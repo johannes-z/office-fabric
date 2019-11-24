@@ -8,6 +8,7 @@
       <div @click="activePage = components.SpinButtonPage">SpinButton</div>
       <div @click="activePage = components.TextFieldPage">TextField</div>
       <div @click="activePage = components.TogglePage">Toggle</div>
+      <div @click="activePage = components.TextPage">Text</div>
 
       <div @click="activePage = components.ImagePage">Image</div>
       <div @click="activePage = components.SeparatorPage">Separator</div>

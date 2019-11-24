@@ -87,18 +87,20 @@ export default class SpinButton extends Vue {
     this.$emit('input', value)
   }
 
-  private onIncrement () {
-    let newValue = Math.min(this.internalValue + this.step, this.max)
-    newValue = precisionRound(newValue, this.precision)
+  private updateValue (value: number) {
+    let newValue = precisionRound(value, this.precision)
     this.internalValue = newValue
     return newValue
   }
 
+  private onIncrement () {
+    let newValue = Math.min(this.internalValue + this.step, this.max)
+    return this.updateValue(newValue)
+  }
+
   private onDecrement () {
     let newValue = Math.max(this.internalValue - this.step, this.min)
-    newValue = precisionRound(newValue, this.precision)
-    this.internalValue = newValue
-    return newValue
+    return this.updateValue(newValue)
   }
 
   private startSpin (dir: number) {
