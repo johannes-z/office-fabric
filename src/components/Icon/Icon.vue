@@ -1,9 +1,10 @@
 <template>
   <i :class="[
-    $style.root,
-    'ms-Icon',
-    `ms-Icon--${iconName}`,
-  ]" aria-hidden="true" />
+       $style.root,
+       'ms-Icon',
+       `ms-Icon--${iconName}`,
+     ]"
+     aria-hidden="true" />
 </template>
 
 <script lang="ts">

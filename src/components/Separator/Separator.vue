@@ -1,9 +1,9 @@
 <template>
   <div :class="[
-      $style.root,
-      vertical && $style.vertical
-    ]"
-    :style="styleObj">
+         $style.root,
+         vertical && $style.vertical
+       ]"
+       :style="styleObj">
     <div :class="$style.content">
       <slot />
     </div>
@@ -16,7 +16,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 const verticalAlignment: any = {
   center: 'middle',
   start: 'top',
-  end: 'bottom'
+  end: 'bottom',
 }
 
 @Component
@@ -27,11 +27,11 @@ export default class Separator extends Vue {
   get styleObj () {
     if (this.vertical) {
       return {
-        'vertical-align': verticalAlignment[this.alignContent]
+        'vertical-align': verticalAlignment[this.alignContent],
       }
     } else {
       return {
-        'text-align': this.justifyContent
+        'text-align': this.justifyContent,
       }
     }
   }

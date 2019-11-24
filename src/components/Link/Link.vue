@@ -1,12 +1,12 @@
 <template>
   <component :is="href ? 'a' : 'button'"
-  :class="[
-    $style.root,
-    disabled && $style.disabled,
-    disabled && 'is-disabled',
-    'ms-Link'
-  ]"
-   :href="href">
+             :class="[
+               $style.root,
+               disabled && $style.disabled,
+               disabled && 'is-disabled',
+               'ms-Link'
+             ]"
+             :href="href">
     <slot />
   </component>
 </template>

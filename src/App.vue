@@ -1,86 +1,15 @@
 <template>
   <div id="app">
-    <Icon icon-name="Attach" />
-    <Icon icon-name="Upload" />
-    <Icon icon-name="Upload" style="color: salmon" />
-
-    <hr>
-
-    <Label>Test</Label>
-    <Label disabled>Test</Label>
-    <Label required>Test</Label>
-    <Label disabled required>Test</Label>
-
-    <Label required for="label-test-1">Label</Label>
-    <input type="text" id="label-test-1">
-
-    <hr>
-
-    asdf <Link href="http://google.at">Google</Link>
-    asdf <Link>Google</Link>
-    asdf <Link href="http://google.at" disabled>Google</Link>
-
-    <hr>
-
-    <Separator>Test</Separator>
-    <Separator align-content="start">Start</Separator>
-    <Separator align-content="end">End</Separator>
-    <Separator />
-
-    <div style="height: 200px;">
-      <Separator vertical>Test</Separator>
-      <Separator vertical align-content="start">Test</Separator>
-      <Separator vertical align-content="end">Test</Separator>
-      <Separator vertical />
-    </div>
-
-    <Separator><Icon icon-name="Attach" /></Separator>
-
-    <hr>
-
-    <FImage
-      src="http://placehold.it/350x150"
-      alt="Example implementation with no image fit property and no height or width is specified." />
-    <FImage
-      src="http://placehold.it/350x150"
-      alt="Example implementation with no image fit property and only width is specified."
-      width="600" />
-    <FImage
-      src="http://placehold.it/350x150"
-      alt="Example implementation with no image fit property and only height is specified."
-      height="100" />
-    <FImage
-      src="http://placehold.it/350x150"
-      alt="Example implementation with no image fit property and height or width is specified."
-      width="100"
-      height="100" />
-
-    <hr>
-
-    <DefaultButton>Test</DefaultButton>
-    <DefaultButton primary>Test</DefaultButton>
-    <DefaultButton disabled>Test</DefaultButton>
-    <DefaultButton disabled primary>Test</DefaultButton>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Icon from './components/Icon/Icon.vue'
-import Label from './components/Label/Label.vue'
-import Link from './components/Link/Link.vue'
-import Separator from './components/Separator/Separator.vue'
-import FImage from './components/Image/Image.vue'
-import DefaultButton from './components/Button/DefaultButton.vue'
+import Toggle from './components/Toggle/Toggle.vue'
 
 @Component({
   components: {
-    Icon,
-    Label,
-    Link,
-    Separator,
-    FImage,
-    DefaultButton
+    Toggle
   }
 })
 export default class App extends Vue {}

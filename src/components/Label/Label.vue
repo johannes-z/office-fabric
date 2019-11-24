@@ -14,8 +14,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Label extends Vue {
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Boolean, default: false }) required!: boolean
+  @Prop({ default: false }) disabled!: boolean
+  @Prop({ default: false }) required!: boolean
 }
 </script>
 
@@ -23,28 +23,22 @@ export default class Label extends Vue {
 .root {
   font-size: 14px;
   font-weight: 600;
-  color: var(--foreground-neutralPrimary);
+  color: var(--fabric-neutralPrimary);
   box-sizing: border-box;
   box-shadow: none;
-  margin-top: 0px;
-  margin-right: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
+  margin: 0;
   display: block;
-  padding-top: 5px;
-  padding-right: 0px;
-  padding-bottom: 5px;
-  padding-left: 0px;
+  padding: 5px 0;
   overflow-wrap: break-word;
 }
 
 .root.disabled {
-  color: var(--main-text-disabled);
+  color: var(--fabric-neutralSecondary);
 }
 
 .required:after {
   content: " *";
-  color: var(--main-text-error);
+  color: var(--fabric-error);
   padding-right: 12px;
 }
 </style>

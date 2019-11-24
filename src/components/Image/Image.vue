@@ -3,7 +3,10 @@
     $style.root,
     'ms-Image'
   ]">
-    <img :class="[$style.image]" :src="src" alt="" v-bind="$attrs">
+    <img :class="[$style.image]"
+         :src="src"
+         alt=""
+         v-bind="$attrs">
   </div>
 </template>
 
@@ -11,7 +14,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({
-  inheritAttrs: false
+  inheritAttrs: false,
 })
 export default class Image extends Vue {
   @Prop({ type: String, required: true }) src!: string
