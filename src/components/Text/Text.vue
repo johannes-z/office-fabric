@@ -1,14 +1,15 @@
 <template>
-  <span :class="[
-          $style.root,
-          block && $style.block,
-          nowrap && $style.nowrap,
-        ]"
-        :style="[
-          {
-            'font-size': fontSize,
-          }
-        ]">
+  <span
+    :class="[
+      $style.root,
+      block && $style.block,
+      nowrap && $style.nowrap,
+    ]"
+    :style="[
+      {
+        'font-size': fontSize,
+      }
+    ]">
     <slot />
   </span>
 </template>
@@ -26,10 +27,6 @@ export default class Toggle extends Vue {
   @Prop({ default: false }) block!: boolean
   @Prop({ default: 'medium' }) variant!: string
 
-  created () {
-    console.log(this.$style)
-  }
-
   get fontSize () {
     // @ts-ignore
     return FontSizes[this.variant]
@@ -45,12 +42,12 @@ export default class Toggle extends Vue {
   color: inherit;
 }
 .block {
-  display: 'block';
+  display: block;
 }
 .nowrap {
-  display: 'block';
-  white-space: 'nowrap';
-  overflow: 'hidden';
-  text-overflow: 'ellipsis';
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
