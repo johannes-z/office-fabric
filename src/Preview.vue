@@ -23,8 +23,7 @@
     </div>
     <div class="content">
       <div class="">
-        <component :is="activePage"
-                   v-if="Object.keys(activePage).length > 0" />
+        <router-view />
       </div>
     </div>
   </div>
@@ -32,49 +31,20 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ImagePage from './pages/Image.vue'
-import LabelPage from './pages/Label.vue'
-import SeparatorPage from './pages/Separator.vue'
-import ButtonPage from './pages/Button.vue'
-import TogglePage from './pages/Toggle.vue'
-import TextFieldPage from './pages/TextField.vue'
-import SpinButtonPage from './pages/SpinButton.vue'
-import CheckboxPage from './pages/Checkbox.vue'
-import ProgressIndicatorPage from './pages/ProgressIndicator.vue'
-import SpinnerPage from './pages/Spinner.vue'
-import TextPage from './pages/Text.vue'
-import ChoiceGroupPage from './pages/ChoiceGroup.vue'
-import NavPage from './pages/Nav.vue'
-import SliderPage from './pages/Slider.vue'
 
 import FabricNav from './components/Nav/Nav.vue'
 
-const components = [
-  'Button',
-  'Checkbox',
-  'Label',
-  'SpinButton',
-  'TextField',
-  'Toggle',
-  'Text',
-  'ChoiceGroup',
-  'Image',
-  'Separator',
-  'Nav',
-  'ProgressIndicator',
-  'Spinner',
-  'Slider',
-]
+import routes from '@/router/routes'
 
 @Component({
-  components: { FabricNav, LabelPage },
+  components: { FabricNav },
   data () {
     return {
       activePage: () => import('./pages/Slider.vue'),
       groups: [{
-        links: components.map(component => ({
-          name: component,
-          onLinkClick: () => (this.activePage = () => import(`./pages/${component}.vue`)),
+        links: routes.map(route => ({
+          name: route.name,
+          onLinkClick: () => this.$router.push({ path: route.path }),
         })),
       }],
     }
