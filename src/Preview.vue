@@ -40,7 +40,6 @@ import routes from '@/router/routes'
   components: { FabricNav },
   data () {
     return {
-      activePage: () => import('./pages/Slider.vue'),
       groups: [{
         links: routes.map(route => ({
           name: route.name,

@@ -41,4 +41,23 @@ export default class PrimaryButton extends DefaultButton {
     background-color: rgb(237, 235, 233);
   }
 }
+.flexContainer {
+  display: flex;
+  height: 100%;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.textContainer {
+  flex-grow: 1;
+  display: block;
+}
+
+.label {
+  margin: 0 4px;
+  line-height: 100%;
+  display: block;
+  font-weight: 600;
+}
 </style>
