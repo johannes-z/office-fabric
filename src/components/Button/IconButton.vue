@@ -1,25 +1,19 @@
 <template>
-  <button :class="[
-            $style.root,
-            primary && $style.primary,
-            disabled && $style.disabled,
-            primary ? 'ms-Button--primary' : 'ms-Button--default',
-            'ms-Button'
-          ]"
-          @click="$emit('click', $event)">
+  <BaseButtonTemplate v-bind="[$attrs, $props]" :class="$style.root">
     <span :class="[$style.flexContainer]">
       <Icon :icon-name="iconName" />
     </span>
-  </button>
+  </BaseButtonTemplate>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import BaseButton from './BaseButton/BaseButton'
 import Icon from '../Icon/Icon.vue'
+import BaseButtonTemplate from './BaseButton/BaseButton.vue'
+import BaseButton from './BaseButton/BaseButton'
 
 @Component({
-  components: { Icon },
+  components: { BaseButtonTemplate, Icon },
 })
 export default class IconButton extends BaseButton {
   @Prop({ default: '' }) text!: string
@@ -57,11 +51,19 @@ export default class IconButton extends BaseButton {
 
   &:hover {
     color: rgb(16, 110, 190);
-    background-color: rgb(243, 242, 241);
+    background-color: var(--fabric-neutralLighter);
+  }
+
+  &:active {
+    background-color: var(--fabric-neutralLight);
+  }
+
+  &.checked {
+    background-color: var(--fabric-neutralLight);
   }
 
   &.disabled {
-    background-color: rgb(243, 242, 241);
+    background-color: var(--fabric-neutralLighter);
     color: rgb(161, 159, 157);
     pointer-events: none;
     user-select: none;
@@ -71,7 +73,7 @@ export default class IconButton extends BaseButton {
     border-image: initial;
     text-decoration: none;
     border-radius: 2px;
-    border-color: rgb(243, 242, 241);
+    border-color: var(--fabric-neutralLighter);
   }
 }
 

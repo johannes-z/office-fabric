@@ -6,7 +6,7 @@
     </div>
 
     <div class="content--inner ms-depth-8">
-      <h2>Base Practices</h2>
+      <h2>Best Practices</h2>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -16,6 +16,8 @@
       <FabricCheckbox disabled />
       <FabricCheckbox checked label="test" />
       <FabricCheckbox checked disabled />
+
+      <FabricCheckbox box-side="end">Test</FabricCheckbox>
 
       <h2>Controlled</h2>
       <FabricCheckbox v-model="value1"
