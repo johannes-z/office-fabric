@@ -42,6 +42,7 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
 import IconButton from '../Button/IconButton.vue'
 @Component({
+  name: 'OSearchBox',
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
