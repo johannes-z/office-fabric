@@ -15,6 +15,7 @@ const components = [
   'Slider',
   'Layer',
   'Callout',
+  'SearchBox',
 ]
 
 const routes = components.map(name => ({
