@@ -1,7 +1,15 @@
 import 'reflect-metadata'
 
-import Vue from 'vue'
+import Vue, { CreateElement } from 'vue'
+import VueRouter from 'vue-router'
 import Preview from './Preview.vue'
+import routes from '@/router/routes'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+  routes,
+})
 
 Vue.config.productionTip = false
 
@@ -52,7 +60,8 @@ createCSSProperties({
 })
 
 new Vue({
-  render: h => h(Preview),
+  render: (h: CreateElement) => h(Preview),
+  router,
 }).$mount('#app')
 
 export {

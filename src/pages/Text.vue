@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>Spinner</h1>
+    <h1>Text</h1>
     <div class="content--inner ms-depth-8">
       <h2>Overview</h2>
     </div>
 
     <div class="content--inner ms-depth-8">
-      <h2>Base Practices</h2>
+      <h2>Best Practices</h2>
     </div>
 
     <div class="content--inner ms-depth-8">

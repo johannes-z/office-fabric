@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
 
 @Component({
@@ -38,7 +38,7 @@ import Label from '../Label/Label.vue'
 })
 export default class Toggle extends Vue {
   @Prop({ default: '' }) label!: string
-  @Prop({ default: false }) checked!: boolean
+  @Model('input', { default: false }) checked!: boolean
   @Prop({ default: false }) defaultChecked!: boolean
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) inlineLabel!: boolean
@@ -50,7 +50,7 @@ export default class Toggle extends Vue {
 
   @Watch('internalChecked')
   private onCheckedChanged (checked: boolean) {
-    this.$emit('update:checked', checked)
+    this.$emit('input', checked)
   }
 }
 </script>

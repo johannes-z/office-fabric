@@ -1,6 +1,7 @@
 <template>
   <div :class="[
     $style.root,
+    boxSide === 'end' && $style.end,
     disabled && $style.disabled,
     internalValue && $style.checked,
     'ms-Checkbox'
@@ -10,7 +11,8 @@
            v-bind="$attrs"
            type="checkbox"
            @input="internalValue = !internalValue">
-    <Label :for="`Checkbox${_uid}`" :class="$style.label">
+    <Label :for="`Checkbox${_uid}`"
+           :class="$style.label">
       <div :class="$style.checkbox">
         <Icon icon-name="CheckMark"
               :class="$style.checkmark" />
@@ -36,6 +38,7 @@ export default class Checkbox extends Vue {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
   @Prop({ default: null }) label!: string
+  @Prop({ default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: string
 
   private internalValue: boolean = this.checked
 
@@ -93,6 +96,22 @@ export default class Checkbox extends Vue {
   position: absolute;
   opacity: 0;
   background: none;
+}
+
+.root {
+  &.end {
+    .label {
+      flex-direction: row-reverse
+    }
+    .checkbox {
+      margin-right: 0;
+      margin-left: 4px;
+    }
+    .text {
+      margin-left: 0;
+      margin-right: 4px;
+    }
+  }
 }
 
 .label {
