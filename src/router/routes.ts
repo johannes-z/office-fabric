@@ -13,6 +13,8 @@ const components = [
   'ProgressIndicator',
   'Spinner',
   'Slider',
+  'Layer',
+  'Callout',
 ]
 
 const routes = components.map(name => ({

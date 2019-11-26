@@ -1,19 +1,29 @@
 <template>
-  <div :class="$style.root">
+  <div :class="[
+    $style.root,
+    disabled && $style.disabled,
+    vertical && $style.vertical,
+  ]">
     <Label :class="$style.titleLabel" v-text="label" />
     <div :class="$style.container">
       <div :class="$style.slideBox"
-           @mousedown="onMouseDown">
+           :tabindex="disabled ? void 0 : 0"
+           @mousedown="onMouseDown"
+           @keydown="onKeyDown">
         <div ref="sliderLine" :class="$style.line">
           <span :class="$style.thumb"
-                :style="{ left: `${thumbOffsetPercent}%`}" />
+                :style="{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%`}" />
           <span :class="[$style.lineContainer, $style.activeSection]"
-                :style="{ width: `${thumbOffsetPercent}%`}" />
+                :style="{ [lengthString]: `${thumbOffsetPercent}%`}" />
           <span :class="[$style.lineContainer, $style.inactiveSection]"
-                :style="{ width: `${100 - thumbOffsetPercent}%`}" />
+                :style="{ [lengthString]: `${100 - thumbOffsetPercent}%`}" />
         </div>
       </div>
-      <Label :class="$style.valueLabel" v-text="internalValue" />
+      <Label :class="$style.valueLabel">
+        <slot name="value" :value="internalValue">
+          {{ internalValue }}
+        </slot>
+      </Label>
     </div>
   </div>
 </template>
@@ -21,6 +31,9 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
+import { KeyCodes } from '@/util/KeyCodes'
+
+export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 
 @Component({
   components: { Label },
@@ -37,9 +50,12 @@ export default class Slider extends Vue {
   @Prop({ default: 10 }) max!: number
   @Prop({ default: 1 }) step!: number
   @Prop({ default: null }) value!: number
+  @Prop({ default: null }) defaultValue!: number
 
-  internalValue?: number = this.value
-  renderedValue?: number = this.value
+  private internalValue?: number = this.value || this.defaultValue || this.min
+  private renderedValue?: number = this.value || this.defaultValue || this.min
+
+  private onKeyDownTimer = -1;
 
   get thumbOffsetPercent () {
     const { min, max, renderedValue } = this
@@ -49,6 +65,10 @@ export default class Slider extends Vue {
   get zeroOffsetPercent () {
     const { min, max } = this
     return min! >= 0 ? 0 : (-min! / (max! - min!)) * 100
+  }
+
+  get lengthString () {
+    return this.vertical ? 'height' : 'width'
   }
 
   private onMouseDown (event: any) {
@@ -106,8 +126,6 @@ export default class Slider extends Vue {
       }
 
       this.updateValue(internalValue, renderedValue)
-      this.internalValue = internalValue
-      this.renderedValue = renderedValue
     })
   }
 
@@ -140,7 +158,7 @@ export default class Slider extends Vue {
     }
     // Make sure value has correct number of decimal places based on number of decimals in step
     const roundedValue = parseFloat(value.toFixed(numDec))
-    const valueChanged = roundedValue !== this.value
+    const valueChanged = roundedValue !== this.internalValue
 
     if (snapToStep) {
       renderedValue = roundedValue
@@ -148,7 +166,61 @@ export default class Slider extends Vue {
 
     this.internalValue = roundedValue
     this.renderedValue = renderedValue
+    this.$emit('input', roundedValue)
   }
+
+  private onKeyDown (event: KeyboardEvent): void {
+    let value: number | undefined = this.internalValue
+    const { max, min, step } = this
+
+    let diff: number | undefined = 0
+
+    switch (event.which) {
+      case KeyCodes.left:
+      case KeyCodes.down:
+        diff = -(step as number)
+
+        this.clearOnKeyDownTimer()
+        this.setOnKeyDownTimer(event)
+
+        break
+      case KeyCodes.right:
+      case KeyCodes.up:
+        diff = step
+
+        this.clearOnKeyDownTimer()
+        this.setOnKeyDownTimer(event)
+
+        break
+
+      case KeyCodes.home:
+        value = min
+        break
+
+      case KeyCodes.end:
+        value = max
+        break
+
+      default:
+        return
+    }
+
+    const newValue: number = Math.min(max as number, Math.max(min as number, value! + diff!))
+
+    this.updateValue(newValue, newValue)
+
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  private clearOnKeyDownTimer (): void {
+    clearTimeout(this.onKeyDownTimer)
+  };
+
+  private setOnKeyDownTimer (event: KeyboardEvent): void {
+    this.onKeyDownTimer = setTimeout(() => {
+    }, ONKEYDOWN_TIMEOUT_DURATION)
+  };
 }
 </script>
 
@@ -160,6 +232,7 @@ export default class Slider extends Vue {
   font-weight: 400;
   user-select: none;
 }
+
 .titleLabel {
   font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -250,7 +323,6 @@ export default class Slider extends Vue {
   width: 16px;
   height: 16px;
   position: absolute;
-  top: -6px;
   transform: translateX(-50%);
   border-width: 2px;
   border-style: solid;
@@ -258,23 +330,153 @@ export default class Slider extends Vue {
   border-radius: 10px;
   background: rgb(255, 255, 255);
   transition: left 0.367s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
-
-  left: 25%;
 }
 .lineContainer {
   box-sizing: border-box;
   height: 4px;
-  width: 100%;
   border-radius: 4px;
 }
 .activeSection {
 background: rgb(96, 94, 92);
   transition: width 0.367s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
-      width: 25%;
 }
 .inactiveSection {
 background: rgb(200, 198, 196);
     transition: width 0.367s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
-        width: 75%;
+}
+.root:not(.vertical) {
+  .thumb {
+    top: -6px;
+  }
+}
+.vertical {
+  margin-right: 8px;
+
+  .titleLabel {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(50, 49, 48);
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    display: block;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    overflow-wrap: break-word;
+  }
+  .container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    text-align: center;
+    margin-top: 8px;
+    margin-right: 0px;
+    margin-bottom: 8px;
+    margin-left: 0px;
+  }
+  .slideBox {
+    position: relative;
+    flex-grow: 1;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 28px;
+    padding-top: 8px;
+    padding-right: 0px;
+    padding-bottom: 8px;
+    padding-left: 0px;
+    outline: transparent;
+    background: transparent;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-image: initial;
+  }
+  .line {
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 4px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    flex-direction: column-reverse;
+  }
+  .thumb {
+    box-sizing: border-box;
+    display: block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: -6px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    transform: translateY(8px);
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(96, 94, 92);
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+    transition: left 0.367s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
+  }
+  .lineContainer {
+    box-sizing: border-box;
+    width: 4px;
+    height: 100%;
+  }
+  .valueLabel {
+    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(50, 49, 48);
+    box-sizing: border-box;
+    box-shadow: none;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    display: block;
+    padding-top: 5px;
+    padding-right: 0px;
+    padding-bottom: 5px;
+    padding-left: 0px;
+    overflow-wrap: break-word;
+    flex-shrink: 1;
+    width: 40px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+.disabled {
+  pointer-events: none;
+  .thumb {
+    border-color: rgb(200, 198, 196);
+    border-radius: 10px;
+    background: rgb(255, 255, 255);
+  }
+  .activeSection {
+    background: rgb(161, 159, 157);
+  }
+  .inactiveSection {
+    background: rgb(243, 242, 241);
+  }
+  .titleLabel,
+  .valueLabel {
+    color: rgb(161, 159, 157);
+  }
 }
 </style>

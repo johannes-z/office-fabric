@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
-import BaseButtonTemplate from './BaseButton/BaseButton.vue'
+import BaseButtonTemplate from './BaseButton/BaseButtonTemplate.vue'
 import BaseButton from './BaseButton/BaseButton'
 
 @Component({

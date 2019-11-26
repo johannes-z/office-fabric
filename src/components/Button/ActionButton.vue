@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
-import BaseButtonTemplate from './BaseButton/BaseButton.vue'
+import BaseButtonTemplate from './BaseButton/BaseButtonTemplate.vue'
 import BaseButton from './BaseButton/BaseButton'
 
 @Component({
@@ -67,6 +67,7 @@ export default class ActionButton extends BaseButton {
 }
 .checked {
   color: rgb(0, 0, 0);
+  background-color: transparent;
 
   .icon {
     color: rgb(0, 69, 120);
