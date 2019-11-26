@@ -1,13 +1,10 @@
 <template>
   <div :class="[
+         'ms-Toggle',
          $style.root,
-         internalChecked && 'is-checked',
-         disabled && 'is-disabled',
-         !disabled && 'is-enabled',
-         internalChecked && $style.checked,
-         disabled && $style.disabled,
+         internalChecked && ['is-checked', $style.checked],
+         disabled ? ['is-disabled', $style.disabled] : 'is-enabled',
          inlineLabel && $style.inlineLabel,
-         'ms-Toggle'
        ]"
        @click="internalChecked = !internalChecked">
     <slot name="label"
@@ -57,7 +54,6 @@ export default class Toggle extends Vue {
 
 <style lang="scss" module>
 .root {
-  font-weight: 400;
   margin-bottom: 8px;
   align-items: center;
 }
@@ -66,9 +62,6 @@ export default class Toggle extends Vue {
   position: relative;
 }
 .pill {
-  position: relative;
-  font-size: 20px;
-  box-sizing: border-box;
   width: 40px;
   height: 20px;
   cursor: pointer;
@@ -107,6 +100,7 @@ export default class Toggle extends Vue {
     margin-right: 16px;
   }
 }
+
 .root.checked {
   .pill {
     justify-content: flex-end;

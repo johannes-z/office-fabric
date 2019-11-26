@@ -17,6 +17,7 @@
                  disableAnimation !== true && $style.animation]" />
     </div>
     <input
+      ref="input"
       v-bind="$attrs"
       :disabled="disabled"
       :value="internalValue"
@@ -31,7 +32,7 @@
     <div
       v-if="internalValue"
       :class="[$style.clearButton, 'ms-SearchBox-clearButton']">
-      <IconButton icon-name="Clear" @click="clearInput" />
+      <IconButton icon-name="Clear" @click.native="clearInput" />
     </div>
   </div>
 </template>
@@ -45,6 +46,9 @@ import IconButton from '../Button/IconButton.vue'
   inheritAttrs: false,
 })
 export default class SearchBox extends Vue {
+  $refs!: {
+    input: HTMLInputElement
+  }
   @Prop({ default: false }) underlined?: boolean
   @Prop({ default: null }) defaultValue?: string
   @Prop({ default: 'Search' }) placeholder?: string
@@ -71,6 +75,7 @@ export default class SearchBox extends Vue {
   }
   clearInput () {
     this.internalValue = ''
+    this.$refs.input.focus()
   }
 }
 </script>
@@ -205,13 +210,9 @@ export default class SearchBox extends Vue {
     margin-right: 0px;
     margin-bottom: -1px;
     margin-left: 0px;
-    .ms-Button {
+    :global(.ms-Button) {
       border-radius: 0px 1px 1px 0px;
-    }
-    &:hover {
-      .ms-Button {
-        background-color: rgb(243, 242, 241);
-      }
+      height: auto;
     }
 }
 </style>
