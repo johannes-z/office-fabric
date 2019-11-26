@@ -29,7 +29,7 @@
                   disabled />
 
     <div>Controlled</div>
-    <FabricToggle label="Test" :checked.sync="toggleState" /> {{ toggleState }}
+    <FabricToggle v-model="toggleState" label="Test" /> {{ toggleState }}
     <FabricToggle label="Test">
       <template #label="{ checked, disabled, label }">
         <div>label: {{ label }}, checked: {{ checked }}, disabled: {{ disabled }}</div>

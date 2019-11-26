@@ -44,14 +44,15 @@ const defaultColors = {
 
 function createCSSProperties (theme: any) {
   const properties = Object.entries(theme).map(([key, value]) => {
-    return `--fabric-${key}: ${value};`
+    return `--fabric-${key}:${value};`
   }).join('\n')
 
   const style = document.getElementById('__fabric__css-properties') || document.createElement('style')
   style.id = '__fabric__css-properties'
   document.head.appendChild(style)
-  console.log(`:root {${properties}}`)
-  style.innerHTML = `:root {${properties}}`
+  style.innerHTML = `:root {
+    ${properties}
+  }`
 }
 
 createCSSProperties({

@@ -52,6 +52,12 @@ export default class Separator extends Vue {
   font-weight: 400;
   position: relative;
 
+  &:before,
+  &:after {
+    background-color: rgb(243, 242, 241);
+    position: absolute;
+  }
+
   &:not(.vertical) {
     padding-top: 4px;
     padding-right: 0px;
@@ -59,11 +65,9 @@ export default class Separator extends Vue {
     padding-left: 0px;
 
     &:before {
-      background-color: rgb(243, 242, 241);
       height: 1px;
       content: "";
       display: block;
-      position: absolute;
       top: 50%;
       bottom: 0px;
       left: 0px;
@@ -82,10 +86,8 @@ export default class Separator extends Vue {
     z-index: 1;
 
     &:after {
-      background-color: rgb(243, 242, 241);
       width: 1px;
       content: "";
-      position: absolute;
       top: 0px;
       bottom: 0px;
       left: 50%;
