@@ -16,6 +16,7 @@
       <b>Progress</b>
       <div @click="activePage = components.ProgressIndicatorPage">ProgressIndicator</div>
       <div @click="activePage = components.SpinnerPage">Spinner</div>
+      <div @click="activePage = components.SearchBox">SearchBox</div>
     </div>
     <div class="content">
       <div class="">
@@ -39,6 +40,7 @@ import CheckboxPage from './pages/Checkbox.vue'
 import ProgressIndicatorPage from './pages/ProgressIndicator.vue'
 import SpinnerPage from './pages/Spinner.vue'
 import TextPage from './pages/Text.vue'
+import SearchBox from './pages/SearchBox.vue'
 
 @Component
 export default class Preview extends Vue {
@@ -54,8 +56,9 @@ export default class Preview extends Vue {
     ProgressIndicatorPage,
     SpinnerPage,
     TextPage,
+    SearchBox,
   }
-  activePage: any = TextPage
+  activePage: any = SearchBox
 }
 </script>
 
