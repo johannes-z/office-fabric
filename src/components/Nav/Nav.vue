@@ -11,6 +11,7 @@
             <div :class="$style.compositeLink">
               <ActionButton :href="link.url"
                             :target="link.target"
+                            :disabled="link.disabled"
                             :class="$style.link"
                             @click.native="link.onLinkClick">
                 {{ link.name }}

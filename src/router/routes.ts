@@ -6,6 +6,7 @@ const components = [
   'TextField',
   'Toggle',
   'Text',
+  'Link',
   'ChoiceGroup',
   'Image',
   'Separator',

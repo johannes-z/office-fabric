@@ -1,21 +1,32 @@
 <template>
-  <label :class="[
-    $style.root,
-    disabled && $style.disabled,
-    required && $style.required,
-    'ms-Label'
-  ]">
+  <label :class="classNames.root">
     <slot />
   </label>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import BaseComponent from '../BaseComponent'
+import { ILabelProps, ILabelStyles } from './Label.types'
 
-@Component
-export default class Label extends Vue {
+@Component({
+  name: 'o-label',
+})
+export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
+
+  protected get classes (): ILabelStyles {
+    const { $style, disabled, required } = this
+    return {
+      root: [
+        'ms-Label',
+        $style.root,
+        disabled && $style.disabled,
+        required && $style.required,
+      ],
+    }
+  }
 }
 </script>
 

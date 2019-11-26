@@ -9,21 +9,10 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '@/components/BaseComponent'
-import Label from '../Label/Label.vue'
 import { FontSizes } from '@/styles/fonts'
-
-export interface ITextProps {
-  nowrap?: boolean
-  block?: boolean
-  variant?: string
-}
-
-export interface ITextClasses {
-  root: any
-}
+import { ITextProps, ITextClasses } from './Text.types'
 
 @Component({
-  components: { Label },
   name: 'o-text',
 })
 export default class Text extends BaseComponent<ITextProps, ITextClasses> {

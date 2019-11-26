@@ -24,19 +24,7 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
 import BaseComponent from '../BaseComponent'
-
-export interface IToggleProps {
-
-}
-
-export interface IToggleClasses {
-  root: any
-  label: any
-  container: any
-  pill: any
-  thumb: any
-  text: any
-}
+import { IToggleProps, IToggleClasses } from './Toggle.types'
 
 @Component({
   components: { Label },
@@ -64,22 +52,26 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleClasses> 
         disabled ? ['is-disabled', this.$style.disabled] : 'is-enabled',
         inlineLabel && this.$style.inlineLabel,
       ],
+      label: [
+        'ms-Toggle-label',
+        this.$style.label,
+      ],
       container: [
+        'ms-Toggle-innerContainer',
         this.$style.container,
       ],
       pill: [
+        'ms-Toggle-background',
         this.$style.pill,
       ],
       thumb: [
+        'ms-Toggle-thumb',
         this.$style.thumb,
       ],
       text: [
+        'ms-Toggle-stateText',
         this.$style.text,
       ],
-      label: [
-        this.$style.label,
-      ],
-
     }
   }
 

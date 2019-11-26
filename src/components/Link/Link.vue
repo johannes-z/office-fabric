@@ -1,11 +1,6 @@
 <template>
   <component :is="href ? 'a' : 'button'"
-             :class="[
-               $style.root,
-               disabled && $style.disabled,
-               disabled && 'is-disabled',
-               'ms-Link'
-             ]"
+             :class="classNames.root"
              :href="href">
     <slot />
   </component>
@@ -13,11 +8,26 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import BaseComponent from '../BaseComponent'
+import { ILinkProps, ILinkStyles } from './Link.types'
 
-@Component
-export default class Link extends Vue {
+@Component({
+  name: 'o-link',
+})
+export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: '' }) href!: string
+
+  protected get classes (): ILinkStyles {
+    const { $style, disabled } = this
+    return {
+      root: [
+        'ms-Link',
+        $style.root,
+        disabled && ['is-disabled', $style.disabled],
+      ],
+    }
+  }
 }
 </script>
 
@@ -25,7 +35,7 @@ export default class Link extends Vue {
 .root {
   font-size: inherit;
   font-weight: inherit;
-  color: var(--primary-themePrimary);
+  color: var(--fabric-themePrimary);
   outline: none;
   text-decoration: none;
   margin: 0;
@@ -44,13 +54,13 @@ export default class Link extends Vue {
   border-bottom: 1px solid transparent;
 
   &:hover {
-  color: var(--primary-themeDarker);
+  color: var(--fabric-themeDarker);
     text-decoration: underline;
   }
 }
 
 .disabled {
-  color: var(--main-text-disabled);
+  color: var(--fabric-disabled);
   pointer-events: none;
   cursor: default;
 }

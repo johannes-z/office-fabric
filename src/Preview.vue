@@ -39,10 +39,12 @@ import routes from '@/router/routes'
 @Component({
   components: { FabricNav },
   data () {
+    console.log(routes)
     return {
       groups: [{
         links: routes.map(route => ({
           name: route.name,
+          // disabled: route.name === this.$route.name,
           onLinkClick: () => this.$router.push({ path: route.path }),
         })),
       }],

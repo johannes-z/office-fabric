@@ -1,19 +1,16 @@
 <template>
-  <div :class="[$style.root, indeterminate && $style.indeterminate]">
+  <div :class="classNames.root">
     <div v-if="label" :class="$style.itemName">
       {{ label }}
     </div>
 
-    <div :class="$style.itemProgress" :style="barHeightStyle">
-      <div :class="$style.progressTrack" :style="barHeightStyle" />
-      <div :class="$style.progressBar"
-           :style="[
-             barHeightStyle,
-             !indeterminate && { width: `${percentComplete}%`}
-           ]" />
+    <div :class="classNames.itemProgress" :style="{ '--barHeight': `${barHeight}px`}">
+      <div :class="classNames.progressTrack" />
+      <div :class="classNames.progressBar"
+           :style="{ '--progress': !indeterminate ? `${percentComplete}%` : null }" />
     </div>
 
-    <div v-if="description" :class="$style.itemDescription">
+    <div v-if="description" :class="classNames.itemDescription">
       {{ description }}
     </div>
   </div>
@@ -21,9 +18,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
+import BaseComponent from '../BaseComponent'
 
 @Component
-export default class ProgressIndicator extends Vue {
+export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ default: false }) indeterminate!: boolean
   @Prop({ default: 0 }) percentComplete!: number
   @Prop({ default: null }) label!: string
@@ -31,8 +30,30 @@ export default class ProgressIndicator extends Vue {
 
   @Prop({ default: 2 }) barHeight!: number
 
-  get barHeightStyle () {
-    return { height: `${this.barHeight}px` }
+  protected get classes (): IProgressIndicatorStyles {
+    const { $style, indeterminate, label, description } = this
+    return {
+      root: [
+        'ms-ProgressIndicator',
+        $style.root,
+        indeterminate && $style.indeterminate,
+      ],
+      itemName: [
+        $style.itemName,
+      ],
+      itemProgress: [
+        $style.itemProgress,
+      ],
+      progressTrack: [
+        $style.progressTrack,
+      ],
+      progressBar: [
+        $style.progressBar,
+      ],
+      itemDescription: [
+        $style.itemDescription,
+      ],
+    }
   }
 }
 </script>
@@ -54,7 +75,7 @@ export default class ProgressIndicator extends Vue {
 }
 .itemProgress {
   position: relative;
-  height: 2px;
+  height: var(--barHeight, 2px);
   padding-top: 8px;
   padding-right: 0px;
   padding-bottom: 8px;
@@ -64,15 +85,15 @@ export default class ProgressIndicator extends Vue {
 .progressTrack {
   position: absolute;
   width: 100%;
-  height: 2px;
+  height: var(--barHeight, 2px);
   background-color: rgb(237, 235, 233);
 }
 .progressBar {
   background-color: rgb(0, 120, 212);
-  height: 2px;
+  height: var(--barHeight, 2px);
   position: absolute;
   transition: width 0.15s linear 0s;
-  width: 0;
+  width: var(--progress, 0);
 }
 .itemName {
   text-overflow: ellipsis;
@@ -90,7 +111,7 @@ export default class ProgressIndicator extends Vue {
 
 .indeterminate {
   .progressBar {
-    height: 2px;
+    height: var(--barHeight, 2px);
     position: absolute;
     width: 0px;
     min-width: 33%;

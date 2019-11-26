@@ -14,7 +14,7 @@
       <h2>Default ProgressIndicator</h2>
       <ProgressIndicator label="Example title"
                          description="Example description"
-                         :percent-complete="0" />
+                         :percent-complete="5" />
       <ProgressIndicator :percent-complete="50" />
       <ProgressIndicator label="Bar Height Example"
                          :bar-height="5"
@@ -22,6 +22,8 @@
       <ProgressIndicator :percent-complete="100" />
       <h2>Indeterminate ProgressIndicator</h2>
       <ProgressIndicator indeterminate />
+      <ProgressIndicator indeterminate
+                         :bar-height="5" />
     </div>
 
     <div class="content--inner ms-depth-8">

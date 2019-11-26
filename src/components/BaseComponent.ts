@@ -1,18 +1,16 @@
 import Vue from 'vue'
 import { Prop } from 'vue-property-decorator'
-import merge from 'lodash.merge'
+import { mergeStyleClasses } from '@/util/mergeStyleClasses'
 
-export default abstract class BaseComponent<
-  IProps = {},
-  IClassProps = {}
-> extends Vue {
+export default abstract class BaseComponent<IProps = {}, IClasses = {}> extends Vue {
+  $style!: IClasses & { [key: string]: string | undefined }
   $props!: IProps
 
-  @Prop({ default: void 0 }) cssClasses!: IClassProps
+  @Prop({ default: void 0 }) cssClasses!: IClasses
 
-  protected abstract get classes (): IClassProps
+  protected abstract get classes (): IClasses
 
-  get classNames (): IClassProps {
-    return merge(this.classes, this.cssClasses)
+  get classNames (): IClasses {
+    return mergeStyleClasses(this.classes, this.cssClasses)
   }
 }
