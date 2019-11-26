@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricText from '@/components/Text/Text.vue'
+import { Text as FabricText, ITextProps, ITextClasses } from '@/components/Text/'
 
 @Component({
   components: {

@@ -9,11 +9,13 @@
   },
   "dependencies": {
     "core-js": "^3.3.2",
+    "lodash.merge": "^4.6.2",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
+    "@types/lodash.merge": "^4.6.6",
     "@vue/cli-plugin-babel": "^4.1.0-beta.0",
     "@vue/cli-plugin-eslint": "^4.1.0-beta.0",
     "@vue/cli-plugin-router": "^4.0.5",
