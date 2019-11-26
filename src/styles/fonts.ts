@@ -14,3 +14,11 @@ export namespace FontSizes {
   export const superLarge: string = '42px'
   export const mega: string = '68px'
 }
+
+export namespace FontWeights {
+  export const light: number = 100
+  export const semilight: number = 300
+  export const regular: number = 400
+  export const semibold: number = 600
+  export const bold: number = 700
+}
