@@ -11,7 +11,18 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <SearchBox>Test</SearchBox>
+      <h2>Default SearchBox</h2>
+      <SearchBox />
+      <SearchBox disable-animation placeholder="Search with no animation" />
+      <h2>Underlined SearchBox</h2>
+      <SearchBox underlined placeholder="Search" />
+      <h2>Disabled SearchBox</h2>
+      <SearchBox disabled />
+      <SearchBox disabled
+                 underlined
+                 placeholder="Search" />
+      <h2>SearchBox with custom icon</h2>
+      <SearchBox placeholder="Filter" icon-name="Filter" />
     </div>
 
     <div class="content--inner ms-depth-8">

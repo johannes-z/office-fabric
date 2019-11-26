@@ -1,26 +1,37 @@
 ﻿<template>
-  <div :class="[isActive && $style.active, $style.root]">
+  <div
+    :class="[isActive && $style.active,
+             $style.root,
+             underlined && $style.underlined,
+             disabled && $style.disabled ]">
     <div
       role="search"
-      :class="$style.iconContainer"
+      :class="[$style.iconContainer,
+               disableAnimation !== true && $style.animation,
+               disabled && $style.disabled]"
       :style="{ width: isActive || internalValue ? '4px' : '32px' }">
       <Icon
-        icon-name="Search"
+        :icon-name="iconName"
         :style="{ opacity: isActive || internalValue ? 0 : 1 }"
-        :class="$style.icon" />
+        :class="[$style.icon,
+                 disableAnimation !== true && $style.animation]" />
     </div>
     <input
+      v-bind="$attrs"
+      :disabled="disabled"
       :value="internalValue"
       :class="[$style.field, 'ms-SearchBox-field']"
-      :area-label="labelText"
-      :placeholder="labelText"
+      :area-label="placeholder"
+      :placeholder="placeholder"
       @input="internalValue = $event.target.value"
       @focus="isActive = true"
-      @blur="isActive = false">
+      @blur="isActive = false"
+      @keydown.enter="submit"
+      @keydown.esc="clearInput">
     <div
       v-if="internalValue"
       :class="[$style.clearButton, 'ms-SearchBox-clearButton']">
-      <IconButton icon-name="Clear" @click="internalValue = null" />
+      <IconButton icon-name="Clear" @click="clearInput" />
     </div>
   </div>
 </template>
@@ -31,12 +42,16 @@ import Icon from '../Icon/Icon.vue'
 import IconButton from '../Button/IconButton.vue'
 @Component({
   components: { Icon, IconButton },
+  inheritAttrs: false,
 })
 export default class SearchBox extends Vue {
   @Prop({ default: false }) underlined?: boolean
   @Prop({ default: null }) defaultValue?: string
-  @Prop({ default: 'Search' }) labelText?: string
+  @Prop({ default: 'Search' }) placeholder?: string
   @Prop({ default: null }) value!: string
+  @Prop({ default: false }) disableAnimation?: boolean
+  @Prop({ default: false }) disabled?: boolean
+  @Prop({ default: 'Search' }) iconName!: string
 
   isActive: boolean = false
   internalValue: string = this.value
@@ -49,6 +64,13 @@ export default class SearchBox extends Vue {
   @Watch('internalValue')
   private onValueChanged (value: string) {
     this.$emit('input', value)
+  }
+
+  submit () {
+    this.$emit('submit', this.internalValue)
+  }
+  clearInput () {
+    this.internalValue = ''
   }
 }
 </script>
@@ -82,13 +104,27 @@ export default class SearchBox extends Vue {
   border-color: rgb(138, 136, 134);
   border-image: initial;
 
+  &.disabled {
+    background-color: rgb(243, 242, 241);
+    pointer-events: none;
+    cursor: default;
+    border-color: rgb(243, 242, 241);
+  }
   &:hover {
-      border-color: rgb(50, 49, 48);
+    border-color: rgb(50, 49, 48);
   }
   &.active {
-      border-color: rgb(0, 120, 212);
+    border-color: rgb(0, 120, 212);
+  }
+  &.underlined {
+    border-radius: 0px;
+    border-style: solid;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(138, 136, 134);
+    border-width: 0px 0px 1px;
   }
 }
+
 .iconContainer {
   display: flex;
   flex-direction: column;
@@ -99,8 +135,23 @@ export default class SearchBox extends Vue {
   text-align: center;
   color: rgb(0, 120, 212);
   cursor: text;
-  transition: width 0.167s ease 0s;
+  &.disabled {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+    width: 32px;
+    text-align: center;
+    color: rgb(161, 159, 157);
+    cursor: text;
+    transition: width 0.167s ease 0s;
+  }
+  &.animation {
+    transition: width 0.167s ease 0s;
+  }
 }
+
 .field {
     box-shadow: none;
     margin-top: 0px;
@@ -135,7 +186,9 @@ export default class SearchBox extends Vue {
   speak: none;
   font-family: FabricMDL2Icons;
   opacity: 1;
-  transition: opacity 0.167s ease 0s;
+  &.animation {
+    transition: opacity 0.167s ease 0s;
+  }
 }
 .clearButton {
     display: flex;
