@@ -1,19 +1,19 @@
 <template>
-  <div :class="classNames.root"
+  <div v-bind="css.root"
        @click="internalChecked = !internalChecked">
     <slot name="label"
           :checked="internalChecked"
           :disabled="disabled"
           :label="label">
-      <Label :class="classNames.label"
+      <Label v-bind="css.label"
              :style="{ '--order': (!onText && !offText) ? 1 : 0 }"
              v-text="label" />
     </slot>
-    <div :class="classNames.container">
-      <button :class="classNames.pill">
-        <div :class="classNames.thumb" />
+    <div v-bind="css.container">
+      <button v-bind="css.pill">
+        <div v-bind="css.thumb" />
       </button>
-      <Label :class="classNames.text">
+      <Label v-bind="css.text">
         {{ internalChecked ? onText : offText }}
       </Label>
     </div>
@@ -24,13 +24,13 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
 import BaseComponent from '../BaseComponent'
-import { IToggleProps, IToggleClasses } from './Toggle.types'
+import { IToggleProps, IToggleStyles } from './Toggle.types'
 
 @Component({
-  components: { Label },
   name: 'o-toggle',
+  components: { Label },
 })
-export default class Toggle extends BaseComponent<IToggleProps, IToggleClasses> {
+export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   @Model('input', { default: false }) checked!: boolean
   @Prop({ default: '' }) label!: string
   @Prop({ default: false }) defaultChecked!: boolean
@@ -42,35 +42,35 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleClasses> 
 
   internalChecked: boolean = this.defaultChecked || this.checked
 
-  protected get classes (): IToggleClasses {
-    const { disabled, inlineLabel, internalChecked } = this
+  get baseStyles (): IToggleStyles {
+    const { $style, disabled, inlineLabel, internalChecked } = this
     return {
       root: [
         'ms-Toggle',
-        this.$style.root,
-        internalChecked && ['is-checked', this.$style.checked],
-        disabled ? ['is-disabled', this.$style.disabled] : 'is-enabled',
-        inlineLabel && this.$style.inlineLabel,
+        $style.root,
+        internalChecked && ['is-checked', $style.checked],
+        disabled ? ['is-disabled', $style.disabled] : 'is-enabled',
+        inlineLabel && $style.inlineLabel,
       ],
       label: [
         'ms-Toggle-label',
-        this.$style.label,
+        $style.label,
       ],
       container: [
         'ms-Toggle-innerContainer',
-        this.$style.container,
+        $style.container,
       ],
       pill: [
         'ms-Toggle-background',
-        this.$style.pill,
+        $style.pill,
       ],
       thumb: [
         'ms-Toggle-thumb',
-        this.$style.thumb,
+        $style.thumb,
       ],
       text: [
         'ms-Toggle-stateText',
-        this.$style.text,
+        $style.text,
       ],
     }
   }

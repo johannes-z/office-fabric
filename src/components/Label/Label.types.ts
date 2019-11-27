@@ -1,3 +1,5 @@
+import { IStyle } from '../BaseComponent'
+
 export interface ILabelProps {
   /**
    * Whether the associated form field is required or not
@@ -15,5 +17,5 @@ export interface ILabelStyles {
   /**
    * Styles for the root element.
    */
-  root: any;
+  root: IStyle;
 }

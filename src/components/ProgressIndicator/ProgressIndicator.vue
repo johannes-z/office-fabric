@@ -1,16 +1,15 @@
 <template>
-  <div :class="classNames.root">
-    <div v-if="label" :class="$style.itemName">
+  <div v-bind="css.root">
+    <div v-if="label" v-bind="css.itemName">
       {{ label }}
     </div>
 
-    <div :class="classNames.itemProgress" :style="{ '--barHeight': `${barHeight}px`}">
-      <div :class="classNames.progressTrack" />
-      <div :class="classNames.progressBar"
-           :style="{ '--progress': !indeterminate ? `${percentComplete}%` : null }" />
+    <div v-bind="css.itemProgress">
+      <div v-bind="css.progressTrack" />
+      <div v-bind="css.progressBar" />
     </div>
 
-    <div v-if="description" :class="classNames.itemDescription">
+    <div v-if="description" v-bind="css.itemDescription">
       {{ description }}
     </div>
   </div>
@@ -21,7 +20,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 
-@Component
+@Component({
+  name: 'o-progress-indicator',
+})
 export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ default: false }) indeterminate!: boolean
   @Prop({ default: 0 }) percentComplete!: number
@@ -30,8 +31,8 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
 
   @Prop({ default: 2 }) barHeight!: number
 
-  protected get classes (): IProgressIndicatorStyles {
-    const { $style, indeterminate, label, description } = this
+  get baseStyles (): IProgressIndicatorStyles {
+    const { $style, indeterminate, label, description, percentComplete } = this
     return {
       root: [
         'ms-ProgressIndicator',
@@ -43,12 +44,14 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
       ],
       itemProgress: [
         $style.itemProgress,
+        { '--barHeight': `${this.barHeight}px` },
       ],
       progressTrack: [
         $style.progressTrack,
       ],
       progressBar: [
         $style.progressBar,
+        { '--progress': !indeterminate ? `${percentComplete}%` : null },
       ],
       itemDescription: [
         $style.itemDescription,

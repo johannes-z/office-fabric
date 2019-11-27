@@ -1,23 +1,17 @@
 <template>
-  <div :class="[
-    $style.root,
-    boxSide === 'end' && $style.end,
-    disabled && $style.disabled,
-    internalValue && $style.checked,
-    'ms-Checkbox'
-  ]">
+  <div v-bind="css.root">
     <input :id="`Checkbox${_uid}`"
-           :class="$style.input"
-           v-bind="$attrs"
+           v-bind="[$attrs, css.input]"
            type="checkbox"
-           @input="internalValue = !internalValue">
+           @input="internalValue = !internalValue"
+           v-on="$listeners">
     <Label :for="`Checkbox${_uid}`"
-           :class="$style.label">
-      <div :class="$style.checkbox">
+           v-bind="css.label">
+      <div v-bind="css.checkbox">
         <Icon icon-name="CheckMark"
-              :class="$style.checkmark" />
+              v-bind="css.checkmark" />
       </div>
-      <span :class="$style.text">
+      <span v-bind="css.text">
         <slot>{{ label }}</slot>
       </span>
     </Label>
@@ -28,12 +22,15 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
 import Icon from '../Icon/Icon.vue'
+import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
+import BaseComponent from '../BaseComponent'
 
 @Component({
+  name: 'o-checkbox',
   components: { Label, Icon },
   inheritAttrs: false,
 })
-export default class Checkbox extends Vue {
+export default class Checkbox extends BaseComponent<ICheckboxProps, ICheckboxStyles> {
   @Model('input', { default: false }) checked!: boolean
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
@@ -41,6 +38,40 @@ export default class Checkbox extends Vue {
   @Prop({ default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: string
 
   private internalValue: boolean = this.checked
+
+  get baseStyles (): ICheckboxStyles {
+    const { $style, boxSide, disabled, internalValue } = this
+    return {
+      root: [
+        'ms-Checkbox',
+        $style.root,
+        disabled
+          ? ['is-disabled', $style.disabled]
+          : 'is-enabled',
+        boxSide === 'end' && $style.end,
+        internalValue && ['is-checked', $style.checked],
+      ],
+      input: [
+        $style.input,
+      ],
+      label: [
+        'ms-Checkbox-label',
+        $style.label,
+      ],
+      checkbox: [
+        'ms-Checkbox-checkbox',
+        $style.checkbox,
+      ],
+      checkmark: [
+        'ms-Checkbox-checkmark',
+        $style.checkmark,
+      ],
+      text: [
+        'ms-Checkbox-text',
+        $style.text,
+      ],
+    }
+  }
 
   @Watch('internalValue')
   private onValueChanged (value: string) {
@@ -160,7 +191,6 @@ export default class Checkbox extends Vue {
   -webkit-font-smoothing: antialiased;
   font-style: normal;
   font-weight: normal;
-  speak: none;
   font-family: FabricMDL2Icons;
   opacity: 0;
   color: rgb(255, 255, 255);

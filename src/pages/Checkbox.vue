@@ -12,16 +12,26 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic Checkboxes</h2>
-      <FabricCheckbox>Test</FabricCheckbox>
-      <FabricCheckbox disabled />
-      <FabricCheckbox checked label="test" />
-      <FabricCheckbox checked disabled />
+      <OCheckbox>Unchecked checkbox</OCheckbox>
+      <OCheckbox checked label="Checked checkbox" />
+      <OCheckbox disabled>Disabled checkbox</OCheckbox>
+      <OCheckbox checked disabled>Disabled checked checkbox</OCheckbox>
 
-      <FabricCheckbox box-side="end">Test</FabricCheckbox>
+      <OCheckbox box-side="end">Test</OCheckbox>
 
       <h2>Controlled</h2>
-      <FabricCheckbox v-model="value1"
-                      :label="value1 ? 'checked' : 'unchecked'" />
+      <OCheckbox v-model="value1"
+                 :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
+      <OCheckbox box-side="end">Checkbox rendered with boxSide "end"</OCheckbox>
+      <OCheckbox @blur="onBlur" @focus="onFocus">
+        Checkbox with event listeners
+      </OCheckbox>
+      <OCheckbox>
+        Custom-rendered label with a
+        <OLink href="https://www.microsoft.com" target="_blank">
+          link
+        </OLink>
+      </OCheckbox>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -32,15 +42,25 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricCheckbox from '@/components/Checkbox/Checkbox.vue'
+import { OCheckbox } from '@/components/Checkbox'
+import { OLink } from '@/components/Link'
 
 @Component({
   components: {
-    FabricCheckbox,
+    OCheckbox,
+    OLink,
   },
 })
 export default class CheckboxPage extends Vue {
   value1: boolean = true
+
+  onFocus () {
+    console.log('Checkbox is focused')
+  }
+
+  onBlur () {
+    console.log('Checkbox is blurred')
+  }
 }
 </script>
 

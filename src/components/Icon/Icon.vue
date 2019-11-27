@@ -1,5 +1,5 @@
 <template>
-  <i :class="classNames.root"
+  <i v-bind="css.root"
      aria-hidden="true" />
 </template>
 
@@ -14,7 +14,7 @@ import { IIconProps, IIconStyles } from './Icon.types'
 export default class Icon extends BaseComponent<IIconProps, IIconStyles> {
   @Prop() iconName!: string
 
-  protected get classes (): IIconStyles {
+  get baseStyles (): IIconStyles {
     return {
       root: [
         'ms-Icon',

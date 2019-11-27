@@ -13,10 +13,10 @@
       <h2>Usage</h2>
       <h2>Default Spinner</h2>
 
-      <Spinner size="xs" />
-      <Spinner size="sm" />
-      <Spinner size="md" />
-      <Spinner size="lg" />
+      <Spinner :size="12" />
+      <Spinner :size="16" />
+      <Spinner :size="20" />
+      <Spinner :size="28" />
 
       <h2>Spinner label positioning</h2>
       <div>

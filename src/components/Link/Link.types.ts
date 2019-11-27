@@ -1,3 +1,5 @@
+import { IStyle } from '../BaseComponent'
+
 export interface ILinkProps {
   // extends Partial<HTMLLinkElement & HTMLButtonElement>
   href?: string;
@@ -5,5 +7,5 @@ export interface ILinkProps {
 }
 
 export interface ILinkStyles {
-  root: any;
+  root: IStyle;
 }

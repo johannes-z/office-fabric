@@ -1,10 +1,6 @@
 <template>
-  <div :class="classNames.root"
-       :style="{
-         '--verticalAlign': verticalAlignment,
-         '--textAlign': justifyContent
-       }">
-    <div :class="classNames.content">
+  <div v-bind="css.root">
+    <div v-bind="css.content">
       <slot />
     </div>
   </div>
@@ -28,15 +24,20 @@ export default class Separator extends BaseComponent<ISeparatorProps, ISeparator
   @Prop({ type: String, default: 'center' }) alignContent!: string
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 
-  protected get classes (): ISeparatorStyles {
+  get baseStyles (): ISeparatorStyles {
+    const { $style, vertical, verticalAlignment, justifyContent } = this
     return {
       root: [
         'ms-Separator',
-        this.$style.root,
-        this.vertical && this.$style.vertical,
+        $style.root,
+        vertical && $style.vertical,
+        {
+          '--verticalAlign': verticalAlignment,
+          '--textAlign': justifyContent,
+        },
       ],
       content: [
-        this.$style.content,
+        $style.content,
       ],
     }
   }

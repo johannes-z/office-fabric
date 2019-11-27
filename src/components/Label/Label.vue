@@ -1,5 +1,5 @@
 <template>
-  <label :class="classNames.root">
+  <label v-bind="css.root">
     <slot />
   </label>
 </template>
@@ -16,7 +16,7 @@ export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
 
-  protected get classes (): ILabelStyles {
+  get baseStyles (): ILabelStyles {
     const { $style, disabled, required } = this
     return {
       root: [

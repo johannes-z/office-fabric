@@ -1,6 +1,6 @@
-import Link from './Link.vue'
+import OLink from './Link.vue'
 
 export * from './Link.types'
 export {
-  Link,
+  OLink,
 }

@@ -1,6 +1,7 @@
 <template>
   <component :is="href ? 'a' : 'button'"
-             :class="classNames.root"
+             v-bind="css.root"
+             :type="!href && 'button'"
              :href="href">
     <slot />
   </component>
@@ -18,7 +19,7 @@ export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: '' }) href!: string
 
-  protected get classes (): ILinkStyles {
+  get baseStyles (): ILinkStyles {
     const { $style, disabled } = this
     return {
       root: [
@@ -60,7 +61,7 @@ export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
 }
 
 .disabled {
-  color: var(--fabric-disabled);
+  color: var(--fabric-neutralSecondary);
   pointer-events: none;
   cursor: default;
 }

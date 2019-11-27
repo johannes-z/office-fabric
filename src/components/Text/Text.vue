@@ -1,7 +1,5 @@
 <template>
-  <span
-    :class="classNames.root"
-    :style="{ '--fontSize': fontSize }">
+  <span v-bind="css.root">
     <slot />
   </span>
 </template>
@@ -10,28 +8,31 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '@/components/BaseComponent'
 import { FontSizes } from '@/styles/fonts'
-import { ITextProps, ITextClasses } from './Text.types'
+import { ITextProps, ITextStyles } from './Text.types'
 
 @Component({
   name: 'o-text',
 })
-export default class Text extends BaseComponent<ITextProps, ITextClasses> {
+export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) nowrap!: boolean
   @Prop({ default: false }) block!: boolean
   @Prop({ default: null }) variant!: string
 
-  get fontSize () {
-    // @ts-ignore
-    return FontSizes[this.variant]
+  created () {
+    console.log(this.css)
   }
 
-  protected get classes (): ITextClasses {
+  get baseStyles (): ITextStyles {
     return {
       root: [
         'ms-Text',
         this.$style.root,
         (this.block || this.nowrap) && this.$style.block,
         this.nowrap && this.$style.nowrap,
+        {
+          // @ts-ignore
+          '--fontSize': FontSizes[this.variant],
+        },
       ],
     }
   }

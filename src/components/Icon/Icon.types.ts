@@ -1,3 +1,5 @@
+import { IStyle } from '../BaseComponent'
+
 export interface IIconProps {
   /**
    * The name of the icon to use from the icon font. If string is empty, a
@@ -7,5 +9,5 @@ export interface IIconProps {
 }
 
 export interface IIconStyles {
-  root?: any;
+  root?: IStyle;
 }

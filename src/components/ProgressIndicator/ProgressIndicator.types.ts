@@ -1,3 +1,5 @@
+import { IStyle } from '../BaseComponent'
+
 export interface IProgressIndicatorProps {
 
 }
@@ -5,10 +7,10 @@ export interface IProgressIndicatorStyles {
   /**
    * Style for the root element.
    */
-  root: any;
-  itemName: any;
-  itemDescription: any;
-  itemProgress: any;
-  progressTrack: any;
-  progressBar: any;
+  root: IStyle;
+  itemName: IStyle;
+  itemDescription: IStyle;
+  itemProgress: IStyle;
+  progressTrack: IStyle;
+  progressBar: IStyle;
 }
