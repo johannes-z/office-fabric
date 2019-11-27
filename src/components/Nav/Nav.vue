@@ -4,28 +4,25 @@ import ActionButton from '@/components/Button/ActionButton.vue'
 import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
 import { Icon } from '@/components/Icon/'
+import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 
-export interface INavLinkGroup {
-  name?: string;
-  links: INavLink[];
-}
+// The number pixels per indentation level for Nav links.
+const INDENTATION_SIZE = 14
 
-export interface INavLink {
-  name: string;
-  url: string;
-  key?: string;
-  links?: INavLink[];
-  isExpanded?: boolean;
-  disabled?: boolean;
-  [propertyName: string]: any;
-}
+// The number of pixels of left margin
+const BASE_INDENT = 3
 
 @Component({
   components: { ActionButton, Icon },
 })
-export default class Nav extends BaseComponent {
-  get baseStyles (): {} {
-    throw new Error('Method not implemented.')
+export default class Nav extends BaseComponent<INavProps, INavStyles> {
+  get baseStyles (): INavStyles {
+    return {
+      root: [
+        'ms-Nav',
+        this.$style.root,
+      ],
+    }
   }
 
   @Prop() groups!: INavLinkGroup[]
@@ -33,7 +30,7 @@ export default class Nav extends BaseComponent {
   render (): VNode {
     const groupElements = this.groups.map(this.renderGroup)
     return (
-      <nav role="navigation" class={this.$style.root}>
+      <nav role="navigation" {...this.css.root}>
         {groupElements}
       </nav>
     )
@@ -87,12 +84,10 @@ export default class Nav extends BaseComponent {
   }
 
   private onLinkExpandClicked (link: INavLink) {
-    console.log(link)
     link.isExpanded = !link.isExpanded
   }
 
   private renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-    console.log(link)
     const noop = () => {}
     return (
       <a href={link.url} onClick={link.onClick || noop} class={this.$style.link}>{link.name}</a>
