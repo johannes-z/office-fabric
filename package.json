@@ -15,7 +15,6 @@
     "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.6",
     "@vue/cli-plugin-babel": "^4.0.0",
     "@vue/cli-plugin-eslint": "^4.0.0",
     "@vue/cli-plugin-router": "^4.0.5",
