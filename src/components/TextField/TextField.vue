@@ -39,14 +39,14 @@
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
 import Label from '@/components/Label/Label.vue'
-import { IToggleProps, ITextFieldStyles } from './TextField.types'
+import { ITextFieldProps, ITextFieldStyles } from './TextField.types'
 import BaseComponent from '../BaseComponent'
 
 @Component({
   components: { Label },
   inheritAttrs: false,
 })
-export default class TextField extends BaseComponent<IToggleProps, ITextFieldStyles> {
+export default class TextField extends BaseComponent<ITextFieldProps, ITextFieldStyles> {
   $refs!: {
     textElement: HTMLTextAreaElement | HTMLInputElement
   }

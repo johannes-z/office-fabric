@@ -6,7 +6,6 @@
           :disabled="disabled"
           :label="label">
       <Label v-bind="css.label"
-             :style="{ '--order': (!onText && !offText) ? 1 : 0 }"
              v-text="label" />
     </slot>
     <div v-bind="css.container">
@@ -40,10 +39,14 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   @Prop({ default: null }) onText!: string
   @Prop({ default: null }) offText!: string
 
+  created () {
+    console.log(this.css)
+  }
+
   internalChecked: boolean = this.defaultChecked || this.checked
 
   get baseStyles (): IToggleStyles {
-    const { $style, disabled, inlineLabel, internalChecked } = this
+    const { $style, disabled, inlineLabel, internalChecked, onText, offText } = this
     return {
       root: [
         'ms-Toggle',
@@ -55,6 +58,7 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
       label: [
         'ms-Toggle-label',
         $style.label,
+        { '--order': (!onText && !offText) ? 1 : 0 },
       ],
       container: [
         'ms-Toggle-innerContainer',
@@ -96,6 +100,7 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   height: 20px;
   cursor: pointer;
   display: flex;
+  align-self: center;
   align-items: center;
   padding: 0 3px;
   outline: transparent;

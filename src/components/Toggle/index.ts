@@ -1,6 +1,6 @@
-import Toggle from './Toggle.vue'
+import OToggle from './Toggle.vue'
 
 export * from './Toggle.types'
 export {
-  Toggle,
+  OToggle,
 }

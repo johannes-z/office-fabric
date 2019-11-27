@@ -17,8 +17,6 @@
       <OCheckbox disabled>Disabled checkbox</OCheckbox>
       <OCheckbox checked disabled>Disabled checked checkbox</OCheckbox>
 
-      <OCheckbox box-side="end">Test</OCheckbox>
-
       <h2>Controlled</h2>
       <OCheckbox v-model="value1"
                  :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />

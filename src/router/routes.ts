@@ -18,6 +18,9 @@ const components = [
   'Callout',
   'SearchBox',
   'Rating',
+  'Modal',
+  'Overlay',
+  'Panel',
 ]
 
 const routes = components.map(name => ({

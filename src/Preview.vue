@@ -73,6 +73,7 @@ body {
   bottom: 0;
   margin-right: 10px;
   padding: 20px;
+  overflow-y: auto;
 }
 .content {
   flex: 1;

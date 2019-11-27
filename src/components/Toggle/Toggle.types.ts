@@ -5,10 +5,10 @@ export interface IToggleProps {
 }
 
 export interface IToggleStyles {
-  root: IStyle
-  label: IStyle
-  container: IStyle
-  pill: IStyle
-  thumb: IStyle
-  text: IStyle
+  root?: IStyle
+  label?: IStyle
+  container?: IStyle
+  pill?: IStyle
+  thumb?: IStyle
+  text?: IStyle
 }

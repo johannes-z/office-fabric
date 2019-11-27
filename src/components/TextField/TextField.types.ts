@@ -1,6 +1,6 @@
 import { IStyle } from '../BaseComponent'
 
-export interface IToggleProps {
+export interface ITextFieldProps {
 
 }
 
