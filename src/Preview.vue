@@ -38,7 +38,6 @@ import routes from '@/router/routes'
 @Component({
   components: { FabricNav },
   data () {
-    console.log(routes)
     return {
       groups: [
         {
@@ -46,36 +45,36 @@ import routes from '@/router/routes'
             name: 'Basic Inputs',
             isExpanded: false,
             links: [
-              { name: 'Button', onLinkClick: () => this.$router.push({ path: 'Button' }) },
-              { name: 'Checkbox', onLinkClick: () => this.$router.push({ path: 'Checkbox' }) },
-              { name: 'ChoiceGroup', onLinkClick: () => this.$router.push({ path: 'ChoiceGroup' }) },
-              { name: 'ComboBox', onLinkClick: () => this.$router.push({ path: 'ComboBox' }) },
-              { name: 'Dropdown', onLinkClick: () => this.$router.push({ path: 'Dropdown' }) },
-              { name: 'Label', onLinkClick: () => this.$router.push({ path: 'Label' }) },
-              { name: 'Link', onLinkClick: () => this.$router.push({ path: 'Link' }) },
-              { name: 'Rating', onLinkClick: () => this.$router.push({ path: 'Rating' }) },
-              { name: 'SearchBox', onLinkClick: () => this.$router.push({ path: 'SearchBox' }) },
-              { name: 'Slider', onLinkClick: () => this.$router.push({ path: 'Slider' }) },
-              { name: 'SpinButton', onLinkClick: () => this.$router.push({ path: 'SpinButton' }) },
-              { name: 'TextField', onLinkClick: () => this.$router.push({ path: 'TextField' }) },
-              { name: 'Toggle', onLinkClick: () => this.$router.push({ path: 'Toggle' }) },
+              { name: 'Button', onClick: () => this.$router.push({ path: 'Button' }) },
+              { name: 'Checkbox', onClick: () => this.$router.push({ path: 'Checkbox' }) },
+              { name: 'ChoiceGroup', onClick: () => this.$router.push({ path: 'ChoiceGroup' }) },
+              { name: 'ComboBox', onClick: () => this.$router.push({ path: 'ComboBox' }) },
+              { name: 'Dropdown', onClick: () => this.$router.push({ path: 'Dropdown' }) },
+              { name: 'Label', onClick: () => this.$router.push({ path: 'Label' }) },
+              { name: 'Link', onClick: () => this.$router.push({ path: 'Link' }) },
+              { name: 'Rating', onClick: () => this.$router.push({ path: 'Rating' }) },
+              { name: 'SearchBox', onClick: () => this.$router.push({ path: 'SearchBox' }) },
+              { name: 'Slider', onClick: () => this.$router.push({ path: 'Slider' }) },
+              { name: 'SpinButton', onClick: () => this.$router.push({ path: 'SpinButton' }) },
+              { name: 'TextField', onClick: () => this.$router.push({ path: 'TextField' }) },
+              { name: 'Toggle', onClick: () => this.$router.push({ path: 'Toggle' }) },
             ],
           }, {
             name: 'Progress',
             isExpanded: false,
             links: [
-              { name: 'ProgressIndicator', onLinkClick: () => this.$router.push({ path: 'ProgressIndicator' }) },
-              { name: 'Spinner', onLinkClick: () => this.$router.push({ path: 'Spinner' }) },
+              { name: 'ProgressIndicator', onClick: () => this.$router.push({ path: 'ProgressIndicator' }) },
+              { name: 'Spinner', onClick: () => this.$router.push({ path: 'Spinner' }) },
             ],
           }, {
             name: 'Utilities',
             isExpanded: false,
             links: [
-              { name: 'Icon', onLinkClick: () => this.$router.push({ path: 'Icon' }) },
-              { name: 'Image', onLinkClick: () => this.$router.push({ path: 'Image' }) },
-              { name: 'Layer', onLinkClick: () => this.$router.push({ path: 'Layer' }) },
-              { name: 'Separator', onLinkClick: () => this.$router.push({ path: 'Separator' }) },
-              { name: 'Text', onLinkClick: () => this.$router.push({ path: 'Text' }) },
+              { name: 'Icon', onClick: () => this.$router.push({ path: 'Icon' }) },
+              { name: 'Image', onClick: () => this.$router.push({ path: 'Image' }) },
+              { name: 'Layer', onClick: () => this.$router.push({ path: 'Layer' }) },
+              { name: 'Separator', onClick: () => this.$router.push({ path: 'Separator' }) },
+              { name: 'Text', onClick: () => this.$router.push({ path: 'Text' }) },
             ],
           }],
         },
@@ -84,7 +83,7 @@ import routes from '@/router/routes'
       //   links: routes.map(route => ({
       //     name: route.name,
       //     // disabled: route.name === this.$route.name,
-      //     onLinkClick: () => this.$router.push({ path: route.path }),
+      //     onClick: () => this.$router.push({ path: route.path }),
       //   })),
       // }],
     }
