@@ -55,10 +55,6 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {
 
   private onKeyDownTimer = -1;
 
-  created () {
-    console.log(this.css)
-  }
-
   get baseStyles (): ISliderStyles {
     const { $style, disabled, vertical, thumbOffsetPercent, lengthString } = this
     return {

@@ -39,10 +39,6 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   @Prop({ default: null }) onText!: string
   @Prop({ default: null }) offText!: string
 
-  created () {
-    console.log(this.css)
-  }
-
   internalChecked: boolean = this.defaultChecked || this.checked
 
   get baseStyles (): IToggleStyles {

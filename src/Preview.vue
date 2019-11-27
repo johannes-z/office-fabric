@@ -35,19 +35,58 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import FabricNav from './components/Nav/Nav.vue'
 
 import routes from '@/router/routes'
-
 @Component({
   components: { FabricNav },
   data () {
     console.log(routes)
     return {
-      groups: [{
-        links: routes.map(route => ({
-          name: route.name,
-          // disabled: route.name === this.$route.name,
-          onLinkClick: () => this.$router.push({ path: route.path }),
-        })),
-      }],
+      groups: [
+        {
+          links: [{
+            name: 'Basic Inputs',
+            isExpanded: false,
+            links: [
+              { name: 'Button', onLinkClick: () => this.$router.push({ path: 'Button' }) },
+              { name: 'Checkbox', onLinkClick: () => this.$router.push({ path: 'Checkbox' }) },
+              { name: 'ChoiceGroup', onLinkClick: () => this.$router.push({ path: 'ChoiceGroup' }) },
+              { name: 'ComboBox', onLinkClick: () => this.$router.push({ path: 'ComboBox' }) },
+              { name: 'Dropdown', onLinkClick: () => this.$router.push({ path: 'Dropdown' }) },
+              { name: 'Label', onLinkClick: () => this.$router.push({ path: 'Label' }) },
+              { name: 'Link', onLinkClick: () => this.$router.push({ path: 'Link' }) },
+              { name: 'Rating', onLinkClick: () => this.$router.push({ path: 'Rating' }) },
+              { name: 'SearchBox', onLinkClick: () => this.$router.push({ path: 'SearchBox' }) },
+              { name: 'Slider', onLinkClick: () => this.$router.push({ path: 'Slider' }) },
+              { name: 'SpinButton', onLinkClick: () => this.$router.push({ path: 'SpinButton' }) },
+              { name: 'TextField', onLinkClick: () => this.$router.push({ path: 'TextField' }) },
+              { name: 'Toggle', onLinkClick: () => this.$router.push({ path: 'Toggle' }) },
+            ],
+          }, {
+            name: 'Progress',
+            isExpanded: false,
+            links: [
+              { name: 'ProgressIndicator', onLinkClick: () => this.$router.push({ path: 'ProgressIndicator' }) },
+              { name: 'Spinner', onLinkClick: () => this.$router.push({ path: 'Spinner' }) },
+            ],
+          }, {
+            name: 'Utilities',
+            isExpanded: false,
+            links: [
+              { name: 'Icon', onLinkClick: () => this.$router.push({ path: 'Icon' }) },
+              { name: 'Image', onLinkClick: () => this.$router.push({ path: 'Image' }) },
+              { name: 'Layer', onLinkClick: () => this.$router.push({ path: 'Layer' }) },
+              { name: 'Separator', onLinkClick: () => this.$router.push({ path: 'Separator' }) },
+              { name: 'Text', onLinkClick: () => this.$router.push({ path: 'Text' }) },
+            ],
+          }],
+        },
+      ],
+      // groups: [{
+      //   links: routes.map(route => ({
+      //     name: route.name,
+      //     // disabled: route.name === this.$route.name,
+      //     onLinkClick: () => this.$router.push({ path: route.path }),
+      //   })),
+      // }],
     }
   },
 })

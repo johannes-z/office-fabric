@@ -18,10 +18,6 @@ export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) block!: boolean
   @Prop({ default: null }) variant!: string
 
-  created () {
-    console.log(this.css)
-  }
-
   get baseStyles (): ITextStyles {
     return {
       root: [
