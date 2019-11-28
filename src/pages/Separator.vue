@@ -12,21 +12,21 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Horizontal Separator</h2>
-      <FabricSeparator>Separator</FabricSeparator>
-      <FabricSeparator align-content="start">Start</FabricSeparator>
-      <FabricSeparator align-content="end">End</FabricSeparator>
-      <FabricSeparator />
+      <o-separator>Separator</o-separator>
+      <o-separator align-content="start">Start</o-separator>
+      <o-separator align-content="end">End</o-separator>
+      <o-separator />
 
       <h2>Vertical Separator</h2>
       <div style="height: 200px;">
-        <FabricSeparator vertical>Separator</FabricSeparator>
-        <FabricSeparator vertical align-content="start">Start</FabricSeparator>
-        <FabricSeparator vertical align-content="end">End</FabricSeparator>
-        <FabricSeparator vertical />
+        <o-separator vertical>Separator</o-separator>
+        <o-separator vertical align-content="start">Start</o-separator>
+        <o-separator vertical align-content="end">End</o-separator>
+        <o-separator vertical />
       </div>
 
       <h2>Separator Slot</h2>
-      <FabricSeparator><FabricIcon icon-name="Attach" /></FabricSeparator>
+      <o-separator><o-icon icon-name="Attach" /></o-separator>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -37,13 +37,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricIcon from '@/components/Icon/Icon.vue'
-import FabricSeparator from '@/components/Separator/Separator.vue'
 
 @Component({
   components: {
-    FabricIcon,
-    FabricSeparator,
   },
 })
 export default class SeparatorPage extends Vue {

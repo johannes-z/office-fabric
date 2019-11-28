@@ -12,16 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic Checkboxes</h2>
-      <FabricCheckbox>Test</FabricCheckbox>
-      <FabricCheckbox disabled />
-      <FabricCheckbox checked label="test" />
-      <FabricCheckbox checked disabled />
-
-      <FabricCheckbox box-side="end">Test</FabricCheckbox>
+      <o-checkbox>Unchecked checkbox</o-checkbox>
+      <o-checkbox checked label="Checked checkbox" />
+      <o-checkbox disabled>Disabled checkbox</o-checkbox>
+      <o-checkbox checked disabled>Disabled checked checkbox</o-checkbox>
 
       <h2>Controlled</h2>
-      <FabricCheckbox v-model="value1"
-                      :label="value1 ? 'checked' : 'unchecked'" />
+      <o-checkbox v-model="value1"
+                  :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
+      <o-checkbox box-side="end">Checkbox rendered with boxSide "end"</o-checkbox>
+      <o-checkbox @blur="onBlur" @focus="onFocus">
+        Checkbox with event listeners
+      </o-checkbox>
+      <o-checkbox>
+        Custom-rendered label with a
+        <o-link href="https://www.microsoft.com" target="_blank">
+          link
+        </o-link>
+      </o-checkbox>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -32,15 +40,21 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricCheckbox from '@/components/Checkbox/Checkbox.vue'
 
 @Component({
   components: {
-    FabricCheckbox,
   },
 })
 export default class CheckboxPage extends Vue {
   value1: boolean = true
+
+  onFocus () {
+    console.log('Checkbox is focused')
+  }
+
+  onBlur () {
+    console.log('Checkbox is blurred')
+  }
 }
 </script>
 

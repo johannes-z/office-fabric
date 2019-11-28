@@ -1,9 +1,37 @@
 import 'reflect-metadata'
-
 import Vue, { CreateElement } from 'vue'
 import VueRouter from 'vue-router'
 import Preview from './Preview.vue'
 import routes from '@/router/routes'
+
+import Fabric, { ITheme } from './plugins/office-fabric'
+
+Vue.use(Fabric, {
+  theme: {
+    'themePrimary': '#bd3e3e',
+    'themeLighterAlt': '#fcf6f6',
+    'themeLighter': '#f4dada',
+    'themeLight': '#ebbcbc',
+    'themeTertiary': '#d78181',
+    'themeSecondary': '#c55151',
+    'themeDarkAlt': '#aa3838',
+    'themeDark': '#8f2f2f',
+    'themeDarker': '#6a2323',
+    'neutralLighterAlt': '#f8f8f8',
+    'neutralLighter': '#f4f4f4',
+    'neutralLight': '#eaeaea',
+    'neutralQuaternaryAlt': '#dadada',
+    'neutralQuaternary': '#d0d0d0',
+    'neutralTertiaryAlt': '#c8c8c8',
+    'neutralTertiary': '#bab8b7',
+    'neutralSecondary': '#a3a2a0',
+    'neutralPrimaryAlt': '#8d8b8a',
+    'neutralPrimary': '#323130',
+    'neutralDark': '#605e5d',
+    'black': '#494847',
+    'white': '#ffffff',
+  } as ITheme,
+})
 
 Vue.use(VueRouter)
 
@@ -13,58 +41,7 @@ const router = new VueRouter({
 
 Vue.config.productionTip = false
 
-const theme = {
-  'themePrimary': '#0078d4',
-  'themeLighterAlt': '#f3f9fd',
-  'themeLighter': '#d0e7f8',
-  'themeLight': '#a9d3f2',
-  'themeTertiary': '#5ca9e5',
-  'themeSecondary': '#1a86d9',
-  'themeDarkAlt': '#006cbe',
-  'themeDark': '#005ba1',
-  'themeDarker': '#004377',
-  'neutralLighterAlt': '#f8f8f8',
-  'neutralLighter': '#f4f4f4',
-  'neutralLight': '#eaeaea',
-  'neutralQuaternaryAlt': '#dadada',
-  'neutralQuaternary': '#d0d0d0',
-  'neutralTertiaryAlt': '#c8c8c8',
-  'neutralTertiary': '#bab8b7',
-  'neutralSecondary': '#a3a2a0',
-  'neutralPrimaryAlt': '#8d8b8a',
-  'neutralPrimary': '#323130',
-  'neutralDark': '#605e5d',
-  'black': '#494847',
-  'white': '#ffffff',
-}
-
-const defaultColors = {
-  'error': '#A4262C',
-}
-
-function createCSSProperties (theme: any) {
-  const properties = Object.entries(theme).map(([key, value]) => {
-    return `--fabric-${key}:${value};`
-  }).join('\n')
-
-  const style = document.getElementById('__fabric__css-properties') || document.createElement('style')
-  style.id = '__fabric__css-properties'
-  document.head.appendChild(style)
-  style.innerHTML = `:root {
-    ${properties}
-  }`
-}
-
-createCSSProperties({
-  ...defaultColors,
-  ...theme,
-})
-
 new Vue({
   render: (h: CreateElement) => h(Preview),
   router,
 }).$mount('#app')
-
-export {
-  createCSSProperties,
-}

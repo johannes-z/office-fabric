@@ -1,9 +1,8 @@
 <template>
-  <div :class="[$style.root]" :style="labelPositionStyle">
-    <div :class="$style.circle" :style="sizeStyle" />
+  <div v-bind="css.root">
+    <div v-bind="css.circle" />
     <div v-if="$slots.default || label"
-         :class="$style.label"
-         :style="marginStyle">
+         v-bind="css.label">
       <slot>{{ label }}</slot>
     </div>
   </div>
@@ -11,38 +10,46 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { ISpinnerProps, ISpinnerStyles } from './Spinner.types'
+import BaseComponent from '../BaseComponent'
 
 @Component
-export default class Spinner extends Vue {
-  @Prop({
-    default: 'md',
-    validator: v => ['xs', 'sm', 'md', 'lg'].indexOf(v) > -1,
-  }) size!: string
+export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {
   @Prop({ default: null }) labelPosition!: string
   @Prop({ default: null }) label!: string
+  @Prop({ default: 20 }) size!: number
 
-  get sizeStyle () {
-    if (this.size === 'xs') return { width: `12px`, height: `12px` }
-    if (this.size === 'sm') return { width: `16px`, height: `16px` }
-    if (this.size === 'md') return { width: `20px`, height: `20px` }
-    if (this.size === 'lg') return { width: `28px`, height: `28px` }
-  }
-
-  get labelPositionStyle () {
+  get baseStyles (): ISpinnerStyles {
+    const { $style } = this
     return {
-      'flex-direction':
-        (this.labelPosition === 'top' && 'column-reverse') ||
-        (this.labelPosition === 'right' && 'row') ||
-        (this.labelPosition === 'left' && 'row-reverse'),
-    }
-  }
-
-  get marginStyle () {
-    return {
-      'margin-top': this.labelPosition == null && '8px',
-      'margin-bottom': this.labelPosition === 'top' && '8px',
-      'margin-left': this.labelPosition === 'right' && '8px',
-      'margin-right': this.labelPosition === 'left' && '8px',
+      root: [
+        'ms-Spinner',
+        $style.root,
+        {
+          flexDirection:
+            (this.labelPosition === 'top' && 'column-reverse') ||
+            (this.labelPosition === 'right' && 'row') ||
+            (this.labelPosition === 'left' && 'row-reverse'),
+        },
+      ],
+      circle: [
+        'ms-Spinner-circle',
+        $style.circle,
+        {
+          width: `${this.size}px`,
+          height: `${this.size}px`,
+        },
+      ],
+      label: [
+        'ms-Spinner-label',
+        $style.label,
+        {
+          marginTop: this.labelPosition == null && '8px',
+          marginBottom: this.labelPosition === 'top' && '8px',
+          marginLeft: this.labelPosition === 'right' && '8px',
+          marginRight: this.labelPosition === 'left' && '8px',
+        },
+      ],
     }
   }
 }

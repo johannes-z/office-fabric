@@ -1,137 +1,84 @@
 <template>
-  <div :class="$style.content">
-    <slot />
-  </div>
+  <MountingPortal v-if="hasTarget"
+                  :mount-to="hostId ? `#${hostId}` : 'body'"
+                  :append="append">
+    <div v-bind="css.root">
+      <div v-bind="css.content">
+        <slot />
+      </div>
+    </div>
+  </MountingPortal>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { MountingPortal } from 'portal-vue'
 import { registerLayer, getDefaultTarget, unregisterLayer } from './Layer.notification'
-
-const DATA_PORTAL_ATTRIBUTE = 'data-portal-element'
-function setPortalAttribute (element: any): void {
-  element.setAttribute(DATA_PORTAL_ATTRIBUTE, 'true')
-}
-
-function setVirtualParent (child: any, parent: any): void {
-  let virtualChild = child as any
-  let virtualParent = parent as any
-  if (!virtualChild._virtual) {
-    virtualChild._virtual = {
-      children: [],
-    }
-  }
-  let oldParent = virtualChild._virtual.parent
-  if (oldParent && oldParent !== parent) {
-    // Remove the child from its old parent.
-    let index = oldParent._virtual.children.indexOf(virtualChild)
-    if (index > -1) {
-      oldParent._virtual.children.splice(index, 1)
-    }
-  }
-  virtualChild._virtual.parent = virtualParent || undefined
-  if (virtualParent) {
-    if (!virtualParent._virtual) {
-      virtualParent._virtual = {
-        children: [],
-      }
-    }
-    virtualParent._virtual.children.push(virtualChild)
-  }
-}
+import { ILayerProps, ILayerStyles } from './Layer.types'
+import BaseComponent from '../BaseComponent'
 
 @Component({
-  components: {},
+  components: { MountingPortal },
 })
-export default class Layer extends Vue {
+export default class Layer extends BaseComponent<ILayerProps, ILayerStyles> {
   @Prop({ default: null }) hostId!: string
-  @Prop({ default: false }) insertFirst!: boolean
+  @Prop({ default: true }) append!: boolean
 
-  private node: any = {}
-  private layerElement: any = {}
-  private internalHostId = this.hostId
+  marker!: HTMLDivElement
+  hasTarget: boolean = false
 
-  mounted () {
-    const { hostId } = this
-
-    this.createLayerElement()
-
-    if (hostId) {
-      registerLayer(hostId, this.createLayerElement)
-    }
-    if (this.layerElement.appendChild) {
-      this.layerElement.appendChild(this.$el)
+  get baseStyles (): ILayerStyles {
+    const { $style, hostId } = this
+    return {
+      root: [
+        'ms-Layer',
+        $style.root,
+        !hostId && $style.isNotHost,
+      ],
+      content: [
+        'ms-Fabric',
+        'ms-Layer-content',
+        $style.content,
+      ],
     }
   }
 
-  updated () {
-    if (this.hostId !== this.internalHostId) {
-      this.createLayerElement()
+  mounted () {
+    this.createElement()
+
+    if (this.hostId) {
+      registerLayer(this.hostId, this.createElement)
     }
   }
 
   beforeDestroy () {
     const { hostId } = this
 
-    this.removeLayerElement()
-    if (hostId) {
-      unregisterLayer(hostId, this.createLayerElement)
+    if (this.hostId) {
+      unregisterLayer(this.hostId, this.createElement)
     }
   }
 
-  private createLayerElement () {
-    const { hostId } = this
-
+  createElement () {
     const doc = this.$el.ownerDocument
     const host = this.getHost()
 
     if (!doc || !host) {
+      this.hasTarget = false
       return
     }
 
-    // If one was already existing, remove.
-    this.removeLayerElement()
-
-    const layerElement = doc.createElement('div')
-    layerElement.className = [
-      'ms-Layer',
-      // @ts-ignore
-      this.$style.root,
-      // @ts-ignore
-      !this.hostId && this.$style.isNotHost,
-    ].join(' ')
-
-    setPortalAttribute(layerElement)
-    setVirtualParent(layerElement, this.$el)
-
-    this.insertFirst
-      ? host.insertBefore(layerElement, host.firstChild)
-      : host.appendChild(layerElement)
-
-    this.layerElement = layerElement
-    this.internalHostId = hostId
-  };
-
-  private removeLayerElement (): void {
-    const { layerElement } = this
-
-    if (layerElement && layerElement.parentNode) {
-      const parentNode = layerElement.parentNode
-      if (parentNode) {
-        parentNode.removeChild(layerElement)
-      }
-    }
+    this.hasTarget = true
   }
 
   private getHost (): Node | undefined {
-    const { hostId } = this
     const doc = this.$el.ownerDocument
     if (!doc) {
       return undefined
     }
 
-    if (hostId) {
-      return doc.getElementById(hostId) as Node
+    if (this.hostId) {
+      return doc.getElementById(this.hostId) as Node
     } else {
       const defaultHostSelector = getDefaultTarget()
       return defaultHostSelector

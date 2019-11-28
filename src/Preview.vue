@@ -1,29 +1,11 @@
 <template>
   <div class="page">
     <div class="sidebar">
-      <FabricNav :groups="groups" />
-      <!-- <b>Basic Inputs</b>
-      <div @click="activePage = components.ButtonPage">Button</div>
-      <div @click="activePage = components.LabelPage">Label</div>
-      <div @click="activePage = components.CheckboxPage">Checkbox</div>
-      <div @click="activePage = components.SpinButtonPage">SpinButton</div>
-      <div @click="activePage = components.TextFieldPage">TextField</div>
-      <div @click="activePage = components.TogglePage">Toggle</div>
-      <div @click="activePage = components.TextPage">Text</div>
-      <div @click="activePage = components.ChoiceGroupPage">ChoiceGroup</div>
-
-      <div @click="activePage = components.ImagePage">Image</div>
-      <div @click="activePage = components.SeparatorPage">Separator</div>
-      <div @click="activePage = components.NavPage">Nav</div>
-
-      <b>Progress</b>
-      <div @click="activePage = components.ProgressIndicatorPage">ProgressIndicator</div>
-      <div @click="activePage = components.SpinnerPage">Spinner</div>
-      <div @click="activePage = components.SliderPage">Slider</div> -->
+      <o-nav :groups="groups" />
     </div>
     <div class="content">
       <div class="">
-        <router-view />
+        <router-view v-bind="null" />
       </div>
     </div>
   </div>
@@ -32,20 +14,57 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-import FabricNav from './components/Nav/Nav.vue'
-
 import routes from '@/router/routes'
-
 @Component({
-  components: { FabricNav },
   data () {
     return {
-      groups: [{
-        links: routes.map(route => ({
-          name: route.name,
-          onLinkClick: () => this.$router.push({ path: route.path }),
-        })),
-      }],
+      groups: [
+        {
+          links: [{
+            name: 'Basic Inputs',
+            isExpanded: false,
+            links: [
+              { name: 'Button', url: '/#/Button' },
+              { name: 'Checkbox', url: '/#/Checkbox' },
+              { name: 'ChoiceGroup', url: '/#/ChoiceGroup' },
+              { name: 'ComboBox', url: '/#/ComboBox' },
+              { name: 'Dropdown', url: '/#/Dropdown' },
+              { name: 'Label', url: '/#/Label' },
+              { name: 'Link', url: '/#/Link' },
+              { name: 'Rating', url: '/#/Rating' },
+              { name: 'SearchBox', url: '/#/SearchBox' },
+              { name: 'Slider', url: '/#/Slider' },
+              { name: 'SpinButton', url: '/#/SpinButton' },
+              { name: 'TextField', url: '/#/TextField' },
+              { name: 'Toggle', url: '/#/Toggle' },
+            ],
+          }, {
+            name: 'Commands, Menus & Navs',
+            isExpanded: false,
+            links: [
+              { name: 'Breadcrumb', url: '/#/Breadcrumb' },
+            ],
+          }, {
+            name: 'Progress',
+            isExpanded: false,
+            links: [
+              { name: 'ProgressIndicator', url: '/#/ProgressIndicator' },
+              { name: 'Spinner', url: '/#/Spinner' },
+            ],
+          }, {
+            name: 'Utilities',
+            isExpanded: false,
+            links: [
+              { name: 'Icon', url: '/#/Icon' },
+              { name: 'Image', url: '/#/Image' },
+              { name: 'Layer', url: '/#/Layer' },
+              { name: 'Overlay', url: '/#/Overlay' },
+              { name: 'Separator', url: '/#/Separator' },
+              { name: 'Text', url: '/#/Text' },
+            ],
+          }],
+        },
+      ],
     }
   },
 })
@@ -71,6 +90,7 @@ body {
   bottom: 0;
   margin-right: 10px;
   padding: 20px;
+  overflow-y: auto;
 }
 .content {
   flex: 1;

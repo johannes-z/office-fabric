@@ -12,16 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
 
+      <!-- <Layer>
+        <div :class="$style.content">
+          <div :class="$style.textContent">Hello World.</div>
+          <div>{{ dateString }}</div>
+        </div>
+      </Layer> -->
+
       <h2>Basic layered content</h2>
 
-      <Toggle v-model="showLayer"
-              inline-label
-              label="Wrap the content box below in a Layer" />
+      <o-toggle v-model="showLayer"
+                inline-label
+                label="Wrap the content box below in a Layer" />
 
-      <!-- <div v-if="!showLayer"
-           :class="$style.content">
-        <div :class="$style.textContent">Hello World.</div>
-        <div>{{ dateString }}</div>
+      <div v-if="!showLayer">
+        <div :class="$style.content">
+          <div :class="$style.textContent">Hello World.</div>
+          <div>{{ dateString }}</div>
+        </div>
       </div>
 
       <div v-else>
@@ -31,22 +39,29 @@
             <div>{{ dateString }}</div>
           </div>
         </Layer>
-      </div> -->
+      </div>
 
       <h2>Using LayerHost to control projection</h2>
-      <Toggle v-model="showHost"
-              inline-label
-              label="Show host" />
+      <o-toggle v-model="showHost"
+                inline-label
+                label="Show host" />
+
       <LayerHost v-if="showHost"
                  :id="layerHostId"
                  :class="$style.layerHost" />
 
-      <Toggle v-model="renderInLayer"
-              inline-label
-              :label="`Render the box below in a Layer and target it at hostId='${layerHostId}'`" />
+      <p>
+        In some cases, you may need to contain layered content within an area. Create an instance of a LayerHost along with an id, and provide a hostId on the layer to render it within the specific host. (Note that it's important that you don't include children within the LayerHost. It's meant to contain Layered content only.)
+      </p>
 
-      <div v-if="!renderInLayer" :class="$style.content">
-        This is example layer content.
+      <o-toggle v-model="renderInLayer"
+                inline-label
+                :label="`Render the box below in a Layer and target it at hostId='${layerHostId}'`" />
+
+      <div v-if="!renderInLayer">
+        <div :class="$style.content">
+          This is example layer content.
+        </div>
       </div>
       <div v-else>
         <Layer :host-id="layerHostId">
@@ -65,11 +80,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Layer from '../components/Layer/Layer.vue'
 import LayerHost from '../components/Layer/LayerHost.vue'
-import Toggle from '../components/Toggle/Toggle.vue'
 
 @Component({
   components: {
-    Toggle,
     Layer,
     LayerHost,
   },

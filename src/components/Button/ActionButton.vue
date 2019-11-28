@@ -22,6 +22,7 @@ import BaseButton from './BaseButton/BaseButton'
 })
 export default class ActionButton extends BaseButton {
   @Prop({ default: '' }) iconName!: string
+  @Prop({ default: '' }) href!: string
   @Prop({ default: false }) disabled!: boolean
 }
 </script>

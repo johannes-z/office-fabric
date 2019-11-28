@@ -1,27 +1,14 @@
 ﻿<template>
-  <div
-    :class="[isActive && $style.active,
-             $style.root,
-             underlined && $style.underlined,
-             disabled && $style.disabled ]">
-    <div
-      role="search"
-      :class="[$style.iconContainer,
-               disableAnimation !== true && $style.animation,
-               disabled && $style.disabled]"
-      :style="{ width: isActive || internalValue ? '4px' : '32px' }">
-      <Icon
-        :icon-name="iconName"
-        :style="{ opacity: isActive || internalValue ? 0 : 1 }"
-        :class="[$style.icon,
-                 disableAnimation !== true && $style.animation]" />
+  <div v-bind="css.root">
+    <div v-bind="css.iconContainer"
+         role="search">
+      <Icon v-bind="css.icon" :icon-name="iconName" />
     </div>
     <input
       ref="input"
-      v-bind="$attrs"
+      v-bind="[$attrs, css.field]"
       :disabled="disabled"
       :value="internalValue"
-      :class="[$style.field, 'ms-SearchBox-field']"
       :area-label="placeholder"
       :placeholder="placeholder"
       @input="internalValue = $event.target.value"
@@ -31,7 +18,7 @@
       @keydown.esc="clearInput">
     <div
       v-if="internalValue"
-      :class="[$style.clearButton, 'ms-SearchBox-clearButton']">
+      v-bind="css.clearButton">
       <IconButton icon-name="Clear" @click.native="clearInput" />
     </div>
   </div>
@@ -41,12 +28,14 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
 import IconButton from '../Button/IconButton.vue'
+import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
+import BaseComponent from '../BaseComponent'
+
 @Component({
-  name: 'OSearchBox',
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class SearchBox extends Vue {
+export default class SearchBox extends BaseComponent<ISearchBoxProps, ISearchBoxStyles> {
   $refs!: {
     input: HTMLInputElement
   }
@@ -60,6 +49,37 @@ export default class SearchBox extends Vue {
 
   isActive: boolean = false
   internalValue: string = this.value
+
+  get baseStyles (): ISearchBoxStyles {
+    const { $style, isActive, disabled, disableAnimation, internalValue, underlined } = this
+    return {
+      root: [
+        isActive && $style.active,
+        $style.root,
+        underlined && $style.underlined,
+        disabled && $style.disabled,
+      ],
+      iconContainer: [
+        $style.iconContainer,
+        disableAnimation !== true && $style.animation,
+        disabled && $style.disabled,
+        { width: isActive || internalValue ? '4px' : '32px' },
+      ],
+      icon: [
+        $style.icon,
+        disableAnimation !== true && $style.animation,
+        { opacity: isActive || internalValue ? 0 : 1 },
+      ],
+      field: [
+        'ms-SearchBox-field',
+        $style.field,
+      ],
+      clearButton: [
+        'ms-SearchBox-clearButton',
+        $style.clearButton,
+      ],
+    }
+  }
 
   @Watch('value')
   private onPropValueChanged (newValue: string) {

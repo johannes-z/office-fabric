@@ -1,25 +1,17 @@
 <template>
-  <div :class="[
-    $style.root,
-    multiline && $style.multiline,
-    isActive && $style.active,
-    disabled && $style.disabled,
-    errorMessage && $style.hasError,
-    'ms-TextField'
-  ]">
-    <div :class="$style.wrapper">
+  <div v-bind="css.root">
+    <div v-bind="css.wrapper">
       <Label v-if="label"
-             :class="$style.label"
+             v-bind="css.label"
              :for="`TextField${_uid}`"
              :required="required"
              v-text="label" />
-      <div :class="$style.fieldGroup">
+      <div v-bind="css.fieldGroup">
         <component :is="multiline ? 'textarea' : 'input'"
                    :id="`TextField${_uid}`"
                    ref="textElement"
                    :value="internalValue"
-                   v-bind="$attrs"
-                   :class="$style.field"
+                   v-bind="[$attrs, css.field]"
                    :disabled="disabled"
                    :readonly="readonly"
                    :required="required"
@@ -34,10 +26,10 @@
                    v-text="internalValue" />
       </div>
     </div>
-    <div v-if="errorMessage" :class="$style.description">
+    <div v-if="errorMessage" v-bind="css.description">
       <div role="alert">
-        <p :class="$style.errorMessage">
-          {{ errorMessage }}
+        <p v-bind="css.errorMessage">
+          <span>{{ errorMessage }}</span>
         </p>
       </div>
     </div>
@@ -47,12 +39,14 @@
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
 import Label from '@/components/Label/Label.vue'
+import { ITextFieldProps, ITextFieldStyles } from './TextField.types'
+import BaseComponent from '../BaseComponent'
 
 @Component({
   components: { Label },
   inheritAttrs: false,
 })
-export default class TextField extends Vue {
+export default class TextField extends BaseComponent<ITextFieldProps, ITextFieldStyles> {
   $refs!: {
     textElement: HTMLTextAreaElement | HTMLInputElement
   }
@@ -64,12 +58,58 @@ export default class TextField extends Vue {
   @Prop({ default: false }) readonly!: boolean
   @Prop({ default: false }) required!: boolean
   @Prop({ default: null }) label!: string
-  @Prop({ default: null }) value!: string
+  @Prop({ default: '' }) value!: string
   @Prop({ default: null }) errorMessage!: string
   @Prop({ default: null }) placeholder!: string
+  @Prop({ default: null }) description!: string
 
   isActive: boolean = false
   internalValue: string = this.value
+
+  get baseStyles (): ITextFieldStyles {
+    const { $style, multiline, isActive, disabled, errorMessage } = this
+    return {
+      root: [
+        'ms-TextField',
+        $style.root,
+        multiline && $style.multiline,
+        isActive && $style.active,
+        disabled && $style.disabled,
+        errorMessage && $style.hasError,
+      ],
+      wrapper: [
+        'ms-TextField-wrapper',
+        $style.wrapper,
+      ],
+      label: [
+        $style.label,
+      ],
+      fieldGroup: [
+        'ms-TextField-fieldGroup',
+        $style.fieldGroup,
+      ],
+      prefix: [
+
+      ],
+      suffix: [
+
+      ],
+      field: [
+        'ms-TextField-field',
+        $style.field,
+      ],
+      icon: [
+
+      ],
+      description: [
+        $style.description,
+      ],
+      errorMessage: [
+        'ms-TextField-errorMessage',
+        $style.errorMessage,
+      ],
+    }
+  }
 
   mounted () {
     this.adjustInputHeight()

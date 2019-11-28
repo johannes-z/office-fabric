@@ -1,25 +1,18 @@
 <template>
-  <div :class="[
-         'ms-Toggle',
-         $style.root,
-         internalChecked && ['is-checked', $style.checked],
-         disabled ? ['is-disabled', $style.disabled] : 'is-enabled',
-         inlineLabel && $style.inlineLabel,
-       ]"
+  <div v-bind="css.root"
        @click="internalChecked = !internalChecked">
     <slot name="label"
           :checked="internalChecked"
           :disabled="disabled"
           :label="label">
-      <Label :class="$style.label"
-             :style="{ order: (!onText && !offText) ? 1 : 0 }"
+      <Label v-bind="css.label"
              v-text="label" />
     </slot>
-    <div :class="$style.container">
-      <button :class="$style.pill">
-        <div :class="$style.thumb" />
+    <div v-bind="css.container">
+      <button v-bind="css.pill">
+        <div v-bind="css.thumb" />
       </button>
-      <Label :class="$style.text">
+      <Label v-bind="css.text">
         {{ internalChecked ? onText : offText }}
       </Label>
     </div>
@@ -29,13 +22,15 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
+import BaseComponent from '../BaseComponent'
+import { IToggleProps, IToggleStyles } from './Toggle.types'
 
 @Component({
   components: { Label },
 })
-export default class Toggle extends Vue {
-  @Prop({ default: '' }) label!: string
+export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   @Model('input', { default: false }) checked!: boolean
+  @Prop({ default: '' }) label!: string
   @Prop({ default: false }) defaultChecked!: boolean
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) inlineLabel!: boolean
@@ -44,6 +39,40 @@ export default class Toggle extends Vue {
   @Prop({ default: null }) offText!: string
 
   internalChecked: boolean = this.defaultChecked || this.checked
+
+  get baseStyles (): IToggleStyles {
+    const { $style, disabled, inlineLabel, internalChecked, onText, offText } = this
+    return {
+      root: [
+        'ms-Toggle',
+        $style.root,
+        internalChecked && ['is-checked', $style.checked],
+        disabled ? ['is-disabled', $style.disabled] : 'is-enabled',
+        inlineLabel && $style.inlineLabel,
+      ],
+      label: [
+        'ms-Toggle-label',
+        $style.label,
+        { '--order': (!onText && !offText) ? 1 : 0 },
+      ],
+      container: [
+        'ms-Toggle-innerContainer',
+        $style.container,
+      ],
+      pill: [
+        'ms-Toggle-background',
+        $style.pill,
+      ],
+      thumb: [
+        'ms-Toggle-thumb',
+        $style.thumb,
+      ],
+      text: [
+        'ms-Toggle-stateText',
+        $style.text,
+      ],
+    }
+  }
 
   @Watch('internalChecked')
   private onCheckedChanged (checked: boolean) {
@@ -66,6 +95,7 @@ export default class Toggle extends Vue {
   height: 20px;
   cursor: pointer;
   display: flex;
+  align-self: center;
   align-items: center;
   padding: 0 3px;
   outline: transparent;
@@ -91,6 +121,9 @@ export default class Toggle extends Vue {
   margin: 0 8px;
   font-weight: 400;
   user-select: none;
+}
+.label {
+  order: var(--order);
 }
 .root.inlineLabel {
   display: flex;

@@ -1,31 +1,20 @@
 ﻿<template>
   <div :area-label="areaLabel"
-       :class="['ms-Rating-star', 'ms-Rating-star-root',
-                $style.root,
-                disabled && $style.disabled ]"
-       :style="`--size: ${size}px`">
-    <div
-      :class="['ms-FocusZone',
-               'ms-Rating-focuszone',
-               $style.ratingFocusZone]">
+       v-bind="css.root">
+    <div v-bind="css.ratingFocusZone">
       <button v-for="ratingLevel in ratingLevels"
               :key="ratingLevel"
-              v-bind="$attrs"
+              v-bind="[css.ratingButton, $attrs]"
               :disabled="disabled"
-              :class="['ms-RatingButton', $style.ratingButton, disabled && $style.disabled, readonly && $style.readonly]"
               @click="!disabled && !readonly && setRating(ratingLevel)">
-        <span :class="['ms-Rating-labelText', $style.labelText]">{{ `Select ${ratingLevel} of ${max}` }}</span>
-        <div :class="['ms-RatingStar-container', $style.ratingStar]">
+        <span v-bind="css.labelText">{{ `Select ${ratingLevel} of ${max}` }}</span>
+        <div v-bind="css.ratingStar">
           <Icon
             :icon-name="getRatingIconName(ratingLevel)"
-            :class="['ms-RatingStar-back',
-                     $style.ratingStarBack,
-                     disabled && $style.disabled]" />
+            v-bind="css.ratingStarBack" />
           <Icon :icon-name="iconName"
-                :class="['ms-RatingStar-front',
-                         $style.ratingStarFront,
-                         disabled && $style.disabled]"
-                :style="{width: getRatingFillPercentage(ratingLevel)}" />
+                v-bind="css.ratingStarFront"
+                :style="{ width: getRatingFillPercentage(ratingLevel) }" />
         </div>
       </button>
     </div>
@@ -36,12 +25,14 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
 import IconButton from '../Button/IconButton.vue'
+import { IRatingProps, IRatingStyles } from './Rating.types'
+import BaseComponent from '../BaseComponent'
+
 @Component({
-  name: 'ORating',
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class Rating extends Vue {
+export default class Rating extends BaseComponent<IRatingProps, IRatingStyles> {
   @Prop({ default: 16 }) size!: number
   @Prop({ default: 0 }) min!: number
   @Prop({ default: 10 }) max!: number
@@ -51,6 +42,50 @@ export default class Rating extends Vue {
   @Prop({ default: 'FavoriteStar' }) unselectedIconName!: string
   @Prop({ default: false }) disabled?: boolean
   @Prop({ default: false }) readonly?: boolean
+
+  get baseStyles (): IRatingStyles {
+    const { $style, disabled, readonly, size } = this
+    return {
+      root: [
+        'ms-Rating-star',
+        'ms-Rating-star-root',
+        $style.root,
+        disabled && $style.disabled,
+        {
+          '--size': `${size}px`,
+        },
+      ],
+      ratingFocusZone: [
+        'ms-FocusZone',
+        'ms-Rating-focuszone',
+        $style.ratingFocusZone,
+      ],
+      labelText: [
+        'ms-Rating-labelText',
+        $style.labelText,
+      ],
+      ratingButton: [
+        'ms-RatingButton',
+        $style.ratingButton,
+        disabled && $style.disabled,
+        readonly && $style.readonly,
+      ],
+      ratingStar: [
+        'ms-RatingStar-container',
+        $style.ratingStar,
+      ],
+      ratingStarBack: [
+        'ms-RatingStar-back',
+        $style.ratingStarBack,
+        disabled && $style.disabled,
+      ],
+      ratingStarFront: [
+        'ms-RatingStar-front',
+        $style.ratingStarFront,
+        disabled && $style.disabled,
+      ],
+    }
+  }
 
   get ratingLevels () {
     const { min, max } = this
@@ -64,20 +99,6 @@ export default class Rating extends Vue {
     if (!this.ariaLabelFormat) return ''
 
     return this.ariaLabelFormat.replace('{0}', `${this.internalValue}`).replace('{1}', `${this.max}`)
-  }
-
-  get rootClasses () {
-    // @ts-ignore
-    if (this.ratingSize === 'Large') return ['ms-Rating-star-root--large', this.$style.rootLarge]
-    // @ts-ignore
-    return ['ms-Rating-star-root--small', this.$style.rootSmall]
-  }
-
-  get buttonClasses () {
-    // @ts-ignore
-    if (this.ratingSize === 'Large') return ['ms-Rating--large', this.$style.ratingStarIsLarge]
-    // @ts-ignore
-    return ['ms-Rating--small', this.$style.ratingStarIsSmall]
   }
 
   getRatingIconName (ratingLevel:number) {

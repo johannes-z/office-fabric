@@ -1,18 +1,27 @@
 <template>
-  <i :class="[
-       $style.root,
-       'ms-Icon',
-       `ms-Icon--${iconName}`,
-     ]"
+  <i v-bind="css.root"
      aria-hidden="true" />
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import BaseComponent from '../BaseComponent'
+import { IIconProps, IIconStyles } from './Icon.types'
 
-@Component
-export default class Icon extends Vue {
-  @Prop({ type: String, required: true }) iconName!: string
+@Component({
+})
+export default class Icon extends BaseComponent<IIconProps, IIconStyles> {
+  @Prop() iconName!: string
+
+  get baseStyles (): IIconStyles {
+    return {
+      root: [
+        'ms-Icon',
+        this.iconName && `ms-Icon--${this.iconName}`,
+        this.$style.root,
+      ],
+    }
+  }
 }
 </script>
 

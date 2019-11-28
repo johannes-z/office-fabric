@@ -1,10 +1,6 @@
 <template>
-  <div :class="[
-         $style.root,
-         vertical && $style.vertical
-       ]"
-       :style="styleObj">
-    <div :class="$style.content">
+  <div v-bind="css.root">
+    <div v-bind="css.content">
       <slot />
     </div>
   </div>
@@ -12,6 +8,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import BaseComponent from '../BaseComponent'
+import { ISeparatorProps, ISeparatorStyles } from './Separator.types'
 
 const verticalAlignment: any = {
   center: 'middle',
@@ -20,23 +18,35 @@ const verticalAlignment: any = {
 }
 
 @Component
-export default class Separator extends Vue {
+export default class Separator extends BaseComponent<ISeparatorProps, ISeparatorStyles> {
   @Prop({ type: String, default: 'center' }) alignContent!: string
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 
-  get styleObj () {
-    if (this.vertical) {
-      return {
-        'vertical-align': verticalAlignment[this.alignContent],
-      }
-    } else {
-      return {
-        'text-align': this.justifyContent,
-      }
+  get baseStyles (): ISeparatorStyles {
+    const { $style, vertical, verticalAlignment, justifyContent } = this
+    return {
+      root: [
+        'ms-Separator',
+        $style.root,
+        vertical && $style.vertical,
+        {
+          '--verticalAlign': verticalAlignment,
+          '--textAlign': justifyContent,
+        },
+      ],
+      content: [
+        $style.content,
+      ],
     }
   }
 
+  get verticalAlignment () {
+    if (!this.vertical) return null
+    return verticalAlignment[this.alignContent]
+  }
+
   get justifyContent () {
+    if (this.vertical) return null
     const alignContent = this.alignContent
     if (alignContent === 'center') return alignContent
     if (alignContent === 'start') return 'start'
@@ -51,6 +61,8 @@ export default class Separator extends Vue {
   font-size: 14px;
   font-weight: 400;
   position: relative;
+  vertical-align: var(--verticalAlign, middle);
+  text-align: var(--textAlign);
 
   &:before,
   &:after {
@@ -76,7 +88,6 @@ export default class Separator extends Vue {
   }
 
   &.vertical {
-    vertical-align: middle;
     padding-top: 0px;
     padding-right: 4px;
     padding-bottom: 0px;

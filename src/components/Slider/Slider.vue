@@ -1,25 +1,20 @@
 <template>
-  <div :class="[
-    $style.root,
-    disabled && $style.disabled,
-    vertical && $style.vertical,
-  ]">
-    <Label :class="$style.titleLabel" v-text="label" />
-    <div :class="$style.container">
-      <div :class="$style.slideBox"
+  <div v-bind="css.root">
+    <Label v-bind="css.titleLabel" v-text="label" />
+    <div v-bind="css.container">
+      <div v-bind="css.slideBox"
            :tabindex="disabled ? void 0 : 0"
            @mousedown="onMouseDown"
            @keydown="onKeyDown">
-        <div ref="sliderLine" :class="$style.line">
-          <span :class="$style.thumb"
-                :style="{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%`}" />
-          <span :class="[$style.lineContainer, $style.activeSection]"
-                :style="{ [lengthString]: `${thumbOffsetPercent}%`}" />
-          <span :class="[$style.lineContainer, $style.inactiveSection]"
-                :style="{ [lengthString]: `${100 - thumbOffsetPercent}%`}" />
+        <div ref="sliderLine" v-bind="css.line">
+          <span v-bind="css.thumb" />
+          <span :class="[css.lineContainer.class, css.activeSection.class]"
+                :style="css.activeSection.style" />
+          <span :class="[css.lineContainer.class, css.inactiveSection.class]"
+                :style="css.inactiveSection.style" />
         </div>
       </div>
-      <Label :class="$style.valueLabel">
+      <Label v-bind="css.valueLabel">
         <slot name="value" :value="internalValue">
           {{ internalValue }}
         </slot>
@@ -32,13 +27,15 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import Label from '../Label/Label.vue'
 import { KeyCodes } from '@/util/KeyCodes'
+import { ISliderProps, ISliderStyles } from './Slider.types'
+import BaseComponent from '../BaseComponent'
 
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 
 @Component({
   components: { Label },
 })
-export default class Slider extends Vue {
+export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {
   $refs!: {
     sliderLine: HTMLDivElement
   }
@@ -56,6 +53,60 @@ export default class Slider extends Vue {
   private renderedValue?: number = this.value || this.defaultValue || this.min
 
   private onKeyDownTimer = -1;
+
+  get baseStyles (): ISliderStyles {
+    const { $style, disabled, vertical, thumbOffsetPercent, lengthString } = this
+    return {
+      root: [
+        'ms-Slider',
+        $style.root,
+        disabled && $style.disabled,
+        vertical && $style.vertical,
+      ],
+      titleLabel: [
+        $style.titleLabel,
+      ],
+      container: [
+        'ms-Slider-container',
+        $style.container,
+      ],
+      slideBox: [
+        'ms-Slider-slideBox ms-Slider-showValue ms-Slider-showTransitions slideBox-390',
+        $style.slideBox,
+      ],
+      line: [
+        'ms-Slider-line',
+        $style.line,
+      ],
+      thumb: [
+        'ms-Slider-thumb',
+        $style.thumb,
+        {
+          [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%`,
+        },
+      ],
+      lineContainer: [
+        $style.lineContainer,
+      ],
+      activeSection: [
+        'ms-Slider-active',
+        $style.activeSection,
+        { [lengthString]: `${thumbOffsetPercent}%` },
+      ],
+      inactiveSection: [
+        'ms-Slider-inactive',
+        $style.inactiveSection,
+        { [lengthString]: `${100 - thumbOffsetPercent}%` },
+      ],
+      valueLabel: [
+        'ms-Slider-value',
+        $style.valueLabel,
+      ],
+      zeroTick: [
+
+      ],
+    }
+  }
 
   get thumbOffsetPercent () {
     const { min, max, renderedValue } = this
@@ -92,7 +143,7 @@ export default class Slider extends Vue {
 
   private onMove (event: any) {
     window.requestAnimationFrame(() => {
-      const { max, min, step, vertical } = this.$props
+      const { max, min, step, vertical } = this
       const steps: number = (max! - min!) / step!
       const sliderPositionRect: ClientRect = this.$refs.sliderLine.getBoundingClientRect()
       const sliderLength: number = !vertical
@@ -149,7 +200,7 @@ export default class Slider extends Vue {
   }
 
   private updateValue (value: number, renderedValue: number): void {
-    const { step, snapToStep } = this.$props
+    const { step, snapToStep } = this
     let numDec = 0
     if (isFinite(step!)) {
       while (Math.round(step! * Math.pow(10, numDec)) / Math.pow(10, numDec) !== step!) {
@@ -226,17 +277,11 @@ export default class Slider extends Vue {
 
 <style lang="scss" module>
 .root {
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px;
   font-weight: 400;
   user-select: none;
 }
 
 .titleLabel {
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px;
   font-weight: 600;
   color: rgb(50, 49, 48);
   box-sizing: border-box;
@@ -353,9 +398,6 @@ background: rgb(200, 198, 196);
   margin-right: 8px;
 
   .titleLabel {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px;
     font-weight: 600;
     color: rgb(50, 49, 48);
     box-sizing: border-box;
@@ -438,8 +480,6 @@ background: rgb(200, 198, 196);
     height: 100%;
   }
   .valueLabel {
-    font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
     font-size: 14px;
     font-weight: 600;
     color: rgb(50, 49, 48);

@@ -1,54 +1,63 @@
 <template>
   <div>
-    <FabricToggle label="Checked with On and Off Text"
-                  default-checked
-                  on-text="On"
-                  off-text="Off" />
-    <FabricToggle label="Unchecked with On Text" on-text="On" />
-    <FabricToggle label="Unchecked with Off Text" off-text="Off" />
-    <FabricToggle label="Test"
-                  disabled
-                  default-checked />
-    <FabricToggle label="Test" disabled />
+    <o-toggle label="Checked with On and Off Text"
+              default-checked
+              on-text="On"
+              off-text="Off" />
+    <o-toggle label="Unchecked with On Text" on-text="On" />
+    <o-toggle label="Unchecked with Off Text" off-text="Off" />
+    <o-toggle label="Test"
+              disabled
+              default-checked />
+    <o-toggle label="Test" disabled />
 
-    <FabricToggle label="With inline label"
-                  on-text="On"
-                  off-text="Off"
-                  inline-label
-                  default-checked />
-    <FabricToggle label="Disabled with inline label"
-                  on-text="On"
-                  off-text="Off"
-                  inline-label />
-    <FabricToggle label="With inline label and without onText and offText"
-                  inline-label
-                  disabled
-                  default-checked />
-    <FabricToggle label="Disabled with inline label and without onText and offText"
-                  inline-label
-                  disabled />
+    <o-toggle label="With inline label"
+              on-text="On"
+              off-text="Off"
+              inline-label
+              default-checked
+              :styles="toggleStyleProp" />
+    <o-toggle label="Disabled with inline label"
+              on-text="On"
+              off-text="Off"
+              inline-label />
+    <o-toggle label="With inline label and without onText and offText"
+              inline-label
+              disabled
+              default-checked />
+    <o-toggle label="Disabled with inline label and without onText and offText"
+              inline-label
+              disabled />
 
     <div>Controlled</div>
-    <FabricToggle v-model="toggleState" label="Test" /> {{ toggleState }}
-    <FabricToggle label="Test">
+    <o-toggle v-model="toggleState" label="Test" /> {{ toggleState }}
+    <o-toggle label="Test">
       <template #label="{ checked, disabled, label }">
         <div>label: {{ label }}, checked: {{ checked }}, disabled: {{ disabled }}</div>
       </template>
-    </FabricToggle>
+    </o-toggle>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricToggle from '@/components/Toggle/Toggle.vue'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { IToggleStyles } from '@/components/Toggle/'
 
 @Component({
   components: {
-    FabricToggle,
   },
 })
 export default class TogglePage extends Vue {
   toggleState: boolean = false
+
+  isGlobal: boolean = false
+
+  toggleStyleProp: IToggleStyles = {
+    label: {
+      fontWeight: 'bold',
+      color: 'red',
+    },
+  }
 }
 </script>
 

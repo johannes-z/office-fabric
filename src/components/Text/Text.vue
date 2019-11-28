@@ -1,42 +1,41 @@
 <template>
-  <span
-    :class="[
-      $style.root,
-      block && $style.block,
-      nowrap && $style.nowrap,
-    ]"
-    :style="[
-      {
-        'font-size': fontSize,
-      }
-    ]">
+  <span v-bind="css.root">
     <slot />
   </span>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import Label from '../Label/Label.vue'
+import BaseComponent from '@/components/BaseComponent'
 import { FontSizes } from '@/styles/fonts'
+import { ITextProps, ITextStyles } from './Text.types'
 
-@Component({
-  components: { Label },
-})
-export default class Toggle extends Vue {
+@Component
+export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) nowrap!: boolean
   @Prop({ default: false }) block!: boolean
-  @Prop({ default: 'medium' }) variant!: string
+  @Prop({ default: null }) variant!: string
 
-  get fontSize () {
-    // @ts-ignore
-    return FontSizes[this.variant]
+  get baseStyles (): ITextStyles {
+    return {
+      root: [
+        'ms-Text',
+        this.$style.root,
+        (this.block || this.nowrap) && this.$style.block,
+        this.nowrap && this.$style.nowrap,
+        {
+          // @ts-ignore
+          '--fontSize': FontSizes[this.variant],
+        },
+      ],
+    }
   }
 }
 </script>
 
 <style lang="scss" module>
 .root {
-  font-size: 14px;
+  font-size: var(--fontSize, 14px);
   font-weight: 400;
   display: inline;
   color: inherit;
