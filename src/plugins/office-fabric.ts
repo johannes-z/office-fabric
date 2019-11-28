@@ -1,6 +1,7 @@
 import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
 import { semanticColors } from '@/util'
+import { IPalette } from '@/types/IPalette'
 
 const toKebabCase = (str: string) => str
   .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -8,38 +9,13 @@ const toKebabCase = (str: string) => str
   .toLowerCase()
 
 export interface ITheme {
-  themePrimary?: string
-  themeLighterAlt?: string
-  themeLighter?: string
-  themeLight?: string
-  themeTertiary?: string
-  themeSecondary?: string
-  themeDarkAlt?: string
-  themeDark?: string
-  themeDarker?: string
-  neutralLighterAlt?: string
-  neutralLighter?: string
-  neutralLight?: string
-  neutralQuaternaryAlt?: string
-  neutralQuaternary?: string
-  neutralTertiaryAlt?: string
-  neutralTertiary?: string
-  neutralSecondary?: string
-  neutralPrimaryAlt?: string
-  neutralPrimary?: string
-  neutralDark?: string
-  black?: string
-  white?: string
-}
-
-export interface IFabricOptions {
   prefix?: string
-  theme?: ITheme
+  theme?: IPalette
   defaultColors?: any
   variant: 'none' | 'neutral' | 'soft' | 'strong'
 }
 
-const defaultOptions: IFabricOptions = {
+const defaultOptions: ITheme = {
   prefix: 'o',
   theme: {
     themePrimary: '#0078d4',
@@ -87,7 +63,7 @@ export function createCSSProperties (theme: { [key: string]: string }) {
 
 export * from '@/components'
 
-export default function install (Vue: any, options: IFabricOptions = defaultOptions) {
+export default function install (Vue: any, options: ITheme = defaultOptions) {
   const _options = Object.assign({}, defaultOptions, options)
 
   for (const _ in Components) {
@@ -98,12 +74,15 @@ export default function install (Vue: any, options: IFabricOptions = defaultOpti
     Vue.component(name, Component)
   }
 
-  Vue.prototype.$semanticColors = semanticColors[_options.variant]
-  Vue.prototype.$theme = _options.theme
+  const _semanticColors = semanticColors[_options.variant]
+  Vue.prototype.$theme = {
+    palette: _options.theme,
+    semanticColors: _semanticColors,
+  }
 
   createCSSProperties({
     ..._options.defaultColors,
-    ...semanticColors[_options.variant],
+    ..._semanticColors,
     ..._options.theme,
   })
 }

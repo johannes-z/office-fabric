@@ -4,6 +4,26 @@ export interface IBreadcrumbProps {
 
 }
 
+/**
+ * {@docCategory Breadcrumb}
+ */
+export interface IBreadcrumbItem {
+  /**
+   * Text to display to the user for the breadcrumb item.
+   */
+  text: string;
+
+  /**
+   * Callback issued when the breadcrumb item is selected.
+   */
+  onClick?: any;
+
+  /**
+   * Url to navigate to when this breadcrumb item is clicked.
+   */
+  href?: string;
+}
+
 export interface IBreadcrumbStyles {
   root?: IStyle
   list?: IStyle

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator'
+import { ITheme } from '@/types/ITheme'
 
 function merge (obj: any, key: string, val: any) {
   if (!val) return obj
@@ -33,9 +34,7 @@ type StyleEntry = string | boolean | Partial<CSSStyleDeclaration>
 export type IStyle = StyleEntry | Array<StyleEntry>
 
 // @ts-ignore
-@Component({
-  inheritAttrs: false,
-})
+@Component
 export default abstract class BaseComponent<IProps = {}, IStyles = {}> extends Vue {
   $style!: { [K in keyof IStyles]: any } & { [key: string]: string }
   $props!: IProps
@@ -47,8 +46,12 @@ export default abstract class BaseComponent<IProps = {}, IStyles = {}> extends V
 
   get css (): IStyleObj<IStyles> {
     const compiled = this.compile(this.baseStyles, this.classes, this.styles)
-    console.log(compiled)
     return compiled
+  }
+
+  get theme (): ITheme {
+    // @ts-ignore
+    return this.$theme
   }
 
   private compile (base?: IStyles, classes?: IStyles, styles?: IStyles): IStyleObj<IStyles> {

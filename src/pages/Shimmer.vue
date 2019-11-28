@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Breadcrumb</h1>
+    <h1>Shimmer</h1>
     <div class="content--inner ms-depth-8">
       <h2>Overview</h2>
     </div>
@@ -11,8 +11,8 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <h2>Breadcrumb</h2>
-      <o-breadcrumb :items="items" />
+      <h2>Shimmer</h2>
+      <o-shimmer />
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -23,18 +23,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IBreadcrumbItem } from '../components'
 
 @Component
-export default class BreadcrumbPage extends Vue {
-  items: IBreadcrumbItem[] = [
-    { text: 'Test 1', href: '#' },
-    { text: 'Test 2', href: '#' },
-    { text: 'Test 3', href: '#' },
-    { text: 'Test 4', href: '#' },
-    { text: 'Test 5', href: '#' },
-    { text: 'Test 6', href: '#' },
-  ]
+export default class ShimmerPage extends Vue {
 }
 </script>
 
