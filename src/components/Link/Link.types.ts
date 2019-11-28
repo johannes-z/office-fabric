@@ -1,4 +1,4 @@
-import { IStyle } from '../BaseComponent'
+import { IStyle } from '@/types/IStyle'
 
 export interface ILinkProps {
   // extends Partial<HTMLLinkElement & HTMLButtonElement>
