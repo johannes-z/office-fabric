@@ -1,6 +1,6 @@
-import OCheckbox from './Checkbox.vue'
+import Checkbox from './Checkbox.vue'
 
 export * from './Checkbox.types'
 export {
-  OCheckbox,
+  Checkbox,
 }

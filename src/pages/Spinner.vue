@@ -13,30 +13,30 @@
       <h2>Usage</h2>
       <h2>Default Spinner</h2>
 
-      <Spinner :size="12" />
-      <Spinner :size="16" />
-      <Spinner :size="20" />
-      <Spinner :size="28" />
+      <o-spinner :size="12" />
+      <o-spinner :size="16" />
+      <o-spinner :size="20" />
+      <o-spinner :size="28" />
 
       <h2>Spinner label positioning</h2>
       <div>
-        <Label>Spinner with label positioned below</Label>
-        <Spinner label="I am definitely loading..." />
+        <o-label>Spinner with label positioned below</o-label>
+        <o-spinner>I am definitely loading...</o-spinner>
       </div>
 
       <div>
-        <Label>Spinner with label positioned above</Label>
-        <Spinner label="Seriously, still loading..." label-position="top" />
+        <o-label>Spinner with label positioned above</o-label>
+        <o-spinner label="Seriously, still loading..." label-position="top" />
       </div>
 
       <div>
-        <Label>Spinner with label positioned to right</Label>
-        <Spinner label="Wait, wait..." label-position="right" />
+        <o-label>Spinner with label positioned to right</o-label>
+        <o-spinner label="Wait, wait..." label-position="right" />
       </div>
 
       <div>
-        <Label>Spinner with label positioned to left</Label>
-        <Spinner label="Nope, still loading..." label-position="left" />
+        <o-label>Spinner with label positioned to left</o-label>
+        <o-spinner label="Nope, still loading..." label-position="left" />
       </div>
     </div>
 
@@ -48,13 +48,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import Spinner from '../components/Spinner/Spinner.vue'
-import Label from '../components/Label/Label.vue'
 
 @Component({
   components: {
-    Label,
-    Spinner,
   },
 })
 export default class SpinnerPage extends Vue {

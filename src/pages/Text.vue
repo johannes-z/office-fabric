@@ -14,22 +14,22 @@
 
       <h2>Text</h2>
       <div>
-        <FabricText variant="large" block>
+        <o-text variant="large" block>
           Wrap (Default)
-        </FabricText>
-        <FabricText>
+        </o-text>
+        <o-text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </FabricText>
+        </o-text>
       </div>
       <div>
-        <FabricText variant="large" block>
+        <o-text variant="large" block>
           No Wrap
-        </FabricText>
-        <FabricText nowrap
-                    :classes="{ root: ['ms-Text'] }"
-                    :styles="{ root: { fontSize: 30 } }">
+        </o-text>
+        <o-text nowrap
+                :classes="{ root: ['ms-Text'] }"
+                :styles="{ root: { fontSize: 30 } }">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </FabricText>
+        </o-text>
       </div>
     </div>
 
@@ -41,11 +41,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Text as FabricText, ITextProps, ITextStyles } from '@/components/Text/'
+import { ITextProps, ITextStyles } from '@/components/Text/'
 
 @Component({
   components: {
-    FabricText,
   },
 })
 export default class TextPage extends Vue {

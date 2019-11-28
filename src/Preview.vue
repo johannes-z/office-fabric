@@ -1,29 +1,11 @@
 <template>
   <div class="page">
     <div class="sidebar">
-      <FabricNav :groups="groups" />
-      <!-- <b>Basic Inputs</b>
-      <div @click="activePage = components.ButtonPage">Button</div>
-      <div @click="activePage = components.LabelPage">Label</div>
-      <div @click="activePage = components.CheckboxPage">Checkbox</div>
-      <div @click="activePage = components.SpinButtonPage">SpinButton</div>
-      <div @click="activePage = components.TextFieldPage">TextField</div>
-      <div @click="activePage = components.TogglePage">Toggle</div>
-      <div @click="activePage = components.TextPage">Text</div>
-      <div @click="activePage = components.ChoiceGroupPage">ChoiceGroup</div>
-
-      <div @click="activePage = components.ImagePage">Image</div>
-      <div @click="activePage = components.SeparatorPage">Separator</div>
-      <div @click="activePage = components.NavPage">Nav</div>
-
-      <b>Progress</b>
-      <div @click="activePage = components.ProgressIndicatorPage">ProgressIndicator</div>
-      <div @click="activePage = components.SpinnerPage">Spinner</div>
-      <div @click="activePage = components.SliderPage">Slider</div> -->
+      <o-nav :groups="groups" />
     </div>
     <div class="content">
       <div class="">
-        <router-view />
+        <router-view v-bind="null" />
       </div>
     </div>
   </div>
@@ -32,11 +14,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-import FabricNav from './components/Nav/Nav.vue'
-
 import routes from '@/router/routes'
 @Component({
-  components: { FabricNav },
   data () {
     return {
       groups: [
@@ -45,47 +24,40 @@ import routes from '@/router/routes'
             name: 'Basic Inputs',
             isExpanded: false,
             links: [
-              { name: 'Button', onClick: () => this.$router.push({ path: 'Button' }) },
-              { name: 'Checkbox', onClick: () => this.$router.push({ path: 'Checkbox' }) },
-              { name: 'ChoiceGroup', onClick: () => this.$router.push({ path: 'ChoiceGroup' }) },
-              { name: 'ComboBox', onClick: () => this.$router.push({ path: 'ComboBox' }) },
-              { name: 'Dropdown', onClick: () => this.$router.push({ path: 'Dropdown' }) },
-              { name: 'Label', onClick: () => this.$router.push({ path: 'Label' }) },
-              { name: 'Link', onClick: () => this.$router.push({ path: 'Link' }) },
-              { name: 'Rating', onClick: () => this.$router.push({ path: 'Rating' }) },
-              { name: 'SearchBox', onClick: () => this.$router.push({ path: 'SearchBox' }) },
-              { name: 'Slider', onClick: () => this.$router.push({ path: 'Slider' }) },
-              { name: 'SpinButton', onClick: () => this.$router.push({ path: 'SpinButton' }) },
-              { name: 'TextField', onClick: () => this.$router.push({ path: 'TextField' }) },
-              { name: 'Toggle', onClick: () => this.$router.push({ path: 'Toggle' }) },
+              { name: 'Button', onClick: () => this.$router.push('Button') },
+              { name: 'Checkbox', onClick: () => this.$router.push('Checkbox') },
+              { name: 'ChoiceGroup', onClick: () => this.$router.push('ChoiceGroup') },
+              { name: 'ComboBox', onClick: () => this.$router.push('ComboBox') },
+              { name: 'Dropdown', onClick: () => this.$router.push('Dropdown') },
+              { name: 'Label', onClick: () => this.$router.push('Label') },
+              { name: 'Link', onClick: () => this.$router.push('Link') },
+              { name: 'Rating', onClick: () => this.$router.push('Rating') },
+              { name: 'SearchBox', onClick: () => this.$router.push('SearchBox') },
+              { name: 'Slider', onClick: () => this.$router.push('Slider') },
+              { name: 'SpinButton', onClick: () => this.$router.push('SpinButton') },
+              { name: 'TextField', onClick: () => this.$router.push('TextField') },
+              { name: 'Toggle', onClick: () => this.$router.push('Toggle') },
             ],
           }, {
             name: 'Progress',
             isExpanded: false,
             links: [
-              { name: 'ProgressIndicator', onClick: () => this.$router.push({ path: 'ProgressIndicator' }) },
-              { name: 'Spinner', onClick: () => this.$router.push({ path: 'Spinner' }) },
+              { name: 'ProgressIndicator', onClick: () => this.$router.push('ProgressIndicator') },
+              { name: 'Spinner', onClick: () => this.$router.push('Spinner') },
             ],
           }, {
             name: 'Utilities',
             isExpanded: false,
             links: [
-              { name: 'Icon', onClick: () => this.$router.push({ path: 'Icon' }) },
-              { name: 'Image', onClick: () => this.$router.push({ path: 'Image' }) },
-              { name: 'Layer', onClick: () => this.$router.push({ path: 'Layer' }) },
-              { name: 'Separator', onClick: () => this.$router.push({ path: 'Separator' }) },
-              { name: 'Text', onClick: () => this.$router.push({ path: 'Text' }) },
+              { name: 'Icon', onClick: () => this.$router.push('Icon') },
+              { name: 'Image', onClick: () => this.$router.push('Image') },
+              { name: 'Layer', onClick: () => this.$router.push('Layer') },
+              { name: 'Separator', onClick: () => this.$router.push('Separator') },
+              { name: 'Text', onClick: () => this.$router.push('Text') },
             ],
           }],
         },
       ],
-      // groups: [{
-      //   links: routes.map(route => ({
-      //     name: route.name,
-      //     // disabled: route.name === this.$route.name,
-      //     onClick: () => this.$router.push({ path: route.path }),
-      //   })),
-      // }],
     }
   },
 })

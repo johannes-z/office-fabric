@@ -13,11 +13,11 @@
       <h2>Usage</h2>
       <h2>Basic</h2>
       <DefaultButton @click.native="isOpen = true">Show Panel</DefaultButton>
-      <OPanel v-if="isOpen"
-              header-text="Sample panel"
-              @close="isOpen = false">
+      <o-panel v-if="isOpen"
+               header-text="Sample panel"
+               @close="isOpen = false">
         <span>Content goes here.</span>
-      </OPanel>
+      </o-panel>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -28,13 +28,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { OPanel } from '../components/'
 import DefaultButton from '@/components/Button/DefaultButton.vue'
 
 @Component({
   components: {
     DefaultButton,
-    OPanel,
   },
 })
 export default class PanelPage extends Vue {

@@ -14,11 +14,11 @@
       <h2>Default Link</h2>
       <div>
         <p>
-          When a link has an href, <OLink href="http://dev.office.com/fabric/components/link">it renders as an anchor tag.</OLink> Without an
-          href, <OLink>the link is rendered as a button</OLink>. You can also use the disabled attribute to create a
-          <OLink disabled href="http://dev.office.com/fabric/components/link">
+          When a link has an href, <o-link href="http://dev.office.com/fabric/components/link">it renders as an anchor tag.</o-link> Without an
+          href, <o-link>the link is rendered as a button</o-link>. You can also use the disabled attribute to create a
+          <o-link disabled href="http://dev.office.com/fabric/components/link">
             disabled link.
-          </OLink>
+          </o-link>
         </p>
         <p>
           It's not recommended to use Links with imgs because Links are meant to render textual inline content. Buttons are inline-block or in
@@ -36,13 +36,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { OLink } from '@/components/Link/'
 
-@Component({
-  components: {
-    OLink,
-  },
-})
+@Component
 export default class LinkPage extends Vue {
 }
 </script>

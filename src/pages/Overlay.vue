@@ -13,22 +13,22 @@
       <h2>Usage</h2>
       <h2>Light</h2>
       <DefaultButton @click.native="isLightOpen = true">Show Overlay</DefaultButton>
-      <OOverlay v-if="isLightOpen"
-                @click.native="isLightOpen = false">
+      <o-overlay v-if="isLightOpen"
+                 @click.native="isLightOpen = false">
         <div :class="$style.root">
           <p>I am content within the overlay.</p>
         </div>
-      </OOverlay>
+      </o-overlay>
 
       <h2>Dark</h2>
       <DefaultButton @click.native="isDarkOpen = true">Show Overlay</DefaultButton>
-      <OOverlay v-if="isDarkOpen"
-                dark
-                @click.native="isDarkOpen = false">
+      <o-overlay v-if="isDarkOpen"
+                 dark
+                 @click.native="isDarkOpen = false">
         <div :class="$style.root">
           <p>I am content within the overlay.</p>
         </div>
-      </OOverlay>
+      </o-overlay>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -39,13 +39,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { OOverlay } from '../components/'
 import DefaultButton from '@/components/Button/DefaultButton.vue'
 
 @Component({
   components: {
     DefaultButton,
-    OOverlay,
   },
 })
 export default class OverlayPage extends Vue {

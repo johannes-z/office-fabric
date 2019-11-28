@@ -8,11 +8,11 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IDialogProps, IDialogStyles } from './Dialog.types'
 import BaseComponent from '../BaseComponent'
-import { OLayer } from '@/components/Layer'
+import { Layer } from '@/components/Layer'
 
 @Component({
   name: 'o-overlay',
-  components: { OLayer },
+  components: { Layer },
 })
 export default class Dialog extends BaseComponent<IDialogProps, IDialogStyles> {
   @Prop({ default: false }) dark!: boolean

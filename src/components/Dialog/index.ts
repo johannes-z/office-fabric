@@ -1,6 +1,6 @@
-import ODialog from './Dialog.vue'
+import Dialog from './Dialog.vue'
 
 export * from './Dialog.types'
 export {
-  ODialog,
+  Dialog,
 }

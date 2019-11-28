@@ -1,8 +1,8 @@
-import OLayer from './Layer.vue'
-import OLayerHost from './LayerHost.vue'
+import Layer from './Layer.vue'
+import LayerHost from './LayerHost.vue'
 
 export * from './Layer.types'
 export {
-  OLayer,
-  OLayerHost,
+  Layer,
+  LayerHost,
 }

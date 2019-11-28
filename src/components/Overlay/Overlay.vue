@@ -8,11 +8,11 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IOverlayProps, IOverlayStyles } from './Overlay.types'
 import BaseComponent from '../BaseComponent'
-import { OLayer } from '@/components/Layer'
+import { Layer } from '@/components/Layer'
 
 @Component({
   name: 'o-overlay',
-  components: { OLayer },
+  components: { Layer },
 })
 export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles> {
   @Prop({ default: false }) dark!: boolean

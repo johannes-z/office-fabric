@@ -1,32 +1,13 @@
-const components = [
-  'Button',
-  'Checkbox',
-  'Label',
-  'SpinButton',
-  'TextField',
-  'Toggle',
-  'Text',
-  'Link',
-  'ChoiceGroup',
-  'Image',
-  'Separator',
-  'Nav',
-  'ProgressIndicator',
-  'Spinner',
-  'Slider',
-  'Layer',
-  'Callout',
-  'SearchBox',
-  'Rating',
-  'Modal',
-  'Overlay',
-  'Panel',
-]
+import * as components from '@/components'
 
-const routes = components.map(name => ({
-  name,
-  path: `/${name}`,
-  component: () => import(`@/pages/${name}.vue`),
-}))
+const routes: any[] = []
+for (const name in components) {
+  routes.push({
+    name,
+    path: `/${name}`,
+    component: () => import(`@/pages/${name}.vue`),
+    props: {},
+  })
+}
 
 export default routes

@@ -3,6 +3,7 @@ import { IStyle } from '../BaseComponent'
 export interface INavLinkGroup {
   name?: string;
   links: INavLink[];
+  collapseByDefault?: boolean
 }
 
 export interface INavLink {

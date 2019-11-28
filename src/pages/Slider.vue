@@ -12,50 +12,50 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Horizontal Sliders</h2>
-      <FabricSlider label="Basic Example"
-                    :min="0"
-                    :max="10"
-                    :value="3" />
-      <FabricSlider label="Snapping Slider Example"
-                    :min="0"
-                    :max="50"
-                    :step="10"
-                    :value="10"
-                    snap-to-step />
-      <FabricSlider label="Disabled example"
-                    :min="50"
-                    :max="500"
-                    :step="50"
-                    :default-value="300"
-                    show-value
-                    disabled />
-      <FabricSlider v-model="value1"
-                    :label="`Controlled example - ${value1}`"
-                    :min="0"
-                    :max="10" />
-      <FabricSlider label="Example with formatted value"
-                    :min="0"
-                    :max="100"
-                    :default-value="55"
-                    show-value>
+      <o-slier label="Basic Example"
+               :min="0"
+               :max="10"
+               :value="3" />
+      <o-slier label="Snapping Slider Example"
+               :min="0"
+               :max="50"
+               :step="10"
+               :value="10"
+               snap-to-step />
+      <o-slier label="Disabled example"
+               :min="50"
+               :max="500"
+               :step="50"
+               :default-value="300"
+               show-value
+               disabled />
+      <o-slier v-model="value1"
+               :label="`Controlled example - ${value1}`"
+               :min="0"
+               :max="10" />
+      <o-slier label="Example with formatted value"
+               :min="0"
+               :max="100"
+               :default-value="55"
+               show-value>
         <template #value="{ value }">
           {{ value }}%
         </template>
-      </FabricSlider>
+      </o-slier>
 
       <h2>Vertical Sliders</h2>
       <div style="display: flex; height: 250px">
-        <FabricSlider label="Basic"
-                      :min="0"
-                      :max="10"
-                      :value="3"
-                      vertical />
-        <FabricSlider label="Disabled"
-                      :min="0"
-                      :max="10"
-                      :value="3"
-                      vertical
-                      disabled />
+        <o-slier label="Basic"
+                 :min="0"
+                 :max="10"
+                 :value="3"
+                 vertical />
+        <o-slier label="Disabled"
+                 :min="0"
+                 :max="10"
+                 :value="3"
+                 vertical
+                 disabled />
       </div>
     </div>
 
@@ -67,11 +67,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricSlider from '@/components/Slider/Slider.vue'
 
 @Component({
   components: {
-    FabricSlider,
   },
 })
 export default class SliderPage extends Vue {

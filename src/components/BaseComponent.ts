@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Prop } from 'vue-property-decorator'
+import { Prop, Component } from 'vue-property-decorator'
 
 function merge (obj: any, key: string, val: any) {
   if (!val) return obj
@@ -32,6 +32,8 @@ export type IStyleObj<T> = {
 type StyleEntry = string | boolean | Partial<CSSStyleDeclaration>
 export type IStyle = StyleEntry | Array<StyleEntry>
 
+// @ts-ignore
+@Component
 export default abstract class BaseComponent<IProps = {}, IStyles = {}> extends Vue {
   $style!: { [K in keyof IStyles]: any } & { [key: string]: string }
   $props!: IProps

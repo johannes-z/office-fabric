@@ -12,24 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic Checkboxes</h2>
-      <OCheckbox>Unchecked checkbox</OCheckbox>
-      <OCheckbox checked label="Checked checkbox" />
-      <OCheckbox disabled>Disabled checkbox</OCheckbox>
-      <OCheckbox checked disabled>Disabled checked checkbox</OCheckbox>
+      <o-checkbox>Unchecked checkbox</o-checkbox>
+      <o-checkbox checked label="Checked checkbox" />
+      <o-checkbox disabled>Disabled checkbox</o-checkbox>
+      <o-checkbox checked disabled>Disabled checked checkbox</o-checkbox>
 
       <h2>Controlled</h2>
-      <OCheckbox v-model="value1"
-                 :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
-      <OCheckbox box-side="end">Checkbox rendered with boxSide "end"</OCheckbox>
-      <OCheckbox @blur="onBlur" @focus="onFocus">
+      <o-checkbox v-model="value1"
+                  :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
+      <o-checkbox box-side="end">Checkbox rendered with boxSide "end"</o-checkbox>
+      <o-checkbox @blur="onBlur" @focus="onFocus">
         Checkbox with event listeners
-      </OCheckbox>
-      <OCheckbox>
+      </o-checkbox>
+      <o-checkbox>
         Custom-rendered label with a
-        <OLink href="https://www.microsoft.com" target="_blank">
+        <o-link href="https://www.microsoft.com" target="_blank">
           link
-        </OLink>
-      </OCheckbox>
+        </o-link>
+      </o-checkbox>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -40,13 +40,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { OCheckbox } from '@/components/Checkbox'
-import { OLink } from '@/components/Link'
 
 @Component({
   components: {
-    OCheckbox,
-    OLink,
   },
 })
 export default class CheckboxPage extends Vue {

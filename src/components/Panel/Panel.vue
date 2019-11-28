@@ -1,13 +1,13 @@
 <template>
-  <OLayer>
+  <Layer>
     <div v-bind="css.root">
-      <OOverlay v-bind="css.overlay" />
+      <Overlay v-bind="css.overlay" />
       <div v-bind="css.main">
         <div v-bind="css.commands">
           <div v-bind="css.navigation">
-            <OIconButton v-bind="css.closeButton"
-                         icon-name="Cancel"
-                         @click.native="$emit('close')" />
+            <IconButton v-bind="css.closeButton"
+                        icon-name="Cancel"
+                        @click.native="$emit('close')" />
           </div>
         </div>
 
@@ -26,19 +26,19 @@
         </div>
       </div>
     </div>
-  </OLayer>
+  </Layer>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { OLayer, OOverlay } from '@/components/'
-import OIconButton from '@/components/Button/IconButton.vue'
+import { Layer, Overlay } from '@/components/'
+import IconButton from '@/components/Button/IconButton.vue'
 
 @Component({
   name: 'o-panel',
-  components: { OLayer, OOverlay, OIconButton },
+  components: { Layer, Overlay, IconButton },
 })
 export default class Panel extends BaseComponent<IPanelProps, IPanelStyles> {
   @Prop({ default: null }) headerText!: string

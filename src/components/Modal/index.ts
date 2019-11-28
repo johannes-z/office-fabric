@@ -1,6 +1,6 @@
-import OModal from './Modal.vue'
+import Modal from './Modal.vue'
 
 export * from './Modal.types'
 export {
-  OModal,
+  Modal,
 }

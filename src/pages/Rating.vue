@@ -57,11 +57,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ORating from '@/components/Rating/Rating.vue'
 
 @Component({
   components: {
-    ORating,
   },
 })
 export default class RatingPage extends Vue {

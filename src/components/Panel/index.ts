@@ -1,6 +1,6 @@
-import OPanel from './Panel.vue'
+import Panel from './Panel.vue'
 
 export * from './Panel.types'
 export {
-  OPanel,
+  Panel,
 }

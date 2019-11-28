@@ -13,9 +13,9 @@
       <h2>Usage</h2>
       <h2>Default OModal</h2>
       <DefaultButton @click.native="isOpen = true">Show Modal</DefaultButton>
-      <OModal :is-open="isOpen">
+      <o-modal :is-open="isOpen">
         Test
-      </OModal>
+      </o-modal>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -26,13 +26,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { OModal } from '../components/'
 import DefaultButton from '@/components/Button/DefaultButton.vue'
 
 @Component({
   components: {
     DefaultButton,
-    OModal,
   },
 })
 export default class ModalPage extends Vue {

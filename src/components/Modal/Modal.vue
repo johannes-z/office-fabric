@@ -1,22 +1,22 @@
 <template>
-  <OLayer>
+  <Layer>
     <div v-bind="css.root">
       <div v-bind="css.container">
         Modal
       </div>
     </div>
-  </OLayer>
+  </Layer>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IModalProps, IModalStyles } from './Modal.types'
 import BaseComponent from '../BaseComponent'
-import { OLayer } from '@/components/Layer'
+import { Layer } from '@/components/Layer'
 
 @Component({
   name: 'o-modal',
-  components: { OLayer },
+  components: { Layer },
 })
 export default class Modal extends BaseComponent<IModalProps, IModalStyles> {
   @Prop({ default: false }) isOpen!: boolean

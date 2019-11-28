@@ -1,6 +1,6 @@
-import OOverlay from './Overlay.vue'
+import Overlay from './Overlay.vue'
 
 export * from './Overlay.types'
 export {
-  OOverlay,
+  Overlay,
 }

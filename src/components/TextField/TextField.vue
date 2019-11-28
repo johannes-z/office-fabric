@@ -58,7 +58,7 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   @Prop({ default: false }) readonly!: boolean
   @Prop({ default: false }) required!: boolean
   @Prop({ default: null }) label!: string
-  @Prop({ default: null }) value!: string
+  @Prop({ default: '' }) value!: string
   @Prop({ default: null }) errorMessage!: string
   @Prop({ default: null }) placeholder!: string
   @Prop({ default: null }) description!: string
@@ -112,6 +112,7 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   }
 
   mounted () {
+    console.log(this.$theme)
     this.adjustInputHeight()
   }
 

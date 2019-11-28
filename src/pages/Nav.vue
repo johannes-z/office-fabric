@@ -11,7 +11,7 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <FabricNav :groups="groups" />
+      <o-nav :groups="groups" />
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -22,13 +22,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricNav from '@/components/Nav/Nav.vue'
 
-@Component({
-  components: {
-    FabricNav,
-  },
-})
+@Component
 export default class NavPage extends Vue {
   groups = [
     {
