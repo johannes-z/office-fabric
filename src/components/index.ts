@@ -1,10 +1,11 @@
+export * from './Breadcrumb'
 export * from './Modal'
 export * from './Overlay'
 export * from './Nav'
+export * from './Image'
 
 export * from './Checkbox'
 export * from './Icon'
-export * from './Image'
 export * from './Label'
 export * from './Layer'
 export * from './Link'

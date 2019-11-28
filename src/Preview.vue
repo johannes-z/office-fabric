@@ -39,6 +39,12 @@ import routes from '@/router/routes'
               { name: 'Toggle', url: '/#/Toggle' },
             ],
           }, {
+            name: 'Commands, Menus & Navs',
+            isExpanded: false,
+            links: [
+              { name: 'Breadcrumb', url: '/#/Breadcrumb' },
+            ],
+          }, {
             name: 'Progress',
             isExpanded: false,
             links: [
