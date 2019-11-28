@@ -33,7 +33,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { Layer, Overlay } from '@/components/'
+import { Layer } from '@/components/Layer'
+import { Overlay } from '@/components/Overlay'
 import IconButton from '@/components/Button/IconButton.vue'
 
 @Component({

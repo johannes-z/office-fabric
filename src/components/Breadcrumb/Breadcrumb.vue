@@ -100,7 +100,7 @@ export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcr
   position: relative;
   align-items: center;
 }
-.itemLink.itemLink {
+.itemLink {
   font-size: 18px;
   font-weight: 400;
   color: rgb(96, 94, 92);
@@ -112,9 +112,7 @@ export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcr
   border-left-color: initial;
   cursor: pointer;
   display: inline;
-  margin-top: 0px;
   margin-right: 0px;
-  margin-bottom: 0px;
   margin-left: 0px;
   padding-top: 0px;
   padding-right: 8px;
