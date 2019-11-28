@@ -26,7 +26,6 @@ import BaseComponent from '../BaseComponent'
 import { IToggleProps, IToggleStyles } from './Toggle.types'
 
 @Component({
-  name: 'o-toggle',
   components: { Label },
 })
 export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {

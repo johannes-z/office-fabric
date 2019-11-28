@@ -33,7 +33,6 @@ import BaseComponent from '../BaseComponent'
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 
 @Component({
-  name: 'o-slider',
   components: { Label },
 })
 export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {

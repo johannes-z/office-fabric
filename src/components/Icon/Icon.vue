@@ -9,7 +9,6 @@ import BaseComponent from '../BaseComponent'
 import { IIconProps, IIconStyles } from './Icon.types'
 
 @Component({
-  name: 'o-icon',
 })
 export default class Icon extends BaseComponent<IIconProps, IIconStyles> {
   @Prop() iconName!: string

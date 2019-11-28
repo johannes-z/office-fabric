@@ -37,7 +37,6 @@ import { Layer, Overlay } from '@/components/'
 import IconButton from '@/components/Button/IconButton.vue'
 
 @Component({
-  name: 'o-panel',
   components: { Layer, Overlay, IconButton },
 })
 export default class Panel extends BaseComponent<IPanelProps, IPanelStyles> {

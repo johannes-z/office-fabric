@@ -13,9 +13,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ISpinnerProps, ISpinnerStyles } from './Spinner.types'
 import BaseComponent from '../BaseComponent'
 
-@Component({
-  name: 'o-spinner',
-})
+@Component
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {
   @Prop({ default: null }) labelPosition!: string
   @Prop({ default: null }) label!: string

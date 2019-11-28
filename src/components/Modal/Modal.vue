@@ -15,7 +15,6 @@ import BaseComponent from '../BaseComponent'
 import { Layer } from '@/components/Layer'
 
 @Component({
-  name: 'o-modal',
   components: { Layer },
 })
 export default class Modal extends BaseComponent<IModalProps, IModalStyles> {

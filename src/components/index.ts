@@ -4,6 +4,7 @@ export * from './Nav'
 
 export * from './Checkbox'
 export * from './Icon'
+export * from './Image'
 export * from './Label'
 export * from './Layer'
 export * from './Link'

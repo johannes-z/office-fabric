@@ -26,7 +26,6 @@ import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 
 @Component({
-  name: 'o-checkbox',
   components: { Label, Icon },
   inheritAttrs: false,
 })

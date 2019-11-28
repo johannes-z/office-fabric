@@ -11,7 +11,6 @@ import BaseComponent from '../BaseComponent'
 import { Layer } from '@/components/Layer'
 
 @Component({
-  name: 'o-overlay',
   components: { Layer },
 })
 export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles> {

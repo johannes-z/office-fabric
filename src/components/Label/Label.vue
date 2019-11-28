@@ -9,9 +9,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
 
-@Component({
-  name: 'o-label',
-})
+@Component
 export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean

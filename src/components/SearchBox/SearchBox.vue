@@ -32,7 +32,6 @@ import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
 
 @Component({
-  name: 'o-search-box',
   components: { Icon, IconButton },
   inheritAttrs: false,
 })

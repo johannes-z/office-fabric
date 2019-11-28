@@ -55,6 +55,7 @@ export default class TogglePage extends Vue {
   toggleStyleProp: IToggleStyles = {
     label: {
       fontWeight: 'bold',
+      color: 'red',
     },
   }
 }

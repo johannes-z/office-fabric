@@ -20,9 +20,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 
-@Component({
-  name: 'o-progress-indicator',
-})
+@Component
 export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ default: false }) indeterminate!: boolean
   @Prop({ default: 0 }) percentComplete!: number

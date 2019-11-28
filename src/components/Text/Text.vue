@@ -10,9 +10,7 @@ import BaseComponent from '@/components/BaseComponent'
 import { FontSizes } from '@/styles/fonts'
 import { ITextProps, ITextStyles } from './Text.types'
 
-@Component({
-  name: 'o-text',
-})
+@Component
 export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) nowrap!: boolean
   @Prop({ default: false }) block!: boolean

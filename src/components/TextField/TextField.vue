@@ -112,7 +112,6 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   }
 
   mounted () {
-    console.log(this.$theme)
     this.adjustInputHeight()
   }
 

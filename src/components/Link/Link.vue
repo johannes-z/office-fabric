@@ -7,15 +7,13 @@
   </component>
 </template>
 
-<script lang="tsx">
+<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILinkProps, ILinkStyles } from './Link.types'
 import { CreateElement } from 'vue'
 
-@Component({
-  name: 'o-link',
-})
+@Component
 export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: '' }) href!: string

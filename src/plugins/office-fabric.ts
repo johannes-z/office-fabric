@@ -1,5 +1,6 @@
 import Vue, { VueConstructor } from 'vue'
-import * as components from '@/components/'
+import * as Components from '@/components/'
+import { semanticColors } from '@/util'
 
 const toKebabCase = (str: string) => str
   .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -87,16 +88,22 @@ export function createCSSProperties (theme: { [key: string]: string }) {
 export * from '@/components'
 
 export default function install (Vue: any, options: IFabricOptions = defaultOptions) {
-  for (const _ in components) {
-    const component: VueConstructor<Vue> = (components as any)[_]
-    console.log(`${options.prefix}-${toKebabCase(component.name)}`)
-    Vue.component(`o-${toKebabCase(component.name)}`, component)
+  const _options = Object.assign({}, defaultOptions, options)
+
+  for (const _ in Components) {
+    const Component: VueConstructor<Vue> = (Components as any)[_]
+    if (!Component.component) continue
+
+    const name: string = `o-${toKebabCase(Component.name)}`
+    Vue.component(name, Component)
   }
 
-  Vue.prototype.$theme = options.theme
+  Vue.prototype.$semanticColors = semanticColors[_options.variant]
+  Vue.prototype.$theme = _options.theme
 
   createCSSProperties({
-    ...options.defaultColors,
-    ...options.theme,
+    ..._options.defaultColors,
+    ...semanticColors[_options.variant],
+    ..._options.theme,
   })
 }

@@ -17,9 +17,7 @@ const verticalAlignment: any = {
   end: 'bottom',
 }
 
-@Component({
-  name: 'o-separator',
-})
+@Component
 export default class Separator extends BaseComponent<ISeparatorProps, ISeparatorStyles> {
   @Prop({ type: String, default: 'center' }) alignContent!: string
   @Prop({ type: Boolean, default: false }) vertical!: boolean

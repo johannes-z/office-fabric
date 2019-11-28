@@ -29,7 +29,6 @@ import { IRatingProps, IRatingStyles } from './Rating.types'
 import BaseComponent from '../BaseComponent'
 
 @Component({
-  name: 'o-rating',
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
