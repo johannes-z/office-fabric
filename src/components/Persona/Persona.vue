@@ -1,40 +1,29 @@
 ﻿<template>
-  <div :class="['ms-Persona',
-                statusClass,
-                $style.root,
-                disabled && $style.disabled ]"
-       :style="`--size: ${size}px`">
-    <div :class="['ms-Persona-coin',
-                  $style.coin]" />
-
-    <div :class="['ms-Persona-imageArea',
-                  $style.imageArea]">
-      <div :class="['ms-Image',
-                    'ms-Persona-image',
-                    $style.imageContainer]">
-        <img :class="['ms-Image-image',
-                      'ms-Image-image--cover',
-                      'ms-Image-image--portrait',
-                      $style.image]"
-             :src="imageUrl"
-             alt="">
-      </div>
-      <div :class="['ms-Persona-presence', $style.presence]">
-        <Icon :icon-name="presenceIcon" :class="['ms-Persona-presenceIcon', $style.presenceIcon]" />
+  <div v-bind="css.root">
+    <div v-bind="css.coin">
+      <div v-bind="css.imageArea">
+        <div v-bind="css.imageContainer">
+          <img v-bind="css.image"
+               :src="imageUrl"
+               alt="">
+        </div>
+        <div v-bind="css.presence">
+          <Icon :icon-name="presenceIcon" v-bind="css.presenceIcon" />
+        </div>
       </div>
     </div>
-    <div :class="['ms-Persona-details', $style.details]">
-      <div dir="auto" :class="['ms-Persona-primaryText', $style.primaryText]">
-        <div :class="['ms-TooltipHost', $style.tooltipHostRoot]">{{ primaryText }}</div>
+    <div v-bind="css.details">
+      <div dir="auto" v-bind="css.primaryText">
+        <div v-bind="css.tooltipHostRoot">{{ primaryText }}</div>
       </div>
-      <div dir="auto" :class="['ms-Persona-secondaryText', $style.secondaryText]">
-        <div :class="['ms-TooltipHost', $style.tooltipHostRoot]">{{ secondaryText }}</div>
+      <div dir="auto" v-bind="css.secondaryText">
+        <div v-bind="css.tooltipHostRoot">{{ secondaryText }}</div>
       </div>
-      <div dir="auto" :class="['ms-Persona-tertiaryText', $style.tertiaryText]">
-        <div :class="['ms-TooltipHost', $style.tooltipHostRoot]">{{ tertiaryText }}</div>
+      <div dir="auto" v-bind="css.tertiaryText">
+        <div v-bind="css.tooltipHostRoot">{{ tertiaryText }}</div>
       </div>
-      <div dir="auto" :class="['ms-Persona-optionalText', $style.optionalText]">
-        <div :class="['ms-TooltipHost', $style.tooltipHostRoot]">{{ optionalText }}</div>
+      <div dir="auto" v-bind="css.optionalText">
+        <div v-bind="css.tooltipHostRoot">{{ optionalText }}</div>
       </div>
     </div>
   </div>
@@ -43,15 +32,18 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
+import BaseComponent from '../BaseComponent'
+import { IPersonaProps, IPersonaStyles } from '../Persona'
 
 @Component({
   name: 'OPersona',
   components: { Icon },
 })
-export default class Persona extends Vue {
+export default class Persona extends BaseComponent<IPersonaProps, IPersonaStyles> {
   @Prop({ default: 48 }) size!: number
   @Prop({ default: undefined }) imageUrl?: string
   @Prop({ default: undefined }) primaryText?: string
+  @Prop({ default: 'online' }) status?: string // online, away, busy
   @Prop({ default: undefined }) secondaryText?: string
   @Prop({ default: undefined }) tertiaryText?: string
   @Prop({ default: undefined }) optionalText?: string
@@ -63,9 +55,120 @@ export default class Persona extends Vue {
     return 'ms-Persona--away'
   }
   get presenceIcon () {
-    return 'SypeClock'
+    const oofIcon = 'SkypeArrow'
+    const { status, isOutOfOffice } = this
+    switch (status) {
+      case 'online':
+        return 'SkypeCheck'
+      case 'away':
+        return isOutOfOffice ? oofIcon : 'SkypeClock'
+      case 'dnd':
+        return 'SkypeMinus'
+      case 'offline':
+        return isOutOfOffice ? oofIcon : ''
+    }
+  }
+  get fontSizePrimary () {
+    if (this.size < 24) return 12
+    if (this.size < 56) return 14
+    return 20
+  }
+  get fontSizeDetails () {
+    if (this.size < 24) return 10
+    if (this.size < 56) return 12
+    return 14
+  }
+
+  get fontSizeIcon () {
+    if (this.size < 48) return 6
+    if (this.size < 72) return 8
+    if (this.size < 100) return 12
+    return 14
+  }
+
+  get presenceSize () {
+    if (this.size <= 12) return this.size
+    if (this.size < 40) return 8
+    if (this.size < 56) return 14
+    if (this.size < 72) return 18
+    if (this.size < 100) return 22
+    if (this.size < 120) return 26
+    return 34
+  }
+
+  get presenceColor () {
+    const { status } = this
+
+    const presenceColorAvailable = '#6BB700'
+    const presenceColorAway = '#FFAA44'
+    const presenceColorBusy = '#C43148'
+    const presenceColorDnd = '#C50F1F'
+    const presenceColorOffline = '#8A8886'
+    const presenceColorOof = '#B4009E'
+
+    if (this.isOutOfOffice) return presenceColorOof
+
+    const statusMap = {
+      'none': presenceColorOffline,
+      'offline': presenceColorOffline,
+      'online': presenceColorAvailable,
+      'away': presenceColorAway,
+      'dnd': presenceColorDnd,
+      'blocked': presenceColorBusy,
+      'busy': presenceColorBusy,
+    }
+
+    // @ts-ignore
+    if (status && status in statusMap) return statusMap[status]
+
+    return presenceColorOffline
+  }
+  get baseStyles (): IPersonaStyles {
+    const { $style, size, status } = this
+    return {
+      root: [
+        'ms-Persona',
+        $style.root,
+        {
+          '--size': `${size}px`,
+          '--fontSizePrimary': `${this.fontSizePrimary}px`,
+          '--fontSizeDetails': `${this.fontSizeDetails}px`,
+          '--presenceSize': `${this.presenceSize}px`,
+          '--presenceColor': this.presenceColor,
+          '--presenceIconFontSize': `${this.fontSizeIcon}px`,
+        },
+      ],
+      coin: [
+        'ms-Persona-coin',
+        $style.coin,
+      ],
+      imageArea: [
+        'ms-Persona-imageArea',
+        $style.imageArea,
+      ],
+      imageContainer: [
+        'ms-Image',
+        'ms-Persona-image',
+        $style.imageContainer,
+      ],
+      image: [
+        'ms-Image-image',
+        'ms-Image-image--cover',
+        'ms-Image-image--portrait',
+        $style.image,
+      ],
+      presence: ['ms-Persona-presence', $style.presence],
+      presenceIcon: ['ms-Persona-presenceIcon', $style.presenceIcon],
+      details: ['ms-Persona-details', $style.details],
+      primaryText: ['ms-Persona-primaryText', $style.primaryText],
+      tooltipHostRoot: ['ms-TooltipHost', $style.tooltipHostRoot],
+      secondaryText: ['ms-Persona-secondaryText', $style.secondaryText],
+      tertiaryText: ['ms-Persona-tertiaryText', $style.tertiaryText],
+      optionalText: ['ms-Persona-optionalText', $style.optionalText],
+    }
   }
 }
+
 </script>
 
 <style lang="scss" module>
@@ -75,7 +178,6 @@ export default class Persona extends Vue {
     font-size: 14px;
     font-weight: 400;
     box-shadow: none;
-    margin-top: 0px;
     margin-right: 0px;
     margin-bottom: 0px;
     margin-left: 0px;
@@ -86,8 +188,8 @@ export default class Persona extends Vue {
     box-sizing: border-box;
     color: rgb(50, 49, 48);
     position: relative;
-    height: --size;
-    min-width: --size;
+    height: 56px;
+    min-width: 56px;
     display: flex;
     align-items: center;
 }
@@ -100,8 +202,8 @@ export default class Persona extends Vue {
 .imageArea {
     position: relative;
     text-align: center;
-    height: --size;;
-    width: --size;;
+    height: var(--size);
+    width: var(--size);
     flex: 0 0 auto;
 }
 .imageContainer {
@@ -126,8 +228,8 @@ export default class Persona extends Vue {
     border-color: initial;
     border-image: initial;
     border-radius: 50%;
-    width: --size;
-    height: --size;
+    width: var(--size);
+    height: var(--size);
 }
 .image {
     display: block;
@@ -142,15 +244,15 @@ export default class Persona extends Vue {
 }
 .presence {
     position: absolute;
-    height: 12px;
-    width: 12px;
+    height: var(--presenceSize);
+    width: var(--presenceSize);
     top: auto;
     right: -2px;
     bottom: -2px;
     text-align: center;
     box-sizing: content-box;
     background-clip: content-box;
-    background-color: rgb(255, 170, 68);
+    background-color: var(--presenceColor);
     border-radius: 50%;
     border-width: 2px;
     border-style: solid;
@@ -162,14 +264,13 @@ export default class Persona extends Vue {
     -webkit-font-smoothing: antialiased;
     font-style: normal;
     font-weight: normal;
+    font-size: var(--fontSizeIcon);
     speak: none;
     font-family: FabricMDL2Icons;
     color: rgb(255, 255, 255);
-    font-size: 6px;
-    line-height: 12px;
+    font-size: 12px;
+    line-height: 20px;
     vertical-align: top;
-    position: relative;
-    left: 1px;
 }
 .details {
     padding-top: 0px;
@@ -188,7 +289,7 @@ export default class Persona extends Vue {
     white-space: nowrap;
     color: rgb(50, 49, 48);
     font-weight: 400;
-    font-size: 20px;
+    font-size: var(--fontSizePrimary);
     overflow: hidden;
 }
 .secondaryText {
@@ -196,7 +297,7 @@ export default class Persona extends Vue {
     white-space: nowrap;
     color: rgb(96, 94, 92);
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--fontSizeDetails);
     overflow: hidden;
 }
 .tertiaryText {
@@ -204,7 +305,7 @@ export default class Persona extends Vue {
     white-space: nowrap;
     color: rgb(96, 94, 92);
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--fontSizeDetails);
     display: none;
     overflow: hidden;
 }
@@ -213,7 +314,7 @@ export default class Persona extends Vue {
     white-space: nowrap;
     color: rgb(96, 94, 92);
     font-weight: 400;
-    font-size: 14px;
+    font-size: var(--fontSizeDetails);
     display: none;
     overflow: hidden;
 }

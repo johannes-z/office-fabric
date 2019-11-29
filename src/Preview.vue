@@ -39,6 +39,12 @@ import routes from '@/router/routes'
               { name: 'Toggle', url: '/#/Toggle' },
             ],
           }, {
+            name: 'Items & Lists',
+            isExpanded: false,
+            links: [
+              { name: 'Persona', url: '/#/Persona' },
+            ],
+          }, {
             name: 'Commands, Menus & Navs',
             isExpanded: false,
             links: [
