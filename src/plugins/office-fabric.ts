@@ -126,7 +126,6 @@ export default function install (Vue: any, options: ITheme = defaultOptions) {
     palette: _palette,
     semanticColors: _semanticColors,
   }
-  console.log(Vue.prototype.$theme)
 
   createCSSProperties(_options.defaultColors)
 }
