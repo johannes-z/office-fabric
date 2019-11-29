@@ -1,5 +1,5 @@
 <template>
-  <span v-bind="css.root">
+  <span :class="classNames.root">
     <slot />
   </span>
 </template>
@@ -9,44 +9,22 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '@/components/BaseComponent'
 import { ITextProps, ITextStyles } from './Text.types'
 import { FontSizes } from '@/styling'
+import { getClassNames } from '../../util/getClassNames'
+import { getStyles } from './Text.styles'
 
 @Component
 export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) nowrap!: boolean
   @Prop({ default: false }) block!: boolean
-  @Prop({ default: null }) variant!: string
+  @Prop({ default: 'medium' }) variant!: string
 
-  get baseStyles (): ITextStyles {
-    return {
-      root: [
-        'ms-Text',
-        this.$style.root,
-        (this.block || this.nowrap) && this.$style.block,
-        this.nowrap && this.$style.nowrap,
-        {
-          // @ts-ignore
-          '--fontSize': FontSizes[this.variant],
-        },
-      ],
-    }
+  get classNames (): any {
+    const { theme, block, nowrap } = this
+    return getClassNames(getStyles, {
+      theme,
+      block,
+      nowrap,
+    })
   }
 }
 </script>
-
-<style lang="scss" module>
-.root {
-  font-size: var(--fontSize, 14px);
-  font-weight: 400;
-  display: inline;
-  color: inherit;
-}
-.block {
-  display: block;
-}
-.nowrap {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-</style>
