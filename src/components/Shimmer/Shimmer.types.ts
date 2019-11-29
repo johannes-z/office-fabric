@@ -1,4 +1,4 @@
-import { IStyle } from '@/types/IStyle'
+import { IStyle } from '@uifabric/merge-styles'
 
 export interface IShimmerProps {
 }

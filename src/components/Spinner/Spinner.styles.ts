@@ -1,7 +1,6 @@
 import { ISpinnerStyles } from './Spinner.types'
-import { getGlobalClassNames, hiddenContentStyle } from '@/styling'
+import { getGlobalClassNames, hiddenContentStyle, HighContrastSelector } from '@/styling'
 import { keyframes } from '@uifabric/merge-styles'
-import { HighContrastSelector } from '@/util'
 
 const GlobalClassNames = {
   root: 'ms-Spinner',
