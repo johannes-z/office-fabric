@@ -117,7 +117,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     const isLinkWithIcon = link.icon || link.iconProps
     return (
       <action-button
-        href={link.url || (link.forceAnchor ? '#' : undefined)}
+        href={link.href || (link.forceAnchor ? '#' : undefined)}
         title={link.title || link.name}
         target={link.target}
         disabled={link.disabled}
@@ -134,7 +134,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private preventBounce (link: INavLink, ev: Event): void {
-    if (!link.url && link.forceAnchor) ev.preventDefault()
+    if (!link.href && link.forceAnchor) ev.preventDefault()
   }
 
   private isGroupExpanded (group: INavLinkGroup): boolean {

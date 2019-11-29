@@ -8,7 +8,7 @@ export interface INavLinkGroup {
 
 export interface INavLink {
   name: string;
-  url: string;
+  href: string;
   key?: string;
   links?: INavLink[];
   isExpanded?: boolean;
