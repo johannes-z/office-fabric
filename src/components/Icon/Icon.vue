@@ -1,5 +1,5 @@
 <template>
-  <i v-bind="css.root"
+  <i :class="classNames.root"
      aria-hidden="true" />
 </template>
 
@@ -7,29 +7,27 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IIconProps, IIconStyles } from './Icon.types'
+import { getClassNames } from '../../util/getClassNames'
+import { getStyles } from './Icon.styles'
 
 @Component({
 })
 export default class Icon extends BaseComponent<IIconProps, IIconStyles> {
   @Prop() iconName!: string
+  @Prop() imageProps!: any
 
-  get baseStyles (): IIconStyles {
-    return {
-      root: [
-        'ms-Icon',
-        this.iconName && `ms-Icon--${this.iconName}`,
-        this.$style.root,
-      ],
-    }
+  get classNames () {
+    const { className, styles, iconName, theme } = this
+    const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
+    const isImage = !!this.imageProps
+
+    return getClassNames(getStyles, {
+      theme: theme!,
+      className,
+      iconClassName: ['ms-Icon', `ms-Icon--${iconName}`],
+      isImage,
+      isPlaceholder,
+    })
   }
 }
 </script>
-
-<style lang="scss" module>
-.root {
-  display: inline-block;
-  font-style: normal;
-  font-weight: normal;
-  font-family: FabricMDL2Icons;
-}
-</style>

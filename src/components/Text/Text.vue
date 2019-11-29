@@ -7,8 +7,8 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '@/components/BaseComponent'
-import { FontSizes } from '@/styles/fonts'
 import { ITextProps, ITextStyles } from './Text.types'
+import { FontSizes } from '@/styling'
 
 @Component
 export default class Text extends BaseComponent<ITextProps, ITextStyles> {

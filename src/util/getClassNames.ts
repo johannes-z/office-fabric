@@ -1,0 +1,5 @@
+import { mergeStyleSets } from '@uifabric/merge-styles'
+
+export function getClassNames (getStyles: any, props: any) {
+  return mergeStyleSets(getStyles(props))
+}

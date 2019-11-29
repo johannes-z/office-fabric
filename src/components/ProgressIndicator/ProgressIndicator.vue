@@ -1,15 +1,15 @@
 <template>
-  <div v-bind="css.root">
-    <div v-if="label" v-bind="css.itemName">
+  <div :class="classNames.root">
+    <div v-if="label" :class="classNames.itemName">
       {{ label }}
     </div>
 
-    <div v-bind="css.itemProgress">
-      <div v-bind="css.progressTrack" />
-      <div v-bind="css.progressBar" />
+    <div :class="classNames.itemProgress">
+      <div :class="classNames.progressTrack" />
+      <div :class="classNames.progressBar" :style="progressBarStyles" />
     </div>
 
-    <div v-if="description" v-bind="css.itemDescription">
+    <div v-if="description" :class="classNames.itemDescription">
       {{ description }}
     </div>
   </div>
@@ -19,6 +19,12 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
+import { getClassNames } from '../../util/getClassNames'
+import { getStyles } from './ProgressIndicator.styles'
+
+// if the percentComplete is near 0, don't animate it.
+// This prevents animations on reset to 0 scenarios
+const ZERO_THRESHOLD = 0.01
 
 @Component
 export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
@@ -29,101 +35,22 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
 
   @Prop({ default: 2 }) barHeight!: number
 
-  get baseStyles (): IProgressIndicatorStyles {
-    const { $style, indeterminate, label, description, percentComplete } = this
+  get classNames () {
+    const { className, indeterminate, theme, barHeight } = this
+    return getClassNames(getStyles, {
+      className,
+      indeterminate,
+      theme,
+      barHeight,
+    })
+  }
+
+  get progressBarStyles () {
+    const { percentComplete } = this
     return {
-      root: [
-        'ms-ProgressIndicator',
-        $style.root,
-        indeterminate && $style.indeterminate,
-      ],
-      itemName: [
-        $style.itemName,
-      ],
-      itemProgress: [
-        $style.itemProgress,
-        { '--barHeight': `${this.barHeight}px` },
-      ],
-      progressTrack: [
-        $style.progressTrack,
-      ],
-      progressBar: [
-        $style.progressBar,
-        { '--progress': !indeterminate ? `${percentComplete}%` : null },
-      ],
-      itemDescription: [
-        $style.itemDescription,
-      ],
+      width: percentComplete !== undefined ? percentComplete + '%' : undefined,
+      transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
     }
   }
 }
 </script>
-
-<style lang="scss" module>
-@keyframes IndeterminateProgress {
-  0% {
-    left: -30%
-  }
-  100% {
-    left: 100%
-  }
-}
-.root {
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  font-size: 14px;
-  font-weight: 400;
-}
-.itemProgress {
-  position: relative;
-  height: var(--barHeight, 2px);
-  padding-top: 8px;
-  padding-right: 0px;
-  padding-bottom: 8px;
-  padding-left: 0px;
-  overflow: hidden;
-}
-.progressTrack {
-  position: absolute;
-  width: 100%;
-  height: var(--barHeight, 2px);
-  background-color: rgb(237, 235, 233);
-}
-.progressBar {
-  background-color: rgb(0, 120, 212);
-  height: var(--barHeight, 2px);
-  position: absolute;
-  transition: width 0.15s linear 0s;
-  width: var(--progress, 0);
-}
-.itemName {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: rgb(50, 49, 48);
-  padding-top: 4px;
-  line-height: 20px;
-  overflow: hidden;
-}
-.itemDescription {
-  color: rgb(96, 94, 92);
-  font-size: 12px;
-  line-height: 18px;
-}
-
-.indeterminate {
-  .progressBar {
-    height: var(--barHeight, 2px);
-    position: absolute;
-    width: 0px;
-    min-width: 33%;
-    transition: width 0.3s ease 0s;
-    background:
-      linear-gradient(to right,
-        rgb(237, 235, 233) 0%,
-        rgb(0, 120, 212) 50%,
-        rgb(237, 235, 233) 100%
-      );
-    animation: IndeterminateProgress 3s infinite;
-  }
-}
-</style>

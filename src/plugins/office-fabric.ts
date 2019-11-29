@@ -1,7 +1,7 @@
 import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
 import { semanticColors } from '@/util'
-import { IPalette } from '@/types/IPalette'
+import { IPalette } from '@/styling'
 
 const toKebabCase = (str: string) => str
   .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -18,28 +18,56 @@ export interface ITheme {
 const defaultOptions: ITheme = {
   prefix: 'o',
   theme: {
+    themeDarker: '#004578',
+    themeDark: '#005a9e',
+    themeDarkAlt: '#106ebe',
     themePrimary: '#0078d4',
-    themeLighterAlt: '#f3f9fd',
-    themeLighter: '#d0e7f8',
-    themeLight: '#a9d3f2',
-    themeTertiary: '#5ca9e5',
-    themeSecondary: '#1a86d9',
-    themeDarkAlt: '#006cbe',
-    themeDark: '#005ba1',
-    themeDarker: '#004377',
-    neutralLighterAlt: '#f8f8f8',
-    neutralLighter: '#f4f4f4',
-    neutralLight: '#eaeaea',
-    neutralQuaternaryAlt: '#dadada',
-    neutralQuaternary: '#d0d0d0',
-    neutralTertiaryAlt: '#c8c8c8',
-    neutralTertiary: '#bab8b7',
-    neutralSecondary: '#a3a2a0',
-    neutralPrimaryAlt: '#8d8b8a',
+    themeSecondary: '#2b88d8',
+    themeTertiary: '#71afe5',
+    themeLight: '#c7e0f4',
+    themeLighter: '#deecf9',
+    themeLighterAlt: '#eff6fc',
+    black: '#000000',
+    blackTranslucent40: 'rgba(0,0,0,.4)',
+    neutralDark: '#201f1e',
     neutralPrimary: '#323130',
-    neutralDark: '#605e5d',
-    black: '#494847',
+    neutralPrimaryAlt: '#3b3a39',
+    neutralSecondary: '#605e5c',
+    neutralSecondaryAlt: '#8a8886',
+    neutralTertiary: '#a19f9d',
+    neutralTertiaryAlt: '#c8c6c4',
+    neutralQuaternary: '#d2d0ce',
+    neutralQuaternaryAlt: '#e1dfdd',
+    neutralLight: '#edebe9',
+    neutralLighter: '#f3f2f1',
+    neutralLighterAlt: '#faf9f8',
+    accent: '#0078d4',
     white: '#ffffff',
+    whiteTranslucent40: 'rgba(255,255,255,.4)',
+    yellowDark: '#d29200',
+    yellow: '#ffb900',
+    yellowLight: '#fff100',
+    orange: '#d83b01',
+    orangeLight: '#ea4300',
+    orangeLighter: '#ff8c00',
+    redDark: '#a4262c',
+    red: '#e81123',
+    magentaDark: '#5c005c',
+    magenta: '#b4009e',
+    magentaLight: '#e3008c',
+    purpleDark: '#32145a',
+    purple: '#5c2d91',
+    purpleLight: '#b4a0ff',
+    blueDark: '#002050',
+    blueMid: '#00188f',
+    blue: '#0078d4',
+    blueLight: '#00bcf2',
+    tealDark: '#004b50',
+    teal: '#008272',
+    tealLight: '#00b294',
+    greenDark: '#004b1c',
+    green: '#107c10',
+    greenLight: '#bad80a',
   },
   defaultColors: {
     error: '#A4262C',
@@ -48,17 +76,26 @@ const defaultOptions: ITheme = {
 }
 
 export function createCSSProperties (theme: { [key: string]: string }) {
-  const properties = Object.entries(theme).map(([key, value]) => {
-    return `--fabric-${key}:${value};`
-  }).join('\n')
+  const properties: any = {}
+  const css: any = []
+  for (const key in theme) {
+    const value = theme[key]
+    properties[key] = `var(--fabric-${key})`
+    css.push(`--fabric-${key}: ${value};`)
+  }
 
-  const style = document.getElementById('__fabric__css-properties') ||
-    document.createElement('style')
-  style.id = '__fabric__css-properties'
-  document.head.appendChild(style)
-  style.innerHTML = `:root {
-    ${properties}
+  let style = document.getElementById('__fabric__css-properties')
+  if (!style) {
+    style = document.createElement('style')
+    style.id = '__fabric__css-properties'
+    document.head.appendChild(style)
+  }
+  style.innerHTML = `
+  ${style.innerHTML}
+  :root {
+    ${css.join('\n')}
   }`
+  return properties
 }
 
 export * from '@/components'
@@ -74,15 +111,22 @@ export default function install (Vue: any, options: ITheme = defaultOptions) {
     Vue.component(name, Component)
   }
 
-  const _semanticColors = semanticColors[_options.variant]
+  const _palette = createCSSProperties(_options.theme as any)
+  const _semanticColors = createCSSProperties(semanticColors[_options.variant])
   Vue.prototype.$theme = {
-    palette: _options.theme,
+    effects: {
+      roundedCorner1: 1,
+      roundedCorner2: 2,
+    },
+    fonts: {
+      small: {},
+      medium: {},
+      large: {},
+    },
+    palette: _palette,
     semanticColors: _semanticColors,
   }
+  console.log(Vue.prototype.$theme)
 
-  createCSSProperties({
-    ..._options.defaultColors,
-    ..._semanticColors,
-    ..._options.theme,
-  })
+  createCSSProperties(_options.defaultColors)
 }

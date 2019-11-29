@@ -1,0 +1,1 @@
+Package `@uifabric/styling` can't be used because of its `react` dependency.

@@ -1,4 +1,4 @@
-import { IStyle } from '@/types/IStyle'
+import { IStyle } from '@uifabric/merge-styles'
 
 export interface ILinkProps {
   // extends Partial<HTMLLinkElement & HTMLButtonElement>
@@ -7,5 +7,5 @@ export interface ILinkProps {
 }
 
 export interface ILinkStyles {
-  root: IStyle;
+  root?: IStyle;
 }

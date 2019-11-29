@@ -1,3 +1,5 @@
+import { IStyle } from '@uifabric/merge-styles'
+
 export interface ISeparatorProps {
   /**
    * Whether the element is a vertical separator.
@@ -15,10 +17,10 @@ export interface ISeparatorStyles {
   /**
    * Style for the root element
    */
-  root: any;
+  root?: IStyle;
 
   /**
    * Style for the content
    */
-  content: any;
+  content?: IStyle;
 }

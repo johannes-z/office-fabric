@@ -1,4 +1,9 @@
-// https://github.com/OfficeDev/office-ui-fabric-react/blob/master/packages/utilities/src/KeyCodes.ts
+/**
+ * Simulated enum for keycodes. These will get inlined by uglify when used much like an enum
+ *
+ * @public
+ * {@docCategory KeyCodes}
+ */
 export const KeyCodes = {
   backspace: 8 as 8,
   tab: 9 as 9,

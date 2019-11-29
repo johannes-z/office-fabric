@@ -1,4 +1,4 @@
-import { IStyle } from '../BaseComponent'
+import { IStyle } from '@uifabric/merge-styles'
 
 export interface ISpinnerProps {
 
