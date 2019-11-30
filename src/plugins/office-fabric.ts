@@ -122,6 +122,7 @@ export default function install (Vue: any, options: ITheme = defaultOptions) {
       xSmall: {},
       small: {},
       medium: {},
+      mediumPlus: {},
       large: {},
     },
     palette: _palette,
