@@ -119,13 +119,42 @@ export default function install (Vue: any, options: ITheme = defaultOptions) {
       roundedCorner2: 2,
     },
     fonts: {
+      xSmall: {},
       small: {},
       medium: {},
       large: {},
     },
     palette: _palette,
-    semanticColors: _semanticColors,
+    semanticColors: {
+      ..._semanticColors,
+      errorText: '#A4262C',
+    },
   }
 
   createCSSProperties(_options.defaultColors)
 }
+
+/*
+
+============================
+    CSS Vars
+--neutralLight: #eaeaea;
+--bodyFrameBackground: var(--neutralLight)
+
+{
+  neutralLight: 'var(--neutralLight)'
+}
+{
+  bodyFrameBackground: 'var(--neutralLight)'
+}
+
+======================================
+    No CSS Vars
+{
+  neutralLight: '#eaeaea'
+}
+{
+  bodyFrameBackground: '#eaeaea'
+}
+
+ */

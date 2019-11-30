@@ -36,13 +36,7 @@ export default class Separator extends BaseComponent<ISeparatorProps, ISeparator
     )
   }
 
-  // get classNames () {
-  //   return getClassNames(getStyles, {
-  //     theme: this.theme,
-  //     className: this.$attrs.class,
-  //     alignContent: this.alignContent,
-  //     vertical: this.vertical,
-  //   })
-  // }
+  // @ts-ignore
+  get classNames () {}
 }
 </script>

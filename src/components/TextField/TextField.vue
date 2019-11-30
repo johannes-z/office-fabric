@@ -1,17 +1,18 @@
 <template>
-  <div v-bind="css.root">
-    <div v-bind="css.wrapper">
+  <div :class="classNames.root">
+    <div :class="classNames.wrapper">
       <Label v-if="label"
-             v-bind="css.label"
+             :class="classNames.label"
              :for="`TextField${_uid}`"
              :required="required"
              v-text="label" />
-      <div v-bind="css.fieldGroup">
+      <div :class="classNames.fieldGroup">
         <component :is="multiline ? 'textarea' : 'input'"
                    :id="`TextField${_uid}`"
                    ref="textElement"
+                   :class="classNames.field"
                    :value="internalValue"
-                   v-bind="[$attrs, css.field]"
+                   v-bind="$attrs"
                    :disabled="disabled"
                    :readonly="readonly"
                    :required="required"
@@ -20,15 +21,15 @@
                    type="text"
                    autocomplete="off"
                    :style="{ resize: (resizable === false) && 'none' }"
-                   @focus="isActive = true"
+                   @focus="onFocus"
                    @blur="isActive = false"
                    @input="internalValue = $event.target.value"
                    v-text="internalValue" />
       </div>
     </div>
-    <div v-if="errorMessage" v-bind="css.description">
+    <div v-if="errorMessage" :class="classNames.description">
       <div role="alert">
-        <p v-bind="css.errorMessage">
+        <p :class="classNames.errorMessage">
           <span>{{ errorMessage }}</span>
         </p>
       </div>
@@ -41,6 +42,8 @@ import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
 import Label from '@/components/Label/Label.vue'
 import { ITextFieldProps, ITextFieldStyles } from './TextField.types'
 import BaseComponent from '../BaseComponent'
+import { getClassNames } from '../../util/getClassNames'
+import { getStyles } from './TextField.styles'
 
 @Component({
   components: { Label },
@@ -54,7 +57,9 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   @Prop({ default: null }) resizable!: boolean
   @Prop({ default: null }) autoAdjustHeight!: boolean
 
+  @Prop({ default: false }) borderless!: boolean
   @Prop({ default: false }) disabled!: boolean
+  @Prop({ default: false }) underlined!: boolean
   @Prop({ default: false }) readonly!: boolean
   @Prop({ default: false }) required!: boolean
   @Prop({ default: null }) label!: string
@@ -66,49 +71,25 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   isActive: boolean = false
   internalValue: string = this.value
 
-  get baseStyles (): ITextFieldStyles {
-    const { $style, multiline, isActive, disabled, errorMessage } = this
-    return {
-      root: [
-        'ms-TextField',
-        $style.root,
-        multiline && $style.multiline,
-        isActive && $style.active,
-        disabled && $style.disabled,
-        errorMessage && $style.hasError,
-      ],
-      wrapper: [
-        'ms-TextField-wrapper',
-        $style.wrapper,
-      ],
-      label: [
-        $style.label,
-      ],
-      fieldGroup: [
-        'ms-TextField-fieldGroup',
-        $style.fieldGroup,
-      ],
-      prefix: [
-
-      ],
-      suffix: [
-
-      ],
-      field: [
-        'ms-TextField-field',
-        $style.field,
-      ],
-      icon: [
-
-      ],
-      description: [
-        $style.description,
-      ],
-      errorMessage: [
-        'ms-TextField-errorMessage',
-        $style.errorMessage,
-      ],
-    }
+  get classNames () {
+    const { theme, className, disabled, isActive: focused, required, multiline, label, borderless, underlined,
+      resizable, autoAdjustHeight } = this
+    return getClassNames(getStyles, {
+      theme,
+      className,
+      disabled,
+      focused,
+      required,
+      multiline,
+      hasLabel: !!label,
+      borderless,
+      underlined,
+      hasIcon: false,
+      resizable: resizable !== false,
+      hasErrorMessage: !!this.errorMessage,
+      inputClassName: '',
+      autoAdjustHeight,
+    })
   }
 
   mounted () {
@@ -148,140 +129,10 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
       textField.style.height = textField.scrollHeight + 'px'
     }
   }
+
+  private async onFocus () {
+    this.isActive = true
+    this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length)
+  }
 }
 </script>
-
-<style lang="scss" module>
-.root {
-  box-shadow: none;
-  box-sizing: border-box;
-  position: relative;
-
-  &.disabled {
-    .label {
-      color: rgb(161, 159, 157);
-    }
-    .fieldGroup {
-      background: rgb(255, 255, 255);
-      border-color: rgb(243, 242, 241);
-    }
-    .field {
-      color: rgb(161, 159, 157);
-      background: none rgb(243, 242, 241);
-      border-color: rgb(243, 242, 241);
-    }
-  }
-
-  &.active {
-    .fieldGroup {
-      border-width: 1px;
-      border-style: solid;
-      border-image: initial;
-      border-radius: 2px;
-      background: rgb(255, 255, 255);
-      border-color: rgb(0, 120, 212);
-
-      &:after {
-        pointer-events: none;
-        content: "";
-        position: absolute;
-        left: -1px;
-        top: -1px;
-        bottom: -1px;
-        right: -1px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: rgb(0, 120, 212);
-        border-image: initial;
-        border-radius: 2px;
-      }
-    }
-  }
-}
-.label + .fieldGroup {
-  &:before {
-    content: "";
-  }
-}
-.fieldGroup {
-  box-shadow: none;
-  box-sizing: border-box;
-  cursor: text;
-  min-height: 32px;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  position: relative;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(138, 136, 134);
-  border-image: initial;
-  border-radius: 2px;
-  background: rgb(255, 255, 255);
-
-  &:hover {
-    border-color: rgb(50, 49, 48);
-  }
-
-  &:before {
-    content: "*";
-    color: rgb(164, 38, 44);
-    position: absolute;
-    top: -5px;
-    right: -10px;
-  }
-}
-.field {
-  font-size: 14px;
-  font-weight: 400;
-  box-shadow: none;
-  padding: 0 8px;
-  box-sizing: border-box;
-  color: rgb(50, 49, 48);
-  width: 100%;
-  min-width: 0px;
-  text-overflow: ellipsis;
-  border-radius: 0px;
-  border-width: initial;
-  border-style: none;
-  border-color: initial;
-  border-image: initial;
-  background: none transparent;
-  outline: 0px;
-}
-
-.root.hasError {
-  .fieldGroup {
-    border-color: rgb(164, 38, 44);
-
-    &:after {
-      border-color: rgb(164, 38, 44);
-    }
-  }
-}
-
-.errorMessage {
-  animation-name: css-0, css-13;
-  animation-duration: 0.367s;
-  animation-timing-function: cubic-bezier(0.1, 0.9, 0.2, 1);
-  animation-fill-mode: both;
-  font-size: 12px;
-  font-weight: 400;
-  color: rgb(164, 38, 44);
-  margin-top: 0px;
-  margin-right: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  padding-top: 5px;
-  display: flex;
-  align-items: center;
-}
-
-.root.multiline {
-  .field {
-    min-height: 32px;
-    padding: 6px 8px;
-    resize: vertical;
-  }
-}
-</style>
