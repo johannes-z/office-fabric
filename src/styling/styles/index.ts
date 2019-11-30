@@ -1,6 +1,7 @@
 export * from './AnimationStyles'
 export * from './CommonStyles'
 export * from './GeneralStyles'
+export * from './PulsingBeaconAnimationStyles'
 
 export * from './fonts'
 export * from './getFocusStyle'
