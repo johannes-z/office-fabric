@@ -14,7 +14,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-import routes from '@/router/routes'
+import routes from '@/plugins/router/routes'
 @Component({
   data () {
     return {
