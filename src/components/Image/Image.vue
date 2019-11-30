@@ -3,13 +3,15 @@
     <img v-bind="$attrs"
          :class="classNames.image"
          :src="src"
-         alt="">
+         alt=""
+         @load="onImageLoaded"
+         @error="onImageError">
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle } from './Image.types'
+import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle, ImageLoadState } from './Image.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Image.styles'
@@ -28,10 +30,12 @@ export default class Image extends BaseComponent<IImageStyleProps, IImageStyles>
   @Prop({ default: null }) shouldStartVisible!: boolean
   @Prop({ default: ImageCoverStyle.portrait }) coverStyle!: number
 
+  loadState: ImageLoadState = ImageLoadState.notLoaded
+
   private static svgRegex = /\.svg$/i;
 
   get classNames () {
-    const { coverStyle, imageFit, theme, className, width, height, maximizeFrame, shouldFadeIn, shouldStartVisible } = this
+    const { loadState, coverStyle, imageFit, theme, className, width, height, maximizeFrame, shouldFadeIn, shouldStartVisible } = this
     return getClassNames(getStyles, {
       theme,
       className,
@@ -40,7 +44,7 @@ export default class Image extends BaseComponent<IImageStyleProps, IImageStyles>
       maximizeFrame,
       shouldFadeIn,
       shouldStartVisible,
-      isLoaded: true, // loadState === ImageLoadState.loaded || (loadState === ImageLoadState.notLoaded && this.props.shouldStartVisible),
+      isLoaded: loadState === ImageLoadState.loaded || (loadState === ImageLoadState.notLoaded && shouldStartVisible),
       isLandscape: coverStyle === ImageCoverStyle.landscape,
       isCenter: imageFit === ImageFit.center,
       isCenterContain: imageFit === ImageFit.centerContain,
@@ -48,9 +52,16 @@ export default class Image extends BaseComponent<IImageStyleProps, IImageStyles>
       isContain: imageFit === ImageFit.contain,
       isCover: imageFit === ImageFit.cover,
       isNone: imageFit === ImageFit.none,
-      isError: false, // loadState === ImageLoadState.error,
+      isError: loadState === ImageLoadState.error,
       isNotImageFit: imageFit === undefined,
     })
+  }
+
+  private onImageLoaded () {
+    this.loadState = ImageLoadState.loaded
+  }
+  private onImageError () {
+    this.loadState = ImageLoadState.error
   }
 }
 </script>

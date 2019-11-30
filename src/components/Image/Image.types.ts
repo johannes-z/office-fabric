@@ -54,6 +54,31 @@ export enum ImageFit {
   centerContain = 5
 }
 
+export enum ImageLoadState {
+  /**
+   * The image has not yet been loaded, and there is no error yet.
+   */
+  notLoaded = 0,
+
+  /**
+   * The image has been loaded successfully.
+   */
+  loaded = 1,
+
+  /**
+   * An error has been encountered while loading the image.
+   */
+  error = 2,
+
+  /**
+   * Deprecated at v1.3.6, to replace the src in case of errors, use `onLoadingStateChange` instead
+   * and rerender the Image with a difference src.
+   * @deprecated Use `onLoadingStateChange` instead
+   * and rerender the Image with a difference src.
+   */
+  errorLoaded = 3
+}
+
 export enum ImageCoverStyle {
   /**
    * The image will be shown at 100% height of container and the width will be scaled accordingly
