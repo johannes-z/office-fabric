@@ -31,7 +31,7 @@ export const getStyles = (props: any): IToggleStyles => {
       checked && 'is-checked',
       !disabled && 'is-enabled',
       disabled && 'is-disabled',
-      // theme.fonts.medium,
+      theme.fonts.medium,
       {
         marginBottom: '8px',
       },

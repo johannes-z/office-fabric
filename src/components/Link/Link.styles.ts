@@ -20,7 +20,7 @@ export const getStyles = (props: any): ILinkStyles => {
   return {
     root: [
       classNames.root,
-      // theme.fonts.medium,
+      theme.fonts.medium,
       {
         color: linkColor,
         outline: 'none',
