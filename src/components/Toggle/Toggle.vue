@@ -5,14 +5,14 @@
           :checked="internalChecked"
           :disabled="disabled"
           :label="label">
-      <Label :class="classNames.label"
+      <Label :class-name="classNames.label"
              v-text="label" />
     </slot>
     <div :class="classNames.container">
       <button :id="`Toggle${_uid}`" :class="classNames.pill">
         <div :class="classNames.thumb" />
       </button>
-      <Label :class="classNames.text"
+      <Label :class-name="classNames.text"
              :for="`Toggle${_uid}`"
              @click.native.prevent>
         {{ internalChecked ? onText : offText }}

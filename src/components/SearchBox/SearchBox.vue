@@ -2,7 +2,7 @@
   <div :class="classNames.root">
     <div :class="classNames.iconContainer"
          role="search">
-      <Icon :class="classNames.icon" :icon-name="iconName" />
+      <Icon :class-name="classNames.icon" :icon-name="iconName" />
     </div>
     <input
       ref="input"
@@ -17,9 +17,8 @@
       @blur="isActive = false"
       @keydown.enter="submit"
       @keydown.esc="clearInput">
-    <div
-      v-if="internalValue"
-      :class="classNames.clearButton">
+    <div v-if="internalValue"
+         :class="classNames.clearButton">
       <IconButton icon-name="Clear" @click.native="clearInput" />
     </div>
   </div>
