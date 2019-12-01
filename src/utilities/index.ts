@@ -1,5 +1,6 @@
 export * from './dom'
 
+export * from './classNamesFunction'
 export * from './css'
 export * from './initializeFocusRects'
 export * from './keyboard'

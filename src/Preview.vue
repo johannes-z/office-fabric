@@ -42,6 +42,7 @@ import routes from '@/plugins/router/routes'
             name: 'Items & Lists',
             isExpanded: false,
             links: [
+              { name: 'ActivityItem', url: '/#/ActivityItem' },
               { name: 'Persona', url: '/#/Persona' },
             ],
           }, {

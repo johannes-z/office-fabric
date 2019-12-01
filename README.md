@@ -1,5 +1,4 @@
 # Important
-
 This library is built on top of Microsoft's `office-ui-fabric-react`, more
 spefically the packages `@uifabric/merge-styles`, `@uifabric/styling`, and
 `@uifabric/utilities`. For maximum design parity, office-fabric uses
@@ -10,6 +9,12 @@ original `.style.ts` definitions of the components are subject to Microsoft's
 license models. Please check `office-ui-fabric-react` for more information.
 
 # office-fabric
+
+# Contributing
+## Vue Caveats
+
+* `class` has to be passed to subcomponents using the `class-name` property,
+  because Vue doesn't expose `$attrs.class`.
 
 ## Project setup
 ```

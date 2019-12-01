@@ -1,3 +1,4 @@
+export * from './ActivityItem'
 export * from './Breadcrumb'
 export * from './Modal'
 export * from './Overlay'

@@ -7,10 +7,11 @@
            @input="internalValue = !internalValue"
            v-on="$listeners">
     <Label :for="`Checkbox${_uid}`"
+           :class-name="classNames.label"
            :class="classNames.label">
       <div :class="classNames.checkbox">
         <Icon icon-name="CheckMark"
-              :class="classNames.checkmark" />
+              :class-name="classNames.checkmark" />
       </div>
       <span :class="classNames.text">
         <slot>{{ label }}</slot>
@@ -25,8 +26,10 @@ import Label from '../Label/Label.vue'
 import Icon from '../Icon/Icon.vue'
 import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Checkbox.styles'
+import { classNamesFunction } from '../../utilities'
+
+const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
 @Component({
   components: { Label, Icon },
