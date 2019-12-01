@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import DefaultButton from '@/components/Button/DefaultButton.vue'
+import DefaultButton from '@/components/Button/DefaultButton/DefaultButton.vue'
 
 @Component({
   components: {

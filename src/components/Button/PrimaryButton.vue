@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import DefaultButton from './DefaultButton.vue'
+import DefaultButton from './DefaultButton/DefaultButton.vue'
 
 @Component
 export default class PrimaryButton extends DefaultButton {

@@ -13,68 +13,68 @@
       <h2>Usage</h2>
       <h2>Default Button</h2>
       <h3>Default</h3>
-      <FabricDefaultButton>Normal</FabricDefaultButton>
-      <FabricDefaultButton checked>Checked</FabricDefaultButton>
-      <FabricDefaultButton disabled>Disabled</FabricDefaultButton>
-      <FabricDefaultButton checked disabled>Checked & Disabled</FabricDefaultButton>
+      <o-default-button>Normal</o-default-button>
+      <o-default-button checked>Checked</o-default-button>
+      <o-default-button disabled>Disabled</o-default-button>
+      <o-default-button checked disabled>Checked & Disabled</o-default-button>
 
       <h3>Primary</h3>
-      <FabricDefaultButton primary>Normal</FabricDefaultButton>
-      <PrimaryButton checked>Checked</PrimaryButton>
-      <PrimaryButton disabled>Disabled</PrimaryButton>
-      <PrimaryButton checked disabled>Checked & Disabled</PrimaryButton>
+      <o-default-button primary>Normal</o-default-button>
+      <o-primary-button checked>Checked</o-primary-button>
+      <o-primary-button disabled>Disabled</o-primary-button>
+      <o-primary-button checked disabled>Checked & Disabled</o-primary-button>
 
       <h2>CommandBar Button</h2>
       <div style="display: flex; flex-direction: row; flex-wrap: nowrap; width: auto; height: 44px; box-sizing: border-box;">
-        <CommandBarButton icon-name="Mail">Normal</CommandBarButton>
-        <CommandBarButton checked>Checked</CommandBarButton>
-        <CommandBarButton disabled>Disabled</CommandBarButton>
-        <CommandBarButton checked disabled>Checked & Disabled</CommandBarButton>
+        <o-command-bar-button icon-name="Mail">Normal</o-command-bar-button>
+        <o-command-bar-button checked>Checked</o-command-bar-button>
+        <o-command-bar-button disabled>Disabled</o-command-bar-button>
+        <o-command-bar-button checked disabled>Checked & Disabled</o-command-bar-button>
       </div>
 
       <h2>Icon Button</h2>
-      <IconButton icon-name="Upload" />
-      <IconButton icon-name="Upload" checked />
-      <IconButton icon-name="Upload" disabled />
-      <IconButton icon-name="Upload"
-                  checked
-                  disabled />
+      <o-icon-button icon-name="Upload" />
+      <o-icon-button icon-name="Upload" checked />
+      <o-icon-button icon-name="Upload" disabled />
+      <o-icon-button icon-name="Upload"
+                     checked
+                     disabled />
 
       <h2>Action Button</h2>
-      <ActionButton icon-name="AddFriend">Normal</ActionButton>
-      <ActionButton icon-name="AddFriend" checked>Checked</ActionButton>
-      <ActionButton icon-name="AddFriend" disabled>Disabled</ActionButton>
-      <ActionButton icon-name="AddFriend"
-                    checked
-                    disabled>
+      <o-action-button icon-name="AddFriend">Normal</o-action-button>
+      <o-action-button icon-name="AddFriend" checked>Checked</o-action-button>
+      <o-action-button icon-name="AddFriend" disabled>Disabled</o-action-button>
+      <o-action-button icon-name="AddFriend"
+                       checked
+                       disabled>
         Checked & Disabled
-      </ActionButton>
+      </o-action-button>
 
       <h2>Button-like Anchor</h2>
-      <FabricDefaultButton href="https://google.at"
-                           target="_blank"
-                           title="open Google">
+      <o-default-button href="https://google.at"
+                        target="_blank"
+                        title="open Google">
         Normal
-      </FabricDefaultButton>
-      <FabricDefaultButton href="https://google.at"
-                           target="_blank"
-                           title="open Google"
-                           checked>
+      </o-default-button>
+      <o-default-button href="https://google.at"
+                        target="_blank"
+                        title="open Google"
+                        checked>
         Checked
-      </FabricDefaultButton>
-      <FabricDefaultButton href="https://google.at"
-                           target="_blank"
-                           title="open Google"
-                           disabled>
+      </o-default-button>
+      <o-default-button href="https://google.at"
+                        target="_blank"
+                        title="open Google"
+                        disabled>
         Disabled
-      </FabricDefaultButton>
-      <FabricDefaultButton href="https://google.at"
-                           target="_blank"
-                           title="open Google"
-                           checked
-                           disabled>
+      </o-default-button>
+      <o-default-button href="https://google.at"
+                        target="_blank"
+                        title="open Google"
+                        checked
+                        disabled>
         Checked & Disabled
-      </FabricDefaultButton>
+      </o-default-button>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -85,20 +85,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricDefaultButton from '@/components/Button/DefaultButton.vue'
-import PrimaryButton from '../components/Button/PrimaryButton.vue'
-import IconButton from '../components/Button/IconButton.vue'
-import ActionButton from '../components/Button/ActionButton.vue'
-import CommandBarButton from '../components/Button/CommandBarButton.vue'
 
 @Component({
-  components: {
-    FabricDefaultButton,
-    PrimaryButton,
-    IconButton,
-    ActionButton,
-    CommandBarButton,
-  },
+  components: {},
 })
 export default class ButtonPage extends Vue {
 }
