@@ -1,5 +1,5 @@
 <template>
-  <BaseButton v-bind="[$attrs, $props]"
+  <BaseButton v-bind="[$attrs, $listeners, $props]"
               variant-class-name="ms-Button--action ms-Button--command"
               :styles="styles">
     <slot />
@@ -16,9 +16,9 @@ import { getStyles } from './ActionButton.styles'
   components: { BaseButton },
 })
 export default class ActionButton extends BaseComponent {
-  @Prop({ default: '' }) iconName!: string
   @Prop({ default: '' }) href!: string
   @Prop({ default: false }) disabled!: boolean
+  @Prop() iconProps!: any
 
   get styles () {
     const { theme } = this

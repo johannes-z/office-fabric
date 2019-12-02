@@ -12,7 +12,8 @@
       <button :id="`Toggle${_uid}`" :class="classNames.pill">
         <div :class="classNames.thumb" />
       </button>
-      <Label :class-name="classNames.text"
+      <Label v-if="(internalChecked && onText) || (!internalChecked && offText)"
+             :class-name="classNames.text"
              :for="`Toggle${_uid}`"
              @click.native.prevent>
         {{ internalChecked ? onText : offText }}
@@ -45,13 +46,14 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
   internalChecked: boolean = this.defaultChecked || this.checked
 
   get classNames () {
+    const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
     return getClassNames(getStyles, {
-      theme: this.theme,
-      className: this.className,
-      disabled: this.disabled,
-      checked: this.internalChecked,
-      inlineLabel: this.inlineLabel,
-      onOffMissing: !this.onText && !this.offText,
+      theme: theme,
+      className: className,
+      disabled: disabled,
+      checked: internalChecked,
+      inlineLabel: inlineLabel,
+      onOffMissing: !onText && !offText,
     })
   }
 

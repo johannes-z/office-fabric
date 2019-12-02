@@ -60,6 +60,13 @@ import routes from '@/plugins/router/routes'
               { name: 'Spinner', href: '/#/Spinner' },
             ],
           }, {
+            name: 'Surfaces',
+            isExpanded: false,
+            links: [
+              { name: 'Dialog', href: '/#/Dialog' },
+              { name: 'Modal', href: '/#/Modal' },
+            ],
+          }, {
             name: 'Utilities',
             isExpanded: false,
             links: [

@@ -1,7 +1,9 @@
 <template>
-  <button :class="classNames.root">
+  <component :is="component"
+             :class="classNames.root"
+             :href="href">
     <span :class="classNames.flexContainer">
-      <Icon v-bind="iconProps" />
+      <Icon :class="css(classNames.icon, className)" v-bind="iconProps" />
 
       <span v-if="$slots.default"
             :class="classNames.textContainer">
@@ -10,7 +12,7 @@
         </span>
       </span>
     </span>
-  </button>
+  </component>
 </template>
 
 <script lang="ts">
@@ -26,11 +28,18 @@ const TouchIdleDelay = 500 /* ms */
   components: { Icon },
 })
 export default class BaseButton extends BaseComponent<any, any> {
+  @Prop() href!: string
   @Prop() checked!: boolean
   @Prop() disabled!: boolean
   @Prop() variantClassName!: string
   @Prop() styles!: any
   @Prop() iconProps!: any
+
+  get component (): 'a' | 'button' {
+    const { disabled, href } = this
+    const renderAsAnchor: boolean = !disabled && !!href
+    return renderAsAnchor ? 'a' : 'button'
+  }
 
   get classNames (): any {
     const { theme, styles, className, iconProps, variantClassName, disabled, checked } = this

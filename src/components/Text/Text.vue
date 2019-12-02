@@ -19,11 +19,12 @@ export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: 'medium' }) variant!: string
 
   get classNames (): any {
-    const { theme, block, nowrap } = this
+    const { theme, block, nowrap, variant } = this
     return getClassNames(getStyles, {
       theme,
       block,
       nowrap,
+      variant,
     })
   }
 }

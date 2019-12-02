@@ -1,5 +1,6 @@
 <template>
-  <div :class="classNames.root">
+  <div :class="classNames.root"
+       :style="{ width: width + 'px', height: height + 'px' }">
     <img v-bind="$attrs"
          :class="classNames.image"
          :src="src"

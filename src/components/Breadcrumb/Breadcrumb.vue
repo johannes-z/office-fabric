@@ -1,18 +1,17 @@
 <template>
   <div :class="classNames.root" role="navigation">
     <ol :class="classNames.list">
-      <li :class="classNames.listItem">
-        <template v-for="(item, index) in items">
-          <o-link :key="`link-${index}`"
-                  :class="classNames.itemLink"
-                  :href="item.href">
-            <div>Test</div>
-          </o-link>
-          <o-icon v-if="index !== (items.length - 1)"
-                  :key="`icon-${index}`"
-                  :class="classNames.chevron"
-                  icon-name="ChevronRight" />
-        </template>
+      <li v-for="(item, index) in items"
+          :key="index"
+          :class="classNames.listItem">
+        <o-link :class="classNames.itemLink"
+                :href="item.href">
+          <div>Test</div>
+        </o-link>
+        <o-icon v-if="index !== (items.length - 1)"
+                :key="`icon-${index}`"
+                :class="classNames.chevron"
+                icon-name="ChevronRight" />
       </li>
     </ol>
   </div>
@@ -34,8 +33,8 @@ export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcr
   get classNames () {
     const { className, theme } = this
     return getClassNames(getStyles, {
+      theme,
       className,
-      theme: theme,
     })
   }
 }

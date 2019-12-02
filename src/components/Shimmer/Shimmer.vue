@@ -33,23 +33,5 @@ export default class Shimmer extends BaseComponent<IShimmerProps, IShimmerStyles
       shimmerWaveColor: shimmerColors && shimmerColors.shimmerWave,
     })
   }
-  @Prop() ShimmerName!: string
-
-  get baseStyles (): IShimmerStyles {
-    return {
-      root: [
-        'ms-Shimmer',
-        this.$style.root,
-      ],
-      shimmerWrapper: [
-        'ms-Shimmer-shimmerWrapper',
-        this.$style.shimmerWrapper,
-      ],
-      shimmerGradient: [
-        'ms-Shimmer-shimmerGradient',
-        this.$style.shimmerGradient,
-      ],
-    }
-  }
 }
 </script>

@@ -13,7 +13,7 @@
       <h2>Usage</h2>
       <h2>Default OModal</h2>
       <DefaultButton @click.native="isOpen = true">Show Modal</DefaultButton>
-      <o-modal :is-open="isOpen">
+      <o-modal v-if="isOpen">
         Test
       </o-modal>
     </div>

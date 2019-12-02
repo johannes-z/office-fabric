@@ -7,7 +7,6 @@ import { css } from '../utilities'
 // @ts-ignore
 @Component
 export default abstract class BaseComponent<IProps = {}, IStyles = {}> extends Vue {
-  $style!: { [K in keyof IStyles]: any } & { [key: string]: string }
   $props!: IProps
 
   @Prop() readonly className?: string
