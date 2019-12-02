@@ -1,5 +1,5 @@
-import { ITheme, HighContrastSelector } from '../../Styling'
-import { IsFocusVisibleClassName } from '../../Utilities'
+import { ITheme, HighContrastSelector } from '@/styling'
+import { IsFocusVisibleClassName } from '@/utilities'
 import { IRawStyle } from '@uifabric/merge-styles'
 import { IButtonStyles } from './Button.types'
 

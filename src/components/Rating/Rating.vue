@@ -24,7 +24,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
-import IconButton from '../Button/IconButton.vue'
+import IconButton from '../Button/IconButton/IconButton.vue'
 import { IRatingProps, IRatingStyles } from './Rating.types'
 import BaseComponent from '../BaseComponent'
 

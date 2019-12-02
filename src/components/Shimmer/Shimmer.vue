@@ -1,9 +1,7 @@
 <template>
-  <div v-bind="css.root">
-    <div v-bind="css.shimmerWrapper">
-      <div v-bind="css.shimmerGradient">
-        Shimmer
-      </div>
+  <div :class="classNames.root">
+    <div :class="classNames.shimmerWrapper">
+      <div :class="classNames.shimmerGradient" />
     </div>
   </div>
 </template>
@@ -12,10 +10,29 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IShimmerProps, IShimmerStyles } from './Shimmer.types'
+import { getStyles } from './Shimmer.styles'
+import { classNamesFunction } from '../../utilities'
+
+const getClassNames = classNamesFunction<any, IShimmerStyles>()
+
+const TRANSITION_ANIMATION_INTERVAL = 200 /* ms */
 
 @Component({
 })
 export default class Shimmer extends BaseComponent<IShimmerProps, IShimmerStyles> {
+  @Prop({ default: null }) shimmerColors!: any
+
+  get classNames () {
+    const { theme, className, shimmerColors } = this
+    return getClassNames(getStyles, {
+      theme: theme!,
+      isDataLoaded: false,
+      className,
+      transitionAnimationInterval: TRANSITION_ANIMATION_INTERVAL,
+      shimmerColor: shimmerColors && shimmerColors.shimmer,
+      shimmerWaveColor: shimmerColors && shimmerColors.shimmerWave,
+    })
+  }
   @Prop() ShimmerName!: string
 
   get baseStyles (): IShimmerStyles {
@@ -36,41 +53,3 @@ export default class Shimmer extends BaseComponent<IShimmerProps, IShimmerStyles
   }
 }
 </script>
-
-<style lang="scss" module>
-@keyframes animation {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.root {
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-size: 14px;
-    font-weight: 400;
-    position: relative;
-    height: auto;
-
-  .shimmerWrapper {
-    position: relative;
-    transform: translateZ(0px);
-    background-color: rgb(243, 242, 241);
-    overflow: hidden;
-    transition: opacity 200ms ease 0s;
-  }
-  .shimmerGradient{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    transform: translateX(-100%);
-    animation-duration: 2s;
-    animation-timing-function: ease-in-out;
-    animation-direction: normal;
-    animation-iteration-count: infinite;
-    animation-name: animation;
-    background: linear-gradient(to right, rgb(243, 242, 241) 0%, rgb(237, 235, 233) 50%, rgb(243, 242, 241) 100%) 0px 0px / 90% 100% no-repeat rgb(243, 242, 241);
-  }
-}
-</style>

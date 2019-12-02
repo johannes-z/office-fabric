@@ -14,10 +14,6 @@ import BaseComponent from '../BaseComponent'
 export default class LayerHost extends BaseComponent<ILayerHostProps, ILayerHostStyles> {
   @Prop({ default: null }) id!: string
 
-  get baseStyles (): ILayerHostStyles {
-    return {}
-  }
-
   mounted () {
     notifyHostChanged(this.id!)
   }

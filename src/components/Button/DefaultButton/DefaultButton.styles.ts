@@ -1,11 +1,11 @@
 // import { IButtonStyles } from '../Button.types'
-import { ITheme, FontWeights } from '../../../Styling'
-import { memoizeFunction } from '../../../Utilities'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 // import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles'
 
 import { primaryStyles, standardStyles } from '../ButtonThemes'
 import { concatStyleSets } from '@uifabric/merge-styles'
+import { memoizeFunction } from '@/utilities'
+import { ITheme, FontWeights } from '@/styling'
 
 const DEFAULT_BUTTON_HEIGHT = '32px'
 const DEFAULT_BUTTON_MIN_WIDTH = '80px'

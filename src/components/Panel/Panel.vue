@@ -35,7 +35,7 @@ import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
 import { Layer } from '@/components/Layer'
 import { Overlay } from '@/components/Overlay'
-import IconButton from '@/components/Button/IconButton.vue'
+import IconButton from '@/components/Button/IconButton/IconButton.vue'
 
 @Component({
   components: { Layer, Overlay, IconButton },

@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import IconButton from '../Button/IconButton.vue'
+import IconButton from '../Button/IconButton/IconButton.vue'
 
 function calculatePrecision (value: number | string): number {
   /**

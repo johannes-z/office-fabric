@@ -1,6 +1,6 @@
 <template>
   <BaseButton v-bind="[$attrs, $props]"
-              :variant-class-name="primary ? 'ms-Button--primary' : 'ms-Button--default'"
+              variant-class-name="ms-Button--icon"
               :styles="styles">
     <slot />
   </BaseButton>
@@ -8,22 +8,20 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getStyles } from './IconButton.styles'
 import BaseButton from '../BaseButton.vue'
-import { getStyles } from './DefaultButton.styles'
 import BaseComponent from '../../BaseComponent'
 
 @Component({
   components: { BaseButton },
 })
-export default class DefaultButton extends BaseComponent {
-  @Prop({ type: String, default: '' }) text!: string
-  @Prop({ type: Boolean, default: false }) primary!: boolean
+export default class IconButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
 
   get styles () {
-    const { primary = false, theme } = this
+    const { theme } = this
     const styles = {}
-    return getStyles(theme, styles, primary)
+    return getStyles(theme, styles)
   }
 }
 </script>

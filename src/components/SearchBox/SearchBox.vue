@@ -27,7 +27,7 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
-import IconButton from '../Button/IconButton.vue'
+import IconButton from '../Button/IconButton/IconButton.vue'
 import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'

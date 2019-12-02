@@ -17,9 +17,10 @@
       <o-default-button checked>Checked</o-default-button>
       <o-default-button disabled>Disabled</o-default-button>
       <o-default-button checked disabled>Checked & Disabled</o-default-button>
+      <o-default-button primary>With primary flag</o-default-button>
 
       <h3>Primary</h3>
-      <o-default-button primary>Normal</o-default-button>
+      <o-primary-button>Normal</o-primary-button>
       <o-primary-button checked>Checked</o-primary-button>
       <o-primary-button disabled>Disabled</o-primary-button>
       <o-primary-button checked disabled>Checked & Disabled</o-primary-button>
@@ -33,18 +34,18 @@
       </div>
 
       <h2>Icon Button</h2>
-      <o-icon-button icon-name="Upload" />
-      <o-icon-button icon-name="Upload" checked />
-      <o-icon-button icon-name="Upload" disabled />
-      <o-icon-button icon-name="Upload"
+      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" />
+      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" checked />
+      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" disabled />
+      <o-icon-button :icon-props="{ iconName: 'Emoji2' }"
                      checked
                      disabled />
 
       <h2>Action Button</h2>
-      <o-action-button icon-name="AddFriend">Normal</o-action-button>
-      <o-action-button icon-name="AddFriend" checked>Checked</o-action-button>
-      <o-action-button icon-name="AddFriend" disabled>Disabled</o-action-button>
-      <o-action-button icon-name="AddFriend"
+      <o-action-button :icon-props="{ iconName: 'AddFriend' }">Normal</o-action-button>
+      <o-action-button :icon-props="{ iconName: 'AddFriend' }" checked>Checked</o-action-button>
+      <o-action-button :icon-props="{ iconName: 'AddFriend' }" disabled>Disabled</o-action-button>
+      <o-action-button :icon-props="{ iconName: 'AddFriend' }"
                        checked
                        disabled>
         Checked & Disabled
