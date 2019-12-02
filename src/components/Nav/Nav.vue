@@ -126,7 +126,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-    const isSelected = (link.key || linkIndex) === this.selectedKey
+    const isSelected = (link.key || linkIndex) === this.internalSelectedKey
     const isLinkWithIcon = link.icon || link.iconProps
 
     const { groups, theme } = this
@@ -146,7 +146,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
         title={link.title || link.name}
         target={link.target}
         disabled={link.disabled}
-        nativeOnClick={this.onNavLinkClicked.bind(this, link)}
+        nativeOnClick={this.onNavLinkClicked.bind(this, link, linkIndex)}
         class={[classNames.link, isSelected && classNames.selected]}
         style={{ paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` }}>
         {link.name}
@@ -154,8 +154,9 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     )
   }
 
-  private onNavLinkClicked (link: INavLink) {
+  private onNavLinkClicked (link: INavLink, linkIndex: number) {
     if (link.onClick) link.onClick(link)
+    this.internalSelectedKey = link.key!
   }
 
   private preventBounce (link: INavLink, ev: Event): void {

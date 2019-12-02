@@ -9,8 +9,11 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '@/components/BaseComponent'
 import { ITextProps, ITextStyles } from './Text.types'
 import { FontSizes } from '@/styling'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Text.styles'
+import { classNamesFunction } from '../../utilities'
+import { IProcessedStyleSet } from '@uifabric/merge-styles'
+
+const getClassNames = classNamesFunction<any, ITextStyles>()
 
 @Component
 export default class Text extends BaseComponent<ITextProps, ITextStyles> {
@@ -18,7 +21,7 @@ export default class Text extends BaseComponent<ITextProps, ITextStyles> {
   @Prop({ default: false }) block!: boolean
   @Prop({ default: 'medium' }) variant!: string
 
-  get classNames (): any {
+  get classNames (): IProcessedStyleSet<ITextStyles> {
     const { theme, block, nowrap, variant } = this
     return getClassNames(getStyles, {
       theme,
