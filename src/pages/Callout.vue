@@ -13,9 +13,14 @@
       <h2>Usage</h2>
       <h2>Default Callout</h2>
 
-      <div ref="target">Target</div>
+      <div style="padding: 20px;">
+        <o-default-button ref="target" @click.native="showCallout = true">Target</o-default-button>
+      </div>
 
-      <FabricCallout :target="target">
+      <o-callout v-if="showCallout"
+                 :target="target"
+                 :styles="{ calloutMain: { maxWidth: 300 } }"
+                 :is-beak-visible="false">
         <div :class="$style.header">
           <p :class="$style.title">
             All of your favorite people
@@ -26,7 +31,7 @@
             Message body is optional. If help documentation is available, consider adding a link to learn more at the bottom.
           </p>
         </div>
-      </FabricCallout>
+      </o-callout>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -37,18 +42,14 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricCallout from '@/components/Callout/Callout.vue'
 
-@Component({
-  components: {
-    FabricCallout,
-  },
-})
+@Component
 export default class CalloutPage extends Vue {
+  showCallout: boolean = false
   target: any = null
 
   mounted () {
-    this.target = this.$refs.target as HTMLElement
+    this.target = (this.$refs.target as Vue).$el
   }
 }
 </script>

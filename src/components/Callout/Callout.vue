@@ -14,11 +14,18 @@ export default class Callout extends Vue {
 
   render (h: CreateElement, context: any) {
     if (!(context.props.target instanceof Node)) return
-    const content = h(CalloutContent, context, context.children)
+    const content = h(CalloutContent, {
+      ...context.data,
+      props: {
+        target: context.props.target,
+        ...context.data.attrs,
+      },
+    }, context.children)
 
     if (context.props.doNotLayer) {
       return content
     }
+
     return h(Layer, context.data, [content])
   }
 }

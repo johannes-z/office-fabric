@@ -61,6 +61,15 @@
                     error-message="Error message"
                     multiline
                     :rows="3" />
+
+      <h2>Underlined</h2>
+      <o-text-field label="Standard:" underlined />
+      <o-text-field label="Disabled:"
+                    disabled
+                    underlined />
+      <o-text-field label="Required:"
+                    required
+                    underlined />
     </div>
 
     <div class="content--inner ms-depth-8">

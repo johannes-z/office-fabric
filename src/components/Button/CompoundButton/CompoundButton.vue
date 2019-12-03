@@ -1,6 +1,6 @@
 <template>
   <BaseButton v-bind="[$attrs, $props]"
-              variant-class-name="ms-Button--commandBar"
+              :variant-class-name="primary ? 'ms-Button--compoundPrimary' : 'ms-Button--compound'"
               :styles="internalStyles">
     <slot />
   </BaseButton>
@@ -8,19 +8,22 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import Icon from '../Icon/Icon.vue'
 import BaseComponent from '../../BaseComponent'
+import { getStyles } from './CompoundButton.styles'
 import BaseButton from '../BaseButton.vue'
-import { getStyles } from './CommandBarButton.styles'
 
 @Component({
   components: { BaseButton },
 })
-export default class CommandBarButton extends BaseComponent {
+export default class CompoundButton extends BaseComponent {
+  @Prop({ type: Boolean, default: false }) primary!: boolean
   get internalStyles () {
-    const { theme } = this
+    const { primary = false, theme } = this
     const styles = {}
-    return getStyles(theme, styles)
+    return getStyles(theme, styles, primary)
   }
 }
 </script>
+
+<style lang="scss" scoped>
+</style>

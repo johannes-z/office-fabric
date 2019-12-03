@@ -15,26 +15,5 @@ import { Layer } from '@/components/Layer'
 })
 export default class Dialog extends BaseComponent<IDialogProps, IDialogStyles> {
   @Prop({ default: false }) dark!: boolean
-
-  get baseStyles (): IDialogStyles {
-    const { $style } = this
-    return {
-      root: [
-        'ms-Dialog',
-        $style.root,
-      ],
-      main: [
-        'ms-Dialog-main',
-        $style.main,
-      ],
-    }
-  }
 }
 </script>
-
-<style lang="scss" module>
-.root {
-}
-.main {
-}
-</style>

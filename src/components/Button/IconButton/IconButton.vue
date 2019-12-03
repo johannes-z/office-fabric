@@ -1,7 +1,7 @@
 <template>
   <BaseButton v-bind="[$attrs, $props]"
               variant-class-name="ms-Button--icon"
-              :styles="styles">
+              :styles="internalStyles">
     <slot />
   </BaseButton>
 </template>
@@ -18,7 +18,7 @@ import BaseComponent from '../../BaseComponent'
 export default class IconButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
 
-  get styles () {
+  get internalStyles () {
     const { theme } = this
     const styles = {}
     return getStyles(theme, styles)

@@ -1,7 +1,7 @@
 <template>
   <BaseButton v-bind="[$attrs, $listeners, $props]"
               variant-class-name="ms-Button--action ms-Button--command"
-              :styles="styles">
+              :styles="internalStyles">
     <slot />
   </BaseButton>
 </template>
@@ -20,7 +20,7 @@ export default class ActionButton extends BaseComponent {
   @Prop({ default: false }) disabled!: boolean
   @Prop() iconProps!: any
 
-  get styles () {
+  get internalStyles () {
     const { theme } = this
     const styles = {}
     return getStyles(theme, styles)

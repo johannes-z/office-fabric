@@ -29,7 +29,7 @@
     "faker": "^4.1.0",
     "reflect-metadata": "^0.1.13",
     "rollup-plugin-typescript2": "^0.25.2",
-    "rollup-plugin-vue": "^5.1.4",
+    "rollup-plugin-vue": "5.1.1",
     "sass": "^1.23.7",
     "sass-loader": "^8.0.0",
     "typescript": "~3.7.2",

@@ -1,7 +1,7 @@
 import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
 import { semanticColors } from '@/util'
-import { IPalette, DefaultPalette, DefaultFontStyles } from '@/styling'
+import { IPalette, DefaultPalette, DefaultFontStyles, DefaultEffects } from '@/styling'
 
 const toKebabCase = (str: string) => str
   .replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -114,10 +114,7 @@ export default function install (Vue: any, options: ITheme = defaultOptions) {
   const _palette = createCSSProperties(_options.theme as any)
   const _semanticColors = createCSSProperties(semanticColors[_options.variant])
   Vue.prototype.$theme = {
-    effects: {
-      roundedCorner1: 1,
-      roundedCorner2: 2,
-    },
+    effects: DefaultEffects,
     fonts: DefaultFontStyles,
     palette: _palette,
     semanticColors: {

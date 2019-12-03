@@ -3,6 +3,7 @@
     <div :class="classNames.wrapper">
       <Label v-if="label"
              :class-name="classNames.label"
+             :styles="classNames.subComponentStyles.label"
              :for="`TextField${_uid}`"
              :required="required"
              v-text="label" />

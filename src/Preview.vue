@@ -63,6 +63,7 @@ import routes from '@/plugins/router/routes'
             name: 'Surfaces',
             isExpanded: false,
             links: [
+              { name: 'Callout', key: 'Callout', href: '/#/Callout' },
               { name: 'Dialog', key: 'Dialog', href: '/#/Dialog' },
               { name: 'Modal', key: 'Modal', href: '/#/Modal' },
             ],

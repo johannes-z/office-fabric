@@ -1,7 +1,7 @@
 <template>
   <BaseButton v-bind="[$attrs, $props]"
               :variant-class-name="primary ? 'ms-Button--primary' : 'ms-Button--default'"
-              :styles="styles">
+              :styles="internalStyles">
     <slot />
   </BaseButton>
 </template>
@@ -20,7 +20,7 @@ export default class DefaultButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) primary!: boolean
   @Prop({ type: Boolean, default: false }) disabled!: boolean
 
-  get styles () {
+  get internalStyles () {
     const { primary = false, theme } = this
     const styles = {}
     return getStyles(theme, styles, primary)

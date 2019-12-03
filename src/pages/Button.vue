@@ -25,6 +25,22 @@
       <o-primary-button disabled>Disabled</o-primary-button>
       <o-primary-button checked disabled>Checked & Disabled</o-primary-button>
 
+      <h2>Compound Button</h2>
+      <o-compound-button secondary-text="This is the secondary text.">Normal</o-compound-button>
+      <o-compound-button secondary-text="This is the secondary text." checked>Checked</o-compound-button>
+      <o-compound-button secondary-text="This is the secondary text." disabled>Disabled</o-compound-button>
+      <o-compound-button secondary-text="This is the secondary text." primary>Primary Normal</o-compound-button>
+      <o-compound-button secondary-text="This is the secondary text."
+                         primary
+                         checked>
+        Primary Checked
+      </o-compound-button>
+      <o-compound-button secondary-text="This is the secondary text."
+                         primary
+                         disabled>
+        Primary Disabled
+      </o-compound-button>
+
       <h2>CommandBar Button</h2>
       <div style="display: flex; flex-direction: row; flex-wrap: nowrap; width: auto; height: 44px; box-sizing: border-box;">
         <o-command-bar-button icon-name="Mail">Normal</o-command-bar-button>

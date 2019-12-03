@@ -1,6 +1,6 @@
 // import { IButtonStyles } from '../Button.types'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-// import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles'
+import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles'
 
 import { primaryStyles, standardStyles } from '../ButtonThemes'
 import { concatStyleSets } from '@uifabric/merge-styles'
@@ -13,7 +13,7 @@ const DEFAULT_BUTTON_MIN_WIDTH = '80px'
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: any, primary?: boolean): any => {
     const baseButtonStyles: any = getBaseButtonStyles(theme)
-    // const splitButtonStyles: any = getSplitButtonStyles(theme)
+    const splitButtonStyles: any = getSplitButtonStyles(theme)
     const defaultButtonStyles: any = {
       root: {
         minWidth: DEFAULT_BUTTON_MIN_WIDTH,
@@ -28,7 +28,7 @@ export const getStyles = memoizeFunction(
       baseButtonStyles,
       defaultButtonStyles,
       primary ? primaryStyles(theme) : standardStyles(theme),
-      // splitButtonStyles,
+      splitButtonStyles,
       customStyles
     )!
   }

@@ -3,12 +3,17 @@
              :class="classNames.root"
              :href="href">
     <span :class="classNames.flexContainer">
-      <Icon :class="css(classNames.icon, className)" v-bind="iconProps" />
+      <Icon v-if="iconProps"
+            :class="css(classNames.icon, className)"
+            v-bind="iconProps" />
 
       <span v-if="$slots.default"
             :class="classNames.textContainer">
         <span :class="classNames.label">
           <slot />
+        </span>
+        <span v-if="secondaryText" :class="classNames.description">
+          {{ secondaryText }}
         </span>
       </span>
     </span>
@@ -32,8 +37,8 @@ export default class BaseButton extends BaseComponent<any, any> {
   @Prop() checked!: boolean
   @Prop() disabled!: boolean
   @Prop() variantClassName!: string
-  @Prop() styles!: any
   @Prop() iconProps!: any
+  @Prop() secondaryText!: string
 
   get component (): 'a' | 'button' {
     const { disabled, href } = this

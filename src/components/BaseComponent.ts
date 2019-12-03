@@ -12,13 +12,14 @@ interface IBaseProps {
 @Component
 export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends Vue {
   $props!: TProps
+  $style!: any
 
   // readonly props: TProps = {
   //   theme: this.theme,
   // } as TProps
 
   @Prop() readonly className?: string
-  // @Prop() readonly styles?: any
+  @Prop({ type: [Object, Function], default: () => {} }) readonly styles?: any
 
   css = css
 
