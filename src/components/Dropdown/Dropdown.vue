@@ -24,7 +24,17 @@
              tabindex="0">
           <ActionButton v-for="(option, index) in options"
                         :key="index"
-                        :class-name="classNames.dropdownItem">
+                        :class-name="
+                          option.hidden
+                            ? classNames.dropdownItemHidden
+                            : isItemSelected && option.disabled === true
+                              ? classNames.dropdownItemSelectedAndDisabled
+                              : isItemSelected
+                                ? classNames.dropdownItemSelected
+                                : option.disabled === true
+                                  ? classNames.dropdownItemDisabled
+                                  : classNames.dropdownItem
+                        ">
             {{ option.text }}
           </ActionButton>
         </div>

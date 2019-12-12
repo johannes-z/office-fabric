@@ -105,7 +105,6 @@ body {
   top: 0;
   bottom: 0;
   margin-right: 10px;
-  padding: 20px;
   overflow-y: auto;
 }
 .content {
