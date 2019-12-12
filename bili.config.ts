@@ -1,4 +1,7 @@
 import { Config } from 'bili'
+import path from 'path'
+
+const projectRoot = path.resolve(__dirname)
 
 const config: Config = {
   input: 'src/dev.ts',
@@ -19,6 +22,12 @@ const config: Config = {
   },
 
   plugins: {
+    alias: {
+      resolve: ['.jsx', '.js', '.vue', '.ts'],
+      entries: [
+        { find: /^@\/(.*)/, replacement: path.resolve(projectRoot, 'src/$1') },
+      ],
+    },
     typescript2: {
       useTsconfigDeclarationDir: true,
     },

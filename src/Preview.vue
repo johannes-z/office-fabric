@@ -104,8 +104,9 @@ body {
   width: 300px;
   top: 0;
   bottom: 0;
+  padding: 20px;
   margin-right: 10px;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .content {
   flex: 1;

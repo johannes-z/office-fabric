@@ -20,7 +20,7 @@ import BaseComponent from '../../BaseComponent'
 import { getStyles } from './ChoiceGroupOption.styles'
 import { getClassNames } from '../../../util/getClassNames'
 
-import { Label } from '@/components'
+import { Label } from '@/components/Label'
 
 @Component({
   components: { Label },

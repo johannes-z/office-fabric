@@ -16,6 +16,9 @@ const getClassNames = classNamesFunction<any, ILabelStyles>()
 
 @Component
 export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
+  @Prop({ default: false }) disabled!: boolean
+  @Prop({ default: false }) required!: boolean
+
   get classNames (): any {
     const { theme, className, styles, disabled, required } = this
 
@@ -26,8 +29,5 @@ export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
       required,
     }, getStyles, styles))
   }
-
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) required!: boolean
 }
 </script>

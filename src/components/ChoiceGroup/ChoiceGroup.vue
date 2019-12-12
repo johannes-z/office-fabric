@@ -28,7 +28,8 @@ import ChoiceGroupOption from './ChoiceGroupOption/ChoiceGroupOption.vue'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './ChoiceGroup.styles'
 import { getClassNames } from '../../util/getClassNames'
-import { Label } from '@/components'
+
+import { Label } from '@/components/Label'
 
 @Component({
   components: { ChoiceGroupOption, Label },
