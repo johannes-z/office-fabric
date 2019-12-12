@@ -8,3 +8,5 @@ export * from './KeyCodes'
 export * from './memoize'
 export * from './rtl'
 export * from './language'
+
+export * from './positioning/positioning.types'
