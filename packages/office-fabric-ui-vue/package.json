@@ -1,5 +1,5 @@
 {
-  "name": "office-ui-fabric-vue",
+  "name": "@fabric-vue/office-ui-fabric-vue",
   "version": "1.0.0",
   "private": true,
   "workspaces": {
@@ -8,10 +8,13 @@
     ]
   },
   "scripts": {
-    "serve": "yarn workspace @fabric-vue/office-ui-fabric-vue serve",
-    "build": "yarn workspace @fabric-vue/office-ui-fabric-vue build"
+    "serve": "vue-cli-service serve src/dev.ts",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fabric-vue/styling": "^1.0.0",
+    "@fabric-vue/utilities": "^1.0.0",
     "@uifabric/merge-styles": "^7.8.1",
     "core-js": "^3.4.5",
     "portal-vue": "^2.1.6",

@@ -1,0 +1,9 @@
+{
+  "name": "@fabric-vue/styling",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "dependencies": {
+    "@fabric-vue/utilities": "^1.0.0"
+  }
+}
