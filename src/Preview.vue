@@ -71,7 +71,7 @@ import routes from '@/plugins/router/routes'
             name: 'Utilities',
             isExpanded: false,
             links: [
-              { name: 'Icon', key: 'Icon', href: '/#/Icon' },
+              { name: 'Icon', key: 'Icon', href: '/#/Icon', disabled: true },
               { name: 'Image', key: 'Image', href: '/#/Image' },
               { name: 'Layer', key: 'Layer', href: '/#/Layer' },
               { name: 'Overlay', key: 'Overlay', href: '/#/Overlay' },

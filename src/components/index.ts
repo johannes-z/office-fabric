@@ -7,6 +7,7 @@ export * from './Nav'
 export * from './Image'
 export * from './Callout'
 export * from './ComboBox'
+export * from './ChoiceGroup'
 
 export * from './Checkbox'
 export * from './Icon'

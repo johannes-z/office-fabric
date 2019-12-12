@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Default ChoiceGroup</h2>
-      <FabricChoiceGroup label="test" :options="options" />
+      <o-choice-group label="Default ChoiceGroup" :options="options" />
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -23,11 +23,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import FabricChoiceGroup from '@/components/ChoiceGroup/ChoiceGroup.vue'
 
 @Component({
   components: {
-    FabricChoiceGroup,
   },
 })
 export default class ChoiceGroupPage extends Vue {

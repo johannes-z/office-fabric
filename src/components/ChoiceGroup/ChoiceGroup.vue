@@ -1,56 +1,53 @@
 <template>
-  <div :class="$style.root">
-    <div :class="$style.label">{{ label }}</div>
-    <div :class="$style.flexContainer">
-      <ChoiceField v-for="option in options"
-                   :id="option.key"
-                   :key="option.key"
-                   v-bind="option"
-                   :checked="selectedOption.key === option.key"
-                   @click.native="selectedOption = option" />
+  <div :class="classNames.applicationRole">
+    <div :class="classNames.root">
+      <Label :class="classNames.label"
+             :required="required"
+             :disabled="disabled">
+        {{ label }}
+      </Label>
+
+      <div :class="classNames.flexContainer">
+        <ChoiceGroupOption
+          v-for="option in options"
+          :id="option.key"
+          :key="option.key"
+          v-bind="option"
+          :checked="selectedOption.key === option.key"
+          @click.native="selectedOption = option">
+          {{ option.text }}
+        </ChoiceGroupOption>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ChoiceField from './ChoiceField.vue'
+import ChoiceGroupOption from './ChoiceGroupOption/ChoiceGroupOption.vue'
+import BaseComponent from '../BaseComponent'
+import { getStyles } from './ChoiceGroup.styles'
+import { getClassNames } from '../../util/getClassNames'
+import { Label } from '@/components'
 
 @Component({
-  components: { ChoiceField },
+  components: { ChoiceGroupOption, Label },
 })
-export default class ChoiceGroup extends Vue {
+export default class ChoiceGroup extends BaseComponent {
   @Prop({ default: null }) label!: string
   @Prop({ default: () => [] }) options!: any[]
+  @Prop({ default: () => [] }) value!: any[]
+  @Prop({ type: Boolean }) disabled!: boolean
+  @Prop({ type: Boolean }) required!: boolean
 
   selectedOption: any = {}
+
+  get classNames () {
+    const { theme, className } = this
+
+    return getClassNames(getStyles, {
+      theme, className, optionsContainIconOrImage: false,
+    })
+  }
 }
 </script>
-
-<style lang="scss" module>
-.root {
-  font-size: 14px;
-  font-weight: 400;
-  display: block;
-}
-.label {
-  font-size: 14px;
-  font-weight: 600;
-  color: rgb(50, 49, 48);
-  box-sizing: border-box;
-  box-shadow: none;
-  margin-top: 0px;
-  margin-right: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  display: block;
-  padding-top: 5px;
-  padding-right: 0px;
-  padding-bottom: 5px;
-  padding-left: 0px;
-  overflow-wrap: break-word;
-}
-.flexContainer {
-
-}
-</style>
