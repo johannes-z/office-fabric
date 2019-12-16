@@ -12,7 +12,9 @@ import { getStyles } from './Label.styles'
 import { classNamesFunction } from '@fabric-vue/utilities'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 
-const getClassNames = classNamesFunction<any, ILabelStyles>()
+const getClassNames = classNamesFunction<any, ILabelStyles>({
+  disableCaching: true,
+})
 
 @Component
 export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
@@ -20,14 +22,14 @@ export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   @Prop({ default: false }) required!: boolean
 
   get classNames (): any {
-    const { theme, className, styles, disabled, required } = this
+    const { theme, className, disabled, required } = this
 
-    return getClassNames(concatStyleSetsWithProps({
-      theme,
+    return getClassNames(getStyles, {
       className,
       disabled,
       required,
-    }, getStyles, styles))
+      theme: theme!,
+    })
   }
 }
 </script>

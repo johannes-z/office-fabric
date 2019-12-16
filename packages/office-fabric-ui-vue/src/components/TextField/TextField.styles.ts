@@ -1,8 +1,7 @@
-import { IconFontSizes, HighContrastSelector, getPlaceholderStyles, normalize, getGlobalClassNames } from '@fabric-vue/styling'
+import { IconFontSizes, HighContrastSelector, getPlaceholderStyles, normalize, getGlobalClassNames, AnimationClassNames } from '@fabric-vue/styling'
 import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { ITextFieldStyles } from './TextField.types'
 import { ILabelStyles } from '../Label'
-import { AnimationClassNames } from '@fabric-vue/styling'
 
 const globalClassNames = {
   root: 'ms-TextField',

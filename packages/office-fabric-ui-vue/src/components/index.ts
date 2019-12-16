@@ -9,6 +9,7 @@ export * from './Callout'
 export * from './ComboBox'
 export * from './ChoiceGroup'
 export * from './Dropdown'
+export * from './Popup'
 
 export * from './Checkbox'
 export * from './Icon'

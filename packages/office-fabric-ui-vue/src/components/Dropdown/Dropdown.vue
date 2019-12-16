@@ -19,7 +19,8 @@
     <div v-if="isOpen">
       <Callout :target="$refs.dropdown"
                :is-beak-visible="false"
-               :callout-width="dropdownWidth || ($refs.dropdown ? $refs.dropdown.clientWidth : 0)">
+               :callout-width="dropdownWidth || ($refs.dropdown ? $refs.dropdown.clientWidth : 0)"
+               @dismiss="isOpen = false">
         <div :class="classNames.dropdownItemsWrapper"
              tabindex="0">
           <ActionButton v-for="(option, index) in options"
@@ -27,9 +28,9 @@
                         :class-name="
                           option.hidden
                             ? classNames.dropdownItemHidden
-                            : isItemSelected && option.disabled === true
+                            : option.isItemSelected && option.disabled === true
                               ? classNames.dropdownItemSelectedAndDisabled
-                              : isItemSelected
+                              : option.isItemSelected
                                 ? classNames.dropdownItemSelected
                                 : option.disabled === true
                                   ? classNames.dropdownItemDisabled
@@ -77,6 +78,12 @@ export default class Dropdown extends BaseComponent {
 
   isOpen: boolean = false
   calloutRenderEdge: RectangleEdge = -1
+
+  created () {
+    this.options.forEach(option => {
+      option.isItemSelected = false
+    })
+  }
 
   get classNames () {
     const { theme, className, errorMessage, label, required, disabled, panelProps, calloutProps } = this

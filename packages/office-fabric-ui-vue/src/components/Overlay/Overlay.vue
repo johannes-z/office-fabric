@@ -8,7 +8,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IOverlayProps, IOverlayStyles } from './Overlay.types'
 import BaseComponent from '../BaseComponent'
-import { Layer } from '@/components/Layer'
+import { Layer } from '../Layer'
 import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Overlay.styles'
 

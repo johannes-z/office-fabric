@@ -1,5 +1,8 @@
 export * from './dom'
 
+export * from './Async'
+export * from './focus'
+
 export * from './classNamesFunction'
 export * from './css'
 export * from './initializeFocusRects'

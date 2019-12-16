@@ -1,9 +1,9 @@
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ActionButton from '@/components/Button/ActionButton/ActionButton.vue'
+import ActionButton from '../Button/ActionButton/ActionButton.vue'
 import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
-import { Icon } from '@/components/Icon/'
+import { Icon } from '../Icon/'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Nav.styles'

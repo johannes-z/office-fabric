@@ -12,8 +12,10 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILinkProps, ILinkStyles } from './Link.types'
 import { CreateElement } from 'vue'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Link.styles'
+import { classNamesFunction } from '@fabric-vue/utilities'
+
+const getClassNames = classNamesFunction<any, ILinkStyles>()
 
 @Component
 export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
@@ -21,11 +23,13 @@ export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
   @Prop({ default: '' }) href!: string
 
   get classNames () {
+    const { className, theme, href, disabled } = this
+
     return getClassNames(getStyles, {
-      className: this.$attrs.class,
-      isButton: !this.href,
-      isDisabled: this.disabled,
-      theme: this.theme,
+      className: className,
+      isButton: href,
+      isDisabled: disabled,
+      theme: theme,
     })
   }
 }

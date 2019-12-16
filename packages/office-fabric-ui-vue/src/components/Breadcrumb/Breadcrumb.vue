@@ -4,10 +4,11 @@
       <li v-for="(item, index) in items"
           :key="index"
           :class="classNames.listItem">
-        <o-link :class="classNames.itemLink"
+        <o-link :class-name="classNames.itemLink"
                 :href="item.href">
-          <div>Test</div>
+          Test
         </o-link>
+
         <o-icon v-if="index !== (items.length - 1)"
                 :key="`icon-${index}`"
                 :class="classNames.chevron"
@@ -21,8 +22,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IBreadcrumbProps, IBreadcrumbStyles, IBreadcrumbItem } from './Breadcrumb.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Breadcrumb.styles'
+import { classNamesFunction } from '@fabric-vue/utilities'
+
+const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
 
 @Component({
   components: {},

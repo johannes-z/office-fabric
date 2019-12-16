@@ -18,10 +18,10 @@
           <o-icon icon-name="Message" />
         </template>
         <template #description>
-          <o-link>Philippe Lampros</o-link> commented
+          <o-link href="#">Philippe Lampros</o-link> commented
         </template>
         <template #comments>
-          I am making a comment and mentioning <o-link>@Anđela Debeljak</o-link>
+          I am making a comment and mentioning <o-link href="#">@Anđela Debeljak</o-link>
           in the text of the comment.
         </template>
         <template #timeStamp>

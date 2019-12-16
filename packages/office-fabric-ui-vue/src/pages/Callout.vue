@@ -20,7 +20,8 @@
       <o-callout v-if="showCallout"
                  :target="target"
                  :styles="{ calloutMain: { maxWidth: 300 } }"
-                 :is-beak-visible="false">
+                 :is-beak-visible="true"
+                 @dismiss="onDismiss">
         <div :class="$style.header">
           <p :class="$style.title">
             All of your favorite people
@@ -50,6 +51,10 @@ export default class CalloutPage extends Vue {
 
   mounted () {
     this.target = (this.$refs.target as Vue).$el
+  }
+
+  onDismiss () {
+    this.showCallout = false
   }
 }
 </script>

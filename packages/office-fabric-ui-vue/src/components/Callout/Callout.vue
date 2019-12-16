@@ -25,7 +25,6 @@ export default class Callout extends Vue {
     if (context.props.doNotLayer) {
       return content
     }
-
     return h(Layer, context.data, [content])
   }
 }

@@ -8,8 +8,8 @@
     ]
   },
   "scripts": {
-    "serve": "yarn workspace @fabric-vue/office-ui-fabric-vue serve",
-    "build": "yarn workspace @fabric-vue/office-ui-fabric-vue build"
+    "serve": "yarn workspace office-ui-fabric-vue serve",
+    "build": "yarn workspace office-ui-fabric-vue build"
   },
   "dependencies": {
     "core-js": "^3.5.0"
