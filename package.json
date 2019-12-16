@@ -11,9 +11,6 @@
     "serve": "yarn workspace office-ui-fabric-vue serve",
     "build": "yarn workspace office-ui-fabric-vue build"
   },
-  "dependencies": {
-    "core-js": "^3.5.0"
-  },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
