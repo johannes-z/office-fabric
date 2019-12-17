@@ -18,7 +18,7 @@
       <FabricLabel disabled required>I'm a disabled and required Label</FabricLabel>
 
       <FabricLabel required for="label-test-1">A Label for An Input</FabricLabel>
-      <input id="label-test-1" type="text">
+      <o-text-field id="label-test-1" type="text" />
     </div>
 
     <div class="content--inner ms-depth-8">

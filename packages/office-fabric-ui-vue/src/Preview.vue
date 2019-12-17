@@ -20,7 +20,7 @@ export default class Preview extends Vue {
     {
       links: [{
         name: 'Basic Inputs',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'Button', key: 'Button', href: '/#/Button' },
           { name: 'Checkbox', key: 'Checkbox', href: '/#/Checkbox' },
@@ -38,26 +38,26 @@ export default class Preview extends Vue {
         ],
       }, {
         name: 'Items & Lists',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'ActivityItem', key: 'ActivityItem', href: '/#/ActivityItem' },
           { name: 'Persona', key: 'Persona', href: '/#/Persona' },
         ],
       }, {
         name: 'Commands, Menus & Navs',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'Breadcrumb', key: 'Breadcrumb', href: '/#/Breadcrumb' },
         ],
       }, {
         name: 'Notification & Engagement',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'MessageBar', key: 'MessageBar', href: '/#/MessageBar' },
         ],
       }, {
         name: 'Progress',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'ProgressIndicator', key: 'ProgressIndicator', href: '/#/ProgressIndicator' },
           { name: 'Shimmer', key: 'Shimmer', href: '/#/Shimmer' },
@@ -65,7 +65,7 @@ export default class Preview extends Vue {
         ],
       }, {
         name: 'Surfaces',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'Callout', key: 'Callout', href: '/#/Callout' },
           { name: 'Dialog', key: 'Dialog', href: '/#/Dialog' },
@@ -73,7 +73,7 @@ export default class Preview extends Vue {
         ],
       }, {
         name: 'Utilities',
-        isExpanded: false,
+        isExpanded: true,
         links: [
           { name: 'Icon', key: 'Icon', href: '/#/Icon', disabled: true },
           { name: 'Image', key: 'Image', href: '/#/Image' },

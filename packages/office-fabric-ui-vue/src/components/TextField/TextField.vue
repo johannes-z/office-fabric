@@ -9,7 +9,7 @@
              v-text="label" />
       <div :class="classNames.fieldGroup">
         <component :is="multiline ? 'textarea' : 'input'"
-                   :id="`TextField${_uid}`"
+                   :id="$attrs.id || `TextField${_uid}`"
                    ref="textElement"
                    :class="classNames.field"
                    :value="internalValue"
