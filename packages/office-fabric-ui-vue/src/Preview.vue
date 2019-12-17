@@ -50,7 +50,7 @@ export default class Preview extends Vue {
           { name: 'Breadcrumb', key: 'Breadcrumb', href: '/#/Breadcrumb' },
         ],
       }, {
-        name: 'Notification & Equipment',
+        name: 'Notification & Engagement',
         isExpanded: false,
         links: [
           { name: 'MessageBar', key: 'MessageBar', href: '/#/MessageBar' },
