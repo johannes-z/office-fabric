@@ -5,7 +5,7 @@ import { getWindow } from './dom/getWindow'
  * @param key The key of the item to fetch from local storage
  */
 export function getItem (key: string): string | null {
-  let result = null
+  let result: string | null = null
   try {
     const win = getWindow()
     result = win ? win.localStorage.getItem(key) : null

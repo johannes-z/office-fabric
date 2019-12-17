@@ -371,7 +371,7 @@ export function isElementTabbable (element: HTMLElement, checkTabIndex?: boolean
   }
 
   let tabIndex = 0
-  let tabIndexAttributeValue = null
+  let tabIndexAttributeValue: string | null = null
 
   if (element && element.getAttribute) {
     tabIndexAttributeValue = element.getAttribute('tabIndex')

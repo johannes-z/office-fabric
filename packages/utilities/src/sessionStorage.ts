@@ -3,7 +3,7 @@
  * @param key The key of the item to fetch from session storage
  */
 export function getItem (key: string): string | null {
-  let result = null
+  let result: string | null = null
   try {
     result = window.sessionStorage.getItem(key)
   } catch (e) {
