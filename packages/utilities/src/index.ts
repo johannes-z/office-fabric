@@ -12,5 +12,6 @@ export * from './memoize'
 export * from './merge'
 export * from './rtl'
 export * from './language'
+export * from './ie11Detector'
 
 export * from './positioning/positioning.types'
