@@ -1,7 +1,3 @@
-<template>
-  <div>Popup</div>
-</template>
-
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getDocument, getWindow, on, Async, doesElementContainFocus } from '@fabric-vue/utilities'
@@ -67,16 +63,15 @@ export default class Popup extends BaseComponent {
     }
   }
 
-  public render (h: CreateElement): VNode {
+  public render (h: CreateElement, context: any): VNode {
     const { className } = this
 
     return (
       <div ref="current"
         className={className}
         onKeyDown={this._onKeyDown}
-        style={{ overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }}
-      >
-        <slot></slot>
+        style={{ overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }}>
+        {this.$slots.default}
       </div>
     )
   }
