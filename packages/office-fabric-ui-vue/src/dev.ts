@@ -7,7 +7,7 @@ import routes from '@/plugins/router/routes'
 import Fabric from './plugins/office-fabric'
 
 Vue.use(Fabric, {
-  defaultFontStyle: { fontFamily: 'Monaco, Menlo, Consolas', fontWeight: 'regular' },
+  // defaultFontStyle: { fontFamily: 'Monaco, Menlo, Consolas', fontWeight: 'bold' },
 }, true)
 
 Vue.use(VueRouter)
