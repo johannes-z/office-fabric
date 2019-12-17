@@ -1,29 +1,37 @@
 ﻿<template>
-  <div v-bind="css.root">
-    <div v-bind="css.coin">
-      <div v-bind="css.imageArea">
-        <div v-bind="css.imageContainer">
-          <img v-bind="css.image"
+  <div :class="classNames.root"
+       :style="{
+         '--size': `${size}px`,
+         '--fontSizePrimary': `${fontSizePrimary}px`,
+         '--fontSizeDetails': `${fontSizeDetails}px`,
+         '--presenceSize': `${presenceSize}px`,
+         '--presenceColor': presenceColor,
+         '--presenceIconFontSize': `${fontSizeIcon}px`,
+       }">
+    <div :class="classNames.coin">
+      <div :class="classNames.imageArea">
+        <div :class="classNames.imageContainer">
+          <img :class="classNames.image"
                :src="imageUrl"
                alt="">
         </div>
-        <div v-bind="css.presence">
-          <Icon :icon-name="presenceIcon" v-bind="css.presenceIcon" />
+        <div :class="classNames.presence">
+          <Icon :icon-name="presenceIcon" :class="classNames.presenceIcon" />
         </div>
       </div>
     </div>
-    <div v-bind="css.details">
-      <div dir="auto" v-bind="css.primaryText">
-        <div v-bind="css.tooltipHostRoot">{{ primaryText }}</div>
+    <div :class="classNames.details">
+      <div dir="auto" :class="classNames.primaryText">
+        <div :class="classNames.tooltipHostRoot">{{ primaryText }}</div>
       </div>
-      <div dir="auto" v-bind="css.secondaryText">
-        <div v-bind="css.tooltipHostRoot">{{ secondaryText }}</div>
+      <div dir="auto" :class="classNames.secondaryText">
+        <div :class="classNames.tooltipHostRoot">{{ secondaryText }}</div>
       </div>
-      <div dir="auto" v-bind="css.tertiaryText">
-        <div v-bind="css.tooltipHostRoot">{{ tertiaryText }}</div>
+      <div dir="auto" :class="classNames.tertiaryText">
+        <div :class="classNames.tooltipHostRoot">{{ tertiaryText }}</div>
       </div>
-      <div dir="auto" v-bind="css.optionalText">
-        <div v-bind="css.tooltipHostRoot">{{ optionalText }}</div>
+      <div dir="auto" :class="classNames.optionalText">
+        <div :class="classNames.tooltipHostRoot">{{ optionalText }}</div>
       </div>
     </div>
   </div>
@@ -34,6 +42,8 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Icon from '../Icon/Icon.vue'
 import BaseComponent from '../BaseComponent'
 import { IPersonaProps, IPersonaStyles } from '../Persona'
+import { getStyles } from './Persona.styles'
+import { getClassNames } from '../../util/getClassNames'
 
 @Component({
   name: 'OPersona',
@@ -50,6 +60,7 @@ export default class Persona extends BaseComponent<IPersonaProps, IPersonaStyles
   @Prop({ default: undefined }) presence?: string
   @Prop({ default: false }) isOutOfOffice?: boolean
   @Prop({ default: false }) hidePersonaDetails?: boolean
+  @Prop({ default: false }) showSecondaryText?: boolean
 
   get statusClass () {
     return 'ms-Persona--away'
@@ -123,49 +134,16 @@ export default class Persona extends BaseComponent<IPersonaProps, IPersonaStyles
 
     return presenceColorOffline
   }
-  get baseStyles (): IPersonaStyles {
-    const { $style, size, status } = this
-    return {
-      root: [
-        'ms-Persona',
-        $style.root,
-        {
-          '--size': `${size}px`,
-          '--fontSizePrimary': `${this.fontSizePrimary}px`,
-          '--fontSizeDetails': `${this.fontSizeDetails}px`,
-          '--presenceSize': `${this.presenceSize}px`,
-          '--presenceColor': this.presenceColor,
-          '--presenceIconFontSize': `${this.fontSizeIcon}px`,
-        },
-      ],
-      coin: [
-        'ms-Persona-coin',
-        $style.coin,
-      ],
-      imageArea: [
-        'ms-Persona-imageArea',
-        $style.imageArea,
-      ],
-      imageContainer: [
-        'ms-Image',
-        'ms-Persona-image',
-        $style.imageContainer,
-      ],
-      image: [
-        'ms-Image-image',
-        'ms-Image-image--cover',
-        'ms-Image-image--portrait',
-        $style.image,
-      ],
-      presence: ['ms-Persona-presence', $style.presence],
-      presenceIcon: ['ms-Persona-presenceIcon', $style.presenceIcon],
-      details: ['ms-Persona-details', $style.details],
-      primaryText: ['ms-Persona-primaryText', $style.primaryText],
-      tooltipHostRoot: ['ms-TooltipHost', $style.tooltipHostRoot],
-      secondaryText: ['ms-Persona-secondaryText', $style.secondaryText],
-      tertiaryText: ['ms-Persona-tertiaryText', $style.tertiaryText],
-      optionalText: ['ms-Persona-optionalText', $style.optionalText],
-    }
+
+  get classNames () {
+    const { theme, className, showSecondaryText, presence, size } = this
+    return getClassNames(getStyles, {
+      theme: theme!,
+      className,
+      showSecondaryText,
+      presence,
+      size,
+    })
   }
 }
 
