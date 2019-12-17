@@ -12,7 +12,7 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
 
   @Prop({ default: '' }) readonly className?: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles?: any
-  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: ITheme
+  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
 
   css = css
 
