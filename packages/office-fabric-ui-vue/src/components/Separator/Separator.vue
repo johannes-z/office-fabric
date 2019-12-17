@@ -22,7 +22,7 @@ export default class Separator extends BaseComponent<ISeparatorProps, ISeparator
 
   render (h: CreateElement, context: any): VNode {
     const classNames = getClassNames(getStyles, {
-      theme: context.parent.$theme,
+      theme: context.props.theme,
       className: context.data.attrs ? context.data.attrs.class : '',
       alignContent: context.props.alignContent,
       vertical: context.props.vertical,
@@ -35,8 +35,5 @@ export default class Separator extends BaseComponent<ISeparatorProps, ISeparator
       </div>
     )
   }
-
-  // @ts-ignore
-  get classNames () {}
 }
 </script>

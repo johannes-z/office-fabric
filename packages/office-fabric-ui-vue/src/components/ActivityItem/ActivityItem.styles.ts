@@ -1,5 +1,5 @@
 import { concatStyleSets, keyframes } from '@uifabric/merge-styles'
-import { HighContrastSelector, PulsingBeaconAnimationStyles } from '@fabric-vue/styling'
+import { HighContrastSelector, PulsingBeaconAnimationStyles, getTheme } from '@fabric-vue/styling'
 import { ITheme } from '@/types/ITheme'
 import { memoizeFunction } from '@fabric-vue/utilities'
 import { IActivityItemStyles } from './ActivityItem.types'
@@ -15,7 +15,7 @@ const ANIMATION_BORDER_WIDTH = '4px'
 
 export const getStyles = memoizeFunction(
   (
-    theme: ITheme = Vue.prototype.$theme,
+    theme: ITheme = getTheme(),
     customStyles?: IActivityItemStyles,
     animateBeaconSignal?: any['animateBeaconSignal'],
     beaconColorOne?: any['beaconColorOne'],

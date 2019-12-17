@@ -15,7 +15,7 @@
       <Label v-if="(internalChecked && onText) || (!internalChecked && offText)"
              :class-name="classNames.text"
              :for="`Toggle${_uid}`"
-             @click.native.prevent>
+             @click.prevent>
         {{ internalChecked ? onText : offText }}
       </Label>
     </div>

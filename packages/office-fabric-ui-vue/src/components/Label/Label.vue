@@ -1,35 +1,39 @@
-<template>
-  <label :class="classNames.root">
-    <slot />
-  </label>
-</template>
-
-<script lang="ts">
+<script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
 import { getStyles } from './Label.styles'
 import { classNamesFunction } from '@fabric-vue/utilities'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
+import { CreateElement, VNode } from 'vue'
 
 const getClassNames = classNamesFunction<any, ILabelStyles>({
   disableCaching: true,
 })
 
-@Component
+@Component({
+  // @ts-ignore
+  functional: true,
+})
 export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
 
-  get classNames (): any {
-    const { theme, className, disabled, required } = this
+  render (h: CreateElement, context: any): VNode {
+    const { theme, className, disabled, required } = context.props
 
-    return getClassNames(getStyles, {
+    const classNames = getClassNames(getStyles, {
       className,
       disabled,
       required,
       theme: theme!,
     })
+
+    return (
+      <label class={classNames.root} {...context.data}>
+        {context.children}
+      </label>
+    )
   }
 }
 </script>

@@ -4,11 +4,9 @@ import VueRouter from 'vue-router'
 import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 
-import Fabric, { ITheme } from './plugins/office-fabric'
-import { IPalette } from './types/IPalette'
+import Fabric from './plugins/office-fabric'
 
-Vue.use(Fabric, {
-} as ITheme)
+Vue.use(Fabric, {}, true)
 
 Vue.use(VueRouter)
 

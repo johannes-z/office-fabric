@@ -1,27 +1,32 @@
 import { getDocument } from '@fabric-vue/utilities'
 
-const hashCode = (s: string) => s.split('')
-  .reduce((a, b) => (((a << 5) - a) + b.charCodeAt(0)) | 0, 0)
-
-const styleMap = new Map()
-
 const STYLE_PREFIX = '__fabric__'
 
-export function registerCSSVars (vars: { [key: string]: string }) {
-  const hash = hashCode(JSON.stringify(vars))
-  if (styleMap.has(hash)) {
+export function registerCSSVars (key: string, obj: any) {
+  const document = getDocument()
+  if (!document) return obj
 
-  } else {
-    styleMap.set(hash, vars)
-    const document = getDocument()
-    if (!document) return
-    const style = document.createElement('style')
-    style.id = `${STYLE_PREFIX}${hash}`
+  const id = `${STYLE_PREFIX}${key}`
+
+  let style = document.getElementById(id)
+  if (!style) {
+    style = document.createElement('style')
+    style.id = `${STYLE_PREFIX}${key}`
     document.head.appendChild(style)
-
-    style.innerHTML = `
-      :root {
-        ${Object.values(vars).join(';')}
-      }`
   }
+
+  const properties: { [key: string]: string } = {}
+  const css: any = []
+
+  for (const key in obj) {
+    const value = obj[key]
+    properties[key] = `var(--fabric-${key})`
+    css.push(`--fabric-${key}: ${value};`)
+  }
+
+  style.innerHTML = `
+  :root {
+    ${css.join('\n')}
+  }`
+  return properties
 }
