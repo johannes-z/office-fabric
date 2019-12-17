@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css } from '@fabric-vue/utilities'
-import { ITheme, getTheme } from '@fabric-vue/styling'
+import { getTheme } from '@fabric-vue/styling'
 
 // @ts-ignore
 @Component

@@ -87,7 +87,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     const classNames = getClassNames(getStyles, { theme: theme!, groups })
 
     return (
-      <li key={link.key || linkIndex} role="listitem" class={classNames.navItem}>
+      <li key={linkIndex} role="listitem" class={classNames.navItem}>
         {this.renderCompositeLink(link, linkIndex, nestingLevel)}
         {link.isExpanded ? this.renderLinks(link.links, ++nestingLevel) : null}
       </li>
@@ -107,7 +107,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     })
 
     return (
-      <div key={link.key || linkIndex} class={classNames.compositeLink}>
+      <div key={linkIndex} class={classNames.compositeLink}>
         {link.links && link.links.length > 0 ? (
           <button onClick={this.onLinkExpandClicked.bind(this, link)} class={classNames.chevronButton}>
             <o-icon
@@ -126,7 +126,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-    const isSelected = (link.key || linkIndex) === this.internalSelectedKey
+    const isSelected = ('' + linkIndex) === this.internalSelectedKey
     const isLinkWithIcon = link.icon || link.iconProps
 
     const { groups, theme } = this
