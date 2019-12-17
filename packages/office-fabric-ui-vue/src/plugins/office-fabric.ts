@@ -8,29 +8,6 @@ const toKebabCase = (str: string) => str
   .replace(/[\s_]+/g, '-')
   .toLowerCase()
 
-export function createCSSProperties (obj: any) {
-  const properties: any = {}
-  const css: any = []
-  for (const key in obj) {
-    const value = obj[key]
-    properties[key] = `var(--fabric-${key})`
-    css.push(`--fabric-${key}: ${value};`)
-  }
-
-  let style = document.getElementById('__fabric__css-properties')
-  if (!style) {
-    style = document.createElement('style')
-    style.id = '__fabric__css-properties'
-    document.head.appendChild(style)
-  }
-  style.innerHTML = `
-  ${style.innerHTML}
-  :root {
-    ${css.join('\n')}
-  }`
-  return properties
-}
-
 export * from '@/components'
 
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {

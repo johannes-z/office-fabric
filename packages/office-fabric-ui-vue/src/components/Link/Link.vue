@@ -26,10 +26,10 @@ export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
     const { className, theme, href, disabled } = this
 
     return getClassNames(getStyles, {
-      className: className,
+      theme,
+      className,
       isButton: !href,
       isDisabled: disabled,
-      theme: theme,
     })
   }
 }

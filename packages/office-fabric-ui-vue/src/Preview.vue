@@ -52,6 +52,12 @@ import routes from '@/plugins/router/routes'
               { name: 'Breadcrumb', key: 'Breadcrumb', href: '/#/Breadcrumb' },
             ],
           }, {
+            name: 'Notification & Equipment',
+            isExpanded: false,
+            links: [
+              { name: 'MessageBar', key: 'MessageBar', href: '/#/MessageBar' },
+            ],
+          }, {
             name: 'Progress',
             isExpanded: false,
             links: [
