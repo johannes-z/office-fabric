@@ -8,8 +8,6 @@ const config: Config = {
 
   output: {
     dir: './dist',
-    fileName: `office-ui-fabric-vue.[format][min].js`,
-    moduleName: 'OfficeUIFabric',
     format: 'esm',
     extractCSS: true,
   },

@@ -2,6 +2,7 @@
   "name": "@uifabric-vue/styling",
   "version": "1.0.0",
   "private": true,
+  "module": "./dist/index.esm.js",
   "main": "./src/index.ts",
   "dependencies": {
     "@uifabric/merge-styles": "^7.8.1",

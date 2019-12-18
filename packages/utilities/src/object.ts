@@ -37,6 +37,7 @@ export function shallowCompare<TA, TB> (a: TA, b: TB): boolean {
  */
 // tslint:disable-next-line:no-any
 export function assign (target: any, ...args: any[]): any {
+  // @ts-ignore
   return filteredAssign.apply(this, [null, target].concat(args))
 }
 

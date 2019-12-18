@@ -224,6 +224,7 @@ export class EventGroup {
 
           let result
           try {
+            // @ts-ignore
             result = callback.apply(parent, args)
             if (result === false && args[0]) {
               let e = args[0]
@@ -262,6 +263,7 @@ export class EventGroup {
             return
           }
 
+          // @ts-ignore
           return callback.apply(parent, args)
         }
 
