@@ -19,13 +19,11 @@ const config: Config = {
   },
 
   babel: {
-    // configFile: false,
+    configFile: false,
+    jsx: 'h',
   },
 
   plugins: {
-    babel: {
-      runtimeHelpers: true,
-    },
     alias: {
       resolve: ['.jsx', '.js', '.vue', '.ts'],
       entries: [
@@ -36,6 +34,7 @@ const config: Config = {
       useTsconfigDeclarationDir: true,
     },
     vue: {
+      compileTemplate: true,
       css: {
         extract: true,
       },

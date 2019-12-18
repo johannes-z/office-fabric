@@ -8,8 +8,8 @@
     ]
   },
   "scripts": {
-    "serve": "yarn workspace office-ui-fabric-vue serve",
-    "build": "yarn workspace office-ui-fabric-vue build"
+    "serve": "yarn workspace @uifabric-vue/office-ui-fabric-vue serve",
+    "build": "yarn workspace @uifabric-vue/office-ui-fabric-vue build"
   },
   "devDependencies": {
     "@vue/eslint-config-standard": "^4.0.0",

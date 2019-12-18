@@ -1,6 +1,5 @@
-<script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ActionButton from '../Button/ActionButton/ActionButton.vue'
+import { ActionButton } from '../Button/'
 import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
 import { Icon } from '../Icon/'
@@ -33,7 +32,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   // @ts-ignore
   get classNames (): any {}
 
-  render (): VNode | null {
+  render (h: CreateElement): VNode | null {
     const { theme, className, isOnTop, groups } = this
     if (!groups) {
       return null
@@ -141,7 +140,8 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     })
 
     return (
-      <action-button
+      <ActionButton
+        // @ts-ignore
         href={link.href || (link.forceAnchor ? '#' : undefined)}
         title={link.title || link.name}
         target={link.target}
@@ -150,7 +150,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
         class={[classNames.link, isSelected && classNames.selected]}
         style={{ paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` }}>
         {link.name}
-      </action-button>
+      </ActionButton>
     )
   }
 
@@ -187,4 +187,3 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     }
   }
 }
-</script>

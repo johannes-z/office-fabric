@@ -138,7 +138,6 @@ export default class Dropdown extends BaseComponent {
   }
 
   private select (option: any) {
-    console.log(option)
     if (option.disabled) return
 
     const index = this.selectedOptions.findIndex(o => o.key === option.key)
