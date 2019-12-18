@@ -156,6 +156,10 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
   private onNavLinkClicked (link: INavLink, linkIndex: number) {
     if (link.onClick) link.onClick(link)
+
+    if (!link.url && link.links && link.links.length > 0) {
+      link.isExpanded = !link.isExpanded
+    }
     this.internalSelectedKey = link.key!
   }
 

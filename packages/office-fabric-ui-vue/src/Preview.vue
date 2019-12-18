@@ -60,7 +60,7 @@ export default class Preview extends Vue {
         isExpanded: true,
         links: [
           { name: 'ProgressIndicator', key: 'ProgressIndicator', href: '/#/ProgressIndicator' },
-          { name: 'Shimmer', key: 'Shimmer', href: '/#/Shimmer' },
+          { name: 'Shimmer', key: 'Shimmer', href: '/#/Shimmer', disabled: true },
           { name: 'Spinner', key: 'Spinner', href: '/#/Spinner' },
         ],
       }, {

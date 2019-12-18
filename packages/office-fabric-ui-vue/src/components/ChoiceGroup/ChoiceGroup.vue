@@ -1,7 +1,8 @@
 <template>
   <div :class="classNames.applicationRole">
     <div :class="classNames.root">
-      <Label :class="classNames.label"
+      <Label v-if="label"
+             :class="classNames.label"
              :required="required"
              :disabled="disabled">
         {{ label }}
@@ -14,7 +15,7 @@
           :key="option.key"
           v-bind="option"
           :checked="selectedOption.key === option.key"
-          @click.native="selectedOption = option">
+          @click.native="onClick(option)">
           {{ option.text }}
         </ChoiceGroupOption>
       </div>
@@ -49,6 +50,11 @@ export default class ChoiceGroup extends BaseComponent {
     return getClassNames(getStyles, {
       theme, className, optionsContainIconOrImage: false,
     })
+  }
+
+  private onClick (option: any) {
+    if (option.disabled) return
+    this.selectedOption = option
   }
 }
 </script>
