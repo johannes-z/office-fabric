@@ -64,7 +64,7 @@ export class EventGroup {
   private _parent: any;
   private _eventRecords: IEventRecord[];
   private _id: number = EventGroup._uniqueId++;
-  private _isDisposed: boolean;
+  private _isDisposed!: boolean;
 
   /** For IE8, bubbleEvent is ignored here and must be dealt with by the handler.
    *  Events raised here by default have bubbling set to false and cancelable set to true.

@@ -4,16 +4,14 @@
            :class="classNames.input"
            v-bind="$attrs"
            type="checkbox"
-           @input="internalValue = !internalValue"
-           v-on="$listeners">
+           @input="internalValue = !internalValue">
     <Label :for="`Checkbox${_uid}`"
-           :class-name="classNames.label"
-           :class="classNames.label">
+           :class-name="classNames.label">
       <div :class="classNames.checkbox">
         <Icon icon-name="CheckMark"
               :class-name="classNames.checkmark" />
       </div>
-      <span :class="classNames.text">
+      <span v-if="label || $slots.default" :class="classNames.text">
         <slot>{{ label }}</slot>
       </span>
     </Label>
@@ -26,8 +24,8 @@ import Label from '../Label/Label.vue'
 import Icon from '../Icon/Icon.vue'
 import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
-import { getStyles } from './Checkbox.styles'
 import { classNamesFunction } from '@fabric-vue/utilities'
+import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
@@ -46,20 +44,20 @@ export default class Checkbox extends BaseComponent<ICheckboxProps, ICheckboxSty
   private internalValue: boolean = this.checked
 
   get classNames () {
-    const { theme, className, disabled, indeterminate, internalValue, boxSide } = this
-    return getClassNames(getStyles, {
-      theme: theme!,
+    const { theme, className, styles, disabled, indeterminate, internalValue, boxSide } = this
+    return getClassNames(styles, {
+      theme,
       className,
       disabled,
       indeterminate,
       checked: internalValue,
       reversed: boxSide !== 'start',
-      isUsingCustomLabelRender: false,
+      isUsingCustomLabelRender: true,
     })
   }
 
   @Watch('internalValue')
-  private onValueChanged (value: string) {
+  private onValueChanged (value: boolean) {
     this.$emit('input', value)
   }
 }

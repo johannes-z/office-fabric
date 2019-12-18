@@ -33,9 +33,8 @@ export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): I
 export default function install (Vue: any, theme: IPartialTheme = {}, useCSSVars: boolean = false) {
   for (const _ in Components) {
     const Component: VueConstructor<Vue> = (Components as any)[_]
-    if (!Component.component) continue
-
-    const name: string = `o-${toKebabCase(Component.name)}`
+    if (Component.toString().indexOf('VueComponent') === -1) continue
+    const name: string = `o-${toKebabCase(_)}`
     Vue.component(name, Component)
   }
 

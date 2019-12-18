@@ -9,7 +9,12 @@
          :class="classNames.dropdown"
          @click="isOpen = true">
       <span :class="classNames.title">
-        Test
+        <template v-if="selectedOptions.length">
+          {{ selectedOptions.map(i => i.text).join(multiSelectDelimiter) }}
+        </template>
+        <template v-else>
+          {{ placeholder }}
+        </template>
       </span>
       <span :class="classNames.caretDownWrapper">
         <Icon :class="classNames.caretDown" icon-name="ChevronDown" />
@@ -20,24 +25,32 @@
       <Callout :target="$refs.dropdown"
                :is-beak-visible="false"
                :callout-width="dropdownWidth || ($refs.dropdown ? $refs.dropdown.clientWidth : 0)"
-               @dismiss="isOpen = false">
+               @dismiss="isOpen = false"
+               @positioned="onPositioned">
         <div :class="classNames.dropdownItemsWrapper"
              tabindex="0">
-          <ActionButton v-for="(option, index) in options"
-                        :key="index"
-                        :class-name="
-                          option.hidden
-                            ? classNames.dropdownItemHidden
-                            : option.isItemSelected && option.disabled === true
-                              ? classNames.dropdownItemSelectedAndDisabled
-                              : option.isItemSelected
-                                ? classNames.dropdownItemSelected
-                                : option.disabled === true
-                                  ? classNames.dropdownItemDisabled
-                                  : classNames.dropdownItem
-                        ">
+          <components :is="multiSelect ? 'Checkbox' : 'ActionButton'"
+                      v-for="(option, index) in options"
+                      :key="index"
+                      :class-name="
+                        option.hidden
+                          ? classNames.dropdownItemHidden
+                          : option.isItemSelected && option.disabled === true
+                            ? classNames.dropdownItemSelectedAndDisabled
+                            : option.isItemSelected
+                              ? classNames.dropdownItemSelected
+                              : option.disabled === true
+                                ? classNames.dropdownItemDisabled
+                                : classNames.dropdownItem"
+                      :disabled="option.disabled"
+                      :title="option.text"
+                      :checked="option.isItemSelected"
+                      :styles="multiSelect && multiSelectItemStyles"
+                      role="option"
+                      @click.native="!multiSelect && select(option)"
+                      @input="multiSelect && select(option)">
             {{ option.text }}
-          </ActionButton>
+          </components>
         </div>
       </Callout>
     </div>
@@ -53,43 +66,53 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { getStyles } from './Dropdown.styles'
 import { getClassNames } from '../../util/getClassNames'
-import { RectangleEdge } from '@fabric-vue/utilities'
+import { RectangleEdge, ICalloutPositionedInfo } from '@fabric-vue/utilities'
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import { Callout } from '../Callout'
 import { ActionButton } from '../Button'
+import { Checkbox } from '../Checkbox'
 
 @Component({
-  components: { Callout, ActionButton, Icon, Label },
+  components: { Callout, ActionButton, Checkbox, Icon, Label },
 })
 export default class Dropdown extends BaseComponent {
-  @Prop() errorMessage!: string
-  @Prop() label!: string
-  @Prop() required!: boolean
-  @Prop() disabled!: boolean
-  @Prop() options!: any[]
-  @Prop() selectedOptions!: any
-  @Prop() panelProps!: any
-  @Prop() calloutProps!: any
-  @Prop() dropdownWidth!: number
+  $refs!: {
+    dropdown: HTMLDivElement
+  }
+
+  @Prop({ required: true }) options!: any[]
+  @Prop({ default: () => [] }) selectedOptions!: any[]
+
+  @Prop({ default: '' }) label!: string
+  @Prop({ default: '' }) placeholder!: string
+  @Prop({ default: '' }) errorMessage!: string
+  @Prop({ default: false }) required!: boolean
+  @Prop({ default: false }) disabled!: boolean
+
+  @Prop({ default: false }) multiSelect!: boolean
+  @Prop({ default: ', ' }) multiSelectDelimiter !: string
+
+  @Prop({ default: 0 }) dropdownWidth!: number
+  @Prop({ default: () => {} }) panelProps!: any
+  @Prop({ default: () => {} }) calloutProps!: any
 
   isOpen: boolean = false
-  calloutRenderEdge: RectangleEdge = -1
+  calloutRenderEdge: RectangleEdge | null = null
 
   created () {
     this.options.forEach(option => {
-      option.isItemSelected = false
+      this.$set(option, 'isItemSelected', false)
     })
   }
 
   get classNames () {
     const { theme, className, errorMessage, label, required, disabled, panelProps, calloutProps } = this
     const { isOpen, calloutRenderEdge } = this
-    const selectedOptions = []
-    return getClassNames(getStyles, {
+    const selectedOptions = this.selectedOptions
+    return getClassNames(this.styles, {
       theme,
       className,
       hasError: !!(errorMessage && errorMessage.length > 0),
@@ -104,11 +127,39 @@ export default class Dropdown extends BaseComponent {
     })
   }
 
+  get multiSelectItemStyles () {
+    return this.classNames.subComponentStyles
+      ? this.classNames.subComponentStyles.multiSelectItem
+      : undefined
+  }
+
   get hasErrorMessage () {
     return this.errorMessage && this.errorMessage.length > 0
   }
+
+  private select (option: any) {
+    console.log(option)
+    if (option.disabled) return
+
+    const index = this.selectedOptions.findIndex(o => o.key === option.key)
+
+    if (index > -1) {
+      this.selectedOptions[index].isItemSelected = false
+      this.selectedOptions.splice(index, 1)
+    } else {
+      if (!this.multiSelect) {
+        this.selectedOptions.splice(0, this.selectedOptions.length)
+        this.isOpen = false
+      }
+      option.isItemSelected = true
+      this.selectedOptions.push(option)
+    }
+  }
+
+  private onPositioned (positions: ICalloutPositionedInfo) {
+    if (!this.calloutRenderEdge || this.calloutRenderEdge !== positions.targetEdge) {
+      this.calloutRenderEdge = positions.targetEdge
+    }
+  }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

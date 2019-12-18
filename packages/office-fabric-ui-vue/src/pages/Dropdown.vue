@@ -13,6 +13,12 @@
       <h2>Usage</h2>
       <h2>Default Dropdown</h2>
       <o-dropdown label="Default Dropdown"
+                  placeholder="Select an option"
+                  :options="options"
+                  error-message="Test" />
+      <o-dropdown label="Default Dropdown"
+                  placeholder="Select an option"
+                  multi-select
                   :options="options"
                   error-message="Test" />
     </div>

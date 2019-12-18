@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import Icon from '../Icon/Icon.vue'
+import { Icon } from '../../Icon/'
 import BaseComponent from '../../BaseComponent'
 import BaseButton from '../BaseButton.vue'
 import { getStyles } from './CommandBarButton.styles'

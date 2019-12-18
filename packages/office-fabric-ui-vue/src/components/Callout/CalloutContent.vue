@@ -107,6 +107,7 @@ export default class CalloutContent extends BaseComponent {
       this.positions = newPositions
     } else if (this.positionAttempts > 0) {
       this.positionAttempts = 0
+      this.$emit('positioned', this.positions)
     }
   }
 
