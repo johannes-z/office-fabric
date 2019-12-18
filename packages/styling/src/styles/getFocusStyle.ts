@@ -1,8 +1,8 @@
 import { IRawStyle } from '@uifabric/merge-styles'
-import { IGetFocusStylesOptions, ITheme } from '../interfaces/'
+import { IGetFocusStylesOptions, ITheme } from '../interfaces/index'
 import { HighContrastSelector } from './CommonStyles'
-import { ZIndexes } from './zIndexes'
 import { IsFocusVisibleClassName } from '@fabric-vue/utilities'
+import { ZIndexes } from './zIndexes'
 
 /**
  * Generates a focus style which can be used to define an :after focus border.

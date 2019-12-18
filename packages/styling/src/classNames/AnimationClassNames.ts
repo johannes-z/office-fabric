@@ -1,5 +1,8 @@
-import { IAnimationStyles } from '../interfaces'
-import { AnimationStyles } from '../styles'
-import { buildClassMap } from '../utilities/buildClassMap'
+import { buildClassMap } from '../utilities/index'
+import { AnimationStyles } from '../styles/index'
+import { IAnimationStyles } from '../interfaces/index'
 
+/**
+ * {@docCategory AnimationClassNames}
+ */
 export const AnimationClassNames: { [key in keyof IAnimationStyles]?: string } = buildClassMap(AnimationStyles)

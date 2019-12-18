@@ -72,7 +72,7 @@ export function registerDefaultFontFaces (baseUrl: string): void {
 function _getFontBaseUrl (): string {
   let win = getWindow()
 
-  // @ts-ignore
+  // tslint:disable-next-line:no-string-literal no-any
   let fabricConfig: IFabricConfig = win ? win['FabricConfig'] : undefined
 
   return fabricConfig && fabricConfig.fontBaseUrl !== undefined ? fabricConfig.fontBaseUrl : DefaultBaseUrl

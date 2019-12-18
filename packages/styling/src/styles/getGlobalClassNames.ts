@@ -14,8 +14,8 @@ const _getGlobalClassNames = memoizeFunction(
 
     if (disableGlobalClassNames) {
       // disable global classnames
-      return Object.keys(classNames).reduce((acc: any, className: string) => {
-        acc[className] = styleSheet.getClassName((classNames as any)[className])
+      return Object.keys(classNames).reduce((acc: {}, className: string) => {
+        acc[className] = styleSheet.getClassName(classNames[className])
         return acc
       }, {})
     }

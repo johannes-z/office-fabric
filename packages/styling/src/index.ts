@@ -1,5 +1,4 @@
-export * from './classNames'
-export * from './interfaces'
-export * from './styles'
-
-export * from './utilities/buildClassMap'
+export * from './classNames/index'
+export * from './styles/index'
+export * from './utilities/index'
+export * from './interfaces/index'

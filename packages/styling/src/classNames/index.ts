@@ -1,3 +1,3 @@
-export * from './AnimationClassNames'
-// export * from './ColorClassNames'
-// export * from './FontClassNames'
+export { AnimationClassNames } from './AnimationClassNames'
+export { FontClassNames } from './FontClassNames'
+export { ColorClassNames } from './ColorClassNames'
