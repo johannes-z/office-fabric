@@ -1,4 +1,4 @@
-import { ITheme } from '@fabric-vue/styling'
+import { ITheme } from '@uifabric-vue/styling'
 import { IStackProps } from './Stack.types'
 
 // Helper function that converts a themed spacing key (if given) to the corresponding themed spacing value.

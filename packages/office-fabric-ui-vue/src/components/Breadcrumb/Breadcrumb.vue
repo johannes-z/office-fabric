@@ -23,7 +23,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IBreadcrumbProps, IBreadcrumbStyles, IBreadcrumbItem } from './Breadcrumb.types'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Breadcrumb.styles'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
 

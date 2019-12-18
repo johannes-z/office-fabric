@@ -67,7 +67,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
-import { RectangleEdge, ICalloutPositionedInfo } from '@fabric-vue/utilities'
+import { RectangleEdge, ICalloutPositionedInfo } from '@uifabric-vue/utilities'
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'

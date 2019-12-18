@@ -1,5 +1,5 @@
 import { IChoiceGroupStyles } from './ChoiceGroup.types'
-import { getGlobalClassNames } from '@fabric-vue/styling'
+import { getGlobalClassNames } from '@uifabric-vue/styling'
 
 const GlobalClassNames = {
   root: 'ms-ChoiceFieldGroup',

@@ -16,7 +16,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IModalProps, IModalStyles } from './Modal.types'
 import BaseComponent from '../BaseComponent'
 import { Layer } from '@/components/Layer'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { getStyles } from './Modal.styles'
 
 const getClassNames = classNamesFunction<any, any>()

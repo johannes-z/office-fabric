@@ -12,7 +12,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILinkProps, ILinkStyles } from './Link.types'
 import { CreateElement } from 'vue'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction<any, ILinkStyles>()
 

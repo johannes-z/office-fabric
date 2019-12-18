@@ -27,7 +27,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IMessageBarStyles, MessageBarType } from './MessageBar.types'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { Icon } from '../Icon'
 import { IconButton } from '../Button'
 

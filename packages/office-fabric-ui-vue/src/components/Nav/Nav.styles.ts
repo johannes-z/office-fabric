@@ -1,4 +1,4 @@
-import { AnimationClassNames, ZIndexes, getFocusStyle, FontWeights, HighContrastSelector, getGlobalClassNames } from '@fabric-vue/styling'
+import { AnimationClassNames, ZIndexes, getFocusStyle, FontWeights, HighContrastSelector, getGlobalClassNames } from '@uifabric-vue/styling'
 import { INavStyles } from './Nav.types'
 
 const GlobalClassNames = {

@@ -4,8 +4,8 @@ import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.st
 
 import { primaryStyles, standardStyles } from '../ButtonThemes'
 import { concatStyleSets } from '@uifabric/merge-styles'
-import { memoizeFunction } from '@fabric-vue/utilities'
-import { ITheme, FontWeights } from '@fabric-vue/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
+import { ITheme, FontWeights } from '@uifabric-vue/styling'
 
 const DEFAULT_BUTTON_HEIGHT = '32px'
 const DEFAULT_BUTTON_MIN_WIDTH = '80px'

@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { isIE11 } from '@fabric-vue/utilities'
+import { isIE11 } from '@uifabric-vue/utilities'
 
 const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'

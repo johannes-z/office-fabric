@@ -1,4 +1,4 @@
-import { GlobalSettings, warn } from '@fabric-vue/utilities'
+import { GlobalSettings, warn } from '@uifabric-vue/utilities'
 import { IRawStyle, IFontFace, fontFace, mergeStyles, Stylesheet } from '@uifabric/merge-styles'
 
 export interface IIconSubset {

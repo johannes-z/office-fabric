@@ -24,7 +24,7 @@ import { Label } from '../Label/'
 import { Icon } from '../Icon/'
 import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()

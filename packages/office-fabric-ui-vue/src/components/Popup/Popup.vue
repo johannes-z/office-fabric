@@ -1,6 +1,6 @@
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { getDocument, getWindow, on, Async, doesElementContainFocus } from '@fabric-vue/utilities'
+import { getDocument, getWindow, on, Async, doesElementContainFocus } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 import { CreateElement, VNode } from 'vue'
 

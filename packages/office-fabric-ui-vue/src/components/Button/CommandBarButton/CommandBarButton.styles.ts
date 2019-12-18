@@ -1,8 +1,8 @@
 import { concatStyleSets } from '@uifabric/merge-styles'
 import { ButtonGlobalClassNames } from '../BaseButton.classNames'
-import { HighContrastSelector, getFocusStyle, ITheme } from '@fabric-vue/styling'
+import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric-vue/styling'
 import { IButtonStyles } from '../Button.types'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 

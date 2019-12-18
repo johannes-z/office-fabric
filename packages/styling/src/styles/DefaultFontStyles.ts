@@ -1,7 +1,7 @@
 import { fontFace, IFontWeight } from '@uifabric/merge-styles'
 import { IFontStyles } from '../interfaces/index'
 import { createFontStyles, FontWeights, LocalizedFontFamilies, LocalizedFontNames } from './fonts'
-import { getLanguage, getWindow } from '@fabric-vue/utilities'
+import { getLanguage, getWindow } from '@uifabric-vue/utilities'
 import { IFabricConfig } from '../interfaces/IFabricConfig'
 
 // Default urls.

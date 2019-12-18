@@ -1,5 +1,5 @@
 import { parseGap, parsePadding } from './StackUtils'
-import { getGlobalClassNames } from '@fabric-vue/styling'
+import { getGlobalClassNames } from '@uifabric-vue/styling'
 
 const nameMap: { [key: string]: string } = {
   start: 'flex-start',

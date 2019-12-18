@@ -1,5 +1,5 @@
 import { IToggleStyles } from './Toggle.types'
-import { HighContrastSelector, FontWeights, getFocusStyle } from '@fabric-vue/styling/'
+import { HighContrastSelector, FontWeights, getFocusStyle } from '@uifabric-vue/styling/'
 
 const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20

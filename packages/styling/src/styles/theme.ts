@@ -1,6 +1,6 @@
 import { ITheme, IPartialTheme, IFontStyles, IPalette, ISemanticColors } from '..'
 import { DefaultPalette, DefaultEffects, DefaultFontStyles, DefaultSpacing } from '.'
-import { merge } from '@fabric-vue/utilities'
+import { merge } from '@uifabric-vue/utilities'
 
 let _theme: ITheme = createTheme({
   palette: DefaultPalette,

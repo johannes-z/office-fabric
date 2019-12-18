@@ -1,7 +1,7 @@
-import { FontWeights, getPlaceholderStyles, HighContrastSelector, ITheme, getFocusStyle } from '@fabric-vue/styling'
+import { FontWeights, getPlaceholderStyles, HighContrastSelector, ITheme, getFocusStyle } from '@uifabric-vue/styling'
 import { concatStyleSets, IStyle, IRawStyle } from '@uifabric/merge-styles'
 import { IComboBoxStyles } from './ComboBox.types'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button/Button.types'
 
 const ComboBoxHeight = 32

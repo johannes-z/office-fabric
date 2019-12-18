@@ -2,7 +2,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { CreateElement, VNode } from 'vue'
 

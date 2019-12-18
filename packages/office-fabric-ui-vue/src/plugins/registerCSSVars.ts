@@ -1,4 +1,4 @@
-import { getDocument } from '@fabric-vue/utilities'
+import { getDocument } from '@uifabric-vue/utilities'
 
 const STYLE_PREFIX = '__fabric__'
 

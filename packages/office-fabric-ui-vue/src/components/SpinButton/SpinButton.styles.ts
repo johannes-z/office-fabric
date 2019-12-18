@@ -1,7 +1,7 @@
 import { concatStyleSets, IRawStyle } from '@uifabric/merge-styles'
 import { ISpinButtonStyles } from './SpinButton.types'
-import { HighContrastSelector, IconFontSizes, ITheme } from '@fabric-vue/styling'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { HighContrastSelector, IconFontSizes, ITheme } from '@uifabric-vue/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button/Button.types'
 
 const ARROW_BUTTON_WIDTH = 23

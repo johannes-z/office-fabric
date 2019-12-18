@@ -1,5 +1,5 @@
 import { mergeStyles } from '@uifabric/merge-styles'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button.types'
 
 export interface ISplitButtonClassNames {

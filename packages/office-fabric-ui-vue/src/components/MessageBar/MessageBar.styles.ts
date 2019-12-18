@@ -1,4 +1,4 @@
-import { HighContrastSelector, IconFontSizes, ScreenWidthMaxSmall, getFocusStyle, getGlobalClassNames, getScreenSelector, IPalette, ISemanticColors } from '@fabric-vue/styling'
+import { HighContrastSelector, IconFontSizes, ScreenWidthMaxSmall, getFocusStyle, getGlobalClassNames, getScreenSelector, IPalette, ISemanticColors } from '@uifabric-vue/styling'
 import { MessageBarType, IMessageBarStyles } from './MessageBar.types'
 import { IStyle } from '@uifabric/merge-styles'
 

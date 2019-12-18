@@ -1,7 +1,7 @@
-import { getGlobalClassNames, normalize, HighContrastSelector, AnimationVariables, getPlaceholderStyles } from '@fabric-vue/styling'
+import { getGlobalClassNames, normalize, HighContrastSelector, AnimationVariables, getPlaceholderStyles } from '@uifabric-vue/styling'
 import { ISearchBoxStyles } from './SearchBox.types'
 import { IStyle } from '@uifabric/merge-styles'
-import { getRTL } from '@fabric-vue/utilities'
+import { getRTL } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-SearchBox',

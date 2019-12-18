@@ -1,7 +1,7 @@
 import { IImageStyles } from './Image.types'
-import { getGlobalClassNames, AnimationClassNames } from '@fabric-vue/styling'
+import { getGlobalClassNames, AnimationClassNames } from '@uifabric-vue/styling'
 import { IStyle } from '@uifabric/merge-styles'
-import { getWindow } from '@fabric-vue/utilities'
+import { getWindow } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-Image',

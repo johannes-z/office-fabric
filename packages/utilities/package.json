@@ -1,5 +1,5 @@
 {
-  "name": "@fabric-vue/utilities",
+  "name": "@uifabric-vue/utilities",
   "version": "1.0.0",
   "private": true,
   "main": "./src/index.ts"

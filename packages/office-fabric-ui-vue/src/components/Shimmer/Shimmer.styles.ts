@@ -1,5 +1,5 @@
-import { hiddenContentStyle, HighContrastSelector, getGlobalClassNames } from '@fabric-vue/styling'
-import { getRTL } from '@fabric-vue/utilities'
+import { hiddenContentStyle, HighContrastSelector, getGlobalClassNames } from '@uifabric-vue/styling'
+import { getRTL } from '@uifabric-vue/utilities'
 import { IShimmerStyles } from './Shimmer.types'
 import { keyframes } from '@uifabric/merge-styles'
 

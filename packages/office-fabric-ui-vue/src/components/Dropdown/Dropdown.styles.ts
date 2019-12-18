@@ -1,5 +1,5 @@
 import { IDropdownStyles } from './Dropdown.types'
-import { IsFocusVisibleClassName, RectangleEdge } from '@fabric-vue/utilities'
+import { IsFocusVisibleClassName, RectangleEdge } from '@uifabric-vue/utilities'
 
 import {
   FontWeights,
@@ -9,7 +9,7 @@ import {
   HighContrastSelectorWhite,
   getScreenSelector,
   ScreenWidthMinMedium,
-} from '@fabric-vue/styling'
+} from '@uifabric-vue/styling'
 import { IStyle, IRawStyle, IStyleFunction } from '@uifabric/merge-styles'
 
 const GlobalClassNames = {

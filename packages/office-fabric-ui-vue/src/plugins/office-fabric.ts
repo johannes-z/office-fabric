@@ -1,6 +1,6 @@
 import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
-import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@fabric-vue/styling'
+import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric-vue/styling'
 import { registerCSSVars } from './registerCSSVars'
 
 const toKebabCase = (str: string) => str

@@ -1,7 +1,7 @@
 import { concatStyleSets, IStyle } from '@uifabric/merge-styles'
-import { HighContrastSelector, getFocusStyle, ITheme } from '@fabric-vue/styling'
+import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric-vue/styling'
 import { IButtonStyles } from '../Button.types'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {

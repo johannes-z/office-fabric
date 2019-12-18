@@ -1,4 +1,4 @@
-import { IRectangle } from '@fabric-vue/utilities'
+import { IRectangle } from '@uifabric-vue/utilities'
 import { DirectionalHint } from '@/common/DirectionalHint'
 
 export enum RectangleEdge {

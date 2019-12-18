@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { getStyles } from './ComboBox.styles'
 import BaseComponent from '../BaseComponent'
 import { Label } from '../Label/'

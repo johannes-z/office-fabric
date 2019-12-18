@@ -1,5 +1,5 @@
 import { IModalStyles } from './Modal.types'
-import { AnimationVariables, getGlobalClassNames, ZIndexes } from '@fabric-vue/styling'
+import { AnimationVariables, getGlobalClassNames, ZIndexes } from '@uifabric-vue/styling'
 
 export const animationDuration = AnimationVariables.durationValue2
 

@@ -1,6 +1,6 @@
 import { ITheme } from '../interfaces/index'
 import { Stylesheet } from '@uifabric/merge-styles'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 
 export type GlobalClassNames<IStyles> = Record<keyof IStyles, string>;
 

@@ -1,7 +1,7 @@
 import { IProgressIndicatorStyles } from './ProgressIndicator.types'
 import { keyframes, IRawStyle } from '@uifabric/merge-styles'
-import { getGlobalClassNames, HighContrastSelector, noWrap } from '@fabric-vue/styling'
-import { getRTL } from '@fabric-vue/utilities'
+import { getGlobalClassNames, HighContrastSelector, noWrap } from '@uifabric-vue/styling'
+import { getRTL } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-ProgressIndicator',

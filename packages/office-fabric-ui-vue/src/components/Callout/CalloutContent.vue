@@ -17,7 +17,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { classNamesFunction, getWindow, getDocument, ICalloutPositionedInfo, assign, IRectangle, IPosition } from '@fabric-vue/utilities'
+import { classNamesFunction, getWindow, getDocument, ICalloutPositionedInfo, assign, IRectangle, IPosition } from '@uifabric-vue/utilities'
 import { getStyles } from './CalloutContent.styles'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { clickedOutside } from '@/util'

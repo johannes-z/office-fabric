@@ -11,7 +11,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IShimmerProps, IShimmerStyles } from './Shimmer.types'
 import { getStyles } from './Shimmer.styles'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction<any, IShimmerStyles>()
 

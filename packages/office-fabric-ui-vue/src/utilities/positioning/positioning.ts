@@ -1,4 +1,4 @@
-import { getScrollbarWidth, getRTL, Rectangle as FullRectangle, IRectangle } from '@fabric-vue/utilities'
+import { getScrollbarWidth, getRTL, Rectangle as FullRectangle, IRectangle } from '@uifabric-vue/utilities'
 import { DirectionalHint } from '@/common/DirectionalHint'
 
 import {

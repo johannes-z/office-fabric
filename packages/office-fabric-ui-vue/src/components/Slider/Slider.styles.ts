@@ -1,6 +1,6 @@
 import { ISliderStyles } from './Slider.types'
-import { HighContrastSelector, getGlobalClassNames, getFocusStyle, AnimationVariables } from '@fabric-vue/styling'
-import { getRTL } from '@fabric-vue/utilities'
+import { HighContrastSelector, getGlobalClassNames, getFocusStyle, AnimationVariables } from '@uifabric-vue/styling'
+import { getRTL } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-Slider',

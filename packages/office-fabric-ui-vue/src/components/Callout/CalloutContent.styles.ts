@@ -1,4 +1,4 @@
-import { focusClear, HighContrastSelector, getGlobalClassNames } from '@fabric-vue/styling'
+import { focusClear, HighContrastSelector, getGlobalClassNames } from '@uifabric-vue/styling'
 import { IRawStyle } from '@uifabric/merge-styles'
 
 function getBeakStyle (beakWidth?: number): IRawStyle {

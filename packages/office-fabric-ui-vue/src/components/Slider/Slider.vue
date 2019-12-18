@@ -30,7 +30,7 @@ import { Label } from '../Label/'
 import { ISliderProps, ISliderStyles } from './Slider.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '@/util/getClassNames'
-import { KeyCodes } from '@fabric-vue/utilities'
+import { KeyCodes } from '@uifabric-vue/utilities'
 
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 

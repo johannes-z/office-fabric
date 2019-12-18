@@ -1,7 +1,7 @@
 import { IRawStyle } from '@uifabric/merge-styles'
 import { IGetFocusStylesOptions, ITheme } from '../interfaces/index'
 import { HighContrastSelector } from './CommonStyles'
-import { IsFocusVisibleClassName } from '@fabric-vue/utilities'
+import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { ZIndexes } from './zIndexes'
 
 /**

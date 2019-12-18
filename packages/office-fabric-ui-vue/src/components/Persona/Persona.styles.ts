@@ -1,4 +1,4 @@
-import { noWrap, FontWeights, normalize, getGlobalClassNames } from '@fabric-vue/styling'
+import { noWrap, FontWeights, normalize, getGlobalClassNames } from '@uifabric-vue/styling'
 import { personaSize, presenceBoolean, sizeBoolean } from './PersonaConsts'
 import { IStyle } from '@uifabric/merge-styles'
 import { PersonaSize, PersonaPresence, IPersonaStyles } from './Persona.types'

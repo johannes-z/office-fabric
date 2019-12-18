@@ -1,7 +1,7 @@
 import { concatStyleSets } from '@uifabric/merge-styles'
 import { IButtonStyles } from '../Button.types'
-import { HighContrastSelector, ITheme } from '@fabric-vue/styling'
-import { memoizeFunction } from '@fabric-vue/utilities'
+import { HighContrastSelector, ITheme } from '@uifabric-vue/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 // import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles';

@@ -8,8 +8,8 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ITextProps, ITextStyles } from './Text.types'
-import { FontSizes } from '@fabric-vue/styling'
-import { classNamesFunction } from '@fabric-vue/utilities'
+import { FontSizes } from '@uifabric-vue/styling'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
