@@ -3,7 +3,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ISeparatorProps, ISeparatorStyles } from './Separator.types'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './Separator.styles'
 import { CreateElement, VNode } from 'vue'
 
 const verticalAlignment: any = {
@@ -21,7 +20,7 @@ export default class Separator extends BaseComponent<ISeparatorProps, ISeparator
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 
   render (h: CreateElement, context: any): VNode {
-    const classNames = getClassNames(getStyles, {
+    const classNames = getClassNames(context.props.styles, {
       theme: context.props.theme,
       className: context.data.attrs ? context.data.attrs.class : '',
       alignContent: context.props.alignContent,

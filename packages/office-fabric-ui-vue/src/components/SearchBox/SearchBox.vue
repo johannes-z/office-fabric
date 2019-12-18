@@ -26,12 +26,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import Icon from '../Icon/Icon.vue'
-import IconButton from '../Button/IconButton/IconButton.vue'
+import { Icon } from '../Icon/'
+import { IconButton } from '../Button/'
 import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './SearchBox.styles'
 
 @Component({
   components: { Icon, IconButton },
@@ -54,7 +53,7 @@ export default class SearchBox extends BaseComponent<ISearchBoxProps, ISearchBox
 
   get classNames () {
     const { theme, underlined, disabled, isActive, className, disableAnimation, internalValue } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme: theme!,
       className,
       underlined,

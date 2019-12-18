@@ -1,6 +1,13 @@
-import Link from './Link.vue'
+import { styled } from '../styled'
+import LinkBase from './Link.vue'
+import { getStyles } from './Link.styles'
+import { VueConstructor } from 'vue'
 
 export * from './Link.types'
-export {
-  Link,
-}
+
+export const Link: VueConstructor = styled(
+  LinkBase,
+  getStyles,
+  undefined,
+  { scope: 'Link' }
+)

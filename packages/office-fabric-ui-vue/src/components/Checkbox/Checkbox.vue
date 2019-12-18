@@ -20,8 +20,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
-import Label from '../Label/Label.vue'
-import Icon from '../Icon/Icon.vue'
+import { Label } from '../Label/'
+import { Icon } from '../Icon/'
 import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@fabric-vue/utilities'
@@ -44,8 +44,8 @@ export default class Checkbox extends BaseComponent<ICheckboxProps, ICheckboxSty
   private internalValue: boolean = this.checked
 
   get classNames () {
-    const { theme, className, styles, disabled, indeterminate, internalValue, boxSide } = this
-    return getClassNames(styles, {
+    const { theme, className, disabled, indeterminate, internalValue, boxSide } = this
+    return getClassNames(this.styles, {
       theme,
       className,
       disabled,

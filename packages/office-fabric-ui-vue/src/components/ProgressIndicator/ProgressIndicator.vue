@@ -20,7 +20,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './ProgressIndicator.styles'
 
 // if the percentComplete is near 0, don't animate it.
 // This prevents animations on reset to 0 scenarios
@@ -37,7 +36,7 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
 
   get classNames () {
     const { className, indeterminate, theme, barHeight } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       className,
       indeterminate,
       theme,

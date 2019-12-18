@@ -1,6 +1,13 @@
-import SearchBox from './SearchBox.vue'
+import { styled } from '../styled'
+import SearchBoxBase from './SearchBox.vue'
+import { getStyles } from './SearchBox.styles'
+import { VueConstructor } from 'vue'
 
 export * from './SearchBox.types'
-export {
-  SearchBox,
-}
+
+export const SearchBox: VueConstructor = styled(
+  SearchBoxBase,
+  getStyles,
+  undefined,
+  { scope: 'SearchBox' }
+)

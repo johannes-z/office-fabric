@@ -45,7 +45,7 @@
                       :disabled="option.disabled"
                       :title="option.text"
                       :checked="option.isItemSelected"
-                      :styles="multiSelect && multiSelectItemStyles"
+                      :styles="multiSelect ? multiSelectItemStyles : null"
                       role="option"
                       @click.native="!multiSelect && select(option)"
                       @input="multiSelect && select(option)">

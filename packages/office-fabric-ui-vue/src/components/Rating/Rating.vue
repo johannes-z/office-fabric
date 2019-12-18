@@ -25,11 +25,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import Icon from '../Icon/Icon.vue'
-import IconButton from '../Button/IconButton/IconButton.vue'
+import { Icon } from '../Icon/'
+import { IconButton } from '../Button/'
 import { IRatingProps, IRatingStyles } from './Rating.types'
 import BaseComponent from '../BaseComponent'
-import { getStyles } from './Rating.styles'
 import { getClassNames } from '../../util/getClassNames'
 
 @Component({
@@ -51,7 +50,7 @@ export default class Rating extends BaseComponent<IRatingProps, IRatingStyles> {
 
   get classNames () {
     const { disabled, readonly, theme } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       disabled,
       readonly,
       theme,

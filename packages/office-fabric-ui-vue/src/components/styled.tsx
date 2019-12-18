@@ -25,7 +25,7 @@ export function styled (
   getProps?: (props: any) => Partial<any>,
   customizable?: ICustomizableProps,
   pure?: boolean
-) {
+): VueConstructor<Vue> {
   return Vue.extend({
     functional: true,
     render: (h: CreateElement, context: RenderContext<any>): VNode => {

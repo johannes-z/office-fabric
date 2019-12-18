@@ -13,7 +13,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ISpinnerProps, ISpinnerStyles } from './Spinner.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './Spinner.styles'
 
 @Component
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {
@@ -23,7 +22,7 @@ export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles
 
   get classNames () {
     const { theme, className, size, labelPosition } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme,
       size,
       className,

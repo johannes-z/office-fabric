@@ -17,7 +17,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction } from '@fabric-vue/utilities'
 import { getStyles } from './ComboBox.styles'
 import BaseComponent from '../BaseComponent'
-import Label from '../Label/Label.vue'
+import { Label } from '../Label/'
 import { IconButton } from '../Button'
 
 const getClassNames = classNamesFunction()

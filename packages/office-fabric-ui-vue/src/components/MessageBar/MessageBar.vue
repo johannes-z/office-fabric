@@ -26,7 +26,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { getStyles } from './MessageBar.styles'
 import { IMessageBarStyles, MessageBarType } from './MessageBar.types'
 import { classNamesFunction } from '@fabric-vue/utilities'
 import { Icon } from '../Icon'
@@ -56,7 +55,7 @@ export default class MessageBar extends BaseComponent {
   get classNames () {
     const { theme, className, messageBarType, actions, truncated, isMultiline, expandSingleLine } = this
 
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme,
       className,
       messageBarType: messageBarType || MessageBarType.info,

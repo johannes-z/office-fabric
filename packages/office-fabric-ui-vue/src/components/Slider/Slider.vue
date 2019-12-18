@@ -26,11 +26,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import Label from '../Label/Label.vue'
+import { Label } from '../Label/'
 import { ISliderProps, ISliderStyles } from './Slider.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '@/util/getClassNames'
-import { getStyles } from './Slider.styles'
 import { KeyCodes } from '@fabric-vue/utilities'
 
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
@@ -60,7 +59,7 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {
 
   get classNames () {
     const { className, disabled, vertical, renderedValue, internalValue, showValue, theme } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       className,
       disabled,
       vertical,

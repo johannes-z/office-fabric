@@ -1,6 +1,13 @@
-import Icon from './Icon.vue'
+import { styled } from '../styled'
+import IconBase from './Icon.vue'
+import { getStyles } from './Icon.styles'
+import { VueConstructor } from 'vue'
 
 export * from './Icon.types'
-export {
-  Icon,
-}
+
+export const Icon: VueConstructor = styled(
+  IconBase,
+  getStyles,
+  undefined,
+  { scope: 'Icon' }
+)

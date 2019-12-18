@@ -24,11 +24,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
-import Label from '../Label/Label.vue'
+import { Label } from '../Label/'
 import BaseComponent from '../BaseComponent'
 import { IToggleProps, IToggleStyles } from './Toggle.types'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './Toggle.styles'
 
 @Component({
   components: { Label },
@@ -47,7 +46,7 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
 
   get classNames () {
     const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme: theme,
       className: className,
       disabled: disabled,

@@ -1,6 +1,13 @@
-import Label from './Label.vue'
+import { styled } from '../styled'
+import LabelBase from './Label.vue'
+import { getStyles } from './Label.styles'
+import { VueConstructor } from 'vue'
 
 export * from './Label.types'
-export {
-  Label,
-}
+
+export const Label: VueConstructor = styled(
+  LabelBase,
+  getStyles,
+  undefined,
+  { scope: 'Label' }
+)

@@ -2,7 +2,6 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
-import { getStyles } from './Label.styles'
 import { classNamesFunction } from '@fabric-vue/utilities'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { CreateElement, VNode } from 'vue'
@@ -22,7 +21,7 @@ export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
   render (h: CreateElement, context: any): VNode {
     const { theme, className, disabled, required } = context.props
 
-    const classNames = getClassNames(getStyles, {
+    const classNames = getClassNames(context.props.styles, {
       className,
       disabled,
       required,

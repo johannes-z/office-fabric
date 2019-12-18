@@ -40,11 +40,10 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
-import Label from '@/components/Label/Label.vue'
+import { Label } from '../Label/'
 import { ITextFieldProps, ITextFieldStyles } from './TextField.types'
 import BaseComponent from '../BaseComponent'
 import { getClassNames } from '../../util/getClassNames'
-import { getStyles } from './TextField.styles'
 
 @Component({
   components: { Label },
@@ -75,7 +74,7 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   get classNames () {
     const { theme, className, disabled, isActive: focused, required, multiline, label, borderless, underlined,
       resizable, autoAdjustHeight } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme,
       className,
       disabled,
