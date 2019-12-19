@@ -16,13 +16,6 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
 
   css = css
 
-  // created () {
-  // for (const key in this.$props) {
-  //   this.$set(this.props as any, key, this.$props[key])
-  // }
-  // console.log(this.props)
-  // }
-
   protected get classNames (): IProcessedStyleSet<IStyles> {
     return {} as any
   }

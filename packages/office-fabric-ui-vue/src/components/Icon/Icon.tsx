@@ -19,7 +19,7 @@ export default class Icon extends BaseComponent {
     const isImage = !!imageProps
 
     const classNames = getClassNames(styles, {
-      theme: theme!,
+      theme,
       className,
       iconClassName: ['ms-Icon', `ms-Icon--${iconName}`],
       isImage,
@@ -27,6 +27,7 @@ export default class Icon extends BaseComponent {
     })
 
     return h('i', {
+      ...context.data,
       class: classNames.root,
       attrs: {
         'aria-hidden': 'true',

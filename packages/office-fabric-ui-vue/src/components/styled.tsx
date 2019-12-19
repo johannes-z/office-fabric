@@ -37,6 +37,7 @@ export function styled (
         props: {
           ...additionalProps,
           ...context.props,
+          className: context.props.className || context.data.class,
           styles: styles,
         },
       }, context.children)
