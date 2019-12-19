@@ -1,9 +1,7 @@
-<script lang="tsx">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { CreateElement, VNode } from 'vue'
 
 const getClassNames = classNamesFunction<any, ILabelStyles>({
@@ -35,4 +33,3 @@ export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
     )
   }
 }
-</script>

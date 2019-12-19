@@ -80,6 +80,7 @@ export default class Preview extends Vue {
           { name: 'Layer', key: 'Layer', href: '/#/Layer' },
           { name: 'Overlay', key: 'Overlay', href: '/#/Overlay' },
           { name: 'Separator', key: 'Separator', href: '/#/Separator' },
+          { name: 'Stack', key: 'Stack', href: '/#/Stack' },
           { name: 'Text', key: 'Text', href: '/#/Text' },
         ],
       }],

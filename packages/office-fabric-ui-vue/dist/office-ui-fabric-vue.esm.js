@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { __decorate, __metadata } from 'tslib';
 import { Prop, Component, Vue as Vue$1, Model, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
@@ -407,15 +406,32 @@ function (_BaseComponent) {
   return ActivityItem;
 }(BaseComponent$1);
 
-__decorate([Prop(), __metadata("design:type", Array)], ActivityItem.prototype, "activityPersonas", void 0);
+__decorate([Prop({
+  type: String,
+  default: function _default() {
+    return [];
+  }
+}), __metadata("design:type", Array)], ActivityItem.prototype, "activityPersonas", void 0);
 
-__decorate([Prop(), __metadata("design:type", Boolean)], ActivityItem.prototype, "animateBeaconSignal", void 0);
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], ActivityItem.prototype, "animateBeaconSignal", void 0);
 
-__decorate([Prop(), __metadata("design:type", String)], ActivityItem.prototype, "beaconColorOne", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], ActivityItem.prototype, "beaconColorOne", void 0);
 
-__decorate([Prop(), __metadata("design:type", String)], ActivityItem.prototype, "beaconColorTwo", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], ActivityItem.prototype, "beaconColorTwo", void 0);
 
-__decorate([Prop(), __metadata("design:type", Boolean)], ActivityItem.prototype, "isCompact", void 0);
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], ActivityItem.prototype, "isCompact", void 0);
 
 ActivityItem = __decorate([Component], ActivityItem);
 var script = ActivityItem;
@@ -564,9 +580,15 @@ function (_BaseComponent) {
   return Icon;
 }(BaseComponent$1);
 
-__decorate([Prop(), __metadata("design:type", String)], Icon.prototype, "iconName", void 0);
+__decorate([Prop({
+  type: String,
+  default: ''
+}), __metadata("design:type", String)], Icon.prototype, "iconName", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Icon.prototype, "imageProps", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Icon.prototype, "imageProps", void 0);
 
 Icon = __decorate([Component({})], Icon);
 var script$1 = Icon;
@@ -678,17 +700,35 @@ function (_BaseComponent) {
   return BaseButton;
 }(BaseComponent$1);
 
-__decorate([Prop(), __metadata("design:type", String)], BaseButton.prototype, "href", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], BaseButton.prototype, "href", void 0);
 
-__decorate([Prop(), __metadata("design:type", Boolean)], BaseButton.prototype, "checked", void 0);
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], BaseButton.prototype, "checked", void 0);
 
-__decorate([Prop(), __metadata("design:type", Boolean)], BaseButton.prototype, "disabled", void 0);
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], BaseButton.prototype, "disabled", void 0);
 
-__decorate([Prop(), __metadata("design:type", String)], BaseButton.prototype, "variantClassName", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], BaseButton.prototype, "variantClassName", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], BaseButton.prototype, "iconProps", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], BaseButton.prototype, "iconProps", void 0);
 
-__decorate([Prop(), __metadata("design:type", String)], BaseButton.prototype, "secondaryText", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], BaseButton.prototype, "secondaryText", void 0);
 
 BaseButton = __decorate([Component({
   components: {
@@ -947,14 +987,19 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], ActionButton.prototype, "href", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], ActionButton.prototype, "disabled", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], ActionButton.prototype, "iconProps", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], ActionButton.prototype, "iconProps", void 0);
 
 ActionButton = __decorate([Component({
   components: {
@@ -1791,7 +1836,7 @@ var __vue_staticRenderFns__$5 = [];
 var __vue_inject_styles__$5 = undefined;
 /* scoped */
 
-var __vue_scope_id__$5 = "data-v-565f0764";
+var __vue_scope_id__$5 = "data-v-4650eb6b";
 /* module identifier */
 
 var __vue_module_identifier__$5 = undefined;
@@ -2261,6 +2306,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Array,
   required: true
 }), __metadata("design:type", Array)], Breadcrumb.prototype, "items", void 0);
 
@@ -2491,10 +2537,12 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Layer.prototype, "hostId", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], Layer.prototype, "append", void 0);
 
@@ -2579,6 +2627,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], LayerHost.prototype, "id", void 0);
 
@@ -2769,25 +2818,49 @@ function (_BaseComponent) {
   return Modal;
 }(BaseComponent$1);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "layerProps", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "layerProps", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "containerClassName", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Modal.prototype, "containerClassName", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "scrollableContentClassName", void 0);
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Modal.prototype, "scrollableContentClassName", void 0);
 
 __decorate([Prop({
   default: true
 }), __metadata("design:type", Boolean)], Modal.prototype, "isVisible", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "hasBeenOpened", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "hasBeenOpened", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "modalRectangleTop", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "modalRectangleTop", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "topOffsetFixed", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "topOffsetFixed", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "isModeless", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "isModeless", void 0);
 
-__decorate([Prop(), __metadata("design:type", Object)], Modal.prototype, "dragOptions", void 0);
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "dragOptions", void 0);
 
 Modal = __decorate([Component({
   components: {
@@ -2853,6 +2926,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Dialog.prototype, "dark", void 0);
 
@@ -3309,11 +3383,22 @@ function (_BaseComponent) {
   return Nav;
 }(BaseComponent$1);
 
-__decorate([Prop(), __metadata("design:type", Array)], Nav.prototype, "groups", void 0);
+__decorate([Prop({
+  type: Array,
+  default: function _default() {
+    return [];
+  }
+}), __metadata("design:type", Array)], Nav.prototype, "groups", void 0);
 
-__decorate([Prop(), __metadata("design:type", String)], Nav.prototype, "selectedKey", void 0);
+__decorate([Prop({
+  type: String,
+  default: ''
+}), __metadata("design:type", String)], Nav.prototype, "selectedKey", void 0);
 
-__decorate([Prop(), __metadata("design:type", Boolean)], Nav.prototype, "isOnTop", void 0);
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Nav.prototype, "isOnTop", void 0);
 
 Nav = __decorate([Component({
   components: {
@@ -3566,38 +3651,47 @@ function (_BaseComponent) {
 Image.svgRegex = /\.svg$/i;
 
 __decorate([Prop({
+  type: String,
   required: true
 }), __metadata("design:type", String)], Image.prototype, "src", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Image.prototype, "alt", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Image.prototype, "width", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Image.prototype, "height", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: null
 }), __metadata("design:type", Number)], Image.prototype, "imageFit", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: null
 }), __metadata("design:type", Boolean)], Image.prototype, "maximizeFrame", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: null
 }), __metadata("design:type", Boolean)], Image.prototype, "shouldFadeIn", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: null
 }), __metadata("design:type", Boolean)], Image.prototype, "shouldStartVisible", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: ImageCoverStyle.portrait
 }), __metadata("design:type", Number)], Image.prototype, "coverStyle", void 0);
 
@@ -4740,25 +4834,33 @@ __decorate([Prop({
   required: true
 }), __metadata("design:type", HTMLElement)], CalloutContent.prototype, "target", void 0);
 
-__decorate([Prop(), __metadata("design:type", Number)], CalloutContent.prototype, "calloutWidth", void 0);
+__decorate([Prop({
+  type: Number,
+  default: null
+}), __metadata("design:type", Number)], CalloutContent.prototype, "calloutWidth", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 16
 }), __metadata("design:type", Number)], CalloutContent.prototype, "beakWidth", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 8
 }), __metadata("design:type", Number)], CalloutContent.prototype, "minPagePadding", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], CalloutContent.prototype, "isBeakVisible", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], CalloutContent.prototype, "coverTarget", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], CalloutContent.prototype, "gapSpace", void 0);
 
@@ -4852,12 +4954,14 @@ function (_Vue) {
 }(Vue$1);
 
 __decorate([Prop({
-  default: false
-}), __metadata("design:type", Boolean)], Callout.prototype, "doNotLayer", void 0);
+  type: HTMLElement,
+  required: true
+}), __metadata("design:type", Object)], Callout.prototype, "target", void 0);
 
 __decorate([Prop({
-  type: HTMLElement
-}), __metadata("design:type", Object)], Callout.prototype, "target", void 0);
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Callout.prototype, "doNotLayer", void 0);
 
 Callout = __decorate([Component({
   // @ts-ignore
@@ -4874,7 +4978,7 @@ var __vue_script__$g = script$g;
 var __vue_inject_styles__$g = undefined;
 /* scoped */
 
-var __vue_scope_id__$g = "data-v-22b4f560";
+var __vue_scope_id__$g = "data-v-fd30b53e";
 /* module identifier */
 
 var __vue_module_identifier__$g = undefined;
@@ -5288,10 +5392,12 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Label.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Label.prototype, "required", void 0);
 
@@ -5491,14 +5597,17 @@ function (_Vue) {
 }(Vue$1);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Autofill.prototype, "defaultVisibleValue", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Autofill.prototype, "suggestedDisplayValue", void 0);
 
 __decorate([Prop({
+  type: Function,
   default: null
 }), __metadata("design:type", Function)], Autofill.prototype, "onInputChange", void 0);
 
@@ -5536,7 +5645,7 @@ var __vue_staticRenderFns__$f = [];
 var __vue_inject_styles__$i = undefined;
 /* scoped */
 
-var __vue_scope_id__$i = "data-v-262125bc";
+var __vue_scope_id__$i = "data-v-13e004f6";
 /* module identifier */
 
 var __vue_module_identifier__$i = undefined;
@@ -6174,27 +6283,32 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], ChoiceGroup.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: Array,
   default: function _default() {
     return [];
   }
 }), __metadata("design:type", Array)], ChoiceGroup.prototype, "options", void 0);
 
 __decorate([Prop({
+  type: Array,
   default: function _default() {
     return [];
   }
 }), __metadata("design:type", Array)], ChoiceGroup.prototype, "value", void 0);
 
 __decorate([Prop({
-  type: Boolean
+  type: Boolean,
+  default: false
 }), __metadata("design:type", Boolean)], ChoiceGroup.prototype, "disabled", void 0);
 
 __decorate([Prop({
-  type: Boolean
+  type: Boolean,
+  default: false
 }), __metadata("design:type", Boolean)], ChoiceGroup.prototype, "required", void 0);
 
 ChoiceGroup = __decorate([Component({
@@ -6742,52 +6856,64 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Array,
   required: true
 }), __metadata("design:type", Array)], Dropdown.prototype, "options", void 0);
 
 __decorate([Prop({
+  type: Array,
   default: function _default() {
     return [];
   }
 }), __metadata("design:type", Array)], Dropdown.prototype, "selectedOptions", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Dropdown.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Dropdown.prototype, "placeholder", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Dropdown.prototype, "errorMessage", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Dropdown.prototype, "required", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Dropdown.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Dropdown.prototype, "multiSelect", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ', '
 }), __metadata("design:type", String)], Dropdown.prototype, "multiSelectDelimiter", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], Dropdown.prototype, "dropdownWidth", void 0);
 
 __decorate([Prop({
+  type: Object,
   default: function _default() {}
 }), __metadata("design:type", Object)], Dropdown.prototype, "panelProps", void 0);
 
 __decorate([Prop({
+  type: Object,
   default: function _default() {}
 }), __metadata("design:type", Object)], Dropdown.prototype, "calloutProps", void 0);
 
@@ -7300,22 +7426,27 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Number,
   default: MessageBarType.info
 }), __metadata("design:type", Number)], MessageBar.prototype, "messageBarType", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "isMultiline", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "actions", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "truncated", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "expandSingleLine", void 0);
 
@@ -7382,7 +7513,7 @@ var __vue_staticRenderFns__$l = [];
 var __vue_inject_styles__$o = undefined;
 /* scoped */
 
-var __vue_scope_id__$o = "data-v-2a92ffc4";
+var __vue_scope_id__$o = "data-v-0aae61fd";
 /* module identifier */
 
 var __vue_module_identifier__$o = undefined;
@@ -7760,10 +7891,12 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: true
 }), __metadata("design:type", Boolean)], Popup.prototype, "shouldRestoreFocus", void 0);
 
 __decorate([Prop({
+  type: Object,
   default: function _default() {}
 }), __metadata("design:type", Object)], Popup.prototype, "style", void 0);
 
@@ -7781,7 +7914,7 @@ var __vue_script__$p = script$p;
 var __vue_inject_styles__$p = undefined;
 /* scoped */
 
-var __vue_scope_id__$p = "data-v-7d1dd636";
+var __vue_scope_id__$p = "data-v-28f77748";
 /* module identifier */
 
 var __vue_module_identifier__$p = undefined;
@@ -7829,10 +7962,12 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Link.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Link.prototype, "href", void 0);
 
@@ -7996,6 +8131,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Overlay.prototype, "dark", void 0);
 
@@ -8092,6 +8228,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Panel.prototype, "headerText", void 0);
 
@@ -8195,22 +8332,27 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], ProgressIndicator.prototype, "indeterminate", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], ProgressIndicator.prototype, "percentComplete", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], ProgressIndicator.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], ProgressIndicator.prototype, "description", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 2
 }), __metadata("design:type", Number)], ProgressIndicator.prototype, "barHeight", void 0);
 
@@ -8432,38 +8574,47 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Number,
   default: 16
 }), __metadata("design:type", Number)], Rating.prototype, "size", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], Rating.prototype, "min", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 10
 }), __metadata("design:type", Number)], Rating.prototype, "max", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], Rating.prototype, "rating", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Rating.prototype, "ariaLabelFormat", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'FavoriteStarFill'
 }), __metadata("design:type", String)], Rating.prototype, "iconName", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'FavoriteStar'
 }), __metadata("design:type", String)], Rating.prototype, "unselectedIconName", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Rating.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Rating.prototype, "readonly", void 0);
 
@@ -8756,30 +8907,37 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], SearchBox.prototype, "underlined", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], SearchBox.prototype, "defaultValue", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'Search'
 }), __metadata("design:type", String)], SearchBox.prototype, "placeholder", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], SearchBox.prototype, "value", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], SearchBox.prototype, "disableAnimation", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], SearchBox.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'Search'
 }), __metadata("design:type", String)], SearchBox.prototype, "iconName", void 0);
 
@@ -9431,42 +9589,52 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Slider.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Slider.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Slider.prototype, "vertical", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Slider.prototype, "snapToStep", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 0
 }), __metadata("design:type", Number)], Slider.prototype, "min", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 10
 }), __metadata("design:type", Number)], Slider.prototype, "max", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 1
 }), __metadata("design:type", Number)], Slider.prototype, "step", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: null
 }), __metadata("design:type", Number)], Slider.prototype, "value", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: null
 }), __metadata("design:type", Number)], Slider.prototype, "defaultValue", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Slider.prototype, "showValue", void 0);
 
@@ -9808,14 +9976,17 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Spinner.prototype, "labelPosition", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Spinner.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: Number,
   default: 20
 }), __metadata("design:type", Number)], Spinner.prototype, "size", void 0);
 
@@ -9966,14 +10137,17 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Text.prototype, "nowrap", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Text.prototype, "block", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'medium'
 }), __metadata("design:type", String)], Text.prototype, "variant", void 0);
 
@@ -10166,54 +10340,67 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "multiline", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: null
 }), __metadata("design:type", Boolean)], TextField.prototype, "resizable", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: null
 }), __metadata("design:type", Boolean)], TextField.prototype, "autoAdjustHeight", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "borderless", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "underlined", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "readonly", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], TextField.prototype, "required", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], TextField.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], TextField.prototype, "value", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], TextField.prototype, "errorMessage", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], TextField.prototype, "placeholder", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], TextField.prototype, "description", void 0);
 
@@ -10655,30 +10842,37 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Model('input', {
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Toggle.prototype, "checked", void 0);
 
 __decorate([Prop({
+  type: String,
   default: ''
 }), __metadata("design:type", String)], Toggle.prototype, "label", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Toggle.prototype, "defaultChecked", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Toggle.prototype, "disabled", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Toggle.prototype, "inlineLabel", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Toggle.prototype, "onText", void 0);
 
 __decorate([Prop({
+  type: String,
   default: null
 }), __metadata("design:type", String)], Toggle.prototype, "offText", void 0);
 
@@ -11458,46 +11652,57 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Number,
   default: 48
 }), __metadata("design:type", Number)], Persona.prototype, "size", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "imageUrl", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "primaryText", void 0);
 
 __decorate([Prop({
+  type: String,
   default: 'online'
 }), __metadata("design:type", String)], Persona.prototype, "status", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "secondaryText", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "tertiaryText", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "optionalText", void 0);
 
 __decorate([Prop({
+  type: String,
   default: undefined
 }), __metadata("design:type", String)], Persona.prototype, "presence", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Persona.prototype, "isOutOfOffice", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Persona.prototype, "hidePersonaDetails", void 0);
 
 __decorate([Prop({
+  type: Boolean,
   default: false
 }), __metadata("design:type", Boolean)], Persona.prototype, "showSecondaryText", void 0);
 
@@ -11587,7 +11792,7 @@ var __vue_staticRenderFns__$x = [];
 
 var __vue_inject_styles__$C = function __vue_inject_styles__(inject) {
   if (!inject) return;
-  inject("data-v-167524a2_0", {
+  inject("data-v-1f88c2ea_0", {
     source: ".-input-css-5-root-2iQL{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400;box-shadow:none;margin-right:0;margin-bottom:0;margin-left:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;box-sizing:border-box;color:#323130;position:relative;height:56px;min-width:56px;display:flex;align-items:center}.-input-css-5-coin-1y8U{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400}.-input-css-5-imageArea-3UUf{position:relative;text-align:center;height:var(--size);width:var(--size);flex:0 0 auto}.-input-css-5-imageContainer-UNGl{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400;animation-name:-input-css-5-css-0-1Uas;animation-duration:367ms;animation-timing-function:cubic-bezier(.1,.25,.75,.9);animation-fill-mode:both;position:absolute;margin-right:10px;top:0;left:0;width:40px;height:40px;perspective:1px;overflow:hidden;border-width:0;border-style:initial;border-color:initial;border-image:initial;border-radius:50%;width:var(--size);height:var(--size)}.-input-css-5-image-zFKx{display:block;opacity:1;width:100%;height:100%;object-fit:cover;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}.-input-css-5-presence-2Q-V{position:absolute;height:var(--presenceSize);width:var(--presenceSize);top:auto;right:-2px;bottom:-2px;text-align:center;box-sizing:content-box;background-clip:content-box;background-color:var(--presenceColor);border-radius:50%;border-width:2px;border-style:solid;border-color:#fff;border-image:initial}.-input-css-5-presenceIcon-1tuh{display:inline-block;-webkit-font-smoothing:antialiased;font-style:normal;font-weight:400;font-size:var(--fontSizeIcon);speak:none;font-family:FabricMDL2Icons;color:#fff;font-size:12px;line-height:20px;vertical-align:top}.-input-css-5-details-3q9n{padding-top:0;padding-right:24px;padding-bottom:0;padding-left:16px;min-width:0;width:100%;text-align:left;display:flex;flex-direction:column;justify-content:space-around}.-input-css-5-primaryText-1F3y{text-overflow:ellipsis;white-space:nowrap;color:#323130;font-weight:400;font-size:var(--fontSizePrimary);overflow:hidden}.-input-css-5-secondaryText-kkP6{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);overflow:hidden}.-input-css-5-tertiaryText-2Mwl{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);display:none;overflow:hidden}.-input-css-5-optionalText-2uH_{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);display:none;overflow:hidden}.-input-css-5-tooltipHostRoot-X0wr{display:inline}",
     map: undefined,
     media: undefined
@@ -11917,7 +12122,6 @@ function install(Vue) {
     var Component = Components[_];
     if (Component.toString().indexOf('VueComponent') === -1) continue;
     var name = "o-".concat(toKebabCase(_));
-    console.log(name, Component);
     Vue.component(name, Component);
   }
 

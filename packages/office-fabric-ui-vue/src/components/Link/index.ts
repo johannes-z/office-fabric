@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import LinkBase from './Link.vue'
+import LinkBase from './Link'
 import { getStyles } from './Link.styles'
 import { VueConstructor } from 'vue'
 

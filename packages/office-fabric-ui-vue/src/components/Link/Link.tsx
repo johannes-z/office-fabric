@@ -1,35 +1,36 @@
-<template>
-  <component :is="href ? 'a' : 'button'"
-             :class="classNames.root"
-             :type="!href && 'button'"
-             :href="href">
-    <slot />
-  </component>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ILinkProps, ILinkStyles } from './Link.types'
-import { CreateElement } from 'vue'
+import { CreateElement, RenderContext, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction<any, ILinkStyles>()
 
-@Component
+@Component({
+  // @ts-ignore
+  functional: true,
+})
 export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: String, default: '' }) href!: string
 
-  get classNames () {
-    const { className, theme, href, disabled } = this
+  render (h: CreateElement, context: RenderContext<any>) {
+    const { theme, className, styles, href, disabled } = context.props
 
-    return getClassNames(this.styles, {
+    const classNames = getClassNames(styles, {
       theme,
       className,
       isButton: !href,
       isDisabled: disabled,
     })
+
+    const component = href ? 'a' : 'button'
+    return h(component, {
+      class: classNames.root,
+      attrs: {
+        ...href && { href },
+        ...!href && { type: 'button' },
+      },
+    }, context.children)
   }
 }
-</script>

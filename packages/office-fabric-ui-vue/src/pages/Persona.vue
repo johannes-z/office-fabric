@@ -43,12 +43,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import OPersona from '@/components/Persona/Persona.vue'
-import OLabel from '@/components/Label/Label.vue'
+import { Persona, Label } from '../components'
+
 @Component({
   components: {
-    OPersona,
-    OLabel,
+    Persona,
+    Label,
   },
 })
 export default class PersonaPage extends Vue {

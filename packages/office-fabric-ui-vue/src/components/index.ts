@@ -11,6 +11,7 @@ export * from './ChoiceGroup'
 export * from './Dropdown'
 export * from './MessageBar'
 export * from './Popup'
+export * from './Stack'
 
 export * from './Checkbox'
 export * from './Icon'

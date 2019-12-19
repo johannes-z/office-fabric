@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import IconBase from './Icon.vue'
+import IconBase from './Icon'
 import { getStyles } from './Icon.styles'
 import { VueConstructor } from 'vue'
 
