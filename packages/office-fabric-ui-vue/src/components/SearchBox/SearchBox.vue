@@ -2,7 +2,7 @@
   <div :class="classNames.root">
     <div :class="classNames.iconContainer"
          role="search">
-      <Icon :class-name="classNames.icon" :icon-name="iconName" />
+      <Icon :class="classNames.icon" :icon-name="iconName" />
     </div>
     <input
       ref="input"

@@ -1,6 +1,6 @@
 <template>
   <div :class="classNames.root">
-    <Label :class-name="classNames.titleLabel" v-text="label" />
+    <Label :class="classNames.titleLabel" v-text="label" />
     <div :class="classNames.container">
       <div :class="classNames.slideBox"
            :tabindex="disabled ? void 0 : 0"
@@ -15,7 +15,7 @@
                 :style="{ [lengthString]: `${100 - thumbOffsetPercent}%` }" />
         </div>
       </div>
-      <Label :class-name="classNames.valueLabel">
+      <Label :class="classNames.valueLabel">
         <slot name="value" :value="internalValue">
           {{ internalValue }}
         </slot>

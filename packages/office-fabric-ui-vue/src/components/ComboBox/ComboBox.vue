@@ -1,6 +1,6 @@
 <template>
   <div :class="classNames.container">
-    <Label :for="`ComboBox${_uid}`" :class-name="classNames.label">Label</Label>
+    <Label :for="`ComboBox${_uid}`" :class="classNames.label">Label</Label>
     <div :class="classNames.root">
       <Autofill :id="`ComboBox${_uid}`"
                 type="text"

@@ -32,7 +32,7 @@
           <components :is="multiSelect ? 'Checkbox' : 'ActionButton'"
                       v-for="(option, index) in options"
                       :key="index"
-                      :class-name="
+                      :class="
                         option.hidden
                           ? classNames.dropdownItemHidden
                           : option.isItemSelected && option.disabled === true

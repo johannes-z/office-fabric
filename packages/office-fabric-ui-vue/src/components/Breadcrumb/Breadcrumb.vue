@@ -4,7 +4,7 @@
       <li v-for="(item, index) in items"
           :key="index"
           :class="classNames.listItem">
-        <o-link :class-name="classNames.itemLink"
+        <o-link :class="classNames.itemLink"
                 :href="item.href">
           Test
         </o-link>

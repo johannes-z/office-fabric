@@ -5,7 +5,7 @@
           :checked="internalChecked"
           :disabled="disabled"
           :label="label">
-      <Label :class-name="classNames.label"
+      <Label :class="classNames.label"
              v-text="label" />
     </slot>
     <div :class="classNames.container">
@@ -13,7 +13,7 @@
         <div :class="classNames.thumb" />
       </button>
       <Label v-if="(internalChecked && onText) || (!internalChecked && offText)"
-             :class-name="classNames.text"
+             :class="classNames.text"
              :for="`Toggle${_uid}`"
              @click.prevent>
         {{ internalChecked ? onText : offText }}

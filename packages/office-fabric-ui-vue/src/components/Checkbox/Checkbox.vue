@@ -6,10 +6,10 @@
            type="checkbox"
            @input="internalValue = !internalValue">
     <Label :for="`Checkbox${_uid}`"
-           :class-name="classNames.label">
+           :class="classNames.label">
       <div :class="classNames.checkbox">
         <Icon icon-name="CheckMark"
-              :class-name="classNames.checkmark" />
+              :class="classNames.checkmark" />
       </div>
       <span v-if="label || $slots.default" :class="classNames.text">
         <slot>{{ label }}</slot>
