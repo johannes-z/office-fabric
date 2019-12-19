@@ -2,8 +2,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { ISeparatorProps, ISeparatorStyles } from './Separator.types'
-import { getClassNames } from '../../util/getClassNames'
 import { CreateElement, VNode } from 'vue'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 const verticalAlignment: any = {
   center: 'middle',

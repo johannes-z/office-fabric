@@ -1,8 +1,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IIconProps, IIconStyles } from './Icon.types'
-import { getClassNames } from '../../util/getClassNames'
 import { CreateElement, RenderContext } from 'vue'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   // @ts-ignore

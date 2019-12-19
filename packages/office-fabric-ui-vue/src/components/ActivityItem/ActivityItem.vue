@@ -21,11 +21,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './ActivityItem.styles'
-import { getClassNames } from '../../util/getClassNames'
 import { IActivityItemStyles } from './ActivityItem.types'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component
-export default class ActivityItem extends BaseComponent<any, IActivityItemStyles> {
+export default class ActivityItem extends BaseComponent {
   @Prop({ type: Array, default: () => [] }) activityPersonas!: any[]
   @Prop({ type: Boolean, default: false }) animateBeaconSignal!: boolean
   @Prop({ type: String, default: null }) beaconColorOne!: string
@@ -36,7 +38,7 @@ export default class ActivityItem extends BaseComponent<any, IActivityItemStyles
     const { className, activityPersonas, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact } = this
 
     return getClassNames(
-      () => getStyles(undefined, undefined, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact),
+      () => getStyles(undefined, undefined, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact) as any,
       {}
     )
   }

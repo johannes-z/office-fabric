@@ -28,9 +28,12 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import ChoiceGroupOption from './ChoiceGroupOption/ChoiceGroupOption.vue'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './ChoiceGroup.styles'
-import { getClassNames } from '../../util/getClassNames'
 
-import { Label } from '@/components/Label'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+import { Label } from '../'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { ChoiceGroupOption, Label },

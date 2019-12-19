@@ -66,14 +66,15 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
-import { RectangleEdge, ICalloutPositionedInfo } from '@uifabric-vue/utilities'
+import { RectangleEdge, ICalloutPositionedInfo, classNamesFunction } from '@uifabric-vue/utilities'
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import { Callout } from '../Callout'
 import { ActionButton } from '../Button'
 import { Checkbox } from '../Checkbox'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Callout, ActionButton, Checkbox, Icon, Label },

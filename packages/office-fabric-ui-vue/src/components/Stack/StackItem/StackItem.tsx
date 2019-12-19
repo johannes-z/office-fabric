@@ -2,8 +2,11 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement, RenderContext } from 'vue'
 import { StackItemStyles as styles } from './StackItem.styles'
-import { getClassNames } from '@/util/getClassNames'
 import { getTheme } from '@uifabric-vue/styling'
+
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   // @ts-ignore

@@ -15,7 +15,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IModalProps, IModalStyles } from './Modal.types'
 import BaseComponent from '../BaseComponent'
-import { Layer } from '@/components/Layer'
+import { Layer } from '../'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { getStyles } from './Modal.styles'
 

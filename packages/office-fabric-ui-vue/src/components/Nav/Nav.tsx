@@ -4,8 +4,10 @@ import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
 import { Icon } from '../Icon/'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Nav.styles'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 // The number pixels per indentation level for Nav links.
 const INDENTATION_SIZE = 14

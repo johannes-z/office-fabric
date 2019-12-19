@@ -17,13 +17,15 @@ import { MountingPortal } from 'portal-vue'
 import { registerLayer, getDefaultTarget, unregisterLayer } from './Layer.notification'
 import { ILayerProps, ILayerStyles } from './Layer.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Layer.styles'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { MountingPortal },
 })
-export default class Layer extends BaseComponent<ILayerProps, ILayerStyles> {
+export default class Layer extends BaseComponent {
   @Prop({ type: String, default: null }) hostId!: string
   @Prop({ type: Boolean, default: true }) append!: boolean
 
@@ -32,7 +34,7 @@ export default class Layer extends BaseComponent<ILayerProps, ILayerStyles> {
 
   get classNames () {
     const { className, theme } = this
-    return getClassNames(getStyles, {
+    return getClassNames(getStyles as any, {
       theme,
       className,
       isNotHost: !this.hostId,

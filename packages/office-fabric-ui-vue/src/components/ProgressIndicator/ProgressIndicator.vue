@@ -19,14 +19,16 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 // if the percentComplete is near 0, don't animate it.
 // This prevents animations on reset to 0 scenarios
 const ZERO_THRESHOLD = 0.01
 
 @Component
-export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
+export default class ProgressIndicator extends BaseComponent {
   @Prop({ type: Boolean, default: false }) indeterminate!: boolean
   @Prop({ type: Number, default: 0 }) percentComplete!: number
   @Prop({ type: String, default: null }) label!: string

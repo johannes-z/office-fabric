@@ -30,10 +30,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { getStyles } from './ChoiceGroupOption.styles'
-import { getClassNames } from '../../../util/getClassNames'
+
+import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { Icon } from '../../Icon'
 import { Label } from '../../Label'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Icon, Label },

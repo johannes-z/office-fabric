@@ -29,7 +29,9 @@ import { Icon } from '../Icon/'
 import { IconButton } from '../Button/'
 import { IRatingProps, IRatingStyles } from './Rating.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Icon, IconButton },

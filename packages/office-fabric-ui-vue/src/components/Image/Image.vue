@@ -14,8 +14,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle, ImageLoadState } from './Image.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
 import { getStyles } from './Image.styles'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   inheritAttrs: false,

@@ -27,7 +27,9 @@ import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import { Label } from '../Label/'
 import BaseComponent from '../BaseComponent'
 import { IToggleProps, IToggleStyles } from './Toggle.types'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Label },

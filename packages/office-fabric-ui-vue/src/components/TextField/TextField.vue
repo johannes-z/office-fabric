@@ -43,13 +43,15 @@ import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
 import { Label } from '../Label/'
 import { ITextFieldProps, ITextFieldStyles } from './TextField.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Label },
   inheritAttrs: false,
 })
-export default class TextField extends BaseComponent<ITextFieldProps, ITextFieldStyles> {
+export default class TextField extends BaseComponent {
   $refs!: {
     textElement: HTMLTextAreaElement | HTMLInputElement
   }

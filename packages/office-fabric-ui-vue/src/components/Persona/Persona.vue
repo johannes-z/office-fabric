@@ -43,13 +43,15 @@ import { Icon } from '../Icon/'
 import BaseComponent from '../BaseComponent'
 import { IPersonaProps, IPersonaStyles } from '../Persona'
 import { getStyles } from './Persona.styles'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   name: 'OPersona',
   components: { Icon },
 })
-export default class Persona extends BaseComponent<IPersonaProps, IPersonaStyles> {
+export default class Persona extends BaseComponent {
   @Prop({ type: Number, default: 48 }) size!: number
   @Prop({ type: String, default: undefined }) imageUrl?: string
   @Prop({ type: String, default: undefined }) primaryText?: string

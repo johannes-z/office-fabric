@@ -30,7 +30,9 @@ import { Icon } from '../Icon/'
 import { IconButton } from '../Button/'
 import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Icon, IconButton },

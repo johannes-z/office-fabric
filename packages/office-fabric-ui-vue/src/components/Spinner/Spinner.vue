@@ -12,7 +12,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ISpinnerProps, ISpinnerStyles } from './Spinner.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {

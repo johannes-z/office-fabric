@@ -33,14 +33,15 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { Layer } from '@/components/Layer'
-import { Overlay } from '@/components/Overlay'
-import IconButton from '@/components/Button/IconButton/IconButton.vue'
+import { Layer, Overlay, IconButton } from '../'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: { Layer, Overlay, IconButton },
 })
-export default class Panel extends BaseComponent<IPanelProps, IPanelStyles> {
+export default class Panel extends BaseComponent {
   @Prop({ type: String, default: null }) headerText!: string
 }
 </script>

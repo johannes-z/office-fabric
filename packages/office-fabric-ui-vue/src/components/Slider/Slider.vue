@@ -29,8 +29,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Label } from '../Label/'
 import { ISliderProps, ISliderStyles } from './Slider.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '@/util/getClassNames'
-import { KeyCodes } from '@uifabric-vue/utilities'
+import { KeyCodes, classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 

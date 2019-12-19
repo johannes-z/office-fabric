@@ -7,8 +7,10 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
 import { styles } from './Stack.styles'
+
+const getClassNames = classNamesFunction()
 
 @Component({
   components: {},

@@ -8,7 +8,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IOverlayProps, IOverlayStyles } from './Overlay.types'
 import BaseComponent from '../BaseComponent'
-import { getClassNames } from '../../util/getClassNames'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+
+const getClassNames = classNamesFunction()
 
 @Component
 export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles> {
