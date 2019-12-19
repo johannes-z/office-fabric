@@ -33,12 +33,12 @@ const TouchIdleDelay = 500 /* ms */
   components: { Icon },
 })
 export default class BaseButton extends BaseComponent<any, any> {
-  @Prop() href!: string
-  @Prop() checked!: boolean
-  @Prop() disabled!: boolean
-  @Prop() variantClassName!: string
-  @Prop() iconProps!: any
-  @Prop() secondaryText!: string
+  @Prop({ type: String, default: null }) href!: string
+  @Prop({ type: Boolean, default: false }) checked!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: String, default: null }) variantClassName!: string
+  @Prop({ type: Object, default: null }) iconProps!: any
+  @Prop({ type: String, default: null }) secondaryText!: string
 
   get component (): 'a' | 'button' {
     const { disabled, href } = this

@@ -36,15 +36,15 @@ import { getClassNames } from '../../util/getClassNames'
   inheritAttrs: false,
 })
 export default class Rating extends BaseComponent<IRatingProps, IRatingStyles> {
-  @Prop({ default: 16 }) size!: number
-  @Prop({ default: 0 }) min!: number
-  @Prop({ default: 10 }) max!: number
-  @Prop({ default: 0 }) rating!: number
-  @Prop({ default: '' }) ariaLabelFormat?: string
-  @Prop({ default: 'FavoriteStarFill' }) iconName!: string
-  @Prop({ default: 'FavoriteStar' }) unselectedIconName!: string
-  @Prop({ default: false }) disabled?: boolean
-  @Prop({ default: false }) readonly?: boolean
+  @Prop({ type: Number, default: 16 }) size!: number
+  @Prop({ type: Number, default: 0 }) min!: number
+  @Prop({ type: Number, default: 10 }) max!: number
+  @Prop({ type: Number, default: 0 }) rating!: number
+  @Prop({ type: String, default: '' }) ariaLabelFormat?: string
+  @Prop({ type: String, default: 'FavoriteStarFill' }) iconName!: string
+  @Prop({ type: String, default: 'FavoriteStar' }) unselectedIconName!: string
+  @Prop({ type: Boolean, default: false }) disabled?: boolean
+  @Prop({ type: Boolean, default: false }) readonly?: boolean
 
   internalValue: number = this.rating
 

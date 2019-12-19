@@ -25,15 +25,15 @@ const getClassNames = classNamesFunction<any, any>()
   components: { Layer },
 })
 export default class Modal extends BaseComponent<IModalProps, IModalStyles> {
-  @Prop() layerProps!: any
-  @Prop() containerClassName!: any
-  @Prop() scrollableContentClassName!: any
+  @Prop({ type: Object, default: null }) layerProps!: any
+  @Prop({ type: String, default: null }) containerClassName!: string
+  @Prop({ type: String, default: null }) scrollableContentClassName!: string
   @Prop({ default: true }) isVisible!: boolean
-  @Prop() hasBeenOpened!: any
-  @Prop() modalRectangleTop!: any
-  @Prop() topOffsetFixed!: any
-  @Prop() isModeless!: any
-  @Prop() dragOptions!: any
+  @Prop({ type: Object, default: null }) hasBeenOpened!: any
+  @Prop({ type: Object, default: null }) modalRectangleTop!: any
+  @Prop({ type: Object, default: null }) topOffsetFixed!: any
+  @Prop({ type: Object, default: null }) isModeless!: any
+  @Prop({ type: Object, default: null }) dragOptions!: any
 
   get classNames () {
     const { theme, className, layerProps, containerClassName, scrollableContentClassName, isVisible, hasBeenOpened, modalRectangleTop, topOffsetFixed, isModeless, dragOptions } = this

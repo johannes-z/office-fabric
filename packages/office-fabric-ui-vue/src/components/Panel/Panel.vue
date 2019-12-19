@@ -41,6 +41,6 @@ import IconButton from '@/components/Button/IconButton/IconButton.vue'
   components: { Layer, Overlay, IconButton },
 })
 export default class Panel extends BaseComponent<IPanelProps, IPanelStyles> {
-  @Prop({ default: null }) headerText!: string
+  @Prop({ type: String, default: null }) headerText!: string
 }
 </script>

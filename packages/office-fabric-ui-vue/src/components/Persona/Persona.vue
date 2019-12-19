@@ -50,17 +50,17 @@ import { getClassNames } from '../../util/getClassNames'
   components: { Icon },
 })
 export default class Persona extends BaseComponent<IPersonaProps, IPersonaStyles> {
-  @Prop({ default: 48 }) size!: number
-  @Prop({ default: undefined }) imageUrl?: string
-  @Prop({ default: undefined }) primaryText?: string
-  @Prop({ default: 'online' }) status?: string // online, away, busy
-  @Prop({ default: undefined }) secondaryText?: string
-  @Prop({ default: undefined }) tertiaryText?: string
-  @Prop({ default: undefined }) optionalText?: string
-  @Prop({ default: undefined }) presence?: string
-  @Prop({ default: false }) isOutOfOffice?: boolean
-  @Prop({ default: false }) hidePersonaDetails?: boolean
-  @Prop({ default: false }) showSecondaryText?: boolean
+  @Prop({ type: Number, default: 48 }) size!: number
+  @Prop({ type: String, default: undefined }) imageUrl?: string
+  @Prop({ type: String, default: undefined }) primaryText?: string
+  @Prop({ type: String, default: 'online' }) status?: string // online, away, busy
+  @Prop({ type: String, default: undefined }) secondaryText?: string
+  @Prop({ type: String, default: undefined }) tertiaryText?: string
+  @Prop({ type: String, default: undefined }) optionalText?: string
+  @Prop({ type: String, default: undefined }) presence?: string
+  @Prop({ type: Boolean, default: false }) isOutOfOffice?: boolean
+  @Prop({ type: Boolean, default: false }) hidePersonaDetails?: boolean
+  @Prop({ type: Boolean, default: false }) showSecondaryText?: boolean
 
   get statusClass () {
     return 'ms-Persona--away'

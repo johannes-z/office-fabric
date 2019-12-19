@@ -27,12 +27,12 @@ const ZERO_THRESHOLD = 0.01
 
 @Component
 export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
-  @Prop({ default: false }) indeterminate!: boolean
-  @Prop({ default: 0 }) percentComplete!: number
-  @Prop({ default: null }) label!: string
-  @Prop({ default: null }) description!: string
+  @Prop({ type: Boolean, default: false }) indeterminate!: boolean
+  @Prop({ type: Number, default: 0 }) percentComplete!: number
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: String, default: null }) description!: string
 
-  @Prop({ default: 2 }) barHeight!: number
+  @Prop({ type: Number, default: 2 }) barHeight!: number
 
   get classNames () {
     const { className, indeterminate, theme, barHeight } = this

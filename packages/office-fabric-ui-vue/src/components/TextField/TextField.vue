@@ -53,20 +53,20 @@ export default class TextField extends BaseComponent<ITextFieldProps, ITextField
   $refs!: {
     textElement: HTMLTextAreaElement | HTMLInputElement
   }
-  @Prop({ default: false }) multiline!: boolean
-  @Prop({ default: null }) resizable!: boolean
-  @Prop({ default: null }) autoAdjustHeight!: boolean
+  @Prop({ type: Boolean, default: false }) multiline!: boolean
+  @Prop({ type: Boolean, default: null }) resizable!: boolean
+  @Prop({ type: Boolean, default: null }) autoAdjustHeight!: boolean
 
-  @Prop({ default: false }) borderless!: boolean
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) underlined!: boolean
-  @Prop({ default: false }) readonly!: boolean
-  @Prop({ default: false }) required!: boolean
-  @Prop({ default: null }) label!: string
-  @Prop({ default: '' }) value!: string
-  @Prop({ default: null }) errorMessage!: string
-  @Prop({ default: null }) placeholder!: string
-  @Prop({ default: null }) description!: string
+  @Prop({ type: Boolean, default: false }) borderless!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) underlined!: boolean
+  @Prop({ type: Boolean, default: false }) readonly!: boolean
+  @Prop({ type: Boolean, default: false }) required!: boolean
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: String, default: '' }) value!: string
+  @Prop({ type: String, default: null }) errorMessage!: string
+  @Prop({ type: String, default: null }) placeholder!: string
+  @Prop({ type: String, default: null }) description!: string
 
   isActive: boolean = false
   internalValue: string = this.value

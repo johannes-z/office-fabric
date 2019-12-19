@@ -12,7 +12,7 @@ import { getClassNames } from '../../util/getClassNames'
 
 @Component
 export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles> {
-  @Prop({ default: false }) dark!: boolean
+  @Prop({ type: Boolean, default: false }) dark!: boolean
 
   get classNames () {
     const { theme, className, dark } = this

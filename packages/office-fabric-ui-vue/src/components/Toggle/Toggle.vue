@@ -33,14 +33,14 @@ import { getClassNames } from '../../util/getClassNames'
   components: { Label },
 })
 export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
-  @Model('input', { default: false }) checked!: boolean
-  @Prop({ default: '' }) label!: string
-  @Prop({ default: false }) defaultChecked!: boolean
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) inlineLabel!: boolean
+  @Model('input', { type: Boolean, default: false }) checked!: boolean
+  @Prop({ type: String, default: '' }) label!: string
+  @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) inlineLabel!: boolean
 
-  @Prop({ default: null }) onText!: string
-  @Prop({ default: null }) offText!: string
+  @Prop({ type: String, default: null }) onText!: string
+  @Prop({ type: String, default: null }) offText!: string
 
   internalChecked: boolean = this.defaultChecked || this.checked
 

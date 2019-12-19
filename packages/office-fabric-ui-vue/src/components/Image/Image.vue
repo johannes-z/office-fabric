@@ -21,15 +21,15 @@ import { getStyles } from './Image.styles'
   inheritAttrs: false,
 })
 export default class Image extends BaseComponent<IImageStyleProps, IImageStyles> {
-  @Prop({ required: true }) src!: string
-  @Prop({ default: '' }) alt!: string
-  @Prop({ default: '' }) width!: string
-  @Prop({ default: '' }) height!: string
-  @Prop({ default: null }) imageFit!: number
-  @Prop({ default: null }) maximizeFrame!: boolean
-  @Prop({ default: null }) shouldFadeIn!: boolean
-  @Prop({ default: null }) shouldStartVisible!: boolean
-  @Prop({ default: ImageCoverStyle.portrait }) coverStyle!: number
+  @Prop({ type: String, required: true }) src!: string
+  @Prop({ type: String, default: '' }) alt!: string
+  @Prop({ type: String, default: '' }) width!: string
+  @Prop({ type: String, default: '' }) height!: string
+  @Prop({ type: Number, default: null }) imageFit!: number
+  @Prop({ type: Boolean, default: null }) maximizeFrame!: boolean
+  @Prop({ type: Boolean, default: null }) shouldFadeIn!: boolean
+  @Prop({ type: Boolean, default: null }) shouldStartVisible!: boolean
+  @Prop({ type: Number, default: ImageCoverStyle.portrait }) coverStyle!: number
 
   loadState: ImageLoadState = ImageLoadState.notLoaded
 

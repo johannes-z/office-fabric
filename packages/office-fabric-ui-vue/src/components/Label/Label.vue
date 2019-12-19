@@ -15,8 +15,8 @@ const getClassNames = classNamesFunction<any, ILabelStyles>({
   functional: true,
 })
 export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) required!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) required!: boolean
 
   render (h: CreateElement, context: any): VNode {
     const { theme, className, disabled, required } = context.props

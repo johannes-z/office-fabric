@@ -17,6 +17,7 @@ import BaseButton from '../BaseButton.vue'
 })
 export default class CompoundButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) primary!: boolean
+
   get internalStyles () {
     const { primary = false, theme } = this
     const styles = {}

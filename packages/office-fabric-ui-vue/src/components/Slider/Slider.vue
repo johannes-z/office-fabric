@@ -41,16 +41,16 @@ export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {
   $refs!: {
     sliderLine: HTMLDivElement
   }
-  @Prop({ default: null }) label!: string
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) vertical!: boolean
-  @Prop({ default: false }) snapToStep!: boolean
-  @Prop({ default: 0 }) min!: number
-  @Prop({ default: 10 }) max!: number
-  @Prop({ default: 1 }) step!: number
-  @Prop({ default: null }) value!: number
-  @Prop({ default: null }) defaultValue!: number
-  @Prop({ default: false }) showValue!: boolean
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) vertical!: boolean
+  @Prop({ type: Boolean, default: false }) snapToStep!: boolean
+  @Prop({ type: Number, default: 0 }) min!: number
+  @Prop({ type: Number, default: 10 }) max!: number
+  @Prop({ type: Number, default: 1 }) step!: number
+  @Prop({ type: Number, default: null }) value!: number
+  @Prop({ type: Number, default: null }) defaultValue!: number
+  @Prop({ type: Boolean, default: false }) showValue!: boolean
 
   private internalValue?: number = this.value || this.defaultValue || this.min
   private renderedValue?: number = this.value || this.defaultValue || this.min

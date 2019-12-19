@@ -20,9 +20,9 @@ export default class Autofill extends Vue {
     inputElement: HTMLInputElement
   }
 
-  @Prop({ default: '' }) defaultVisibleValue!: string
-  @Prop({ default: '' }) suggestedDisplayValue!: string
-  @Prop({ default: null }) onInputChange!: (value: string, composing: boolean) => any
+  @Prop({ type: String, default: '' }) defaultVisibleValue!: string
+  @Prop({ type: String, default: '' }) suggestedDisplayValue!: string
+  @Prop({ type: Function, default: null }) onInputChange!: (value: string, composing: boolean) => any
 
   _autoFillEnabled: boolean = false
   _isComposing: boolean = false

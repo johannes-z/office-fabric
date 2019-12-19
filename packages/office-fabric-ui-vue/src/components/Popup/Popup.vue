@@ -11,8 +11,8 @@ export default class Popup extends BaseComponent {
   $refs!: {
     current: HTMLDivElement
   }
-  @Prop({ default: true }) shouldRestoreFocus!: boolean
-  @Prop({ default: () => {} }) style!: any
+  @Prop({ type: Boolean, default: true }) shouldRestoreFocus!: boolean
+  @Prop({ type: Object, default: () => {} }) style!: any
 
   private _originalFocusedElement!: HTMLElement;
   private _async!: Async;

@@ -16,9 +16,9 @@ import { getClassNames } from '../../util/getClassNames'
 
 @Component
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {
-  @Prop({ default: null }) labelPosition!: string
-  @Prop({ default: null }) label!: string
-  @Prop({ default: 20 }) size!: number
+  @Prop({ type: String, default: null }) labelPosition!: string
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: Number, default: 20 }) size!: number
 
   get classNames () {
     const { theme, className, size, labelPosition } = this

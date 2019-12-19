@@ -31,7 +31,7 @@ const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
   components: {},
 })
 export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcrumbStyles> {
-  @Prop({ required: true }) items!: IBreadcrumbItem[]
+  @Prop({ type: Array, required: true }) items!: IBreadcrumbItem[]
 
   get classNames () {
     const { className, theme } = this

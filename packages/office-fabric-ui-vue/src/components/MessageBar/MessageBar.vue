@@ -37,11 +37,11 @@ const getClassNames = classNamesFunction<any, IMessageBarStyles>()
   components: { Icon, IconButton },
 })
 export default class MessageBar extends BaseComponent {
-  @Prop({ default: MessageBarType.info }) messageBarType!: number
-  @Prop({ default: true }) isMultiline!: boolean
-  @Prop({ default: false }) actions!: boolean
-  @Prop({ default: true }) truncated!: boolean
-  @Prop({ default: true }) expandSingleLine!: boolean
+  @Prop({ type: Number, default: MessageBarType.info }) messageBarType!: number
+  @Prop({ type: Boolean, default: true }) isMultiline!: boolean
+  @Prop({ type: Boolean, default: false }) actions!: boolean
+  @Prop({ type: Boolean, default: true }) truncated!: boolean
+  @Prop({ type: Boolean, default: true }) expandSingleLine!: boolean
 
   private ICON_MAP = {
     [MessageBarType.info]: 'Info',

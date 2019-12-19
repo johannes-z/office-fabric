@@ -1,4 +1,3 @@
-import 'reflect-metadata'
 import Vue, { CreateElement } from 'vue'
 import VueRouter from 'vue-router'
 import Preview from './Preview.vue'

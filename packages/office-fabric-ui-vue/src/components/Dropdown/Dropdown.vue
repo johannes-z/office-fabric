@@ -83,21 +83,21 @@ export default class Dropdown extends BaseComponent {
     dropdown: HTMLDivElement
   }
 
-  @Prop({ required: true }) options!: any[]
-  @Prop({ default: () => [] }) selectedOptions!: any[]
+  @Prop({ type: Array, required: true }) options!: any[]
+  @Prop({ type: Array, default: () => [] }) selectedOptions!: any[]
 
-  @Prop({ default: '' }) label!: string
-  @Prop({ default: '' }) placeholder!: string
-  @Prop({ default: '' }) errorMessage!: string
-  @Prop({ default: false }) required!: boolean
-  @Prop({ default: false }) disabled!: boolean
+  @Prop({ type: String, default: '' }) label!: string
+  @Prop({ type: String, default: '' }) placeholder!: string
+  @Prop({ type: String, default: '' }) errorMessage!: string
+  @Prop({ type: Boolean, default: false }) required!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
 
-  @Prop({ default: false }) multiSelect!: boolean
-  @Prop({ default: ', ' }) multiSelectDelimiter !: string
+  @Prop({ type: Boolean, default: false }) multiSelect!: boolean
+  @Prop({ type: String, default: ', ' }) multiSelectDelimiter !: string
 
-  @Prop({ default: 0 }) dropdownWidth!: number
-  @Prop({ default: () => {} }) panelProps!: any
-  @Prop({ default: () => {} }) calloutProps!: any
+  @Prop({ type: Number, default: 0 }) dropdownWidth!: number
+  @Prop({ type: Object, default: () => {} }) panelProps!: any
+  @Prop({ type: Object, default: () => {} }) calloutProps!: any
 
   isOpen: boolean = false
   calloutRenderEdge: RectangleEdge | null = null

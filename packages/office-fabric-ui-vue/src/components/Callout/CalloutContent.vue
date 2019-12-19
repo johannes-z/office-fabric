@@ -36,12 +36,12 @@ export default class CalloutContent extends BaseComponent {
   }
 
   @Prop({ type: HTMLElement, required: true }) target!: HTMLElement
-  @Prop() calloutWidth!: number
-  @Prop({ default: 16 }) beakWidth!: number
-  @Prop({ default: 8 }) minPagePadding!: number
-  @Prop({ default: true }) isBeakVisible!: boolean
-  @Prop({ default: false }) coverTarget!: boolean
-  @Prop({ default: 0 }) gapSpace!: number
+  @Prop({ type: Number, default: null }) calloutWidth!: number
+  @Prop({ type: Number, default: 16 }) beakWidth!: number
+  @Prop({ type: Number, default: 8 }) minPagePadding!: number
+  @Prop({ type: Boolean, default: true }) isBeakVisible!: boolean
+  @Prop({ type: Boolean, default: false }) coverTarget!: boolean
+  @Prop({ type: Number, default: 0 }) gapSpace!: number
 
   private internalKey = new Date()
   private positions: any = null

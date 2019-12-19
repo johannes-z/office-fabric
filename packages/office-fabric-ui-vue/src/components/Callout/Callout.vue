@@ -9,8 +9,8 @@ import CalloutContent from './CalloutContent.vue'
   functional: true,
 })
 export default class Callout extends Vue {
-  @Prop({ default: false }) doNotLayer!: boolean
-  @Prop({ type: HTMLElement }) target!: any
+  @Prop({ type: HTMLElement, required: true }) target!: any
+  @Prop({ type: Boolean, default: false }) doNotLayer!: boolean
 
   render (h: CreateElement, context: any) {
     if (!(context.props.target instanceof Node)) return

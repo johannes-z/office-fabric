@@ -36,11 +36,11 @@ import { Label } from '@/components/Label'
   components: { ChoiceGroupOption, Label },
 })
 export default class ChoiceGroup extends BaseComponent {
-  @Prop({ default: null }) label!: string
-  @Prop({ default: () => [] }) options!: any[]
-  @Prop({ default: () => [] }) value!: any[]
-  @Prop({ type: Boolean }) disabled!: boolean
-  @Prop({ type: Boolean }) required!: boolean
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: Array, default: () => [] }) options!: any[]
+  @Prop({ type: Array, default: () => [] }) value!: any[]
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) required!: boolean
 
   selectedOption: any = {}
 

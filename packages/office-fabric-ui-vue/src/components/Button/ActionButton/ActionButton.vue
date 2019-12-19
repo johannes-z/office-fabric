@@ -16,9 +16,9 @@ import { getStyles } from './ActionButton.styles'
   components: { BaseButton },
 })
 export default class ActionButton extends BaseComponent {
-  @Prop({ default: '' }) href!: string
-  @Prop({ default: false }) disabled!: boolean
-  @Prop() iconProps!: any
+  @Prop({ type: String, default: '' }) href!: string
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Object, default: null }) iconProps!: any
 
   get internalStyles () {
     const { theme } = this

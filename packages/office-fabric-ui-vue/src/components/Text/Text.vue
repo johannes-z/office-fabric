@@ -16,9 +16,9 @@ const getClassNames = classNamesFunction<any, ITextStyles>()
 
 @Component
 export default class Text extends BaseComponent {
-  @Prop({ default: false }) nowrap!: boolean
-  @Prop({ default: false }) block!: boolean
-  @Prop({ default: 'medium' }) variant!: string
+  @Prop({ type: Boolean, default: false }) nowrap!: boolean
+  @Prop({ type: Boolean, default: false }) block!: boolean
+  @Prop({ type: String, default: 'medium' }) variant!: string
 
   get classNames (): IProcessedStyleSet<ITextStyles> {
     const { theme, block, nowrap, variant } = this

@@ -34,12 +34,12 @@ const getClassNames = classNamesFunction<any, ICheckboxStyles>()
   inheritAttrs: false,
 })
 export default class Checkbox extends BaseComponent<ICheckboxProps, ICheckboxStyles> {
-  @Model('input', { default: false }) checked!: boolean
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) indeterminate!: boolean
-  @Prop({ default: false }) required!: boolean
-  @Prop({ default: null }) label!: string
-  @Prop({ default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: string
+  @Model('input', { type: Boolean, default: false }) checked!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) indeterminate!: boolean
+  @Prop({ type: Boolean, default: false }) required!: boolean
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: String, default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: string
 
   private internalValue: boolean = this.checked
 

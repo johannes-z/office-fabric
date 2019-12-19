@@ -24,8 +24,8 @@ import { getStyles } from './Layer.styles'
   components: { MountingPortal },
 })
 export default class Layer extends BaseComponent<ILayerProps, ILayerStyles> {
-  @Prop({ default: null }) hostId!: string
-  @Prop({ default: true }) append!: boolean
+  @Prop({ type: String, default: null }) hostId!: string
+  @Prop({ type: Boolean, default: true }) append!: boolean
 
   marker!: HTMLDivElement
   hasTarget: boolean = false

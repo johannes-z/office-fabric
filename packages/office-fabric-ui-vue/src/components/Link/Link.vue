@@ -18,8 +18,8 @@ const getClassNames = classNamesFunction<any, ILinkStyles>()
 
 @Component
 export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: '' }) href!: string
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: String, default: '' }) href!: string
 
   get classNames () {
     const { className, theme, href, disabled } = this

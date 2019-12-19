@@ -40,13 +40,13 @@ export default class SearchBox extends BaseComponent<ISearchBoxProps, ISearchBox
   $refs!: {
     input: HTMLInputElement
   }
-  @Prop({ default: false }) underlined?: boolean
-  @Prop({ default: null }) defaultValue?: string
-  @Prop({ default: 'Search' }) placeholder?: string
-  @Prop({ default: null }) value!: string
-  @Prop({ default: false }) disableAnimation?: boolean
-  @Prop({ default: false }) disabled?: boolean
-  @Prop({ default: 'Search' }) iconName!: string
+  @Prop({ type: Boolean, default: false }) underlined?: boolean
+  @Prop({ type: String, default: null }) defaultValue?: string
+  @Prop({ type: String, default: 'Search' }) placeholder?: string
+  @Prop({ type: String, default: null }) value!: string
+  @Prop({ type: Boolean, default: false }) disableAnimation?: boolean
+  @Prop({ type: Boolean, default: false }) disabled?: boolean
+  @Prop({ type: String, default: 'Search' }) iconName!: string
 
   isActive: boolean = false
   internalValue: string = this.value

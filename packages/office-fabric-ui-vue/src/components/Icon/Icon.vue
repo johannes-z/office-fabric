@@ -12,8 +12,8 @@ import { getClassNames } from '../../util/getClassNames'
 @Component({
 })
 export default class Icon extends BaseComponent {
-  @Prop() iconName!: string
-  @Prop() imageProps!: any
+  @Prop({ type: String, default: '' }) iconName!: string
+  @Prop({ type: Object, default: null }) imageProps!: any
 
   get classNames () {
     const { className, iconName, theme } = this

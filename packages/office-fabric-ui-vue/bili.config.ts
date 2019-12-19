@@ -18,12 +18,15 @@ const config: Config = {
     NODE_ENV: 'production',
   },
 
-  babel: {
-    configFile: false,
-    jsx: 'h',
+  extendRollupConfig: config => {
+    config.inputConfig.preserveSymlinks = true
+    return config
   },
 
   plugins: {
+    babel: {
+      exclude: /node_modules/,
+    },
     alias: {
       resolve: ['.jsx', '.js', '.vue', '.ts'],
       entries: [

@@ -22,9 +22,9 @@ export function isRelativeUrl (url: string): boolean {
   components: { ActionButton, Icon },
 })
 export default class Nav extends BaseComponent<INavProps, INavStyles> {
-  @Prop() groups!: INavLinkGroup[]
-  @Prop() selectedKey!: string
-  @Prop() isOnTop!: boolean
+  @Prop({ type: Array, default: () => [] }) groups!: INavLinkGroup[]
+  @Prop({ type: String, default: '' }) selectedKey!: string
+  @Prop({ type: Boolean, default: false }) isOnTop!: boolean
 
   isGroupCollapsed: { [key: string]: boolean } = {}
   internalSelectedKey: string = ''

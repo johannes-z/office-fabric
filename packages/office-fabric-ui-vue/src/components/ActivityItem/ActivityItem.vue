@@ -26,11 +26,11 @@ import { IActivityItemStyles } from './ActivityItem.types'
 
 @Component
 export default class ActivityItem extends BaseComponent<any, IActivityItemStyles> {
-  @Prop() activityPersonas!: any[]
-  @Prop() animateBeaconSignal!: boolean
-  @Prop() beaconColorOne!: string
-  @Prop() beaconColorTwo!: string
-  @Prop() isCompact!: boolean
+  @Prop({ type: String, default: () => [] }) activityPersonas!: any[]
+  @Prop({ type: Boolean, default: false }) animateBeaconSignal!: boolean
+  @Prop({ type: String, default: null }) beaconColorOne!: string
+  @Prop({ type: String, default: null }) beaconColorTwo!: string
+  @Prop({ type: Boolean, default: false }) isCompact!: boolean
 
   get classNames (): any {
     const { className, activityPersonas, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact } = this
