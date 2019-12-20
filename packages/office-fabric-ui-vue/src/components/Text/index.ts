@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import TextBase from './Text.vue'
+import TextBase from './Text'
 import { getStyles } from './Text.styles'
 import { VueConstructor } from 'vue'
 

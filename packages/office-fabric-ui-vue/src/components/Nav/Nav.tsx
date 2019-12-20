@@ -4,10 +4,9 @@ import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
 import { Icon } from '../Icon/'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
-import { getStyles } from './Nav.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<any, any>()
 
 // The number pixels per indentation level for Nav links.
 const INDENTATION_SIZE = 14
@@ -31,9 +30,6 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   isGroupCollapsed: { [key: string]: boolean } = {}
   internalSelectedKey: string = ''
 
-  // @ts-ignore
-  get classNames (): any {}
-
   render (h: CreateElement): VNode | null {
     const { theme, className, isOnTop, groups } = this
     if (!groups) {
@@ -41,7 +37,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     }
     const groupElements = this.groups.map(this.renderGroup)
 
-    const classNames = getClassNames(getStyles, { theme: theme!, className, isOnTop, groups })
+    const classNames = getClassNames(this.styles, { theme: theme!, className, isOnTop, groups })
 
     return (
       <nav role="navigation" class={classNames.root}>
@@ -52,7 +48,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
   private renderGroup (group: INavLinkGroup, groupIndex: number): VNode {
     const { groups, theme } = this
-    const classNames = getClassNames(getStyles, {
+    const classNames = getClassNames(this.styles, {
       theme: theme!,
       isGroup: true,
       isExpanded: this.isGroupExpanded(group),
@@ -74,7 +70,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     )
 
     const { groups, theme } = this
-    const classNames = getClassNames(getStyles, { theme: theme!, groups })
+    const classNames = getClassNames(this.styles, { theme: theme!, groups })
 
     return (
       <ul role="list" class={classNames.navItems}>
@@ -85,7 +81,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
   private renderLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
     const { groups, theme } = this
-    const classNames = getClassNames(getStyles, { theme: theme!, groups })
+    const classNames = getClassNames(this.styles, { theme: theme!, groups })
 
     return (
       <li key={linkIndex} role="listitem" class={classNames.navItem}>
@@ -97,7 +93,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
   private renderCompositeLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
     const { styles, groups, theme } = this
-    const classNames = getClassNames(getStyles, {
+    const classNames = getClassNames(this.styles, {
       theme: theme!,
       isExpanded: !!link.isExpanded,
       isSelected: false,
@@ -132,7 +128,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
     const { groups, theme } = this
 
-    const classNames = getClassNames(getStyles, {
+    const classNames = getClassNames(this.styles, {
       theme: theme!,
       isSelected: isSelected,
       isDisabled: link.disabled,
