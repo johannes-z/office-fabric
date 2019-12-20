@@ -1,9 +1,14 @@
 module.exports = {
   presets: [
-    ['@vue/cli-plugin-babel/preset', {
-      useBuiltIns: false,
-      polyfills: false,
-      exclude: ['transform-regenerator'],
-    }],
+    [
+      '@vue/cli-plugin-babel/preset',
+      process.env.NODE_ENV === 'production'
+        ? {
+          useBuiltIns: false,
+          polyfills: false,
+          exclude: ['transform-regenerator'],
+        }
+        : {},
+    ],
   ],
 }
