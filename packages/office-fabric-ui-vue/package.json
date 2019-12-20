@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "./dist/office-ui-fabric-vue.esm.js",
   "module": "./dist/office-ui-fabric-vue.esm.js",
   "scripts": {

@@ -4,10 +4,11 @@ import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 
 import Fabric from './plugins/office-fabric'
+import { IPartialTheme } from '@uifabric-vue/styling'
 
 Vue.use(Fabric, {
-  // defaultFontStyle: { fontFamily: 'Monaco, Menlo, Consolas', fontWeight: 'bold' },
-}, true)
+  palette: {},
+} as IPartialTheme, true)
 
 Vue.use(VueRouter)
 

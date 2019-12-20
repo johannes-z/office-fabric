@@ -1,7 +1,6 @@
 {
   "name": "@uifabric-vue/styling",
-  "version": "1.0.0",
-  "private": true,
+  "version": "0.1.0",
   "module": "./dist/index.esm.js",
   "main": "./src/index.ts",
   "dependencies": {
