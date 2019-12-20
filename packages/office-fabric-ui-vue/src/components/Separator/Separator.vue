@@ -17,7 +17,7 @@ const verticalAlignment: any = {
   // @ts-ignore
   functional: true,
 })
-export default class Separator extends BaseComponent<ISeparatorProps, ISeparatorStyles> {
+export default class Separator extends BaseComponent {
   @Prop({ type: String, default: 'center' }) alignContent!: string
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 

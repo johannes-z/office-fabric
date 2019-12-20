@@ -38,7 +38,7 @@ export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 @Component({
   components: { Label },
 })
-export default class Slider extends BaseComponent<ISliderProps, ISliderStyles> {
+export default class Slider extends BaseComponent {
   $refs!: {
     sliderLine: HTMLDivElement
   }

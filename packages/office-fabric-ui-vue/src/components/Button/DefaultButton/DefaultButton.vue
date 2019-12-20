@@ -22,8 +22,7 @@ export default class DefaultButton extends BaseComponent {
 
   get internalStyles () {
     const { primary = false, theme } = this
-    const styles = {}
-    return getStyles(theme, styles, primary)
+    return getStyles(theme, this.styles, primary)
   }
 }
 </script>

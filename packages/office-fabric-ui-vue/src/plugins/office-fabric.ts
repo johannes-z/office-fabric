@@ -2,11 +2,7 @@ import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
 import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric-vue/styling'
 import { registerCSSVars } from './registerCSSVars'
-
-const toKebabCase = (str: string) => str
-  .replace(/([a-z])([A-Z])/g, '$1-$2')
-  .replace(/[\s_]+/g, '-')
-  .toLowerCase()
+import { toKebabCase } from '@/util'
 
 export * from '@/components'
 

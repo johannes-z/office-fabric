@@ -26,8 +26,10 @@ export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
 
     const component = href ? 'a' : 'button'
     return h(component, {
+      ...context.data,
       class: classNames.root,
       attrs: {
+        ...context.data.attrs,
         ...href && { href },
         ...!href && { type: 'button' },
       },

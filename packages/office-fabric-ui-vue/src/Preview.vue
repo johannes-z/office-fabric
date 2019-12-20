@@ -41,6 +41,7 @@ export default class Preview extends Vue {
         isExpanded: true,
         links: [
           { name: 'ActivityItem', key: 'ActivityItem', href: '/#/ActivityItem' },
+          { name: 'Facepile', key: 'Facepile', href: '/#/Facepile' },
           { name: 'Persona', key: 'Persona', href: '/#/Persona' },
         ],
       }, {

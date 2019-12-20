@@ -38,7 +38,7 @@ const getClassNames = classNamesFunction()
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class SearchBox extends BaseComponent<ISearchBoxProps, ISearchBoxStyles> {
+export default class SearchBox extends BaseComponent {
   $refs!: {
     input: HTMLInputElement
   }
