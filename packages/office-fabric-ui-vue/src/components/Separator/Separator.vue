@@ -4,6 +4,7 @@ import BaseComponent from '../BaseComponent'
 import { ISeparatorProps, ISeparatorStyles } from './Separator.types'
 import { CreateElement, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction()
 
@@ -13,11 +14,8 @@ const verticalAlignment: any = {
   end: 'bottom',
 }
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
-export default class Separator extends BaseComponent {
+@Component
+export default class Separator extends StatelessComponent {
   @Prop({ type: String, default: 'center' }) alignContent!: string
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 

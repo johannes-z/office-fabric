@@ -1,18 +1,15 @@
 import { Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../BaseComponent'
 import { ILabelProps, ILabelStyles } from './Label.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { CreateElement, VNode } from 'vue'
+import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<any, ILabelStyles>({
   disableCaching: true,
 })
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
-export default class Label extends BaseComponent<ILabelProps, ILabelStyles> {
+@Component
+export default class Label extends StatelessComponent<ILabelProps, ILabelStyles> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) required!: boolean
 

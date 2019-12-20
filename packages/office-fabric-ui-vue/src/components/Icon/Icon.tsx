@@ -1,16 +1,12 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../BaseComponent'
-import { IIconProps, IIconStyles } from './Icon.types'
+import { Component, Prop } from 'vue-property-decorator'
 import { CreateElement, RenderContext } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction()
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
-export default class Icon extends BaseComponent {
+@Component
+export default class Icon extends StatelessComponent {
   @Prop({ type: String, default: '' }) iconName!: string
   @Prop({ type: Object, default: null }) imageProps!: any
 

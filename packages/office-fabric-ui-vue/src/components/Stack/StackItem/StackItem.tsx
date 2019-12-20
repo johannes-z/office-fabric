@@ -5,15 +5,14 @@ import { StackItemStyles as styles } from './StackItem.styles'
 import { getTheme } from '@uifabric-vue/styling'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import StatelessComponent from '@/components/StatelessComponent'
 
 const getClassNames = classNamesFunction()
 
 @Component({
-  // @ts-ignore
-  functional: true,
   components: {},
 })
-export default class StackItem extends Vue {
+export default class StackItem extends StatelessComponent {
   @Prop() grow
   @Prop() shrink
   @Prop() disableShrink

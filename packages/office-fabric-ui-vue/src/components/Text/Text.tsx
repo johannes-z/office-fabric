@@ -1,16 +1,13 @@
 import { Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../BaseComponent'
 import { ITextStyles } from './Text.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { CreateElement, RenderContext } from 'vue'
+import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
-export default class Text extends BaseComponent {
+@Component
+export default class Text extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) nowrap!: boolean
   @Prop({ type: Boolean, default: false }) block!: boolean
   @Prop({ type: String, default: 'medium' }) variant!: string

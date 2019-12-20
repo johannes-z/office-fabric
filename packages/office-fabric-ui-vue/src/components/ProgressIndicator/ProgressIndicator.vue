@@ -1,8 +1,25 @@
+<template>
+  <div :class="classNames.root">
+    <div v-if="label" :class="classNames.itemName">
+      {{ label }}
+    </div>
+
+    <div v-if="!progressHidden" :class="classNames.itemProgress">
+      <div :class="classNames.progressTrack" />
+      <div :class="classNames.progressBar" :style="progressBarStyles" />
+    </div>
+
+    <div v-if="description" :class="classNames.itemDescription">
+      {{ description }}
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement, RenderContext } from 'vue'
 
 const getClassNames = classNamesFunction<IProgressIndicatorProps, IProgressIndicatorStyles>()
 
@@ -10,10 +27,7 @@ const getClassNames = classNamesFunction<IProgressIndicatorProps, IProgressIndic
 // This prevents animations on reset to 0 scenarios
 const ZERO_THRESHOLD = 0.01
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
+@Component
 export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ type: Boolean, default: false }) progressHidden!: boolean
   @Prop({ type: Boolean, default: false }) indeterminate!: boolean
@@ -23,38 +37,22 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
 
   @Prop({ type: Number, default: 2 }) barHeight!: number
 
-  render (h: CreateElement, context: RenderContext) {
-    const { className, indeterminate, theme, barHeight, description, progressHidden } = context.props
-    const classNames = getClassNames(context.props.styles, {
+  get classNames () {
+    const { className, indeterminate, theme, barHeight } = this
+    return getClassNames(this.styles, {
       className,
       indeterminate,
       theme,
       barHeight,
     })
+  }
 
-    const { percentComplete } = context.props
-    const progressBarStyles = {
+  get progressBarStyles () {
+    const { percentComplete } = this
+    return {
       width: percentComplete !== undefined ? percentComplete + '%' : undefined,
       transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
     }
-
-    return (
-      <div class={classNames.root}>
-        <div class={classNames.itemName}>
-          { context.props.label }
-        </div>
-
-        {
-          !progressHidden
-            ? <div class={classNames.itemProgress}>
-              <div class={classNames.progressTrack} />
-              <div class={classNames.progressBar} style={progressBarStyles} />
-            </div>
-            : null
-        }
-
-        {description ? <div class={classNames.itemDescription}>{ description }</div> : null}
-      </div>
-    )
   }
 }
+</script>

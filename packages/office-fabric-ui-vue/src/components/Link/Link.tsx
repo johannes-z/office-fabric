@@ -1,16 +1,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../BaseComponent'
 import { ILinkProps, ILinkStyles } from './Link.types'
 import { CreateElement, RenderContext, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<any, ILinkStyles>()
 
-@Component({
-  // @ts-ignore
-  functional: true,
-})
-export default class Link extends BaseComponent<ILinkProps, ILinkStyles> {
+@Component
+export default class Link extends StatelessComponent<ILinkProps, ILinkStyles> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: String, default: '' }) href!: string
 

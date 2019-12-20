@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import ProgressIndicatorBase from './ProgressIndicator'
+import ProgressIndicatorBase from './ProgressIndicator.vue'
 import { getStyles } from './ProgressIndicator.styles'
 import { VueConstructor } from 'vue'
 
