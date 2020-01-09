@@ -18,8 +18,8 @@ const getClassNames = classNamesFunction()
 
 @Component
 export default class Spinner extends BaseComponent<ISpinnerProps, ISpinnerStyles> {
-  @Prop({ type: String, default: null }) labelPosition!: string
   @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: String, default: null }) labelPosition!: string
   @Prop({ type: Number, default: 20 }) size!: number
 
   get classNames () {

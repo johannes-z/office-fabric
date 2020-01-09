@@ -86,13 +86,13 @@ export default class MessageBar extends BaseComponent {
 
     return getClassNames(this.styles, {
       theme,
-      className,
       messageBarType: messageBarType || MessageBarType.info,
       onDismiss: this.$listeners.dismiss !== undefined,
       actions: actions !== undefined,
       truncated: truncated,
       isMultiline: isMultiline,
       expandSingleLine: expandSingleLine,
+      className,
     })
   }
 

@@ -2,7 +2,11 @@
   <div :class="classNames.root">
     <div :class="classNames.itemContainer">
       <ul :class="classNames.members" role="listbox">
-        <FacepileButton />
+        <li v-for="(persona, index) in personas"
+            :key="singlePersona ? 'persona' : `personaCoin-${index}`"
+            role="option">
+          <FacepileButton />
+        </li>
       </ul>
     </div>
   </div>
@@ -20,6 +24,12 @@ const getClassNames = classNamesFunction()
   components: { FacepileButton },
 })
 export default class Facepile extends BaseComponent {
+  @Prop({ type: Array, default: () => [] }) readonly personas!: any[]
+
+  get singlePersona () {
+    return this.personas.length === 1
+  }
+
   get classNames () {
     return getClassNames(this.styles, {
       theme: this.theme!,

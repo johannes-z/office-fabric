@@ -14,6 +14,7 @@ import BaseComponent from '../../BaseComponent'
 
 @Component({
   components: { BaseButton },
+  inheritAttrs: false,
 })
 export default class IconButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) disabled!: boolean

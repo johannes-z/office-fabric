@@ -72,8 +72,7 @@
         </o-link>
         <template #actions>
           <div>
-            <o-message-bar-button>Yes</o-message-bar-button>
-            <o-message-bar-button>No</o-message-bar-button>
+            <o-message-bar-button>Action</o-message-bar-button>
           </div>
         </template>
       </o-message-bar>
