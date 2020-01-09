@@ -1,18 +1,18 @@
 {
   "name": "@uifabric-vue/styling",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "module": "./dist/index.esm.js",
   "main": "./src/index.ts",
   "dependencies": {
-    "@uifabric/merge-styles": "^7.8.1",
-    "@uifabric-vue/utilities": "^1.0.0"
+    "@uifabric-vue/utilities": "^1.0.0",
+    "@uifabric/merge-styles": "^7.8.1"
   },
   "devDependencies": {
     "bili": "^4.8.1",
-    "rollup": "^1.27.13",
+    "rollup": "^1.28.0",
     "rollup-plugin-alias": "^2.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "rollup-plugin-vue": "5.1.1",
-    "typescript": "~3.7.3"
+    "typescript": "^3.7.4"
   }
 }
