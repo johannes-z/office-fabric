@@ -4,9 +4,15 @@ import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 
 import Fabric from '@uifabric-vue/office-ui-fabric-vue'
+import { IPartialTheme } from '@uifabric-vue/styling'
+
+import { initializeIcons } from '@uifabric/icons'
+
+initializeIcons()
 
 Vue.use(Fabric, {
-}, true)
+  palette: {},
+} as IPartialTheme, true)
 
 Vue.use(VueRouter)
 

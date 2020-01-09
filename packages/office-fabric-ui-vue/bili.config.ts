@@ -26,6 +26,7 @@ const config: Config = {
   plugins: {
     babel: {
       exclude: /node_modules/,
+      runtimeHelpers: true,
     },
     alias: {
       resolve: ['.jsx', '.js', '.vue', '.ts'],

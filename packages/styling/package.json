@@ -1,7 +1,7 @@
 {
   "name": "@uifabric-vue/styling",
   "version": "1.0.0",
-  "module": "./dist/index.esm.js",
+  "module": "./src/index.ts",
   "main": "./src/index.ts",
   "dependencies": {
     "@uifabric-vue/utilities": "^1.0.0",

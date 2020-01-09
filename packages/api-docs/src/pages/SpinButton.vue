@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import SpinButton from '@uifabric-vue/office-ui-fabric-vue'
+import { SpinButton } from '@uifabric-vue/office-ui-fabric-vue'
 
 @Component({
   components: {

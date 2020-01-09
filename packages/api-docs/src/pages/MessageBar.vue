@@ -12,14 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Label</h2>
-      <o-message-bar>I'm a Label</o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.error">
+      <o-message-bar>
+        Info/Default MessageBar.
+        <o-link href="https://google.at" target="_blank">
+          Visit our website.
+        </o-link>
+      </o-message-bar>
+      <o-message-bar :is-multiline="false"
+                     :message-bar-type="MessageBarType.error"
+                     @dismiss="onDismiss">
         Error MessageBar with single line, with dismiss button.
         <o-link href="www.bing.com" target="_blank">
           Visit our website.
         </o-link>
       </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.blocked">
+      <o-message-bar :is-multiline="false"
+                     truncated
+                     :message-bar-type="MessageBarType.blocked"
+                     @dismiss="onDismiss">
         <b>Blocked MessageBar - single line, with dismiss button and truncated text.</b> Truncation is not available if you use action buttons
         or multiline and should be used sparingly. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi luctus, purus a lobortis
         tristique, odio augue pharetra metus, ac placerat nunc mi nec dui. Vestibulum aliquam et nunc semper scelerisque. Curabitur vitae orci
@@ -33,18 +43,38 @@
         <o-link href="www.bing.com" target="_blank">
           Visit our website.
         </o-link>
+        <template #actions>
+          <div>
+            <o-message-bar-button>Yes</o-message-bar-button>
+            <o-message-bar-button>No</o-message-bar-button>
+          </div>
+        </template>
       </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.success">
+      <o-message-bar :message-bar-type="MessageBarType.success"
+                     :is-multiline="false">
         Success MessageBar with single line and action buttons.
         <o-link href="www.bing.com" target="_blank">
           Visit our website.
         </o-link>
+        <template #actions>
+          <div>
+            <o-message-bar-button>Yes</o-message-bar-button>
+            <o-message-bar-button>No</o-message-bar-button>
+          </div>
+        </template>
       </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.warning">
+      <o-message-bar :message-bar-type="MessageBarType.warning"
+                     :is-multiline="false"
+                     @dismiss="onDismiss">
         Warning MessageBar content.
         <o-link href="www.bing.com" target="_blank">
           Visit our website.
         </o-link>
+        <template #actions>
+          <div>
+            <o-message-bar-button>Action</o-message-bar-button>
+          </div>
+        </template>
       </o-message-bar>
       <o-message-bar :message-bar-type="MessageBarType.warning">
         <b>Warning defaults to multiline</b>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi luctus, purus a lobortis tristique,
@@ -55,6 +85,12 @@
         <o-link href="www.bing.com" target="_blank">
           Visit our website.
         </o-link>
+        <template #actions>
+          <div>
+            <o-message-bar-button>Yes</o-message-bar-button>
+            <o-message-bar-button>No</o-message-bar-button>
+          </div>
+        </template>
       </o-message-bar>
     </div>
 
@@ -74,6 +110,10 @@ import { MessageBarType } from '@uifabric-vue/office-ui-fabric-vue'
 })
 export default class MessageBarPage extends Vue {
   MessageBarType = MessageBarType
+
+  onDismiss () {
+    console.log('test')
+  }
 }
 </script>
 

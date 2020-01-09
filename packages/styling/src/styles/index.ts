@@ -7,7 +7,7 @@ export { FontSizes, FontWeights, IconFontSizes, createFontStyles } from './fonts
 export * from './getFocusStyle'
 export { hiddenContentStyle } from './hiddenContentStyle'
 export { PulsingBeaconAnimationStyles } from './PulsingBeaconAnimationStyles'
-export { getGlobalClassNames, GlobalClassNames } from './getGlobalClassNames'
+export * from './getGlobalClassNames'
 export { getTheme, loadTheme, createTheme } from './theme'
 export * from './CommonStyles'
 export * from './GeneralStyles'

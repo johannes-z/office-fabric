@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>OModal</h1>
+    <h1>Facepile</h1>
     <div class="content--inner ms-depth-8">
       <h2>Overview</h2>
     </div>
@@ -11,11 +11,8 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <h2>Default OModal</h2>
-      <DefaultButton @click.native="isOpen = true">Show Modal</DefaultButton>
-      <o-modal v-if="isOpen">
-        Test
-      </o-modal>
+      <h2>Default Facepile</h2>
+      <o-facepile />
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -26,17 +23,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { DefaultButton } from '@uifabric-vue/office-ui-fabric-vue'
 
-@Component({
-  components: {
-    DefaultButton,
-  },
-})
-export default class ModalPage extends Vue {
-  isOpen: boolean = false
+@Component
+export default class FacepilePage extends Vue {
 }
 </script>
-
-<style lang="scss" module>
-</style>
