@@ -13,5 +13,5 @@ export default abstract class StatelessComponent<TProps = {}, IStyles = {}> exte
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles?: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
 
-  css
+  css = css
 }

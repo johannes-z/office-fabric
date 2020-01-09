@@ -79,9 +79,7 @@ export function classNamesFunction<TStyleProps extends {}, TStyleSet extends ISt
       } else {
         (current as any)[RetVal] = mergeCssSets(
           [
-            (typeof styleFunctionOrObject === 'function' ? styleFunctionOrObject(styleProps) : styleFunctionOrObject) as IStyleSet<
-            TStyleSet
-            >,
+            (typeof styleFunctionOrObject === 'function' ? styleFunctionOrObject(styleProps) : styleFunctionOrObject) as IStyleSet<TStyleSet>,
           ],
           { rtl: !!rtl }
         )
