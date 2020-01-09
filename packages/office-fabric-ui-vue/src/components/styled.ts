@@ -26,11 +26,16 @@ export function styled (
   customizable?: ICustomizableProps,
   pure?: boolean
 ): VueConstructor<Vue> {
+  let _styles: any
   return Vue.extend({
     functional: true,
-    render: (h: CreateElement, context: RenderContext<any>): VNode => {
-      const styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles)
-      const additionalProps = getProps ? getProps(context.props) : undefined
+    render (h: CreateElement, context: RenderContext<any>): VNode {
+      if (!_styles || context.props.styles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
+        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles)
+        _styles.__cachedInputs__ = [baseStyles, context.props.styles]
+      }
+
+      const additionalProps = getProps ? getProps(this) : undefined
 
       return h(Component, {
         ...context.data,
@@ -38,7 +43,7 @@ export function styled (
           ...additionalProps,
           ...context.props,
           className: context.props.className || context.data.class,
-          styles: styles,
+          styles: _styles,
         },
       }, context.children)
     },

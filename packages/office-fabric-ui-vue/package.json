@@ -11,6 +11,7 @@
   "dependencies": {
     "@uifabric-vue/styling": "^1.0.0",
     "@uifabric-vue/utilities": "^1.0.0",
+    "@uifabric/icons": "^7.3.0",
     "@uifabric/merge-styles": "^7.8.1",
     "core-js": "^3.6.2",
     "portal-vue": "^2.1.7",

@@ -3,7 +3,9 @@ import { CreateElement, RenderContext } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 
-const getClassNames = classNamesFunction()
+import { getIconContent } from './FontIcon'
+
+const getClassNames = classNamesFunction({ disableCaching: true })
 
 @Component
 export default class Icon extends StatelessComponent {
@@ -11,25 +13,30 @@ export default class Icon extends StatelessComponent {
   @Prop({ type: Object, default: null }) imageProps!: any
 
   render (h: CreateElement, context: RenderContext) {
-    const { className, iconName, theme, styles, imageProps } = context.props
+    const { className, iconName, theme, styles } = context.props
 
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
-    const isImage = !!imageProps
+    const isImage = !!context.props.imageProps
+    const iconContent = getIconContent(iconName) || {}
+    const { iconClassName, children } = iconContent
 
     const classNames = getClassNames(styles, {
       theme,
       className,
-      iconClassName: ['ms-Icon', `ms-Icon--${iconName}`],
+      iconClassName,
       isImage,
       isPlaceholder,
     })
 
-    return h('i', {
+    const RootType = isImage ? 'span' : 'i'
+
+    return h(RootType, {
       ...context.data,
       class: classNames.root,
       attrs: {
         'aria-hidden': 'true',
+        'data-icon-name': iconName,
       },
-    })
+    }, children)
   }
 }

@@ -6,6 +6,10 @@ import routes from '@/plugins/router/routes'
 import Fabric from './plugins/office-fabric'
 import { IPartialTheme } from '@uifabric-vue/styling'
 
+import { initializeIcons } from '@uifabric/icons'
+
+initializeIcons()
+
 Vue.use(Fabric, {
   palette: {},
 } as IPartialTheme, true)
