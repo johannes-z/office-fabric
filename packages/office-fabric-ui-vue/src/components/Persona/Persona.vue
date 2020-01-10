@@ -1,5 +1,6 @@
 ﻿<template>
-  <div :class="classNames.root">
+  <div :class="classNames.root"
+       :style="coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : undefined">
     <PersonaCoin v-bind="$props" />
 
     <div v-if="!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)"

@@ -38,7 +38,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
-import { classNamesFunction, getInitials } from '@uifabric-vue/utilities'
+import { classNamesFunction, getInitials, getRTL } from '@uifabric-vue/utilities'
 import { mergeStyles } from '@uifabric/merge-styles'
 import { getPersonaInitialsColor } from '../PersonaInitialsColor'
 import {
@@ -60,9 +60,9 @@ export default class PersonaCoin extends BaseComponent {
   @Prop({ type: Boolean, required: true }) allowPhoneInitials!: boolean
   @Prop({ type: Number, required: true }) presence!: number
   @Prop({ type: Number, required: true }) size!: number
+  @Prop({ type: Number, required: true }) coinSize!: number
 
   @Prop() coinProps!: any
-  @Prop({ type: Number, default: 0 }) coinSize!: number
   @Prop() showUnknownPersonaCoin!: any
   @Prop() isOutOfOffice!: any
   @Prop() presenceTitle!: any
@@ -78,7 +78,7 @@ export default class PersonaCoin extends BaseComponent {
 
   get initials () {
     const { imageInitials, allowPhoneInitials, showUnknownPersonaCoin } = this
-    const isRTL = false
+    const isRTL = getRTL(this.theme)
 
     return imageInitials || getInitials(this.text, isRTL, allowPhoneInitials)
   }

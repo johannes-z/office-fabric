@@ -4,6 +4,8 @@ import { getStyles } from './Persona.styles'
 import { VueConstructor } from 'vue'
 
 export * from './Persona.types'
+export * from './PersonaConsts'
+export { getPersonaInitialsColor } from './PersonaInitialsColor'
 
 export const Persona: VueConstructor = styled(
   PersonaBase,
