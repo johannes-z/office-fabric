@@ -1,6 +1,13 @@
-import Image from './Image.vue'
+import { styled } from '../styled'
+import ImageBase from './Image.vue'
+import { getStyles } from './Image.styles'
+import { VueConstructor } from 'vue'
 
 export * from './Image.types'
-export {
-  Image,
-}
+
+export const Image: VueConstructor = styled(
+  ImageBase,
+  getStyles,
+  undefined,
+  { scope: 'Image' }
+)

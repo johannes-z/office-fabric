@@ -8,21 +8,11 @@
          '--presenceColor': presenceColor,
          '--presenceIconFontSize': `${fontSizeIcon}px`,
        }">
-    <div :class="classNames.coin">
-      <div :class="classNames.imageArea">
-        <div :class="classNames.imageContainer">
-          <img :class="classNames.image"
-               :src="imageUrl"
-               alt="">
-        </div>
-        <div :class="classNames.presence">
-          <Icon :icon-name="presenceIcon" :class="classNames.presenceIcon" />
-        </div>
-      </div>
-    </div>
+    <PersonaCoin v-bind="$props" />
+
     <div :class="classNames.details">
       <div dir="auto" :class="classNames.primaryText">
-        <div :class="classNames.tooltipHostRoot">{{ primaryText }}</div>
+        <div :class="classNames.tooltipHostRoot">{{ text }}</div>
       </div>
       <div dir="auto" :class="classNames.secondaryText">
         <div :class="classNames.tooltipHostRoot">{{ secondaryText }}</div>
@@ -34,6 +24,19 @@
         <div :class="classNames.tooltipHostRoot">{{ optionalText }}</div>
       </div>
     </div>
+
+    <!-- <div :class="classNames.coin">
+      <div :class="classNames.imageArea">
+        <div :class="classNames.imageContainer">
+          <img :class="classNames.image"
+               :src="imageUrl"
+               alt="">
+        </div>
+        <div :class="classNames.presence">
+          <Icon :icon-name="presenceIcon" :class="classNames.presenceIcon" />
+        </div>
+      </div>
+    </div> -->
   </div>
 </template>
 
@@ -45,21 +48,24 @@ import { IPersonaProps, IPersonaStyles } from '../Persona'
 import { getStyles } from './Persona.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
+import { PersonaCoin } from './PersonaCoin/'
+import { PersonaSize } from './Persona.types'
+
 const getClassNames = classNamesFunction()
 
 @Component({
   name: 'OPersona',
-  components: { Icon },
+  components: { Icon, PersonaCoin },
 })
 export default class Persona extends BaseComponent {
-  @Prop({ type: Number, default: 48 }) size!: number
+  @Prop({ type: Number, default: PersonaSize.size8 }) size!: any
   @Prop({ type: String, default: undefined }) imageUrl?: string
-  @Prop({ type: String, default: undefined }) primaryText?: string
+  @Prop({ type: String, default: undefined }) text?: string
   @Prop({ type: String, default: 'online' }) status?: string // online, away, busy
   @Prop({ type: String, default: undefined }) secondaryText?: string
   @Prop({ type: String, default: undefined }) tertiaryText?: string
   @Prop({ type: String, default: undefined }) optionalText?: string
-  @Prop({ type: String, default: undefined }) presence?: string
+  @Prop({ type: Number, default: undefined }) presence?: number
   @Prop({ type: Boolean, default: false }) isOutOfOffice?: boolean
   @Prop({ type: Boolean, default: false }) hidePersonaDetails?: boolean
   @Prop({ type: Boolean, default: false }) showSecondaryText?: boolean

@@ -22,11 +22,11 @@ const getClassNames = classNamesFunction()
 @Component({
   inheritAttrs: false,
 })
-export default class Image extends BaseComponent<IImageStyleProps, IImageStyles> {
+export default class Image extends BaseComponent {
   @Prop({ type: String, required: true }) src!: string
   @Prop({ type: String, default: '' }) alt!: string
-  @Prop({ type: String, default: '' }) width!: string
-  @Prop({ type: String, default: '' }) height!: string
+  @Prop({ type: [String, Number], default: '' }) width!: string | number
+  @Prop({ type: [String, Number], default: '' }) height!: string | number
   @Prop({ type: Number, default: null }) imageFit!: number
   @Prop({ type: Boolean, default: null }) maximizeFrame!: boolean
   @Prop({ type: Boolean, default: null }) shouldFadeIn!: boolean
@@ -38,8 +38,9 @@ export default class Image extends BaseComponent<IImageStyleProps, IImageStyles>
   private static svgRegex = /\.svg$/i;
 
   get classNames () {
-    const { loadState, coverStyle, imageFit, theme, className, width, height, maximizeFrame, shouldFadeIn, shouldStartVisible } = this
-    return getClassNames(getStyles, {
+    const { styles, loadState, coverStyle, imageFit, theme, className, width, height, maximizeFrame, shouldFadeIn, shouldStartVisible } = this
+
+    return getClassNames(styles, {
       theme,
       className,
       width,

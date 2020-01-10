@@ -4,10 +4,18 @@
       <li v-for="(item, index) in items"
           :key="index"
           :class="classNames.listItem">
-        <o-link :class="classNames.itemLink"
-                :href="item.href">
-          Test
+        <o-link v-if="item.onClick || item.href"
+                :class="classNames.itemLink"
+                :href="item.href"
+                @click="onBreadcrumbClicked($event, item)">
+          {{ item.text }}
         </o-link>
+
+        <span v-else
+              :class="classNames.item"
+              @click="onBreadcrumbClicked($event, item)">
+          {{ item.text }}
+        </span>
 
         <o-icon v-if="index !== (items.length - 1)"
                 :key="`icon-${index}`"
@@ -39,6 +47,12 @@ export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcr
       theme,
       className,
     })
+  }
+
+  private onBreadcrumbClicked (event: MouseEvent, item: IBreadcrumbItem) {
+    if (item.onClick) {
+      item.onClick(event, item)
+    }
   }
 }
 </script>

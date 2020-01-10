@@ -13,18 +13,22 @@ export default class Callout extends StatelessComponent {
   render (h: CreateElement, context: any) {
     if (!(context.props.target instanceof Node)) return
 
+    const { layerProps, ...rest } = context.props
+
     const content = h(CalloutContent, {
       ...context.data,
       props: {
-        ...context.props,
+        ...rest,
         ...context.data.attrs,
       },
     }, context.children)
 
-    if (context.props.doNotLayer) {
-      return content
-    }
-    return h(Layer, context.data, [content])
+    return context.props.doNotLayer ? content : h(Layer, {
+      ...context.data,
+      props: {
+        ...layerProps,
+      },
+    }, [content])
   }
 }
 </script>

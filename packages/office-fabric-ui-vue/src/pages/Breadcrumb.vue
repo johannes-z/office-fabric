@@ -28,13 +28,17 @@ import { IBreadcrumbItem } from '../components'
 @Component
 export default class BreadcrumbPage extends Vue {
   items: IBreadcrumbItem[] = [
-    { text: 'Test 1', href: '#' },
-    { text: 'Test 2', href: '#' },
-    { text: 'Test 3', href: '#' },
-    { text: 'Test 4', href: '#' },
-    { text: 'Test 5', href: '#' },
-    { text: 'Test 6', href: '#' },
+    { text: 'Files', onClick: this.onItemClicked },
+    { text: 'Folder 2', onClick: this.onItemClicked },
+    { text: 'Folder 3', onClick: this.onItemClicked },
+    { text: 'Folder 4 (non-clickable)' },
+    { text: 'Folder 5', onClick: this.onItemClicked },
+    { text: 'Folder 6', onClick: this.onItemClicked },
   ]
+
+  onItemClicked (event: MouseEvent, item: any) {
+    console.log(item)
+  }
 }
 </script>
 
