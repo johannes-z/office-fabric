@@ -1,5 +1,6 @@
 <template>
-  <div :class="classNames.presence"
+  <div v-if="presence !== PersonaPresenceEnum.none"
+       :class="classNames.presence"
        :title="presenceTitle"
        :style="coinSizeWithPresenceStyle">
     <Icon v-if="renderIcon"
@@ -35,6 +36,8 @@ export default class PersonaPresence extends BaseComponent {
   @Prop() isOutOfOffice!: any
   @Prop() coinSize!: any
   @Prop() presenceTitle!: any
+
+  PersonaPresenceEnum = PersonaPresenceEnum
 
   get renderIcon () {
     const { coinSize } = this
