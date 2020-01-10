@@ -69,6 +69,7 @@ export default class PersonaCoin extends BaseComponent {
   @Prop() imageUrl!: any
   @Prop() imageInitials!: any
   @Prop() text!: any
+  @Prop() initialsColor!: any
 
   mergeStyles = mergeStyles
   getPersonaInitialsColor = getPersonaInitialsColor

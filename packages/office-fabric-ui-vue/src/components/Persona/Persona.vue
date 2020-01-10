@@ -43,7 +43,7 @@ export default class Persona extends BaseComponent {
   @Prop({ type: Number, default: PersonaSize.size48 }) size!: number
 
   @Prop({ type: Number, default: 0 }) coinSize!: number
-  @Prop({ type: [Number, String], default: null }) initialsColor!: number
+  @Prop({ type: [Number, String], default: undefined }) initialsColor!: number
 
   @Prop({ type: Boolean, default: false }) hidePersonaDetails?: boolean
 

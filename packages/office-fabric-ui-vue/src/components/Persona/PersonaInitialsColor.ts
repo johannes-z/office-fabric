@@ -121,6 +121,7 @@ export function getPersonaInitialsColor (props: Pick<any, 'primaryText' | 'text'
   const { primaryText, text } = props
   let { initialsColor } = props
   let initialsColorCode: string
+
   if (typeof initialsColor === 'string') {
     initialsColorCode = initialsColor
   } else {
