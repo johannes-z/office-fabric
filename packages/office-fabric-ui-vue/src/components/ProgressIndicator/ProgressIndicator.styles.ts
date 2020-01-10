@@ -1,6 +1,6 @@
 import { IProgressIndicatorStyles } from './ProgressIndicator.types'
 import { keyframes, IRawStyle } from '@uifabric/merge-styles'
-import { getGlobalClassNames, HighContrastSelector, noWrap } from '@uifabric-vue/styling'
+import { getGlobalClassNames, HighContrastSelector, noWrap } from '@uifabric/styling'
 import { getRTL } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {

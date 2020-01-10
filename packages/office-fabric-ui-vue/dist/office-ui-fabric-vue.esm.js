@@ -2,12 +2,12 @@ import { __decorate, __metadata } from 'tslib';
 import { Prop, Component, Vue as Vue$1, Model, Watch } from 'vue-property-decorator';
 import Vue from 'vue';
 import { css, memoizeFunction, IsFocusVisibleClassName, classNamesFunction, getWindow, getScrollbarWidth, Rectangle as Rectangle$1, getRTL, assign, isIE11, RectangleEdge as RectangleEdge$1, Async, getDocument, on, doesElementContainFocus, KeyCodes } from '@uifabric-vue/utilities';
-import { getTheme, PulsingBeaconAnimationStyles, HighContrastSelector, getGlobalClassNames, getFocusStyle, hiddenContentStyle, FontWeights, getScreenSelector, ScreenWidthMaxSmall, ScreenWidthMinMedium, ScreenWidthMaxMedium, ZIndexes, AnimationVariables, AnimationClassNames, focusClear, getPlaceholderStyles, HighContrastSelectorWhite, normalize, IconFontSizes, HighContrastSelectorBlack, noWrap, createTheme, loadTheme as loadTheme$1 } from '@uifabric-vue/styling';
+import { getTheme, PulsingBeaconAnimationStyles, HighContrastSelector, getGlobalClassNames, getFocusStyle, hiddenContentStyle, FontWeights, getScreenSelector, ScreenWidthMaxSmall, ScreenWidthMinMedium, ScreenWidthMaxMedium, ZIndexes, AnimationVariables, AnimationClassNames, focusClear, getPlaceholderStyles, HighContrastSelectorWhite, normalize, IconFontSizes, HighContrastSelectorBlack, noWrap, createTheme, loadTheme as loadTheme$1 } from '@uifabric/styling';
 import { keyframes, concatStyleSets, mergeStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles';
 import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.mjs';
 import { MountingPortal } from 'portal-vue';
 import _mergeJSXProps from '@vue/babel-helper-vue-jsx-merge-props';
-import { HighContrastSelector as HighContrastSelector$1, getFocusStyle as getFocusStyle$1, FontWeights as FontWeights$1 } from '@uifabric-vue/styling/';
+import { HighContrastSelector as HighContrastSelector$1, getFocusStyle as getFocusStyle$1, FontWeights as FontWeights$1 } from '@uifabric/styling/';
 import __vue_create_injector__ from 'vue-runtime-helpers/dist/inject-style/browser.mjs';
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {

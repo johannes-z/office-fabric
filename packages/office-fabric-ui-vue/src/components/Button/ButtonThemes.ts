@@ -1,4 +1,4 @@
-import { ITheme, HighContrastSelector } from '@uifabric-vue/styling'
+import { ITheme, HighContrastSelector } from '@uifabric/styling'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { IRawStyle } from '@uifabric/merge-styles'
 import { IButtonStyles } from './Button.types'

@@ -1,5 +1,5 @@
 import { ICheckboxStyles } from './Checkbox.types'
-import { HighContrastSelector, getGlobalClassNames } from '@uifabric-vue/styling'
+import { HighContrastSelector, getGlobalClassNames } from '@uifabric/styling'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { IStyle } from '@uifabric/merge-styles'
 

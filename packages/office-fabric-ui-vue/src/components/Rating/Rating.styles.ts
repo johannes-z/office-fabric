@@ -1,4 +1,4 @@
-import { hiddenContentStyle, getFocusStyle, getGlobalClassNames, HighContrastSelector } from '@uifabric-vue/styling'
+import { hiddenContentStyle, getFocusStyle, getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
 import { IRatingStyles } from './Rating.types'
 
 const GlobalClassNames = {

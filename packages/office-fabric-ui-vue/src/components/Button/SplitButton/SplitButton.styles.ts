@@ -1,5 +1,5 @@
 import { concatStyleSets, IStyle } from '@uifabric/merge-styles'
-import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric-vue/styling'
+import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric/styling'
 import { IButtonStyles } from '../Button.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'
 

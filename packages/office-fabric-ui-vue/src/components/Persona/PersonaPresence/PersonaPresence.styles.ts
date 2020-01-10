@@ -1,6 +1,6 @@
 import { PersonaPresence, PersonaSize } from '../Persona.types'
 import { personaPresenceSize, presenceBoolean, sizeBoolean } from '../PersonaConsts'
-import { getGlobalClassNames, HighContrastSelector } from '@uifabric-vue/styling'
+import { getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
 import { IRawStyle } from '@uifabric/merge-styles'
 
 const GlobalClassNames = {

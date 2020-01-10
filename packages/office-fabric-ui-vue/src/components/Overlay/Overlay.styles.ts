@@ -1,4 +1,4 @@
-import { getGlobalClassNames, HighContrastSelector } from '@uifabric-vue/styling'
+import { getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
 import { IOverlayStyles } from './Overlay.types'
 
 const GlobalClassNames = {

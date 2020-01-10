@@ -1,5 +1,5 @@
 import { IImageStyles } from './Image.types'
-import { getGlobalClassNames, AnimationClassNames } from '@uifabric-vue/styling'
+import { getGlobalClassNames, AnimationClassNames } from '@uifabric/styling'
 import { IStyle } from '@uifabric/merge-styles'
 import { getWindow } from '@uifabric-vue/utilities'
 

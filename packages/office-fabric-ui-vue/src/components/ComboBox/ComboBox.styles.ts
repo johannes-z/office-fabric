@@ -1,4 +1,4 @@
-import { FontWeights, getPlaceholderStyles, HighContrastSelector, ITheme, getFocusStyle } from '@uifabric-vue/styling'
+import { FontWeights, getPlaceholderStyles, HighContrastSelector, ITheme, getFocusStyle } from '@uifabric/styling'
 import { concatStyleSets, IStyle, IRawStyle } from '@uifabric/merge-styles'
 import { IComboBoxStyles } from './ComboBox.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'

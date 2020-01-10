@@ -1,5 +1,5 @@
 import { ISpinnerStyles } from './Spinner.types'
-import { getGlobalClassNames, hiddenContentStyle, HighContrastSelector } from '@uifabric-vue/styling'
+import { getGlobalClassNames, hiddenContentStyle, HighContrastSelector } from '@uifabric/styling'
 import { keyframes } from '@uifabric/merge-styles'
 
 const GlobalClassNames = {

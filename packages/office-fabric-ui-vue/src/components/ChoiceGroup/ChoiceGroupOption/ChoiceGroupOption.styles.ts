@@ -1,4 +1,4 @@
-import { HighContrastSelector, getGlobalClassNames } from '@uifabric-vue/styling'
+import { HighContrastSelector, getGlobalClassNames } from '@uifabric/styling'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { IChoiceGroupOptionStyles } from './ChoiceGroupOption.types'
 import { IStyle } from '@uifabric/merge-styles'

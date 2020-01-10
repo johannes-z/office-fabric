@@ -5,12 +5,16 @@ export * from './focus'
 
 export * from './classNamesFunction'
 export * from './css'
+
+export * from './customizations/Customizations'
+
 export * from './initializeFocusRects'
 export * from './keyboard'
 export * from './KeyCodes'
 export * from './GlobalSettings'
 export * from './memoize'
 export * from './merge'
+export * from './properties'
 export * from './rtl'
 export * from './initials'
 export * from './language'

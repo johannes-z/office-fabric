@@ -1,6 +1,6 @@
 import Vue, { VueConstructor } from 'vue'
 import * as Components from '@/components/'
-import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric-vue/styling'
+import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric/styling'
 import { registerCSSVars } from './registerCSSVars'
 import { toKebabCase } from '@/util'
 

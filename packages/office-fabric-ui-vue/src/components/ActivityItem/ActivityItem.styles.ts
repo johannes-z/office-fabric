@@ -1,5 +1,5 @@
 import { concatStyleSets, keyframes } from '@uifabric/merge-styles'
-import { HighContrastSelector, PulsingBeaconAnimationStyles, getTheme, ITheme } from '@uifabric-vue/styling'
+import { HighContrastSelector, PulsingBeaconAnimationStyles, getTheme, ITheme } from '@uifabric/styling'
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IActivityItemStyles } from './ActivityItem.types'
 import Vue from 'vue'

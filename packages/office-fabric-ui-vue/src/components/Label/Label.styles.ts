@@ -1,5 +1,5 @@
 import { ILabelStyles } from './Label.types'
-import { HighContrastSelector, FontWeights } from '@uifabric-vue/styling'
+import { HighContrastSelector, FontWeights } from '@uifabric/styling'
 
 export const getStyles = (props: any): ILabelStyles => {
   const { theme, className, disabled, required } = props

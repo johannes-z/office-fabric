@@ -1,6 +1,6 @@
 import { PersonaSize } from '../Persona.types'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
-import { getGlobalClassNames, FontWeights, HighContrastSelector } from '@uifabric-vue/styling'
+import { getGlobalClassNames, FontWeights, HighContrastSelector } from '@uifabric/styling'
 
 const GlobalClassNames = {
   coin: 'ms-Persona-coin',

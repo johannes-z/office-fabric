@@ -1,6 +1,6 @@
 import { concatStyleSets, IRawStyle } from '@uifabric/merge-styles'
 import { ISpinButtonStyles } from './SpinButton.types'
-import { HighContrastSelector, IconFontSizes, ITheme } from '@uifabric-vue/styling'
+import { HighContrastSelector, IconFontSizes, ITheme } from '@uifabric/styling'
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button/Button.types'
 

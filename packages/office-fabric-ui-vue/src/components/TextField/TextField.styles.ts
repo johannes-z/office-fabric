@@ -1,4 +1,4 @@
-import { IconFontSizes, HighContrastSelector, getPlaceholderStyles, normalize, getGlobalClassNames, AnimationClassNames } from '@uifabric-vue/styling'
+import { IconFontSizes, HighContrastSelector, getPlaceholderStyles, normalize, getGlobalClassNames, AnimationClassNames } from '@uifabric/styling'
 import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { ITextFieldStyles } from './TextField.types'
 import { ILabelStyles } from '../Label'

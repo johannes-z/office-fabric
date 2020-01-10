@@ -1,7 +1,7 @@
 
 import { IButtonStyles } from './Button.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'
-import { HighContrastSelector, ITheme, getFocusStyle, hiddenContentStyle } from '@uifabric-vue/styling'
+import { HighContrastSelector, ITheme, getFocusStyle, hiddenContentStyle } from '@uifabric/styling'
 import { IRawStyle } from '@uifabric/merge-styles'
 
 const noOutline: IRawStyle = {

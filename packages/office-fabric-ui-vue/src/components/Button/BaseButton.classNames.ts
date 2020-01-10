@@ -1,4 +1,4 @@
-import { ITheme, getGlobalClassNames } from '@uifabric-vue/styling'
+import { ITheme, getGlobalClassNames } from '@uifabric/styling'
 import { IButtonStyles } from './Button.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { mergeStyleSets } from '@uifabric/merge-styles'

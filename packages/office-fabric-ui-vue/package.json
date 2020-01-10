@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@uifabric-vue/styling": "^1.0.0",
+    "@uifabric/styling": "^7.9.0",
     "@uifabric-vue/utilities": "^1.0.0",
     "@uifabric/icons": "^7.3.0",
     "@uifabric/merge-styles": "^7.8.1",

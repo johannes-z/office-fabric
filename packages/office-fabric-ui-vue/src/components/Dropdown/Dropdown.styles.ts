@@ -9,7 +9,7 @@ import {
   HighContrastSelectorWhite,
   getScreenSelector,
   ScreenWidthMinMedium,
-} from '@uifabric-vue/styling'
+} from '@uifabric/styling'
 import { IStyle, IRawStyle, IStyleFunction } from '@uifabric/merge-styles'
 
 const GlobalClassNames = {

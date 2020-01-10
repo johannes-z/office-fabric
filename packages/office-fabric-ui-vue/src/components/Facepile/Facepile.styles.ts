@@ -1,4 +1,4 @@
-import { hiddenContentStyle, getFocusStyle, getGlobalClassNames } from '@uifabric-vue/styling'
+import { hiddenContentStyle, getFocusStyle, getGlobalClassNames } from '@uifabric/styling'
 import { IStyle } from '@uifabric/merge-styles'
 
 const GlobalClassNames = {

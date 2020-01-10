@@ -4,7 +4,7 @@ import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 
 import Fabric from './plugins/office-fabric'
-import { IPartialTheme } from '@uifabric-vue/styling'
+import { IPartialTheme } from '@uifabric/styling'
 
 import { initializeIcons } from '@uifabric/icons'
 

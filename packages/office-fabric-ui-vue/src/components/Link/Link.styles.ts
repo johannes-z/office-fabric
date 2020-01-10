@@ -1,5 +1,5 @@
 import { ILinkStyles } from './Link.types'
-import { getGlobalClassNames, HighContrastSelector, HighContrastSelectorBlack, HighContrastSelectorWhite } from '@uifabric-vue/styling'
+import { getGlobalClassNames, HighContrastSelector, HighContrastSelectorBlack, HighContrastSelectorWhite } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-Link',

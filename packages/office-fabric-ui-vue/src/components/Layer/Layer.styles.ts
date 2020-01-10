@@ -1,5 +1,5 @@
 import { ILayerStyles } from './Layer.types'
-import { getGlobalClassNames, ZIndexes } from '@uifabric-vue/styling'
+import { getGlobalClassNames, ZIndexes } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-Layer',

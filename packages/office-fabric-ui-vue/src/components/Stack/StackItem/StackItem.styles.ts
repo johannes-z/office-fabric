@@ -1,4 +1,4 @@
-import { getGlobalClassNames } from '@uifabric-vue/styling'
+import { getGlobalClassNames } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-StackItem',

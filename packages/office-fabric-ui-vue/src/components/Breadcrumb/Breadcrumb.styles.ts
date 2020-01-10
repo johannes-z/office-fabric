@@ -1,5 +1,5 @@
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
-import { getFocusStyle, HighContrastSelector, FontWeights, getGlobalClassNames, getScreenSelector, ScreenWidthMinMedium, ScreenWidthMaxMedium, ScreenWidthMaxSmall } from '@uifabric-vue/styling'
+import { getFocusStyle, HighContrastSelector, FontWeights, getGlobalClassNames, getScreenSelector, ScreenWidthMinMedium, ScreenWidthMaxMedium, ScreenWidthMaxSmall } from '@uifabric/styling'
 import { IRawStyle } from '@uifabric/merge-styles'
 import { IBreadcrumbStyles } from './Breadcrumb.types'
 
