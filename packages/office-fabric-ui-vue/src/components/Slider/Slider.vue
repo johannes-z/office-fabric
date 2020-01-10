@@ -7,12 +7,26 @@
            @mousedown="onMouseDown"
            @keydown="onKeyDown">
         <div ref="sliderLine" :class="classNames.line">
+          <span v-if="originFromZero"
+                :class="classNames.zeroTick"
+                :style="{ [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` }" />
           <span :class="classNames.thumb"
                 :style="{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` }" />
-          <span :class="css(classNames.lineContainer, classNames.activeSection)"
-                :style="{ [lengthString]: `${thumbOffsetPercent}%` }" />
-          <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
-                :style="{ [lengthString]: `${100 - thumbOffsetPercent}%` }" />
+
+          <template v-if="originFromZero">
+            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
+                  :style="{ [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` }" />
+            <span :class="css(classNames.lineContainer, classNames.activeSection)"
+                  :style="{ [lengthString]: `${Math.abs(zeroOffsetPercent - thumbOffsetPercent)}%` }" />
+            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
+                  :style="{ [lengthString]: `${Math.min(100 - thumbOffsetPercent, 100 - zeroOffsetPercent)}%` }" />
+          </template>
+          <template v-else>
+            <span :class="css(classNames.lineContainer, classNames.activeSection)"
+                  :style="{ [lengthString]: `${thumbOffsetPercent}%` }" />
+            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
+                  :style="{ [lengthString]: `${100 - thumbOffsetPercent}%` }" />
+          </template>
         </div>
       </div>
       <Label :class="classNames.valueLabel">
@@ -52,6 +66,7 @@ export default class Slider extends BaseComponent {
   @Prop({ type: Number, default: null }) value!: number
   @Prop({ type: Number, default: null }) defaultValue!: number
   @Prop({ type: Boolean, default: false }) showValue!: boolean
+  @Prop({ type: Boolean, default: false }) originFromZero!: boolean
 
   private internalValue?: number = this.value || this.defaultValue || this.min
   private renderedValue?: number = this.value || this.defaultValue || this.min
