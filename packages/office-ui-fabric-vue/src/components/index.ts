@@ -1,3 +1,6 @@
+
+export * from './Overlay'
+
 export * from './ActivityItem'
 export * from './Button'
 export * from './Breadcrumb'
@@ -13,13 +16,13 @@ export * from './MessageBar'
 export * from './Popup'
 export * from './Stack'
 export * from './Facepile'
+export * from './Panel'
 
 export * from './Checkbox'
 export * from './Icon'
 export * from './Label'
 export * from './Layer'
 export * from './Link'
-export * from './Overlay'
 
 export * from './Panel'
 export * from './ProgressIndicator'

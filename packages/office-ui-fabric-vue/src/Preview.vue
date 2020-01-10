@@ -71,6 +71,7 @@ export default class Preview extends Vue {
           { name: 'Callout', key: 'Callout', href: '/#/Callout' },
           { name: 'Dialog', key: 'Dialog', href: '/#/Dialog' },
           { name: 'Modal', key: 'Modal', href: '/#/Modal' },
+          { name: 'Panel', key: 'Panel', href: '/#/Panel' },
         ],
       }, {
         name: 'Utilities',

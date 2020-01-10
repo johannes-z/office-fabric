@@ -6,7 +6,7 @@ import { Icon } from '../Icon/'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction<any, any>()
+const getClassNames = classNamesFunction()
 
 // The number pixels per indentation level for Nav links.
 const INDENTATION_SIZE = 14

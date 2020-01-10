@@ -31,6 +31,7 @@ const config: Config = {
       ],
     },
     typescript2: {
+      abortOnError: false,
       useTsconfigDeclarationDir: true,
     },
     vue: {

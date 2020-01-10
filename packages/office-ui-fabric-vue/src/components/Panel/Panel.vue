@@ -1,25 +1,36 @@
 <template>
   <Layer>
-    <div v-bind="css.root">
-      <Overlay v-bind="css.overlay" />
-      <div v-bind="css.main">
-        <div v-bind="css.commands">
-          <div v-bind="css.navigation">
-            <IconButton v-bind="css.closeButton"
-                        icon-name="Cancel"
+    <div :class="classNames.root">
+      <Overlay v-if="isBlocking && isOpen" :class="classNames.overlay" />
+      <div :class="classNames.main">
+        <div :class="classNames.commands">
+          <div :class="classNames.navigation">
+            <IconButton :class="classNames.closeButton"
+                        :styles="{
+                          root: {
+                            height: 'auto',
+                            width: '44px',
+                            color: theme.palette.neutralSecondary,
+                            fontSize: IconFontSizes.large
+                          },
+                          rootHovered: {
+                            color: theme.palette.neutralPrimary
+                          }
+                        }"
+                        :icon-props="{ iconName: 'Cancel' }"
                         @click.native="$emit('close')" />
           </div>
         </div>
 
-        <div v-bind="css.contentInner">
-          <div v-bind="css.header">
-            <p v-bind="css.headerText">
+        <div :class="classNames.contentInner">
+          <div :class="classNames.header">
+            <p :class="classNames.headerText">
               {{ headerText }}
             </p>
           </div>
 
-          <div v-bind="css.scrollableContent">
-            <div v-bind="css.content">
+          <div :class="classNames.scrollableContent">
+            <div :class="classNames.content">
               <slot />
             </div>
           </div>
@@ -33,8 +44,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { Layer, Overlay, IconButton } from '../'
+import { Layer, Overlay, IconButton } from '@/components/'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { IconFontSizes } from '@uifabric/styling'
 
 const getClassNames = classNamesFunction()
 
@@ -43,5 +55,51 @@ const getClassNames = classNamesFunction()
 })
 export default class Panel extends BaseComponent {
   @Prop({ type: String, default: null }) headerText!: string
+  @Prop() focusTrapZoneProps!: any
+  @Prop() headerClassName!: any
+  @Prop() type!: any
+
+  @Prop({ type: Boolean, default: false }) hasCloseButton!: boolean
+  @Prop({ type: Boolean, default: false }) isAnimating!: boolean
+  @Prop({ type: Boolean, default: false }) isFooterSticky!: boolean
+  @Prop({ type: Boolean, default: false }) isFooterAtBottom!: boolean
+  @Prop({ type: Boolean, default: false }) isOnRightSide!: boolean
+  @Prop({ type: Boolean, default: false }) isOpen!: boolean
+  @Prop({ type: Boolean, default: false }) isHiddenOnDismiss!: boolean
+  @Prop({ type: Boolean, default: false }) isBlocking!: boolean
+
+  IconFontSizes = IconFontSizes
+
+  get classNames () {
+    const {
+      styles,
+      theme,
+      className = '',
+      focusTrapZoneProps,
+      hasCloseButton,
+      headerClassName = '',
+      isAnimating,
+      isFooterSticky,
+      isFooterAtBottom,
+      isOnRightSide,
+      isOpen,
+      isHiddenOnDismiss,
+      type } = this
+
+    return getClassNames(styles!, {
+      theme: theme!,
+      className,
+      focusTrapZoneClassName: focusTrapZoneProps ? focusTrapZoneProps.className : undefined,
+      hasCloseButton,
+      headerClassName,
+      isAnimating,
+      isFooterSticky,
+      isFooterAtBottom,
+      isOnRightSide,
+      isOpen,
+      isHiddenOnDismiss,
+      type,
+    })
+  }
 }
 </script>

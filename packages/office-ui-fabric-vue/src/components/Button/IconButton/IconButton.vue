@@ -21,8 +21,7 @@ export default class IconButton extends BaseComponent {
 
   get internalStyles () {
     const { theme } = this
-    const styles = {}
-    return getStyles(theme, styles)
+    return getStyles(theme, this.styles)
   }
 }
 </script>
