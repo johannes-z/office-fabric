@@ -84,7 +84,8 @@ export default class Panel extends BaseComponent {
       isOnRightSide,
       isOpen,
       isHiddenOnDismiss,
-      type } = this
+      type,
+    } = this
 
     return getClassNames(styles!, {
       theme: theme!,
