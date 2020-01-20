@@ -12,6 +12,9 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "declarationMap": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [

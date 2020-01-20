@@ -8,8 +8,9 @@ const config: Config = {
 
   output: {
     dir: './dist',
-    format: 'esm',
+    format: ['esm', 'umd-min'],
     extractCSS: true,
+    moduleName: '@uifabric-vue/utilities',
   },
 
   env: {
