@@ -1340,6 +1340,12 @@ var _isRTL;
 
 
 function getRTL() {
+  var theme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  if (theme.rtl !== undefined) {
+    return theme.rtl;
+  }
+
   if (_isRTL === undefined) {
     // Fabric supports persisting the RTL setting between page refreshes via session storage
     var savedRTL = getItem(RTL_LOCAL_STORAGE_KEY);
@@ -1579,75 +1585,6 @@ function css() {
   return classes.join(' ');
 }
 
-var _DirectionalKeyCodes;
-var DirectionalKeyCodes = (_DirectionalKeyCodes = {}, _defineProperty(_DirectionalKeyCodes, KeyCodes.up, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.down, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.left, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.right, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.home, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.end, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.tab, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageUp, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageDown, 1), _DirectionalKeyCodes);
-/**
- * Returns true if the keycode is a directional keyboard key.
- */
-
-function isDirectionalKeyCode(which) {
-  return !!DirectionalKeyCodes[which];
-}
-/**
- * Adds a keycode to the list of keys that, when pressed, should cause the focus outlines to be visible.
- * This can be used to add global shortcut keys that directionally move from section to section within
- * an app or between focus trap zones.
- */
-
-function addDirectionalKeyCode(which) {
-  DirectionalKeyCodes[which] = 1;
-}
-
-var IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible';
-/**
- * Initializes the logic which:
- *
- * 1. Subscribes keydown and mousedown events. (It will only do it once per window,
- *    so it's safe to call this method multiple times.)
- * 2. When the user presses directional keyboard keys, adds the 'ms-Fabric--isFocusVisible' classname
- *    to the document body.
- * 3. When the user clicks a mouse button, we remove the classname if it exists.
- *
- * This logic allows components on the page to conditionally render focus treatments only
- * if the global classname exists, which simplifies logic overall.
- *
- * @param window - the window used to add the event listeners
- */
-
-function initializeFocusRects(window) {
-  var win = window || getWindow();
-
-  if (win && !win.__hasInitializeFocusRects__) {
-    win.__hasInitializeFocusRects__ = true;
-    win.addEventListener('mousedown', _onMouseDown, true);
-    win.addEventListener('keydown', _onKeyDown, true);
-  }
-}
-
-function _onMouseDown(ev) {
-  var win = getWindow(ev.target);
-
-  if (win) {
-    var classList = win.document.body.classList;
-
-    if (classList.contains(IsFocusVisibleClassName)) {
-      classList.remove(IsFocusVisibleClassName);
-    }
-  }
-}
-
-function _onKeyDown(ev) {
-  var win = getWindow(ev.target);
-
-  if (win) {
-    var classList = win.document.body.classList;
-
-    if (isDirectionalKeyCode(ev.which) && !classList.contains(IsFocusVisibleClassName)) {
-      classList.add(IsFocusVisibleClassName);
-    }
-  }
-}
-
 /**
  * Storing global state in local module variables has issues when more than one copy
  * if the module gets loaded on the page (due to a bundling error or simply by consuming
@@ -1755,6 +1692,177 @@ function _getCallbacks() {
   var globalSettings = _getGlobalSettings();
 
   return globalSettings[CALLBACK_STATE_PROP_NAME];
+}
+
+var CustomizationsGlobalKey = 'customizations';
+var NO_CUSTOMIZATIONS = {
+  settings: {},
+  scopedSettings: {},
+  inCustomizerContext: false
+};
+
+var _allSettings = GlobalSettings.getValue(CustomizationsGlobalKey, {
+  settings: {},
+  scopedSettings: {},
+  inCustomizerContext: false
+});
+
+var _events = [];
+var Customizations =
+/*#__PURE__*/
+function () {
+  function Customizations() {
+    _classCallCheck(this, Customizations);
+  }
+
+  _createClass(Customizations, null, [{
+    key: "reset",
+    value: function reset() {
+      _allSettings.settings = {};
+      _allSettings.scopedSettings = {};
+    } // tslint:disable-next-line:no-any
+
+  }, {
+    key: "applySettings",
+    value: function applySettings(settings) {
+      _allSettings.settings = Object.assign({}, _allSettings.settings, {}, settings);
+
+      Customizations._raiseChange();
+    } // tslint:disable-next-line:no-any
+
+  }, {
+    key: "applyScopedSettings",
+    value: function applyScopedSettings(scopeName, settings) {
+      _allSettings.scopedSettings[scopeName] = Object.assign({}, _allSettings.scopedSettings[scopeName], {}, settings);
+
+      Customizations._raiseChange();
+    }
+  }, {
+    key: "getSettings",
+    value: function getSettings(properties, scopeName) // tslint:disable-next-line:no-any
+    {
+      var localSettings = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : NO_CUSTOMIZATIONS;
+      // tslint:disable-next-line:no-any
+      var settings = {};
+      var localScopedSettings = scopeName && localSettings.scopedSettings[scopeName] || {};
+      var globalScopedSettings = scopeName && _allSettings.scopedSettings[scopeName] || {};
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = properties[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var property = _step.value;
+          settings[property] = localScopedSettings[property] || localSettings.settings[property] || globalScopedSettings[property] || _allSettings.settings[property];
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      return settings;
+    }
+  }, {
+    key: "observe",
+    value: function observe(onChange) {
+      _events.push(onChange);
+    }
+  }, {
+    key: "unobserve",
+    value: function unobserve(onChange) {
+      _events = _events.filter(function (cb) {
+        return cb !== onChange;
+      });
+    }
+  }, {
+    key: "_raiseChange",
+    value: function _raiseChange() {
+      _events.forEach(function (cb) {
+        return cb();
+      });
+    }
+  }]);
+
+  return Customizations;
+}();
+
+var _DirectionalKeyCodes;
+var DirectionalKeyCodes = (_DirectionalKeyCodes = {}, _defineProperty(_DirectionalKeyCodes, KeyCodes.up, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.down, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.left, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.right, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.home, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.end, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.tab, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageUp, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageDown, 1), _DirectionalKeyCodes);
+/**
+ * Returns true if the keycode is a directional keyboard key.
+ */
+
+function isDirectionalKeyCode(which) {
+  return !!DirectionalKeyCodes[which];
+}
+/**
+ * Adds a keycode to the list of keys that, when pressed, should cause the focus outlines to be visible.
+ * This can be used to add global shortcut keys that directionally move from section to section within
+ * an app or between focus trap zones.
+ */
+
+function addDirectionalKeyCode(which) {
+  DirectionalKeyCodes[which] = 1;
+}
+
+var IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible';
+/**
+ * Initializes the logic which:
+ *
+ * 1. Subscribes keydown and mousedown events. (It will only do it once per window,
+ *    so it's safe to call this method multiple times.)
+ * 2. When the user presses directional keyboard keys, adds the 'ms-Fabric--isFocusVisible' classname
+ *    to the document body.
+ * 3. When the user clicks a mouse button, we remove the classname if it exists.
+ *
+ * This logic allows components on the page to conditionally render focus treatments only
+ * if the global classname exists, which simplifies logic overall.
+ *
+ * @param window - the window used to add the event listeners
+ */
+
+function initializeFocusRects(window) {
+  var win = window || getWindow();
+
+  if (win && !win.__hasInitializeFocusRects__) {
+    win.__hasInitializeFocusRects__ = true;
+    win.addEventListener('mousedown', _onMouseDown, true);
+    win.addEventListener('keydown', _onKeyDown, true);
+  }
+}
+
+function _onMouseDown(ev) {
+  var win = getWindow(ev.target);
+
+  if (win) {
+    var classList = win.document.body.classList;
+
+    if (classList.contains(IsFocusVisibleClassName)) {
+      classList.remove(IsFocusVisibleClassName);
+    }
+  }
+}
+
+function _onKeyDown(ev) {
+  var win = getWindow(ev.target);
+
+  if (win) {
+    var classList = win.document.body.classList;
+
+    if (isDirectionalKeyCode(ev.which) && !classList.contains(IsFocusVisibleClassName)) {
+      classList.add(IsFocusVisibleClassName);
+    }
+  }
 }
 
 var stylesheet$1 = Stylesheet.getInstance();
@@ -1933,95 +2041,6 @@ function _merge(target, source) {
   return target;
 }
 
-/**
- * Fetches an item from local storage without throwing an exception
- * @param key The key of the item to fetch from local storage
- */
-
-function getItem$1(key) {
-  var result = null;
-
-  try {
-    var win = getWindow();
-    result = win ? win.localStorage.getItem(key) : null;
-  } catch (e) {
-    /* Eat the exception */
-  }
-
-  return result;
-}
-/**
- * Inserts an item into local storage without throwing an exception
- * @param key The key of the item to add to local storage
- * @param data The data to put into local storage
- */
-
-function setItem$1(key, data) {
-  try {
-    var win = getWindow();
-    win && win.localStorage.setItem(key, data);
-  } catch (e) {
-    /* Eat the exception */
-  }
-}
-
-var _language;
-/**
- * Gets the rtl state of the page (returns true if in rtl.)
- *
- * @public
- */
-
-
-function getLanguage() {
-  if (_language === undefined) {
-    var doc = getDocument();
-    var savedLanguage = getItem$1('language');
-
-    if (savedLanguage !== null) {
-      _language = savedLanguage;
-    }
-
-    if (_language === undefined && doc) {
-      _language = doc.documentElement.getAttribute('lang');
-    }
-
-    if (_language === undefined) {
-      _language = 'en';
-    }
-  }
-
-  return _language;
-}
-/**
- * Sets the rtl state of the page (by adjusting the dir attribute of the html element.)
- *
- * @public
- */
-
-function setLanguage(language) {
-  var avoidPersisting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var doc = getDocument();
-
-  if (doc) {
-    doc.documentElement.setAttribute('lang', language);
-  }
-
-  if (!avoidPersisting) {
-    setItem$1('language', language);
-  }
-
-  _language = language;
-}
-
-var isIE11 = function isIE11() {
-  if (typeof window === 'undefined' || !window.navigator || !window.navigator.userAgent) {
-    return false;
-  }
-
-  return window.navigator.userAgent.indexOf('rv:11.0') > -1;
-};
-
 var CURRENT_ID_PROPERTY = '__currentId__';
 var DEFAULT_ID_STRING = 'id__'; // tslint:disable-next-line:no-any
 
@@ -2166,6 +2185,352 @@ function values(obj) {
     return arr;
   }, []);
 }
+
+/**
+ * An array of events that are allowed on every html element type.
+ *
+ * @public
+ */
+
+var baseElementEvents = ['onCopy', 'onCut', 'onPaste', 'onCompositionEnd', 'onCompositionStart', 'onCompositionUpdate', 'onFocus', 'onFocusCapture', 'onBlur', 'onBlurCapture', 'onChange', 'onInput', 'onSubmit', 'onLoad', 'onError', 'onKeyDown', 'onKeyDownCapture', 'onKeyPress', 'onKeyUp', 'onAbort', 'onCanPlay', 'onCanPlayThrough', 'onDurationChange', 'onEmptied', 'onEncrypted', 'onEnded', 'onLoadedData', 'onLoadedMetadata', 'onLoadStart', 'onPause', 'onPlay', 'onPlaying', 'onProgress', 'onRateChange', 'onSeeked', 'onSeeking', 'onStalled', 'onSuspend', 'onTimeUpdate', 'onVolumeChange', 'onWaiting', 'onClick', 'onClickCapture', 'onContextMenu', 'onDoubleClick', 'onDrag', 'onDragEnd', 'onDragEnter', 'onDragExit', 'onDragLeave', 'onDragOver', 'onDragStart', 'onDrop', 'onMouseDown', 'onMouseDownCapture', 'onMouseEnter', 'onMouseLeave', 'onMouseMove', 'onMouseOut', 'onMouseOver', 'onMouseUp', 'onMouseUpCapture', 'onSelect', 'onTouchCancel', 'onTouchEnd', 'onTouchMove', 'onTouchStart', 'onScroll', 'onWheel', 'onPointerCancel', 'onPointerDown', 'onPointerEnter', 'onPointerLeave', 'onPointerMove', 'onPointerOut', 'onPointerOver', 'onPointerUp', 'onGotPointerCapture', 'onLostPointerCapture'];
+/**
+ * An array of element attributes which are allowed on every html element type.
+ *
+ * @public
+ */
+
+var baseElementProperties = ['accessKey', 'children', 'className', 'contentEditable', 'dir', 'draggable', 'hidden', 'htmlFor', 'id', 'lang', 'role', 'style', 'tabIndex', 'title', 'translate', 'spellCheck', 'name'];
+/**
+ * An array of HTML element properties and events.
+ *
+ * @public
+ */
+
+var htmlElementProperties = baseElementProperties.concat(baseElementEvents);
+/**
+ * An array of LABEL tag properties and events.
+ *
+ * @public
+ */
+
+var labelProperties = htmlElementProperties.concat(['form']);
+/**
+ * An array of AUDIO tag properties and events.
+ *
+ * @public
+ */
+
+var audioProperties = htmlElementProperties.concat(['height', 'loop', 'muted', 'preload', 'src', 'width']);
+/**
+ * An array of VIDEO tag properties and events.
+ *
+ * @public
+ */
+
+var videoProperties = audioProperties.concat(['poster']);
+/**
+ * An array of OL tag properties and events.
+ *
+ * @public
+ */
+
+var olProperties = htmlElementProperties.concat(['start']);
+/**
+ * An array of LI tag properties and events.
+ *
+ * @public
+ */
+
+var liProperties = htmlElementProperties.concat(['value']);
+/**
+ * An array of A tag properties and events.
+ *
+ * @public
+ */
+
+var anchorProperties = htmlElementProperties.concat(['download', 'href', 'hrefLang', 'media', 'rel', 'target', 'type']);
+/**
+ * An array of BUTTON tag properties and events.
+ *
+ * @public
+ */
+
+var buttonProperties = htmlElementProperties.concat(['autoFocus', 'disabled', 'form', 'formAction', 'formEncType', 'formMethod', 'formNoValidate', 'formTarget', 'type', 'value']);
+/**
+ * An array of INPUT tag properties and events.
+ *
+ * @public
+ */
+
+var inputProperties = buttonProperties.concat(['accept', 'alt', 'autoComplete', 'checked', 'dirname', 'form', 'height', 'inputMode', 'list', 'max', 'maxLength', 'min', 'multiple', 'pattern', 'placeholder', 'readOnly', 'required', 'src', 'step', 'size', 'type', 'value', 'width']);
+/**
+ * An array of TEXTAREA tag properties and events.
+ *
+ * @public
+ */
+
+var textAreaProperties = buttonProperties.concat(['cols', 'dirname', 'form', 'maxLength', 'placeholder', 'readOnly', 'required', 'rows', 'wrap']);
+/**
+ * An array of SELECT tag properties and events.
+ *
+ * @public
+ */
+
+var selectProperties = buttonProperties.concat(['form', 'multiple', 'required']);
+var optionProperties = htmlElementProperties.concat(['selected', 'value']);
+/**
+ * An array of TABLE tag properties and events.
+ *
+ * @public
+ */
+
+var tableProperties = htmlElementProperties.concat(['cellPadding', 'cellSpacing']);
+/**
+ * An array of TR tag properties and events.
+ *
+ * @public
+ */
+
+var trProperties = htmlElementProperties;
+/**
+ * An array of TH tag properties and events.
+ *
+ * @public
+ */
+
+var thProperties = htmlElementProperties.concat(['rowSpan', 'scope']);
+/**
+ * An array of TD tag properties and events.
+ *
+ * @public
+ */
+
+var tdProperties = htmlElementProperties.concat(['colSpan', 'headers', 'rowSpan', 'scope']);
+var colGroupProperties = htmlElementProperties.concat(['span']);
+var colProperties = htmlElementProperties.concat(['span']);
+/**
+ * An array of FORM tag properties and events.
+ *
+ * @public
+ */
+
+var formProperties = htmlElementProperties.concat(['acceptCharset', 'action', 'encType', 'encType', 'method', 'noValidate', 'target']);
+/**
+ * An array of IFRAME tag properties and events.
+ *
+ * @public
+ */
+
+var iframeProperties = htmlElementProperties.concat(['allow', 'allowFullScreen', 'allowPaymentRequest', 'allowTransparency', 'csp', 'height', 'importance', 'referrerPolicy', 'sandbox', 'src', 'srcDoc', 'width']);
+/**
+ * An array of IMAGE tag properties and events.
+ *
+ * @public
+ */
+
+var imgProperties = htmlElementProperties.concat(['alt', 'crossOrigin', 'height', 'src', 'srcSet', 'useMap', 'width']);
+/**
+ * @deprecated Use imgProperties for img elements.
+ */
+
+var imageProperties = imgProperties;
+/**
+ * An array of DIV tag properties and events.
+ *
+ * @public
+ */
+
+var divProperties = htmlElementProperties;
+/**
+ * Gets native supported props for an html element provided the allowance set. Use one of the property
+ * sets defined (divProperties, buttonPropertes, etc) to filter out supported properties from a given
+ * props set. Note that all data- and aria- prefixed attributes will be allowed.
+ * NOTE: getNativeProps should always be applied first when adding props to a react component. The
+ * non-native props should be applied second. This will prevent getNativeProps from overriding your custom props.
+ * For example, if props passed to getNativeProps has an onClick function and getNativeProps is added to
+ * the component after an onClick function is added, then the getNativeProps onClick will override it.
+ *
+ * @public
+ * @param props - The unfiltered input props
+ * @param allowedPropsNames-  The array of allowed propnames.
+ * @returns The filtered props
+ */
+
+function getNativeProps(props, allowedPropNames, excludedPropNames) {
+  // It'd be great to properly type this while allowing 'aria-` and 'data-' attributes like TypeScript does for JSX attributes,
+  // but that ability is hardcoded into the TS compiler with no analog in TypeScript typings.
+  // Then we'd be able to enforce props extends native props (including aria- and data- attributes), and then return native props.
+  // We should be able to do this once this PR is merged: https://github.com/microsoft/TypeScript/pull/26797
+  return filteredAssign(function (propName) {
+    return (!excludedPropNames || excludedPropNames.indexOf(propName) < 0) && (propName.indexOf('data-') === 0 || propName.indexOf('aria-') === 0 || allowedPropNames.indexOf(propName) >= 0);
+  }, {}, props);
+}
+
+/**
+ * Regular expression matching characters to ignore when calculating the initials.
+ * The first part matches characters within parenthesis, including the parenthesis.
+ * The second part matches special ASCII characters except space, plus some unicode special characters.
+ */
+// eslint-disable-next-line
+var UNWANTED_CHARS_REGEX = /\([^)]*\)|[\0-\u001F\!-/:-@\[-`\{-\u00BF\u0250-\u036F\uD800-\uFFFF]/g;
+/**
+   * Regular expression matching phone numbers. Applied after chars matching UNWANTED_CHARS_REGEX have been removed
+   * and number has been trimmed for whitespaces
+   */
+
+var PHONENUMBER_REGEX = /^\d+[\d\s]*(:?ext|x|)\s*\d+$/i;
+/** Regular expression matching one or more spaces. */
+
+var MULTIPLE_WHITESPACES_REGEX = /\s+/g;
+/**
+   * Regular expression matching languages for which we currently don't support initials.
+   * Arabic:   Arabic, Arabic Supplement, Arabic Extended-A.
+   * Korean:   Hangul Jamo, Hangul Compatibility Jamo, Hangul Jamo Extended-A, Hangul Syllables, Hangul Jamo Extended-B.
+   * Japanese: Hiragana, Katakana.
+   * CJK:      CJK Unified Ideographs Extension A, CJK Unified Ideographs, CJK Compatibility Ideographs, CJK Unified Ideographs Extension B
+   */
+
+/* tslint:disable:max-line-length */
+
+var UNSUPPORTED_TEXT_REGEX = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uAC00-\uD7AF\uD7B0-\uD7FF\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]|[\uD840-\uD869][\uDC00-\uDED6]/;
+/* tslint:enable:max-line-length */
+
+function getInitialsLatin(displayName, isRtl) {
+  var initials = '';
+  var splits = displayName.split(' ');
+
+  if (splits.length === 2) {
+    initials += splits[0].charAt(0).toUpperCase();
+    initials += splits[1].charAt(0).toUpperCase();
+  } else if (splits.length === 3) {
+    initials += splits[0].charAt(0).toUpperCase();
+    initials += splits[2].charAt(0).toUpperCase();
+  } else if (splits.length !== 0) {
+    initials += splits[0].charAt(0).toUpperCase();
+  }
+
+  if (isRtl && initials.length > 1) {
+    return initials.charAt(1) + initials.charAt(0);
+  }
+
+  return initials;
+}
+
+function cleanupDisplayName(displayName) {
+  displayName = displayName.replace(UNWANTED_CHARS_REGEX, '');
+  displayName = displayName.replace(MULTIPLE_WHITESPACES_REGEX, ' ');
+  displayName = displayName.trim();
+  return displayName;
+}
+/**
+   * Get (up to 2 characters) initials based on display name of the persona.
+   *
+   * @public
+   */
+
+
+function getInitials(displayName, isRtl, allowPhoneInitials) {
+  if (!displayName) {
+    return '';
+  }
+
+  displayName = cleanupDisplayName(displayName); // For names containing CJK characters, and phone numbers, we don't display initials
+
+  if (UNSUPPORTED_TEXT_REGEX.test(displayName) || !allowPhoneInitials && PHONENUMBER_REGEX.test(displayName)) {
+    return '';
+  }
+
+  return getInitialsLatin(displayName, isRtl);
+}
+
+/**
+ * Fetches an item from local storage without throwing an exception
+ * @param key The key of the item to fetch from local storage
+ */
+
+function getItem$1(key) {
+  var result = null;
+
+  try {
+    var win = getWindow();
+    result = win ? win.localStorage.getItem(key) : null;
+  } catch (e) {
+    /* Eat the exception */
+  }
+
+  return result;
+}
+/**
+ * Inserts an item into local storage without throwing an exception
+ * @param key The key of the item to add to local storage
+ * @param data The data to put into local storage
+ */
+
+function setItem$1(key, data) {
+  try {
+    var win = getWindow();
+    win && win.localStorage.setItem(key, data);
+  } catch (e) {
+    /* Eat the exception */
+  }
+}
+
+var _language;
+/**
+ * Gets the rtl state of the page (returns true if in rtl.)
+ *
+ * @public
+ */
+
+
+function getLanguage() {
+  if (_language === undefined) {
+    var doc = getDocument();
+    var savedLanguage = getItem$1('language');
+
+    if (savedLanguage !== null) {
+      _language = savedLanguage;
+    }
+
+    if (_language === undefined && doc) {
+      _language = doc.documentElement.getAttribute('lang');
+    }
+
+    if (_language === undefined) {
+      _language = 'en';
+    }
+  }
+
+  return _language;
+}
+/**
+ * Sets the rtl state of the page (by adjusting the dir attribute of the html element.)
+ *
+ * @public
+ */
+
+function setLanguage(language) {
+  var avoidPersisting = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var doc = getDocument();
+
+  if (doc) {
+    doc.documentElement.setAttribute('lang', language);
+  }
+
+  if (!avoidPersisting) {
+    setItem$1('language', language);
+  }
+
+  _language = language;
+}
+
+var isIE11 = function isIE11() {
+  if (typeof window === 'undefined' || !window.navigator || !window.navigator.userAgent) {
+    return false;
+  }
+
+  return window.navigator.userAgent.indexOf('rv:11.0') > -1;
+};
 
 /** An instance of EventGroup allows anything with a handle to it to trigger events on it.
  *  If the target is an HTMLElement, the event will be attached to the element and can be
@@ -2857,4 +3222,4 @@ var Position;
   Position[Position["end"] = 3] = "end";
 })(Position || (Position = {}));
 
-export { Async, DATA_IS_SCROLLABLE_ATTRIBUTE, EventGroup, GlobalSettings, IsFocusVisibleClassName, KeyCodes, Position, Rectangle, RectangleEdge, _isSSR, addDirectionalKeyCode, allowScrollOnElement, assign, classNamesFunction, css, disableBodyScroll, doesElementContainFocus, enableBodyScroll, filteredAssign, findScrollableParent, focusAsync, focusFirstChild, getDocument, getElementIndexPath, getFirstFocusable, getFirstTabbable, getFocusableByIndexPath, getId, getLanguage, getLastFocusable, getLastTabbable, getNextElement, getPreviousElement, getRTL, getRTLSafeKeyCode, getScrollbarWidth, getWindow, initializeFocusRects, isDirectionalKeyCode, isElementFocusSubZone, isElementFocusZone, isElementTabbable, isElementVisible, isIE11, mapEnumByName, memoize, memoizeFunction, merge, on, resetControlledWarnings, resetIds, resetMemoizations, setLanguage, setMemoizeWeakMap, setRTL, setSSR, setWarningCallback, shallowCompare, shouldWrapFocus, values, warn, warnConditionallyRequiredProps, warnControlledUsage, warnDeprecations, warnMutuallyExclusive };
+export { Async, Customizations, DATA_IS_SCROLLABLE_ATTRIBUTE, EventGroup, GlobalSettings, IsFocusVisibleClassName, KeyCodes, Position, Rectangle, RectangleEdge, _isSSR, addDirectionalKeyCode, allowScrollOnElement, anchorProperties, assign, audioProperties, baseElementEvents, baseElementProperties, buttonProperties, classNamesFunction, colGroupProperties, colProperties, css, disableBodyScroll, divProperties, doesElementContainFocus, enableBodyScroll, filteredAssign, findScrollableParent, focusAsync, focusFirstChild, formProperties, getDocument, getElementIndexPath, getFirstFocusable, getFirstTabbable, getFocusableByIndexPath, getId, getInitials, getLanguage, getLastFocusable, getLastTabbable, getNativeProps, getNextElement, getPreviousElement, getRTL, getRTLSafeKeyCode, getScrollbarWidth, getWindow, htmlElementProperties, iframeProperties, imageProperties, imgProperties, initializeFocusRects, inputProperties, isDirectionalKeyCode, isElementFocusSubZone, isElementFocusZone, isElementTabbable, isElementVisible, isIE11, labelProperties, liProperties, mapEnumByName, memoize, memoizeFunction, merge, olProperties, on, optionProperties, resetControlledWarnings, resetIds, resetMemoizations, selectProperties, setLanguage, setMemoizeWeakMap, setRTL, setSSR, setWarningCallback, shallowCompare, shouldWrapFocus, tableProperties, tdProperties, textAreaProperties, thProperties, trProperties, values, videoProperties, warn, warnConditionallyRequiredProps, warnControlledUsage, warnDeprecations, warnMutuallyExclusive };
