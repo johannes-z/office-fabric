@@ -23,7 +23,7 @@ export default class StackItem extends StatelessComponent {
   render (h: CreateElement, context: RenderContext<any>) {
     const { grow, shrink, disableShrink, align, verticalFill, order, className } = context.props
 
-    const classNames = getClassNames(() => styles({
+    const classNames: any = getClassNames(() => styles({
       grow,
       shrink,
       disableShrink,

@@ -10,7 +10,7 @@ const config: Config = {
     dir: './dist',
     fileName: `office-ui-fabric-vue.[format][min].js`,
     moduleName: 'OfficeUIFabric',
-    format: ['esm', 'umd-min'],
+    format: ['esm'],
     extractCSS: true,
   },
 
@@ -25,13 +25,13 @@ const config: Config = {
 
   plugins: {
     babel: {
-      exclude: /node_modules/,
-      runtimeHelpers: true,
+      exclude: /node_modules|core-js/,
     },
     alias: {
       resolve: ['.jsx', '.js', '.vue', '.ts'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(projectRoot, 'src/$1') },
+        { find: '@uifabric/utilities', replacement: './node_modules/@uifabric-vue/utilities' },
       ],
     },
     typescript2: {

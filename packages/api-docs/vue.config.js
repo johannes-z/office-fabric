@@ -3,8 +3,9 @@ module.exports = {
     resolve: {
       symlinks: false,
       alias: {
-        '@uifabric/styling': '@uifabric/styling',
+        '@uifabric/utilities': '@uifabric-vue/utilities',
       },
     },
   },
+
 }

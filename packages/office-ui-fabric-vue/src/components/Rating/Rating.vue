@@ -37,7 +37,7 @@ const getClassNames = classNamesFunction()
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class Rating extends BaseComponent<IRatingProps, IRatingStyles> {
+export default class Rating extends BaseComponent {
   @Prop({ type: Number, default: 16 }) size!: number
   @Prop({ type: Number, default: 0 }) min!: number
   @Prop({ type: Number, default: 10 }) max!: number

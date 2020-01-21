@@ -20,7 +20,7 @@ export default class Separator extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 
   render (h: CreateElement, context: any): VNode {
-    const classNames = getClassNames(context.props.styles, {
+    const classNames: any = getClassNames(context.props.styles, {
       theme: context.props.theme,
       className: context.data.attrs ? context.data.attrs.class : '',
       alignContent: context.props.alignContent,

@@ -1,0 +1,1 @@
+{"version":3,"file":"SearchBox.types.d.ts","sourceRoot":"","sources":["../../../src/components/SearchBox/SearchBox.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,MAAM,EAAE,MAAM,wBAAwB,CAAA;AAE/C,MAAM,WAAW,eAAe;CAE/B;AAED,MAAM,WAAW,gBAAgB;IAC/B,IAAI,EAAE,MAAM,CAAC;IACb,aAAa,EAAE,MAAM,CAAC;IACtB,IAAI,EAAE,MAAM,CAAC;IACb,KAAK,EAAE,MAAM,CAAC;IACd,WAAW,EAAE,MAAM,CAAC;CACrB"}
