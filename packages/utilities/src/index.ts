@@ -7,6 +7,7 @@ export * from './classNamesFunction'
 export * from './css'
 
 export * from './customizations/Customizations'
+export * from './customizations/mergeSettings'
 
 export * from './initializeFocusRects'
 export * from './keyboard'

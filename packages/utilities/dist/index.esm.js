@@ -1796,6 +1796,51 @@ function () {
   return Customizations;
 }();
 
+/**
+ * Merge new and old settings, giving priority to new settings.
+ * New settings is optional in which case oldSettings is returned as-is.
+ * @param oldSettings - Old settings to fall back to.
+ * @param newSettings - New settings that will be merged over oldSettings.
+ * @returns Merged settings.
+ */
+function mergeSettings() {
+  var oldSettings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var newSettings = arguments.length > 1 ? arguments[1] : undefined;
+  var mergeSettingsWith = _isSettingsFunction(newSettings) ? newSettings : _settingsMergeWith(newSettings);
+  return mergeSettingsWith(oldSettings);
+}
+function mergeScopedSettings() {
+  var oldSettings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var newSettings = arguments.length > 1 ? arguments[1] : undefined;
+  var mergeSettingsWith = _isSettingsFunction(newSettings) ? newSettings : _scopedSettingsMergeWith(newSettings);
+  return mergeSettingsWith(oldSettings);
+}
+
+function _isSettingsFunction(settings) {
+  return typeof settings === 'function';
+}
+
+function _settingsMergeWith(newSettings) {
+  return function (settings) {
+    return newSettings ? Object.assign({}, settings, {}, newSettings) : settings;
+  };
+}
+
+function _scopedSettingsMergeWith() {
+  var scopedSettingsFromProps = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  return function (oldScopedSettings) {
+    var newScopedSettings = Object.assign({}, oldScopedSettings);
+
+    for (var scopeName in scopedSettingsFromProps) {
+      if (scopedSettingsFromProps.hasOwnProperty(scopeName)) {
+        newScopedSettings[scopeName] = Object.assign({}, oldScopedSettings[scopeName], {}, scopedSettingsFromProps[scopeName]);
+      }
+    }
+
+    return newScopedSettings;
+  };
+}
+
 var _DirectionalKeyCodes;
 var DirectionalKeyCodes = (_DirectionalKeyCodes = {}, _defineProperty(_DirectionalKeyCodes, KeyCodes.up, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.down, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.left, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.right, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.home, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.end, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.tab, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageUp, 1), _defineProperty(_DirectionalKeyCodes, KeyCodes.pageDown, 1), _DirectionalKeyCodes);
 /**
@@ -3222,4 +3267,4 @@ var Position;
   Position[Position["end"] = 3] = "end";
 })(Position || (Position = {}));
 
-export { Async, Customizations, DATA_IS_SCROLLABLE_ATTRIBUTE, EventGroup, GlobalSettings, IsFocusVisibleClassName, KeyCodes, Position, Rectangle, RectangleEdge, _isSSR, addDirectionalKeyCode, allowScrollOnElement, anchorProperties, assign, audioProperties, baseElementEvents, baseElementProperties, buttonProperties, classNamesFunction, colGroupProperties, colProperties, css, disableBodyScroll, divProperties, doesElementContainFocus, enableBodyScroll, filteredAssign, findScrollableParent, focusAsync, focusFirstChild, formProperties, getDocument, getElementIndexPath, getFirstFocusable, getFirstTabbable, getFocusableByIndexPath, getId, getInitials, getLanguage, getLastFocusable, getLastTabbable, getNativeProps, getNextElement, getPreviousElement, getRTL, getRTLSafeKeyCode, getScrollbarWidth, getWindow, htmlElementProperties, iframeProperties, imageProperties, imgProperties, initializeFocusRects, inputProperties, isDirectionalKeyCode, isElementFocusSubZone, isElementFocusZone, isElementTabbable, isElementVisible, isIE11, labelProperties, liProperties, mapEnumByName, memoize, memoizeFunction, merge, olProperties, on, optionProperties, resetControlledWarnings, resetIds, resetMemoizations, selectProperties, setLanguage, setMemoizeWeakMap, setRTL, setSSR, setWarningCallback, shallowCompare, shouldWrapFocus, tableProperties, tdProperties, textAreaProperties, thProperties, trProperties, values, videoProperties, warn, warnConditionallyRequiredProps, warnControlledUsage, warnDeprecations, warnMutuallyExclusive };
+export { Async, Customizations, DATA_IS_SCROLLABLE_ATTRIBUTE, EventGroup, GlobalSettings, IsFocusVisibleClassName, KeyCodes, Position, Rectangle, RectangleEdge, _isSSR, addDirectionalKeyCode, allowScrollOnElement, anchorProperties, assign, audioProperties, baseElementEvents, baseElementProperties, buttonProperties, classNamesFunction, colGroupProperties, colProperties, css, disableBodyScroll, divProperties, doesElementContainFocus, enableBodyScroll, filteredAssign, findScrollableParent, focusAsync, focusFirstChild, formProperties, getDocument, getElementIndexPath, getFirstFocusable, getFirstTabbable, getFocusableByIndexPath, getId, getInitials, getLanguage, getLastFocusable, getLastTabbable, getNativeProps, getNextElement, getPreviousElement, getRTL, getRTLSafeKeyCode, getScrollbarWidth, getWindow, htmlElementProperties, iframeProperties, imageProperties, imgProperties, initializeFocusRects, inputProperties, isDirectionalKeyCode, isElementFocusSubZone, isElementFocusZone, isElementTabbable, isElementVisible, isIE11, labelProperties, liProperties, mapEnumByName, memoize, memoizeFunction, merge, mergeScopedSettings, mergeSettings, olProperties, on, optionProperties, resetControlledWarnings, resetIds, resetMemoizations, selectProperties, setLanguage, setMemoizeWeakMap, setRTL, setSSR, setWarningCallback, shallowCompare, shouldWrapFocus, tableProperties, tdProperties, textAreaProperties, thProperties, trProperties, values, videoProperties, warn, warnConditionallyRequiredProps, warnControlledUsage, warnDeprecations, warnMutuallyExclusive };
