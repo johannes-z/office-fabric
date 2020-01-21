@@ -1,167 +1,78 @@
+import 'core-js/modules/es.symbol';
+import 'core-js/modules/es.array.filter';
+import 'core-js/modules/es.array.for-each';
+import 'core-js/modules/es.array.index-of';
+import 'core-js/modules/es.object.get-own-property-descriptor';
+import 'core-js/modules/es.object.get-own-property-descriptors';
+import 'core-js/modules/es.object.keys';
+import 'core-js/modules/es.object.to-string';
+import 'core-js/modules/es.regexp.to-string';
+import 'core-js/modules/web.dom-collections.for-each';
+import _defineProperty from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/defineProperty';
+import { concatStyleSetsWithProps, keyframes, concatStyleSets, mergeStyleSets, mergeStyles } from '@uifabric/merge-styles';
+import Vue from 'vue';
+import _classCallCheck from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/classCallCheck';
+import _createClass from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/createClass';
+import _possibleConstructorReturn from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/possibleConstructorReturn';
+import _getPrototypeOf from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/getPrototypeOf';
+import _inherits from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/inherits';
 import { __decorate, __metadata } from 'tslib';
 import { Prop, Component, Vue as Vue$1, Model, Watch } from 'vue-property-decorator';
-import Vue from 'vue';
-import { css, memoizeFunction, IsFocusVisibleClassName, classNamesFunction, getWindow, getScrollbarWidth, Rectangle as Rectangle$1, getRTL, assign, isIE11, RectangleEdge as RectangleEdge$1, Async, getDocument, on, doesElementContainFocus, KeyCodes } from '@uifabric-vue/utilities';
-import { getTheme, PulsingBeaconAnimationStyles, HighContrastSelector, getGlobalClassNames, getFocusStyle, hiddenContentStyle, FontWeights, getScreenSelector, ScreenWidthMaxSmall, ScreenWidthMinMedium, ScreenWidthMaxMedium, ZIndexes, AnimationVariables, AnimationClassNames, focusClear, getPlaceholderStyles, HighContrastSelectorWhite, normalize, IconFontSizes, HighContrastSelectorBlack, noWrap, createTheme, loadTheme as loadTheme$1 } from '@uifabric/styling';
-import { keyframes, concatStyleSets, mergeStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles';
+import { css, classNamesFunction, memoizeFunction, IsFocusVisibleClassName, getWindow, getScrollbarWidth, Rectangle as Rectangle$1, getRTL, assign, isIE11, RectangleEdge as RectangleEdge$1, Async, getDocument, on, doesElementContainFocus, KeyCodes, getInitials } from '@uifabric-vue/utilities';
+import { getTheme, getGlobalClassNames, HighContrastSelector, PulsingBeaconAnimationStyles, getIcon, getFocusStyle, hiddenContentStyle, FontWeights, getScreenSelector, ScreenWidthMaxSmall, ScreenWidthMinMedium, ScreenWidthMaxMedium, ZIndexes, AnimationClassNames, focusClear, getPlaceholderStyles, HighContrastSelectorWhite, normalize, IconFontSizes, ScreenWidthMinLarge, ScreenWidthMinXLarge, ScreenWidthMinUhfMobile, ScreenWidthMinXXLarge, AnimationVariables, HighContrastSelectorBlack, noWrap, createTheme, loadTheme as loadTheme$1 } from '@uifabric/styling';
 import __vue_normalize__ from 'vue-runtime-helpers/dist/normalize-component.mjs';
+import 'core-js/modules/es.string.small';
+import 'core-js/modules/es.symbol.description';
+import 'core-js/modules/es.string.link';
 import { MountingPortal } from 'portal-vue';
+import 'core-js/modules/es.array.splice';
+import 'core-js/modules/es.array.map';
+import 'core-js/modules/es.function.name';
+import 'core-js/modules/es.array.concat';
+import 'core-js/modules/es.number.constructor';
+import _objectWithoutProperties from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/objectWithoutProperties';
+import 'core-js/modules/es.number.to-fixed';
+import 'regenerator-runtime/runtime';
+import _asyncToGenerator from '../../../node_modules/@vue/babel-preset-app/node_modules/@babel/runtime/helpers/esm/asyncToGenerator';
+import 'core-js/modules/es.regexp.exec';
+import 'core-js/modules/es.string.replace';
+import 'core-js/modules/es.symbol.iterator';
+import 'core-js/modules/es.array.slice';
+import 'core-js/modules/es.string.iterator';
+import 'core-js/modules/web.dom-collections.iterator';
 import _mergeJSXProps from '@vue/babel-helper-vue-jsx-merge-props';
+import 'core-js/modules/es.array.join';
+import 'core-js/modules/es.array.find-index';
+import 'core-js/modules/es.array.fill';
+import 'core-js/modules/es.parse-float';
 import { HighContrastSelector as HighContrastSelector$1, getFocusStyle as getFocusStyle$1, FontWeights as FontWeights$1 } from '@uifabric/styling/';
-import __vue_create_injector__ from 'vue-runtime-helpers/dist/inject-style/browser.mjs';
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
-  try {
-    var info = gen[key](arg);
-    var value = info.value;
-  } catch (error) {
-    reject(error);
-    return;
-  }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-  if (info.done) {
-    resolve(value);
-  } else {
-    Promise.resolve(value).then(_next, _throw);
-  }
-}
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function styled(Component, baseStyles, getProps, customizable, pure) {
+  var _styles;
 
-function _asyncToGenerator(fn) {
-  return function () {
-    var self = this,
-        args = arguments;
-    return new Promise(function (resolve, reject) {
-      var gen = fn.apply(self, args);
+  return Vue.extend({
+    functional: true,
+    render: function render(h, context) {
+      if (!_styles || context.props.styles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
+        _styles = function _styles(styleProps) {
+          return concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles);
+        };
 
-      function _next(value) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        _styles.__cachedInputs__ = [baseStyles, context.props.styles];
       }
 
-      function _throw(err) {
-        asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
-      }
-
-      _next(undefined);
-    });
-  };
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
+      var additionalProps = getProps ? getProps(this) : undefined;
+      return h(Component, _objectSpread({}, context.data, {
+        props: _objectSpread({}, additionalProps, {}, context.props, {
+          className: context.props.className || context.data.class,
+          styles: _styles
+        })
+      }), context.children);
     }
   });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-
-  return _setPrototypeOf(o, p);
-}
-
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return self;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
-    return call;
-  }
-
-  return _assertThisInitialized(self);
 }
 
 var BaseComponent =
@@ -175,17 +86,17 @@ function (_Vue) {
     _classCallCheck(this, BaseComponent);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(BaseComponent).apply(this, arguments));
+    _this.componentRef = null;
     _this.css = css;
     return _this;
-  } // created () {
-  // for (const key in this.$props) {
-  //   this.$set(this.props as any, key, this.$props[key])
-  // }
-  // console.log(this.props)
-  // }
-
+  }
 
   _createClass(BaseComponent, [{
+    key: "mounted",
+    value: function mounted() {
+      this.componentRef = this.$el;
+    }
+  }, {
     key: "classNames",
     get: function get() {
       return {};
@@ -214,6 +125,117 @@ __decorate([Prop({
 BaseComponent = __decorate([Component], BaseComponent);
 var BaseComponent$1 = BaseComponent;
 
+var getClassNames = classNamesFunction();
+
+var Overlay =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Overlay, _BaseComponent);
+
+  function Overlay() {
+    _classCallCheck(this, Overlay);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Overlay).apply(this, arguments));
+  }
+
+  _createClass(Overlay, [{
+    key: "classNames",
+    get: function get() {
+      var theme = this.theme,
+          className = this.className,
+          dark = this.dark;
+      return getClassNames(this.styles, {
+        theme: theme,
+        className: className,
+        isDark: dark
+      });
+    }
+  }]);
+
+  return Overlay;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Overlay.prototype, "dark", void 0);
+
+Overlay = __decorate([Component], Overlay);
+var script = Overlay;
+
+/* script */
+var __vue_script__ = script;
+/* template */
+
+var __vue_render__ = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    class: _vm.classNames.root
+  }, [_vm._t("default")], 2);
+};
+
+var __vue_staticRenderFns__ = [];
+/* style */
+
+var __vue_inject_styles__ = undefined;
+/* scoped */
+
+var __vue_scope_id__ = undefined;
+/* module identifier */
+
+var __vue_module_identifier__ = undefined;
+/* functional template */
+
+var __vue_is_functional_template__ = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__ = __vue_normalize__({
+  render: __vue_render__,
+  staticRenderFns: __vue_staticRenderFns__
+}, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
+
+var GlobalClassNames = {
+  root: 'ms-Overlay',
+  rootDark: 'ms-Overlay--dark'
+};
+var getStyles = function getStyles(props) {
+  var className = props.className,
+      theme = props.theme,
+      isNone = props.isNone,
+      isDark = props.isDark;
+  var palette = theme.palette;
+  var classNames = getGlobalClassNames(GlobalClassNames, theme);
+  return {
+    root: [classNames.root, theme.fonts.medium, {
+      backgroundColor: palette.whiteTranslucent40,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      selectors: _defineProperty({}, HighContrastSelector, {
+        border: '1px solid WindowText',
+        opacity: 0
+      })
+    }, isNone && {
+      visibility: 'hidden'
+    }, isDark && [classNames.rootDark, {
+      backgroundColor: palette.blackTranslucent40
+    }], className]
+  };
+};
+
+var Overlay$1 = styled(__vue_component__, getStyles, undefined);
+
 var DEFAULT_PERSONA_SIZE = '32px';
 var COMPACT_PERSONA_SIZE = '16px';
 var DEFAULT_ICON_SIZE = '16px';
@@ -221,7 +243,7 @@ var COMPACT_ICON_SIZE = '13px';
 var ANIMATION_INNER_DIMENSION = '4px';
 var ANIMATION_OUTER_DIMENSION = '28px';
 var ANIMATION_BORDER_WIDTH = '4px';
-var getStyles = memoizeFunction(function () {
+var getStyles$1 = memoizeFunction(function () {
   var theme = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : getTheme();
   var customStyles = arguments.length > 1 ? arguments[1] : undefined;
   var animateBeaconSignal = arguments.length > 2 ? arguments[2] : undefined;
@@ -373,9 +395,7 @@ var getStyles = memoizeFunction(function () {
   return concatStyleSets(ActivityItemStyles, customStyles);
 });
 
-function getClassNames(getStyles, props) {
-  return mergeStyleSets(getStyles(props));
-}
+var getClassNames$1 = classNamesFunction();
 
 var ActivityItem =
 /*#__PURE__*/
@@ -397,8 +417,8 @@ function (_BaseComponent) {
           beaconColorOne = this.beaconColorOne,
           beaconColorTwo = this.beaconColorTwo,
           isCompact = this.isCompact;
-      return getClassNames(function () {
-        return getStyles(undefined, undefined, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact);
+      return getClassNames$1(function () {
+        return getStyles$1(undefined, undefined, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact);
       }, {});
     }
   }]);
@@ -407,7 +427,7 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
-  type: String,
+  type: Array,
   default: function _default() {
     return [];
   }
@@ -434,13 +454,13 @@ __decorate([Prop({
 }), __metadata("design:type", Boolean)], ActivityItem.prototype, "isCompact", void 0);
 
 ActivityItem = __decorate([Component], ActivityItem);
-var script = ActivityItem;
+var script$1 = ActivityItem;
 
 /* script */
-var __vue_script__ = script;
+var __vue_script__$1 = script$1;
 /* template */
 
-var __vue_render__ = function __vue_render__() {
+var __vue_render__$1 = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -462,29 +482,29 @@ var __vue_render__ = function __vue_render__() {
   }, [_vm._t("timeStamp")], 2)])]);
 };
 
-var __vue_staticRenderFns__ = [];
+var __vue_staticRenderFns__$1 = [];
 /* style */
 
-var __vue_inject_styles__ = undefined;
+var __vue_inject_styles__$1 = undefined;
 /* scoped */
 
-var __vue_scope_id__ = undefined;
+var __vue_scope_id__$1 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__ = undefined;
+var __vue_module_identifier__$1 = undefined;
 /* functional template */
 
-var __vue_is_functional_template__ = false;
+var __vue_is_functional_template__$1 = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__ = __vue_normalize__({
-  render: __vue_render__,
-  staticRenderFns: __vue_staticRenderFns__
-}, __vue_inject_styles__, __vue_script__, __vue_scope_id__, __vue_is_functional_template__, __vue_module_identifier__, false, undefined, undefined, undefined);
+var __vue_component__$1 = __vue_normalize__({
+  render: __vue_render__$1,
+  staticRenderFns: __vue_staticRenderFns__$1
+}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
 
 var ButtonGlobalClassNames = {
   msButton: 'ms-Button',
@@ -530,28 +550,77 @@ var getBaseButtonClassNames = memoizeFunction(function (theme, styles, className
   });
 });
 
-function styled(Component, baseStyles, getProps, customizable, pure) {
-  return Vue.extend({
-    functional: true,
-    render: function render(h, context) {
-      var styles = function styles(styleProps) {
-        return concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles);
-      };
+var StatelessComponent =
+/*#__PURE__*/
+function (_Vue) {
+  _inherits(StatelessComponent, _Vue);
 
-      var additionalProps = getProps ? getProps(context.props) : undefined;
-      return h(Component, _objectSpread2({}, context.data, {
-        props: _objectSpread2({}, additionalProps, {}, context.props, {
-          styles: styles
-        })
-      }), context.children);
-    }
-  });
-}
+  function StatelessComponent() {
+    var _this;
+
+    _classCallCheck(this, StatelessComponent);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(StatelessComponent).apply(this, arguments));
+    _this.css = css;
+    return _this;
+  }
+
+  return StatelessComponent;
+}(Vue);
+
+__decorate([Prop({
+  default: ''
+}), __metadata("design:type", String)], StatelessComponent.prototype, "className", void 0);
+
+__decorate([Prop({
+  type: [Object, Function],
+  default: function _default() {}
+}), __metadata("design:type", Object)], StatelessComponent.prototype, "styles", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: function _default() {
+    return getTheme();
+  }
+}), __metadata("design:type", Object)], StatelessComponent.prototype, "theme", void 0);
+
+StatelessComponent = __decorate([Component({
+  // @ts-ignore
+  functional: true
+})], StatelessComponent);
+var StatelessComponent$1 = StatelessComponent;
+
+var getIconContent = memoizeFunction(function (iconName) {
+  var _ref = getIcon(iconName) || {
+    subset: {},
+    code: undefined
+  },
+      code = _ref.code,
+      subset = _ref.subset;
+
+  if (!code) {
+    return null;
+  }
+
+  return {
+    children: code,
+    iconClassName: subset.className,
+    fontFamily: subset.fontFace && subset.fontFace.fontFamily
+  };
+}, undefined, // @ts-ignore
+true);
+
+function ownKeys$1(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$1(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$1(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$1(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var getClassNames$2 = classNamesFunction({
+  disableCaching: true
+});
 
 var Icon =
 /*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Icon, _BaseComponent);
+function (_StatelessComponent) {
+  _inherits(Icon, _StatelessComponent);
 
   function Icon() {
     _classCallCheck(this, Icon);
@@ -560,25 +629,38 @@ function (_BaseComponent) {
   }
 
   _createClass(Icon, [{
-    key: "classNames",
-    get: function get() {
-      var className = this.className,
-          iconName = this.iconName,
-          theme = this.theme;
+    key: "render",
+    value: function render(h, context) {
+      var _context$props = context.props,
+          className = _context$props.className,
+          iconName = _context$props.iconName,
+          theme = _context$props.theme,
+          styles = _context$props.styles;
       var isPlaceholder = typeof iconName === 'string' && iconName.length === 0;
-      var isImage = !!this.imageProps;
-      return getClassNames(this.styles, {
+      var isImage = !!context.props.imageProps;
+      var iconContent = getIconContent(iconName) || {};
+      var iconClassName = iconContent.iconClassName,
+          children = iconContent.children;
+      var classNames = getClassNames$2(styles, {
         theme: theme,
         className: className,
-        iconClassName: ['ms-Icon', "ms-Icon--".concat(iconName)],
+        iconClassName: iconClassName,
         isImage: isImage,
         isPlaceholder: isPlaceholder
       });
+      var RootType = isImage ? 'span' : 'i';
+      return h(RootType, _objectSpread$1({}, context.data, {
+        class: classNames.root,
+        attrs: {
+          'aria-hidden': 'true',
+          'data-icon-name': iconName
+        }
+      }), children);
     }
   }]);
 
   return Icon;
-}(BaseComponent$1);
+}(StatelessComponent$1);
 
 __decorate([Prop({
   type: String,
@@ -590,51 +672,8 @@ __decorate([Prop({
   default: null
 }), __metadata("design:type", Object)], Icon.prototype, "imageProps", void 0);
 
-Icon = __decorate([Component({})], Icon);
-var script$1 = Icon;
-
-/* script */
-var __vue_script__$1 = script$1;
-/* template */
-
-var __vue_render__$1 = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('i', {
-    class: _vm.classNames.root,
-    attrs: {
-      "aria-hidden": "true"
-    }
-  });
-};
-
-var __vue_staticRenderFns__$1 = [];
-/* style */
-
-var __vue_inject_styles__$1 = undefined;
-/* scoped */
-
-var __vue_scope_id__$1 = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$1 = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$1 = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$1 = __vue_normalize__({
-  render: __vue_render__$1,
-  staticRenderFns: __vue_staticRenderFns__$1
-}, __vue_inject_styles__$1, __vue_script__$1, __vue_scope_id__$1, __vue_is_functional_template__$1, __vue_module_identifier__$1, false, undefined, undefined, undefined);
+Icon = __decorate([Component], Icon);
+var IconBase = Icon;
 
 /** Class names used in themeable and non-themeable Icon components */
 
@@ -649,7 +688,7 @@ var classNames = mergeStyleSets({
     overflow: 'hidden'
   }]
 });
-var getStyles$1 = function getStyles(props) {
+var getStyles$2 = function getStyles(props) {
   var className = props.className,
       iconClassName = props.iconClassName,
       isPlaceholder = props.isPlaceholder,
@@ -660,7 +699,7 @@ var getStyles$1 = function getStyles(props) {
   };
 };
 
-var Icon$1 = styled(__vue_component__$1, getStyles$1, undefined);
+var Icon$1 = styled(IconBase, getStyles$2, undefined);
 
 /* ms */
 
@@ -737,7 +776,6 @@ BaseButton = __decorate([Component({
 })], BaseButton);
 var script$2 = BaseButton;
 
-/* script */
 var __vue_script__$2 = script$2;
 /* template */
 
@@ -813,7 +851,7 @@ var iconStyle = function iconStyle(fontSize) {
  */
 
 
-var getStyles$2 = memoizeFunction(function (theme) {
+var getStyles$3 = memoizeFunction(function (theme) {
   var semanticColors = theme.semanticColors,
       effects = theme.effects,
       fonts = theme.fonts;
@@ -904,8 +942,8 @@ var getStyles$2 = memoizeFunction(function (theme) {
 
 var DEFAULT_BUTTON_HEIGHT = '40px';
 var DEFAULT_PADDING = '0 4px';
-var getStyles$3 = memoizeFunction(function (theme, customStyles) {
-  var baseButtonStyles = getStyles$2(theme);
+var getStyles$4 = memoizeFunction(function (theme, customStyles) {
+  var baseButtonStyles = getStyles$3(theme);
   var actionButtonStyles = {
     root: {
       padding: DEFAULT_PADDING,
@@ -979,7 +1017,7 @@ function (_BaseComponent) {
     get: function get() {
       var theme = this.theme;
       var styles = {};
-      return getStyles$3(theme, styles);
+      return getStyles$4(theme, styles);
     }
   }]);
 
@@ -1051,10 +1089,10 @@ var __vue_component__$3 = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$3
 }, __vue_inject_styles__$3, __vue_script__$3, __vue_scope_id__$3, __vue_is_functional_template__$3, __vue_module_identifier__$3, false, undefined, undefined, undefined);
 
-var getStyles$4 = memoizeFunction(function (theme, customStyles, focusInset, focusColor) {
+var getStyles$5 = memoizeFunction(function (theme, customStyles, focusInset, focusColor) {
   var _selectors2, _selectors3, _selectors4, _selectors5, _selectors6, _selectors9;
 
-  var baseButtonStyles = getStyles$2(theme);
+  var baseButtonStyles = getStyles$3(theme);
   var baseSplitButtonStyles = {}; // getSplitButtonStyles(theme)
 
   var p = theme.palette,
@@ -1227,7 +1265,7 @@ function (_BaseComponent) {
     get: function get() {
       var theme = this.theme;
       var styles = {};
-      return getStyles$4(theme, styles);
+      return getStyles$5(theme, styles);
     }
   }]);
 
@@ -1283,6 +1321,10 @@ var __vue_component__$4 = __vue_normalize__({
   render: __vue_render__$4,
   staticRenderFns: __vue_staticRenderFns__$4
 }, __vue_inject_styles__$4, __vue_script__$4, __vue_scope_id__$4, __vue_is_functional_template__$4, __vue_module_identifier__$4, false, undefined, undefined, undefined);
+
+function ownKeys$2(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$2(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$2(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$2(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 var splitButtonDividerBaseStyles = function splitButtonDividerBaseStyles() {
   return {
@@ -1366,7 +1408,7 @@ function standardStyles(theme) {
         }
       }
     },
-    splitButtonDivider: _objectSpread2({}, splitButtonDividerBaseStyles(), {
+    splitButtonDivider: _objectSpread$2({}, splitButtonDividerBaseStyles(), {
       backgroundColor: p.neutralTertiaryAlt,
       selectors: _defineProperty({}, HighContrastSelector, {
         backgroundColor: 'WindowText'
@@ -1464,7 +1506,7 @@ function primaryStyles(theme) {
         border: 'none'
       })
     },
-    splitButtonDivider: _objectSpread2({}, splitButtonDividerBaseStyles(), {
+    splitButtonDivider: _objectSpread$2({}, splitButtonDividerBaseStyles(), {
       backgroundColor: p.white,
       selectors: _defineProperty({}, HighContrastSelector, {
         backgroundColor: 'Window'
@@ -1518,7 +1560,10 @@ function primaryStyles(theme) {
   };
 }
 
-var getStyles$5 = memoizeFunction(function (theme, customStyles) {
+function ownKeys$3(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$3(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$3(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$3(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var getStyles$6 = memoizeFunction(function (theme, customStyles) {
   var effects = theme.effects,
       palette = theme.palette;
   var buttonHighContrastFocus = {
@@ -1626,12 +1671,12 @@ var getStyles$5 = memoizeFunction(function (theme, customStyles) {
       marginRight: 0,
       marginBottom: 0
     },
-    splitButtonDivider: _objectSpread2({}, splitButtonDividerBaseStyles, {
+    splitButtonDivider: _objectSpread$3({}, splitButtonDividerBaseStyles, {
       selectors: _defineProperty({}, HighContrastSelector, {
         backgroundColor: 'WindowText'
       })
     }),
-    splitButtonDividerDisabled: _objectSpread2({}, splitButtonDividerBaseStyles, {
+    splitButtonDividerDisabled: _objectSpread$3({}, splitButtonDividerBaseStyles, {
       selectors: _defineProperty({}, HighContrastSelector, {
         backgroundColor: 'GrayText'
       })
@@ -1676,11 +1721,11 @@ var getStyles$5 = memoizeFunction(function (theme, customStyles) {
   return concatStyleSets(splitButtonStyles, customStyles);
 });
 
-var getStyles$6 = memoizeFunction(function (theme, customStyles, primary) {
+var getStyles$7 = memoizeFunction(function (theme, customStyles, primary) {
   var fonts = theme.fonts,
       palette = theme.palette;
-  var baseButtonStyles = getStyles$2(theme);
-  var splitButtonStyles = getStyles$5(theme);
+  var baseButtonStyles = getStyles$3(theme);
+  var splitButtonStyles = getStyles$6(theme);
   var compoundButtonStyles = {
     root: {
       maxWidth: '280px',
@@ -1792,7 +1837,7 @@ function (_BaseComponent) {
           primary = _this$primary === void 0 ? false : _this$primary,
           theme = this.theme;
       var styles = {};
-      return getStyles$6(theme, styles, primary);
+      return getStyles$7(theme, styles, primary);
     }
   }]);
 
@@ -1857,9 +1902,9 @@ var __vue_component__$5 = __vue_normalize__({
 // import { IButtonStyles } from '../Button.types'
 var DEFAULT_BUTTON_HEIGHT$1 = '32px';
 var DEFAULT_BUTTON_MIN_WIDTH = '80px';
-var getStyles$7 = memoizeFunction(function (theme, customStyles, primary) {
-  var baseButtonStyles = getStyles$2(theme);
-  var splitButtonStyles = getStyles$5(theme);
+var getStyles$8 = memoizeFunction(function (theme, customStyles, primary) {
+  var baseButtonStyles = getStyles$3(theme);
+  var splitButtonStyles = getStyles$6(theme);
   var defaultButtonStyles = {
     root: {
       minWidth: DEFAULT_BUTTON_MIN_WIDTH,
@@ -1889,8 +1934,7 @@ function (_BaseComponent) {
       var _this$primary = this.primary,
           primary = _this$primary === void 0 ? false : _this$primary,
           theme = this.theme;
-      var styles = {};
-      return getStyles$7(theme, styles, primary);
+      return getStyles$8(theme, this.styles, primary);
     }
   }]);
 
@@ -1962,8 +2006,8 @@ var __vue_component__$6 = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$6
 }, __vue_inject_styles__$6, __vue_script__$6, __vue_scope_id__$6, __vue_is_functional_template__$6, __vue_module_identifier__$6, false, undefined, undefined, undefined);
 
-var getStyles$8 = memoizeFunction(function (theme, customStyles) {
-  var baseButtonStyles = getStyles$2(theme);
+var getStyles$9 = memoizeFunction(function (theme, customStyles) {
+  var baseButtonStyles = getStyles$3(theme);
   var splitButtonStyles = {}; // getSplitButtonStyles(theme)
 
   var palette = theme.palette,
@@ -2026,8 +2070,7 @@ function (_BaseComponent) {
     key: "internalStyles",
     get: function get() {
       var theme = this.theme;
-      var styles = {};
-      return getStyles$8(theme, styles);
+      return getStyles$9(theme, this.styles);
     }
   }]);
 
@@ -2042,7 +2085,8 @@ __decorate([Prop({
 IconButton = __decorate([Component({
   components: {
     BaseButton: __vue_component__$2
-  }
+  },
+  inheritAttrs: false
 })], IconButton);
 var script$7 = IconButton;
 
@@ -2089,6 +2133,94 @@ var __vue_component__$7 = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$7
 }, __vue_inject_styles__$7, __vue_script__$7, __vue_scope_id__$7, __vue_is_functional_template__$7, __vue_module_identifier__$7, false, undefined, undefined, undefined);
 
+var getStyles$a = memoizeFunction(function (theme, customStyles, focusInset, focusColor) {
+  var baseButtonStyles = getStyles$3(theme);
+  var messageBarButtonStyles = {
+    root: [getFocusStyle(theme, {
+      inset: 1,
+      highContrastStyle: {
+        outlineOffset: '-4px',
+        outlineColor: 'ActiveBorder'
+      },
+      borderColor: 'transparent'
+    }), {
+      height: 24,
+      borderColor: theme.palette.neutralTertiaryAlt
+    }]
+  };
+  return concatStyleSets(baseButtonStyles, messageBarButtonStyles, customStyles);
+});
+
+var MessageBarButton =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(MessageBarButton, _BaseComponent);
+
+  function MessageBarButton() {
+    _classCallCheck(this, MessageBarButton);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MessageBarButton).apply(this, arguments));
+  }
+
+  _createClass(MessageBarButton, [{
+    key: "customStyles",
+    get: function get() {
+      return getStyles$a(this.theme, this.styles);
+    }
+  }]);
+
+  return MessageBarButton;
+}(BaseComponent$1);
+
+MessageBarButton = __decorate([Component({
+  components: {
+    DefaultButton: __vue_component__$6
+  }
+})], MessageBarButton);
+var script$8 = MessageBarButton;
+
+/* script */
+var __vue_script__$8 = script$8;
+/* template */
+
+var __vue_render__$8 = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('DefaultButton', {
+    attrs: {
+      "styles": _vm.customStyles
+    }
+  }, [_vm._t("default")], 2);
+};
+
+var __vue_staticRenderFns__$8 = [];
+/* style */
+
+var __vue_inject_styles__$8 = undefined;
+/* scoped */
+
+var __vue_scope_id__$8 = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$8 = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$8 = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$8 = __vue_normalize__({
+  render: __vue_render__$8,
+  staticRenderFns: __vue_staticRenderFns__$8
+}, __vue_inject_styles__$8, __vue_script__$8, __vue_scope_id__$8, __vue_is_functional_template__$8, __vue_module_identifier__$8, false, undefined, undefined, undefined);
+
 var PrimaryButton =
 /*#__PURE__*/
 function (_DefaultButton) {
@@ -2109,33 +2241,36 @@ __decorate([Prop({
 }), __metadata("design:type", Boolean)], PrimaryButton.prototype, "primary", void 0);
 
 PrimaryButton = __decorate([Component], PrimaryButton);
-var script$8 = PrimaryButton;
+var script$9 = PrimaryButton;
 
 /* script */
-var __vue_script__$8 = script$8;
+var __vue_script__$9 = script$9;
 /* template */
 
 /* style */
 
-var __vue_inject_styles__$8 = undefined;
+var __vue_inject_styles__$9 = undefined;
 /* scoped */
 
-var __vue_scope_id__$8 = undefined;
+var __vue_scope_id__$9 = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$8 = undefined;
+var __vue_module_identifier__$9 = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$8 = undefined;
+var __vue_is_functional_template__$9 = undefined;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$8 = __vue_normalize__({}, __vue_inject_styles__$8, __vue_script__$8, __vue_scope_id__$8, __vue_is_functional_template__$8, __vue_module_identifier__$8, false, undefined, undefined, undefined);
+var __vue_component__$9 = __vue_normalize__({}, __vue_inject_styles__$9, __vue_script__$9, __vue_scope_id__$9, __vue_is_functional_template__$9, __vue_module_identifier__$9, false, undefined, undefined, undefined);
 
-var GlobalClassNames = {
+function ownKeys$4(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$4(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$4(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$4(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var GlobalClassNames$1 = {
   root: 'ms-Breadcrumb',
   list: 'ms-Breadcrumb-list',
   listItem: 'ms-Breadcrumb-listItem',
@@ -2156,15 +2291,15 @@ var itemLineHeight = 36;
 var itemFontSize = 18;
 var MinimumScreenSelector = getScreenSelector(0, ScreenWidthMaxSmall);
 var MediumScreenSelector = getScreenSelector(ScreenWidthMinMedium, ScreenWidthMaxMedium);
-var getStyles$9 = function getStyles(props) {
-  var _selectors2, _objectSpread2$1;
+var getStyles$b = function getStyles(props) {
+  var _selectors2, _objectSpread2;
 
   var className = props.className,
       theme = props.theme;
   var palette = theme.palette,
       semanticColors = theme.semanticColors,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames, theme); // Tokens
+  var classNames = getGlobalClassNames(GlobalClassNames$1, theme); // Tokens
 
   var itemBackgroundHoveredColor = semanticColors.menuItemBackgroundHovered;
   var itemBackgroundPressedColor = semanticColors.menuItemBackgroundPressed;
@@ -2252,14 +2387,14 @@ var getStyles$9 = function getStyles(props) {
       color: overflowButtonColor,
       height: '100%',
       cursor: 'pointer',
-      selectors: _objectSpread2({}, itemStateSelectors, (_objectSpread2$1 = {}, _defineProperty(_objectSpread2$1, MinimumScreenSelector, {
+      selectors: _objectSpread$4({}, itemStateSelectors, (_objectSpread2 = {}, _defineProperty(_objectSpread2, MinimumScreenSelector, {
         padding: '4px 6px'
-      }), _defineProperty(_objectSpread2$1, MediumScreenSelector, {
+      }), _defineProperty(_objectSpread2, MediumScreenSelector, {
         fontSize: fonts.mediumPlus.fontSize
-      }), _objectSpread2$1))
+      }), _objectSpread2))
     }],
-    itemLink: [classNames.itemLink, getFocusStyle(theme), SingleLineTextStyle, _objectSpread2({}, commonItemStyles, {
-      selectors: _objectSpread2(_defineProperty({
+    itemLink: [classNames.itemLink, getFocusStyle(theme), SingleLineTextStyle, _objectSpread$4({}, commonItemStyles, {
+      selectors: _objectSpread$4(_defineProperty({
         ':focus': {
           color: palette.neutralDark
         }
@@ -2267,7 +2402,7 @@ var getStyles$9 = function getStyles(props) {
         outline: "none"
       }), itemStateSelectors)
     })],
-    item: [classNames.item, _objectSpread2({}, commonItemStyles, {
+    item: [classNames.item, _objectSpread$4({}, commonItemStyles, {
       selectors: {
         ':hover': {
           cursor: 'default'
@@ -2277,7 +2412,7 @@ var getStyles$9 = function getStyles(props) {
   };
 };
 
-var getClassNames$1 = classNamesFunction();
+var getClassNames$3 = classNamesFunction();
 
 var Breadcrumb =
 /*#__PURE__*/
@@ -2291,11 +2426,18 @@ function (_BaseComponent) {
   }
 
   _createClass(Breadcrumb, [{
+    key: "onBreadcrumbClicked",
+    value: function onBreadcrumbClicked(event, item) {
+      if (item.onClick) {
+        item.onClick(event, item);
+      }
+    }
+  }, {
     key: "classNames",
     get: function get() {
       var className = this.className,
           theme = this.theme;
-      return getClassNames$1(getStyles$9, {
+      return getClassNames$3(getStyles$b, {
         theme: theme,
         className: className
       });
@@ -2313,13 +2455,13 @@ __decorate([Prop({
 Breadcrumb = __decorate([Component({
   components: {}
 })], Breadcrumb);
-var script$9 = Breadcrumb;
+var script$a = Breadcrumb;
 
 /* script */
-var __vue_script__$9 = script$9;
+var __vue_script__$a = script$a;
 /* template */
 
-var __vue_render__$8 = function __vue_render__() {
+var __vue_render__$9 = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -2337,12 +2479,24 @@ var __vue_render__$8 = function __vue_render__() {
     return _c('li', {
       key: index,
       class: _vm.classNames.listItem
-    }, [_c('o-link', {
+    }, [item.onClick || item.href ? _c('o-link', {
+      class: _vm.classNames.itemLink,
       attrs: {
-        "class-name": _vm.classNames.itemLink,
         "href": item.href
+      },
+      on: {
+        "click": function click($event) {
+          return _vm.onBreadcrumbClicked($event, item);
+        }
       }
-    }, [_vm._v("\n        Test\n      ")]), _vm._v(" "), index !== _vm.items.length - 1 ? _c('o-icon', {
+    }, [_vm._v("\n        " + _vm._s(item.text) + "\n      ")]) : _c('span', {
+      class: _vm.classNames.item,
+      on: {
+        "click": function click($event) {
+          return _vm.onBreadcrumbClicked($event, item);
+        }
+      }
+    }, [_vm._v("\n        " + _vm._s(item.text) + "\n      ")]), _vm._v(" "), index !== _vm.items.length - 1 ? _c('o-icon', {
       key: "icon-" + index,
       class: _vm.classNames.chevron,
       attrs: {
@@ -2352,29 +2506,29 @@ var __vue_render__$8 = function __vue_render__() {
   }), 0)]);
 };
 
-var __vue_staticRenderFns__$8 = [];
+var __vue_staticRenderFns__$9 = [];
 /* style */
 
-var __vue_inject_styles__$9 = undefined;
+var __vue_inject_styles__$a = undefined;
 /* scoped */
 
-var __vue_scope_id__$9 = undefined;
+var __vue_scope_id__$a = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$9 = undefined;
+var __vue_module_identifier__$a = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$9 = false;
+var __vue_is_functional_template__$a = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$9 = __vue_normalize__({
-  render: __vue_render__$8,
-  staticRenderFns: __vue_staticRenderFns__$8
-}, __vue_inject_styles__$9, __vue_script__$9, __vue_scope_id__$9, __vue_is_functional_template__$9, __vue_module_identifier__$9, false, undefined, undefined, undefined);
+var __vue_component__$a = __vue_normalize__({
+  render: __vue_render__$9,
+  staticRenderFns: __vue_staticRenderFns__$9
+}, __vue_inject_styles__$a, __vue_script__$a, __vue_scope_id__$a, __vue_is_functional_template__$a, __vue_module_identifier__$a, false, undefined, undefined, undefined);
 
 var _layersByHostId = {};
 
@@ -2432,16 +2586,16 @@ function getDefaultTarget() {
   return _defaultHostSelector;
 }
 
-var GlobalClassNames$1 = {
+var GlobalClassNames$2 = {
   root: 'ms-Layer',
   rootNoHost: 'ms-Layer--fixed',
   content: 'ms-Layer-content'
 };
-var getStyles$a = function getStyles(props) {
+var getStyles$c = function getStyles(props) {
   var className = props.className,
       isNotHost = props.isNotHost,
       theme = props.theme;
-  var classNames = getGlobalClassNames(GlobalClassNames$1, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$2, theme);
   return {
     root: [classNames.root, theme.fonts.medium, isNotHost && [classNames.rootNoHost, {
       position: 'fixed',
@@ -2457,6 +2611,8 @@ var getStyles$a = function getStyles(props) {
     }]
   };
 };
+
+var getClassNames$4 = classNamesFunction();
 
 var Layer =
 /*#__PURE__*/
@@ -2525,7 +2681,7 @@ function (_BaseComponent) {
     get: function get() {
       var className = this.className,
           theme = this.theme;
-      return getClassNames(getStyles$a, {
+      return getClassNames$4(getStyles$c, {
         theme: theme,
         className: className,
         isNotHost: !this.hostId
@@ -2551,13 +2707,13 @@ Layer = __decorate([Component({
     MountingPortal: MountingPortal
   }
 })], Layer);
-var script$a = Layer;
+var script$b = Layer;
 
 /* script */
-var __vue_script__$a = script$a;
+var __vue_script__$b = script$b;
 /* template */
 
-var __vue_render__$9 = function __vue_render__() {
+var __vue_render__$a = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -2576,29 +2732,29 @@ var __vue_render__$9 = function __vue_render__() {
   }, [_vm._t("default")], 2)])]) : _vm._e();
 };
 
-var __vue_staticRenderFns__$9 = [];
+var __vue_staticRenderFns__$a = [];
 /* style */
 
-var __vue_inject_styles__$a = undefined;
+var __vue_inject_styles__$b = undefined;
 /* scoped */
 
-var __vue_scope_id__$a = undefined;
+var __vue_scope_id__$b = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$a = undefined;
+var __vue_module_identifier__$b = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$a = false;
+var __vue_is_functional_template__$b = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$a = __vue_normalize__({
-  render: __vue_render__$9,
-  staticRenderFns: __vue_staticRenderFns__$9
-}, __vue_inject_styles__$a, __vue_script__$a, __vue_scope_id__$a, __vue_is_functional_template__$a, __vue_module_identifier__$a, false, undefined, undefined, undefined);
+var __vue_component__$b = __vue_normalize__({
+  render: __vue_render__$a,
+  staticRenderFns: __vue_staticRenderFns__$a
+}, __vue_inject_styles__$b, __vue_script__$b, __vue_scope_id__$b, __vue_is_functional_template__$b, __vue_module_identifier__$b, false, undefined, undefined, undefined);
 
 var LayerHost =
 /*#__PURE__*/
@@ -2634,240 +2790,7 @@ __decorate([Prop({
 LayerHost = __decorate([Component({
   components: {}
 })], LayerHost);
-var script$b = LayerHost;
-
-/* script */
-var __vue_script__$b = script$b;
-/* template */
-
-var __vue_render__$a = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('div', {
-    staticClass: "LayerHost",
-    attrs: {
-      "id": _vm.id
-    }
-  });
-};
-
-var __vue_staticRenderFns__$a = [];
-/* style */
-
-var __vue_inject_styles__$b = undefined;
-/* scoped */
-
-var __vue_scope_id__$b = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$b = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$b = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$b = __vue_normalize__({
-  render: __vue_render__$a,
-  staticRenderFns: __vue_staticRenderFns__$a
-}, __vue_inject_styles__$b, __vue_script__$b, __vue_scope_id__$b, __vue_is_functional_template__$b, __vue_module_identifier__$b, false, undefined, undefined, undefined);
-
-var animationDuration = AnimationVariables.durationValue2;
-var globalClassNames = {
-  root: 'ms-Modal',
-  main: 'ms-Dialog-main',
-  scrollableContent: 'ms-Modal-scrollableContent',
-  isOpen: 'is-open',
-  layer: 'ms-Modal-Layer'
-};
-var getStyles$b = function getStyles(props) {
-  var className = props.className,
-      containerClassName = props.containerClassName,
-      scrollableContentClassName = props.scrollableContentClassName,
-      isOpen = props.isOpen,
-      isVisible = props.isVisible,
-      hasBeenOpened = props.hasBeenOpened,
-      modalRectangleTop = props.modalRectangleTop,
-      theme = props.theme,
-      topOffsetFixed = props.topOffsetFixed,
-      isModeless = props.isModeless,
-      layerClassName = props.layerClassName,
-      isDefaultDragHandle = props.isDefaultDragHandle;
-  var palette = theme.palette,
-      effects = theme.effects,
-      fonts = theme.fonts;
-  var classNames = getGlobalClassNames(globalClassNames, theme);
-  return {
-    root: [classNames.root, fonts.medium, {
-      backgroundColor: 'transparent',
-      position: isModeless ? 'absolute' : 'fixed',
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: 0,
-      pointerEvents: 'none',
-      transition: "opacity ".concat(animationDuration)
-    }, topOffsetFixed && hasBeenOpened && {
-      alignItems: 'flex-start'
-    }, isOpen && classNames.isOpen, isVisible && {
-      opacity: 1,
-      pointerEvents: 'auto'
-    }, className],
-    main: [classNames.main, {
-      boxShadow: effects.elevation64,
-      borderRadius: effects.roundedCorner2,
-      backgroundColor: palette.white,
-      boxSizing: 'border-box',
-      position: 'relative',
-      textAlign: 'left',
-      outline: '3px solid transparent',
-      maxHeight: 'calc(100% - 32px)',
-      maxWidth: 'calc(100% - 32px)',
-      minHeight: '176px',
-      minWidth: '288px',
-      overflowY: 'auto',
-      zIndex: isModeless ? ZIndexes.Layer : undefined
-    }, topOffsetFixed && hasBeenOpened && {
-      top: modalRectangleTop
-    }, isDefaultDragHandle && {
-      cursor: 'move'
-    }, containerClassName],
-    scrollableContent: [classNames.scrollableContent, {
-      overflowY: 'auto',
-      flexGrow: 1,
-      maxHeight: '100vh',
-      selectors: {
-        '@supports (-webkit-overflow-scrolling: touch)': {
-          maxHeight: window.innerHeight
-        }
-      }
-    }, scrollableContentClassName],
-    layer: isModeless && [layerClassName, classNames.layer, {
-      position: 'static',
-      width: 'unset',
-      height: 'unset'
-    }],
-    keyboardMoveIconContainer: {
-      position: 'absolute',
-      display: 'flex',
-      justifyContent: 'center',
-      width: '100%',
-      padding: '3px 0px'
-    },
-    keyboardMoveIcon: {
-      fontSize: fonts.xLargePlus.fontSize,
-      width: '24px'
-    }
-  };
-};
-
-var getClassNames$2 = classNamesFunction();
-
-var Modal =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Modal, _BaseComponent);
-
-  function Modal() {
-    _classCallCheck(this, Modal);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Modal).apply(this, arguments));
-  }
-
-  _createClass(Modal, [{
-    key: "classNames",
-    get: function get() {
-      var theme = this.theme,
-          className = this.className,
-          layerProps = this.layerProps,
-          containerClassName = this.containerClassName,
-          scrollableContentClassName = this.scrollableContentClassName,
-          isVisible = this.isVisible,
-          hasBeenOpened = this.hasBeenOpened,
-          modalRectangleTop = this.modalRectangleTop,
-          topOffsetFixed = this.topOffsetFixed,
-          isModeless = this.isModeless,
-          dragOptions = this.dragOptions;
-      var layerClassName = layerProps === undefined ? '' : layerProps.className;
-      return getClassNames$2(getStyles$b, {
-        theme: theme,
-        className: className,
-        containerClassName: containerClassName,
-        scrollableContentClassName: scrollableContentClassName,
-        isOpen: true,
-        isVisible: isVisible,
-        hasBeenOpened: hasBeenOpened,
-        modalRectangleTop: modalRectangleTop,
-        topOffsetFixed: topOffsetFixed,
-        isModeless: isModeless,
-        layerClassName: layerClassName,
-        isDefaultDragHandle: dragOptions && !dragOptions.dragHandleSelector
-      });
-    }
-  }]);
-
-  return Modal;
-}(BaseComponent$1);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "layerProps", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: null
-}), __metadata("design:type", String)], Modal.prototype, "containerClassName", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: null
-}), __metadata("design:type", String)], Modal.prototype, "scrollableContentClassName", void 0);
-
-__decorate([Prop({
-  default: true
-}), __metadata("design:type", Boolean)], Modal.prototype, "isVisible", void 0);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "hasBeenOpened", void 0);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "modalRectangleTop", void 0);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "topOffsetFixed", void 0);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "isModeless", void 0);
-
-__decorate([Prop({
-  type: Object,
-  default: null
-}), __metadata("design:type", Object)], Modal.prototype, "dragOptions", void 0);
-
-Modal = __decorate([Component({
-  components: {
-    Layer: __vue_component__$a
-  }
-})], Modal);
-var script$c = Modal;
+var script$c = LayerHost;
 
 /* script */
 var __vue_script__$c = script$c;
@@ -2880,11 +2803,12 @@ var __vue_render__$b = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c('Layer', [_c('div', {
-    class: _vm.classNames.root
-  }, [_c('div', {
-    class: _vm.classNames.container
-  }, [_vm._v("\n      Modal\n      asfd\n      asdf\n      asdf\n    ")])])]);
+  return _c('div', {
+    staticClass: "LayerHost",
+    attrs: {
+      "id": _vm.id
+    }
+  });
 };
 
 var __vue_staticRenderFns__$b = [];
@@ -2932,7 +2856,7 @@ __decorate([Prop({
 
 Dialog = __decorate([Component({
   components: {
-    Layer: __vue_component__$a
+    Layer: __vue_component__$b
   }
 })], Dialog);
 var script$d = Dialog;
@@ -2975,7 +2899,256 @@ var __vue_component__$d = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$c
 }, __vue_inject_styles__$d, __vue_script__$d, __vue_scope_id__$d, __vue_is_functional_template__$d, __vue_module_identifier__$d, false, undefined, undefined, undefined);
 
-var GlobalClassNames$2 = {
+function ownKeys$5(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$5(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$5(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$5(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var getClassNames$5 = classNamesFunction(); // The number pixels per indentation level for Nav links.
+
+var INDENTATION_SIZE = 14; // The number of pixels of left margin
+
+var BASE_INDENT = 3;
+
+var Nav =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Nav, _BaseComponent);
+
+  function Nav() {
+    var _this;
+
+    _classCallCheck(this, Nav);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Nav).apply(this, arguments));
+    _this.isGroupCollapsed = {};
+    _this.internalSelectedKey = '';
+    return _this;
+  }
+
+  _createClass(Nav, [{
+    key: "render",
+    value: function render(h) {
+      var theme = this.theme,
+          className = this.className,
+          isOnTop = this.isOnTop,
+          groups = this.groups;
+
+      if (!groups) {
+        return null;
+      }
+
+      var groupElements = this.groups.map(this.renderGroup);
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        className: className,
+        isOnTop: isOnTop,
+        groups: groups
+      });
+      return h("nav", {
+        "attrs": {
+          "role": "navigation"
+        },
+        "class": classNames.root
+      }, [groupElements]);
+    }
+  }, {
+    key: "renderGroup",
+    value: function renderGroup(group, groupIndex) {
+      var h = this.$createElement;
+      var groups = this.groups,
+          theme = this.theme;
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        isGroup: true,
+        isExpanded: this.isGroupExpanded(group),
+        groups: groups
+      });
+      return h("div", {
+        "key": groupIndex
+      }, [h("div", {
+        "class": classNames.groupContent
+      }, [this.renderLinks(group.links, 0)])]);
+    }
+  }, {
+    key: "renderLinks",
+    value: function renderLinks(links, nestingLevel) {
+      var _this2 = this;
+
+      var h = this.$createElement;
+      if (!links || !links.length) return null;
+      var linkElements = links.map(function (link, linkIndex) {
+        return _this2.renderLink(link, linkIndex, nestingLevel);
+      });
+      var groups = this.groups,
+          theme = this.theme;
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        groups: groups
+      });
+      return h("ul", {
+        "attrs": {
+          "role": "list"
+        },
+        "class": classNames.navItems
+      }, [linkElements]);
+    }
+  }, {
+    key: "renderLink",
+    value: function renderLink(link, linkIndex, nestingLevel) {
+      var h = this.$createElement;
+      var groups = this.groups,
+          theme = this.theme;
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        groups: groups
+      });
+      return h("li", {
+        "key": linkIndex,
+        "attrs": {
+          "role": "listitem"
+        },
+        "class": classNames.navItem
+      }, [this.renderCompositeLink(link, linkIndex, nestingLevel), link.isExpanded ? this.renderLinks(link.links, ++nestingLevel) : null]);
+    }
+  }, {
+    key: "renderCompositeLink",
+    value: function renderCompositeLink(link, linkIndex, nestingLevel) {
+      var h = this.$createElement;
+      var styles = this.styles,
+          groups = this.groups,
+          theme = this.theme;
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        isExpanded: !!link.isExpanded,
+        isSelected: false,
+        isLink: true,
+        isDisabled: link.disabled,
+        position: INDENTATION_SIZE * nestingLevel + 1,
+        groups: groups
+      });
+      return h("div", {
+        "key": linkIndex,
+        "class": classNames.compositeLink
+      }, [link.links && link.links.length > 0 ? h("button", {
+        "on": {
+          "click": this.onLinkExpandClicked.bind(this, link)
+        },
+        "class": classNames.chevronButton
+      }, [h("o-icon", {
+        "class": classNames.chevronIcon,
+        "style": link.isExpanded && {
+          transform: 'rotate(-180deg)'
+        },
+        "attrs": {
+          "icon-name": "ChevronDown"
+        }
+      })]) : null, this.renderNavLink(link, linkIndex, nestingLevel)]);
+    }
+  }, {
+    key: "onLinkExpandClicked",
+    value: function onLinkExpandClicked(link) {
+      link.isExpanded = !link.isExpanded;
+    }
+  }, {
+    key: "renderNavLink",
+    value: function renderNavLink(link, linkIndex, nestingLevel) {
+      var h = this.$createElement;
+      var isSelected = '' + linkIndex === this.internalSelectedKey;
+      var isLinkWithIcon = link.icon || link.iconProps;
+      var groups = this.groups,
+          theme = this.theme;
+      var classNames = getClassNames$5(this.styles, {
+        theme: theme,
+        isSelected: isSelected,
+        isDisabled: link.disabled,
+        isButtonEntry: link.onClick && !link.forceAnchor,
+        leftPadding: INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24),
+        groups: groups
+      });
+      return h(__vue_component__$3, {
+        "attrs": {
+          "href": link.href || (link.forceAnchor ? '#' : undefined),
+          "title": link.title || link.name,
+          "target": link.target,
+          "disabled": link.disabled
+        },
+        "nativeOn": {
+          "click": this.onNavLinkClicked.bind(this, link, linkIndex)
+        },
+        "class": [classNames.link, isSelected && classNames.selected],
+        "style": {
+          paddingLeft: "".concat(INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24), "px")
+        }
+      }, [link.name]);
+    }
+  }, {
+    key: "onNavLinkClicked",
+    value: function onNavLinkClicked(link, linkIndex) {
+      if (link.onClick) link.onClick(link);
+
+      if (!link.url && link.links && link.links.length > 0) {
+        link.isExpanded = !link.isExpanded;
+      }
+
+      this.internalSelectedKey = link.key;
+    }
+  }, {
+    key: "preventBounce",
+    value: function preventBounce(link, ev) {
+      if (!link.href && link.forceAnchor) ev.preventDefault();
+    }
+  }, {
+    key: "isGroupExpanded",
+    value: function isGroupExpanded(group) {
+      if (group.name && this.isGroupCollapsed.hasOwnProperty(group.name)) {
+        return !this.isGroupCollapsed[group.name];
+      }
+
+      if (group.collapseByDefault !== undefined) {
+        return !group.collapseByDefault;
+      }
+
+      return true;
+    }
+  }, {
+    key: "toggleCollapsed",
+    value: function toggleCollapsed(group) {
+      if (group.name) {
+        var newGroupCollapsed = _objectSpread$5({}, this.isGroupCollapsed, _defineProperty({}, group.name, this.isGroupExpanded(group)));
+
+        this.$set(this, 'isGroupCollapsed', newGroupCollapsed);
+      }
+    }
+  }]);
+
+  return Nav;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: Array,
+  default: function _default() {
+    return [];
+  }
+}), __metadata("design:type", Array)], Nav.prototype, "groups", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+}), __metadata("design:type", String)], Nav.prototype, "selectedKey", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Nav.prototype, "isOnTop", void 0);
+
+Nav = __decorate([Component({
+  components: {
+    ActionButton: __vue_component__$3,
+    Icon: Icon$1
+  }
+})], Nav);
+var NavBase = Nav;
+
+var GlobalClassNames$3 = {
   root: 'ms-Nav',
   linkText: 'ms-Nav-linkText',
   compositeLink: 'ms-Nav-compositeLink',
@@ -2987,7 +3160,7 @@ var GlobalClassNames$2 = {
   group: 'ms-Nav-group',
   groupContent: 'ms-Nav-groupContent'
 };
-var getStyles$c = function getStyles(props) {
+var getStyles$d = function getStyles(props) {
   var className = props.className,
       theme = props.theme,
       isOnTop = props.isOnTop,
@@ -3009,7 +3182,7 @@ var getStyles$c = function getStyles(props) {
   var palette = theme.palette,
       semanticColors = theme.semanticColors,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames$2, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$3, theme);
   return {
     root: [classNames.root, className, fonts.medium, {
       overflowY: 'auto',
@@ -3160,253 +3333,7 @@ var getStyles$c = function getStyles(props) {
   };
 };
 
-var INDENTATION_SIZE = 14; // The number of pixels of left margin
-
-var BASE_INDENT = 3;
-
-var Nav =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Nav, _BaseComponent);
-
-  function Nav() {
-    var _this;
-
-    _classCallCheck(this, Nav);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Nav).apply(this, arguments));
-    _this.isGroupCollapsed = {};
-    _this.internalSelectedKey = '';
-    return _this;
-  } // @ts-ignore
-
-
-  _createClass(Nav, [{
-    key: "render",
-    value: function render(h) {
-      var theme = this.theme,
-          className = this.className,
-          isOnTop = this.isOnTop,
-          groups = this.groups;
-
-      if (!groups) {
-        return null;
-      }
-
-      var groupElements = this.groups.map(this.renderGroup);
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        className: className,
-        isOnTop: isOnTop,
-        groups: groups
-      });
-      return h("nav", {
-        "attrs": {
-          "role": "navigation"
-        },
-        "class": classNames.root
-      }, [groupElements]);
-    }
-  }, {
-    key: "renderGroup",
-    value: function renderGroup(group, groupIndex) {
-      var h = this.$createElement;
-      var groups = this.groups,
-          theme = this.theme;
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        isGroup: true,
-        isExpanded: this.isGroupExpanded(group),
-        groups: groups
-      });
-      return h("div", {
-        "key": groupIndex
-      }, [h("div", {
-        "class": classNames.groupContent
-      }, [this.renderLinks(group.links, 0)])]);
-    }
-  }, {
-    key: "renderLinks",
-    value: function renderLinks(links, nestingLevel) {
-      var _this2 = this;
-
-      var h = this.$createElement;
-      if (!links || !links.length) return null;
-      var linkElements = links.map(function (link, linkIndex) {
-        return _this2.renderLink(link, linkIndex, nestingLevel);
-      });
-      var groups = this.groups,
-          theme = this.theme;
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        groups: groups
-      });
-      return h("ul", {
-        "attrs": {
-          "role": "list"
-        },
-        "class": classNames.navItems
-      }, [linkElements]);
-    }
-  }, {
-    key: "renderLink",
-    value: function renderLink(link, linkIndex, nestingLevel) {
-      var h = this.$createElement;
-      var groups = this.groups,
-          theme = this.theme;
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        groups: groups
-      });
-      return h("li", {
-        "key": linkIndex,
-        "attrs": {
-          "role": "listitem"
-        },
-        "class": classNames.navItem
-      }, [this.renderCompositeLink(link, linkIndex, nestingLevel), link.isExpanded ? this.renderLinks(link.links, ++nestingLevel) : null]);
-    }
-  }, {
-    key: "renderCompositeLink",
-    value: function renderCompositeLink(link, linkIndex, nestingLevel) {
-      var h = this.$createElement;
-      var styles = this.styles,
-          groups = this.groups,
-          theme = this.theme;
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        isExpanded: !!link.isExpanded,
-        isSelected: false,
-        isLink: true,
-        isDisabled: link.disabled,
-        position: INDENTATION_SIZE * nestingLevel + 1,
-        groups: groups
-      });
-      return h("div", {
-        "key": linkIndex,
-        "class": classNames.compositeLink
-      }, [link.links && link.links.length > 0 ? h("button", {
-        "on": {
-          "click": this.onLinkExpandClicked.bind(this, link)
-        },
-        "class": classNames.chevronButton
-      }, [h("o-icon", {
-        "class": classNames.chevronIcon,
-        "style": link.isExpanded && {
-          transform: 'rotate(-180deg)'
-        },
-        "attrs": {
-          "icon-name": "ChevronDown"
-        }
-      })]) : null, this.renderNavLink(link, linkIndex, nestingLevel)]);
-    }
-  }, {
-    key: "onLinkExpandClicked",
-    value: function onLinkExpandClicked(link) {
-      link.isExpanded = !link.isExpanded;
-    }
-  }, {
-    key: "renderNavLink",
-    value: function renderNavLink(link, linkIndex, nestingLevel) {
-      var h = this.$createElement;
-      var isSelected = '' + linkIndex === this.internalSelectedKey;
-      var isLinkWithIcon = link.icon || link.iconProps;
-      var groups = this.groups,
-          theme = this.theme;
-      var classNames = getClassNames(getStyles$c, {
-        theme: theme,
-        isSelected: isSelected,
-        isDisabled: link.disabled,
-        isButtonEntry: link.onClick && !link.forceAnchor,
-        leftPadding: INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24),
-        groups: groups
-      });
-      return h(__vue_component__$3, {
-        "attrs": {
-          "href": link.href || (link.forceAnchor ? '#' : undefined),
-          "title": link.title || link.name,
-          "target": link.target,
-          "disabled": link.disabled
-        },
-        "nativeOn": {
-          "click": this.onNavLinkClicked.bind(this, link, linkIndex)
-        },
-        "class": [classNames.link, isSelected && classNames.selected],
-        "style": {
-          paddingLeft: "".concat(INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24), "px")
-        }
-      }, [link.name]);
-    }
-  }, {
-    key: "onNavLinkClicked",
-    value: function onNavLinkClicked(link, linkIndex) {
-      if (link.onClick) link.onClick(link);
-
-      if (!link.url && link.links && link.links.length > 0) {
-        link.isExpanded = !link.isExpanded;
-      }
-
-      this.internalSelectedKey = link.key;
-    }
-  }, {
-    key: "preventBounce",
-    value: function preventBounce(link, ev) {
-      if (!link.href && link.forceAnchor) ev.preventDefault();
-    }
-  }, {
-    key: "isGroupExpanded",
-    value: function isGroupExpanded(group) {
-      if (group.name && this.isGroupCollapsed.hasOwnProperty(group.name)) {
-        return !this.isGroupCollapsed[group.name];
-      }
-
-      if (group.collapseByDefault !== undefined) {
-        return !group.collapseByDefault;
-      }
-
-      return true;
-    }
-  }, {
-    key: "toggleCollapsed",
-    value: function toggleCollapsed(group) {
-      if (group.name) {
-        var newGroupCollapsed = _objectSpread2({}, this.isGroupCollapsed, _defineProperty({}, group.name, this.isGroupExpanded(group)));
-
-        this.$set(this, 'isGroupCollapsed', newGroupCollapsed);
-      }
-    }
-  }, {
-    key: "classNames",
-    get: function get() {}
-  }]);
-
-  return Nav;
-}(BaseComponent$1);
-
-__decorate([Prop({
-  type: Array,
-  default: function _default() {
-    return [];
-  }
-}), __metadata("design:type", Array)], Nav.prototype, "groups", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: ''
-}), __metadata("design:type", String)], Nav.prototype, "selectedKey", void 0);
-
-__decorate([Prop({
-  type: Boolean,
-  default: false
-}), __metadata("design:type", Boolean)], Nav.prototype, "isOnTop", void 0);
-
-Nav = __decorate([Component({
-  components: {
-    ActionButton: __vue_component__$3,
-    Icon: Icon$1
-  }
-})], Nav);
-var Nav$1 = Nav;
+var Nav$1 = styled(NavBase, getStyles$d, undefined);
 
 var ImageFit;
 
@@ -3491,99 +3418,7 @@ var ImageCoverStyle;
   ImageCoverStyle[ImageCoverStyle["portrait"] = 1] = "portrait";
 })(ImageCoverStyle || (ImageCoverStyle = {}));
 
-var GlobalClassNames$3 = {
-  root: 'ms-Image',
-  rootMaximizeFrame: 'ms-Image--maximizeFrame',
-  image: 'ms-Image-image',
-  imageCenter: 'ms-Image-image--center',
-  imageContain: 'ms-Image-image--contain',
-  imageCover: 'ms-Image-image--cover',
-  imageCenterContain: 'ms-Image-image--centerContain',
-  imageCenterCover: 'ms-Image-image--centerCover',
-  imageNone: 'ms-Image-image--none',
-  imageLandscape: 'ms-Image-image--landscape',
-  imagePortrait: 'ms-Image-image--portrait'
-};
-var getStyles$d = function getStyles(props) {
-  var className = props.className,
-      width = props.width,
-      height = props.height,
-      maximizeFrame = props.maximizeFrame,
-      isLoaded = props.isLoaded,
-      shouldFadeIn = props.shouldFadeIn,
-      shouldStartVisible = props.shouldStartVisible,
-      isLandscape = props.isLandscape,
-      isCenter = props.isCenter,
-      isContain = props.isContain,
-      isCover = props.isCover,
-      isCenterContain = props.isCenterContain,
-      isCenterCover = props.isCenterCover,
-      isNone = props.isNone,
-      isError = props.isError,
-      isNotImageFit = props.isNotImageFit,
-      theme = props.theme;
-  var classNames = getGlobalClassNames(GlobalClassNames$3, theme);
-  var ImageFitStyles = {
-    position: 'absolute',
-    left: '50% /* @noflip */',
-    top: '50%',
-    transform: 'translate(-50%,-50%)'
-  }; // Cut the mustard using msMaxTouchPoints to detect IE11 which does not support CSS object-fit
-
-  var window = getWindow();
-  var supportsObjectFit = window !== undefined && window.navigator.msMaxTouchPoints === undefined;
-  var fallbackObjectFitStyles = isContain && isLandscape || isCover && !isLandscape ? {
-    width: '100%',
-    height: 'auto'
-  } : {
-    width: 'auto',
-    height: '100%'
-  };
-  return {
-    root: [classNames.root, theme.fonts.medium, {
-      overflow: 'hidden'
-    }, maximizeFrame && [classNames.rootMaximizeFrame, {
-      height: '100%',
-      width: '100%'
-    }], isLoaded && shouldFadeIn && !shouldStartVisible && AnimationClassNames.fadeIn400, (isCenter || isContain || isCover || isCenterContain || isCenterCover) && {
-      position: 'relative'
-    }, className],
-    image: [classNames.image, {
-      display: 'block',
-      opacity: 0
-    }, isLoaded && ['is-loaded', {
-      opacity: 1
-    }], isCenter && [classNames.imageCenter, ImageFitStyles], isContain && [classNames.imageContain, supportsObjectFit && {
-      width: '100%',
-      height: '100%',
-      objectFit: 'contain'
-    }, !supportsObjectFit && fallbackObjectFitStyles, ImageFitStyles], isCover && [classNames.imageCover, supportsObjectFit && {
-      width: '100%',
-      height: '100%',
-      objectFit: 'cover'
-    }, !supportsObjectFit && fallbackObjectFitStyles, ImageFitStyles], isCenterContain && [classNames.imageCenterContain, isLandscape && {
-      maxWidth: '100%'
-    }, !isLandscape && {
-      maxHeight: '100%'
-    }, ImageFitStyles], isCenterCover && [classNames.imageCenterCover, isLandscape && {
-      maxHeight: '100%'
-    }, !isLandscape && {
-      maxWidth: '100%'
-    }, ImageFitStyles], isNone && [classNames.imageNone, {
-      width: 'auto',
-      height: 'auto'
-    }], isNotImageFit && [!!width && !height && {
-      height: 'auto',
-      width: '100%'
-    }, !width && !!height && {
-      height: '100%',
-      width: 'auto'
-    }, !!width && !!height && {
-      height: '100%',
-      width: '100%'
-    }], isLandscape && classNames.imageLandscape, !isLandscape && classNames.imagePortrait, !isLoaded && 'is-notLoaded', shouldFadeIn && 'is-fadeIn', isError && 'is-error']
-  };
-};
+var getClassNames$6 = classNamesFunction();
 
 var Image =
 /*#__PURE__*/
@@ -3613,7 +3448,8 @@ function (_BaseComponent) {
   }, {
     key: "classNames",
     get: function get() {
-      var loadState = this.loadState,
+      var styles = this.styles,
+          loadState = this.loadState,
           coverStyle = this.coverStyle,
           imageFit = this.imageFit,
           theme = this.theme,
@@ -3623,7 +3459,7 @@ function (_BaseComponent) {
           maximizeFrame = this.maximizeFrame,
           shouldFadeIn = this.shouldFadeIn,
           shouldStartVisible = this.shouldStartVisible;
-      return getClassNames(getStyles$d, {
+      return getClassNames$6(styles, {
         theme: theme,
         className: className,
         width: width,
@@ -3661,14 +3497,14 @@ __decorate([Prop({
 }), __metadata("design:type", String)], Image.prototype, "alt", void 0);
 
 __decorate([Prop({
-  type: String,
+  type: [String, Number],
   default: ''
-}), __metadata("design:type", String)], Image.prototype, "width", void 0);
+}), __metadata("design:type", Object)], Image.prototype, "width", void 0);
 
 __decorate([Prop({
-  type: String,
+  type: [String, Number],
   default: ''
-}), __metadata("design:type", String)], Image.prototype, "height", void 0);
+}), __metadata("design:type", Object)], Image.prototype, "height", void 0);
 
 __decorate([Prop({
   type: Number,
@@ -3754,6 +3590,102 @@ var __vue_component__$e = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$d
 }, __vue_inject_styles__$e, __vue_script__$e, __vue_scope_id__$e, __vue_is_functional_template__$e, __vue_module_identifier__$e, false, undefined, undefined, undefined);
 
+var GlobalClassNames$4 = {
+  root: 'ms-Image',
+  rootMaximizeFrame: 'ms-Image--maximizeFrame',
+  image: 'ms-Image-image',
+  imageCenter: 'ms-Image-image--center',
+  imageContain: 'ms-Image-image--contain',
+  imageCover: 'ms-Image-image--cover',
+  imageCenterContain: 'ms-Image-image--centerContain',
+  imageCenterCover: 'ms-Image-image--centerCover',
+  imageNone: 'ms-Image-image--none',
+  imageLandscape: 'ms-Image-image--landscape',
+  imagePortrait: 'ms-Image-image--portrait'
+};
+var getStyles$e = function getStyles(props) {
+  var className = props.className,
+      width = props.width,
+      height = props.height,
+      maximizeFrame = props.maximizeFrame,
+      isLoaded = props.isLoaded,
+      shouldFadeIn = props.shouldFadeIn,
+      shouldStartVisible = props.shouldStartVisible,
+      isLandscape = props.isLandscape,
+      isCenter = props.isCenter,
+      isContain = props.isContain,
+      isCover = props.isCover,
+      isCenterContain = props.isCenterContain,
+      isCenterCover = props.isCenterCover,
+      isNone = props.isNone,
+      isError = props.isError,
+      isNotImageFit = props.isNotImageFit,
+      theme = props.theme;
+  var classNames = getGlobalClassNames(GlobalClassNames$4, theme);
+  var ImageFitStyles = {
+    position: 'absolute',
+    left: '50% /* @noflip */',
+    top: '50%',
+    transform: 'translate(-50%,-50%)'
+  }; // Cut the mustard using msMaxTouchPoints to detect IE11 which does not support CSS object-fit
+
+  var window = getWindow();
+  var supportsObjectFit = window !== undefined && window.navigator.msMaxTouchPoints === undefined;
+  var fallbackObjectFitStyles = isContain && isLandscape || isCover && !isLandscape ? {
+    width: '100%',
+    height: 'auto'
+  } : {
+    width: 'auto',
+    height: '100%'
+  };
+  return {
+    root: [classNames.root, theme.fonts.medium, {
+      overflow: 'hidden'
+    }, maximizeFrame && [classNames.rootMaximizeFrame, {
+      height: '100%',
+      width: '100%'
+    }], isLoaded && shouldFadeIn && !shouldStartVisible && AnimationClassNames.fadeIn400, (isCenter || isContain || isCover || isCenterContain || isCenterCover) && {
+      position: 'relative'
+    }, className],
+    image: [classNames.image, {
+      display: 'block',
+      opacity: 0
+    }, isLoaded && ['is-loaded', {
+      opacity: 1
+    }], isCenter && [classNames.imageCenter, ImageFitStyles], isContain && [classNames.imageContain, supportsObjectFit && {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain'
+    }, !supportsObjectFit && fallbackObjectFitStyles, ImageFitStyles], isCover && [classNames.imageCover, supportsObjectFit && {
+      width: '100%',
+      height: '100%',
+      objectFit: 'cover'
+    }, !supportsObjectFit && fallbackObjectFitStyles, ImageFitStyles], isCenterContain && [classNames.imageCenterContain, isLandscape && {
+      maxWidth: '100%'
+    }, !isLandscape && {
+      maxHeight: '100%'
+    }, ImageFitStyles], isCenterCover && [classNames.imageCenterCover, isLandscape && {
+      maxHeight: '100%'
+    }, !isLandscape && {
+      maxWidth: '100%'
+    }, ImageFitStyles], isNone && [classNames.imageNone, {
+      width: 'auto',
+      height: 'auto'
+    }], isNotImageFit && [!!width && !height && {
+      height: 'auto',
+      width: '100%'
+    }, !width && !!height && {
+      height: '100%',
+      width: 'auto'
+    }, !!width && !!height && {
+      height: '100%',
+      width: '100%'
+    }], isLandscape && classNames.imageLandscape, !isLandscape && classNames.imagePortrait, !isLoaded && 'is-notLoaded', shouldFadeIn && 'is-fadeIn', isError && 'is-error']
+  };
+};
+
+var Image$1 = styled(__vue_component__$e, getStyles$e, undefined);
+
 function getBeakStyle(beakWidth) {
   return {
     height: beakWidth,
@@ -3761,14 +3693,14 @@ function getBeakStyle(beakWidth) {
   };
 }
 
-var GlobalClassNames$4 = {
+var GlobalClassNames$5 = {
   container: 'ms-Callout-container',
   root: 'ms-Callout',
   beak: 'ms-Callout-beak',
   beakCurtain: 'ms-Callout-beakCurtain',
   calloutMain: 'ms-Callout-main'
 };
-var getStyles$e = function getStyles(props) {
+var getStyles$f = function getStyles(props) {
   var theme = props.theme,
       className = props.className,
       overflowYHidden = props.overflowYHidden,
@@ -3776,7 +3708,7 @@ var getStyles$e = function getStyles(props) {
       beakWidth = props.beakWidth,
       backgroundColor = props.backgroundColor,
       calloutMaxWidth = props.calloutMaxWidth;
-  var classNames = getGlobalClassNames(GlobalClassNames$4, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$5, theme);
   var semanticColors = theme.semanticColors,
       effects = theme.effects;
   return {
@@ -3834,6 +3766,10 @@ var getStyles$e = function getStyles(props) {
 function clickedOutside(e, src) {
   return !src.contains(e.target);
 }
+
+var toKebabCase = function toKebabCase(str) {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase();
+};
 
 var DirectionalHint = {
   /**
@@ -3926,6 +3862,10 @@ var Position;
 })(Position || (Position = {}));
 
 var _DirectionalDictionar;
+
+function ownKeys$6(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$6(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$6(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$6(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 var Rectangle =
 /*#__PURE__*/
 function (_FullRectangle) {
@@ -4454,7 +4394,7 @@ function _getPositionData() {
     };
   }
 
-  var positionInformation = _objectSpread2({}, DirectionalDictionary[directionalHint]);
+  var positionInformation = _objectSpread$6({}, DirectionalDictionary[directionalHint]);
 
   if (getRTL()) {
     // If alignment edge exists and that alignment edge is -2 or 2, right or left, then flip it.
@@ -4530,7 +4470,7 @@ function _finalizeBeakPosition(elementPosition, positionedBeak, bounds) {
   returnValue[RectangleEdge[targetEdge]] = _getEdgeValue(positionedBeak, targetEdge);
   returnValue[RectangleEdge[returnEdge]] = _getRelativeEdgeDifference(positionedBeak, actualElement, returnEdge);
   return {
-    elementPosition: _objectSpread2({}, returnValue),
+    elementPosition: _objectSpread$6({}, returnValue),
     closestEdge: getClosestEdge(elementPosition.targetEdge, positionedBeak, actualElement),
     targetEdge: targetEdge
   };
@@ -4632,7 +4572,7 @@ function _positionElementRelative(props, elementToPosition, boundingRect, previo
 
   var positionedElement = _positionElementWithinBounds(_getRectangleFromElement(elementToPosition), targetRect, boundingRect, positionData, gap, props.directionalHintFixed, props.coverTarget);
 
-  return _objectSpread2({}, positionedElement, {
+  return _objectSpread$6({}, positionedElement, {
     targetRectangle: targetRect
   });
 }
@@ -4660,7 +4600,7 @@ function _positionCallout(props, hostElement, callout, previousPositions, doNotF
 
   var finalizedBeakPosition = _finalizeBeakPosition(positionedElement, beakPositioned, boundingRect);
 
-  return _objectSpread2({}, _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget, doNotFinalizeReturnEdge), {
+  return _objectSpread$6({}, _finalizePositionData(positionedElement, hostElement, boundingRect, props.coverTarget, doNotFinalizeReturnEdge), {
     beakPosition: finalizedBeakPosition
   });
 }
@@ -4668,7 +4608,7 @@ function positionCallout(props, hostElement, elementToPosition, previousPosition
   return _positionCallout(props, hostElement, elementToPosition, previousPositions);
 }
 
-var getClassNames$3 = classNamesFunction();
+var getClassNames$7 = classNamesFunction();
 
 var CalloutContent =
 /*#__PURE__*/
@@ -4707,9 +4647,22 @@ function (_BaseComponent) {
   }, {
     key: "mounted",
     value: function () {
-      var _mounted = _asyncToGenerator(function* () {
-        this.updatePosition();
-      });
+      var _mounted = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee() {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.updatePosition();
+
+              case 1:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
 
       function mounted() {
         return _mounted.apply(this, arguments);
@@ -4781,7 +4734,7 @@ function (_BaseComponent) {
           styles = this.styles,
           calloutWidth = this.calloutWidth,
           beakWidth = this.beakWidth;
-      return getClassNames$3(concatStyleSetsWithProps({
+      return getClassNames$7(concatStyleSetsWithProps({
         theme: theme,
         className: className,
         overflowYHidden: false,
@@ -4789,7 +4742,7 @@ function (_BaseComponent) {
         beakWidth: beakWidth,
         backgroundColor: '#fff',
         calloutMaxWidth: '100%'
-      }, getStyles$e, styles));
+      }, getStyles$f, styles));
     }
   }, {
     key: "actualBeakWidth",
@@ -4921,10 +4874,14 @@ var __vue_component__$f = __vue_normalize__({
   staticRenderFns: __vue_staticRenderFns__$e
 }, __vue_inject_styles__$f, __vue_script__$f, __vue_scope_id__$f, __vue_is_functional_template__$f, __vue_module_identifier__$f, false, undefined, undefined, undefined);
 
+function ownKeys$7(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$7(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$7(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$7(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 var Callout =
 /*#__PURE__*/
-function (_Vue) {
-  _inherits(Callout, _Vue);
+function (_StatelessComponent) {
+  _inherits(Callout, _StatelessComponent);
 
   function Callout() {
     _classCallCheck(this, Callout);
@@ -4936,22 +4893,22 @@ function (_Vue) {
     key: "render",
     value: function render(h, context) {
       if (!(context.props.target instanceof Node)) return;
-      var content = h(__vue_component__$f, _objectSpread2({}, context.data, {
-        props: _objectSpread2({
-          target: context.props.target
-        }, context.data.attrs)
+
+      var _context$props = context.props,
+          layerProps = _context$props.layerProps,
+          rest = _objectWithoutProperties(_context$props, ["layerProps"]);
+
+      var content = h(__vue_component__$f, _objectSpread$7({}, context.data, {
+        props: _objectSpread$7({}, rest, {}, context.data.attrs)
       }), context.children);
-
-      if (context.props.doNotLayer) {
-        return content;
-      }
-
-      return h(__vue_component__$a, context.data, [content]);
+      return context.props.doNotLayer ? content : h(__vue_component__$b, _objectSpread$7({}, context.data, {
+        props: _objectSpread$7({}, layerProps)
+      }), [content]);
     }
   }]);
 
   return Callout;
-}(Vue$1);
+}(StatelessComponent$1);
 
 __decorate([Prop({
   type: HTMLElement,
@@ -4963,10 +4920,7 @@ __decorate([Prop({
   default: false
 }), __metadata("design:type", Boolean)], Callout.prototype, "doNotLayer", void 0);
 
-Callout = __decorate([Component({
-  // @ts-ignore
-  functional: true
-})], Callout);
+Callout = __decorate([Component], Callout);
 var script$g = Callout;
 
 /* script */
@@ -4978,7 +4932,7 @@ var __vue_script__$g = script$g;
 var __vue_inject_styles__$g = undefined;
 /* scoped */
 
-var __vue_scope_id__$g = "data-v-fd30b53e";
+var __vue_scope_id__$g = "data-v-5b84899e";
 /* module identifier */
 
 var __vue_module_identifier__$g = undefined;
@@ -5169,7 +5123,7 @@ var getCaretDownButtonStyles = memoizeFunction(function (theme, customStyles) {
   };
   return concatStyleSets(styles, customStyles);
 });
-var getStyles$f = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
+var getStyles$g = memoizeFunction(function (theme, customStyles, comboBoxOptionWidth) {
   var semanticColors = theme.semanticColors,
       fonts = theme.fonts,
       effects = theme.effects;
@@ -5353,14 +5307,14 @@ var getStyles$f = memoizeFunction(function (theme, customStyles, comboBoxOptionW
   return concatStyleSets(styles, customStyles);
 });
 
-var getClassNames$4 = classNamesFunction({
+var getClassNames$8 = classNamesFunction({
   disableCaching: true
 });
 
 var Label =
 /*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Label, _BaseComponent);
+function (_StatelessComponent) {
+  _inherits(Label, _StatelessComponent);
 
   function Label() {
     _classCallCheck(this, Label);
@@ -5376,7 +5330,7 @@ function (_BaseComponent) {
           className = _context$props.className,
           disabled = _context$props.disabled,
           required = _context$props.required;
-      var classNames = getClassNames$4(context.props.styles, {
+      var classNames = getClassNames$8(context.props.styles, {
         className: className,
         disabled: disabled,
         required: required,
@@ -5389,7 +5343,7 @@ function (_BaseComponent) {
   }]);
 
   return Label;
-}(BaseComponent$1);
+}(StatelessComponent$1);
 
 __decorate([Prop({
   type: Boolean,
@@ -5401,37 +5355,10 @@ __decorate([Prop({
   default: false
 }), __metadata("design:type", Boolean)], Label.prototype, "required", void 0);
 
-Label = __decorate([Component({
-  // @ts-ignore
-  functional: true
-})], Label);
-var script$h = Label;
+Label = __decorate([Component], Label);
+var LabelBase = Label;
 
-/* script */
-var __vue_script__$h = script$h;
-/* template */
-
-/* style */
-
-var __vue_inject_styles__$h = undefined;
-/* scoped */
-
-var __vue_scope_id__$h = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$h = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$h = undefined;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$h = __vue_normalize__({}, __vue_inject_styles__$h, __vue_script__$h, __vue_scope_id__$h, __vue_is_functional_template__$h, __vue_module_identifier__$h, false, undefined, undefined, undefined);
-
-var getStyles$g = function getStyles(props) {
+var getStyles$h = function getStyles(props) {
   var theme = props.theme,
       className = props.className,
       disabled = props.disabled,
@@ -5470,7 +5397,7 @@ var getStyles$g = function getStyles(props) {
   };
 };
 
-var Label$1 = styled(__vue_component__$h, getStyles$g, undefined);
+var Label$1 = styled(LabelBase, getStyles$h, undefined);
 
 var SELECTION_FORWARD = 'forward';
 
@@ -5614,10 +5541,10 @@ __decorate([Prop({
 Autofill = __decorate([Component({
   components: {}
 })], Autofill);
-var script$i = Autofill;
+var script$h = Autofill;
 
 /* script */
-var __vue_script__$i = script$i;
+var __vue_script__$h = script$h;
 /* template */
 
 var __vue_render__$f = function __vue_render__() {
@@ -5642,28 +5569,28 @@ var __vue_render__$f = function __vue_render__() {
 var __vue_staticRenderFns__$f = [];
 /* style */
 
-var __vue_inject_styles__$i = undefined;
+var __vue_inject_styles__$h = undefined;
 /* scoped */
 
-var __vue_scope_id__$i = "data-v-13e004f6";
+var __vue_scope_id__$h = "data-v-13e004f6";
 /* module identifier */
 
-var __vue_module_identifier__$i = undefined;
+var __vue_module_identifier__$h = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$i = false;
+var __vue_is_functional_template__$h = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$i = __vue_normalize__({
+var __vue_component__$h = __vue_normalize__({
   render: __vue_render__$f,
   staticRenderFns: __vue_staticRenderFns__$f
-}, __vue_inject_styles__$i, __vue_script__$i, __vue_scope_id__$i, __vue_is_functional_template__$i, __vue_module_identifier__$i, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$h, __vue_script__$h, __vue_scope_id__$h, __vue_is_functional_template__$h, __vue_module_identifier__$h, false, undefined, undefined, undefined);
 
-var getClassNames$5 = classNamesFunction();
+var getClassNames$9 = classNamesFunction();
 
 var ComboBox =
 /*#__PURE__*/
@@ -5681,7 +5608,7 @@ function (_BaseComponent) {
     get: function get() {
       var theme = this.theme,
           className = this.className;
-      return getClassNames$5(getStyles$f(theme, {}), {
+      return getClassNames$9(getStyles$g(theme, {}), {
         theme: theme,
         className: className
       });
@@ -5693,15 +5620,15 @@ function (_BaseComponent) {
 
 ComboBox = __decorate([Component({
   components: {
-    Autofill: __vue_component__$i,
+    Autofill: __vue_component__$h,
     Label: Label$1,
     IconButton: __vue_component__$7
   }
 })], ComboBox);
-var script$j = ComboBox;
+var script$i = ComboBox;
 
 /* script */
-var __vue_script__$j = script$j;
+var __vue_script__$i = script$i;
 /* template */
 
 var __vue_render__$g = function __vue_render__() {
@@ -5714,9 +5641,9 @@ var __vue_render__$g = function __vue_render__() {
   return _c('div', {
     class: _vm.classNames.container
   }, [_c('Label', {
+    class: _vm.classNames.label,
     attrs: {
-      "for": "ComboBox" + _vm._uid,
-      "class-name": _vm.classNames.label
+      "for": "ComboBox" + _vm._uid
     }
   }, [_vm._v("Label")]), _vm._v(" "), _c('div', {
     class: _vm.classNames.root
@@ -5740,10 +5667,146 @@ var __vue_render__$g = function __vue_render__() {
 var __vue_staticRenderFns__$g = [];
 /* style */
 
+var __vue_inject_styles__$i = undefined;
+/* scoped */
+
+var __vue_scope_id__$i = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$i = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$i = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$i = __vue_normalize__({
+  render: __vue_render__$g,
+  staticRenderFns: __vue_staticRenderFns__$g
+}, __vue_inject_styles__$i, __vue_script__$i, __vue_scope_id__$i, __vue_is_functional_template__$i, __vue_module_identifier__$i, false, undefined, undefined, undefined);
+
+var getClassNames$a = classNamesFunction();
+
+var ChoiceGroupOption =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(ChoiceGroupOption, _BaseComponent);
+
+  function ChoiceGroupOption() {
+    _classCallCheck(this, ChoiceGroupOption);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ChoiceGroupOption).apply(this, arguments));
+  }
+
+  _createClass(ChoiceGroupOption, [{
+    key: "classNames",
+    get: function get() {
+      var styles = this.styles,
+          theme = this.theme,
+          iconProps = this.iconProps,
+          imageSrc = this.imageSrc,
+          checked = this.checked,
+          disabled = this.disabled,
+          imageSize = this.imageSize,
+          focused = this.focused;
+      return getClassNames$a(styles, {
+        theme: theme,
+        hasIcon: !!iconProps,
+        hasImage: !!imageSrc,
+        checked: checked,
+        disabled: disabled,
+        imageIsLarge: !!imageSrc && (imageSize.width > 71 || imageSize.height > 71),
+        imageSize: imageSize,
+        focused: focused
+      });
+    }
+  }]);
+
+  return ChoiceGroupOption;
+}(BaseComponent$1);
+
+__decorate([Prop(), __metadata("design:type", String)], ChoiceGroupOption.prototype, "id", void 0);
+
+__decorate([Prop(), __metadata("design:type", String)], ChoiceGroupOption.prototype, "text", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "iconProps", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "imageSrc", void 0);
+
+__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "checked", void 0);
+
+__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "disabled", void 0);
+
+__decorate([Prop({
+  default: function _default() {
+    return {
+      width: 32,
+      height: 32
+    };
+  }
+}), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "imageSize", void 0);
+
+__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "focused", void 0);
+
+ChoiceGroupOption = __decorate([Component({
+  components: {
+    Icon: Icon$1,
+    Label: Label$1
+  }
+})], ChoiceGroupOption);
+var script$j = ChoiceGroupOption;
+
+/* script */
+var __vue_script__$j = script$j;
+/* template */
+
+var __vue_render__$h = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    class: _vm.classNames.root
+  }, [_c('div', {
+    class: _vm.classNames.wrapper
+  }, [_c('input', {
+    class: _vm.classNames.input,
+    attrs: {
+      "id": "ChoiceGroup" + _vm._uid + "-" + _vm.id,
+      "name": "ChoiceGroup" + _vm._uid,
+      "disabled": _vm.disabled,
+      "type": "radio"
+    }
+  }), _vm._v(" "), _c('label', {
+    class: _vm.classNames.field,
+    attrs: {
+      "for": "ChoiceGroup" + _vm._uid + "-" + _vm.id
+    }
+  }, [_vm.imageSrc ? void 0 : _vm.iconProps ? [_c('div', {
+    class: _vm.classNames.innerField
+  }, [_c('div', {
+    class: _vm.classNames.iconWrapper
+  }, [_c('Icon', _vm._b({}, 'Icon', _vm.iconProps, false))], 1)])] : _vm._e(), _vm._v(" "), _vm.imageSrc || _vm.iconProps ? _c('div', {
+    class: _vm.classNames.labelWrapper
+  }, [_c('span', {
+    staticClass: "ms-ChoiceFieldLabel"
+  }, [_vm._t("default", [_vm._v(_vm._s(_vm.text))])], 2)]) : _c('span', {
+    staticClass: "ms-ChoiceFieldLabel"
+  }, [_vm._t("default", [_vm._v(_vm._s(_vm.text))])], 2)], 2)])]);
+};
+
+var __vue_staticRenderFns__$h = [];
+/* style */
+
 var __vue_inject_styles__$j = undefined;
 /* scoped */
 
-var __vue_scope_id__$j = undefined;
+var __vue_scope_id__$j = "data-v-6117dfd3";
 /* module identifier */
 
 var __vue_module_identifier__$j = undefined;
@@ -5757,11 +5820,11 @@ var __vue_is_functional_template__$j = false;
 /* style inject shadow dom */
 
 var __vue_component__$j = __vue_normalize__({
-  render: __vue_render__$g,
-  staticRenderFns: __vue_staticRenderFns__$g
+  render: __vue_render__$h,
+  staticRenderFns: __vue_staticRenderFns__$h
 }, __vue_inject_styles__$j, __vue_script__$j, __vue_scope_id__$j, __vue_is_functional_template__$j, __vue_module_identifier__$j, false, undefined, undefined, undefined);
 
-var GlobalClassNames$5 = {
+var GlobalClassNames$6 = {
   root: 'ms-ChoiceField',
   choiceFieldWrapper: 'ms-ChoiceField-wrapper',
   input: 'ms-ChoiceField-input',
@@ -5831,7 +5894,7 @@ function getImageWrapperStyle(isSelectedImageWrapper, className, checked) {
   }]];
 }
 
-var getStyles$h = function getStyles(props) {
+var getStyles$i = function getStyles(props) {
   var theme = props.theme,
       hasIcon = props.hasIcon,
       hasImage = props.hasImage,
@@ -5843,7 +5906,7 @@ var getStyles$h = function getStyles(props) {
   var palette = theme.palette,
       semanticColors = theme.semanticColors,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames$5, theme); // Tokens
+  var classNames = getGlobalClassNames(GlobalClassNames$6, theme); // Tokens
   // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.smallInputBorder
 
   var circleBorderColor = palette.neutralPrimary;
@@ -6086,164 +6149,9 @@ var getStyles$h = function getStyles(props) {
   };
 };
 
-var ChoiceGroupOption =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(ChoiceGroupOption, _BaseComponent);
+var ChoiceGroupOption$1 = styled(__vue_component__$j, getStyles$i, undefined);
 
-  function ChoiceGroupOption() {
-    _classCallCheck(this, ChoiceGroupOption);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(ChoiceGroupOption).apply(this, arguments));
-  }
-
-  _createClass(ChoiceGroupOption, [{
-    key: "classNames",
-    get: function get() {
-      var theme = this.theme,
-          iconProps = this.iconProps,
-          imageSrc = this.imageSrc,
-          checked = this.checked,
-          disabled = this.disabled,
-          imageSize = this.imageSize,
-          focused = this.focused;
-      return getClassNames(getStyles$h, {
-        theme: theme,
-        hasIcon: !!iconProps,
-        hasImage: !!imageSrc,
-        checked: checked,
-        disabled: disabled,
-        imageIsLarge: !!imageSrc && (imageSize.width > 71 || imageSize.height > 71),
-        imageSize: imageSize,
-        focused: focused
-      });
-    }
-  }]);
-
-  return ChoiceGroupOption;
-}(BaseComponent$1);
-
-__decorate([Prop(), __metadata("design:type", String)], ChoiceGroupOption.prototype, "id", void 0);
-
-__decorate([Prop(), __metadata("design:type", String)], ChoiceGroupOption.prototype, "text", void 0);
-
-__decorate([Prop(), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "iconProps", void 0);
-
-__decorate([Prop(), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "imageSrc", void 0);
-
-__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "checked", void 0);
-
-__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "disabled", void 0);
-
-__decorate([Prop({
-  default: function _default() {
-    return {
-      width: 32,
-      height: 32
-    };
-  }
-}), __metadata("design:type", Object)], ChoiceGroupOption.prototype, "imageSize", void 0);
-
-__decorate([Prop(), __metadata("design:type", Boolean)], ChoiceGroupOption.prototype, "focused", void 0);
-
-ChoiceGroupOption = __decorate([Component({
-  components: {
-    Icon: Icon$1,
-    Label: Label$1
-  }
-})], ChoiceGroupOption);
-var script$k = ChoiceGroupOption;
-
-/* script */
-var __vue_script__$k = script$k;
-/* template */
-
-var __vue_render__$h = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('div', {
-    class: _vm.classNames.root
-  }, [_c('div', {
-    class: _vm.classNames.wrapper
-  }, [_c('input', {
-    class: _vm.classNames.input,
-    attrs: {
-      "id": "ChoiceGroup" + _vm._uid + "-" + _vm.id,
-      "name": "ChoiceGroup" + _vm._uid,
-      "disabled": _vm.disabled,
-      "type": "radio"
-    }
-  }), _vm._v(" "), _c('label', {
-    class: _vm.classNames.field,
-    attrs: {
-      "for": "ChoiceGroup" + _vm._uid + "-" + _vm.id
-    }
-  }, [_vm.imageSrc ? void 0 : _vm.iconProps ? [_c('div', {
-    class: _vm.classNames.innerField
-  }, [_c('div', {
-    class: _vm.classNames.iconWrapper
-  }, [_c('Icon', _vm._b({}, 'Icon', _vm.iconProps, false))], 1)])] : _vm._e(), _vm._v(" "), _vm.imageSrc || _vm.iconProps ? _c('div', {
-    class: _vm.classNames.labelWrapper
-  }, [_c('span', {
-    staticClass: "ms-ChoiceFieldLabel"
-  }, [_vm._t("default", [_vm._v(_vm._s(_vm.text))])], 2)]) : _c('span', {
-    staticClass: "ms-ChoiceFieldLabel"
-  }, [_vm._t("default", [_vm._v(_vm._s(_vm.text))])], 2)], 2)])]);
-};
-
-var __vue_staticRenderFns__$h = [];
-/* style */
-
-var __vue_inject_styles__$k = undefined;
-/* scoped */
-
-var __vue_scope_id__$k = "data-v-1a999b6a";
-/* module identifier */
-
-var __vue_module_identifier__$k = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$k = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$k = __vue_normalize__({
-  render: __vue_render__$h,
-  staticRenderFns: __vue_staticRenderFns__$h
-}, __vue_inject_styles__$k, __vue_script__$k, __vue_scope_id__$k, __vue_is_functional_template__$k, __vue_module_identifier__$k, false, undefined, undefined, undefined);
-
-var GlobalClassNames$6 = {
-  root: 'ms-ChoiceFieldGroup',
-  flexContainer: 'ms-ChoiceFieldGroup-flexContainer'
-};
-var getStyles$i = function getStyles(props) {
-  var className = props.className,
-      optionsContainIconOrImage = props.optionsContainIconOrImage,
-      theme = props.theme;
-  var classNames = getGlobalClassNames(GlobalClassNames$6, theme);
-  return {
-    // TODO (Fabric 8?) - merge className back into `root` and apply root style to
-    // the actual root role=application element
-    applicationRole: className,
-    root: [classNames.root, theme.fonts.medium, {
-      display: 'block'
-    }],
-    flexContainer: [classNames.flexContainer, optionsContainIconOrImage && {
-      display: 'flex',
-      flexDirection: 'row',
-      flexWrap: 'wrap'
-    }]
-  };
-};
-
-var Label$2 = styled(__vue_component__$h, getStyles$g, undefined);
+var getClassNames$b = classNamesFunction();
 
 var ChoiceGroup =
 /*#__PURE__*/
@@ -6269,9 +6177,10 @@ function (_BaseComponent) {
   }, {
     key: "classNames",
     get: function get() {
-      var theme = this.theme,
+      var styles = this.styles,
+          theme = this.theme,
           className = this.className;
-      return getClassNames(getStyles$i, {
+      return getClassNames$b(styles, {
         theme: theme,
         className: className,
         optionsContainIconOrImage: false
@@ -6313,14 +6222,14 @@ __decorate([Prop({
 
 ChoiceGroup = __decorate([Component({
   components: {
-    ChoiceGroupOption: __vue_component__$k,
-    Label: Label$2
+    ChoiceGroupOption: ChoiceGroupOption$1,
+    Label: Label$1
   }
 })], ChoiceGroup);
-var script$l = ChoiceGroup;
+var script$k = ChoiceGroup;
 
 /* script */
-var __vue_script__$l = script$l;
+var __vue_script__$k = script$k;
 /* template */
 
 var __vue_render__$i = function __vue_render__() {
@@ -6361,28 +6270,54 @@ var __vue_render__$i = function __vue_render__() {
 var __vue_staticRenderFns__$i = [];
 /* style */
 
-var __vue_inject_styles__$l = undefined;
+var __vue_inject_styles__$k = undefined;
 /* scoped */
 
-var __vue_scope_id__$l = undefined;
+var __vue_scope_id__$k = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$l = undefined;
+var __vue_module_identifier__$k = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$l = false;
+var __vue_is_functional_template__$k = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$l = __vue_normalize__({
+var __vue_component__$k = __vue_normalize__({
   render: __vue_render__$i,
   staticRenderFns: __vue_staticRenderFns__$i
-}, __vue_inject_styles__$l, __vue_script__$l, __vue_scope_id__$l, __vue_is_functional_template__$l, __vue_module_identifier__$l, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$k, __vue_script__$k, __vue_scope_id__$k, __vue_is_functional_template__$k, __vue_module_identifier__$k, false, undefined, undefined, undefined);
 
-var getClassNames$6 = classNamesFunction();
+var GlobalClassNames$7 = {
+  root: 'ms-ChoiceFieldGroup',
+  flexContainer: 'ms-ChoiceFieldGroup-flexContainer'
+};
+var getStyles$j = function getStyles(props) {
+  var className = props.className,
+      optionsContainIconOrImage = props.optionsContainIconOrImage,
+      theme = props.theme;
+  var classNames = getGlobalClassNames(GlobalClassNames$7, theme);
+  return {
+    // TODO (Fabric 8?) - merge className back into `root` and apply root style to
+    // the actual root role=application element
+    applicationRole: className,
+    root: [classNames.root, theme.fonts.medium, {
+      display: 'block'
+    }],
+    flexContainer: [classNames.flexContainer, optionsContainIconOrImage && {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap'
+    }]
+  };
+};
+
+var ChoiceGroup$1 = styled(__vue_component__$k, getStyles$j, undefined);
+
+var getClassNames$c = classNamesFunction();
 
 var Checkbox =
 /*#__PURE__*/
@@ -6413,7 +6348,7 @@ function (_BaseComponent) {
           indeterminate = this.indeterminate,
           internalValue = this.internalValue,
           boxSide = this.boxSide;
-      return getClassNames$6(this.styles, {
+      return getClassNames$c(this.styles, {
         theme: theme,
         className: className,
         disabled: disabled,
@@ -6470,10 +6405,10 @@ Checkbox = __decorate([Component({
   },
   inheritAttrs: false
 })], Checkbox);
-var script$m = Checkbox;
+var script$l = Checkbox;
 
 /* script */
-var __vue_script__$m = script$m;
+var __vue_script__$l = script$l;
 /* template */
 
 var __vue_render__$j = function __vue_render__() {
@@ -6497,16 +6432,16 @@ var __vue_render__$j = function __vue_render__() {
       }
     }
   }, 'input', _vm.$attrs, false)), _vm._v(" "), _c('Label', {
+    class: _vm.classNames.label,
     attrs: {
-      "for": "Checkbox" + _vm._uid,
-      "class-name": _vm.classNames.label
+      "for": "Checkbox" + _vm._uid
     }
   }, [_c('div', {
     class: _vm.classNames.checkbox
   }, [_c('Icon', {
+    class: _vm.classNames.checkmark,
     attrs: {
-      "icon-name": "CheckMark",
-      "class-name": _vm.classNames.checkmark
+      "icon-name": "CheckMark"
     }
   })], 1), _vm._v(" "), _vm.label || _vm.$slots.default ? _c('span', {
     class: _vm.classNames.text
@@ -6516,28 +6451,28 @@ var __vue_render__$j = function __vue_render__() {
 var __vue_staticRenderFns__$j = [];
 /* style */
 
-var __vue_inject_styles__$m = undefined;
+var __vue_inject_styles__$l = undefined;
 /* scoped */
 
-var __vue_scope_id__$m = undefined;
+var __vue_scope_id__$l = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$m = undefined;
+var __vue_module_identifier__$l = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$m = false;
+var __vue_is_functional_template__$l = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$m = __vue_normalize__({
+var __vue_component__$l = __vue_normalize__({
   render: __vue_render__$j,
   staticRenderFns: __vue_staticRenderFns__$j
-}, __vue_inject_styles__$m, __vue_script__$m, __vue_scope_id__$m, __vue_is_functional_template__$m, __vue_module_identifier__$m, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$l, __vue_script__$l, __vue_scope_id__$l, __vue_is_functional_template__$l, __vue_module_identifier__$l, false, undefined, undefined, undefined);
 
-var GlobalClassNames$7 = {
+var GlobalClassNames$8 = {
   root: 'ms-Checkbox',
   label: 'ms-Checkbox-label',
   checkbox: 'ms-Checkbox-checkbox',
@@ -6547,7 +6482,7 @@ var GlobalClassNames$7 = {
 var MS_CHECKBOX_LABEL_SIZE = '20px';
 var MS_CHECKBOX_TRANSITION_DURATION = '200ms';
 var MS_CHECKBOX_TRANSITION_TIMING = 'cubic-bezier(.4, 0, .23, 1)';
-var getStyles$j = function getStyles(props) {
+var getStyles$k = function getStyles(props) {
   var _selectors3, _selectors4, _selectors5, _selectors6, _selectors7;
 
   var className = props.className,
@@ -6561,7 +6496,7 @@ var getStyles$j = function getStyles(props) {
       effects = theme.effects,
       palette = theme.palette,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames$7, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$8, theme);
   var checkmarkFontColor = semanticColors.inputForegroundChecked; // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.inputBorder
 
   var checkmarkFontColorHovered = palette.neutralSecondary; // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.smallInputBorder
@@ -6757,7 +6692,9 @@ var getStyles$j = function getStyles(props) {
   };
 };
 
-var Checkbox$1 = styled(__vue_component__$m, getStyles$j, undefined);
+var Checkbox$1 = styled(__vue_component__$l, getStyles$k, undefined);
+
+var getClassNames$d = classNamesFunction();
 
 var Dropdown =
 /*#__PURE__*/
@@ -6826,7 +6763,7 @@ function (_BaseComponent) {
       var isOpen = this.isOpen,
           calloutRenderEdge = this.calloutRenderEdge;
       var selectedOptions = this.selectedOptions;
-      return getClassNames(this.styles, {
+      return getClassNames$d(this.styles, {
         theme: theme,
         className: className,
         hasError: !!(errorMessage && errorMessage.length > 0),
@@ -6926,10 +6863,9 @@ Dropdown = __decorate([Component({
     Label: Label$1
   }
 })], Dropdown);
-var script$n = Dropdown;
+var script$m = Dropdown;
 
-/* script */
-var __vue_script__$n = script$n;
+var __vue_script__$m = script$m;
 /* template */
 
 var __vue_render__$k = function __vue_render__() {
@@ -6987,8 +6923,8 @@ var __vue_render__$k = function __vue_render__() {
     return _c(_vm.multiSelect ? 'Checkbox' : 'ActionButton', {
       key: index,
       tag: "components",
+      class: option.hidden ? _vm.classNames.dropdownItemHidden : option.isItemSelected && option.disabled === true ? _vm.classNames.dropdownItemSelectedAndDisabled : option.isItemSelected ? _vm.classNames.dropdownItemSelected : option.disabled === true ? _vm.classNames.dropdownItemDisabled : _vm.classNames.dropdownItem,
       attrs: {
-        "class-name": option.hidden ? _vm.classNames.dropdownItemHidden : option.isItemSelected && option.disabled === true ? _vm.classNames.dropdownItemSelectedAndDisabled : option.isItemSelected ? _vm.classNames.dropdownItemSelected : option.disabled === true ? _vm.classNames.dropdownItemDisabled : _vm.classNames.dropdownItem,
         "disabled": option.disabled,
         "title": option.text,
         "checked": option.isItemSelected,
@@ -7017,28 +6953,31 @@ var __vue_render__$k = function __vue_render__() {
 var __vue_staticRenderFns__$k = [];
 /* style */
 
-var __vue_inject_styles__$n = undefined;
+var __vue_inject_styles__$m = undefined;
 /* scoped */
 
-var __vue_scope_id__$n = undefined;
+var __vue_scope_id__$m = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$n = undefined;
+var __vue_module_identifier__$m = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$n = false;
+var __vue_is_functional_template__$m = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$n = __vue_normalize__({
+var __vue_component__$m = __vue_normalize__({
   render: __vue_render__$k,
   staticRenderFns: __vue_staticRenderFns__$k
-}, __vue_inject_styles__$n, __vue_script__$n, __vue_scope_id__$n, __vue_is_functional_template__$n, __vue_module_identifier__$n, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$m, __vue_script__$m, __vue_scope_id__$m, __vue_is_functional_template__$m, __vue_module_identifier__$m, false, undefined, undefined, undefined);
 
-var GlobalClassNames$8 = {
+function ownKeys$8(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$8(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$8(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$8(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var GlobalClassNames$9 = {
   root: 'ms-Dropdown-container',
   label: 'ms-Dropdown-label',
   dropdown: 'ms-Dropdown',
@@ -7063,7 +7002,7 @@ var highContrastAdjustMixin = _defineProperty({}, "".concat(HighContrastSelector
 });
 
 var highContrastItemAndTitleStateMixin = {
-  selectors: _objectSpread2(_defineProperty({}, HighContrastSelector, {
+  selectors: _objectSpread$8(_defineProperty({}, HighContrastSelector, {
     backgroundColor: 'Highlight',
     borderColor: 'Highlight',
     color: 'HighlightText'
@@ -7075,7 +7014,7 @@ var highContrastBorderState = {
   })
 };
 var MinimumScreenSelector$1 = getScreenSelector(0, ScreenWidthMinMedium);
-var getStyles$k = function getStyles(props) {
+var getStyles$l = function getStyles(props) {
   var _selectors3;
 
   var theme = props.theme,
@@ -7094,7 +7033,7 @@ var getStyles$k = function getStyles(props) {
     throw new Error('theme is undefined or null in base Dropdown getStyles function.');
   }
 
-  var globalClassnames = getGlobalClassNames(GlobalClassNames$8, theme);
+  var globalClassnames = getGlobalClassNames(GlobalClassNames$9, theme);
   var palette = theme.palette,
       semanticColors = theme.semanticColors,
       effects = theme.effects,
@@ -7191,7 +7130,7 @@ var getStyles$k = function getStyles(props) {
       }, highContrastItemAndTitleStateMixin]), _defineProperty(_selectors3, '&:active .' + globalClassnames.title, [!disabled && rootHoverFocusActiveSelectorNeutralDarkMixin, {
         borderColor: palette.themePrimary
       }, highContrastBorderState]), _defineProperty(_selectors3, '&:hover .' + globalClassnames.caretDown, !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin), _defineProperty(_selectors3, '&:focus .' + globalClassnames.caretDown, [!disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin, {
-        selectors: _objectSpread2(_defineProperty({}, HighContrastSelector, {
+        selectors: _objectSpread$8(_defineProperty({}, HighContrastSelector, {
           color: 'HighlightText'
         }), highContrastAdjustMixin)
       }]), _defineProperty(_selectors3, '&:active .' + globalClassnames.caretDown, !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin), _defineProperty(_selectors3, '&:hover .' + globalClassnames.titleIsPlaceHolder, !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin), _defineProperty(_selectors3, '&:focus .' + globalClassnames.titleIsPlaceHolder, !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin), _defineProperty(_selectors3, '&:active .' + globalClassnames.titleIsPlaceHolder, !disabled && rootHoverFocusActiveSelectorNeutralPrimaryMixin), _defineProperty(_selectors3, '&:hover .' + globalClassnames.titleHasError, borderColorError), _defineProperty(_selectors3, '&:active .' + globalClassnames.titleHasError, borderColorError), _selectors3)
@@ -7258,7 +7197,7 @@ var getStyles$k = function getStyles(props) {
         color: 'GrayText'
       })
     }],
-    errorMessage: _objectSpread2({
+    errorMessage: _objectSpread$8({
       color: semanticColors.errorText
     }, theme.fonts.small, {
       paddingTop: 5
@@ -7305,7 +7244,7 @@ var getStyles$k = function getStyles(props) {
       overflowWrap: 'break-word',
       margin: '1px'
     }],
-    dropdownItemHeader: [globalClassnames.dropdownItemHeader, _objectSpread2({}, fonts.medium, {
+    dropdownItemHeader: [globalClassnames.dropdownItemHeader, _objectSpread$8({}, fonts.medium, {
       fontWeight: FontWeights.semibold,
       color: semanticColors.menuHeader,
       background: 'none',
@@ -7350,7 +7289,7 @@ var getStyles$k = function getStyles(props) {
   };
 };
 
-var Dropdown$1 = styled(__vue_component__$n, getStyles$k, undefined);
+var Dropdown$1 = styled(__vue_component__$m, getStyles$l, undefined);
 
 var MessageBarType;
 
@@ -7380,7 +7319,7 @@ var MessageBarType;
   MessageBarType[MessageBarType["remove"] = 90000] = "remove";
 })(MessageBarType || (MessageBarType = {}));
 
-var getClassNames$7 = classNamesFunction();
+var getClassNames$e = classNamesFunction();
 
 var MessageBar =
 /*#__PURE__*/
@@ -7395,11 +7334,24 @@ function (_BaseComponent) {
     _classCallCheck(this, MessageBar);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MessageBar).apply(this, arguments));
+    _this.state = {
+      expandSingleLine: _this.expandSingleLine
+    };
     _this.ICON_MAP = (_this$ICON_MAP = {}, _defineProperty(_this$ICON_MAP, MessageBarType.info, 'Info'), _defineProperty(_this$ICON_MAP, MessageBarType.warning, 'Info'), _defineProperty(_this$ICON_MAP, MessageBarType.error, 'ErrorBadge'), _defineProperty(_this$ICON_MAP, MessageBarType.blocked, 'Blocked2'), _defineProperty(_this$ICON_MAP, MessageBarType.severeWarning, 'Warning'), _defineProperty(_this$ICON_MAP, MessageBarType.success, 'Completed'), _this$ICON_MAP);
     return _this;
   }
 
   _createClass(MessageBar, [{
+    key: "onExpandSingleLine",
+    value: function onExpandSingleLine(value) {
+      this.state.expandSingleLine = value;
+    }
+  }, {
+    key: "onClick",
+    value: function onClick() {
+      this.state.expandSingleLine = !this.state.expandSingleLine;
+    }
+  }, {
     key: "classNames",
     get: function get() {
       var theme = this.theme,
@@ -7407,17 +7359,17 @@ function (_BaseComponent) {
           messageBarType = this.messageBarType,
           actions = this.actions,
           truncated = this.truncated,
-          isMultiline = this.isMultiline,
-          expandSingleLine = this.expandSingleLine;
-      return getClassNames$7(this.styles, {
+          isMultiline = this.isMultiline;
+      var expandSingleLine = this.state.expandSingleLine;
+      return getClassNames$e(this.styles, {
         theme: theme,
-        className: className,
         messageBarType: messageBarType || MessageBarType.info,
-        // onDismiss: onDismiss !== undefined,
+        onDismiss: this.$listeners.dismiss !== undefined,
         actions: actions !== undefined,
         truncated: truncated,
         isMultiline: isMultiline,
-        expandSingleLine: expandSingleLine
+        expandSingleLine: expandSingleLine,
+        className: className
       });
     }
   }]);
@@ -7442,7 +7394,7 @@ __decorate([Prop({
 
 __decorate([Prop({
   type: Boolean,
-  default: true
+  default: false
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "truncated", void 0);
 
 __decorate([Prop({
@@ -7450,16 +7402,18 @@ __decorate([Prop({
   default: true
 }), __metadata("design:type", Boolean)], MessageBar.prototype, "expandSingleLine", void 0);
 
+__decorate([Watch('expandSingleLine'), __metadata("design:type", Function), __metadata("design:paramtypes", [Boolean]), __metadata("design:returntype", void 0)], MessageBar.prototype, "onExpandSingleLine", null);
+
 MessageBar = __decorate([Component({
   components: {
     Icon: Icon$1,
     IconButton: __vue_component__$7
   }
 })], MessageBar);
-var script$o = MessageBar;
+var script$n = MessageBar;
 
 /* script */
-var __vue_script__$o = script$o;
+var __vue_script__$n = script$n;
 /* template */
 
 var __vue_render__$l = function __vue_render__() {
@@ -7485,53 +7439,77 @@ var __vue_render__$l = function __vue_render__() {
       "icon-name": _vm.ICON_MAP[_vm.messageBarType]
     }
   })], 1), _vm._v(" "), _c('div', {
-    class: _vm.classNames.text
+    class: _vm.classNames.text,
+    attrs: {
+      "role": "status"
+    }
   }, [_c('span', {
     class: _vm.classNames.innerText
-  }, [_vm._t("default")], 2)]), _vm._v(" "), !_vm.actions && _vm.truncated ? _c('div', {
+  }, [_c('span', [_vm._t("default")], 2)])]), _vm._v(" "), !_vm.actions && _vm.truncated ? _c('div', {
     class: _vm.classNames.expandSingleLine
   }, [_c('IconButton', {
     class: _vm.classNames.expand,
     attrs: {
       "icon-props": {
-        iconName: _vm.expandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown'
+        iconName: _vm.state.expandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown'
+      }
+    },
+    nativeOn: {
+      "click": function click($event) {
+        return _vm.onClick($event);
       }
     }
-  })], 1) : _vm._e(), _vm._v(" "), _c('IconButton', {
+  })], 1) : _vm._e(), _vm._v(" "), !_vm.isMultiline && _vm.$slots.actions ? _c('div', {
+    class: _vm.classNames.actions
+  }, [_vm._t("actions")], 2) : _vm._e(), _vm._v(" "), _vm.$listeners.dismiss ? [_vm.isMultiline ? _c('IconButton', {
     class: _vm.classNames.dismissal,
     attrs: {
       "icon-props": {
         iconName: 'Clear'
       }
     }
-  })], 1)])]);
+  }) : _c('div', {
+    class: _vm.classNames.dismissSingleLine
+  }, [_c('IconButton', {
+    class: _vm.classNames.dismissal,
+    attrs: {
+      "icon-props": {
+        iconName: 'Clear'
+      }
+    }
+  })], 1)] : _vm._e()], 2), _vm._v(" "), _vm.isMultiline && _vm.$slots.actions ? _c('div', {
+    class: _vm.classNames.actions
+  }, [_vm._t("actions")], 2) : _vm._e()])]);
 };
 
 var __vue_staticRenderFns__$l = [];
 /* style */
 
-var __vue_inject_styles__$o = undefined;
+var __vue_inject_styles__$n = undefined;
 /* scoped */
 
-var __vue_scope_id__$o = "data-v-0aae61fd";
+var __vue_scope_id__$n = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$o = undefined;
+var __vue_module_identifier__$n = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$o = false;
+var __vue_is_functional_template__$n = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$o = __vue_normalize__({
+var __vue_component__$n = __vue_normalize__({
   render: __vue_render__$l,
   staticRenderFns: __vue_staticRenderFns__$l
-}, __vue_inject_styles__$o, __vue_script__$o, __vue_scope_id__$o, __vue_is_functional_template__$o, __vue_module_identifier__$o, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$n, __vue_script__$n, __vue_scope_id__$n, __vue_is_functional_template__$n, __vue_module_identifier__$n, false, undefined, undefined, undefined);
 
-var GlobalClassNames$9 = {
+function ownKeys$9(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$9(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$9(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$9(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var GlobalClassNames$a = {
   root: 'ms-MessageBar',
   error: 'ms-MessageBar--error',
   blocked: 'ms-MessageBar--blocked',
@@ -7591,7 +7569,7 @@ var getIconColor = function getIconColor(messageBarType, palette, semanticColors
   return palette.neutralSecondary;
 };
 
-var getStyles$l = function getStyles(props) {
+var getStyles$m = function getStyles(props) {
   var theme = props.theme,
       className = props.className,
       messageBarType = props.messageBarType,
@@ -7603,7 +7581,7 @@ var getStyles$l = function getStyles(props) {
       palette = theme.palette,
       fonts = theme.fonts;
   var SmallScreenSelector = getScreenSelector(0, ScreenWidthMaxSmall);
-  var classNames = getGlobalClassNames(GlobalClassNames$9, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$a, theme);
   var dismissalAndExpandIconStyle = {
     fontSize: IconFontSizes.xSmall,
     height: 10,
@@ -7645,7 +7623,7 @@ var getStyles$l = function getStyles(props) {
       display: 'flex',
       wordBreak: 'break-word',
       selectors: _defineProperty({
-        '& .ms-Link': _objectSpread2({
+        '& .ms-Link': _objectSpread$9({
           color: palette.themeDark
         }, fonts.small)
       }, HighContrastSelector, {
@@ -7675,7 +7653,7 @@ var getStyles$l = function getStyles(props) {
         color: 'Window'
       })
     },
-    text: [classNames.text, _objectSpread2({
+    text: [classNames.text, _objectSpread$9({
       minWidth: 0,
       display: 'flex',
       flexGrow: 1,
@@ -7735,7 +7713,7 @@ var getStyles$l = function getStyles(props) {
   };
 };
 
-var MessageBar$1 = styled(__vue_component__$o, getStyles$l, undefined);
+var MessageBar$1 = styled(__vue_component__$n, getStyles$m, undefined);
 
 var Popup =
 /*#__PURE__*/
@@ -7903,79 +7881,73 @@ __decorate([Prop({
 Popup = __decorate([Component({
   components: {}
 })], Popup);
-var script$p = Popup;
+var script$o = Popup;
 
 /* script */
-var __vue_script__$p = script$p;
+var __vue_script__$o = script$o;
 /* template */
 
 /* style */
 
-var __vue_inject_styles__$p = undefined;
+var __vue_inject_styles__$o = undefined;
 /* scoped */
 
-var __vue_scope_id__$p = "data-v-28f77748";
+var __vue_scope_id__$o = "data-v-28f77748";
 /* module identifier */
 
-var __vue_module_identifier__$p = undefined;
+var __vue_module_identifier__$o = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$p = undefined;
+var __vue_is_functional_template__$o = undefined;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$p = __vue_normalize__({}, __vue_inject_styles__$p, __vue_script__$p, __vue_scope_id__$p, __vue_is_functional_template__$p, __vue_module_identifier__$p, false, undefined, undefined, undefined);
+var __vue_component__$o = __vue_normalize__({}, __vue_inject_styles__$o, __vue_script__$o, __vue_scope_id__$o, __vue_is_functional_template__$o, __vue_module_identifier__$o, false, undefined, undefined, undefined);
 
-var getClassNames$8 = classNamesFunction();
+function ownKeys$a(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-var Link =
+function _objectSpread$a(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$a(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$a(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var getStyles$n = memoizeFunction(function (theme, className, customStyles) {
+  var baseButtonStyles = getStyles$3(theme);
+  var customButtonStyles = concatStyleSets(baseButtonStyles, customStyles);
+  return _objectSpread$a({}, customButtonStyles, {
+    root: [baseButtonStyles.root, className, theme.fonts.medium, customStyles && customStyles.root]
+  });
+});
+
+var FacepileButton =
 /*#__PURE__*/
 function (_BaseComponent) {
-  _inherits(Link, _BaseComponent);
+  _inherits(FacepileButton, _BaseComponent);
 
-  function Link() {
-    _classCallCheck(this, Link);
+  function FacepileButton() {
+    _classCallCheck(this, FacepileButton);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Link).apply(this, arguments));
+    return _possibleConstructorReturn(this, _getPrototypeOf(FacepileButton).apply(this, arguments));
   }
 
-  _createClass(Link, [{
-    key: "classNames",
+  _createClass(FacepileButton, [{
+    key: "customStyles",
     get: function get() {
-      var className = this.className,
-          theme = this.theme,
-          href = this.href,
-          disabled = this.disabled;
-      return getClassNames$8(this.styles, {
-        theme: theme,
-        className: className,
-        isButton: !href,
-        isDisabled: disabled
-      });
+      return getStyles$n(this.theme, this.className, this.styles);
     }
   }]);
 
-  return Link;
+  return FacepileButton;
 }(BaseComponent$1);
 
-__decorate([Prop({
-  type: Boolean,
-  default: false
-}), __metadata("design:type", Boolean)], Link.prototype, "disabled", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: ''
-}), __metadata("design:type", String)], Link.prototype, "href", void 0);
-
-Link = __decorate([Component], Link);
-var script$q = Link;
+FacepileButton = __decorate([Component({
+  components: {
+    BaseButton: __vue_component__$2
+  }
+})], FacepileButton);
+var script$p = FacepileButton;
 
 /* script */
-var __vue_script__$q = script$q;
+var __vue_script__$p = script$p;
 /* template */
 
 var __vue_render__$m = function __vue_render__() {
@@ -7985,17 +7957,114 @@ var __vue_render__$m = function __vue_render__() {
 
   var _c = _vm._self._c || _h;
 
-  return _c(_vm.href ? 'a' : 'button', {
-    tag: "component",
-    class: _vm.classNames.root,
+  return _c('BaseButton', {
     attrs: {
-      "type": !_vm.href && 'button',
-      "href": _vm.href
+      "variant-class-name": "ms-Button--facepile",
+      "styles": _vm.customStyles
     }
-  }, [_vm._t("default")], 2);
+  }, [_vm._v("FacepileButton")]);
 };
 
 var __vue_staticRenderFns__$m = [];
+/* style */
+
+var __vue_inject_styles__$p = undefined;
+/* scoped */
+
+var __vue_scope_id__$p = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$p = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$p = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$p = __vue_normalize__({
+  render: __vue_render__$m,
+  staticRenderFns: __vue_staticRenderFns__$m
+}, __vue_inject_styles__$p, __vue_script__$p, __vue_scope_id__$p, __vue_is_functional_template__$p, __vue_module_identifier__$p, false, undefined, undefined, undefined);
+
+var getClassNames$f = classNamesFunction();
+
+var Facepile =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Facepile, _BaseComponent);
+
+  function Facepile() {
+    _classCallCheck(this, Facepile);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Facepile).apply(this, arguments));
+  }
+
+  _createClass(Facepile, [{
+    key: "singlePersona",
+    get: function get() {
+      return this.personas.length === 1;
+    }
+  }, {
+    key: "classNames",
+    get: function get() {
+      return getClassNames$f(this.styles, {
+        theme: this.theme,
+        className: this.className
+      });
+    }
+  }]);
+
+  return Facepile;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: Array,
+  default: function _default() {
+    return [];
+  }
+}), __metadata("design:type", Array)], Facepile.prototype, "personas", void 0);
+
+Facepile = __decorate([Component({
+  components: {
+    FacepileButton: __vue_component__$p
+  }
+})], Facepile);
+var script$q = Facepile;
+
+/* script */
+var __vue_script__$q = script$q;
+/* template */
+
+var __vue_render__$n = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    class: _vm.classNames.root
+  }, [_c('div', {
+    class: _vm.classNames.itemContainer
+  }, [_c('ul', {
+    class: _vm.classNames.members,
+    attrs: {
+      "role": "listbox"
+    }
+  }, _vm._l(_vm.personas, function (persona, index) {
+    return _c('li', {
+      key: _vm.singlePersona ? 'persona' : "personaCoin-" + index,
+      attrs: {
+        "role": "option"
+      }
+    }, [_c('FacepileButton')], 1);
+  }), 0)])]);
+};
+
+var __vue_staticRenderFns__$n = [];
 /* style */
 
 var __vue_inject_styles__$q = undefined;
@@ -8015,14 +8084,722 @@ var __vue_is_functional_template__$q = false;
 /* style inject shadow dom */
 
 var __vue_component__$q = __vue_normalize__({
-  render: __vue_render__$m,
-  staticRenderFns: __vue_staticRenderFns__$m
+  render: __vue_render__$n,
+  staticRenderFns: __vue_staticRenderFns__$n
 }, __vue_inject_styles__$q, __vue_script__$q, __vue_scope_id__$q, __vue_is_functional_template__$q, __vue_module_identifier__$q, false, undefined, undefined, undefined);
 
-var GlobalClassNames$a = {
+var GlobalClassNames$b = {
+  root: 'ms-Facepile',
+  addButton: 'ms-Facepile-addButton ms-Facepile-itemButton',
+  descriptiveOverflowButton: 'ms-Facepile-descriptiveOverflowButton ms-Facepile-itemButton',
+  itemButton: 'ms-Facepile-itemButton ms-Facepile-person',
+  itemContainer: 'ms-Facepile-itemContainer',
+  members: 'ms-Facepile-members',
+  member: 'ms-Facepile-member',
+  overflowButton: 'ms-Facepile-overflowButton ms-Facepile-itemButton'
+};
+var getStyles$o = function getStyles(props) {
+  var className = props.className,
+      theme = props.theme,
+      _props$spacingAroundI = props.spacingAroundItemButton,
+      spacingAroundItemButton = _props$spacingAroundI === void 0 ? 2 : _props$spacingAroundI;
+  var palette = theme.palette,
+      fonts = theme.fonts;
+  var classNames = getGlobalClassNames(GlobalClassNames$b, theme);
+  var ItemButtonStyles = {
+    textAlign: 'center',
+    padding: 0,
+    borderRadius: '50%',
+    verticalAlign: 'top',
+    display: 'inline',
+    backgroundColor: 'transparent',
+    border: 'none',
+    selectors: {
+      '&::-moz-focus-inner': {
+        padding: 0,
+        border: 0
+      }
+    }
+  };
+  return {
+    root: [classNames.root, theme.fonts.medium, {
+      width: 'auto'
+    }, className],
+    addButton: [classNames.addButton, getFocusStyle(theme, {
+      inset: -1
+    }), ItemButtonStyles, {
+      fontSize: fonts.medium.fontSize,
+      color: palette.white,
+      backgroundColor: palette.themePrimary,
+      marginRight: spacingAroundItemButton * 2 + 'px',
+      selectors: {
+        '&:hover': {
+          backgroundColor: palette.themeDark
+        },
+        '&:focus': {
+          backgroundColor: palette.themeDark
+        },
+        '&:active': {
+          backgroundColor: palette.themeDarker
+        },
+        '&:disabled': {
+          backgroundColor: palette.neutralTertiaryAlt
+        }
+      }
+    }],
+    descriptiveOverflowButton: [classNames.descriptiveOverflowButton, getFocusStyle(theme, {
+      inset: -1
+    }), ItemButtonStyles, {
+      fontSize: fonts.small.fontSize,
+      color: palette.neutralSecondary,
+      backgroundColor: palette.neutralLighter,
+      marginLeft: "".concat(spacingAroundItemButton * 2, "px")
+    }],
+    itemButton: [classNames.itemButton, ItemButtonStyles],
+    itemContainer: [classNames.itemContainer, {
+      display: 'flex'
+    }],
+    members: [classNames.members, {
+      display: 'flex',
+      overflow: 'hidden',
+      listStyleType: 'none',
+      padding: 0,
+      margin: "-".concat(spacingAroundItemButton, "px")
+    }],
+    member: [classNames.member, {
+      display: 'inline-flex',
+      flex: '0 0 auto',
+      margin: "".concat(spacingAroundItemButton, "px")
+    }],
+    overflowButton: [classNames.overflowButton, getFocusStyle(theme, {
+      inset: -1
+    }), ItemButtonStyles, {
+      fontSize: fonts.medium.fontSize,
+      color: palette.neutralSecondary,
+      backgroundColor: palette.neutralLighter,
+      marginLeft: "".concat(spacingAroundItemButton * 2, "px")
+    }],
+    overflowInitialsIcon: [{
+      color: palette.neutralPrimary
+    }],
+    screenReaderOnly: hiddenContentStyle
+  };
+};
+
+var Facepile$1 = styled(__vue_component__$q, getStyles$o, undefined);
+
+var getClassNames$g = classNamesFunction();
+var PanelVisibilityState;
+
+(function (PanelVisibilityState) {
+  PanelVisibilityState[PanelVisibilityState["closed"] = 0] = "closed";
+  PanelVisibilityState[PanelVisibilityState["animatingOpen"] = 1] = "animatingOpen";
+  PanelVisibilityState[PanelVisibilityState["open"] = 2] = "open";
+  PanelVisibilityState[PanelVisibilityState["animatingClosed"] = 3] = "animatingClosed";
+})(PanelVisibilityState || (PanelVisibilityState = {}));
+
+var Panel =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Panel, _BaseComponent);
+
+  function Panel() {
+    var _this;
+
+    _classCallCheck(this, Panel);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Panel).apply(this, arguments));
+    _this.IconFontSizes = IconFontSizes;
+    _this.visibility = PanelVisibilityState.closed;
+    return _this;
+  }
+
+  _createClass(Panel, [{
+    key: "classNames",
+    get: function get() {
+      var styles = this.styles,
+          theme = this.theme,
+          _this$className = this.className,
+          className = _this$className === void 0 ? '' : _this$className,
+          focusTrapZoneProps = this.focusTrapZoneProps,
+          hasCloseButton = this.hasCloseButton,
+          _this$headerClassName = this.headerClassName,
+          headerClassName = _this$headerClassName === void 0 ? '' : _this$headerClassName,
+          isFooterSticky = this.isFooterSticky,
+          isFooterAtBottom = this.isFooterAtBottom,
+          isOnRightSide = this.isOnRightSide,
+          isOpen = this.isOpen,
+          isHiddenOnDismiss = this.isHiddenOnDismiss,
+          type = this.type;
+      var visibility = this.visibility;
+      var isAnimating = visibility === PanelVisibilityState.animatingClosed || visibility === PanelVisibilityState.animatingOpen;
+      return getClassNames$g(styles, {
+        theme: theme,
+        className: className,
+        focusTrapZoneClassName: focusTrapZoneProps ? focusTrapZoneProps.className : undefined,
+        hasCloseButton: hasCloseButton,
+        headerClassName: headerClassName,
+        isAnimating: isAnimating,
+        isFooterSticky: isFooterSticky,
+        isFooterAtBottom: isFooterAtBottom,
+        isOnRightSide: isOnRightSide,
+        isOpen: isOpen,
+        isHiddenOnDismiss: isHiddenOnDismiss,
+        type: type
+      });
+    }
+  }]);
+
+  return Panel;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Panel.prototype, "headerText", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], Panel.prototype, "focusTrapZoneProps", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], Panel.prototype, "headerClassName", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], Panel.prototype, "type", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "hasCloseButton", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isFooterSticky", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isFooterAtBottom", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isOnRightSide", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isOpen", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isHiddenOnDismiss", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Panel.prototype, "isBlocking", void 0);
+
+Panel = __decorate([Component({
+  components: {
+    Layer: __vue_component__$b,
+    Overlay: Overlay$1,
+    IconButton: __vue_component__$7
+  }
+})], Panel);
+var script$r = Panel;
+
+/* script */
+var __vue_script__$r = script$r;
+/* template */
+
+var __vue_render__$o = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('Layer', [_c('div', {
+    class: _vm.classNames.root
+  }, [_vm.isBlocking && _vm.isOpen ? _c('Overlay', {
+    class: _vm.classNames.overlay
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    class: _vm.classNames.main
+  }, [_c('div', {
+    class: _vm.classNames.commands
+  }, [_c('div', {
+    class: _vm.classNames.navigation
+  }, [_c('IconButton', {
+    class: _vm.classNames.closeButton,
+    attrs: {
+      "styles": {
+        root: {
+          height: 'auto',
+          width: '44px',
+          color: _vm.theme.palette.neutralSecondary,
+          fontSize: _vm.IconFontSizes.large
+        },
+        rootHovered: {
+          color: _vm.theme.palette.neutralPrimary
+        }
+      },
+      "icon-props": {
+        iconName: 'Cancel'
+      }
+    },
+    nativeOn: {
+      "click": function click($event) {
+        return _vm.$emit('close');
+      }
+    }
+  })], 1)]), _vm._v(" "), _c('div', {
+    class: _vm.classNames.contentInner
+  }, [_c('div', {
+    class: _vm.classNames.header
+  }, [_c('p', {
+    class: _vm.classNames.headerText
+  }, [_vm._v("\n            " + _vm._s(_vm.headerText) + "\n          ")])]), _vm._v(" "), _c('div', {
+    class: _vm.classNames.scrollableContent
+  }, [_c('div', {
+    class: _vm.classNames.content
+  }, [_vm._t("default")], 2)])])])], 1)]);
+};
+
+var __vue_staticRenderFns__$o = [];
+/* style */
+
+var __vue_inject_styles__$r = undefined;
+/* scoped */
+
+var __vue_scope_id__$r = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$r = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$r = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$r = __vue_normalize__({
+  render: __vue_render__$o,
+  staticRenderFns: __vue_staticRenderFns__$o
+}, __vue_inject_styles__$r, __vue_script__$r, __vue_scope_id__$r, __vue_is_functional_template__$r, __vue_module_identifier__$r, false, undefined, undefined, undefined);
+
+/**
+ * {@docCategory Panel}
+ */
+var PanelType;
+
+(function (PanelType) {
+  /**
+   * Renders the Panel with a `fluid` (full screen) width.
+   * Recommended for use on small screen breakpoints.
+   * - Small (320-479): full screen width, 16px left/right padding
+   * - Medium (480-639): full screen width, 16px left/right padding
+   * - Large (640-1023): full screen width, 32px left/right padding
+   * - XLarge (1024-1365): full screen width, 32px left/right padding
+   * - XXLarge (1366-up): full screen width, 40px left/right padding
+   */
+  PanelType[PanelType["smallFluid"] = 0] = "smallFluid";
+  /**
+   * Renders the Panel in fixed-width `small` size, anchored to the far side (right in LTR mode).
+   * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
+   * - Medium (480-639): 340px width, 16px left/right padding
+   * - Large (640-1023): 340px width, 32px left/right padding
+   * - XLarge (1024-1365): 340px width, 32px left/right padding
+   * - XXLarge (1366-up): 340px width, 40px left/right padding
+   */
+
+  PanelType[PanelType["smallFixedFar"] = 1] = "smallFixedFar";
+  /**
+   * Renders the Panel in fixed-width `small` size, anchored to the near side (left in LTR mode).
+   * - Small (320-479): 272px width, 16px left/right padding
+   * - Medium (480-639): 272px width, 16px left/right padding
+   * - Large (640-1023): 272px width, 32px left/right padding
+   * - XLarge (1024-1365): 272px width, 32px left/right padding
+   * - XXLarge (1366-up): 272px width, 40px left/right padding
+   */
+
+  PanelType[PanelType["smallFixedNear"] = 2] = "smallFixedNear";
+  /**
+   * Renders the Panel in `medium` size, anchored to the far side (right in LTR mode).
+   * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
+   * - Medium (480-639): adapts to `PanelType.smallFixedFar` at this breakpoint
+   * - Large (640-1023): 592px width, 32px left/right padding
+   * - XLarge (1024-1365): 644px width, 32px left/right padding
+   * - XXLarge (1366-up): 644px width, 40px left/right padding
+   */
+
+  PanelType[PanelType["medium"] = 3] = "medium";
+  /**
+   * Renders the Panel in `large` size, anchored to the far side (right in LTR mode).
+   * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
+   * - Medium (480-639):  adapts to `PanelType.smallFixedFar` at this breakpoint
+   * - Large (640-1023): adapts to `PanelType.medium` at this breakpoint
+   * - XLarge (1024-1365): 48px fixed left margin, fluid width, 32px left/right padding
+   * - XXLarge (1366-up): 428px fixed left margin, fluid width, 40px left/right padding
+   */
+
+  PanelType[PanelType["large"] = 4] = "large";
+  /**
+   * Renders the Panel in `large` size, anchored to the far side (right in LTR mode), with a fixed width at XX-Large breakpoint.
+   * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
+   * - Medium (480-639): adapts to `PanelType.smallFixedFar` at this breakpoint
+   * - Large (640-1023): adapts to `PanelType.medium` at this breakpoint
+   * - XLarge (1024-1365): 48px fixed left margin, fluid width, 32px left/right padding
+   * - XXLarge (1366-up): 940px width, 40px left/right padding
+   */
+
+  PanelType[PanelType["largeFixed"] = 5] = "largeFixed";
+  /**
+   * Renders the Panel in `extra large` size, anchored to the far side (right in LTR mode).
+   * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
+   * - Medium (480-639): adapts to `PanelType.smallFixedFar` at this breakpoint
+   * - Large (640-1023): adapts to `PanelType.medium` at this breakpoint
+   * - XLarge (1024-1365): adapts to `PanelType.large` at this breakpoint
+   * - XXLarge (1366-1919): 176px fixed left margin, fluid width, 40px left/right padding
+   * - XXXLarge (1920-up): 176px fixed left margin, fluid width, 40px left/right padding
+   */
+
+  PanelType[PanelType["extraLarge"] = 6] = "extraLarge";
+  /**
+   * Renders the Panel in `custom` size using `customWidth`, anchored to the far side (right in LTR mode).
+   * - Has a fixed width provided by the `customWidth` prop
+   * - When screen width reaches the `customWidth` value it will behave like a fluid width Panel
+   * taking up 100% of the viewport width
+   */
+
+  PanelType[PanelType["custom"] = 7] = "custom";
+  /**
+   * Renders the Panel in `custom` size using `customWidth`, anchored to the near side (left in LTR mode).
+   * - Has a fixed width provided by the `customWidth` prop
+   * - When screen width reaches the `customWidth` value it will behave like a fluid width Panel
+   * taking up 100% of the viewport width
+   */
+
+  PanelType[PanelType["customNear"] = 8] = "customNear";
+})(PanelType || (PanelType = {}));
+
+var _mediumPanelSelectors, _largePanelSelectors;
+
+function ownKeys$b(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$b(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$b(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$b(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+// import { IStyleFunctionOrObject } from '../../Utilities';
+// import { IButtonStyles, IButtonStyleProps } from '../../Button';
+
+var GlobalClassNames$c = {
+  root: 'ms-Panel',
+  main: 'ms-Panel-main',
+  commands: 'ms-Panel-commands',
+  contentInner: 'ms-Panel-contentInner',
+  scrollableContent: 'ms-Panel-scrollableContent',
+  navigation: 'ms-Panel-navigation',
+  closeButton: 'ms-Panel-closeButton ms-PanelAction-close',
+  header: 'ms-Panel-header',
+  headerText: 'ms-Panel-headerText',
+  content: 'ms-Panel-content',
+  footer: 'ms-Panel-footer',
+  footerInner: 'ms-Panel-footerInner',
+  isOpen: 'is-open',
+  hasCloseButton: 'ms-Panel--hasCloseButton',
+  smallFluid: 'ms-Panel--smFluid',
+  smallFixedNear: 'ms-Panel--smLeft',
+  smallFixedFar: 'ms-Panel--sm',
+  medium: 'ms-Panel--md',
+  large: 'ms-Panel--lg',
+  largeFixed: 'ms-Panel--fixed',
+  extraLarge: 'ms-Panel--xl',
+  custom: 'ms-Panel--custom',
+  customNear: 'ms-Panel--customLeft'
+};
+var panelWidth = {
+  full: '100%',
+  auto: 'auto',
+  xs: 272,
+  sm: 340,
+  md1: 592,
+  md2: 644,
+  lg: 940
+};
+var panelMargin = {
+  auto: 'auto',
+  none: 0,
+  md: 48,
+  lg: 428,
+  xl: 176
+}; // Following consts are used below in `getPanelBreakpoints()` function to provide
+// necessary fallbacks for different types of Panel in different breakpoints.
+
+var smallPanelSelectors = _defineProperty({}, "@media (min-width: ".concat(ScreenWidthMinMedium, "px)"), {
+  width: panelWidth.sm
+});
+
+var mediumPanelSelectors = (_mediumPanelSelectors = {}, _defineProperty(_mediumPanelSelectors, "@media (min-width: ".concat(ScreenWidthMinLarge, "px)"), {
+  width: panelWidth.md1
+}), _defineProperty(_mediumPanelSelectors, "@media (min-width: ".concat(ScreenWidthMinXLarge, "px)"), {
+  width: panelWidth.md2
+}), _mediumPanelSelectors);
+var largePanelSelectors = (_largePanelSelectors = {}, _defineProperty(_largePanelSelectors, "@media (min-width: ".concat(ScreenWidthMinUhfMobile, "px)"), {
+  left: panelMargin.md,
+  width: panelWidth.auto
+}), _defineProperty(_largePanelSelectors, "@media (min-width: ".concat(ScreenWidthMinXXLarge, "px)"), {
+  left: panelMargin.lg
+}), _largePanelSelectors);
+
+var largeFixedPanelSelectors = _defineProperty({}, "@media (min-width: ".concat(ScreenWidthMinXXLarge, "px)"), {
+  left: panelMargin.auto,
+  width: panelWidth.lg
+});
+
+var extraLargePanelSelectors = _defineProperty({}, "@media (min-width: ".concat(ScreenWidthMinXXLarge, "px)"), {
+  left: panelMargin.xl
+}); // Make sure Panels have fallbacks to different breakpoints by reusing same selectors.
+// This is done in the effort to follow design redlines.
+
+
+var getPanelBreakpoints = function getPanelBreakpoints(type) {
+  var selectors; // Panel types `smallFluid`, `smallFixedNear`, `custom` and `customNear`
+  // are not checked in here because they render the same in all the breakpoints
+  // and have the checks done separately in the `getStyles` function below.
+
+  switch (type) {
+    case PanelType.smallFixedFar:
+      selectors = _objectSpread$b({}, smallPanelSelectors);
+      break;
+
+    case PanelType.medium:
+      selectors = _objectSpread$b({}, smallPanelSelectors, {}, mediumPanelSelectors);
+      break;
+
+    case PanelType.large:
+      selectors = _objectSpread$b({}, smallPanelSelectors, {}, mediumPanelSelectors, {}, largePanelSelectors);
+      break;
+
+    case PanelType.largeFixed:
+      selectors = _objectSpread$b({}, smallPanelSelectors, {}, mediumPanelSelectors, {}, largePanelSelectors, {}, largeFixedPanelSelectors);
+      break;
+
+    case PanelType.extraLarge:
+      selectors = _objectSpread$b({}, smallPanelSelectors, {}, mediumPanelSelectors, {}, largePanelSelectors, {}, extraLargePanelSelectors);
+      break;
+  }
+
+  return selectors;
+};
+
+var commandBarHeight = '44px';
+var sharedPaddingStyles = {
+  paddingLeft: '16px',
+  paddingRight: '16px'
+}; // // TODO -Issue #5689: Comment in once Button is converted to mergeStyles
+// function getIconButtonStyles(props: any): IStyleFunctionOrObject<IButtonStyleProps, IButtonStyles> {
+//   const { theme } = props;
+//   return () => ({
+//     root: {
+//       height: 'auto',
+//       width: '44px',
+//       color: theme.palette.neutralSecondary,
+//       fontSize: IconFontSizes.large
+//     },
+//     rootHovered: {
+//       color: theme.palette.neutralPrimary
+//     }
+//   });
+// }
+
+var getStyles$p = function getStyles(props) {
+  var className = props.className,
+      focusTrapZoneClassName = props.focusTrapZoneClassName,
+      hasCloseButton = props.hasCloseButton,
+      headerClassName = props.headerClassName,
+      isAnimating = props.isAnimating,
+      isFooterSticky = props.isFooterSticky,
+      isFooterAtBottom = props.isFooterAtBottom,
+      isOnRightSide = props.isOnRightSide,
+      isOpen = props.isOpen,
+      isHiddenOnDismiss = props.isHiddenOnDismiss,
+      theme = props.theme,
+      _props$type = props.type,
+      type = _props$type === void 0 ? PanelType.smallFixedFar : _props$type;
+  var effects = theme.effects,
+      fonts = theme.fonts,
+      semanticColors = theme.semanticColors;
+  var classNames = getGlobalClassNames(GlobalClassNames$c, theme);
+  var isCustomPanel = type === PanelType.custom || type === PanelType.customNear;
+  return {
+    root: [classNames.root, theme.fonts.medium, isOpen && classNames.isOpen, hasCloseButton && classNames.hasCloseButton, {
+      pointerEvents: 'none',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    }, isCustomPanel && isOnRightSide && classNames.custom, isCustomPanel && !isOnRightSide && classNames.customNear, className],
+    overlay: [{
+      pointerEvents: 'auto',
+      cursor: 'pointer'
+    }, isOpen && isAnimating && AnimationClassNames.fadeIn100, !isOpen && isAnimating && AnimationClassNames.fadeOut100],
+    hiddenPanel: [!isOpen && !isAnimating && isHiddenOnDismiss && {
+      visibility: 'hidden'
+    }],
+    main: [classNames.main, {
+      backgroundColor: semanticColors.bodyBackground,
+      boxShadow: effects.elevation64,
+      pointerEvents: 'auto',
+      position: 'absolute',
+      display: 'flex',
+      flexDirection: 'column',
+      overflowX: 'hidden',
+      overflowY: 'auto',
+      WebkitOverflowScrolling: 'touch',
+      bottom: 0,
+      top: 0,
+      // (left, right, width) - Properties to be overridden depending on the type of the Panel and the screen breakpoint.
+      left: panelMargin.auto,
+      right: panelMargin.none,
+      width: panelWidth.full,
+      selectors: _objectSpread$b(_defineProperty({}, HighContrastSelector, {
+        borderLeft: "3px solid ".concat(semanticColors.variantBorder),
+        borderRight: "3px solid ".concat(semanticColors.variantBorder)
+      }), getPanelBreakpoints(type))
+    }, type === PanelType.smallFluid && {
+      left: panelMargin.none
+    }, type === PanelType.smallFixedNear && {
+      left: panelMargin.none,
+      right: panelMargin.auto,
+      width: panelWidth.xs
+    }, type === PanelType.customNear && {
+      right: 'auto',
+      left: 0
+    }, isCustomPanel && {
+      maxWidth: '100vw'
+    }, isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideRightIn40, isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideLeftIn40, !isOpen && isAnimating && !isOnRightSide && AnimationClassNames.slideLeftOut40, !isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideRightOut40, focusTrapZoneClassName],
+    commands: [classNames.commands],
+    navigation: [classNames.navigation, {
+      padding: '0 5px',
+      height: commandBarHeight,
+      display: 'flex',
+      justifyContent: 'flex-end'
+    }],
+    closeButton: [classNames.closeButton],
+    contentInner: [classNames.contentInner, {
+      display: 'flex',
+      flexDirection: 'column',
+      flexGrow: 1,
+      overflowY: 'hidden'
+    }],
+    header: [classNames.header, sharedPaddingStyles, {
+      margin: '14px 0',
+      // Ensure that title doesn't shrink if screen is too small
+      flexShrink: 0,
+      selectors: _defineProperty({}, "@media (min-width: ".concat(ScreenWidthMinXLarge, "px)"), {
+        marginTop: '30px'
+      })
+    }],
+    headerText: [classNames.headerText, fonts.xLarge, {
+      color: semanticColors.bodyText,
+      lineHeight: '27px',
+      margin: 0,
+      overflowWrap: 'break-word',
+      wordWrap: 'break-word',
+      wordBreak: 'break-word',
+      hyphens: 'auto'
+    }, headerClassName],
+    scrollableContent: [classNames.scrollableContent, {
+      overflowY: 'auto'
+    }, isFooterAtBottom && {
+      flexGrow: 1
+    }],
+    content: [classNames.content, sharedPaddingStyles, {
+      marginBottom: 0,
+      paddingBottom: 20
+    }],
+    footer: [classNames.footer, {
+      // Ensure that footer doesn't shrink if screen is too small
+      flexShrink: 0,
+      borderTop: '1px solid transparent',
+      transition: "opacity ".concat(AnimationVariables.durationValue3, " ").concat(AnimationVariables.easeFunction2)
+    }, isFooterSticky && {
+      background: semanticColors.bodyBackground,
+      borderTopColor: semanticColors.variantBorder
+    }],
+    footerInner: [classNames.footerInner, sharedPaddingStyles, {
+      paddingBottom: 16,
+      paddingTop: 16
+    }]
+  };
+};
+
+var Panel$1 = styled(__vue_component__$r, getStyles$p, undefined);
+
+function ownKeys$c(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$c(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$c(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$c(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+var getClassNames$h = classNamesFunction();
+
+var Link =
+/*#__PURE__*/
+function (_StatelessComponent) {
+  _inherits(Link, _StatelessComponent);
+
+  function Link() {
+    _classCallCheck(this, Link);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Link).apply(this, arguments));
+  }
+
+  _createClass(Link, [{
+    key: "render",
+    value: function render(h, context) {
+      var _context$props = context.props,
+          theme = _context$props.theme,
+          className = _context$props.className,
+          styles = _context$props.styles,
+          href = _context$props.href,
+          disabled = _context$props.disabled;
+      var classNames = getClassNames$h(styles, {
+        theme: theme,
+        className: className,
+        isButton: !href,
+        isDisabled: disabled
+      });
+      var component = href ? 'a' : 'button';
+      return h(component, _objectSpread$c({}, context.data, {
+        class: classNames.root,
+        attrs: _objectSpread$c({}, context.data.attrs, {}, href && {
+          href: href
+        }, {}, !href && {
+          type: 'button'
+        })
+      }), context.children);
+    }
+  }]);
+
+  return Link;
+}(StatelessComponent$1);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Link.prototype, "disabled", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: ''
+}), __metadata("design:type", String)], Link.prototype, "href", void 0);
+
+Link = __decorate([Component], Link);
+var LinkBase = Link;
+
+var GlobalClassNames$d = {
   root: 'ms-Link'
 };
-var getStyles$m = function getStyles(props) {
+var getStyles$q = function getStyles(props) {
   var _selectors3;
 
   var className = props.className,
@@ -8035,7 +8812,7 @@ var getStyles$m = function getStyles(props) {
   var linkInteractedColor = semanticColors.linkHovered;
   var linkDisabledColor = semanticColors.disabledText;
   var focusBorderColor = semanticColors.focusBorder;
-  var classNames = getGlobalClassNames(GlobalClassNames$a, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$d, theme);
   return {
     root: [classNames.root, theme.fonts.medium, {
       color: linkColor,
@@ -8100,194 +8877,9 @@ var getStyles$m = function getStyles(props) {
   };
 };
 
-var Link$1 = styled(__vue_component__$q, getStyles$m, undefined);
+var Link$1 = styled(LinkBase, getStyles$q, undefined);
 
-var Overlay =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Overlay, _BaseComponent);
-
-  function Overlay() {
-    _classCallCheck(this, Overlay);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Overlay).apply(this, arguments));
-  }
-
-  _createClass(Overlay, [{
-    key: "classNames",
-    get: function get() {
-      var theme = this.theme,
-          className = this.className,
-          dark = this.dark;
-      return getClassNames(this.styles, {
-        theme: theme,
-        className: className,
-        isDark: dark
-      });
-    }
-  }]);
-
-  return Overlay;
-}(BaseComponent$1);
-
-__decorate([Prop({
-  type: Boolean,
-  default: false
-}), __metadata("design:type", Boolean)], Overlay.prototype, "dark", void 0);
-
-Overlay = __decorate([Component], Overlay);
-var script$r = Overlay;
-
-/* script */
-var __vue_script__$r = script$r;
-/* template */
-
-var __vue_render__$n = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('div', {
-    class: _vm.classNames.root
-  }, [_vm._t("default")], 2);
-};
-
-var __vue_staticRenderFns__$n = [];
-/* style */
-
-var __vue_inject_styles__$r = undefined;
-/* scoped */
-
-var __vue_scope_id__$r = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$r = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$r = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$r = __vue_normalize__({
-  render: __vue_render__$n,
-  staticRenderFns: __vue_staticRenderFns__$n
-}, __vue_inject_styles__$r, __vue_script__$r, __vue_scope_id__$r, __vue_is_functional_template__$r, __vue_module_identifier__$r, false, undefined, undefined, undefined);
-
-var GlobalClassNames$b = {
-  root: 'ms-Overlay',
-  rootDark: 'ms-Overlay--dark'
-};
-var getStyles$n = function getStyles(props) {
-  var className = props.className,
-      theme = props.theme,
-      isNone = props.isNone,
-      isDark = props.isDark;
-  var palette = theme.palette;
-  var classNames = getGlobalClassNames(GlobalClassNames$b, theme);
-  return {
-    root: [classNames.root, theme.fonts.medium, {
-      backgroundColor: palette.whiteTranslucent40,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
-      position: 'absolute',
-      selectors: _defineProperty({}, HighContrastSelector, {
-        border: '1px solid WindowText',
-        opacity: 0
-      })
-    }, isNone && {
-      visibility: 'hidden'
-    }, isDark && [classNames.rootDark, {
-      backgroundColor: palette.blackTranslucent40
-    }], className]
-  };
-};
-
-var Overlay$1 = styled(__vue_component__$r, getStyles$n, undefined);
-
-var Overlay$2 = styled(__vue_component__$r, getStyles$n, undefined);
-
-var Panel =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Panel, _BaseComponent);
-
-  function Panel() {
-    _classCallCheck(this, Panel);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(Panel).apply(this, arguments));
-  }
-
-  return Panel;
-}(BaseComponent$1);
-
-__decorate([Prop({
-  type: String,
-  default: null
-}), __metadata("design:type", String)], Panel.prototype, "headerText", void 0);
-
-Panel = __decorate([Component({
-  components: {
-    Layer: __vue_component__$a,
-    Overlay: Overlay$2,
-    IconButton: __vue_component__$7
-  }
-})], Panel);
-var script$s = Panel;
-
-/* script */
-var __vue_script__$s = script$s;
-/* template */
-
-var __vue_render__$o = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('Layer', [_c('div', _vm._b({}, 'div', _vm.css.root, false), [_c('Overlay', _vm._b({}, 'Overlay', _vm.css.overlay, false)), _vm._v(" "), _c('div', _vm._b({}, 'div', _vm.css.main, false), [_c('div', _vm._b({}, 'div', _vm.css.commands, false), [_c('div', _vm._b({}, 'div', _vm.css.navigation, false), [_c('IconButton', _vm._b({
-    attrs: {
-      "icon-name": "Cancel"
-    },
-    nativeOn: {
-      "click": function click($event) {
-        return _vm.$emit('close');
-      }
-    }
-  }, 'IconButton', _vm.css.closeButton, false))], 1)]), _vm._v(" "), _c('div', _vm._b({}, 'div', _vm.css.contentInner, false), [_c('div', _vm._b({}, 'div', _vm.css.header, false), [_c('p', _vm._b({}, 'p', _vm.css.headerText, false), [_vm._v("\n            " + _vm._s(_vm.headerText) + "\n          ")])]), _vm._v(" "), _c('div', _vm._b({}, 'div', _vm.css.scrollableContent, false), [_c('div', _vm._b({}, 'div', _vm.css.content, false), [_vm._t("default")], 2)])])])], 1)]);
-};
-
-var __vue_staticRenderFns__$o = [];
-/* style */
-
-var __vue_inject_styles__$s = undefined;
-/* scoped */
-
-var __vue_scope_id__$s = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$s = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$s = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$s = __vue_normalize__({
-  render: __vue_render__$o,
-  staticRenderFns: __vue_staticRenderFns__$o
-}, __vue_inject_styles__$s, __vue_script__$s, __vue_scope_id__$s, __vue_is_functional_template__$s, __vue_module_identifier__$s, false, undefined, undefined, undefined);
-
+var getClassNames$i = classNamesFunction(); // if the percentComplete is near 0, don't animate it.
 // This prevents animations on reset to 0 scenarios
 
 var ZERO_THRESHOLD = 0.01;
@@ -8310,7 +8902,7 @@ function (_BaseComponent) {
           indeterminate = this.indeterminate,
           theme = this.theme,
           barHeight = this.barHeight;
-      return getClassNames(this.styles, {
+      return getClassNames$i(this.styles, {
         className: className,
         indeterminate: indeterminate,
         theme: theme,
@@ -8330,6 +8922,11 @@ function (_BaseComponent) {
 
   return ProgressIndicator;
 }(BaseComponent$1);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], ProgressIndicator.prototype, "progressHidden", void 0);
 
 __decorate([Prop({
   type: Boolean,
@@ -8357,10 +8954,9 @@ __decorate([Prop({
 }), __metadata("design:type", Number)], ProgressIndicator.prototype, "barHeight", void 0);
 
 ProgressIndicator = __decorate([Component], ProgressIndicator);
-var script$t = ProgressIndicator;
+var script$s = ProgressIndicator;
 
-/* script */
-var __vue_script__$t = script$t;
+var __vue_script__$s = script$s;
 /* template */
 
 var __vue_render__$p = function __vue_render__() {
@@ -8374,14 +8970,14 @@ var __vue_render__$p = function __vue_render__() {
     class: _vm.classNames.root
   }, [_vm.label ? _c('div', {
     class: _vm.classNames.itemName
-  }, [_vm._v("\n    " + _vm._s(_vm.label) + "\n  ")]) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n    " + _vm._s(_vm.label) + "\n  ")]) : _vm._e(), _vm._v(" "), !_vm.progressHidden ? _c('div', {
     class: _vm.classNames.itemProgress
   }, [_c('div', {
     class: _vm.classNames.progressTrack
   }), _vm._v(" "), _c('div', {
     class: _vm.classNames.progressBar,
     style: _vm.progressBarStyles
-  })]), _vm._v(" "), _vm.description ? _c('div', {
+  })]) : _vm._e(), _vm._v(" "), _vm.description ? _c('div', {
     class: _vm.classNames.itemDescription
   }, [_vm._v("\n    " + _vm._s(_vm.description) + "\n  ")]) : _vm._e()]);
 };
@@ -8389,28 +8985,28 @@ var __vue_render__$p = function __vue_render__() {
 var __vue_staticRenderFns__$p = [];
 /* style */
 
-var __vue_inject_styles__$t = undefined;
+var __vue_inject_styles__$s = undefined;
 /* scoped */
 
-var __vue_scope_id__$t = undefined;
+var __vue_scope_id__$s = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$t = undefined;
+var __vue_module_identifier__$s = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$t = false;
+var __vue_is_functional_template__$s = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$t = __vue_normalize__({
+var __vue_component__$s = __vue_normalize__({
   render: __vue_render__$p,
   staticRenderFns: __vue_staticRenderFns__$p
-}, __vue_inject_styles__$t, __vue_script__$t, __vue_scope_id__$t, __vue_is_functional_template__$t, __vue_module_identifier__$t, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$s, __vue_script__$s, __vue_scope_id__$s, __vue_is_functional_template__$s, __vue_module_identifier__$s, false, undefined, undefined, undefined);
 
-var GlobalClassNames$c = {
+var GlobalClassNames$e = {
   root: 'ms-ProgressIndicator',
   itemName: 'ms-ProgressIndicator-itemName',
   itemDescription: 'ms-ProgressIndicator-itemDescription',
@@ -8434,7 +9030,7 @@ var IndeterminateProgressRTL = keyframes({
     right: '100%'
   }
 });
-var getStyles$o = function getStyles(props) {
+var getStyles$r = function getStyles(props) {
   var isRTL = getRTL();
   var className = props.className,
       indeterminate = props.indeterminate,
@@ -8444,7 +9040,7 @@ var getStyles$o = function getStyles(props) {
   var palette = theme.palette,
       semanticColors = theme.semanticColors,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames$c, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$e, theme);
   var marginBetweenText = 8;
   var textHeight = 18;
   var progressTrackColor = palette.neutralLight;
@@ -8495,7 +9091,9 @@ var getStyles$o = function getStyles(props) {
   };
 };
 
-var ProgressIndicator$1 = styled(__vue_component__$t, getStyles$o, undefined);
+var ProgressIndicator$1 = styled(__vue_component__$s, getStyles$r, undefined);
+
+var getClassNames$j = classNamesFunction();
 
 var Rating =
 /*#__PURE__*/
@@ -8545,7 +9143,7 @@ function (_BaseComponent) {
       var disabled = this.disabled,
           readonly = this.readonly,
           theme = this.theme;
-      return getClassNames(this.styles, {
+      return getClassNames$j(this.styles, {
         disabled: disabled,
         readonly: readonly,
         theme: theme
@@ -8629,10 +9227,10 @@ Rating = __decorate([Component({
   },
   inheritAttrs: false
 })], Rating);
-var script$u = Rating;
+var script$t = Rating;
 
 /* script */
-var __vue_script__$u = script$u;
+var __vue_script__$t = script$t;
 /* template */
 
 var __vue_render__$q = function __vue_render__() {
@@ -8688,28 +9286,28 @@ var __vue_render__$q = function __vue_render__() {
 var __vue_staticRenderFns__$q = [];
 /* style */
 
-var __vue_inject_styles__$u = undefined;
+var __vue_inject_styles__$t = undefined;
 /* scoped */
 
-var __vue_scope_id__$u = undefined;
+var __vue_scope_id__$t = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$u = undefined;
+var __vue_module_identifier__$t = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$u = false;
+var __vue_is_functional_template__$t = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$u = __vue_normalize__({
+var __vue_component__$t = __vue_normalize__({
   render: __vue_render__$q,
   staticRenderFns: __vue_staticRenderFns__$q
-}, __vue_inject_styles__$u, __vue_script__$u, __vue_scope_id__$u, __vue_is_functional_template__$u, __vue_module_identifier__$u, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$t, __vue_script__$t, __vue_scope_id__$t, __vue_is_functional_template__$t, __vue_module_identifier__$t, false, undefined, undefined, undefined);
 
-var GlobalClassNames$d = {
+var GlobalClassNames$f = {
   root: 'ms-RatingStar-root',
   rootIsSmall: 'ms-RatingStar-root--small',
   rootIsLarge: 'ms-RatingStar-root--large',
@@ -8732,13 +9330,13 @@ function _getColorWithHighContrast(color, highContrastColor) {
   };
 }
 
-function getStyles$p(props) {
+function getStyles$s(props) {
   var disabled = props.disabled,
       readOnly = props.readOnly,
       theme = props.theme;
   var semanticColors = theme.semanticColors,
       palette = theme.palette;
-  var classNames = getGlobalClassNames(GlobalClassNames$d, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$f, theme);
   var ratingSmallIconSize = 16;
   var ratingLargeIconSize = 20;
   var ratingVerticalPadding = 8;
@@ -8842,7 +9440,9 @@ function getStyles$p(props) {
   };
 }
 
-var Rating$1 = styled(__vue_component__$u, getStyles$p, undefined);
+var Rating$1 = styled(__vue_component__$t, getStyles$s, undefined);
+
+var getClassNames$k = classNamesFunction();
 
 var SearchBox =
 /*#__PURE__*/
@@ -8891,7 +9491,7 @@ function (_BaseComponent) {
           className = this.className,
           disableAnimation = this.disableAnimation,
           internalValue = this.internalValue;
-      return getClassNames(this.styles, {
+      return getClassNames$k(this.styles, {
         theme: theme,
         className: className,
         underlined: underlined,
@@ -8952,10 +9552,9 @@ SearchBox = __decorate([Component({
   },
   inheritAttrs: false
 })], SearchBox);
-var script$v = SearchBox;
+var script$u = SearchBox;
 
-/* script */
-var __vue_script__$v = script$v;
+var __vue_script__$u = script$u;
 /* template */
 
 var __vue_render__$r = function __vue_render__() {
@@ -8973,8 +9572,8 @@ var __vue_render__$r = function __vue_render__() {
       "role": "search"
     }
   }, [_c('Icon', {
+    class: _vm.classNames.icon,
     attrs: {
-      "class-name": _vm.classNames.icon,
       "icon-name": _vm.iconName
     }
   })], 1), _vm._v(" "), _c('input', _vm._b({
@@ -9029,35 +9628,35 @@ var __vue_render__$r = function __vue_render__() {
 var __vue_staticRenderFns__$r = [];
 /* style */
 
-var __vue_inject_styles__$v = undefined;
+var __vue_inject_styles__$u = undefined;
 /* scoped */
 
-var __vue_scope_id__$v = undefined;
+var __vue_scope_id__$u = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$v = undefined;
+var __vue_module_identifier__$u = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$v = false;
+var __vue_is_functional_template__$u = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$v = __vue_normalize__({
+var __vue_component__$u = __vue_normalize__({
   render: __vue_render__$r,
   staticRenderFns: __vue_staticRenderFns__$r
-}, __vue_inject_styles__$v, __vue_script__$v, __vue_scope_id__$v, __vue_is_functional_template__$v, __vue_module_identifier__$v, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$u, __vue_script__$u, __vue_scope_id__$u, __vue_is_functional_template__$u, __vue_module_identifier__$u, false, undefined, undefined, undefined);
 
-var GlobalClassNames$e = {
+var GlobalClassNames$g = {
   root: 'ms-SearchBox',
   iconContainer: 'ms-SearchBox-iconContainer',
   icon: 'ms-SearchBox-icon',
   clearButton: 'ms-SearchBox-clearButton',
   field: 'ms-SearchBox-field'
 };
-function getStyles$q(props) {
+function getStyles$t(props) {
   var _selectors2, _selectors3;
 
   var theme = props.theme,
@@ -9071,7 +9670,7 @@ function getStyles$q(props) {
       fonts = theme.fonts,
       semanticColors = theme.semanticColors,
       effects = theme.effects;
-  var classNames = getGlobalClassNames(GlobalClassNames$e, theme); // placeholder style constants
+  var classNames = getGlobalClassNames(GlobalClassNames$g, theme); // placeholder style constants
 
   var placeholderStyles = {
     color: semanticColors.inputPlaceholderText,
@@ -9212,12 +9811,14 @@ function getStyles$q(props) {
   };
 }
 
-var SearchBox$1 = styled(__vue_component__$v, getStyles$q, undefined);
+var SearchBox$1 = styled(__vue_component__$u, getStyles$t, undefined);
+
+var getClassNames$l = classNamesFunction();
 
 var Separator =
 /*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Separator, _BaseComponent);
+function (_StatelessComponent) {
+  _inherits(Separator, _StatelessComponent);
 
   function Separator() {
     _classCallCheck(this, Separator);
@@ -9228,7 +9829,7 @@ function (_BaseComponent) {
   _createClass(Separator, [{
     key: "render",
     value: function render(h, context) {
-      var classNames = getClassNames(context.props.styles, {
+      var classNames = getClassNames$l(context.props.styles, {
         theme: context.props.theme,
         className: context.data.attrs ? context.data.attrs.class : '',
         alignContent: context.props.alignContent,
@@ -9243,7 +9844,7 @@ function (_BaseComponent) {
   }]);
 
   return Separator;
-}(BaseComponent$1);
+}(StatelessComponent$1);
 
 __decorate([Prop({
   type: String,
@@ -9255,37 +9856,34 @@ __decorate([Prop({
   default: false
 }), __metadata("design:type", Boolean)], Separator.prototype, "vertical", void 0);
 
-Separator = __decorate([Component({
-  // @ts-ignore
-  functional: true
-})], Separator);
-var script$w = Separator;
+Separator = __decorate([Component], Separator);
+var script$v = Separator;
 
 /* script */
-var __vue_script__$w = script$w;
+var __vue_script__$v = script$v;
 /* template */
 
 /* style */
 
-var __vue_inject_styles__$w = undefined;
+var __vue_inject_styles__$v = undefined;
 /* scoped */
 
-var __vue_scope_id__$w = undefined;
+var __vue_scope_id__$v = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$w = undefined;
+var __vue_module_identifier__$v = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$w = undefined;
+var __vue_is_functional_template__$v = undefined;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$w = __vue_normalize__({}, __vue_inject_styles__$w, __vue_script__$w, __vue_scope_id__$w, __vue_is_functional_template__$w, __vue_module_identifier__$w, false, undefined, undefined, undefined);
+var __vue_component__$v = __vue_normalize__({}, __vue_inject_styles__$v, __vue_script__$v, __vue_scope_id__$v, __vue_is_functional_template__$v, __vue_module_identifier__$v, false, undefined, undefined, undefined);
 
-var getStyles$r = function getStyles(props) {
+var getStyles$u = function getStyles(props) {
   var theme = props.theme,
       alignContent = props.alignContent,
       vertical = props.vertical,
@@ -9353,12 +9951,9 @@ var getStyles$r = function getStyles(props) {
   };
 };
 
-var Separator$1 = styled(__vue_component__$w, getStyles$r, undefined);
+var Separator$1 = styled(__vue_component__$v, getStyles$u, undefined);
 
-function getClassNames$9(getStyles, props) {
-  return mergeStyleSets(getStyles(props));
-}
-
+var getClassNames$m = classNamesFunction();
 var ONKEYDOWN_TIMEOUT_DURATION = 1000;
 
 var Slider =
@@ -9554,7 +10149,7 @@ function (_BaseComponent) {
           internalValue = this.internalValue,
           showValue = this.showValue,
           theme = this.theme;
-      return getClassNames$9(this.styles, {
+      return getClassNames$m(this.styles, {
         className: className,
         disabled: disabled,
         vertical: vertical,
@@ -9638,19 +10233,24 @@ __decorate([Prop({
   default: false
 }), __metadata("design:type", Boolean)], Slider.prototype, "showValue", void 0);
 
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Slider.prototype, "originFromZero", void 0);
+
 Slider = __decorate([Component({
   components: {
     Label: Label$1
   }
 })], Slider);
-var script$x = Slider;
+var script$w = Slider;
 
 /* script */
-var __vue_script__$x = script$x;
+var __vue_script__$w = script$w;
 /* template */
 
 var __vue_render__$s = function __vue_render__() {
-  var _obj, _obj$1, _obj$2;
+  var _obj, _obj$1, _obj$2, _obj$3, _obj$4, _obj$5, _obj$6;
 
   var _vm = this;
 
@@ -9661,9 +10261,7 @@ var __vue_render__$s = function __vue_render__() {
   return _c('div', {
     class: _vm.classNames.root
   }, [_c('Label', {
-    attrs: {
-      "class-name": _vm.classNames.titleLabel
-    },
+    class: _vm.classNames.titleLabel,
     domProps: {
       "textContent": _vm._s(_vm.label)
     }
@@ -9681,19 +10279,29 @@ var __vue_render__$s = function __vue_render__() {
   }, [_c('div', {
     ref: "sliderLine",
     class: _vm.classNames.line
-  }, [_c('span', {
+  }, [_vm.originFromZero ? _c('span', {
+    class: _vm.classNames.zeroTick,
+    style: (_obj = {}, _obj[_vm.vertical ? 'bottom' : 'left'] = _vm.zeroOffsetPercent + "%", _obj)
+  }) : _vm._e(), _vm._v(" "), _c('span', {
     class: _vm.classNames.thumb,
-    style: (_obj = {}, _obj[_vm.vertical ? 'bottom' : 'left'] = _vm.thumbOffsetPercent + "%", _obj)
+    style: (_obj$1 = {}, _obj$1[_vm.vertical ? 'bottom' : 'left'] = _vm.thumbOffsetPercent + "%", _obj$1)
+  }), _vm._v(" "), _vm.originFromZero ? [_c('span', {
+    class: _vm.css(_vm.classNames.lineContainer, _vm.classNames.inactiveSection),
+    style: (_obj$2 = {}, _obj$2[_vm.lengthString] = Math.min(_vm.thumbOffsetPercent, _vm.zeroOffsetPercent) + "%", _obj$2)
   }), _vm._v(" "), _c('span', {
     class: _vm.css(_vm.classNames.lineContainer, _vm.classNames.activeSection),
-    style: (_obj$1 = {}, _obj$1[_vm.lengthString] = _vm.thumbOffsetPercent + "%", _obj$1)
+    style: (_obj$3 = {}, _obj$3[_vm.lengthString] = Math.abs(_vm.zeroOffsetPercent - _vm.thumbOffsetPercent) + "%", _obj$3)
   }), _vm._v(" "), _c('span', {
     class: _vm.css(_vm.classNames.lineContainer, _vm.classNames.inactiveSection),
-    style: (_obj$2 = {}, _obj$2[_vm.lengthString] = 100 - _vm.thumbOffsetPercent + "%", _obj$2)
-  })])]), _vm._v(" "), _c('Label', {
-    attrs: {
-      "class-name": _vm.classNames.valueLabel
-    }
+    style: (_obj$4 = {}, _obj$4[_vm.lengthString] = Math.min(100 - _vm.thumbOffsetPercent, 100 - _vm.zeroOffsetPercent) + "%", _obj$4)
+  })] : [_c('span', {
+    class: _vm.css(_vm.classNames.lineContainer, _vm.classNames.activeSection),
+    style: (_obj$5 = {}, _obj$5[_vm.lengthString] = _vm.thumbOffsetPercent + "%", _obj$5)
+  }), _vm._v(" "), _c('span', {
+    class: _vm.css(_vm.classNames.lineContainer, _vm.classNames.inactiveSection),
+    style: (_obj$6 = {}, _obj$6[_vm.lengthString] = 100 - _vm.thumbOffsetPercent + "%", _obj$6)
+  })]], 2)]), _vm._v(" "), _c('Label', {
+    class: _vm.classNames.valueLabel
   }, [_vm._t("value", [_vm._v("\n        " + _vm._s(_vm.internalValue) + "\n      ")], {
     "value": _vm.internalValue
   })], 2)], 1)], 1);
@@ -9702,28 +10310,28 @@ var __vue_render__$s = function __vue_render__() {
 var __vue_staticRenderFns__$s = [];
 /* style */
 
-var __vue_inject_styles__$x = undefined;
+var __vue_inject_styles__$w = undefined;
 /* scoped */
 
-var __vue_scope_id__$x = undefined;
+var __vue_scope_id__$w = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$x = undefined;
+var __vue_module_identifier__$w = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$x = false;
+var __vue_is_functional_template__$w = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$x = __vue_normalize__({
+var __vue_component__$w = __vue_normalize__({
   render: __vue_render__$s,
   staticRenderFns: __vue_staticRenderFns__$s
-}, __vue_inject_styles__$x, __vue_script__$x, __vue_scope_id__$x, __vue_is_functional_template__$x, __vue_module_identifier__$x, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$w, __vue_script__$w, __vue_scope_id__$w, __vue_is_functional_template__$w, __vue_module_identifier__$w, false, undefined, undefined, undefined);
 
-var GlobalClassNames$f = {
+var GlobalClassNames$h = {
   root: 'ms-Slider',
   enabled: 'ms-Slider-enabled',
   disabled: 'ms-Slider-disabled',
@@ -9740,7 +10348,7 @@ var GlobalClassNames$f = {
   showTransitions: 'ms-Slider-showTransitions',
   zeroTick: 'ms-Slider-zeroTick'
 };
-var getStyles$s = function getStyles(props) {
+var getStyles$v = function getStyles(props) {
   var _selectors6;
 
   var className = props.className,
@@ -9751,7 +10359,7 @@ var getStyles$s = function getStyles(props) {
       showTransitions = props.showTransitions,
       showValue = props.showValue;
   var semanticColors = theme.semanticColors;
-  var classNames = getGlobalClassNames(GlobalClassNames$f, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$h, theme);
   /** Tokens:
    *   The word "active" in the token refers to the selected section of the slider
    *   The word "inactive" in the token refers to the unselected section of the slider */
@@ -9943,7 +10551,9 @@ var getStyles$s = function getStyles(props) {
   };
 };
 
-var Slider$1 = styled(__vue_component__$x, getStyles$s, undefined);
+var Slider$1 = styled(__vue_component__$w, getStyles$v, undefined);
+
+var getClassNames$n = classNamesFunction();
 
 var Spinner =
 /*#__PURE__*/
@@ -9963,7 +10573,7 @@ function (_BaseComponent) {
           className = this.className,
           size = this.size,
           labelPosition = this.labelPosition;
-      return getClassNames(this.styles, {
+      return getClassNames$n(this.styles, {
         theme: theme,
         size: size,
         className: className,
@@ -9978,12 +10588,12 @@ function (_BaseComponent) {
 __decorate([Prop({
   type: String,
   default: null
-}), __metadata("design:type", String)], Spinner.prototype, "labelPosition", void 0);
+}), __metadata("design:type", String)], Spinner.prototype, "label", void 0);
 
 __decorate([Prop({
   type: String,
   default: null
-}), __metadata("design:type", String)], Spinner.prototype, "label", void 0);
+}), __metadata("design:type", String)], Spinner.prototype, "labelPosition", void 0);
 
 __decorate([Prop({
   type: Number,
@@ -9991,10 +10601,10 @@ __decorate([Prop({
 }), __metadata("design:type", Number)], Spinner.prototype, "size", void 0);
 
 Spinner = __decorate([Component], Spinner);
-var script$y = Spinner;
+var script$x = Spinner;
 
 /* script */
-var __vue_script__$y = script$y;
+var __vue_script__$x = script$x;
 /* template */
 
 var __vue_render__$t = function __vue_render__() {
@@ -10016,28 +10626,28 @@ var __vue_render__$t = function __vue_render__() {
 var __vue_staticRenderFns__$t = [];
 /* style */
 
-var __vue_inject_styles__$y = undefined;
+var __vue_inject_styles__$x = undefined;
 /* scoped */
 
-var __vue_scope_id__$y = undefined;
+var __vue_scope_id__$x = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$y = undefined;
+var __vue_module_identifier__$x = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$y = false;
+var __vue_is_functional_template__$x = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$y = __vue_normalize__({
+var __vue_component__$x = __vue_normalize__({
   render: __vue_render__$t,
   staticRenderFns: __vue_staticRenderFns__$t
-}, __vue_inject_styles__$y, __vue_script__$y, __vue_scope_id__$y, __vue_is_functional_template__$y, __vue_module_identifier__$y, false, undefined, undefined, undefined);
+}, __vue_inject_styles__$x, __vue_script__$x, __vue_scope_id__$x, __vue_is_functional_template__$x, __vue_module_identifier__$x, false, undefined, undefined, undefined);
 
-var GlobalClassNames$g = {
+var GlobalClassNames$i = {
   root: 'ms-Spinner',
   circle: 'ms-Spinner-circle',
   label: 'ms-Spinner-label'
@@ -10050,13 +10660,13 @@ var spinAnimation = keyframes({
     transform: 'rotate(360deg)'
   }
 });
-var getStyles$t = function getStyles(props) {
+var getStyles$w = function getStyles(props) {
   var theme = props.theme,
       size = props.size,
       className = props.className,
       labelPosition = props.labelPosition;
   var palette = theme.palette;
-  var classNames = getGlobalClassNames(GlobalClassNames$g, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$i, theme);
   return {
     root: [classNames.root, {
       display: 'flex',
@@ -10102,14 +10712,14 @@ var getStyles$t = function getStyles(props) {
   };
 };
 
-var Spinner$1 = styled(__vue_component__$y, getStyles$t, undefined);
+var Spinner$1 = styled(__vue_component__$x, getStyles$w, undefined);
 
-var getClassNames$a = classNamesFunction();
+var getClassNames$o = classNamesFunction();
 
 var Text =
 /*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Text, _BaseComponent);
+function (_StatelessComponent) {
+  _inherits(Text, _StatelessComponent);
 
   function Text() {
     _classCallCheck(this, Text);
@@ -10118,23 +10728,28 @@ function (_BaseComponent) {
   }
 
   _createClass(Text, [{
-    key: "classNames",
-    get: function get() {
-      var theme = this.theme,
-          block = this.block,
-          nowrap = this.nowrap,
-          variant = this.variant;
-      return getClassNames$a(this.styles, {
+    key: "render",
+    value: function render(h, context) {
+      var _context$props = context.props,
+          theme = _context$props.theme,
+          styles = _context$props.styles,
+          block = _context$props.block,
+          nowrap = _context$props.nowrap,
+          variant = _context$props.variant;
+      var classNames = getClassNames$o(styles, {
         theme: theme,
         block: block,
         nowrap: nowrap,
         variant: variant
       });
+      return h("span", {
+        "class": classNames.root
+      }, [context.children]);
     }
   }]);
 
   return Text;
-}(BaseComponent$1);
+}(StatelessComponent$1);
 
 __decorate([Prop({
   type: Boolean,
@@ -10152,49 +10767,9 @@ __decorate([Prop({
 }), __metadata("design:type", String)], Text.prototype, "variant", void 0);
 
 Text = __decorate([Component], Text);
-var script$z = Text;
+var TextBase = Text;
 
-/* script */
-var __vue_script__$z = script$z;
-/* template */
-
-var __vue_render__$u = function __vue_render__() {
-  var _vm = this;
-
-  var _h = _vm.$createElement;
-
-  var _c = _vm._self._c || _h;
-
-  return _c('span', {
-    class: _vm.classNames.root
-  }, [_vm._t("default")], 2);
-};
-
-var __vue_staticRenderFns__$u = [];
-/* style */
-
-var __vue_inject_styles__$z = undefined;
-/* scoped */
-
-var __vue_scope_id__$z = undefined;
-/* module identifier */
-
-var __vue_module_identifier__$z = undefined;
-/* functional template */
-
-var __vue_is_functional_template__$z = false;
-/* style inject */
-
-/* style inject SSR */
-
-/* style inject shadow dom */
-
-var __vue_component__$z = __vue_normalize__({
-  render: __vue_render__$u,
-  staticRenderFns: __vue_staticRenderFns__$u
-}, __vue_inject_styles__$z, __vue_script__$z, __vue_scope_id__$z, __vue_is_functional_template__$z, __vue_module_identifier__$z, false, undefined, undefined, undefined);
-
-var getStyles$u = function getStyles(props) {
+var getStyles$x = function getStyles(props) {
   var theme = props.theme,
       as = props.as,
       className = props.className,
@@ -10221,7 +10796,9 @@ var getStyles$u = function getStyles(props) {
   };
 };
 
-var Text$1 = styled(__vue_component__$z, getStyles$u, undefined);
+var Text$1 = styled(TextBase, getStyles$x, undefined);
+
+var getClassNames$p = classNamesFunction();
 
 var TextField =
 /*#__PURE__*/
@@ -10262,17 +10839,37 @@ function (_BaseComponent) {
   }, {
     key: "onMultilineChanged",
     value: function () {
-      var _onMultilineChanged = _asyncToGenerator(function* (newValue, oldValue) {
-        var textElement = this.$refs.textElement;
-        var start = textElement.selectionStart || 0;
-        var end = textElement.selectionEnd || 0;
+      var _onMultilineChanged = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee(newValue, oldValue) {
+        var textElement, start, end;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                textElement = this.$refs.textElement;
+                start = textElement.selectionStart || 0;
+                end = textElement.selectionEnd || 0;
 
-        if (newValue !== oldValue && this.isActive) {
-          yield this.$nextTick();
-          this.$refs.textElement.focus();
-          this.$refs.textElement.setSelectionRange(start, end);
-        }
-      });
+                if (!(newValue !== oldValue && this.isActive)) {
+                  _context.next = 8;
+                  break;
+                }
+
+                _context.next = 6;
+                return this.$nextTick();
+
+              case 6:
+                this.$refs.textElement.focus();
+                this.$refs.textElement.setSelectionRange(start, end);
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
 
       function onMultilineChanged(_x, _x2) {
         return _onMultilineChanged.apply(this, arguments);
@@ -10292,10 +10889,23 @@ function (_BaseComponent) {
   }, {
     key: "onFocus",
     value: function () {
-      var _onFocus = _asyncToGenerator(function* () {
-        this.isActive = true;
-        this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length);
-      });
+      var _onFocus = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2() {
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isActive = true;
+                this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length);
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
 
       function onFocus() {
         return _onFocus.apply(this, arguments);
@@ -10317,7 +10927,7 @@ function (_BaseComponent) {
           underlined = this.underlined,
           resizable = this.resizable,
           autoAdjustHeight = this.autoAdjustHeight;
-      return getClassNames(this.styles, {
+      return getClassNames$p(this.styles, {
         theme: theme,
         className: className,
         disabled: disabled,
@@ -10416,13 +11026,12 @@ TextField = __decorate([Component({
   },
   inheritAttrs: false
 })], TextField);
-var script$A = TextField;
+var script$y = TextField;
 
-/* script */
-var __vue_script__$A = script$A;
+var __vue_script__$y = script$y;
 /* template */
 
-var __vue_render__$v = function __vue_render__() {
+var __vue_render__$u = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -10434,8 +11043,8 @@ var __vue_render__$v = function __vue_render__() {
   }, [_c('div', {
     class: _vm.classNames.wrapper
   }, [_vm.label ? _c('Label', {
+    class: _vm.classNames.label,
     attrs: {
-      "class-name": _vm.classNames.label,
       "styles": _vm.classNames.subComponentStyles.label,
       "for": "TextField" + _vm._uid,
       "required": _vm.required
@@ -10486,31 +11095,31 @@ var __vue_render__$v = function __vue_render__() {
   }, [_c('span', [_vm._v(_vm._s(_vm.errorMessage))])])])]) : _vm._e()]);
 };
 
-var __vue_staticRenderFns__$v = [];
+var __vue_staticRenderFns__$u = [];
 /* style */
 
-var __vue_inject_styles__$A = undefined;
+var __vue_inject_styles__$y = undefined;
 /* scoped */
 
-var __vue_scope_id__$A = undefined;
+var __vue_scope_id__$y = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$A = undefined;
+var __vue_module_identifier__$y = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$A = false;
+var __vue_is_functional_template__$y = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$A = __vue_normalize__({
-  render: __vue_render__$v,
-  staticRenderFns: __vue_staticRenderFns__$v
-}, __vue_inject_styles__$A, __vue_script__$A, __vue_scope_id__$A, __vue_is_functional_template__$A, __vue_module_identifier__$A, false, undefined, undefined, undefined);
+var __vue_component__$y = __vue_normalize__({
+  render: __vue_render__$u,
+  staticRenderFns: __vue_staticRenderFns__$u
+}, __vue_inject_styles__$y, __vue_script__$y, __vue_scope_id__$y, __vue_is_functional_template__$y, __vue_module_identifier__$y, false, undefined, undefined, undefined);
 
-var globalClassNames$1 = {
+var globalClassNames = {
   root: 'ms-TextField',
   description: 'ms-TextField-description',
   errorMessage: 'ms-TextField-errorMessage',
@@ -10555,7 +11164,7 @@ function getLabelStyles(props) {
   };
 }
 
-function getStyles$v(props) {
+function getStyles$y(props) {
   var theme = props.theme,
       className = props.className,
       disabled = props.disabled,
@@ -10573,7 +11182,7 @@ function getStyles$v(props) {
   var semanticColors = theme.semanticColors,
       effects = theme.effects,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(globalClassNames$1, theme);
+  var classNames = getGlobalClassNames(globalClassNames, theme);
   var fieldPrefixSuffix = {
     background: semanticColors.disabledBackground,
     color: !disabled ? semanticColors.inputPlaceholderText : semanticColors.disabledText,
@@ -10789,7 +11398,9 @@ function getStyles$v(props) {
   };
 }
 
-var TextField$1 = styled(__vue_component__$A, getStyles$v, undefined);
+var TextField$1 = styled(__vue_component__$y, getStyles$y, undefined);
+
+var getClassNames$q = classNamesFunction();
 
 var Toggle =
 /*#__PURE__*/
@@ -10827,7 +11438,7 @@ function (_BaseComponent) {
           inlineLabel = this.inlineLabel,
           onText = this.onText,
           offText = this.offText;
-      return getClassNames(this.styles, {
+      return getClassNames$q(this.styles, {
         theme: theme,
         className: className,
         disabled: disabled,
@@ -10883,13 +11494,13 @@ Toggle = __decorate([Component({
     Label: Label$1
   }
 })], Toggle);
-var script$B = Toggle;
+var script$z = Toggle;
 
 /* script */
-var __vue_script__$B = script$B;
+var __vue_script__$z = script$z;
 /* template */
 
-var __vue_render__$w = function __vue_render__() {
+var __vue_render__$v = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -10902,9 +11513,7 @@ var __vue_render__$w = function __vue_render__() {
       "click": _vm.onClick
     }
   }, [_vm._t("label", [_c('Label', {
-    attrs: {
-      "class-name": _vm.classNames.label
-    },
+    class: _vm.classNames.label,
     domProps: {
       "textContent": _vm._s(_vm.label)
     }
@@ -10922,8 +11531,8 @@ var __vue_render__$w = function __vue_render__() {
   }, [_c('div', {
     class: _vm.classNames.thumb
   })]), _vm._v(" "), _vm.internalChecked && _vm.onText || !_vm.internalChecked && _vm.offText ? _c('Label', {
+    class: _vm.classNames.text,
     attrs: {
-      "class-name": _vm.classNames.text,
       "for": "Toggle" + _vm._uid
     },
     on: {
@@ -10934,34 +11543,34 @@ var __vue_render__$w = function __vue_render__() {
   }, [_vm._v("\n      " + _vm._s(_vm.internalChecked ? _vm.onText : _vm.offText) + "\n    ")]) : _vm._e()], 1)], 2);
 };
 
-var __vue_staticRenderFns__$w = [];
+var __vue_staticRenderFns__$v = [];
 /* style */
 
-var __vue_inject_styles__$B = undefined;
+var __vue_inject_styles__$z = undefined;
 /* scoped */
 
-var __vue_scope_id__$B = undefined;
+var __vue_scope_id__$z = undefined;
 /* module identifier */
 
-var __vue_module_identifier__$B = undefined;
+var __vue_module_identifier__$z = undefined;
 /* functional template */
 
-var __vue_is_functional_template__$B = false;
+var __vue_is_functional_template__$z = false;
 /* style inject */
 
 /* style inject SSR */
 
 /* style inject shadow dom */
 
-var __vue_component__$B = __vue_normalize__({
-  render: __vue_render__$w,
-  staticRenderFns: __vue_staticRenderFns__$w
-}, __vue_inject_styles__$B, __vue_script__$B, __vue_scope_id__$B, __vue_is_functional_template__$B, __vue_module_identifier__$B, false, undefined, undefined, undefined);
+var __vue_component__$z = __vue_normalize__({
+  render: __vue_render__$v,
+  staticRenderFns: __vue_staticRenderFns__$v
+}, __vue_inject_styles__$z, __vue_script__$z, __vue_scope_id__$z, __vue_is_functional_template__$z, __vue_module_identifier__$z, false, undefined, undefined, undefined);
 
 var DEFAULT_PILL_WIDTH = 40;
 var DEFAULT_PILL_HEIGHT = 20;
 var DEFAULT_THUMB_SIZE = 12;
-var getStyles$w = function getStyles(props) {
+var getStyles$z = function getStyles(props) {
   var theme = props.theme,
       className = props.className,
       disabled = props.disabled,
@@ -11116,7 +11725,7 @@ var getStyles$w = function getStyles(props) {
   };
 };
 
-var Toggle$1 = styled(__vue_component__$B, getStyles$w, undefined);
+var Toggle$1 = styled(__vue_component__$z, getStyles$z, undefined);
 
 var PersonaSize;
 
@@ -11366,7 +11975,7 @@ var presenceBoolean = function presenceBoolean(presence) {
   };
 };
 
-var GlobalClassNames$h = {
+var GlobalClassNames$j = {
   root: 'ms-Persona',
   size8: 'ms-Persona--size8',
   size10: 'ms-Persona--size10',
@@ -11393,13 +12002,13 @@ var GlobalClassNames$h = {
   optionalText: 'ms-Persona-optionalText',
   textContent: 'ms-Persona-textContent'
 };
-var getStyles$x = function getStyles(props) {
+var getStyles$A = function getStyles(props) {
   var className = props.className,
       showSecondaryText = props.showSecondaryText,
       theme = props.theme;
   var palette = theme.palette,
       fonts = theme.fonts;
-  var classNames = getGlobalClassNames(GlobalClassNames$h, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$j, theme);
   var size = sizeBoolean(props.size);
   var presence = presenceBoolean(props.presence);
   var showSecondaryTextDefaultHeight = '16px';
@@ -11536,30 +12145,226 @@ var getStyles$x = function getStyles(props) {
   };
 };
 
-var Persona =
-/*#__PURE__*/
-function (_BaseComponent) {
-  _inherits(Persona, _BaseComponent);
+/**
+ * Following colors are considered reserved colors and can only be set with overrides, so they are excluded from this set:
+ * - `gray` and `black` are colors that can result in offensive persona coins with some initials combinations,
+ *   so it can only be set with overrides.
+ * - `red` is a color that often has a special meaning, so it is considered a reserved color and can only be set with overrides.
+ * - `transparent` is not intended to be used with typical initials due to accessibility issues,
+ *   its primary use is for Facepile overflow buttons.
+ */
 
-  function Persona() {
-    _classCallCheck(this, Persona);
+var COLOR_SWATCHES_LOOKUP = [PersonaInitialsColor.lightBlue, PersonaInitialsColor.blue, PersonaInitialsColor.darkBlue, PersonaInitialsColor.teal, PersonaInitialsColor.green, PersonaInitialsColor.darkGreen, PersonaInitialsColor.lightPink, PersonaInitialsColor.pink, PersonaInitialsColor.magenta, PersonaInitialsColor.purple, PersonaInitialsColor.orange, PersonaInitialsColor.lightRed, PersonaInitialsColor.darkRed, PersonaInitialsColor.violet, PersonaInitialsColor.gold, PersonaInitialsColor.burgundy, PersonaInitialsColor.warmGray, PersonaInitialsColor.cyan, PersonaInitialsColor.rust, PersonaInitialsColor.coolGray];
+var COLOR_SWATCHES_NUM_ENTRIES = COLOR_SWATCHES_LOOKUP.length;
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Persona).apply(this, arguments));
+function getInitialsColorFromName(displayName) {
+  var color = PersonaInitialsColor.blue;
+
+  if (!displayName) {
+    return color;
   }
 
-  _createClass(Persona, [{
-    key: "statusClass",
+  var hashCode = 0;
+
+  for (var iLen = displayName.length - 1; iLen >= 0; iLen--) {
+    var ch = displayName.charCodeAt(iLen);
+    var shift = iLen % 8; // tslint:disable-next-line:no-bitwise
+
+    hashCode ^= (ch << shift) + (ch >> 8 - shift);
+  }
+
+  color = COLOR_SWATCHES_LOOKUP[hashCode % COLOR_SWATCHES_NUM_ENTRIES];
+  return color;
+}
+
+function personaInitialsColorToHexCode(personaInitialsColor) {
+  switch (personaInitialsColor) {
+    case PersonaInitialsColor.lightBlue:
+      return '#4F6BED';
+
+    case PersonaInitialsColor.blue:
+      return '#0078D4';
+
+    case PersonaInitialsColor.darkBlue:
+      return '#004E8C';
+
+    case PersonaInitialsColor.teal:
+      return '#038387';
+
+    case PersonaInitialsColor.lightGreen:
+    case PersonaInitialsColor.green:
+      return '#498205';
+
+    case PersonaInitialsColor.darkGreen:
+      return '#0B6A0B';
+
+    case PersonaInitialsColor.lightPink:
+      return '#C239B3';
+
+    case PersonaInitialsColor.pink:
+      return '#E3008C';
+
+    case PersonaInitialsColor.magenta:
+      return '#881798';
+
+    case PersonaInitialsColor.purple:
+      return '#5C2E91';
+
+    case PersonaInitialsColor.orange:
+      return '#CA5010';
+
+    case PersonaInitialsColor.red:
+      return '#EE1111';
+
+    case PersonaInitialsColor.lightRed:
+      return '#D13438';
+
+    case PersonaInitialsColor.darkRed:
+      return '#A4262C';
+
+    case PersonaInitialsColor.transparent:
+      return 'transparent';
+
+    case PersonaInitialsColor.violet:
+      return '#8764B8';
+
+    case PersonaInitialsColor.gold:
+      return '#986F0B';
+
+    case PersonaInitialsColor.burgundy:
+      return '#750B1C';
+
+    case PersonaInitialsColor.warmGray:
+      return '#7A7574';
+
+    case PersonaInitialsColor.cyan:
+      return '#005B70';
+
+    case PersonaInitialsColor.rust:
+      return '#8E562E';
+
+    case PersonaInitialsColor.coolGray:
+      return '#69797E';
+
+    case PersonaInitialsColor.black:
+      return '#1D1D1D';
+
+    case PersonaInitialsColor.gray:
+      return '#393939';
+  }
+}
+/**
+ * Gets the hex color string (prefixed with #) for the given persona props.
+ * This is the logic used internally by the Persona control.
+ * @param props - Current persona props
+ * @returns Hex color string prefixed with #
+ */
+
+function getPersonaInitialsColor(props) {
+  var primaryText = props.primaryText,
+      text = props.text;
+  var initialsColor = props.initialsColor;
+  var initialsColorCode;
+
+  if (typeof initialsColor === 'string') {
+    initialsColorCode = initialsColor;
+  } else {
+    initialsColor = initialsColor !== undefined ? initialsColor : getInitialsColorFromName(text || primaryText);
+    initialsColorCode = personaInitialsColorToHexCode(initialsColor);
+  }
+
+  return initialsColorCode;
+}
+
+var coinSizeFontScaleFactor = 6;
+var coinSizePresenceScaleFactor = 3;
+var presenceMaxSize = 40;
+var presenceFontMaxSize = 20;
+var getClassNames$r = classNamesFunction();
+
+var PersonaPresence$1 =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(PersonaPresence$1, _BaseComponent);
+
+  function PersonaPresence$1() {
+    var _this;
+
+    _classCallCheck(this, PersonaPresence$1);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PersonaPresence$1).apply(this, arguments));
+    _this.PersonaPresenceEnum = PersonaPresence;
+    return _this;
+  }
+
+  _createClass(PersonaPresence$1, [{
+    key: "renderIcon",
     get: function get() {
-      return 'ms-Persona--away';
+      var coinSize = this.coinSize;
+      var size = sizeBoolean(this.size);
+      return !(size.isSize8 || size.isSize10 || size.isSize16 || size.isSize24 || size.isSize28 || size.isSize32) && (coinSize ? coinSize > 32 : true);
     }
   }, {
-    key: "presenceIcon",
+    key: "presenceHeightWidth",
     get: function get() {
-      var oofIcon = 'SkypeArrow';
-      var status = this.status,
+      var coinSize = this.coinSize;
+      var presenceHeightWidth = coinSize ? coinSize / coinSizePresenceScaleFactor < presenceMaxSize ? coinSize / coinSizePresenceScaleFactor + 'px' : presenceMaxSize + 'px' : '';
+      return presenceHeightWidth;
+    }
+  }, {
+    key: "coinSizeWithPresenceStyle",
+    get: function get() {
+      var coinSize = this.coinSize,
+          presenceHeightWidth = this.presenceHeightWidth;
+      return coinSize ? {
+        width: presenceHeightWidth,
+        height: presenceHeightWidth
+      } : undefined;
+    }
+  }, {
+    key: "coinSizeWithPresenceIconStyle",
+    get: function get() {
+      var coinSize = this.coinSize,
+          isOutOfOffice = this.isOutOfOffice,
+          styles = this.styles,
+          presence = this.presence,
+          presenceTitle = this.presenceTitle,
+          presenceHeightWidth = this.presenceHeightWidth;
+      var size = sizeBoolean(this.size);
+      var presenceFontSize = coinSize ? coinSize / coinSizeFontScaleFactor < presenceFontMaxSize ? coinSize / coinSizeFontScaleFactor + 'px' : presenceFontMaxSize + 'px' : '';
+      return coinSize ? {
+        fontSize: presenceFontSize,
+        lineHeight: presenceHeightWidth
+      } : undefined;
+    }
+  }, {
+    key: "classNames",
+    get: function get() {
+      var styles = this.styles,
+          theme = this.theme,
+          presence = this.presence,
+          size = this.size,
+          isOutOfOffice = this.isOutOfOffice;
+      return getClassNames$r(styles, {
+        theme: theme,
+        presence: presence,
+        size: size,
+        isOutOfOffice: isOutOfOffice
+      });
+    }
+  }, {
+    key: "icon",
+    get: function get() {
+      var presence = this.presence,
           isOutOfOffice = this.isOutOfOffice;
 
-      switch (status) {
+      if (!presence) {
+        return undefined;
+      }
+
+      var oofIcon = 'SkypeArrow';
+
+      switch (PersonaPresence[presence]) {
         case 'online':
           return 'SkypeCheck';
 
@@ -11572,65 +12377,610 @@ function (_BaseComponent) {
         case 'offline':
           return isOutOfOffice ? oofIcon : '';
       }
-    }
-  }, {
-    key: "fontSizePrimary",
-    get: function get() {
-      if (this.size < 24) return 12;
-      if (this.size < 56) return 14;
-      return 20;
-    }
-  }, {
-    key: "fontSizeDetails",
-    get: function get() {
-      if (this.size < 24) return 10;
-      if (this.size < 56) return 12;
-      return 14;
-    }
-  }, {
-    key: "fontSizeIcon",
-    get: function get() {
-      if (this.size < 48) return 6;
-      if (this.size < 72) return 8;
-      if (this.size < 100) return 12;
-      return 14;
-    }
-  }, {
-    key: "presenceSize",
-    get: function get() {
-      if (this.size <= 12) return this.size;
-      if (this.size < 40) return 8;
-      if (this.size < 56) return 14;
-      if (this.size < 72) return 18;
-      if (this.size < 100) return 22;
-      if (this.size < 120) return 26;
-      return 34;
-    }
-  }, {
-    key: "presenceColor",
-    get: function get() {
-      var status = this.status;
-      var presenceColorAvailable = '#6BB700';
-      var presenceColorAway = '#FFAA44';
-      var presenceColorBusy = '#C43148';
-      var presenceColorDnd = '#C50F1F';
-      var presenceColorOffline = '#8A8886';
-      var presenceColorOof = '#B4009E';
-      if (this.isOutOfOffice) return presenceColorOof;
-      var statusMap = {
-        'none': presenceColorOffline,
-        'offline': presenceColorOffline,
-        'online': presenceColorAvailable,
-        'away': presenceColorAway,
-        'dnd': presenceColorDnd,
-        'blocked': presenceColorBusy,
-        'busy': presenceColorBusy
-      }; // @ts-ignore
 
-      if (status && status in statusMap) return statusMap[status];
-      return presenceColorOffline;
+      return '';
+    }
+  }]);
+
+  return PersonaPresence$1;
+}(BaseComponent$1);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaPresence$1.prototype, "presence", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaPresence$1.prototype, "size", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaPresence$1.prototype, "isOutOfOffice", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaPresence$1.prototype, "coinSize", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaPresence$1.prototype, "presenceTitle", void 0);
+
+PersonaPresence$1 = __decorate([Component({
+  components: {
+    Icon: Icon$1
+  }
+})], PersonaPresence$1);
+var script$A = PersonaPresence$1;
+
+/* script */
+var __vue_script__$A = script$A;
+/* template */
+
+var __vue_render__$w = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _vm.presence !== _vm.PersonaPresenceEnum.none ? _c('div', {
+    class: _vm.classNames.presence,
+    style: _vm.coinSizeWithPresenceStyle,
+    attrs: {
+      "title": _vm.presenceTitle
+    }
+  }, [_vm.renderIcon ? _c('Icon', {
+    class: _vm.classNames.presenceIcon,
+    style: _vm.coinSizeWithPresenceIconStyle,
+    attrs: {
+      "icon-name": _vm.icon
+    }
+  }) : _vm._e()], 1) : _vm._e();
+};
+
+var __vue_staticRenderFns__$w = [];
+/* style */
+
+var __vue_inject_styles__$A = undefined;
+/* scoped */
+
+var __vue_scope_id__$A = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$A = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$A = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$A = __vue_normalize__({
+  render: __vue_render__$w,
+  staticRenderFns: __vue_staticRenderFns__$w
+}, __vue_inject_styles__$A, __vue_script__$A, __vue_scope_id__$A, __vue_is_functional_template__$A, __vue_module_identifier__$A, false, undefined, undefined, undefined);
+
+var GlobalClassNames$k = {
+  presence: 'ms-Persona-presence',
+  presenceIcon: 'ms-Persona-presenceIcon'
+};
+var getStyles$B = function getStyles(props) {
+  var theme = props.theme;
+  var semanticColors = theme.semanticColors,
+      fonts = theme.fonts;
+  var classNames = getGlobalClassNames(GlobalClassNames$k, theme);
+  var size = sizeBoolean(props.size);
+  var presence = presenceBoolean(props.presence); // Presence colors
+
+  var presenceColorAvailable = '#6BB700';
+  var presenceColorAway = '#FFAA44';
+  var presenceColorBusy = '#C43148';
+  var presenceColorDnd = '#C50F1F';
+  var presenceColorOffline = '#8A8886';
+  var presenceColorOof = '#B4009E';
+  var isOpenCirclePresence = presence.isOffline || props.isOutOfOffice && (presence.isAvailable || presence.isBusy || presence.isAway || presence.isDoNotDisturb);
+  var borderSizeForSmallPersonas = '1px';
+  var borderSizeForLargePersonas = '2px';
+  var borderSize = size.isSize72 || size.isSize100 ? borderSizeForLargePersonas : borderSizeForSmallPersonas;
+  return {
+    presence: [classNames.presence, {
+      position: 'absolute',
+      height: personaPresenceSize.size12,
+      width: personaPresenceSize.size12,
+      borderRadius: '50%',
+      top: 'auto',
+      right: '-2px',
+      bottom: '-2px',
+      border: "2px solid ".concat(semanticColors.bodyBackground),
+      textAlign: 'center',
+      boxSizing: 'content-box',
+      backgroundClip: 'content-box',
+      MsHighContrastAdjust: 'none',
+      selectors: _defineProperty({}, HighContrastSelector, {
+        borderColor: 'Window',
+        backgroundColor: 'WindowText'
+      })
+    }, (size.isSize8 || size.isSize10) && {
+      right: 'auto',
+      top: '7px',
+      left: 0,
+      border: 0,
+      selectors: _defineProperty({}, HighContrastSelector, {
+        top: '9px',
+        border: '1px solid WindowText'
+      })
+    }, (size.isSize8 || size.isSize10 || size.isSize24 || size.isSize28 || size.isSize32) && makeSizeStyle(personaPresenceSize.size8), (size.isSize40 || size.isSize48) && makeSizeStyle(personaPresenceSize.size12), size.isSize16 && {
+      height: personaPresenceSize.size6,
+      width: personaPresenceSize.size6,
+      borderWidth: '1.5px'
+    }, size.isSize56 && makeSizeStyle(personaPresenceSize.size16), size.isSize72 && makeSizeStyle(personaPresenceSize.size20), size.isSize100 && makeSizeStyle(personaPresenceSize.size28), size.isSize120 && makeSizeStyle(personaPresenceSize.size32), presence.isAvailable && {
+      backgroundColor: presenceColorAvailable,
+      selectors: _defineProperty({}, HighContrastSelector, backgroundColor('Highlight'))
+    }, presence.isAway && backgroundColor(presenceColorAway), presence.isBlocked && [{
+      selectors: _defineProperty({
+        // Only show :after at larger sizes
+        ':after': size.isSize40 || size.isSize48 || size.isSize72 || size.isSize100 ? {
+          content: '""',
+          width: '100%',
+          height: borderSize,
+          backgroundColor: presenceColorBusy,
+          transform: 'translateY(-50%) rotate(-45deg)',
+          position: 'absolute',
+          top: '50%',
+          left: 0
+        } : undefined
+      }, HighContrastSelector, {
+        selectors: {
+          ':after': {
+            width: "calc(100% - 4px)",
+            left: '2px',
+            backgroundColor: 'Window'
+          }
+        }
+      })
+    }], presence.isBusy && backgroundColor(presenceColorBusy), presence.isDoNotDisturb && backgroundColor(presenceColorDnd), presence.isOffline && backgroundColor(presenceColorOffline), (isOpenCirclePresence || presence.isBlocked) && [{
+      backgroundColor: semanticColors.bodyBackground,
+      selectors: _defineProperty({
+        ':before': {
+          content: '""',
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          border: "".concat(borderSize, " solid ").concat(presenceColorBusy),
+          borderRadius: '50%',
+          boxSizing: 'border-box'
+        }
+      }, HighContrastSelector, {
+        backgroundColor: 'WindowText',
+        selectors: {
+          ':before': {
+            width: "calc(100% - 2px)",
+            height: "calc(100% - 2px)",
+            top: '1px',
+            left: '1px',
+            borderColor: 'Window'
+          }
+        }
+      })
+    }], isOpenCirclePresence && presence.isAvailable && makeBeforeBorderStyle(borderSize, presenceColorAvailable), isOpenCirclePresence && presence.isBusy && makeBeforeBorderStyle(borderSize, presenceColorBusy), isOpenCirclePresence && presence.isAway && makeBeforeBorderStyle(borderSize, presenceColorOof), isOpenCirclePresence && presence.isDoNotDisturb && makeBeforeBorderStyle(borderSize, presenceColorDnd), isOpenCirclePresence && presence.isOffline && makeBeforeBorderStyle(borderSize, presenceColorOffline), isOpenCirclePresence && presence.isOffline && props.isOutOfOffice && makeBeforeBorderStyle(borderSize, presenceColorOof)],
+    presenceIcon: [classNames.presenceIcon, {
+      color: semanticColors.bodyBackground,
+      fontSize: '6px',
+      lineHeight: personaPresenceSize.size12,
+      verticalAlign: 'top',
+      selectors: _defineProperty({}, HighContrastSelector, {
+        color: 'Window'
+      })
+    }, size.isSize56 && {
+      fontSize: '8px',
+      lineHeight: personaPresenceSize.size16
+    }, size.isSize72 && {
+      fontSize: fonts.small.fontSize,
+      lineHeight: personaPresenceSize.size20
+    }, size.isSize100 && {
+      fontSize: fonts.medium.fontSize,
+      lineHeight: personaPresenceSize.size28
+    }, size.isSize120 && {
+      fontSize: fonts.medium.fontSize,
+      lineHeight: personaPresenceSize.size32
+    }, presence.isAway && {
+      position: 'relative',
+      left: isOpenCirclePresence ? undefined : '1px'
+    }, isOpenCirclePresence && presence.isAvailable && makeOpenCircleIconStyle(presenceColorAvailable), isOpenCirclePresence && presence.isBusy && makeOpenCircleIconStyle(presenceColorBusy), isOpenCirclePresence && presence.isAway && makeOpenCircleIconStyle(presenceColorOof), isOpenCirclePresence && presence.isDoNotDisturb && makeOpenCircleIconStyle(presenceColorDnd), isOpenCirclePresence && presence.isOffline && makeOpenCircleIconStyle(presenceColorOffline), isOpenCirclePresence && presence.isOffline && props.isOutOfOffice && makeOpenCircleIconStyle(presenceColorOof)]
+  };
+};
+
+function makeOpenCircleIconStyle(color) {
+  return {
+    color: color,
+    borderColor: color
+  };
+}
+
+function makeBeforeBorderStyle(borderSize, color) {
+  return {
+    selectors: {
+      ':before': {
+        border: "".concat(borderSize, " solid ").concat(color)
+      }
+    }
+  };
+}
+
+function makeSizeStyle(size) {
+  return {
+    height: size,
+    width: size
+  };
+}
+
+function backgroundColor(color) {
+  return {
+    backgroundColor: color
+  };
+}
+
+function ownKeys$d(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$d(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$d(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$d(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function styled$1(Component, baseStyles, getProps, customizable, pure) {
+  var _styles;
+
+  return Vue.extend({
+    functional: true,
+    render: function render(h, context) {
+      if (!_styles || context.props.styles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
+        _styles = function _styles(styleProps) {
+          return concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles);
+        };
+
+        _styles.__cachedInputs__ = [baseStyles, context.props.styles];
+      }
+
+      var additionalProps = getProps ? getProps(this) : undefined;
+      return h(Component, _objectSpread$d({}, context.data, {
+        props: _objectSpread$d({}, additionalProps, {}, context.props, {
+          className: context.props.className || context.data.class,
+          styles: _styles
+        })
+      }), context.children);
+    }
+  });
+}
+
+var PersonaPresence$2 = styled$1(__vue_component__$A, getStyles$B, undefined);
+
+var getClassNames$s = classNamesFunction();
+
+var PersonaCoin =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(PersonaCoin, _BaseComponent);
+
+  function PersonaCoin() {
+    var _this;
+
+    _classCallCheck(this, PersonaCoin);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PersonaCoin).apply(this, arguments));
+    _this.mergeStyles = mergeStyles;
+    _this.getPersonaInitialsColor = getPersonaInitialsColor;
+    _this.PersonaSize = PersonaSize;
+    _this.ImageFit = ImageFit;
+    return _this;
+  }
+
+  _createClass(PersonaCoin, [{
+    key: "initials",
+    get: function get() {
+      var imageInitials = this.imageInitials,
+          allowPhoneInitials = this.allowPhoneInitials,
+          showUnknownPersonaCoin = this.showUnknownPersonaCoin;
+      var isRTL = getRTL(this.theme);
+      return imageInitials || getInitials(this.text, isRTL, allowPhoneInitials);
     }
   }, {
+    key: "dimension",
+    get: function get() {
+      var coinSize = this.coinSize,
+          size = this.size;
+      return coinSize || sizeToPixels[size];
+    }
+  }, {
+    key: "personaPresenceProps",
+    get: function get() {
+      var coinSize = this.coinSize,
+          theme = this.theme,
+          isOutOfOffice = this.isOutOfOffice,
+          presence = this.presence,
+          presenceTitle = this.presenceTitle,
+          size = this.size;
+      return {
+        coinSize: coinSize,
+        isOutOfOffice: isOutOfOffice,
+        presence: presence,
+        presenceTitle: presenceTitle,
+        size: size,
+        theme: theme
+      };
+    }
+  }, {
+    key: "shouldRenderInitials",
+    get: function get() {
+      return !this.imageUrl;
+    }
+  }, {
+    key: "coinSizeStyle",
+    get: function get() {
+      var coinSize = this.coinSize;
+      return coinSize ? {
+        width: coinSize,
+        height: coinSize
+      } : undefined;
+    }
+  }, {
+    key: "classNames",
+    get: function get() {
+      var styles = this.styles,
+          theme = this.theme,
+          className = this.className,
+          coinProps = this.coinProps,
+          size = this.size,
+          coinSize = this.coinSize,
+          showUnknownPersonaCoin = this.showUnknownPersonaCoin;
+      return getClassNames$s(styles, {
+        theme: theme,
+        className: coinProps && coinProps.className ? coinProps.className : className,
+        size: size,
+        coinSize: coinSize,
+        showUnknownPersonaCoin: showUnknownPersonaCoin
+      });
+    }
+  }]);
+
+  return PersonaCoin;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: Boolean,
+  required: true
+}), __metadata("design:type", Boolean)], PersonaCoin.prototype, "allowPhoneInitials", void 0);
+
+__decorate([Prop({
+  type: Number,
+  required: true
+}), __metadata("design:type", Number)], PersonaCoin.prototype, "presence", void 0);
+
+__decorate([Prop({
+  type: Number,
+  required: true
+}), __metadata("design:type", Number)], PersonaCoin.prototype, "size", void 0);
+
+__decorate([Prop({
+  type: Number,
+  required: true
+}), __metadata("design:type", Number)], PersonaCoin.prototype, "coinSize", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "coinProps", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "showUnknownPersonaCoin", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "isOutOfOffice", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "presenceTitle", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "imageUrl", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "imageInitials", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "text", void 0);
+
+__decorate([Prop(), __metadata("design:type", Object)], PersonaCoin.prototype, "initialsColor", void 0);
+
+PersonaCoin = __decorate([Component({
+  inheritAttrs: false,
+  components: {
+    Icon: Icon$1,
+    OImage: Image$1,
+    PersonaPresence: PersonaPresence$2
+  }
+})], PersonaCoin);
+var script$B = PersonaCoin;
+
+/* script */
+var __vue_script__$B = script$B;
+/* template */
+
+var __vue_render__$x = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('div', {
+    class: _vm.classNames.coin,
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_vm.size !== _vm.PersonaSize.size8 && _vm.size !== _vm.PersonaSize.size10 && _vm.size !== _vm.PersonaSize.tiny ? _c('div', {
+    class: _vm.classNames.imageArea,
+    style: _vm.coinSizeStyle,
+    attrs: {
+      "role": "presentation"
+    }
+  }, [_vm.shouldRenderInitials ? _c('div', {
+    class: _vm.mergeStyles(_vm.classNames.initials, !_vm.showUnknownPersonaCoin && {
+      backgroundColor: _vm.getPersonaInitialsColor(_vm.$props)
+    }),
+    style: _vm.coinSizeStyle,
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm.initials ? _c('span', [_vm._v(_vm._s(_vm.initials))]) : _c('Icon', {
+    attrs: {
+      "icon-name": "Contact"
+    }
+  })], 1) : _vm._e(), _vm._v(" "), _vm.imageUrl ? _c('OImage', {
+    class: _vm.classNames.image,
+    attrs: {
+      "image-fit": _vm.ImageFit.cover,
+      "src": _vm.imageUrl,
+      "width": _vm.dimension,
+      "height": _vm.dimension
+    }
+  }) : _vm._e(), _vm._v(" "), _c('PersonaPresence', _vm._b({}, 'PersonaPresence', _vm.personaPresenceProps, false))], 1) : [_vm.presence ? _c('PersonaPresence', _vm._b({}, 'PersonaPresence', _vm.personaPresenceProps, false)) : _c('Icon', {
+    class: _vm.classNames.size10WithoutPresenceIcon,
+    attrs: {
+      "icon-name": "Contact"
+    }
+  })], _vm._v(" "), _vm._t("default")], 2);
+};
+
+var __vue_staticRenderFns__$x = [];
+/* style */
+
+var __vue_inject_styles__$B = undefined;
+/* scoped */
+
+var __vue_scope_id__$B = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$B = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$B = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$B = __vue_normalize__({
+  render: __vue_render__$x,
+  staticRenderFns: __vue_staticRenderFns__$x
+}, __vue_inject_styles__$B, __vue_script__$B, __vue_scope_id__$B, __vue_is_functional_template__$B, __vue_module_identifier__$B, false, undefined, undefined, undefined);
+
+var GlobalClassNames$l = {
+  coin: 'ms-Persona-coin',
+  imageArea: 'ms-Persona-imageArea',
+  image: 'ms-Persona-image',
+  initials: 'ms-Persona-initials',
+  size8: 'ms-Persona--size8',
+  size10: 'ms-Persona--size10',
+  size16: 'ms-Persona--size16',
+  size24: 'ms-Persona--size24',
+  size28: 'ms-Persona--size28',
+  size32: 'ms-Persona--size32',
+  size40: 'ms-Persona--size40',
+  size48: 'ms-Persona--size48',
+  size56: 'ms-Persona--size56',
+  size72: 'ms-Persona--size72',
+  size100: 'ms-Persona--size100',
+  size120: 'ms-Persona--size120'
+};
+var getStyles$C = function getStyles(props) {
+  var _selectors;
+
+  var className = props.className,
+      theme = props.theme,
+      coinSize = props.coinSize;
+  var palette = theme.palette,
+      fonts = theme.fonts;
+  var size = sizeBoolean(props.size);
+  var classNames = getGlobalClassNames(GlobalClassNames$l, theme); // Static colors used when displaying 'unknown persona' coin
+
+  var unknownPersonaBackgroundColor = 'rgb(234, 234, 234)';
+  var unknownPersonaFontColor = 'rgb(168, 0, 0)';
+  var dimension = coinSize || props.size && sizeToPixels[props.size] || 48;
+  return {
+    coin: [classNames.coin, fonts.medium, size.isSize8 && classNames.size8, size.isSize10 && classNames.size10, size.isSize16 && classNames.size16, size.isSize24 && classNames.size24, size.isSize28 && classNames.size28, size.isSize32 && classNames.size32, size.isSize40 && classNames.size40, size.isSize48 && classNames.size48, size.isSize56 && classNames.size56, size.isSize72 && classNames.size72, size.isSize100 && classNames.size100, size.isSize120 && classNames.size120, className],
+    size10WithoutPresenceIcon: {
+      fontSize: fonts.xSmall.fontSize,
+      position: 'absolute',
+      top: '5px',
+      right: 'auto',
+      left: 0
+    },
+    imageArea: [classNames.imageArea, {
+      position: 'relative',
+      textAlign: 'center',
+      flex: '0 0 auto',
+      height: dimension,
+      width: dimension
+    }, dimension <= 10 && {
+      overflow: 'visible',
+      background: 'transparent',
+      height: 0,
+      width: 0
+    }],
+    image: [classNames.image, {
+      marginRight: '10px',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      border: 0,
+      borderRadius: '50%',
+      perspective: '1px'
+    }, dimension <= 10 && {
+      overflow: 'visible',
+      background: 'transparent',
+      height: 0,
+      width: 0
+    }, dimension > 10 && {
+      height: dimension,
+      width: dimension
+    }],
+    initials: [classNames.initials, {
+      borderRadius: '50%',
+      color: props.showUnknownPersonaCoin ? unknownPersonaFontColor : palette.white,
+      fontSize: fonts.large.fontSize,
+      fontWeight: FontWeights.semibold,
+      lineHeight: dimension === 48 ? 46 : dimension,
+      height: dimension,
+      selectors: (_selectors = {}, _defineProperty(_selectors, HighContrastSelector, {
+        border: '1px solid WindowText',
+        MsHighContrastAdjust: 'none',
+        color: 'WindowText',
+        boxSizing: 'border-box',
+        backgroundColor: 'Window !important'
+      }), _defineProperty(_selectors, "i", {
+        fontWeight: FontWeights.semibold
+      }), _selectors)
+    }, props.showUnknownPersonaCoin && {
+      backgroundColor: unknownPersonaBackgroundColor
+    }, dimension < 32 && {
+      fontSize: fonts.xSmall.fontSize
+    }, dimension >= 32 && dimension < 40 && {
+      fontSize: fonts.medium.fontSize
+    }, dimension >= 40 && dimension < 56 && {
+      fontSize: fonts.mediumPlus.fontSize
+    }, dimension >= 56 && dimension < 72 && {
+      fontSize: fonts.xLarge.fontSize
+    }, dimension >= 72 && dimension < 100 && {
+      fontSize: fonts.xxLarge.fontSize
+    }, dimension >= 100 && {
+      fontSize: fonts.superLarge.fontSize
+    }]
+  };
+};
+
+var PersonaCoin$1 = styled$1(__vue_component__$B, getStyles$C, undefined);
+
+var getClassNames$t = classNamesFunction();
+
+var Persona =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Persona, _BaseComponent);
+
+  function Persona() {
+    var _this;
+
+    _classCallCheck(this, Persona);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Persona).apply(this, arguments));
+    _this.PersonaSize = PersonaSize;
+    return _this;
+  }
+
+  _createClass(Persona, [{
     key: "classNames",
     get: function get() {
       var theme = this.theme,
@@ -11638,7 +12988,7 @@ function (_BaseComponent) {
           showSecondaryText = this.showSecondaryText,
           presence = this.presence,
           size = this.size;
-      return getClassNames(getStyles$x, {
+      return getClassNames$t(getStyles$A, {
         theme: theme,
         className: className,
         showSecondaryText: showSecondaryText,
@@ -11652,9 +13002,54 @@ function (_BaseComponent) {
 }(BaseComponent$1);
 
 __decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Persona.prototype, "allowPhoneInitials", void 0);
+
+__decorate([Prop({
   type: Number,
-  default: 48
+  default: PersonaPresence.none
+}), __metadata("design:type", Number)], Persona.prototype, "presence", void 0);
+
+__decorate([Prop({
+  type: Number,
+  default: PersonaSize.size48
 }), __metadata("design:type", Number)], Persona.prototype, "size", void 0);
+
+__decorate([Prop({
+  type: Number,
+  default: 0
+}), __metadata("design:type", Number)], Persona.prototype, "coinSize", void 0);
+
+__decorate([Prop({
+  type: [Number, String],
+  default: undefined
+}), __metadata("design:type", Number)], Persona.prototype, "initialsColor", void 0);
+
+__decorate([Prop({
+  type: Boolean,
+  default: false
+}), __metadata("design:type", Boolean)], Persona.prototype, "hidePersonaDetails", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Persona.prototype, "text", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Persona.prototype, "secondaryText", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Persona.prototype, "tertiaryText", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Persona.prototype, "optionalText", void 0);
 
 __decorate([Prop({
   type: String,
@@ -11663,33 +13058,8 @@ __decorate([Prop({
 
 __decorate([Prop({
   type: String,
-  default: undefined
-}), __metadata("design:type", String)], Persona.prototype, "primaryText", void 0);
-
-__decorate([Prop({
-  type: String,
   default: 'online'
 }), __metadata("design:type", String)], Persona.prototype, "status", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: undefined
-}), __metadata("design:type", String)], Persona.prototype, "secondaryText", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: undefined
-}), __metadata("design:type", String)], Persona.prototype, "tertiaryText", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: undefined
-}), __metadata("design:type", String)], Persona.prototype, "optionalText", void 0);
-
-__decorate([Prop({
-  type: String,
-  default: undefined
-}), __metadata("design:type", String)], Persona.prototype, "presence", void 0);
 
 __decorate([Prop({
   type: Boolean,
@@ -11699,17 +13069,13 @@ __decorate([Prop({
 __decorate([Prop({
   type: Boolean,
   default: false
-}), __metadata("design:type", Boolean)], Persona.prototype, "hidePersonaDetails", void 0);
-
-__decorate([Prop({
-  type: Boolean,
-  default: false
 }), __metadata("design:type", Boolean)], Persona.prototype, "showSecondaryText", void 0);
 
 Persona = __decorate([Component({
   name: 'OPersona',
   components: {
-    Icon: Icon$1
+    Icon: Icon$1,
+    PersonaCoin: PersonaCoin$1
   }
 })], Persona);
 var script$C = Persona;
@@ -11718,7 +13084,7 @@ var script$C = Persona;
 var __vue_script__$C = script$C;
 /* template */
 
-var __vue_render__$x = function __vue_render__() {
+var __vue_render__$y = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -11727,34 +13093,11 @@ var __vue_render__$x = function __vue_render__() {
 
   return _c('div', {
     class: _vm.classNames.root,
-    style: {
-      '--size': _vm.size + "px",
-      '--fontSizePrimary': _vm.fontSizePrimary + "px",
-      '--fontSizeDetails': _vm.fontSizeDetails + "px",
-      '--presenceSize': _vm.presenceSize + "px",
-      '--presenceColor': _vm.presenceColor,
-      '--presenceIconFontSize': _vm.fontSizeIcon + "px"
-    }
-  }, [_c('div', {
-    class: _vm.classNames.coin
-  }, [_c('div', {
-    class: _vm.classNames.imageArea
-  }, [_c('div', {
-    class: _vm.classNames.imageContainer
-  }, [_c('img', {
-    class: _vm.classNames.image,
-    attrs: {
-      "src": _vm.imageUrl,
-      "alt": ""
-    }
-  })]), _vm._v(" "), _c('div', {
-    class: _vm.classNames.presence
-  }, [_c('Icon', {
-    class: _vm.classNames.presenceIcon,
-    attrs: {
-      "icon-name": _vm.presenceIcon
-    }
-  })], 1)])]), _vm._v(" "), _c('div', {
+    style: _vm.coinSize ? {
+      height: _vm.coinSize + "px",
+      minWidth: _vm.coinSize + "px"
+    } : undefined
+  }, [_c('PersonaCoin', _vm._b({}, 'PersonaCoin', _vm.$props, false)), _vm._v(" "), !_vm.hidePersonaDetails || _vm.size === _vm.PersonaSize.size8 || _vm.size === _vm.PersonaSize.size10 || _vm.size === _vm.PersonaSize.tiny ? _c('div', {
     class: _vm.classNames.details
   }, [_c('div', {
     class: _vm.classNames.primaryText,
@@ -11763,7 +13106,7 @@ var __vue_render__$x = function __vue_render__() {
     }
   }, [_c('div', {
     class: _vm.classNames.tooltipHostRoot
-  }, [_vm._v(_vm._s(_vm.primaryText))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.text))])]), _vm._v(" "), _c('div', {
     class: _vm.classNames.secondaryText,
     attrs: {
       "dir": "auto"
@@ -11784,40 +13127,14 @@ var __vue_render__$x = function __vue_render__() {
     }
   }, [_c('div', {
     class: _vm.classNames.tooltipHostRoot
-  }, [_vm._v(_vm._s(_vm.optionalText))])])])]);
+  }, [_vm._v(_vm._s(_vm.optionalText))])])]) : _vm._e()], 1);
 };
 
-var __vue_staticRenderFns__$x = [];
+var __vue_staticRenderFns__$y = [];
 /* style */
 
-var __vue_inject_styles__$C = function __vue_inject_styles__(inject) {
-  if (!inject) return;
-  inject("data-v-1f88c2ea_0", {
-    source: ".-input-css-5-root-2iQL{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400;box-shadow:none;margin-right:0;margin-bottom:0;margin-left:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0;box-sizing:border-box;color:#323130;position:relative;height:56px;min-width:56px;display:flex;align-items:center}.-input-css-5-coin-1y8U{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400}.-input-css-5-imageArea-3UUf{position:relative;text-align:center;height:var(--size);width:var(--size);flex:0 0 auto}.-input-css-5-imageContainer-UNGl{font-family:\"Segoe UI\",\"Segoe UI Web (West European)\",\"Segoe UI\",-apple-system,BlinkMacSystemFont,Roboto,\"Helvetica Neue\",sans-serif;-webkit-font-smoothing:antialiased;font-size:14px;font-weight:400;animation-name:-input-css-5-css-0-1Uas;animation-duration:367ms;animation-timing-function:cubic-bezier(.1,.25,.75,.9);animation-fill-mode:both;position:absolute;margin-right:10px;top:0;left:0;width:40px;height:40px;perspective:1px;overflow:hidden;border-width:0;border-style:initial;border-color:initial;border-image:initial;border-radius:50%;width:var(--size);height:var(--size)}.-input-css-5-image-zFKx{display:block;opacity:1;width:100%;height:100%;object-fit:cover;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}.-input-css-5-presence-2Q-V{position:absolute;height:var(--presenceSize);width:var(--presenceSize);top:auto;right:-2px;bottom:-2px;text-align:center;box-sizing:content-box;background-clip:content-box;background-color:var(--presenceColor);border-radius:50%;border-width:2px;border-style:solid;border-color:#fff;border-image:initial}.-input-css-5-presenceIcon-1tuh{display:inline-block;-webkit-font-smoothing:antialiased;font-style:normal;font-weight:400;font-size:var(--fontSizeIcon);speak:none;font-family:FabricMDL2Icons;color:#fff;font-size:12px;line-height:20px;vertical-align:top}.-input-css-5-details-3q9n{padding-top:0;padding-right:24px;padding-bottom:0;padding-left:16px;min-width:0;width:100%;text-align:left;display:flex;flex-direction:column;justify-content:space-around}.-input-css-5-primaryText-1F3y{text-overflow:ellipsis;white-space:nowrap;color:#323130;font-weight:400;font-size:var(--fontSizePrimary);overflow:hidden}.-input-css-5-secondaryText-kkP6{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);overflow:hidden}.-input-css-5-tertiaryText-2Mwl{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);display:none;overflow:hidden}.-input-css-5-optionalText-2uH_{text-overflow:ellipsis;white-space:nowrap;color:#605e5c;font-weight:400;font-size:var(--fontSizeDetails);display:none;overflow:hidden}.-input-css-5-tooltipHostRoot-X0wr{display:inline}",
-    map: undefined,
-    media: undefined
-  });
-  Object.defineProperty(this, "$style", {
-    value: {
-      "root": "-input-css-5-root-2iQL",
-      "coin": "-input-css-5-coin-1y8U",
-      "imageArea": "-input-css-5-imageArea-3UUf",
-      "imageContainer": "-input-css-5-imageContainer-UNGl",
-      "css-0": "-input-css-5-css-0-1Uas",
-      "image": "-input-css-5-image-zFKx",
-      "presence": "-input-css-5-presence-2Q-V",
-      "presenceIcon": "-input-css-5-presenceIcon-1tuh",
-      "details": "-input-css-5-details-3q9n",
-      "primaryText": "-input-css-5-primaryText-1F3y",
-      "secondaryText": "-input-css-5-secondaryText-kkP6",
-      "tertiaryText": "-input-css-5-tertiaryText-2Mwl",
-      "optionalText": "-input-css-5-optionalText-2uH_",
-      "tooltipHostRoot": "-input-css-5-tooltipHostRoot-X0wr"
-    }
-  });
-};
+var __vue_inject_styles__$C = undefined;
 /* scoped */
-
 
 var __vue_scope_id__$C = undefined;
 /* module identifier */
@@ -11826,16 +13143,20 @@ var __vue_module_identifier__$C = undefined;
 /* functional template */
 
 var __vue_is_functional_template__$C = false;
+/* style inject */
+
 /* style inject SSR */
 
 /* style inject shadow dom */
 
 var __vue_component__$C = __vue_normalize__({
-  render: __vue_render__$x,
-  staticRenderFns: __vue_staticRenderFns__$x
-}, __vue_inject_styles__$C, __vue_script__$C, __vue_scope_id__$C, __vue_is_functional_template__$C, __vue_module_identifier__$C, false, __vue_create_injector__, undefined, undefined);
+  render: __vue_render__$y,
+  staticRenderFns: __vue_staticRenderFns__$y
+}, __vue_inject_styles__$C, __vue_script__$C, __vue_scope_id__$C, __vue_is_functional_template__$C, __vue_module_identifier__$C, false, undefined, undefined, undefined);
 
-var GlobalClassNames$i = {
+var Persona$1 = styled(__vue_component__$C, getStyles$A, undefined);
+
+var GlobalClassNames$m = {
   root: 'ms-Shimmer-container',
   shimmerWrapper: 'ms-Shimmer-shimmerWrapper',
   shimmerGradient: 'ms-Shimmer-shimmerGradient',
@@ -11858,7 +13179,7 @@ var shimmerAnimationRTL = keyframes({
     transform: "translateX(".concat(BACKGROUND_OFF_SCREEN_POSITION, ")")
   }
 });
-function getStyles$y(props) {
+function getStyles$D(props) {
   var isDataLoaded = props.isDataLoaded,
       className = props.className,
       theme = props.theme,
@@ -11866,7 +13187,7 @@ function getStyles$y(props) {
       shimmerColor = props.shimmerColor,
       shimmerWaveColor = props.shimmerWaveColor;
   var semanticColors = theme.semanticColors;
-  var classNames = getGlobalClassNames(GlobalClassNames$i, theme);
+  var classNames = getGlobalClassNames(GlobalClassNames$m, theme);
   var isRTL = getRTL();
   return {
     root: [classNames.root, theme.fonts.medium, {
@@ -11927,7 +13248,7 @@ function getStyles$y(props) {
   };
 }
 
-var getClassNames$b = classNamesFunction();
+var getClassNames$u = classNamesFunction();
 var TRANSITION_ANIMATION_INTERVAL = 200;
 /* ms */
 
@@ -11948,7 +13269,7 @@ function (_BaseComponent) {
       var theme = this.theme,
           className = this.className,
           shimmerColors = this.shimmerColors;
-      return getClassNames$b(getStyles$y, {
+      return getClassNames$u(getStyles$D, {
         theme: theme,
         isDataLoaded: false,
         className: className,
@@ -11973,7 +13294,7 @@ var script$D = Shimmer;
 var __vue_script__$D = script$D;
 /* template */
 
-var __vue_render__$y = function __vue_render__() {
+var __vue_render__$z = function __vue_render__() {
   var _vm = this;
 
   var _h = _vm.$createElement;
@@ -11989,7 +13310,7 @@ var __vue_render__$y = function __vue_render__() {
   })])]);
 };
 
-var __vue_staticRenderFns__$y = [];
+var __vue_staticRenderFns__$z = [];
 /* style */
 
 var __vue_inject_styles__$D = undefined;
@@ -12009,44 +13330,48 @@ var __vue_is_functional_template__$D = false;
 /* style inject shadow dom */
 
 var __vue_component__$D = __vue_normalize__({
-  render: __vue_render__$y,
-  staticRenderFns: __vue_staticRenderFns__$y
+  render: __vue_render__$z,
+  staticRenderFns: __vue_staticRenderFns__$z
 }, __vue_inject_styles__$D, __vue_script__$D, __vue_scope_id__$D, __vue_is_functional_template__$D, __vue_module_identifier__$D, false, undefined, undefined, undefined);
 
 
 
-var Components = /*#__PURE__*/Object.freeze({
+var index = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  ActivityItem: __vue_component__,
+  Overlay: Overlay$1,
+  ActivityItem: __vue_component__$1,
+  BaseButton: __vue_component__$2,
   ActionButton: __vue_component__$3,
   CommandBarButton: __vue_component__$4,
   CompoundButton: __vue_component__$5,
   DefaultButton: __vue_component__$6,
   IconButton: __vue_component__$7,
-  PrimaryButton: __vue_component__$8,
-  Breadcrumb: __vue_component__$9,
-  Modal: __vue_component__$c,
+  MessageBarButton: __vue_component__$8,
+  PrimaryButton: __vue_component__$9,
+  Breadcrumb: __vue_component__$a,
+  Modal: __vue_component__$E,
   Dialog: __vue_component__$d,
   Nav: Nav$1,
-  Image: __vue_component__$e,
+  Image: Image$1,
   get ImageFit () { return ImageFit; },
   get ImageLoadState () { return ImageLoadState; },
   get ImageCoverStyle () { return ImageCoverStyle; },
   Callout: __vue_component__$g,
-  ComboBox: __vue_component__$j,
-  ChoiceGroup: __vue_component__$l,
+  ComboBox: __vue_component__$i,
+  ChoiceGroup: ChoiceGroup$1,
   Dropdown: Dropdown$1,
   MessageBar: MessageBar$1,
   get MessageBarType () { return MessageBarType; },
-  Popup: __vue_component__$p,
+  Popup: __vue_component__$o,
+  Facepile: Facepile$1,
+  Panel: Panel$1,
+  get PanelType () { return PanelType; },
   Checkbox: Checkbox$1,
   Icon: Icon$1,
   Label: Label$1,
-  Layer: __vue_component__$a,
-  LayerHost: __vue_component__$b,
+  Layer: __vue_component__$b,
+  LayerHost: __vue_component__$c,
   Link: Link$1,
-  Overlay: Overlay$1,
-  Panel: __vue_component__$s,
   ProgressIndicator: ProgressIndicator$1,
   Rating: Rating$1,
   SearchBox: SearchBox$1,
@@ -12056,10 +13381,308 @@ var Components = /*#__PURE__*/Object.freeze({
   Text: Text$1,
   TextField: TextField$1,
   Toggle: Toggle$1,
-  Persona: __vue_component__$C,
+  Persona: Persona$1,
+  getPersonaInitialsColor: getPersonaInitialsColor,
   get PersonaSize () { return PersonaSize; },
   get PersonaPresence () { return PersonaPresence; },
   get PersonaInitialsColor () { return PersonaInitialsColor; },
+  get personaSize () { return personaSize; },
+  get personaPresenceSize () { return personaPresenceSize; },
+  sizeBoolean: sizeBoolean,
+  sizeToPixels: sizeToPixels,
+  presenceBoolean: presenceBoolean,
+  Shimmer: __vue_component__$D
+});
+
+var animationDuration = AnimationVariables.durationValue2;
+var globalClassNames$1 = {
+  root: 'ms-Modal',
+  main: 'ms-Dialog-main',
+  scrollableContent: 'ms-Modal-scrollableContent',
+  isOpen: 'is-open',
+  layer: 'ms-Modal-Layer'
+};
+var getStyles$E = function getStyles(props) {
+  var className = props.className,
+      containerClassName = props.containerClassName,
+      scrollableContentClassName = props.scrollableContentClassName,
+      isOpen = props.isOpen,
+      isVisible = props.isVisible,
+      hasBeenOpened = props.hasBeenOpened,
+      modalRectangleTop = props.modalRectangleTop,
+      theme = props.theme,
+      topOffsetFixed = props.topOffsetFixed,
+      isModeless = props.isModeless,
+      layerClassName = props.layerClassName,
+      isDefaultDragHandle = props.isDefaultDragHandle;
+  var palette = theme.palette,
+      effects = theme.effects,
+      fonts = theme.fonts;
+  var classNames = getGlobalClassNames(globalClassNames$1, theme);
+  return {
+    root: [classNames.root, fonts.medium, {
+      backgroundColor: 'transparent',
+      position: isModeless ? 'absolute' : 'fixed',
+      height: '100%',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      opacity: 0,
+      pointerEvents: 'none',
+      transition: "opacity ".concat(animationDuration)
+    }, topOffsetFixed && hasBeenOpened && {
+      alignItems: 'flex-start'
+    }, isOpen && classNames.isOpen, isVisible && {
+      opacity: 1,
+      pointerEvents: 'auto'
+    }, className],
+    main: [classNames.main, {
+      boxShadow: effects.elevation64,
+      borderRadius: effects.roundedCorner2,
+      backgroundColor: palette.white,
+      boxSizing: 'border-box',
+      position: 'relative',
+      textAlign: 'left',
+      outline: '3px solid transparent',
+      maxHeight: 'calc(100% - 32px)',
+      maxWidth: 'calc(100% - 32px)',
+      minHeight: '176px',
+      minWidth: '288px',
+      overflowY: 'auto',
+      zIndex: isModeless ? ZIndexes.Layer : undefined
+    }, topOffsetFixed && hasBeenOpened && {
+      top: modalRectangleTop
+    }, isDefaultDragHandle && {
+      cursor: 'move'
+    }, containerClassName],
+    scrollableContent: [classNames.scrollableContent, {
+      overflowY: 'auto',
+      flexGrow: 1,
+      maxHeight: '100vh',
+      selectors: {
+        '@supports (-webkit-overflow-scrolling: touch)': {
+          maxHeight: window.innerHeight
+        }
+      }
+    }, scrollableContentClassName],
+    layer: isModeless && [layerClassName, classNames.layer, {
+      position: 'static',
+      width: 'unset',
+      height: 'unset'
+    }],
+    keyboardMoveIconContainer: {
+      position: 'absolute',
+      display: 'flex',
+      justifyContent: 'center',
+      width: '100%',
+      padding: '3px 0px'
+    },
+    keyboardMoveIcon: {
+      fontSize: fonts.xLargePlus.fontSize,
+      width: '24px'
+    }
+  };
+};
+
+var getClassNames$v = classNamesFunction();
+
+var Modal =
+/*#__PURE__*/
+function (_BaseComponent) {
+  _inherits(Modal, _BaseComponent);
+
+  function Modal() {
+    _classCallCheck(this, Modal);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Modal).apply(this, arguments));
+  }
+
+  _createClass(Modal, [{
+    key: "classNames",
+    get: function get() {
+      var theme = this.theme,
+          className = this.className,
+          layerProps = this.layerProps,
+          containerClassName = this.containerClassName,
+          scrollableContentClassName = this.scrollableContentClassName,
+          isVisible = this.isVisible,
+          hasBeenOpened = this.hasBeenOpened,
+          modalRectangleTop = this.modalRectangleTop,
+          topOffsetFixed = this.topOffsetFixed,
+          isModeless = this.isModeless,
+          dragOptions = this.dragOptions;
+      var layerClassName = layerProps === undefined ? '' : layerProps.className;
+      return getClassNames$v(getStyles$E, {
+        theme: theme,
+        className: className,
+        containerClassName: containerClassName,
+        scrollableContentClassName: scrollableContentClassName,
+        isOpen: true,
+        isVisible: isVisible,
+        hasBeenOpened: hasBeenOpened,
+        modalRectangleTop: modalRectangleTop,
+        topOffsetFixed: topOffsetFixed,
+        isModeless: isModeless,
+        layerClassName: layerClassName,
+        isDefaultDragHandle: dragOptions && !dragOptions.dragHandleSelector
+      });
+    }
+  }]);
+
+  return Modal;
+}(BaseComponent$1);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "layerProps", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Modal.prototype, "containerClassName", void 0);
+
+__decorate([Prop({
+  type: String,
+  default: null
+}), __metadata("design:type", String)], Modal.prototype, "scrollableContentClassName", void 0);
+
+__decorate([Prop({
+  default: true
+}), __metadata("design:type", Boolean)], Modal.prototype, "isVisible", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "hasBeenOpened", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "modalRectangleTop", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "topOffsetFixed", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "isModeless", void 0);
+
+__decorate([Prop({
+  type: Object,
+  default: null
+}), __metadata("design:type", Object)], Modal.prototype, "dragOptions", void 0);
+
+Modal = __decorate([Component({
+  components: {
+    Layer: __vue_component__$b
+  }
+})], Modal);
+var script$E = Modal;
+
+/* script */
+var __vue_script__$E = script$E;
+/* template */
+
+var __vue_render__$A = function __vue_render__() {
+  var _vm = this;
+
+  var _h = _vm.$createElement;
+
+  var _c = _vm._self._c || _h;
+
+  return _c('Layer', [_c('div', {
+    class: _vm.classNames.root
+  }, [_c('div', {
+    class: _vm.classNames.container
+  }, [_vm._v("\n      Modal\n      asfd\n      asdf\n      asdf\n    ")])])]);
+};
+
+var __vue_staticRenderFns__$A = [];
+/* style */
+
+var __vue_inject_styles__$E = undefined;
+/* scoped */
+
+var __vue_scope_id__$E = undefined;
+/* module identifier */
+
+var __vue_module_identifier__$E = undefined;
+/* functional template */
+
+var __vue_is_functional_template__$E = false;
+/* style inject */
+
+/* style inject SSR */
+
+/* style inject shadow dom */
+
+var __vue_component__$E = __vue_normalize__({
+  render: __vue_render__$A,
+  staticRenderFns: __vue_staticRenderFns__$A
+}, __vue_inject_styles__$E, __vue_script__$E, __vue_scope_id__$E, __vue_is_functional_template__$E, __vue_module_identifier__$E, false, undefined, undefined, undefined);
+
+
+
+var Components = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  Overlay: Overlay$1,
+  ActivityItem: __vue_component__$1,
+  BaseButton: __vue_component__$2,
+  ActionButton: __vue_component__$3,
+  CommandBarButton: __vue_component__$4,
+  CompoundButton: __vue_component__$5,
+  DefaultButton: __vue_component__$6,
+  IconButton: __vue_component__$7,
+  MessageBarButton: __vue_component__$8,
+  PrimaryButton: __vue_component__$9,
+  Breadcrumb: __vue_component__$a,
+  Modal: __vue_component__$E,
+  Dialog: __vue_component__$d,
+  Nav: Nav$1,
+  Image: Image$1,
+  get ImageFit () { return ImageFit; },
+  get ImageLoadState () { return ImageLoadState; },
+  get ImageCoverStyle () { return ImageCoverStyle; },
+  Callout: __vue_component__$g,
+  ComboBox: __vue_component__$i,
+  ChoiceGroup: ChoiceGroup$1,
+  Dropdown: Dropdown$1,
+  MessageBar: MessageBar$1,
+  get MessageBarType () { return MessageBarType; },
+  Popup: __vue_component__$o,
+  Facepile: Facepile$1,
+  Panel: Panel$1,
+  get PanelType () { return PanelType; },
+  Checkbox: Checkbox$1,
+  Icon: Icon$1,
+  Label: Label$1,
+  Layer: __vue_component__$b,
+  LayerHost: __vue_component__$c,
+  Link: Link$1,
+  ProgressIndicator: ProgressIndicator$1,
+  Rating: Rating$1,
+  SearchBox: SearchBox$1,
+  Separator: Separator$1,
+  Slider: Slider$1,
+  Spinner: Spinner$1,
+  Text: Text$1,
+  TextField: TextField$1,
+  Toggle: Toggle$1,
+  Persona: Persona$1,
+  getPersonaInitialsColor: getPersonaInitialsColor,
+  get PersonaSize () { return PersonaSize; },
+  get PersonaPresence () { return PersonaPresence; },
+  get PersonaInitialsColor () { return PersonaInitialsColor; },
+  get personaSize () { return personaSize; },
+  get personaPresenceSize () { return personaPresenceSize; },
+  sizeBoolean: sizeBoolean,
+  sizeToPixels: sizeToPixels,
+  presenceBoolean: presenceBoolean,
   Shimmer: __vue_component__$D
 });
 
@@ -12089,9 +13712,9 @@ function registerCSSVars(key, obj) {
   return properties;
 }
 
-var toKebabCase = function toKebabCase(str) {
-  return str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase();
-};
+function ownKeys$e(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread$e(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys$e(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys$e(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 function loadTheme(theme) {
   var useCSSVars = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
@@ -12106,7 +13729,7 @@ function loadTheme(theme) {
     palette = registerCSSVars('palette', palette);
     semanticColors = registerCSSVars('semanticColors', semanticColors); // update theme
 
-    _theme = loadTheme$1(_objectSpread2({}, theme, {
+    _theme = loadTheme$1(_objectSpread$e({}, theme, {
       palette: palette,
       semanticColors: semanticColors
     }));
@@ -12155,55 +13778,5 @@ function install(Vue) {
 
  */
 
-
-
-var index = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  ActivityItem: __vue_component__,
-  ActionButton: __vue_component__$3,
-  CommandBarButton: __vue_component__$4,
-  CompoundButton: __vue_component__$5,
-  DefaultButton: __vue_component__$6,
-  IconButton: __vue_component__$7,
-  PrimaryButton: __vue_component__$8,
-  Breadcrumb: __vue_component__$9,
-  Modal: __vue_component__$c,
-  Dialog: __vue_component__$d,
-  Nav: Nav$1,
-  Image: __vue_component__$e,
-  get ImageFit () { return ImageFit; },
-  get ImageLoadState () { return ImageLoadState; },
-  get ImageCoverStyle () { return ImageCoverStyle; },
-  Callout: __vue_component__$g,
-  ComboBox: __vue_component__$j,
-  ChoiceGroup: __vue_component__$l,
-  Dropdown: Dropdown$1,
-  MessageBar: MessageBar$1,
-  get MessageBarType () { return MessageBarType; },
-  Popup: __vue_component__$p,
-  Checkbox: Checkbox$1,
-  Icon: Icon$1,
-  Label: Label$1,
-  Layer: __vue_component__$a,
-  LayerHost: __vue_component__$b,
-  Link: Link$1,
-  Overlay: Overlay$1,
-  Panel: __vue_component__$s,
-  ProgressIndicator: ProgressIndicator$1,
-  Rating: Rating$1,
-  SearchBox: SearchBox$1,
-  Separator: Separator$1,
-  Slider: Slider$1,
-  Spinner: Spinner$1,
-  Text: Text$1,
-  TextField: TextField$1,
-  Toggle: Toggle$1,
-  Persona: __vue_component__$C,
-  get PersonaSize () { return PersonaSize; },
-  get PersonaPresence () { return PersonaPresence; },
-  get PersonaInitialsColor () { return PersonaInitialsColor; },
-  Shimmer: __vue_component__$D
-});
-
 export default install;
-export { __vue_component__$3 as ActionButton, __vue_component__ as ActivityItem, __vue_component__$9 as Breadcrumb, __vue_component__$g as Callout, Checkbox$1 as Checkbox, __vue_component__$l as ChoiceGroup, __vue_component__$j as ComboBox, __vue_component__$4 as CommandBarButton, __vue_component__$5 as CompoundButton, __vue_component__$6 as DefaultButton, __vue_component__$d as Dialog, Dropdown$1 as Dropdown, index as FabricComponents, Icon$1 as Icon, __vue_component__$7 as IconButton, __vue_component__$e as Image, ImageCoverStyle, ImageFit, ImageLoadState, Label$1 as Label, __vue_component__$a as Layer, __vue_component__$b as LayerHost, Link$1 as Link, MessageBar$1 as MessageBar, MessageBarType, __vue_component__$c as Modal, Nav$1 as Nav, Overlay$1 as Overlay, __vue_component__$s as Panel, __vue_component__$C as Persona, PersonaInitialsColor, PersonaPresence, PersonaSize, __vue_component__$p as Popup, __vue_component__$8 as PrimaryButton, ProgressIndicator$1 as ProgressIndicator, Rating$1 as Rating, SearchBox$1 as SearchBox, Separator$1 as Separator, __vue_component__$D as Shimmer, Slider$1 as Slider, Spinner$1 as Spinner, Text$1 as Text, TextField$1 as TextField, Toggle$1 as Toggle, loadTheme };
+export { __vue_component__$3 as ActionButton, __vue_component__$1 as ActivityItem, __vue_component__$2 as BaseButton, __vue_component__$a as Breadcrumb, __vue_component__$g as Callout, Checkbox$1 as Checkbox, ChoiceGroup$1 as ChoiceGroup, __vue_component__$i as ComboBox, __vue_component__$4 as CommandBarButton, __vue_component__$5 as CompoundButton, __vue_component__$6 as DefaultButton, __vue_component__$d as Dialog, Dropdown$1 as Dropdown, index as FabricComponents, Facepile$1 as Facepile, Icon$1 as Icon, __vue_component__$7 as IconButton, Image$1 as Image, ImageCoverStyle, ImageFit, ImageLoadState, Label$1 as Label, __vue_component__$b as Layer, __vue_component__$c as LayerHost, Link$1 as Link, MessageBar$1 as MessageBar, __vue_component__$8 as MessageBarButton, MessageBarType, __vue_component__$E as Modal, Nav$1 as Nav, Overlay$1 as Overlay, Panel$1 as Panel, PanelType, Persona$1 as Persona, PersonaInitialsColor, PersonaPresence, PersonaSize, __vue_component__$o as Popup, __vue_component__$9 as PrimaryButton, ProgressIndicator$1 as ProgressIndicator, Rating$1 as Rating, SearchBox$1 as SearchBox, Separator$1 as Separator, __vue_component__$D as Shimmer, Slider$1 as Slider, Spinner$1 as Spinner, Text$1 as Text, TextField$1 as TextField, Toggle$1 as Toggle, getPersonaInitialsColor, loadTheme, personaPresenceSize, personaSize, presenceBoolean, sizeBoolean, sizeToPixels };

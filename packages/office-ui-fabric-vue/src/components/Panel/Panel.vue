@@ -50,6 +50,13 @@ import { IconFontSizes } from '@uifabric/styling'
 
 const getClassNames = classNamesFunction()
 
+enum PanelVisibilityState {
+  closed,
+  animatingOpen,
+  open,
+  animatingClosed
+}
+
 @Component({
   components: { Layer, Overlay, IconButton },
 })
@@ -60,7 +67,6 @@ export default class Panel extends BaseComponent {
   @Prop() type!: any
 
   @Prop({ type: Boolean, default: false }) hasCloseButton!: boolean
-  @Prop({ type: Boolean, default: false }) isAnimating!: boolean
   @Prop({ type: Boolean, default: false }) isFooterSticky!: boolean
   @Prop({ type: Boolean, default: false }) isFooterAtBottom!: boolean
   @Prop({ type: Boolean, default: false }) isOnRightSide!: boolean
@@ -70,6 +76,8 @@ export default class Panel extends BaseComponent {
 
   IconFontSizes = IconFontSizes
 
+  visibility = PanelVisibilityState.closed
+
   get classNames () {
     const {
       styles,
@@ -78,7 +86,6 @@ export default class Panel extends BaseComponent {
       focusTrapZoneProps,
       hasCloseButton,
       headerClassName = '',
-      isAnimating,
       isFooterSticky,
       isFooterAtBottom,
       isOnRightSide,
@@ -86,6 +93,9 @@ export default class Panel extends BaseComponent {
       isHiddenOnDismiss,
       type,
     } = this
+
+    const { visibility } = this
+    const isAnimating = visibility === PanelVisibilityState.animatingClosed || visibility === PanelVisibilityState.animatingOpen
 
     return getClassNames(styles!, {
       theme: theme!,

@@ -24,7 +24,7 @@ license models. Please check `office-ui-fabric-react` for more information.
 3. `api-docs` (WIP), the homepage and showcase of the components.
 
 ## Vue Caveats
-* `class` has to be passed to subcomponents using the `class-name` property,
+* `class` have to be passed to subcomponents using the `class-name` property,
   because Vue doesn't expose `$attrs.class`.
 
 ## Project setup
@@ -41,3 +41,22 @@ yarn serve
 ```
 yarn build
 ```
+
+
+## Labels
+### Progress
+Each component has one of the following progress states:
+
+<dl>
+  <dt>missing</dt>
+  <dd>Development of this component has not yet started</dd>
+
+  <dt>wip</dt>
+  <dd>Development of this component has started, and the component is not yet ready for use</dd>
+
+  <dt>done</dt>
+  <dd>This component is ready to be used, but some features available in the react version aren't implemented yet</dd>
+
+  <dt>complete</dt>
+  <dd>This component is ready and has feature parity with its react counterpart.</dd>
+</dl>

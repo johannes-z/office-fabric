@@ -29,7 +29,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
-import { getStyles } from './ChoiceGroupOption.styles'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
@@ -52,9 +51,9 @@ export default class ChoiceGroupOption extends BaseComponent {
   @Prop() focused!: boolean
 
   get classNames () {
-    const { theme, iconProps, imageSrc, checked, disabled, imageSize, focused } = this
+    const { styles, theme, iconProps, imageSrc, checked, disabled, imageSize, focused } = this
 
-    return getClassNames(getStyles, {
+    return getClassNames(styles, {
       theme: theme!,
       hasIcon: !!iconProps,
       hasImage: !!imageSrc,

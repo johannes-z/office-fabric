@@ -109,7 +109,7 @@ export default class Dropdown extends BaseComponent {
     })
   }
 
-  get classNames () {
+  get classNames (): any {
     const { theme, className, errorMessage, label, required, disabled, panelProps, calloutProps } = this
     const { isOpen, calloutRenderEdge } = this
     const selectedOptions = this.selectedOptions

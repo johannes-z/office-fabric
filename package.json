@@ -5,7 +5,8 @@
   "workspaces": {
     "packages": [
       "packages/utilities",
-      "packages/office-ui-fabric-vue"
+      "packages/office-ui-fabric-vue",
+      "packages/api-docs"
     ]
   },
   "scripts": {
@@ -13,10 +14,13 @@
     "build": "yarn workspace @uifabric-vue/office-ui-fabric-vue build"
   },
   "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.1.2",
+    "@vue/cli-plugin-eslint": "^4.1.2",
+    "@vue/cli-plugin-router": "^4.1.2",
+    "@vue/cli-plugin-typescript": "^4.1.2",
+    "@vue/cli-service": "^4.1.2",
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.0.0",
     "typescript": "^3.7.4",
     "vue-template-compiler": "^2.6.11"
   }

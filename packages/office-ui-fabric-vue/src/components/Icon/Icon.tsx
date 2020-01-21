@@ -20,7 +20,7 @@ export default class Icon extends StatelessComponent {
     const iconContent = getIconContent(iconName) || {}
     const { iconClassName, children } = iconContent
 
-    const classNames = getClassNames(styles, {
+    const classNames: any = getClassNames(styles, {
       theme,
       className,
       iconClassName,

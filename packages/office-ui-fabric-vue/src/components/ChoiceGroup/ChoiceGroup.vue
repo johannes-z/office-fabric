@@ -25,9 +25,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import ChoiceGroupOption from './ChoiceGroupOption/ChoiceGroupOption.vue'
+import { ChoiceGroupOption } from './ChoiceGroupOption'
 import BaseComponent from '../BaseComponent'
-import { getStyles } from './ChoiceGroup.styles'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
@@ -48,9 +47,9 @@ export default class ChoiceGroup extends BaseComponent {
   selectedOption: any = {}
 
   get classNames () {
-    const { theme, className } = this
+    const { styles, theme, className } = this
 
-    return getClassNames(getStyles, {
+    return getClassNames(styles, {
       theme, className, optionsContainIconOrImage: false,
     })
   }
