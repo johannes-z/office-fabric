@@ -8,7 +8,22 @@
              type="radio">
 
       <label :for="`ChoiceGroup${_uid}-${id}`" :class="classNames.field">
-        <template v-if="imageSrc" />
+        <template v-if="imageSrc">
+          <div :class="classNames.innerField">
+            <div :class="classNames.imageWrapper">
+              <OImage :src="imageSrc"
+                      :alt="imageAlt"
+                      :width="imageSize.width"
+                      :height="imageSize.height" />
+            </div>
+            <div :class="classNames.selectedImageWrapper">
+              <OImage :src="selectedImageSrc"
+                      :alt="imageAlt"
+                      :width="imageSize.width"
+                      :height="imageSize.height" />
+            </div>
+          </div>
+        </template>
         <template v-else-if="iconProps">
           <div :class="classNames.innerField">
             <div :class="classNames.iconWrapper">
@@ -33,18 +48,21 @@ import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { Icon } from '../../Icon'
+import { Image } from '../../Image'
 import { Label } from '../../Label'
 
 const getClassNames = classNamesFunction()
 
 @Component({
-  components: { Icon, Label },
+  components: { Icon, OImage: Image, Label },
 })
 export default class ChoiceGroupOption extends BaseComponent {
   @Prop() id!: string
   @Prop() text!: string
   @Prop() iconProps!: any
   @Prop() imageSrc!: any
+  @Prop() selectedImageSrc!: any
+  @Prop() imageAlt!: any
   @Prop() checked!: boolean
   @Prop() disabled!: boolean
   @Prop({ default: () => ({ width: 32, height: 32 }) }) imageSize!: any
