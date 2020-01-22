@@ -2,10 +2,12 @@
   "name": "@uifabric-vue/utilities",
   "version": "1.0.0",
   "main": "./dist/index.umd.min.js",
-  "module": "./dist/index.esm.js",
+  "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "bili"
+    "build": "yarn build:browser && yarn build:module",
+    "build:browser": "bili",
+    "build:module": "tsc"
   },
   "devDependencies": {
     "bili": "^4.8.1",
