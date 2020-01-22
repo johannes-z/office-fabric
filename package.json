@@ -10,7 +10,8 @@
     ]
   },
   "scripts": {
-    "serve": "yarn workspace @uifabric-vue/office-ui-fabric-vue serve",
+    "serve": "yarn workspace api-docs serve",
+    "dev": "yarn workspace @uifabric-vue/office-ui-fabric-vue build -w",
     "build": "yarn workspace @uifabric-vue/office-ui-fabric-vue build"
   },
   "devDependencies": {

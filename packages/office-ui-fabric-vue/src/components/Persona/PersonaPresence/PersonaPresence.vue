@@ -17,7 +17,7 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import {
   PersonaPresence as PersonaPresenceEnum, PersonaSize,
 } from '../Persona.types'
-import { Icon } from '@/components'
+import { Icon } from '../../index'
 import { sizeBoolean } from '../PersonaConsts'
 
 const coinSizeFontScaleFactor = 6
@@ -29,6 +29,7 @@ const getClassNames = classNamesFunction()
 
 @Component({
   components: { Icon },
+  name: 'PersonaPresence',
 })
 export default class PersonaPresence extends BaseComponent {
   @Prop() presence!: any

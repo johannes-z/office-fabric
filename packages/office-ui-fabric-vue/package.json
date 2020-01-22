@@ -2,7 +2,8 @@
   "name": "@uifabric-vue/office-ui-fabric-vue",
   "version": "1.0.0",
   "main": "./dist/office-ui-fabric-vue.umd.min.js",
-  "module": "./dist/office-ui-fabric-vue.esm.js",
+  "module": "./src/index.ts",
+  "types": "./types/index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve src/dev.ts",
     "build": "bili",
@@ -13,6 +14,7 @@
     "@uifabric/icons": "^7.3.1",
     "@uifabric/merge-styles": "^7.8.2",
     "@uifabric/styling": "^7.10.1",
+    "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "core-js": "^3.6.4",
     "portal-vue": "^2.1.7",
     "vue": "^2.6.11",
@@ -41,7 +43,6 @@
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
     "typescript": "^3.7.5",
-    "vue-router": "^3.1.5",
     "vue-template-compiler": "^2.6.11"
   }
 }

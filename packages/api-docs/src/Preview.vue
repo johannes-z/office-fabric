@@ -41,6 +41,7 @@ export default class Preview extends Vue {
         isExpanded: true,
         links: [
           { name: 'ActivityItem', key: 'ActivityItem', href: '/#/ActivityItem' },
+          { name: 'Facepile', key: 'Facepile', href: '/#/Facepile' },
           { name: 'Persona', key: 'Persona', href: '/#/Persona' },
         ],
       }, {
@@ -70,6 +71,7 @@ export default class Preview extends Vue {
           { name: 'Callout', key: 'Callout', href: '/#/Callout' },
           { name: 'Dialog', key: 'Dialog', href: '/#/Dialog' },
           { name: 'Modal', key: 'Modal', href: '/#/Modal' },
+          { name: 'Panel', key: 'Panel', href: '/#/Panel' },
         ],
       }, {
         name: 'Utilities',
@@ -80,6 +82,7 @@ export default class Preview extends Vue {
           { name: 'Layer', key: 'Layer', href: '/#/Layer' },
           { name: 'Overlay', key: 'Overlay', href: '/#/Overlay' },
           { name: 'Separator', key: 'Separator', href: '/#/Separator' },
+          { name: 'Stack', key: 'Stack', href: '/#/Stack' },
           { name: 'Text', key: 'Text', href: '/#/Text' },
         ],
       }],
