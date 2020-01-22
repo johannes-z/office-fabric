@@ -9,8 +9,8 @@ import { getTheme } from '@uifabric/styling'
   functional: true,
 })
 export default abstract class StatelessComponent<TProps = {}, IStyles = {}> extends Vue {
-  @Prop({ default: '' }) readonly className?: string
-  @Prop({ type: [Object, Function], default: () => {} }) readonly styles?: any
+  @Prop({ type: [String, Array], default: '' }) readonly className!: string
+  @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
 
   css = css

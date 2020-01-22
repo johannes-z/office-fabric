@@ -106,3 +106,9 @@ export interface ISpinButtonStyles {
    */
   arrowButtonsContainerDisabled: IStyle;
 }
+
+export enum KeyboardSpinDirection {
+  down = -1,
+  notSpinning = 0,
+  up = 1
+}

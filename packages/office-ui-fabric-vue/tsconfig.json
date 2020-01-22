@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
+    "outDir": "lib",
     "target": "esnext",
     "module": "esnext",
+    "moduleResolution": "node",
     "strict": true,
     "jsx": "preserve",
     "jsxFactory": "h",
     "importHelpers": true,
-    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,
@@ -34,12 +35,13 @@
       "scripthost"
     ]
   },
+  "files": [
+    "src/shims-vue.d.ts"
+  ],
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "src/**/*.vue"
   ],
   "exclude": [
     "node_modules"

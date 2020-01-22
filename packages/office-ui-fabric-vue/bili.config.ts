@@ -7,9 +7,9 @@ const config: Config = {
   input: 'src/index.ts',
 
   output: {
-    dir: './dist',
-    fileName: `office-ui-fabric-vue.[format][min].js`,
-    moduleName: 'OfficeUIFabric',
+    dir: './lib',
+    fileName: `[name][ext]`,
+    // moduleName: 'OfficeUIFabric',
     format: ['esm'],
     extractCSS: true,
   },
@@ -19,6 +19,7 @@ const config: Config = {
   },
 
   extendRollupConfig: config => {
+    config.inputConfig.preserveModules = true
     config.inputConfig.preserveSymlinks = true
     return config
   },
@@ -40,9 +41,7 @@ const config: Config = {
     },
     vue: {
       compileTemplate: true,
-      css: {
-        extract: true,
-      },
+      css: true,
     },
   },
 
