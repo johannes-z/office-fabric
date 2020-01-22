@@ -2,22 +2,21 @@ import Vue, { VueConstructor } from 'vue'
 import * as Components from '../components'
 import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric/styling'
 import { registerCSSVars } from './registerCSSVars'
-import { toKebabCase } from '../util'
+import { toKebabCase } from '../utilities'
 
 export * from '../components'
 
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
-  // get latest theme
-  let _theme = baseLoadTheme(theme)
+  let _theme = createTheme(theme)
 
   if (useCSSVars) {
     let { palette, semanticColors } = _theme
     // generate new css vars
     palette = registerCSSVars('palette', palette)
     semanticColors = registerCSSVars('semanticColors', semanticColors)
+
     // update theme
-    _theme = baseLoadTheme({
-      ...theme,
+    baseLoadTheme({
       palette,
       semanticColors,
     })
@@ -34,9 +33,7 @@ export default function install (Vue: any, theme: IPartialTheme = {}, useCSSVars
     Vue.component(name, Component)
   }
 
-  let _theme = createTheme(theme)
-  _theme = loadTheme(theme, useCSSVars)
-  Vue.prototype.$fabricTheme = _theme
+  loadTheme(theme, useCSSVars)
 }
 
 /*

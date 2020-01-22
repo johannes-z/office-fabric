@@ -10,9 +10,7 @@ import { initializeIcons } from '@uifabric/icons'
 
 initializeIcons()
 
-Vue.use(Fabric, {
-  palette: {},
-} as IPartialTheme, true)
+Vue.use(Fabric, {} as IPartialTheme, true)
 
 Vue.use(VueRouter)
 

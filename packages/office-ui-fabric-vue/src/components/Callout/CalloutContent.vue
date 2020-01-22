@@ -20,7 +20,7 @@ import BaseComponent from '../BaseComponent'
 import { classNamesFunction, getWindow, getDocument, ICalloutPositionedInfo, assign, IRectangle, IPosition } from '@uifabric-vue/utilities'
 import { getStyles } from './CalloutContent.styles'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import { clickedOutside } from '../../util'
+import { clickedOutside } from '../../utilities'
 
 import { positionCallout } from '../../utilities/positioning/'
 
