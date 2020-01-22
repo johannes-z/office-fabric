@@ -14,20 +14,20 @@
 
       <h2>Text</h2>
       <div>
-        <o-text variant="large" block>
+        <f-text variant="large" block>
           Wrap (Default)
-        </o-text>
-        <o-text>
+        </f-text>
+        <f-text>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </o-text>
+        </f-text>
       </div>
       <div>
-        <o-text variant="large" block>
+        <f-text variant="large" block>
           No Wrap
-        </o-text>
-        <o-text nowrap>
+        </f-text>
+        <f-text nowrap>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </o-text>
+        </f-text>
       </div>
     </div>
 

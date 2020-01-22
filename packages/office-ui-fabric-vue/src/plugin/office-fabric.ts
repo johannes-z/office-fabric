@@ -29,7 +29,7 @@ export default function install (Vue: any, theme: IPartialTheme = {}, useCSSVars
   for (const _ in Components) {
     const Component: VueConstructor<Vue> = (Components as any)[_]
     if (Component.toString().indexOf('VueComponent') === -1) continue
-    const name: string = `o-${toKebabCase(_)}`
+    const name: string = `f-${toKebabCase(_)}`
     Vue.component(name, Component)
   }
 

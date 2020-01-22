@@ -107,8 +107,9 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
       <div key={linkIndex} class={classNames.compositeLink}>
         {link.links && link.links.length > 0 ? (
           <button onClick={this.onLinkExpandClicked.bind(this, link)} class={classNames.chevronButton}>
-            <o-icon
-              class={classNames.chevronIcon}
+            <Icon
+              class-name={classNames.chevronIcon}
+              // @ts-ignore
               style={link.isExpanded && { transform: 'rotate(-180deg)' }}
               icon-name="ChevronDown" />
           </button>

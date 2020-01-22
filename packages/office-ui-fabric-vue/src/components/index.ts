@@ -1,5 +1,6 @@
 
 export * from './Overlay'
+export * from './SwatchColorPicker'
 
 export * from './ActivityItem'
 export * from './Button'

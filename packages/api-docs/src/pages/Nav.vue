@@ -11,7 +11,7 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <o-nav :groups="groups" />
+      <f-nav :groups="groups" />
     </div>
 
     <div class="content--inner ms-depth-8">

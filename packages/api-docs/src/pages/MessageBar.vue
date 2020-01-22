@@ -12,21 +12,21 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Label</h2>
-      <o-message-bar>
+      <f-message-bar>
         Info/Default MessageBar.
-        <o-link href="https://google.at" target="_blank">
+        <f-link href="https://google.at" target="_blank">
           Visit our website.
-        </o-link>
-      </o-message-bar>
-      <o-message-bar :is-multiline="false"
+        </f-link>
+      </f-message-bar>
+      <f-message-bar :is-multiline="false"
                      :message-bar-type="MessageBarType.error"
                      @dismiss="onDismiss">
         Error MessageBar with single line, with dismiss button.
-        <o-link href="www.bing.com" target="_blank">
+        <f-link href="www.bing.com" target="_blank">
           Visit our website.
-        </o-link>
-      </o-message-bar>
-      <o-message-bar :is-multiline="false"
+        </f-link>
+      </f-message-bar>
+      <f-message-bar :is-multiline="false"
                      truncated
                      :message-bar-type="MessageBarType.blocked"
                      @dismiss="onDismiss">
@@ -37,61 +37,61 @@
         pulvinar commodo odio sit amet faucibus. In hac habitasse platea dictumst. Duis eu ante commodo, condimentum nibh pellentesque, laoreet
         enim. Fusce massa lorem, ultrices eu mi a, fermentum suscipit magna. Integer porta purus pulvinar, hendrerit felis eget, condimentum
         mauris.
-      </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.severeWarning">
+      </f-message-bar>
+      <f-message-bar :message-bar-type="MessageBarType.severeWarning">
         SevereWarning MessageBar with action buttons which defaults to multiline.
-        <o-link href="www.bing.com" target="_blank">
+        <f-link href="www.bing.com" target="_blank">
           Visit our website.
-        </o-link>
+        </f-link>
         <template #actions>
           <div>
-            <o-message-bar-button>Yes</o-message-bar-button>
-            <o-message-bar-button>No</o-message-bar-button>
+            <f-message-bar-button>Yes</f-message-bar-button>
+            <f-message-bar-button>No</f-message-bar-button>
           </div>
         </template>
-      </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.success"
+      </f-message-bar>
+      <f-message-bar :message-bar-type="MessageBarType.success"
                      :is-multiline="false">
         Success MessageBar with single line and action buttons.
-        <o-link href="www.bing.com" target="_blank">
+        <f-link href="www.bing.com" target="_blank">
           Visit our website.
-        </o-link>
+        </f-link>
         <template #actions>
           <div>
-            <o-message-bar-button>Yes</o-message-bar-button>
-            <o-message-bar-button>No</o-message-bar-button>
+            <f-message-bar-button>Yes</f-message-bar-button>
+            <f-message-bar-button>No</f-message-bar-button>
           </div>
         </template>
-      </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.warning"
+      </f-message-bar>
+      <f-message-bar :message-bar-type="MessageBarType.warning"
                      :is-multiline="false"
                      @dismiss="onDismiss">
         Warning MessageBar content.
-        <o-link href="www.bing.com" target="_blank">
+        <f-link href="www.bing.com" target="_blank">
           Visit our website.
-        </o-link>
+        </f-link>
         <template #actions>
           <div>
-            <o-message-bar-button>Action</o-message-bar-button>
+            <f-message-bar-button>Action</f-message-bar-button>
           </div>
         </template>
-      </o-message-bar>
-      <o-message-bar :message-bar-type="MessageBarType.warning">
+      </f-message-bar>
+      <f-message-bar :message-bar-type="MessageBarType.warning">
         <b>Warning defaults to multiline</b>. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi luctus, purus a lobortis tristique,
         odio augue pharetra metus, ac placerat nunc mi nec dui. Vestibulum aliquam et nunc semper scelerisque. Curabitur vitae orci nec quam
         condimentum porttitor et sed lacus. Vivamus ac efficitur leo. Cras faucibus mauris libero, ac placerat erat euismod et. Donec pulvinar
         commodo odio sit amet faucibus. In hac habitasse platea dictumst. Duis eu ante commodo, condimentum nibh pellentesque, laoreet enim.
         Fusce massa lorem, ultrices eu mi a, fermentum suscipit magna. Integer porta purus pulvinar, hendrerit felis eget, condimentum mauris.
-        <o-link href="www.bing.com" target="_blank">
+        <f-link href="www.bing.com" target="_blank">
           Visit our website.
-        </o-link>
+        </f-link>
         <template #actions>
           <div>
-            <o-message-bar-button>Yes</o-message-bar-button>
-            <o-message-bar-button>No</o-message-bar-button>
+            <f-message-bar-button>Yes</f-message-bar-button>
+            <f-message-bar-button>No</f-message-bar-button>
           </div>
         </template>
-      </o-message-bar>
+      </f-message-bar>
     </div>
 
     <div class="content--inner ms-depth-8">

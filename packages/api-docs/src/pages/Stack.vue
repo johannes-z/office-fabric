@@ -14,27 +14,27 @@
 
       <h2>Stack</h2>
 
-      <o-stack>
+      <f-stack>
         <span>Default vertical stack</span>
-        <o-stack>
+        <f-stack>
           <span>Item One</span>
           <span>Item Two</span>
           <span>Item Three</span>
-        </o-stack>
+        </f-stack>
 
         <span>Ordered stack</span>
-        <o-stack>
-          <o-stack-item :order="2">
+        <f-stack>
+          <f-stack-item :order="2">
             <span>Item One</span>
-          </o-stack-item>
-          <o-stack-item :order="3">
+          </f-stack-item>
+          <f-stack-item :order="3">
             <span>Item Two</span>
-          </o-stack-item>
-          <o-stack-item :order="1">
+          </f-stack-item>
+          <f-stack-item :order="1">
             <span>Item Three</span>
-          </o-stack-item>
-        </o-stack>
-      </o-stack>
+          </f-stack-item>
+        </f-stack>
+      </f-stack>
     </div>
 
     <div class="content--inner ms-depth-8">

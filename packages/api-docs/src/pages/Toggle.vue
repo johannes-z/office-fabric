@@ -11,42 +11,42 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <o-toggle label="Checked with On and Off Text"
+      <f-toggle label="Checked with On and Off Text"
                 default-checked
                 on-text="On"
                 off-text="Off" />
-      <o-toggle label="Unchecked with On Text" on-text="On" />
-      <o-toggle label="Unchecked with Off Text" off-text="Off" />
-      <o-toggle label="Disabled and checked"
+      <f-toggle label="Unchecked with On Text" on-text="On" />
+      <f-toggle label="Unchecked with Off Text" off-text="Off" />
+      <f-toggle label="Disabled and checked"
                 disabled
                 default-checked />
-      <o-toggle label="Disabled" disabled />
+      <f-toggle label="Disabled" disabled />
 
-      <o-toggle label="With inline label"
+      <f-toggle label="With inline label"
                 on-text="On"
                 off-text="Off"
                 inline-label
                 default-checked
                 :styles="toggleStyleProp" />
-      <o-toggle label="Disabled with inline label"
+      <f-toggle label="Disabled with inline label"
                 on-text="On"
                 off-text="Off"
                 inline-label />
-      <o-toggle label="With inline label and without onText and offText"
+      <f-toggle label="With inline label and without onText and offText"
                 inline-label
                 disabled
                 default-checked />
-      <o-toggle label="Disabled with inline label and without onText and offText"
+      <f-toggle label="Disabled with inline label and without onText and offText"
                 inline-label
                 disabled />
 
       <div>Controlled</div>
-      <o-toggle v-model="toggleState" label="Test" /> {{ toggleState }}
-      <o-toggle label="Test">
+      <f-toggle v-model="toggleState" label="Test" /> {{ toggleState }}
+      <f-toggle label="Test">
         <template #label="{ checked, disabled, label }">
           <div>label: {{ label }}, checked: {{ checked }}, disabled: {{ disabled }}</div>
         </template>
-      </o-toggle>
+      </f-toggle>
     </div>
 
     <div class="content--inner ms-depth-8">

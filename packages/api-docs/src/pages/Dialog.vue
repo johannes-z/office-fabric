@@ -13,10 +13,10 @@
       <h2>Usage</h2>
       <h2>Default Dialog</h2>
 
-      <o-default-button @click.native="showDialog = true">Open Dialog</o-default-button>
-      <o-dialog v-if="showDialog">
+      <f-default-button @click.native="showDialog = true">Open Dialog</f-default-button>
+      <f-dialog v-if="showDialog">
         Test
-      </o-dialog>
+      </f-dialog>
     </div>
 
     <div class="content--inner ms-depth-8">

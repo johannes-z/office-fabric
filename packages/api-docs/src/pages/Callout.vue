@@ -3,11 +3,11 @@
     <h1>Callout</h1>
     <div class="content--inner ms-depth-8">
       <h2>Overview</h2>
-      <o-text block variant="large">Callouts are a powerful way to simplify a user interface. They host tips and other information users need when they need it, with minimal effort on their part. Callouts can help you use screen space more effectively and reduce screen clutter. However, poorly designed Callouts can be annoying, distracting, unhelpful, overwhelming, or in the way.</o-text>
+      <f-text block variant="large">Callouts are a powerful way to simplify a user interface. They host tips and other information users need when they need it, with minimal effort on their part. Callouts can help you use screen space more effectively and reduce screen clutter. However, poorly designed Callouts can be annoying, distracting, unhelpful, overwhelming, or in the way.</f-text>
       <br>
-      <o-text block variant="large">Use a Callout for displaying additional contextual information about an item on the screen. Callouts also have a tail that identifies their source. A common use for Callout is the introduction of a new feature or capability of an app or site. Alternate usages include pairing the Callout with a button or clickable element for on-demand presentation of additional or supporting content.</o-text>
+      <f-text block variant="large">Use a Callout for displaying additional contextual information about an item on the screen. Callouts also have a tail that identifies their source. A common use for Callout is the introduction of a new feature or capability of an app or site. Alternate usages include pairing the Callout with a button or clickable element for on-demand presentation of additional or supporting content.</f-text>
       <br>
-      <o-text block variant="large">By default, Callouts that do not contain focusable elements (links, buttons etc) cannot gain focus when opened. For proper screen reader support, follow the non-focusable callout example, which treats the callout content like a status message.</o-text>
+      <f-text block variant="large">By default, Callouts that do not contain focusable elements (links, buttons etc) cannot gain focus when opened. For proper screen reader support, follow the non-focusable callout example, which treats the callout content like a status message.</f-text>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -19,10 +19,10 @@
       <h2>Default Callout</h2>
 
       <div style="padding: 20px;">
-        <o-default-button ref="target" @click.native="showCallout = true">Target</o-default-button>
+        <f-default-button ref="target" @click.native="showCallout = true">Target</f-default-button>
       </div>
 
-      <o-callout v-if="showCallout"
+      <f-callout v-if="showCallout"
                  :target="target"
                  :styles="{ calloutMain: { maxWidth: 300 } }"
                  :is-beak-visible="false"
@@ -37,14 +37,14 @@
             Message body is optional. If help documentation is available, consider adding a link to learn more at the bottom.
           </p>
           <div :class="$style.actions">
-            <o-link :class="$style.link"
+            <f-link :class="$style.link"
                     href="http://microsoft.com"
                     target="_blank">
               Go to microsoft
-            </o-link>
+            </f-link>
           </div>
         </div>
-      </o-callout>
+      </f-callout>
     </div>
 
     <div class="content--inner ms-depth-8">

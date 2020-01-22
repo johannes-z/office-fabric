@@ -13,11 +13,11 @@
       <h2>Usage</h2>
       <h2>Basic</h2>
       <DefaultButton @click.native="isOpen = true">Show Panel</DefaultButton>
-      <o-panel v-if="isOpen"
+      <f-panel v-if="isOpen"
                header-text="Sample panel"
                @close="isOpen = false">
         <span>Content goes here.</span>
-      </o-panel>
+      </f-panel>
     </div>
 
     <div class="content--inner ms-depth-8">
