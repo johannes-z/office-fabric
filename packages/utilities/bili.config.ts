@@ -8,8 +8,7 @@ const config: Config = {
 
   output: {
     dir: './dist',
-    format: ['esm', 'umd-min'],
-    extractCSS: true,
+    format: ['umd-min'],
     moduleName: '@uifabric-vue/utilities',
   },
 
@@ -17,27 +16,19 @@ const config: Config = {
     NODE_ENV: 'production',
   },
 
-  babel: {
-    // configFile: false,
-  },
-
   plugins: {
-    babel: {
-      runtimeHelpers: true,
-    },
     alias: {
-      resolve: ['.jsx', '.js', '.vue', '.ts'],
+      resolve: ['.ts'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(projectRoot, 'src/$1') },
       ],
     },
     typescript2: {
-      abortOnError: false,
-      useTsconfigDeclarationDir: true,
-    },
-    vue: {
-      css: {
-        extract: true,
+      tsconfigOverride: {
+        compilerOptions: {
+          declarationMap: false,
+          declaration: false,
+        },
       },
     },
   },

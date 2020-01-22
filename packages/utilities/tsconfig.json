@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "noImplicitAny": false,
+    "outDir": "lib",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
