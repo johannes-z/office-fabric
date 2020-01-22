@@ -77,7 +77,6 @@ export default class Popup extends BaseComponent {
   }
 
   private _onKeyDown = (ev: Event): void => {
-    console.log(ev)
     // switch (ev.which) {
     //   case KeyCodes.escape:
     //     if (this.onDismiss) {

@@ -1,6 +1,7 @@
 import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import Vue, { VueConstructor } from 'vue'
 import { CreateElement, RenderContext, VNode } from 'vue/types/umd'
+import { Customizations } from '@uifabric-vue/utilities'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {
   styles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>;
@@ -19,6 +20,8 @@ export interface ICustomizableProps {
   fields?: string[];
 }
 
+const DefaultFields = ['theme', 'styles']
+
 export function styled (
   Component: VueConstructor<Vue>,
   baseStyles: IStyleFunctionOrObject<any, any>,
@@ -26,7 +29,12 @@ export function styled (
   customizable?: ICustomizableProps,
   pure?: boolean
 ): VueConstructor<Vue> {
+  customizable = customizable || { scope: '', fields: undefined }
+
+  const { scope, fields = DefaultFields } = customizable
+
   let _styles: any
+
   return Vue.extend({
     functional: true,
     render (h: CreateElement, context: RenderContext<any>): VNode {
@@ -36,6 +44,10 @@ export function styled (
       }
 
       const additionalProps = getProps ? getProps(this) : undefined
+
+      // const settings = Customizations.getSettings(fields, scope)
+      // const { styles: customizedStyles, dir, ...rest } = settings
+      // console.log(customizedStyles, dir, rest)
 
       return h(Component, {
         ...context.data,

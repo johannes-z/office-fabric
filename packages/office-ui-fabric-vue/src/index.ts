@@ -1,6 +1,8 @@
 import Fabric from './plugins/office-fabric'
 import * as Components from './components'
 
+export * from './utilities/positioning'
+
 export * from './components'
 export {
   Fabric,

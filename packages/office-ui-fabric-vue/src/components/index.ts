@@ -16,6 +16,7 @@ export * from './MessageBar'
 export * from './Popup'
 // export * from './Stack'
 export * from './Facepile'
+export * from './SpinButton'
 export * from './Panel'
 
 export * from './Checkbox'

@@ -86,4 +86,9 @@ export interface ISpinButtonStyles {
      */
     arrowButtonsContainerDisabled: IStyle;
 }
+export declare enum KeyboardSpinDirection {
+    down = -1,
+    notSpinning = 0,
+    up = 1
+}
 //# sourceMappingURL=SpinButton.types.d.ts.map

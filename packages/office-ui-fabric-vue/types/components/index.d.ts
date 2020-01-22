@@ -13,6 +13,7 @@ export * from './Dropdown';
 export * from './MessageBar';
 export * from './Popup';
 export * from './Facepile';
+export * from './SpinButton';
 export * from './Panel';
 export * from './Checkbox';
 export * from './Icon';

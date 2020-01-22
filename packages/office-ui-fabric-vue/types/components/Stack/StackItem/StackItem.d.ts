@@ -1,5 +1,5 @@
 import { CreateElement, RenderContext } from 'vue';
-import StatelessComponent from '@/components/StatelessComponent';
+import StatelessComponent from '../../StatelessComponent';
 export default class StackItem extends StatelessComponent {
     grow: any;
     shrink: any;
