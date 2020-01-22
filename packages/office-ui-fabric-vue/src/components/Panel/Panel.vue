@@ -44,7 +44,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { Layer, Overlay, IconButton } from '@/components/'
+import { Layer, Overlay, IconButton } from '../index'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IconFontSizes } from '@uifabric/styling'
 

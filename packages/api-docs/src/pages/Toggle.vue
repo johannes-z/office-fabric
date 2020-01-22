@@ -17,10 +17,10 @@
                 off-text="Off" />
       <o-toggle label="Unchecked with On Text" on-text="On" />
       <o-toggle label="Unchecked with Off Text" off-text="Off" />
-      <o-toggle label="Test"
+      <o-toggle label="Disabled and checked"
                 disabled
                 default-checked />
-      <o-toggle label="Test" disabled />
+      <o-toggle label="Disabled" disabled />
 
       <o-toggle label="With inline label"
                 on-text="On"

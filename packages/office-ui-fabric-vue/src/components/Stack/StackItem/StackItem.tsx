@@ -5,7 +5,7 @@ import { StackItemStyles as styles } from './StackItem.styles'
 import { getTheme } from '@uifabric/styling'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import StatelessComponent from '@/components/StatelessComponent'
+import StatelessComponent from '../../StatelessComponent'
 
 const getClassNames = classNamesFunction()
 

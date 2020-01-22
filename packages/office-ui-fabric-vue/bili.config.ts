@@ -25,10 +25,11 @@ const config: Config = {
 
   plugins: {
     babel: {
-      exclude: /node_modules|core-js/,
+      exclude: /.*node_modules.*|.*core-js.*/,
+      runtimeHelpers: true,
     },
     alias: {
-      resolve: ['.jsx', '.js', '.vue', '.ts'],
+      resolve: ['.jsx', '.js', '.vue', '.ts', '.tsx'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(projectRoot, 'src/$1') },
         { find: '@uifabric/utilities', replacement: './node_modules/@uifabric-vue/utilities' },

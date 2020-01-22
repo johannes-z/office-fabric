@@ -1,5 +1,5 @@
 import { memoizeFunction } from '@uifabric-vue/utilities'
-import { IButtonStyles } from '@/components/Button/Button.types'
+import { IButtonStyles } from '../../Button/Button.types'
 import { ITheme } from '@uifabric/styling'
 import { concatStyleSets } from '@uifabric/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../../Button/BaseButton.styles'

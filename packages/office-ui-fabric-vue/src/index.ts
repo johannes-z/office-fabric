@@ -3,6 +3,7 @@ import * as Components from './components'
 
 export * from './components'
 export {
+  Fabric,
   Components as FabricComponents,
 }
 export {

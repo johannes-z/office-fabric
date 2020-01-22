@@ -42,6 +42,11 @@
           {{ value }}%
         </template>
       </o-slider>
+      <o-slider label="Origin from zero"
+                :min="-5"
+                :max="15"
+                :default-value="3"
+                origin-from-zero />
 
       <h2>Vertical Sliders</h2>
       <div style="display: flex; height: 250px">
@@ -56,6 +61,12 @@
                   :value="3"
                   vertical
                   disabled />
+        <o-slider label="Origin from zero"
+                  :min="-5"
+                  :max="15"
+                  :default-value="3"
+                  vertical
+                  origin-from-zero />
       </div>
     </div>
 

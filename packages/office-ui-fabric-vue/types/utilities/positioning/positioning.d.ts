@@ -1,5 +1,5 @@
 import { Rectangle as FullRectangle, IRectangle } from '@uifabric-vue/utilities';
-import { DirectionalHint } from '@/common/DirectionalHint';
+import { DirectionalHint } from '../../common/DirectionalHint';
 import { IPositionDirectionalHintData, IPositionedData, IPoint, ICalloutPositionedInfo, ICalloutBeakPositionedInfo, IPositionProps, RectangleEdge } from './positioning.types';
 export declare class Rectangle extends FullRectangle {
     [key: string]: number | boolean | any;

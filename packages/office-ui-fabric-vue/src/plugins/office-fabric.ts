@@ -1,10 +1,10 @@
 import Vue, { VueConstructor } from 'vue'
-import * as Components from '@/components/'
+import * as Components from '../components'
 import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '@uifabric/styling'
 import { registerCSSVars } from './registerCSSVars'
-import { toKebabCase } from '@/util'
+import { toKebabCase } from '../util'
 
-export * from '@/components'
+export * from '../components'
 
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
   // get latest theme

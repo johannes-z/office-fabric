@@ -1,5 +1,5 @@
 import { getScrollbarWidth, getRTL, Rectangle as FullRectangle, IRectangle } from '@uifabric-vue/utilities'
-import { DirectionalHint } from '@/common/DirectionalHint'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 import {
   IPositionDirectionalHintData,

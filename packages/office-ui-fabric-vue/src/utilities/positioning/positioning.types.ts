@@ -1,5 +1,5 @@
 import { IRectangle } from '@uifabric-vue/utilities'
-import { DirectionalHint } from '@/common/DirectionalHint'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 export enum RectangleEdge {
   top = 1,

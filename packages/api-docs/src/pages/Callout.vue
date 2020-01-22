@@ -25,7 +25,7 @@
       <o-callout v-if="showCallout"
                  :target="target"
                  :styles="{ calloutMain: { maxWidth: 300 } }"
-                 :is-beak-visible="true"
+                 :is-beak-visible="false"
                  @dismiss="onDismiss">
         <div :class="$style.header">
           <p :class="$style.title">
