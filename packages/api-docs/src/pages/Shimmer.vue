@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Shimmer</h2>
-      <o-shimmer />
+      <f-shimmer />
     </div>
 
     <div class="content--inner ms-depth-8">

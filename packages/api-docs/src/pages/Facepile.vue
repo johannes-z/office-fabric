@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Default Facepile</h2>
-      <o-facepile />
+      <f-facepile />
     </div>
 
     <div class="content--inner ms-depth-8">

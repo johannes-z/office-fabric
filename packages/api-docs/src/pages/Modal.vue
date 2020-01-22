@@ -13,9 +13,9 @@
       <h2>Usage</h2>
       <h2>Default OModal</h2>
       <DefaultButton @click.native="isOpen = true">Show Modal</DefaultButton>
-      <o-modal v-if="isOpen">
+      <f-modal v-if="isOpen">
         Test
-      </o-modal>
+      </f-modal>
     </div>
 
     <div class="content--inner ms-depth-8">

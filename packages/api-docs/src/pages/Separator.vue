@@ -12,21 +12,21 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Horizontal Separator</h2>
-      <o-separator>Separator</o-separator>
-      <o-separator align-content="start">Start</o-separator>
-      <o-separator align-content="end">End</o-separator>
-      <o-separator />
+      <f-separator>Separator</f-separator>
+      <f-separator align-content="start">Start</f-separator>
+      <f-separator align-content="end">End</f-separator>
+      <f-separator />
 
       <h2>Vertical Separator</h2>
       <div style="height: 200px;">
-        <o-separator vertical>Separator</o-separator>
-        <o-separator vertical align-content="start">Start</o-separator>
-        <o-separator vertical align-content="end">End</o-separator>
-        <o-separator vertical />
+        <f-separator vertical>Separator</f-separator>
+        <f-separator vertical align-content="start">Start</f-separator>
+        <f-separator vertical align-content="end">End</f-separator>
+        <f-separator vertical />
       </div>
 
       <h2>Separator Slot</h2>
-      <o-separator><o-icon icon-name="Attach" /></o-separator>
+      <f-separator><f-icon icon-name="Attach" /></f-separator>
     </div>
 
     <div class="content--inner ms-depth-8">

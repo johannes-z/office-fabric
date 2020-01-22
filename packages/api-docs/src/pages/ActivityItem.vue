@@ -13,47 +13,47 @@
       <h2>Usage</h2>
       <h2>Default ActivityItem</h2>
 
-      <o-activity-item>
+      <f-activity-item>
         <template #icon>
-          <o-icon icon-name="Message" />
+          <f-icon icon-name="Message" />
         </template>
         <template #description>
-          <o-link href="#">Philippe Lampros</o-link> commented
+          <f-link href="#">Philippe Lampros</f-link> commented
         </template>
         <template #comments>
-          I am making a comment and mentioning <o-link href="#">@Anđela Debeljak</o-link>
+          I am making a comment and mentioning <f-link href="#">@Anđela Debeljak</f-link>
           in the text of the comment.
         </template>
         <template #timeStamp>
           Just now
         </template>
-      </o-activity-item>
+      </f-activity-item>
 
-      <o-activity-item>
+      <f-activity-item>
         <template #icon>
-          <o-icon icon-name="Delete" />
+          <f-icon icon-name="Delete" />
         </template>
         <template #description>
-          <o-link href="#">Lisha Refai</o-link> deleted <b>DocumentTitle.docx</b>
+          <f-link href="#">Lisha Refai</f-link> deleted <b>DocumentTitle.docx</b>
         </template>
         <template #timeStamp>
           Just now
         </template>
-      </o-activity-item>
+      </f-activity-item>
 
-      <o-activity-item>
+      <f-activity-item>
         <template #icon>
-          <o-icon icon-name="FabricMovetoFolder" />
+          <f-icon icon-name="FabricMovetoFolder" />
         </template>
         <template #description>
-          <o-link href="#">Julian Arvidsson</o-link> moved
-          <o-link>PresentationTitle.pptx</o-link> to
-          <o-link>Destination Folder</o-link>
+          <f-link href="#">Julian Arvidsson</f-link> moved
+          <f-link>PresentationTitle.pptx</f-link> to
+          <f-link>Destination Folder</f-link>
         </template>
         <template #timeStamp>
           Yesterday
         </template>
-      </o-activity-item>
+      </f-activity-item>
     </div>
 
     <div class="content--inner ms-depth-8">

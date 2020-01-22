@@ -12,17 +12,17 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Default ChoiceGroup</h2>
-      <o-choice-group label="Default ChoiceGroup" :options="options" />
+      <f-choice-group label="Default ChoiceGroup" :options="options" />
 
       <h2>ChoiceGroup with a custom label</h2>
-      <o-label required>Custom Label</o-label>
-      <o-choice-group :options="options" />
+      <f-label required>Custom Label</f-label>
+      <f-choice-group :options="options" />
 
       <h2>ChoiceGroups with images</h2>
-      <o-choice-group label="Pick one image" :options="imageOptions" />
+      <f-choice-group label="Pick one image" :options="imageOptions" />
 
       <h2>ChoiceGroups with icons</h2>
-      <o-choice-group label="Pick one icon" :options="iconOptions" />
+      <f-choice-group label="Pick one icon" :options="iconOptions" />
     </div>
 
     <div class="content--inner ms-depth-8">

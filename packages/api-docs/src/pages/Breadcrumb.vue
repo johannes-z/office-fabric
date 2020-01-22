@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Breadcrumb</h2>
-      <o-breadcrumb :items="items" />
+      <f-breadcrumb :items="items" />
     </div>
 
     <div class="content--inner ms-depth-8">

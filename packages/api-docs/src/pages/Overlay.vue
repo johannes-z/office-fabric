@@ -13,22 +13,22 @@
       <h2>Usage</h2>
       <h2>Light</h2>
       <DefaultButton @click.native="isLightOpen = true">Show Overlay</DefaultButton>
-      <o-overlay v-if="isLightOpen"
+      <f-overlay v-if="isLightOpen"
                  @click.native="isLightOpen = false">
         <div :class="$style.root">
           <p>I am content within the overlay.</p>
         </div>
-      </o-overlay>
+      </f-overlay>
 
       <h2>Dark</h2>
       <DefaultButton @click.native="isDarkOpen = true">Show Overlay</DefaultButton>
-      <o-overlay v-if="isDarkOpen"
+      <f-overlay v-if="isDarkOpen"
                  dark
                  @click.native="isDarkOpen = false">
         <div :class="$style.root">
           <p>I am content within the overlay.</p>
         </div>
-      </o-overlay>
+      </f-overlay>
     </div>
 
     <div class="content--inner ms-depth-8">

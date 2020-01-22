@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="sidebar">
-      <o-nav :groups="groups" />
+      <f-nav :groups="groups" />
     </div>
     <div class="content">
       <div class="">
@@ -35,6 +35,12 @@ export default class Preview extends Vue {
           { name: 'SpinButton', key: 'SpinButton', href: '/#/SpinButton' },
           { name: 'TextField', key: 'TextField', href: '/#/TextField' },
           { name: 'Toggle', key: 'Toggle', href: '/#/Toggle' },
+        ],
+      }, {
+        name: 'Galleries & Pickers',
+        isExpanded: true,
+        links: [
+          { name: 'SwatchColorPicker', key: 'SwatchColorPicker', href: '/#/SwatchColorPicker' },
         ],
       }, {
         name: 'Items & Lists',

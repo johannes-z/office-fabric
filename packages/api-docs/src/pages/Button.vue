@@ -13,85 +13,85 @@
       <h2>Usage</h2>
       <h2>Default Button</h2>
       <h3>Default</h3>
-      <o-default-button>Normal</o-default-button>
-      <o-default-button checked>Checked</o-default-button>
-      <o-default-button disabled>Disabled</o-default-button>
-      <o-default-button checked disabled>Checked & Disabled</o-default-button>
-      <o-default-button primary>With primary flag</o-default-button>
+      <f-default-button>Normal</f-default-button>
+      <f-default-button checked>Checked</f-default-button>
+      <f-default-button disabled>Disabled</f-default-button>
+      <f-default-button checked disabled>Checked & Disabled</f-default-button>
+      <f-default-button primary>With primary flag</f-default-button>
 
       <h3>Primary</h3>
-      <o-primary-button>Normal</o-primary-button>
-      <o-primary-button checked>Checked</o-primary-button>
-      <o-primary-button disabled>Disabled</o-primary-button>
-      <o-primary-button checked disabled>Checked & Disabled</o-primary-button>
+      <f-primary-button>Normal</f-primary-button>
+      <f-primary-button checked>Checked</f-primary-button>
+      <f-primary-button disabled>Disabled</f-primary-button>
+      <f-primary-button checked disabled>Checked & Disabled</f-primary-button>
 
       <h2>Compound Button</h2>
-      <o-compound-button secondary-text="This is the secondary text.">Normal</o-compound-button>
-      <o-compound-button secondary-text="This is the secondary text." checked>Checked</o-compound-button>
-      <o-compound-button secondary-text="This is the secondary text." disabled>Disabled</o-compound-button>
-      <o-compound-button secondary-text="This is the secondary text." primary>Primary Normal</o-compound-button>
-      <o-compound-button secondary-text="This is the secondary text."
+      <f-compound-button secondary-text="This is the secondary text.">Normal</f-compound-button>
+      <f-compound-button secondary-text="This is the secondary text." checked>Checked</f-compound-button>
+      <f-compound-button secondary-text="This is the secondary text." disabled>Disabled</f-compound-button>
+      <f-compound-button secondary-text="This is the secondary text." primary>Primary Normal</f-compound-button>
+      <f-compound-button secondary-text="This is the secondary text."
                          primary
                          checked>
         Primary Checked
-      </o-compound-button>
-      <o-compound-button secondary-text="This is the secondary text."
+      </f-compound-button>
+      <f-compound-button secondary-text="This is the secondary text."
                          primary
                          disabled>
         Primary Disabled
-      </o-compound-button>
+      </f-compound-button>
 
       <h2>CommandBar Button</h2>
       <div style="display: flex; flex-direction: row; flex-wrap: nowrap; width: auto; height: 44px; box-sizing: border-box;">
-        <o-command-bar-button icon-name="Mail">Normal</o-command-bar-button>
-        <o-command-bar-button checked>Checked</o-command-bar-button>
-        <o-command-bar-button disabled>Disabled</o-command-bar-button>
-        <o-command-bar-button checked disabled>Checked & Disabled</o-command-bar-button>
+        <f-command-bar-button icon-name="Mail">Normal</f-command-bar-button>
+        <f-command-bar-button checked>Checked</f-command-bar-button>
+        <f-command-bar-button disabled>Disabled</f-command-bar-button>
+        <f-command-bar-button checked disabled>Checked & Disabled</f-command-bar-button>
       </div>
 
       <h2>Icon Button</h2>
-      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" />
-      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" checked />
-      <o-icon-button :icon-props="{ iconName: 'Emoji2' }" disabled />
-      <o-icon-button :icon-props="{ iconName: 'Emoji2' }"
+      <f-icon-button :icon-props="{ iconName: 'Emoji2' }" />
+      <f-icon-button :icon-props="{ iconName: 'Emoji2' }" checked />
+      <f-icon-button :icon-props="{ iconName: 'Emoji2' }" disabled />
+      <f-icon-button :icon-props="{ iconName: 'Emoji2' }"
                      checked
                      disabled />
 
       <h2>Action Button</h2>
-      <o-action-button :icon-props="{ iconName: 'AddFriend' }">Normal</o-action-button>
-      <o-action-button :icon-props="{ iconName: 'AddFriend' }" checked>Checked</o-action-button>
-      <o-action-button :icon-props="{ iconName: 'AddFriend' }" disabled>Disabled</o-action-button>
-      <o-action-button :icon-props="{ iconName: 'AddFriend' }"
+      <f-action-button :icon-props="{ iconName: 'AddFriend' }">Normal</f-action-button>
+      <f-action-button :icon-props="{ iconName: 'AddFriend' }" checked>Checked</f-action-button>
+      <f-action-button :icon-props="{ iconName: 'AddFriend' }" disabled>Disabled</f-action-button>
+      <f-action-button :icon-props="{ iconName: 'AddFriend' }"
                        checked
                        disabled>
         Checked & Disabled
-      </o-action-button>
+      </f-action-button>
 
       <h2>Button-like Anchor</h2>
-      <o-default-button href="https://google.at"
+      <f-default-button href="https://google.at"
                         target="_blank"
                         title="open Google">
         Normal
-      </o-default-button>
-      <o-default-button href="https://google.at"
+      </f-default-button>
+      <f-default-button href="https://google.at"
                         target="_blank"
                         title="open Google"
                         checked>
         Checked
-      </o-default-button>
-      <o-default-button href="https://google.at"
+      </f-default-button>
+      <f-default-button href="https://google.at"
                         target="_blank"
                         title="open Google"
                         disabled>
         Disabled
-      </o-default-button>
-      <o-default-button href="https://google.at"
+      </f-default-button>
+      <f-default-button href="https://google.at"
                         target="_blank"
                         title="open Google"
                         checked
                         disabled>
         Checked & Disabled
-      </o-default-button>
+      </f-default-button>
     </div>
 
     <div class="content--inner ms-depth-8">

@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>ComboBox</h2>
-      <o-combo-box />
+      <f-combo-box />
     </div>
 
     <div class="content--inner ms-depth-8">

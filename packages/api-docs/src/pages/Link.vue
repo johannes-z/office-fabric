@@ -14,11 +14,11 @@
       <h2>Default Link</h2>
       <div>
         <p>
-          When a link has an href, <o-link href="http://dev.office.com/fabric/components/link">it renders as an anchor tag.</o-link> Without an
-          href, <o-link>the link is rendered as a button</o-link>. You can also use the disabled attribute to create a
-          <o-link disabled href="http://dev.office.com/fabric/components/link">
+          When a link has an href, <f-link href="http://dev.office.com/fabric/components/link">it renders as an anchor tag.</f-link> Without an
+          href, <f-link>the link is rendered as a button</f-link>. You can also use the disabled attribute to create a
+          <f-link disabled href="http://dev.office.com/fabric/components/link">
             disabled link.
-          </o-link>
+          </f-link>
         </p>
         <p>
           It's not recommended to use Links with imgs because Links are meant to render textual inline content. Buttons are inline-block or in

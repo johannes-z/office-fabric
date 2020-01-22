@@ -21,7 +21,7 @@
 
       <h2>Basic layered content</h2>
 
-      <o-toggle v-model="showLayer"
+      <f-toggle v-model="showLayer"
                 inline-label
                 label="Wrap the content box below in a Layer" />
 
@@ -42,7 +42,7 @@
       </div>
 
       <h2>Using LayerHost to control projection</h2>
-      <o-toggle v-model="showHost"
+      <f-toggle v-model="showHost"
                 inline-label
                 label="Show host" />
 
@@ -54,7 +54,7 @@
         In some cases, you may need to contain layered content within an area. Create an instance of a LayerHost along with an id, and provide a hostId on the layer to render it within the specific host. (Note that it's important that you don't include children within the LayerHost. It's meant to contain Layered content only.)
       </p>
 
-      <o-toggle v-model="renderInLayer"
+      <f-toggle v-model="renderInLayer"
                 inline-label
                 :label="`Render the box below in a Layer and target it at hostId='${layerHostId}'`" />
 

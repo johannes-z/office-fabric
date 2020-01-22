@@ -12,62 +12,62 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic TextFields</h2>
-      <o-text-field label="Standard" />
-      <o-text-field label="Placeholder" placeholder="I am a placeholder" />
-      <o-text-field label="Disabled"
+      <f-text-field label="Standard" />
+      <f-text-field label="Placeholder" placeholder="I am a placeholder" />
+      <f-text-field label="Disabled"
                     value="I am disabled"
                     disabled />
-      <o-text-field label="Read-only"
+      <f-text-field label="Read-only"
                     value="I am read-only"
                     readonly />
-      <o-text-field label="Required " required />
-      <o-text-field required />
-      <o-text-field label="With error message" error-message="Error message" />
+      <f-text-field label="Required " required />
+      <f-text-field required />
+      <f-text-field label="With error message" error-message="Error message" />
 
       <h2>Controlled TextFields</h2>
-      <o-text-field v-model="text1" label="Basic controlled TextField" />
+      <f-text-field v-model="text1" label="Basic controlled TextField" />
       {{ text1 }}
       <div style="width: 200px">
-        <o-text-field v-model="value2"
+        <f-text-field v-model="value2"
                       :maxlength="5"
                       label="Controlled TextField limiting length of value to 5" />
         {{ value2 }}
       </div>
 
       <h2>Multiline TextField</h2>
-      <o-text-field label="Standard"
+      <f-text-field label="Standard"
                     multiline
                     :rows="3" />
-      <o-text-field label="Disabled"
+      <f-text-field label="Disabled"
                     multiline
                     disabled
                     :value="lorem"
                     :rows="3" />
-      <o-text-field label="Non-resizable"
+      <f-text-field label="Non-resizable"
                     multiline
                     :resizable="false"
                     :rows="3" />
-      <o-text-field label="With auto adjusting height"
+      <f-text-field label="With auto adjusting height"
                     multiline
                     auto-adjust-height />
-      <o-text-field
+      <f-text-field
         label="Switches from single to multiline if more than 50 characters are
     entered"
         auto-adjust-height
         :multiline="multiline"
         :value="multilineValue"
         @input="onInput" />
-      <o-text-field label="With error message"
+      <f-text-field label="With error message"
                     error-message="Error message"
                     multiline
                     :rows="3" />
 
       <h2>Underlined</h2>
-      <o-text-field label="Standard:" underlined />
-      <o-text-field label="Disabled:"
+      <f-text-field label="Standard:" underlined />
+      <f-text-field label="Disabled:"
                     disabled
                     underlined />
-      <o-text-field label="Required:"
+      <f-text-field label="Required:"
                     required
                     underlined />
     </div>

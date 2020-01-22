@@ -11,13 +11,13 @@
         <template v-if="imageSrc">
           <div :class="classNames.innerField">
             <div :class="classNames.imageWrapper">
-              <OImage :src="imageSrc"
+              <FImage :src="imageSrc"
                       :alt="imageAlt"
                       :width="imageSize.width"
                       :height="imageSize.height" />
             </div>
             <div :class="classNames.selectedImageWrapper">
-              <OImage :src="selectedImageSrc"
+              <FImage :src="selectedImageSrc"
                       :alt="imageAlt"
                       :width="imageSize.width"
                       :height="imageSize.height" />
@@ -54,7 +54,7 @@ import { Label } from '../../Label'
 const getClassNames = classNamesFunction()
 
 @Component({
-  components: { Icon, OImage: Image, Label },
+  components: { Icon, FImage: Image, Label },
 })
 export default class ChoiceGroupOption extends BaseComponent {
   @Prop() id!: string
@@ -84,6 +84,3 @@ export default class ChoiceGroupOption extends BaseComponent {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>

@@ -12,24 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic Checkboxes</h2>
-      <o-checkbox>Unchecked checkbox</o-checkbox>
-      <o-checkbox checked label="Checked checkbox" />
-      <o-checkbox disabled>Disabled checkbox</o-checkbox>
-      <o-checkbox checked disabled>Disabled checked checkbox</o-checkbox>
+      <f-checkbox>Unchecked checkbox</f-checkbox>
+      <f-checkbox checked label="Checked checkbox" />
+      <f-checkbox disabled>Disabled checkbox</f-checkbox>
+      <f-checkbox checked disabled>Disabled checked checkbox</f-checkbox>
 
       <h2>Controlled</h2>
-      <o-checkbox v-model="value1"
+      <f-checkbox v-model="value1"
                   :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
-      <o-checkbox box-side="end">Checkbox rendered with boxSide "end"</o-checkbox>
-      <o-checkbox @blur="onBlur" @focus="onFocus">
+      <f-checkbox box-side="end">Checkbox rendered with boxSide "end"</f-checkbox>
+      <f-checkbox @blur="onBlur" @focus="onFocus">
         Checkbox with event listeners
-      </o-checkbox>
-      <o-checkbox>
+      </f-checkbox>
+      <f-checkbox>
         Custom-rendered label with a
-        <o-link href="https://www.microsoft.com" target="_blank">
+        <f-link href="https://www.microsoft.com" target="_blank">
           link
-        </o-link>
-      </o-checkbox>
+        </f-link>
+      </f-checkbox>
     </div>
 
     <div class="content--inner ms-depth-8">
