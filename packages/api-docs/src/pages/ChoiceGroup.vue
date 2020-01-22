@@ -19,7 +19,7 @@
       <o-choice-group :options="options" />
 
       <h2>ChoiceGroups with images</h2>
-      <o-choice-group label="Pick one image" :options="options" />
+      <o-choice-group label="Pick one image" :options="imageOptions" />
 
       <h2>ChoiceGroups with icons</h2>
       <o-choice-group label="Pick one icon" :options="iconOptions" />
@@ -44,6 +44,22 @@ export default class ChoiceGroupPage extends Vue {
     { key: 'B', text: 'Option B' },
     { key: 'C', text: 'Option C', disabled: true },
     { key: 'D', text: 'Option D' },
+  ]
+  imageOptions = [
+    {
+      key: 'bar',
+      imageSrc: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/choicegroup-bar-unselected.png',
+      selectedImageSrc: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/choicegroup-bar-selected.png',
+      imageAlt: 'Bar chart icon',
+      text: 'Clustered bar chart',
+    },
+    {
+      key: 'pie',
+      imageSrc: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/choicegroup-bar-unselected.png',
+      selectedImageSrc: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/choicegroup-bar-selected.png',
+      imageAlt: 'Pie chart icon',
+      text: 'Pie chart',
+    },
   ]
   iconOptions = [
     {
