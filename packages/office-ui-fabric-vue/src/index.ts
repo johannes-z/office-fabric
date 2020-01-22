@@ -1,4 +1,4 @@
-import Fabric from './plugins/office-fabric'
+import Fabric from './plugin/office-fabric'
 import * as Components from './components'
 
 export * from './utilities/positioning'
@@ -10,5 +10,5 @@ export {
 }
 export {
   loadTheme,
-} from './plugins/office-fabric'
+} from './plugin/office-fabric'
 export default Fabric
