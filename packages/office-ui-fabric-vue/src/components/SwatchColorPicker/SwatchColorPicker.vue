@@ -3,7 +3,9 @@
     <template #default="{ cell: item, index }">
       <ColorPickerGridCell
         :color="item.color"
-        :circle="cellShape === 'circle'" />
+        :circle="cellShape === 'circle'"
+        :width="cellWidth"
+        :height="cellHeight" />
     </template>
   </Grid>
 </template>
@@ -31,6 +33,9 @@ export default class SwatchColorPicker extends BaseComponent {
   @Prop({ type: Array, default: () => [] }) colorCells!: any[]
   @Prop({ type: Number }) columnCount!: number
   @Prop({ type: String, default: 'circle' }) cellShape!: string
+
+  @Prop({ type: Number }) cellHeight!: number
+  @Prop({ type: Number }) cellWidth!: number
 
   get classNames () {
     const { theme, styles, className, cellMargin } = this

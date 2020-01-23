@@ -7,6 +7,8 @@
             :class="css(classNames.icon, className)"
             v-bind="iconProps" />
 
+      <slot name="flex" />
+
       <span v-if="$slots.default"
             :class="classNames.textContainer">
         <span :class="classNames.label">
