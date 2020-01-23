@@ -6,7 +6,6 @@ import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
-@Component
 export default class Text extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) nowrap!: boolean
   @Prop({ type: Boolean, default: false }) block!: boolean
