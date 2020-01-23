@@ -6,12 +6,7 @@ import { VueConstructor } from 'vue'
 
 export * from './Grid.types'
 
-export const Grid: VueConstructor = styled(
-  GridBase,
-  getStyles,
-  undefined,
-  { scope: 'Grid' }
-)
+export const Grid: VueConstructor = styled(GridBase, getStyles)
 
 export {
   GridCell,
