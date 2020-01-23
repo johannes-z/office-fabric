@@ -2,7 +2,14 @@
   <BaseButton v-bind="[$attrs, $listeners, $props]"
               variant-class-name="ms-Button--action ms-Button--command"
               :styles="internalStyles">
-    <slot />
+    <!-- Pass on all named slots -->
+    <slot v-for="slot in Object.keys($slots)"
+          :slot="slot"
+          :name="slot" />
+
+    <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
+      <slot :name="slot" v-bind="scope" />
+    </template>
   </BaseButton>
 </template>
 

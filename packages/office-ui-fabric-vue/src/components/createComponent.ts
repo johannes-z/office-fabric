@@ -2,13 +2,15 @@ import { Vue, Component } from 'vue-property-decorator'
 import { styled } from './styled'
 
 interface IOptions {
-  displayName: string
+  displayName?: string
   styles: any
   [key: string]: any
 }
 
-export function createComponent (component: any, options: IOptions) {
-  const decorated = Component(options)(component)
+export function createComponent (component: any, options?: IOptions) {
+  const decorated = options
+    ? Component(options)(component)
+    : Component(component)
 
   decorated.prototype.constructor.options.inject = {
     self: {
@@ -18,10 +20,17 @@ export function createComponent (component: any, options: IOptions) {
     },
   }
 
+  if (!options) {
+    return styled(
+      decorated,
+      () => {}
+    )
+  }
+
   return styled(
     decorated,
     options.styles,
     undefined,
-    { scope: options.displayName }
+    options.displayName ? { scope: options.displayName } : undefined,
   )
 }

@@ -1,11 +1,10 @@
 <template>
-  <ActionButton>
-    <slot :item="item"
-          :className="css(className, {
-            ['' + cellIsSelectedStyle]: selected,
-            ['' + cellDisabledStyle]: disabled
-          })"
-          :getClassNames="getClassNames" />
+  <ActionButton :class-name="css(className, {
+                  ['' + cellIsSelectedStyle]: selected,
+                  ['' + cellDisabledStyle]: disabled
+                })"
+                :get-class-names="getClassNames">
+    <template #flex><slot :item="item" /></template>
   </ActionButton>
 </template>
 
