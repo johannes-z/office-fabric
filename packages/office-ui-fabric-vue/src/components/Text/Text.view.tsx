@@ -6,6 +6,7 @@ import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
+@Component
 export default class Text extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) nowrap!: boolean
   @Prop({ type: Boolean, default: false }) block!: boolean
@@ -21,7 +22,7 @@ export default class Text extends StatelessComponent {
     })
 
     return (
-      <span class={classNames.root}>
+      <span {...context.data} class={classNames.root}>
         {context.children}
       </span>
     )

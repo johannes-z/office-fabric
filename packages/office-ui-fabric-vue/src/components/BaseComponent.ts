@@ -7,8 +7,8 @@ import { getTheme } from '@uifabric/styling'
 // @ts-ignore
 @Component
 export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends Vue {
-  @Prop({ default: '' }) readonly className?: string
-  @Prop({ type: [Object, Function], default: () => {} }) readonly styles?: any
+  @Prop({ type: [String, Array], default: '' }) readonly className!: string
+  @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
 
   componentRef: HTMLElement | null = null

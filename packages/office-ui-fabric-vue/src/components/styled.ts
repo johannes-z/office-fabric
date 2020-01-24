@@ -1,6 +1,7 @@
 import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import Vue, { VueConstructor } from 'vue'
-import { CreateElement, RenderContext, VNode } from 'vue/types/umd'
+import Vue, { VueConstructor, CreateElement, RenderContext, VNode } from 'vue'
+
+import { Component as VueComponent } from 'vue-property-decorator'
 import { Customizations } from '@uifabric-vue/utilities'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {
@@ -36,22 +37,22 @@ export function styled (
   let _styles: any
 
   return Vue.extend({
+    name: `Styled${(Component as any).displayName || (Component as any).name}`,
     functional: true,
     render (h: CreateElement, context: RenderContext<any>): VNode {
-      if (!_styles || context.props.styles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
+      const settings = Customizations.getSettings(fields, scope)
+      const { styles: customizedStyles, dir, ...rest } = settings
+      const additionalProps = getProps ? getProps(this) : undefined
+
+      if (!_styles || customizedStyles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
         _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles)
         _styles.__cachedInputs__ = [baseStyles, context.props.styles]
       }
 
-      const additionalProps = getProps ? getProps(this) : undefined
-
-      // const settings = Customizations.getSettings(fields, scope)
-      // const { styles: customizedStyles, dir, ...rest } = settings
-      // console.log(customizedStyles, dir, rest)
-
       return h(Component, {
         ...context.data,
         props: {
+          ...rest,
           ...additionalProps,
           ...context.props,
           className: context.props.className || context.data.class,
