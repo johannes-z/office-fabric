@@ -1,5 +1,3 @@
-import { getId, resetIds } from './getId';
-export { getId, resetIds };
 /**
  * Compares a to b and b to a.
  *

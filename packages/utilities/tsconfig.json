@@ -2,8 +2,8 @@
   "compilerOptions": {
     "noImplicitAny": false,
     "outDir": "lib",
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es5",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "jsxFactory": "h",
