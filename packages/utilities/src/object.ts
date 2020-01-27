@@ -1,7 +1,5 @@
 import { Stylesheet } from '@uifabric/merge-styles'
-import { getId, resetIds } from './getId'
-
-export { getId, resetIds }
+import { resetIds } from './getId'
 
 // tslint:disable-next-line:no-any
 function checkProperties (a: any, b: any): boolean {
