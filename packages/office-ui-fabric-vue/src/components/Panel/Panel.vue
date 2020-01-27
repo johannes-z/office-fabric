@@ -25,7 +25,7 @@
         <div :class="classNames.contentInner">
           <div :class="classNames.header">
             <p :class="classNames.headerText">
-              {{ headerText }}
+              <slot name="header">{{ headerText }}</slot>
             </p>
           </div>
 

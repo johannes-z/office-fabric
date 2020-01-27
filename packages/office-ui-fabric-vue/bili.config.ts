@@ -3,14 +3,17 @@ import path from 'path'
 
 const projectRoot = path.resolve(__dirname)
 
+process.env.NODE_ENV = 'production'
+process.env.BUILD_TYPE = 'module'
+
 const config: Config = {
   input: 'src/index.ts',
 
   output: {
     dir: './lib',
     fileName: `[name][ext]`,
-    // moduleName: 'OfficeUIFabric',
-    format: ['esm'],
+    moduleName: 'OfficeUIFabric',
+    format: 'esm',
     extractCSS: true,
   },
 
@@ -26,14 +29,14 @@ const config: Config = {
 
   plugins: {
     babel: {
-      exclude: /.*node_modules.*|.*core-js.*/,
-      runtimeHelpers: true,
+      runtimeHelpers: false,
+      externalHelpers: false,
     },
     alias: {
       resolve: ['.jsx', '.js', '.vue', '.ts', '.tsx'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(projectRoot, 'src/$1') },
-        { find: '@uifabric/utilities', replacement: './node_modules/@uifabric-vue/utilities' },
+        { find: '@uifabric/utilities', replacement: path.resolve(projectRoot, 'node_modules/@uifabric-vue/utilities') },
       ],
     },
     typescript2: {

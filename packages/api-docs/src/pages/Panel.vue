@@ -12,10 +12,11 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Basic</h2>
-      <DefaultButton @click.native="isOpen = true">Show Panel</DefaultButton>
+      <DefaultButton @click.native="isOpen = !isOpen">{{ isOpen ? 'Hide' : 'Show' }} Panel</DefaultButton>
       <f-panel v-if="isOpen"
-               header-text="Sample panel"
                @close="isOpen = false">
+        <template #header>Sample panel</template>
+
         <span>Content goes here.</span>
       </f-panel>
     </div>

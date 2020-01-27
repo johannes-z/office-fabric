@@ -12,7 +12,7 @@
   "scripts": {
     "serve": "yarn workspace api-docs serve",
     "dev": "yarn workspace @uifabric-vue/office-ui-fabric-vue build -w",
-    "build": "yarn workspace @uifabric-vue/office-ui-fabric-vue build"
+    "build": "yarn workspace @uifabric-vue/utilities build && yarn workspace @uifabric-vue/office-ui-fabric-vue build"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.2",
