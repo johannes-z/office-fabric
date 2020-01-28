@@ -2,6 +2,10 @@
 This is a WIP of Office UI Fabric Vue. It aims to use as much official `Office UI Fabric React` code as possible, by
 re-using official files and packages.
 
+* NPM release is still missing.
+* Build setup (`module` and `browser/umd`) has to be improved.
+* Export of `office-ui-fabric-vue` needs improvement.
+
 # Important
 This library is built on top of Microsoft's `office-ui-fabric-react`, more spefically the packages
 `@uifabric/merge-styles`, `@uifabric/styling`, and `@uifabric/utilities`. For maximum design parity, office-fabric uses
