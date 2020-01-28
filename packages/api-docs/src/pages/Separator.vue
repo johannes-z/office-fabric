@@ -25,6 +25,9 @@
         <f-separator vertical />
       </div>
 
+      <h2>Basic Themed Separator with Text</h2>
+      <f-separator :theme="theme">Today</f-separator>
+
       <h2>Separator Slot</h2>
       <f-separator><f-icon icon-name="Attach" /></f-separator>
     </div>
@@ -37,12 +40,21 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { ITheme, createTheme } from '@uifabric/styling'
 
 @Component({
   components: {
   },
 })
 export default class SeparatorPage extends Vue {
+  theme: ITheme = createTheme({
+    fonts: {
+      medium: {
+        fontFamily: 'Monaco, Menlo, Consolas',
+        fontSize: '30px',
+      },
+    },
+  });
 }
 </script>
 

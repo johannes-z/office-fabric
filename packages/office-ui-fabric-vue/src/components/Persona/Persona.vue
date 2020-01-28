@@ -17,6 +17,7 @@
       <div dir="auto" :class="classNames.optionalText">
         <div :class="classNames.tooltipHostRoot">{{ optionalText }}</div>
       </div>
+      <slot />
     </div>
   </div>
 </template>
@@ -26,7 +27,6 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Icon } from '../Icon/'
 import BaseComponent from '../BaseComponent'
 import { IPersonaProps, IPersonaStyles } from '../Persona'
-import { getStyles } from './Persona.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { PersonaCoin } from './PersonaCoin/'
@@ -62,7 +62,7 @@ export default class Persona extends BaseComponent {
 
   get classNames () {
     const { theme, className, showSecondaryText, presence, size } = this
-    return getClassNames(getStyles, {
+    return getClassNames(this.styles, {
       theme: theme!,
       className,
       showSecondaryText,

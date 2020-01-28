@@ -13,7 +13,8 @@
       <h2>Usage</h2>
       <h2>Basic</h2>
       <DefaultButton @click.native="isOpen = !isOpen">{{ isOpen ? 'Hide' : 'Show' }} Panel</DefaultButton>
-      <f-panel v-if="isOpen"
+      <f-panel :is-open="isOpen"
+               :on-dismiss="() => isOpen = false"
                @close="isOpen = false">
         <template #header>Sample panel</template>
 
