@@ -9,7 +9,9 @@
              v-text="label" />
     </slot>
     <div :class="classNames.container">
-      <button :id="`Toggle${_uid}`" :class="classNames.pill">
+      <button :id="`Toggle${_uid}`"
+              ref="toggleButton"
+              :class="classNames.pill">
         <div :class="classNames.thumb" />
       </button>
       <Label v-if="(internalChecked && onText) || (!internalChecked && offText)"
@@ -35,6 +37,9 @@ const getClassNames = classNamesFunction()
   components: { Label },
 })
 export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
+  $refs!: {
+    toggleButton: HTMLButtonElement
+  }
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: String, default: '' }) label!: string
   @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
@@ -58,8 +63,12 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
     })
   }
 
+  public focus () {
+    this.$refs.toggleButton.focus()
+  }
+
   @Watch('internalChecked')
-  private onCheckedChanged (checked: boolean) {
+  private onCheckedChanged (checked: boolean, prevVal: boolean) {
     this.$emit('input', checked)
   }
 
