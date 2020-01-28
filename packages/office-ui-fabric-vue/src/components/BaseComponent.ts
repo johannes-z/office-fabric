@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
-import { css } from '@uifabric-vue/utilities'
+import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
 import { getTheme } from '@uifabric/styling'
 
 // @ts-ignore
@@ -14,11 +14,74 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
   componentRef: HTMLElement | null = null
   css = css
 
+  private __async: Async | null = null;
+  private __events: EventGroup | null = null;
+  private __disposables: IDisposable[] | null = null;
+
+  /**
+   * When the component has mounted, update the componentRef.
+   */
   mounted () {
     this.componentRef = this.$el as HTMLElement
   }
 
+  /**
+   * If we have disposables, dispose them automatically on unmount.
+   */
+  beforeDestroy () {
+    if (this.__disposables) {
+      for (let i = 0, len = this._disposables.length; i < len; i++) {
+        let disposable = this.__disposables[i]
+
+        if (disposable.dispose) {
+          disposable.dispose()
+        }
+      }
+      this.__disposables = null
+    }
+  }
+
   protected get classNames (): IProcessedStyleSet<IStyles> {
     return {} as any
+  }
+
+  /**
+   * Allows subclasses to push things to this._disposables to be auto disposed.
+   */
+  protected get _disposables (): IDisposable[] {
+    if (!this.__disposables) {
+      this.__disposables = []
+    }
+    return this.__disposables
+  }
+
+  /**
+   * Gets the async instance associated with the component, created on demand. The async instance gives
+   * subclasses a way to execute setTimeout/setInterval async calls safely, where the callbacks
+   * will be cleared/ignored automatically after unmounting. The helpers within the async object also
+   * preserve the this pointer so that you don't need to "bind" the callbacks.
+   */
+  protected get _async (): Async {
+    if (!this.__async) {
+      this.__async = new Async(this)
+      this._disposables.push(this.__async)
+    }
+
+    return this.__async
+  }
+
+  /**
+   * Gets the event group instance assocaited with the component, created on demand. The event instance
+   * provides on/off methods for listening to DOM (or regular javascript object) events. The event callbacks
+   * will be automatically disconnected after unmounting. The helpers within the events object also
+   * preserve the this reference so that you don't need to "bind" the callbacks.
+   */
+  protected get events (): EventGroup {
+    if (!this.__events) {
+      this.__events = new EventGroup(this)
+      this._disposables.push(this.__events)
+    }
+
+    return this.__events
   }
 }
