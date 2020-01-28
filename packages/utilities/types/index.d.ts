@@ -1,5 +1,6 @@
 export * from './dom';
 export * from './Async';
+export * from './IDisposable';
 export * from './focus';
 export * from './classNamesFunction';
 export * from './css';
