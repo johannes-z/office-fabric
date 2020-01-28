@@ -4,12 +4,12 @@
       <li v-for="(item, index) in items"
           :key="index"
           :class="classNames.listItem">
-        <o-link v-if="item.onClick || item.href"
-                :class="classNames.itemLink"
-                :href="item.href"
-                @click="onBreadcrumbClicked($event, item)">
+        <OLink v-if="item.onClick || item.href"
+               :class="classNames.itemLink"
+               :href="item.href"
+               @click="onBreadcrumbClicked($event, item)">
           {{ item.text }}
-        </o-link>
+        </OLink>
 
         <span v-else
               :class="classNames.item"
@@ -17,10 +17,10 @@
           {{ item.text }}
         </span>
 
-        <o-icon v-if="index !== (items.length - 1)"
-                :key="`icon-${index}`"
-                :class="classNames.chevron"
-                icon-name="ChevronRight" />
+        <Icon v-if="index !== (items.length - 1)"
+              :key="`icon-${index}`"
+              :class="classNames.chevron"
+              icon-name="ChevronRight" />
       </li>
     </ol>
   </div>
@@ -32,11 +32,13 @@ import { IBreadcrumbProps, IBreadcrumbStyles, IBreadcrumbItem } from './Breadcru
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Breadcrumb.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { Link } from '../Link'
+import { Icon } from '../Icon'
 
 const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
 
 @Component({
-  components: {},
+  components: { OLink: Link, Icon },
 })
 export default class Breadcrumb extends BaseComponent<IBreadcrumbProps, IBreadcrumbStyles> {
   @Prop({ type: Array, required: true }) items!: IBreadcrumbItem[]
