@@ -1,3 +1,5 @@
+export * from './elementContains'
+export * from './elementContainsAttribute'
 export * from './getDocument'
 export * from './getWindow'
 export * from './on'
