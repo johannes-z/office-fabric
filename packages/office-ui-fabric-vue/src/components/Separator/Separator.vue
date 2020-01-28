@@ -1,12 +1,12 @@
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { ISeparatorProps, ISeparatorStyles } from './Separator.types'
+import { ISeparatorProps, ISeparatorStyles, ISeparatorStyleProps } from './Separator.types'
 import { CreateElement, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<ISeparatorStyleProps, ISeparatorStyles>()
 
 const verticalAlignment: any = {
   center: 'middle',
@@ -20,15 +20,16 @@ export default class Separator extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) vertical!: boolean
 
   render (h: CreateElement, context: any): VNode {
-    const classNames: any = getClassNames(context.props.styles, {
-      theme: context.props.theme,
-      className: context.data.attrs ? context.data.attrs.class : '',
-      alignContent: context.props.alignContent,
-      vertical: context.props.vertical,
+    const { styles, theme, className, vertical, alignContent } = context.props
+    const classNames = getClassNames(styles, {
+      theme,
+      className,
+      alignContent,
+      vertical,
     })
     return (
       <div class={classNames.root}>
-        <div class={classNames.content}>
+        <div class={classNames.content} role="separator" aria-orientation={vertical ? 'vertical' : 'horizontal'}>
           {context.children}
         </div>
       </div>

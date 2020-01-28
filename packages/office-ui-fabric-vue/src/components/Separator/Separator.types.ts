@@ -1,6 +1,17 @@
-import { IStyle } from '@uifabric/merge-styles'
+import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import { ITheme } from '@uifabric/styling'
 
-export interface ISeparatorProps {
+export interface ISeparatorProps extends HTMLElement {
+  /**
+   * Theme (provided through customization.)
+   */
+  theme?: ITheme;
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  styles?: IStyleFunctionOrObject<ISeparatorStyleProps, ISeparatorStyles>;
+
   /**
    * Whether the element is a vertical separator.
    */
@@ -13,14 +24,20 @@ export interface ISeparatorProps {
   alignContent?: 'start' | 'center' | 'end';
 }
 
+export type ISeparatorStyleProps = Required<Pick<ISeparatorProps, 'theme'>> &
+Pick<ISeparatorProps, 'className' | 'alignContent' | 'vertical'>;
+
+/**
+ * {@docCategory Separator}
+ */
 export interface ISeparatorStyles {
   /**
    * Style for the root element
    */
-  root?: IStyle;
+  root: IStyle;
 
   /**
    * Style for the content
    */
-  content?: IStyle;
+  content: IStyle;
 }

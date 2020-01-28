@@ -1,6 +1,6 @@
-import { ISeparatorStyles } from './Separator.types'
+import { ISeparatorStyles, ISeparatorStyleProps } from './Separator.types'
 
-export const getStyles = (props: any): ISeparatorStyles => {
+export const getStyles = (props: ISeparatorStyleProps): ISeparatorStyles => {
   const { theme, alignContent, vertical, className } = props
 
   const alignStart = alignContent === 'start'
@@ -9,7 +9,7 @@ export const getStyles = (props: any): ISeparatorStyles => {
 
   return {
     root: [
-      // theme.fonts.medium,
+      theme.fonts.medium,
       {
         position: 'relative',
       },
