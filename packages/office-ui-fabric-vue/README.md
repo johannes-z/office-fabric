@@ -1,4 +1,4 @@
-## Caveats
+<!-- ## Caveats
 
 Functional components in Vue have no instance, so it's not possible to call methods of the component. They also omit the
 `@Component` decorator:
@@ -26,4 +26,4 @@ export const SomeComponent: VueConstructor = createComponent(SomeComponentBase, 
   // use any component options
   mixins: [],
 })
-```
+``` -->
