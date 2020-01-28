@@ -17,8 +17,8 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import {
   PersonaPresence as PersonaPresenceEnum, PersonaSize,
 } from '../Persona.types'
-import { Icon } from '../../index'
 import { sizeBoolean } from '../PersonaConsts'
+import { Icon } from '../../Icon'
 
 const coinSizeFontScaleFactor = 6
 const coinSizePresenceScaleFactor = 3

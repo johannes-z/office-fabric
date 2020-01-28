@@ -1,5 +1,10 @@
 <template>
-  <BaseButton variant-class-name="ms-Button--facepile" :styles="customStyles">FacepileButton</BaseButton>
+  <BaseButton variant-class-name="ms-Button--facepile"
+              :styles="customStyles">
+    <template #flex>
+      <slot />
+    </template>
+  </BaseButton>
 </template>
 
 <script lang="ts">

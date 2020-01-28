@@ -47,8 +47,9 @@ import {
 } from '../Persona.types'
 import { PersonaPresence } from '../PersonaPresence/'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
-import { Icon, Image } from '../../index'
+import { Image } from '../../index'
 import { ImageFit } from '../../Image'
+import { Icon } from '../../Icon'
 
 const getClassNames = classNamesFunction()
 
