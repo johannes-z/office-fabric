@@ -23,7 +23,11 @@ export interface ICustomizableProps {
 
 const DefaultFields = ['theme', 'styles']
 
-export function styled (
+export function styled<
+  TComponentProps extends IPropsWithStyles<TStyleProps, TStyleSet>,
+  TStyleProps,
+  TStyleSet extends IStyleSet<TStyleSet>
+> (
   Component: VueConstructor<Vue>,
   baseStyles: IStyleFunctionOrObject<any, any>,
   getProps?: (props: any) => Partial<any>,
