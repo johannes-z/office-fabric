@@ -1,6 +1,7 @@
 
 export * from './Overlay'
 export * from './OverflowSet'
+export * from './ResizeGroup'
 export * from './SwatchColorPicker'
 
 export * from './ActivityItem'
