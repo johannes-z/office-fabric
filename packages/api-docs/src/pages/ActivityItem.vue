@@ -54,6 +54,17 @@
           Yesterday
         </template>
       </f-activity-item>
+
+      <f-activity-item comments="Test">
+        <template #icon>
+          <f-icon icon-name="FabricMovetoFolder" />
+        </template>
+        <template #description>
+          <f-link href="#">Julian Arvidsson</f-link> moved
+          <f-link>PresentationTitle.pptx</f-link> to
+          <f-link>Destination Folder</f-link>
+        </template>
+      </f-activity-item>
     </div>
 
     <div class="content--inner ms-depth-8">

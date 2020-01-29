@@ -11,3 +11,5 @@ export const Icon: VueConstructor = styled(
   undefined,
   { scope: 'Icon' }
 )
+
+export * from './FontIcon'

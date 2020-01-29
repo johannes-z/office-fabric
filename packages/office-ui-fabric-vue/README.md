@@ -27,3 +27,7 @@ export const SomeComponent: VueConstructor = createComponent(SomeComponentBase, 
   mixins: [],
 })
 ``` -->
+## Contributing
+
+### Caveats
+* Use `JSX/TSX` instead of `SFC`s when writing a recursive template to avoid circular imports.

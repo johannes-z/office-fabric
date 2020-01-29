@@ -1,5 +1,6 @@
 
 export * from './Overlay'
+export * from './OverflowSet'
 export * from './SwatchColorPicker'
 
 export * from './ActivityItem'
@@ -15,7 +16,7 @@ export * from './ChoiceGroup'
 export * from './Dropdown'
 export * from './MessageBar'
 export * from './Popup'
-// export * from './Stack'
+export * from './Stack'
 export * from './Facepile'
 export * from './SpinButton'
 export * from './Panel'

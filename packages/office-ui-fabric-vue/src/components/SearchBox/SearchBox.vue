@@ -13,13 +13,16 @@
       :area-label="placeholder"
       :placeholder="placeholder"
       @input="internalValue = $event.target.value"
-      @focus="isActive = true"
-      @blur="isActive = false"
+      @focus="onFocus"
+      @blur="onBlur"
       @keydown.enter="submit"
-      @keydown.esc="clearInput">
+      @keydown.esc="onEscape">
     <div v-if="internalValue"
          :class="classNames.clearButton">
-      <IconButton icon-name="Clear" @click.native="clearInput" />
+      <IconButton
+        :styles="{ root: { height: 'auto' }, icon: { fontSize: '12px' } }"
+        :icon-props="{ iconName: 'Clear' }"
+        @click.native="clearInput" />
     </div>
   </div>
 </template>
@@ -74,14 +77,36 @@ export default class SearchBox extends BaseComponent {
   @Watch('internalValue')
   private onValueChanged (value: string) {
     this.$emit('input', value)
+    this.$emit('change', value)
   }
 
   submit () {
-    this.$emit('submit', this.internalValue)
+    this.$emit('search', this.internalValue)
   }
-  clearInput () {
+
+  onEscape (e: KeyboardEvent) {
+    this.$emit('escape', e)
+    if (e.defaultPrevented) return
+    this.clearInput()
+  }
+
+  clearInput (e?: MouseEvent) {
+    this.$emit('clear', e)
+    if (e && e.defaultPrevented) return
     this.internalValue = ''
     this.$refs.input.focus()
+  }
+
+  private onFocus (e: FocusEvent) {
+    this.$emit('focus', e)
+    if (e.defaultPrevented) return
+    this.isActive = true
+  }
+
+  private onBlur (e: FocusEvent) {
+    this.$emit('blur', e)
+    if (e.defaultPrevented) return
+    this.isActive = false
   }
 }
 </script>
