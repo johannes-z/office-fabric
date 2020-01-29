@@ -7,7 +7,7 @@
       <span :class="classNames.activityText">
         <slot name="description" />
       </span>
-      <div :class="classNames.commentText">
+      <div v-if="$slots.comments" :class="classNames.commentText">
         <slot name="comments" />
       </div>
       <div :class="classNames.timeStamp">
@@ -38,7 +38,7 @@ export default class ActivityItem extends BaseComponent {
     const { className, activityPersonas, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact } = this
 
     return getClassNames(
-      () => getStyles(undefined, undefined, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact) as any,
+      () => getStyles(undefined, this.styles, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact) as any,
       {}
     )
   }

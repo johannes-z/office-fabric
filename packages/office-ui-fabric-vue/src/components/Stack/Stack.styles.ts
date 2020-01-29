@@ -16,6 +16,8 @@ export const styles: any = (props: any, theme: any, tokens: any): any => {
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
+  console.log(tokens)
+
   const childrenGap = tokens && tokens.childrenGap ? tokens.childrenGap : gap
   const maxHeight = tokens && tokens.maxHeight ? tokens.maxHeight : props.maxHeight
   const maxWidth = tokens && tokens.maxWidth ? tokens.maxWidth : props.maxWidth

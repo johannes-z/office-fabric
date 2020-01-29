@@ -55,6 +55,7 @@ export default class Preview extends Vue {
         isExpanded: true,
         links: [
           { name: 'Breadcrumb', key: 'Breadcrumb', href: '/#/Breadcrumb' },
+          { name: 'OverflowSet', key: 'OverflowSet', href: '/#/OverflowSet' },
         ],
       }, {
         name: 'Notification & Engagement',
@@ -83,7 +84,7 @@ export default class Preview extends Vue {
         name: 'Utilities',
         isExpanded: true,
         links: [
-          { name: 'Icon', key: 'Icon', href: '/#/Icon', disabled: true },
+          { name: 'Icon', key: 'Icon', href: '/#/Icon' },
           { name: 'Image', key: 'Image', href: '/#/Image' },
           { name: 'Layer', key: 'Layer', href: '/#/Layer' },
           { name: 'Overlay', key: 'Overlay', href: '/#/Overlay' },

@@ -1,6 +1,6 @@
 <template>
   <div :class="classNames.root">
-    <slot />
+    <slot v-bind="$props" />
   </div>
 </template>
 
@@ -19,28 +19,35 @@ export default class Stack extends BaseComponent {
   @Prop({ type: String, default: '' }) verticalFill!: string
   @Prop({ type: Boolean, default: false }) horizontal!: boolean
   @Prop({ type: Boolean, default: false }) reversed!: boolean
-  @Prop({ type: Number, default: 0 }) gap!: number
+  @Prop({ type: Number, default: 0 }) childrenGap!: number
   @Prop({ type: Boolean, default: false }) grow!: boolean
   @Prop({ type: Boolean, default: false }) wrap!: boolean
   @Prop({ type: Number, default: 0 }) horizontalAlign!: number
   @Prop({ type: Number, default: 0 }) verticalAlign!: number
   @Prop({ type: Boolean, default: false }) disableShrink!: boolean
 
+  @Prop({ type: Number, default: 0 }) test!: number
+
+  @Prop({ type: Object, default: () => {} }) tokens!: any
+
+  created () {
+    console.log(this.test)
+  }
+
   get classNames () {
-    const { theme, verticalFill, horizontal, reversed, gap, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = this
+    const { theme, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = this
 
     return getClassNames(() => styles({
       className,
       verticalFill,
       horizontal,
       reversed,
-      gap,
       grow,
       wrap,
       horizontalAlign,
       verticalAlign,
       disableShrink,
-    }, theme), {})
+    }, theme, this.tokens))
   }
 }
 </script>

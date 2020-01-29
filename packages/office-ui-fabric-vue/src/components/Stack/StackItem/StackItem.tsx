@@ -20,7 +20,10 @@ export default class StackItem extends StatelessComponent {
   @Prop() verticalFill
   @Prop({ type: Number, default: null }) order!: number
 
+  @Prop({ type: Number, default: 0 }) test!: number
+
   render (h: CreateElement, context: RenderContext<any>) {
+    console.log(context.props.test)
     const { grow, shrink, disableShrink, align, verticalFill, order, className } = context.props
 
     const classNames: any = getClassNames(() => styles({
