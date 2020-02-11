@@ -68,7 +68,7 @@ export const getStyles = (props: any): ISpinnerStyles => {
     ],
     label: [
       classNames.label,
-      // theme.fonts.small,
+      theme.fonts.small,
       {
         color: palette.themePrimary,
         margin: '8px 0 0',
