@@ -2,12 +2,16 @@
   <input ref="inputElement"
          autocomplete="off"
          autocapitalize="off"
-         :value="displayValue">
+         :value="displayValue"
+         @input="onInputChanged"
+         @keydown="onKeyDown"
+         @keyup="$emit('keyup', $event)">
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { isIE11 } from '@uifabric-vue/utilities'
+import { isIE11, KeyCodes } from '@uifabric-vue/utilities'
+import BaseComponent from '../BaseComponent'
 
 const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'
@@ -15,19 +19,23 @@ const SELECTION_BACKWARD = 'backward'
 @Component({
   components: {},
 })
-export default class Autofill extends Vue {
+export default class Autofill extends BaseComponent {
   $refs!: {
     inputElement: HTMLInputElement
   }
 
   @Prop({ type: String, default: '' }) defaultVisibleValue!: string
   @Prop({ type: String, default: '' }) suggestedDisplayValue!: string
-  @Prop({ type: Function, default: null }) onInputChange!: (value: string, composing: boolean) => any
+  @Prop({ type: Boolean, default: false }) preventValueSelection!: boolean
 
-  _autoFillEnabled: boolean = false
-  _isComposing: boolean = false
-  _value: string = this.defaultVisibleValue || ''
-  displayValue: string = this.defaultVisibleValue || ''
+  @Prop({ type: Array, default: () => [KeyCodes.down, KeyCodes.up] as KeyCodes[] }) enableAutofillOnKeyPress!: KeyCodes[]
+  @Prop({ type: Function, default: null }) onInputChange!: (value: string, composing: boolean) => string
+  @Prop({ type: Function, default: null }) onInputValueChange!: (newValue?: string, composing?: boolean) => void
+
+  private autoFillEnabled: boolean = false
+  private isComposing: boolean = false
+  private internalValue: string = this.defaultVisibleValue || ''
+  private displayValue: string = this.defaultVisibleValue || ''
 
   public get cursorLocation (): number | null {
     if (this.$refs.inputElement) {
@@ -42,22 +50,76 @@ export default class Autofill extends Vue {
     }
   }
 
-  private _onInputChanged = (ev: Event) => {
-    const value: string = this._getCurrentInputValue(ev)
+  public get value (): string {
+    return this.internalValue
+  }
 
-    if (!this._isComposing) {
-      this._tryEnableAutofill(value, this._value, ev.composed)
-    }
+  public get isValueSelected (): boolean {
+    return Boolean(this.$refs.inputElement && this.$refs.inputElement.selectionStart !== this.$refs.inputElement.selectionEnd)
+  }
 
-    // If it is not IE11 and currently composing, update the value
-    if (!(isIE11() && this._isComposing)) {
-      const nativeEventComposing = ev.composed
-      const isComposing = nativeEventComposing === undefined ? this._isComposing : nativeEventComposing
-      this._updateValue(value, isComposing)
+  public get selectionStart (): number | null {
+    return this.$refs.inputElement ? this.$refs.inputElement.selectionStart : -1
+  }
+
+  public get selectionEnd (): number | null {
+    return this.$refs.inputElement ? this.$refs.inputElement.selectionEnd : -1
+  }
+
+  public focus () {
+    this.$refs.inputElement && this.$refs.inputElement.focus()
+  }
+
+  public clear () {
+    this.autoFillEnabled = true
+    this.updateValue('', false)
+    this.$refs.inputElement && this.$refs.inputElement.setSelectionRange(0, 0)
+  }
+
+  private onKeyDown (ev: any) {
+    this.$emit('keydown', ev)
+
+    // If the event is actively being composed, then don't alert autofill.
+    // Right now typing does not have isComposing, once that has been fixed any should be removed.
+    if (!(ev as any).isComposing) {
+      switch (ev.which) {
+        case KeyCodes.backspace:
+          this.autoFillEnabled = false
+          break
+        case KeyCodes.left:
+        case KeyCodes.right:
+          if (this.autoFillEnabled) {
+            this.internalValue = this.displayValue!
+            this.autoFillEnabled = false
+          }
+          break
+        default:
+          if (!this.autoFillEnabled) {
+            if (this.enableAutofillOnKeyPress!.indexOf(ev.which) !== -1) {
+              this.autoFillEnabled = true
+            }
+          }
+          break
+      }
     }
   };
 
-  private _getCurrentInputValue (ev?: Event): string {
+  private onInputChanged (ev: Event) {
+    const value: string = this.getCurrentInputValue(ev)
+
+    if (!this.isComposing) {
+      this.tryEnableAutofill(value, this.value, ev.composed)
+    }
+
+    // If it is not IE11 and currently composing, update the value
+    if (!(isIE11() && this.isComposing)) {
+      const nativeEventComposing = ev.composed
+      const isComposing = nativeEventComposing === undefined ? this.isComposing : nativeEventComposing
+      this.updateValue(value, isComposing)
+    }
+  };
+
+  private getCurrentInputValue (ev?: Event): string {
     if (ev && ev.target && (ev.target as any).value) {
       return (ev.target as any).value
     } else if (this.$refs.inputElement && this.$refs.inputElement.value) {
@@ -71,25 +133,25 @@ export default class Autofill extends Vue {
    * Updates the current input value as well as getting a new display value.
    * @param newValue - The new value from the input
    */
-  private _updateValue (newValue: string, composing: boolean) {
+  private updateValue (newValue: string, composing: boolean) {
     // Only proceed if the value is nonempty and is different from the old value
     // This is to work around the fact that, in IE 11, inputs with a placeholder fire an onInput event on focus
-    if (!newValue && newValue === this._value) {
+    if (!newValue && newValue === this.value) {
       return
     }
-    this._value = this.onInputChange ? this.onInputChange(newValue, composing) : newValue
-    this.displayValue = this._getDisplayValue(this._value, this.suggestedDisplayValue)
+    this.internalValue = this.onInputChange ? this.onInputChange(newValue, composing) : newValue
+    this.displayValue = this.getDisplayValue(this.value, this.suggestedDisplayValue)
   }
 
-  private _getDisplayValue (inputValue: string, suggestedDisplayValue?: string): string {
+  private getDisplayValue (inputValue: string, suggestedDisplayValue?: string): string {
     let displayValue = inputValue
-    if (suggestedDisplayValue && inputValue && this._doesTextStartWith(suggestedDisplayValue, displayValue) && this._autoFillEnabled) {
+    if (suggestedDisplayValue && inputValue && this.doesTextStartWith(suggestedDisplayValue, displayValue) && this.autoFillEnabled) {
       displayValue = suggestedDisplayValue
     }
     return displayValue
   }
 
-  private _doesTextStartWith (text: string, startWith: string): boolean {
+  private doesTextStartWith (text: string, startWith: string): boolean {
     if (!text || !startWith) {
       return false
     }
@@ -107,16 +169,16 @@ export default class Autofill extends Vue {
    * @param isComposing - if true then the text is actively being composed and it has not completed.
    * @param isComposed - if the text is a composed text value.
    */
-  private _tryEnableAutofill (newValue: string, oldValue: string, isComposing?: boolean, isComposed?: boolean): void {
+  private tryEnableAutofill (newValue: string, oldValue: string, isComposing?: boolean, isComposed?: boolean): void {
     if (
       !isComposing &&
       newValue &&
       this.$refs.inputElement &&
       this.$refs.inputElement.selectionStart === newValue.length &&
-      !this._autoFillEnabled &&
+      !this.autoFillEnabled &&
       (newValue.length > oldValue.length || isComposed)
     ) {
-      this._autoFillEnabled = true
+      this.autoFillEnabled = true
     }
   }
 }

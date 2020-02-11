@@ -2,11 +2,17 @@ import Vue from 'vue'
 import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
-import { getTheme } from '@uifabric/styling'
+import { getTheme, ITheme } from '@uifabric/styling'
+
+interface BaseProps {
+  theme: ITheme
+  styles: any
+  className: string
+}
 
 // @ts-ignore
 @Component
-export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends Vue {
+export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vue {
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
@@ -17,6 +23,17 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
   private __async: Async | null = null;
   private __events: EventGroup | null = null;
   private __disposables: IDisposable[] | null = null;
+
+  protected state!: TState
+  protected props: TProps = {} as TProps
+
+  created () {
+    for (const key in this.$props) {
+      if (this.$props.hasOwnProperty(key)) {
+        this.$set(this.props as any, key, this.$props[key])
+      }
+    }
+  }
 
   /**
    * When the component has mounted, update the componentRef.
@@ -41,7 +58,7 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
     }
   }
 
-  protected get classNames (): IProcessedStyleSet<IStyles> {
+  protected get classNames (): IProcessedStyleSet<any> {
     return {} as any
   }
 
@@ -83,5 +100,17 @@ export default abstract class BaseComponent<TProps = {}, IStyles = {}> extends V
     }
 
     return this.__events
+  }
+
+  /**
+   * Updates the component's current state.
+   *
+   * @returns The updated state object.
+   */
+  protected setState (state: TState): TState {
+    for (const key in state) {
+      this.$set(this.state as any, key, state[key])
+    }
+    return this.state
   }
 }
