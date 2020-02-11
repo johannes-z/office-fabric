@@ -972,19 +972,19 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@uifabric/icons@^7.3.2":
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/@uifabric/icons/-/icons-7.3.2.tgz#7eef67422f8087ba73dd18aec669f64c0e40fc71"
-  integrity sha512-ZqlRBkFporJWHusvAzXI3ye99B/pKN/mGmHbMZtAPoGSFSge3ahv3GzQA8IvamrrHdf5j2OwCZR7db9BJvOOzA==
+"@uifabric/icons@^7.3.3":
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/@uifabric/icons/-/icons-7.3.3.tgz#49aa604dc27ef7a53fe62940f3acf99cc161ba1d"
+  integrity sha512-4SUg2VyNPNP8/Xs+x7ZY4xiEJytrmATWtISmS1EVRTFYrTjeFmbIxzSGZsm1ISgcM5xSdu9a2Ih2ps7SreX0Ug==
   dependencies:
     "@uifabric/set-version" "^7.0.3"
-    "@uifabric/styling" "^7.10.2"
+    "@uifabric/styling" "^7.10.3"
     tslib "^1.10.0"
 
-"@uifabric/merge-styles@^7.8.3":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-7.8.3.tgz#affb99342733791217474e3e7a7bd6d67c8e18c8"
-  integrity sha512-mMLXIKmB7NH2ss6k7I4o7kE7Dy9+vcgubkxNVsgzBdV9vlDtnMDMc6/nZjOxgmBAr1UCRxCxERaKSB1oNFxtAg==
+"@uifabric/merge-styles@^7.8.4":
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/@uifabric/merge-styles/-/merge-styles-7.8.4.tgz#0590ea2a9219d3e653b400175e15465ff60b6dd5"
+  integrity sha512-tW4vjrsjWmg1GN1ulssFvdy1I98PA2iJgdHHI4YMKdRZh5aYyFwUt9n3uNq3hJCG8hHmTYOSajakN/0Tr2UeIg==
   dependencies:
     "@uifabric/set-version" "^7.0.3"
     tslib "^1.10.0"
@@ -996,23 +996,23 @@
   dependencies:
     tslib "^1.10.0"
 
-"@uifabric/styling@^7.10.2":
-  version "7.10.2"
-  resolved "https://registry.yarnpkg.com/@uifabric/styling/-/styling-7.10.2.tgz#ba5398582f204fee43f2679bf6523ad418e10d32"
-  integrity sha512-a4BCtbm273s2997wZwBkOeWNm2lzUr6eVzE+CmShUVxXWAMPXI5ZZS6SZ4LpZkDkhdItLnNq+VODSJ7M/VM0aw==
+"@uifabric/styling@^7.10.3":
+  version "7.10.3"
+  resolved "https://registry.yarnpkg.com/@uifabric/styling/-/styling-7.10.3.tgz#705864208bf6c139dac5ecfa4570317b045dc2e9"
+  integrity sha512-fdWRLig4haMGkKGl3r3CCicAbdGAR1tl/6k4xTBN65pz1e8OaxKA5QoVdOOoxBorvaSGGJFbV+N8LKzU5y3GoQ==
   dependencies:
     "@microsoft/load-themed-styles" "^1.10.26"
-    "@uifabric/merge-styles" "^7.8.3"
+    "@uifabric/merge-styles" "^7.8.4"
     "@uifabric/set-version" "^7.0.3"
-    "@uifabric/utilities" "^7.11.3"
+    "@uifabric/utilities" "^7.11.4"
     tslib "^1.10.0"
 
-"@uifabric/utilities@^7.11.3":
-  version "7.11.3"
-  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-7.11.3.tgz#8672736bab450e4db9ed2d51aa309405317a318d"
-  integrity sha512-y/2H65F41Q3DU4GQJFWj6x09qfjMYcwutHkU7sm2r0h82K01u5qeCPkPV9RqGGsJOrqllvsR5BoaRP77a1ot8A==
+"@uifabric/utilities@^7.11.4":
+  version "7.11.4"
+  resolved "https://registry.yarnpkg.com/@uifabric/utilities/-/utilities-7.11.4.tgz#fd8035521b2d2fc27ebd61b255dc2031dbba17f8"
+  integrity sha512-B3Tiwma0yD/fQFIkyc+jNXwCgOtSvXlm1OGPC/mRoGczuXQH6o9mydaS7C8PjoetELgYQCZYm7Q7oup+thfSVg==
   dependencies:
-    "@uifabric/merge-styles" "^7.8.3"
+    "@uifabric/merge-styles" "^7.8.4"
     "@uifabric/set-version" "^7.0.3"
     prop-types "^15.5.10"
     tslib "^1.10.0"
@@ -7683,6 +7683,11 @@ reserved-words@^0.1.2:
   resolved "https://registry.yarnpkg.com/reserved-words/-/reserved-words-0.1.2.tgz#00a0940f98cd501aeaaac316411d9adc52b31ab1"
   integrity sha1-AKCUD5jNUBrqqsMWQR2a3FKzGrE=
 
+resize-observer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/resize-observer/-/resize-observer-1.0.0.tgz#4f8380b73b411af4ed7d916fe85a2d59900e71ef"
+  integrity sha512-D7UFShDm2TgrEDEyeg+/tTEbvOgPWlvPAfJtxiKp+qutu6HowmcGJKjECgGru0PPDIj3SAucn3ZPpOx54fF7DQ==
+
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -7931,6 +7936,15 @@ rollup@^1.30.0:
   version "1.30.0"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.30.0.tgz#ae9c893804e8eaa8f8f74b0aaf7e7fb4374a9d01"
   integrity sha512-ANcmfaSQwpcJtZUTA0ZMNBtFcQ1B4A5FldlNqEK0WdWm9sHSKu93ffa2KV1ux8HA/yKIV/ZARV28m7rNdXJgEw==
+  dependencies:
+    "@types/estree" "*"
+    "@types/node" "*"
+    acorn "^7.1.0"
+
+rollup@^1.30.1:
+  version "1.31.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.31.0.tgz#e2a87212e96aa7850f3eb53fdd02cf89f2d2fe9a"
+  integrity sha512-9C6ovSyNeEwvuRuUUmsTpJcXac1AwSL1a3x+O5lpmQKZqi5mmrjauLeqIjvREC+yNRR8fPdzByojDng+af3nVw==
   dependencies:
     "@types/estree" "*"
     "@types/node" "*"
