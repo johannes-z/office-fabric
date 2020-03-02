@@ -9,6 +9,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { styles } from './Stack.styles'
+import { IStackTokens } from './Stack.types'
 
 const getClassNames = classNamesFunction()
 
@@ -26,13 +27,7 @@ export default class Stack extends BaseComponent {
   @Prop({ type: Number, default: 0 }) verticalAlign!: number
   @Prop({ type: Boolean, default: false }) disableShrink!: boolean
 
-  @Prop({ type: Number, default: 0 }) test!: number
-
-  @Prop({ type: Object, default: () => {} }) tokens!: any
-
-  created () {
-    console.log(this.test)
-  }
+  @Prop({ type: Object, default: () => {} }) tokens!: IStackTokens
 
   get classNames () {
     const { theme, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = this
