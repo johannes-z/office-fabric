@@ -1,6 +1,6 @@
 import { IStyleFunction, IStyle } from '@uifabric/merge-styles'
 
-// import { IOverflowSetStyles, IOverflowSetStyleProps } from './OverflowSet.types'
+import { IOverflowSetStyles, IOverflowSetStyleProps } from './OverflowSet.types'
 
 const overflowItemStyle: IStyle = {
   flexShrink: 0,

@@ -13,8 +13,10 @@
       <h2>Usage</h2>
 
       <h2>Default SearchBox</h2>
-      <f-search-box />
-      <f-search-box disable-animation placeholder="Search with no animation" />
+      <f-stack :tokens="{ childrenGap: 20 }">
+        <f-search-box />
+        <f-search-box disable-animation placeholder="Search with no animation" />
+      </f-stack>
 
       <h2>Underlined SearchBox</h2>
       <f-search-box underlined placeholder="Search" />
