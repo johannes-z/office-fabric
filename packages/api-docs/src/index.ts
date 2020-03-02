@@ -15,6 +15,9 @@ Vue.use(Fabric, {} as IPartialTheme, true)
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  base: process.env.NODE_ENV === 'production'
+    ? '/office-fabric/'
+    : '/',
   routes,
 })
 
