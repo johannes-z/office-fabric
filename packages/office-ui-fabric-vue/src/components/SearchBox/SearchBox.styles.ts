@@ -1,4 +1,4 @@
-import { getGlobalClassNames, normalize, HighContrastSelector, AnimationVariables, getPlaceholderStyles } from '@uifabric/styling'
+import { getGlobalClassNames, normalize, HighContrastSelector, AnimationVariables, getPlaceholderStyles, getInputFocusStyle } from '@uifabric/styling'
 import { ISearchBoxStyles } from './SearchBox.types'
 import { IStyle } from '@uifabric/merge-styles'
 import { getRTL } from '@uifabric-vue/utilities'
@@ -47,7 +47,7 @@ export function getStyles (props: any): ISearchBoxStyles {
         height: 32,
         selectors: {
           [HighContrastSelector]: {
-            border: '1px solid WindowText',
+            borderColor: 'WindowText',
           },
           ':hover': {
             borderColor: semanticColors.inputBorderHovered,
@@ -76,16 +76,13 @@ export function getStyles (props: any): ISearchBoxStyles {
       hasFocus && [
         'is-active',
         {
-          borderColor: semanticColors.inputFocusBorderAlt,
-          selectors: {
-            ':hover': {
-              borderColor: semanticColors.inputFocusBorderAlt,
-            },
-            [HighContrastSelector]: {
-              borderColor: 'Highlight',
-            },
-          },
+          position: 'relative',
         },
+        getInputFocusStyle(
+          semanticColors.inputFocusBorderAlt,
+          underlined ? 0 : effects.roundedCorner2,
+          underlined ? 'borderBottom' : 'border'
+        ),
       ],
       disabled && [
         'is-disabled',
@@ -171,7 +168,7 @@ export function getStyles (props: any): ISearchBoxStyles {
             color: inputIconAltHovered,
           },
           '.ms-Button': {
-            borderRadius: getRTL() ? '1px 0 0 1px' : '0 1px 1px 0',
+            borderRadius: getRTL(theme) ? '1px 0 0 1px' : '0 1px 1px 0',
           },
           '.ms-Button-icon': {
             color: inputIconAlt,
