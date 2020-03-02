@@ -28,9 +28,12 @@ export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): I
 export default function install (Vue: any, theme: IPartialTheme = {}, useCSSVars: boolean = false) {
   for (const _ in Components) {
     const Component: VueConstructor<Vue> = (Components as any)[_]
-    if (Component.toString().indexOf('VueComponent') === -1) continue
+    // if (Component.toString().indexOf('VueComponent') === -1) continue
     const name: string = `f-${toKebabCase(_)}`
-    Vue.component(name, Component)
+    try {
+      Vue.component(name, Component)
+    } catch (error) {
+    }
   }
 
   loadTheme(theme, useCSSVars)
