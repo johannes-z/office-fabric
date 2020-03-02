@@ -28,7 +28,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
   protected props: TProps = {} as TProps
 
   created () {
-    console.warn('Avoid BaseComponent')
     for (const key in this.$props) {
       if (this.$props.hasOwnProperty(key)) {
         this.$set(this.props as any, key, this.$props[key])
