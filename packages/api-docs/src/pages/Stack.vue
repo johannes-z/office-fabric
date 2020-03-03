@@ -16,9 +16,7 @@
 
       <Stack :tokens="containerStackTokens" :test="1">
         <span>Default vertical stack</span>
-        <Stack slot-scope="scope"
-               :styles="stackStyles"
-               v-bind="scope">
+        <Stack :styles="stackStyles">
           <span>Item One</span>
           <span>Item Two</span>
           <span>Item Three</span>
