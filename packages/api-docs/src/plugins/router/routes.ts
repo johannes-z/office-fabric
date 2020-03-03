@@ -10,6 +10,12 @@ for (const name in FabricComponents) {
   })
 }
 routes.push({
+  name: 'Welcome',
+  path: `/`,
+  component: () => import(`@/Welcome.vue`),
+  props: {},
+})
+routes.push({
   name: 'Button',
   path: `/Button`,
   component: () => import(`@/pages/Button.vue`),

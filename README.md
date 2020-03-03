@@ -30,7 +30,7 @@ The `Vue`-components also borrow code from `office-ui-fabric-react`, making it e
 
 1. `@uifabric-vue/office-ui-fabric-vue`, the main project defining all the vue components for Fabric.
 2. `@uifabric-vue/utilities`, which is basically a fork of `@uifabric/utilities` but re-written without `react`
-   dependencies.
+   dependencies. See https://github.com/OfficeDev/office-ui-fabric-react/issues/11815.
 3. `api-docs` (WIP), the homepage and showcase of the components.
 
 ## Vue Caveats
