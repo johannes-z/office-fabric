@@ -60,6 +60,7 @@ export default class Preview extends Vue {
           isExpanded: true,
           links: [
             { name: 'ActivityItem WIP', key: 'ActivityItem', href: publicPath + '/#/ActivityItem' },
+            { name: 'BasicList WIP', key: 'BasicList', href: publicPath + '/#/BasicList' },
             { name: 'DetailsList WIP', key: 'DetailsList', href: publicPath + '/#/DetailsList' },
             { name: 'Facepile WIP', key: 'Facepile', href: publicPath + '/#/Facepile' },
             { name: 'Persona WIP', key: 'Persona', href: publicPath + '/#/Persona' },

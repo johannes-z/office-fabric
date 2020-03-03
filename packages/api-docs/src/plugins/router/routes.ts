@@ -21,5 +21,11 @@ routes.push({
   component: () => import(`@/pages/Button.vue`),
   props: {},
 })
+routes.push({
+  name: 'BasicList',
+  path: `/BasicList`,
+  component: () => import(`@/pages/BasicList.vue`),
+  props: {},
+})
 
 export default routes
