@@ -5,14 +5,12 @@
     <div ref="surface"
          className="ms-List-surface"
          role="presentation">
-      <div>
-        <div v-for="(item, index) in items"
-             :key="index"
-             className="ms-List-cell">
-          <slot name="cell" :item="item">
-            {{ item && item.name || '' }}
-          </slot>
-        </div>
+      <div v-for="(item, index) in items"
+           :key="index"
+           className="ms-List-cell">
+        <slot name="cell" :item="item">
+          {{ item && item.name || '' }}
+        </slot>
       </div>
     </div>
   </div>
@@ -22,7 +20,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IList, IListProps, IPage, IPageProps, ScrollToMode } from './List.types'
 import BaseComponent from '../BaseComponent'
-import { IRectangle } from '@uifabric-vue/utilities'
+import { IRectangle, findScrollableParent } from '@uifabric-vue/utilities'
 
 const RESIZE_DELAY = 16
 const MIN_SCROLL_UPDATE_DELAY = 100
@@ -102,6 +100,11 @@ export default class List extends BaseComponent {
   @Prop({ type: Array, required: true }) items!: any
 
   role: string = 'list'
+  scrollElement!: HTMLElement
+
+  mounted () {
+    this.scrollElement = findScrollableParent(this.$refs.root) as HTMLElement
+  }
 
   get pageElements () {
     return this.items

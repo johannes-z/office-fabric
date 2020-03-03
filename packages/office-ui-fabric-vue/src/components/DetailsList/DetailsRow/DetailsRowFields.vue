@@ -4,6 +4,7 @@
          :key="columnIndex"
          :role="column.isRowHeader ? 'rowheader' : 'gridcell'"
          aria-readonly
+         :style="{ width: calcWidth(column) }"
          :class="css(
            column.className,
            column.isMultiline && rowClassNames.isMultiline,
@@ -11,8 +12,7 @@
            rowClassNames.cell,
            column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
            showAnimation && rowClassNames.cellAnimation
-         )"
-         :style="{ width: calcWidth(column) }">
+         )">
       {{ getCellText(item, column) }}
     </div>
   </div>
