@@ -12,10 +12,19 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Horizontal Separator</h2>
-      <f-separator>Separator</f-separator>
-      <f-separator align-content="start">Start</f-separator>
-      <f-separator align-content="end">End</f-separator>
-      <f-separator />
+      <f-stack :tokens="{ childrenGap: 12 }">
+        <f-text>Horizontal center aligned</f-text>
+        <f-separator>Separator</f-separator>
+
+        <f-text>Horizontal start aligned</f-text>
+        <f-separator align-content="start">Start</f-separator>
+
+        <f-text>Horizontal end aligned</f-text>
+        <f-separator align-content="end">End</f-separator>
+
+        <f-text>Empty horizontal</f-text>
+        <f-separator />
+      </f-stack>
 
       <h2>Vertical Separator</h2>
       <div style="height: 200px;">

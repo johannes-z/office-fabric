@@ -22,10 +22,12 @@
       <f-search-box underlined placeholder="Search" />
 
       <h2>Disabled SearchBox</h2>
-      <f-search-box disabled />
-      <f-search-box disabled
-                    underlined
-                    placeholder="Search" />
+      <f-stack :tokens="{ childrenGap: 20 }">
+        <f-search-box disabled />
+        <f-search-box disabled
+                      underlined
+                      placeholder="Search" />
+      </f-stack>
 
       <h2>SearchBox with custom icon</h2>
       <f-search-box placeholder="Filter" icon-name="Filter" />

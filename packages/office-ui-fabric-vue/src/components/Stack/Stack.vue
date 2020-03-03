@@ -6,6 +6,7 @@ import { styles } from './Stack.styles'
 import { IStackTokens } from './Stack.types'
 import StatelessComponent from '../StatelessComponent'
 import { VNode, CreateElement, RenderContext } from 'vue'
+import { mergeStyleSets } from '@uifabric/styling'
 
 const getClassNames = classNamesFunction()
 
@@ -28,7 +29,7 @@ export default class Stack extends StatelessComponent {
   render (h: CreateElement, ctx: RenderContext): VNode {
     const { theme, tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = ctx.props
 
-    const classNames: any = getClassNames(styles({
+    const classNames: any = getClassNames(mergeStyleSets(ctx.props.styles, styles({
       className,
       verticalFill,
       horizontal,
@@ -38,7 +39,7 @@ export default class Stack extends StatelessComponent {
       horizontalAlign,
       verticalAlign,
       disableShrink,
-    }, theme, tokens))
+    }, theme, tokens)))
 
     return h('div', {
       ...ctx.data,
