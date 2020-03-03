@@ -9,7 +9,9 @@
         <div v-for="(item, index) in items"
              :key="index"
              className="ms-List-cell">
-          {{ item && item.name || '' }}
+          <slot name="cell" :item="item">
+            {{ item && item.name || '' }}
+          </slot>
         </div>
       </div>
     </div>
