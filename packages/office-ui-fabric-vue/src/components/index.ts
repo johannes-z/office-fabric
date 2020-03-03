@@ -1,4 +1,7 @@
 
+export * from './DetailsList'
+export * from './List'
+
 export * from './Overlay'
 export * from './OverflowSet'
 export * from './ResizeGroup'
