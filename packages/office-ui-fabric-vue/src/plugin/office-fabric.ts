@@ -30,6 +30,8 @@ export interface IOptions {
   prefix?: string
 }
 
+export { IPartialTheme } from '@uifabric/styling'
+
 export default function install (Vue: any, theme: IPartialTheme = {}, options: Partial<IOptions> = {}) {
   for (const _ in Components) {
     const Component: any = (Components as any)[_]

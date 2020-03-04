@@ -3,14 +3,13 @@ import VueRouter from 'vue-router'
 import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 
-import Fabric from '@uifabric-vue/office-ui-fabric-vue'
-import { IPartialTheme } from '@uifabric/styling'
-
-import { initializeIcons } from '@uifabric/icons'
+import Fabric, { initializeIcons, IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 
 initializeIcons()
 
-Vue.use(Fabric, {} as IPartialTheme, true)
+Vue.use(Fabric, {} as IPartialTheme, {
+  useCSSVars: true,
+} as IOptions)
 
 Vue.use(VueRouter)
 
