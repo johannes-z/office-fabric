@@ -4,8 +4,6 @@ import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '
 import { registerCSSVars } from './registerCSSVars'
 import { toKebabCase } from '../utilities'
 
-export * from '../components'
-
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
   let _theme = createTheme(theme)
 

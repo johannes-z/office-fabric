@@ -10,4 +10,6 @@ export {
 export { loadTheme } from './plugin/office-fabric'
 export { initializeIcons } from '@uifabric/icons'
 
+export { IPartialTheme, IOptions } from './plugin/office-fabric'
+
 export default Fabric
