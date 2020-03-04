@@ -1,12 +1,13 @@
 <template>
   <div ref="root"
-       :role="pageElements.length > 0 ? role : undefined"
+       :role="pages.length > 0 ? role : undefined"
        :class="css('ms-List', className)">
     <div ref="surface"
          class="ms-List-surface"
          role="presentation">
       <div v-for="page in pages"
            :key="page.key"
+           :ref="page.key"
            class="ms-List-page"
            :style="getPageStyle(page)">
         <div v-for="(item, index) in page.items"
@@ -14,7 +15,7 @@
              class="ms-List-cell">
           <slot name="cell"
                 :item="item"
-                :index="index">
+                :index="page.startIndex + index">
             {{ item && item.name || '' }}
           </slot>
         </div>
@@ -27,7 +28,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { IList, IListProps, IPage, IPageProps, ScrollToMode } from './List.types'
 import BaseComponent from '../BaseComponent'
-import { IRectangle, findScrollableParent, getWindow, findIndex } from '@uifabric-vue/utilities'
+import { IRectangle, findScrollableParent, getWindow, findIndex, getParent } from '@uifabric-vue/utilities'
 
 const RESIZE_DELAY = 16
 const MIN_SCROLL_UPDATE_DELAY = 100
@@ -105,8 +106,8 @@ export default class List extends BaseComponent {
     surface: HTMLDivElement
   }
   @Prop({ type: Array, required: true }) items!: any
-  @Prop({ type: Function, default: List.prototype._getItemCountForPage }) getItemCountForPage!: (...args: any[]) => number
-  @Prop({ type: Function, default: List.prototype._getPageHeight }) getPageHeight!: (...args: any[]) => number
+  @Prop({ type: Function, default: () => 0 }) getItemCountForPage!: (...args: any[]) => number
+  @Prop({ type: Function, default: () => 0 }) getPageHeight!: (...args: any[]) => number
   @Prop({ type: Number, default: DEFAULT_RENDERED_WINDOWS_AHEAD }) renderedWindowsAhead!: number
   @Prop({ type: Number, default: DEFAULT_RENDERED_WINDOWS_BEHIND }) renderedWindowsBehind!: number
   @Prop({ type: Number, default: 0 }) startIndex!: number
@@ -147,7 +148,18 @@ export default class List extends BaseComponent {
   } = {}
   estimatedPageHeight: number = 0
 
-  @Watch('isScrolling', { immediate: true })
+  created () {
+    // @ts-ignore
+    this._onScrollingDone = this._async.debounce(this._onScrollingDone, DONE_SCROLLING_WAIT, {
+      leading: false,
+    })
+    this._onAsyncScroll = this._async.debounce(this._onAsyncScroll, MIN_SCROLL_UPDATE_DELAY, {
+      leading: false,
+      maxWait: MAX_SCROLL_UPDATE_DELAY,
+    })
+  }
+
+  @Watch('isScrolling')
   shouldUpdate (newVal: boolean, oldVal: boolean) {
     if (!newVal && oldVal) this.updatePages()
   }
@@ -157,34 +169,43 @@ export default class List extends BaseComponent {
     this.measureVersion++
     this.scrollElement = findScrollableParent(this.$refs.root) as HTMLElement
 
-    this.events.on(window, 'resize', this._onAsyncResize)
     if (this.$refs.root) {
       this.events.on(this.$refs.root, 'focus', this._onFocus, true)
     }
     if (this.scrollElement) {
       this.events.on(this.scrollElement, 'scroll', this._onScroll)
-      // this.events.on(this.scrollElement, 'scroll', this._onAsyncScroll)
+      this.events.on(this.scrollElement, 'scroll', this._onAsyncScroll)
     }
   }
 
-  private _onAsyncResize (): void {
-    this.$forceUpdate()
+  /**
+   * Debounced method to asynchronously update the visible region on a scroll event.
+   */
+  private _onAsyncScroll (): void {
+    this.updateRenderRects()
+
+    // Only update pages when the visible rect falls outside of the materialized rect.
+    if (!this.materializedRect || !_isContainedWithin(this.requiredRect as IRectangle, this.materializedRect)) {
+      this.updatePages()
+    } else {
+      // console.log('requiredRect contained in materialized', this._requiredRect, this._materializedRect);
+    }
   }
 
   /** Track the last item index focused so that we ensure we keep it rendered. */
   private _onFocus (ev: any): void {
     let target = ev.target as HTMLElement
 
-    // while (target !== this.$refs.surface) {
-    //   const indexString = target.getAttribute('data-list-index')
+    while (target !== this.$refs.surface) {
+      const indexString = target.getAttribute('data-list-index')
 
-    //   if (indexString) {
-    //     this.focusedIndex = Number(indexString)
-    //     break
-    //   }
+      if (indexString) {
+        this.focusedIndex = Number(indexString)
+        break
+      }
 
-    //   target = getParent(target) as HTMLElement
-    // }
+      target = getParent(target) as HTMLElement
+    }
   }
 
   /**
@@ -195,11 +216,12 @@ export default class List extends BaseComponent {
     if (!this.isScrolling && !this.ignoreScrollingState) {
       this.isScrolling = true
     }
-    this._resetRequiredWindows()
-    setTimeout(() => this._onScrollingDone(), 0)
+    this.resetRequiredWindows()
+    // @ts-ignore
+    this._onScrollingDone()
   }
 
-  private _resetRequiredWindows (): void {
+  private resetRequiredWindows (): void {
     this.requiredWindowsAhead = 0
     this.requiredWindowsBehind = 0
   }
@@ -212,10 +234,6 @@ export default class List extends BaseComponent {
     if (!this.ignoreScrollingState) {
       this.isScrolling = false
     }
-  }
-
-  get pageElements () {
-    return this.items
   }
 
   /** Generate the style object for the page. */
@@ -328,7 +346,7 @@ export default class List extends BaseComponent {
 
     this.materializedRect = materializedRect
 
-    // console.log('materialized: ', materializedRect);
+    // console.log('materialized: ', materializedRect)
     return {
       pages: pages,
       measureVersion: this.measureVersion,
@@ -351,7 +369,7 @@ export default class List extends BaseComponent {
 
       const { itemCount = this.getItemCountForPage(itemIndex, visibleRect) } = pageData
 
-      const { height = this.getPageHeight(itemIndex, visibleRect, itemCount) } = pageData
+      const { height = this._getPageHeight(itemIndex, visibleRect, itemCount) } = pageData
 
       return {
         itemCount: itemCount,
@@ -364,7 +382,7 @@ export default class List extends BaseComponent {
 
       return {
         itemCount: itemCount,
-        height: this.getPageHeight(itemIndex, visibleRect, itemCount),
+        height: this._getPageHeight(itemIndex, visibleRect, itemCount),
       }
     }
   }
@@ -478,7 +496,7 @@ export default class List extends BaseComponent {
           this.hasCompletedFirstRender = true
           this.updatePages(finalProps)
         } else {
-          // this._onAsyncScroll()
+          this._onAsyncScroll()
         }
       } else {
         // Enqueue an idle bump.
@@ -493,6 +511,7 @@ export default class List extends BaseComponent {
     if (finalProps.onPagesUpdated) {
       finalProps.onPagesUpdated(finalState.pages as any[])
     }
+    this.measureVersion = newListState.measureVersion
     this.pages = newListState.pages
   }
 
@@ -525,7 +544,7 @@ export default class List extends BaseComponent {
     const pageElement = this.$refs[page.key] as HTMLElement
     const cachedHeight = this.cachedPageHeights[page.startIndex]
 
-    // console.log('   * measure attempt', page.startIndex, cachedHeight);
+    console.log('   * measure attempt', page.startIndex, cachedHeight)
 
     if (pageElement && this.shouldVirtualize() && (!cachedHeight || cachedHeight.measureVersion !== this.measureVersion)) {
       const newClientRect = {

@@ -24,7 +24,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
   private __events: EventGroup | null = null;
   private __disposables: IDisposable[] | null = null;
 
-  protected state!: TState
+  protected state: TState = {} as TState
   protected props: TProps = {} as TProps
 
   created () {
@@ -107,9 +107,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
    *
    * @returns The updated state object.
    */
-  protected setState (state: TState): TState {
-    for (const key in state) {
-      this.$set(this.state as any, key, state[key])
+  protected setState (newState: TState): TState {
+    for (const key in newState) {
+      this.$set(this.state as any, key, newState[key])
     }
     return this.state
   }
