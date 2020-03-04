@@ -261,7 +261,7 @@ export default class List extends BaseComponent {
 
     let itemsPerPage = 1
     let pageTop = 0
-    let currentSpacer = null
+    let currentSpacer: any = null
     const focusedIndex = this.focusedIndex
     const endIndex = startIndex! + renderCount
     const shouldVirtualize = this.shouldVirtualize(props)
