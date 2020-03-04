@@ -6,9 +6,28 @@
     </div>
 
     <div class="content--inner ms-depth-8">
+      <h2>Installation</h2>
+
+      First you have to install some packages using your favorite package manager. Here we're using <code>yarn</code>,
+      but you can also use any other package manager:
+
+      <pre>
+yarn add "@uifabric-vue/office-ui-fabric-vue"
+      </pre>
+
+      That's it! If you're also planning on overriding CSS and add your own styling, you may also want to use these
+      packages:
+
+      <pre>
+yarn add "@uifabric/merge-styles"
+yarn add "@uifabric/styling"
+      </pre>
+    </div>
+
+    <div class="content--inner ms-depth-8">
       <h2>Getting Started</h2>
 
-      Import and install the Vue Plugin to start using Office UI Fabric Vue:
+      Import the Vue Plugin to start using Office UI Fabric Vue:
       <pre>
 import Fabric, { IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 Vue.use(Fabric, {} as IPartialTheme, {} as IOptions)
@@ -54,6 +73,11 @@ initializeIcons()
     /* ... */
 }
       </pre>
+
+      You can also check out the <a
+        href="https://github.com/johannes-z/office-fabric/tree/master/packages/api-docs"
+        target="_blank">api-docs</a>
+      package to see a extensive usage of Office UI Fabric Vue.
     </div>
   </div>
 </template>
