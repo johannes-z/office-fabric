@@ -10,6 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.8.3",
     "@uifabric-vue/office-ui-fabric-vue": "^1.0.0",
+    "@uifabric/example-data": "^7.0.5",
     "@uifabric/merge-styles": "^7.8.6",
     "@uifabric/styling": "^7.10.14",
     "core-js": "^3.6.4",
@@ -30,7 +31,7 @@
     "faker": "^4.1.0",
     "sass": "^1.25.0",
     "sass-loader": "^8.0.2",
-    "typescript": "^3.7.5",
+    "typescript": "^3.8.3",
     "vue-router": "^3.1.5",
     "vue-template-compiler": "^2.6.11"
   }
