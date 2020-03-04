@@ -18,6 +18,7 @@ export default class Popup extends BaseComponent {
   private _async!: Async;
   private needsVerticalScrollBar = false;
   private _containsFocus = false;
+  // @ts-ignore
   private _disposables: (() => void)[] = [];
 
   created () {
