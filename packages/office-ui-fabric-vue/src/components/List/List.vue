@@ -157,6 +157,9 @@ export default class List extends BaseComponent {
       leading: false,
       maxWait: MAX_SCROLL_UPDATE_DELAY,
     })
+    this._onAsyncIdle = this._async.debounce(this._onAsyncIdle, IDLE_DEBOUNCE_DELAY, {
+      leading: false,
+    })
   }
 
   @Watch('isScrolling')
@@ -189,6 +192,31 @@ export default class List extends BaseComponent {
       this.updatePages()
     } else {
       // console.log('requiredRect contained in materialized', this._requiredRect, this._materializedRect);
+    }
+  }
+
+  /**
+   * This is an async debounced method that will try and increment the windows we render. If we can increment
+   * either, we increase the amount we render and re-evaluate.
+   */
+  private _onAsyncIdle (): void {
+    const { renderedWindowsAhead, renderedWindowsBehind } = this
+    const { requiredWindowsAhead, requiredWindowsBehind } = this
+    const windowsAhead = Math.min(renderedWindowsAhead as number, requiredWindowsAhead + 1)
+    const windowsBehind = Math.min(renderedWindowsBehind as number, requiredWindowsBehind + 1)
+
+    if (windowsAhead !== requiredWindowsAhead || windowsBehind !== requiredWindowsBehind) {
+      // console.log('idling', windowsBehind, windowsAhead);
+
+      this.requiredWindowsAhead = windowsAhead
+      this.requiredWindowsBehind = windowsBehind
+      this.updateRenderRects()
+      this.updatePages()
+    }
+
+    if (renderedWindowsAhead! > windowsAhead || renderedWindowsBehind! > windowsBehind) {
+      // Async increment on next tick.
+      this._onAsyncIdle()
     }
   }
 
@@ -500,11 +528,11 @@ export default class List extends BaseComponent {
         }
       } else {
         // Enqueue an idle bump.
-        // this._onAsyncIdle()
+        this._onAsyncIdle()
       }
     } else {
       // Enqueue an idle bump
-      // this._onAsyncIdle()
+      this._onAsyncIdle()
     }
 
     // Notify the caller that rendering the new pages has completed
