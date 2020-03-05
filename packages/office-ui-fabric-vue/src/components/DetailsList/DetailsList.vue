@@ -1,5 +1,6 @@
 <template>
-  <div :class="classNames.root">
+  <div :class="classNames.root"
+       data-is-scrollable="false">
     <div role="grid">
       <div :class="classNames.headerWrapper">
         <DetailsHeader :columns="adjustedColumns" />

@@ -12,7 +12,9 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
 
-      <f-details-list :columns="columns" :items="items" />
+      <div data-is-scrollable="true" style="overflow-x: auto; max-height: 80vh">
+        <f-details-list :columns="columns" :items="items" />
+      </div>
     </div>
 
     <div class="content--inner ms-depth-8">

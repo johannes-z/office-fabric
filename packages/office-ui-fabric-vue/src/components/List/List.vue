@@ -106,8 +106,8 @@ export default class List extends BaseComponent {
     surface: HTMLDivElement
   }
   @Prop({ type: Array, required: true }) items!: any
-  @Prop({ type: Function, default: () => 0 }) getItemCountForPage!: (...args: any[]) => number
-  @Prop({ type: Function, default: () => 0 }) getPageHeight!: (...args: any[]) => number
+  @Prop({ type: Function, default: null }) getItemCountForPage!: (...args: any[]) => number
+  @Prop({ type: Function, default: null }) getPageHeight!: (...args: any[]) => number
   @Prop({ type: Number, default: DEFAULT_RENDERED_WINDOWS_AHEAD }) renderedWindowsAhead!: number
   @Prop({ type: Number, default: DEFAULT_RENDERED_WINDOWS_BEHIND }) renderedWindowsBehind!: number
   @Prop({ type: Number, default: 0 }) startIndex!: number
@@ -206,8 +206,6 @@ export default class List extends BaseComponent {
     const windowsBehind = Math.min(renderedWindowsBehind as number, requiredWindowsBehind + 1)
 
     if (windowsAhead !== requiredWindowsAhead || windowsBehind !== requiredWindowsBehind) {
-      // console.log('idling', windowsBehind, windowsAhead);
-
       this.requiredWindowsAhead = windowsAhead
       this.requiredWindowsBehind = windowsBehind
       this.updateRenderRects()
@@ -320,10 +318,11 @@ export default class List extends BaseComponent {
       const isFirstPage = itemIndex === startIndex
 
       // console.log('building page', itemIndex, 'pageTop: ' + pageTop, 'inAllowed: ' +
-      // isPageInAllowedRange, 'inRequired: ' + isPageInRequiredRange);
+      // isPageInAllowedRange, 'inRequired: ' + isPageInRequiredRange)
 
       // Only render whats visible, focused, or first page,
       // or when running in fast rendering mode (not in virtualized mode), we render all current items in pages
+
       if (isPageVisible || isPageFocused || isFirstPage) {
         if (currentSpacer) {
           pages.push(currentSpacer)
@@ -395,7 +394,7 @@ export default class List extends BaseComponent {
     if (getPageSpecification) {
       const pageData = getPageSpecification(itemIndex, visibleRect)
 
-      const { itemCount = this.getItemCountForPage(itemIndex, visibleRect) } = pageData
+      const { itemCount = this._getItemCountForPage(itemIndex, visibleRect) } = pageData
 
       const { height = this._getPageHeight(itemIndex, visibleRect, itemCount) } = pageData
 
@@ -406,7 +405,7 @@ export default class List extends BaseComponent {
         key: pageData.key,
       }
     } else {
-      const itemCount = this.getItemCountForPage(itemIndex, visibleRect)
+      const itemCount = this._getItemCountForPage(itemIndex, visibleRect)
 
       return {
         itemCount: itemCount,
@@ -496,7 +495,7 @@ export default class List extends BaseComponent {
   }
 
   private updatePages (props: any = this.$props): void {
-    console.log('updating pages')
+    // console.log('updating pages')
 
     if (!this.requiredRect) {
       this.updateRenderRects(props)
@@ -506,6 +505,9 @@ export default class List extends BaseComponent {
     const oldListPages = this.pages!
 
     this.notifyPageChanges(oldListPages, newListState.pages!)
+
+    this.measureVersion = newListState.measureVersion
+    this.pages = newListState.pages
 
     // Multiple updates may have been queued, so the callback will reflect all of them.
     // Re-fetch the current props and states to avoid using a stale props or state captured in the closure.
@@ -539,8 +541,6 @@ export default class List extends BaseComponent {
     if (finalProps.onPagesUpdated) {
       finalProps.onPagesUpdated(finalState.pages as any[])
     }
-    this.measureVersion = newListState.measureVersion
-    this.pages = newListState.pages
   }
 
   private updatePageMeasurements (pages: any[]): boolean {
@@ -569,10 +569,10 @@ export default class List extends BaseComponent {
   private measurePage (page: any): boolean {
     let hasChangedHeight = false
     // @ts-ignore
-    const pageElement = this.$refs[page.key] as HTMLElement
+    const pageElement = this.$refs[page.key] ? this.$refs[page.key][0] as HTMLElement : null
     const cachedHeight = this.cachedPageHeights[page.startIndex]
 
-    console.log('   * measure attempt', page.startIndex, cachedHeight)
+    // console.log('   * measure attempt', page.startIndex, cachedHeight)
 
     if (pageElement && this.shouldVirtualize() && (!cachedHeight || cachedHeight.measureVersion !== this.measureVersion)) {
       const newClientRect = {
