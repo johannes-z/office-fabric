@@ -2,44 +2,47 @@
   <div :class="classNames.root"
        :aria-sort="column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none'"
        :aria-colindex="columnIndex"
-       role="columnheader">
-    <span :id="`${parentId}-${column.key}`"
-          :aria-label="column.isIconOnly ? column.name : undefined"
-          :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
-          :class="classNames.cellTitle">
-      <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
-        <!-- Column Icon -->
-        <template v-if="column.iconName || column.iconClassName">
-          <component :is="IconComponent"
-                     :class="classNames.iconClassName"
-                     :icon-name="column.iconName" />
-        </template>
+       role="columnheader"
+       :style="{ width: columnWidth }">
+    <span :class="classNames.cellTooltip">
+      <span :id="`${parentId}-${column.key}`"
+            :aria-label="column.isIconOnly ? column.name : undefined"
+            :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
+            :class="classNames.cellTitle">
+        <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
+          <!-- Column Icon -->
+          <template v-if="column.iconName || column.iconClassName">
+            <component :is="IconComponent"
+                       :class="classNames.iconClassName"
+                       :icon-name="column.iconName" />
+          </template>
 
-        <!-- Column Name -->
-        <template v-if="column.isIconOnly">
-          <span :class="classNames.accessibleLabel">{{ column.name }}</span>
-        </template>
-        <template v-else>
-          {{ column.name }}
-        </template>
+          <!-- Column Name -->
+          <template v-if="column.isIconOnly">
+            <span :class="classNames.accessibleLabel">{{ column.name }}</span>
+          </template>
+          <template v-else>
+            {{ column.name }}
+          </template>
+        </span>
 
-      </span>
-      <!-- Filter Indicator -->
-      <component :is="IconComponent"
-                 v-if="column.isFiltered"
-                 :class="classNames.nearIcon"
-                 icon-name="Filter" />
-      <!-- Sort Indicator -->
-      <component :is="IconComponent"
-                 v-if="column.isSorted"
-                 :class="classNames.sortIcon"
-                 :icon-name="column.isSortedDescending ? 'SortDown' : 'SortUp'" />
-      <!-- Group Indicator -->
-      <component :is="IconComponent"
-                 v-if="column.isGrouped"
-                 :class="classNames.nearIcon"
-                 icon-name="GroupedDescending" />
+        <!-- Filter Indicator -->
+        <component :is="IconComponent"
+                   v-if="column.isFiltered"
+                   :class="classNames.nearIcon"
+                   icon-name="Filter" />
+        <!-- Sort Indicator -->
+        <component :is="IconComponent"
+                   v-if="column.isSorted"
+                   :class="classNames.sortIcon"
+                   :icon-name="column.isSortedDescending ? 'SortDown' : 'SortUp'" />
+        <!-- Group Indicator -->
+        <component :is="IconComponent"
+                   v-if="column.isGrouped"
+                   :class="classNames.nearIcon"
+                   icon-name="GroupedDescending" />
       <!-- TODO: columnActionsMode -->
+      </span>
     </span>
   </div>
 </template>
@@ -93,6 +96,16 @@ export default class DetailsColumn extends BaseComponent {
       transitionDurationDrag: TRANSITION_DURATION_DRAG,
       transitionDurationDrop: TRANSITION_DURATION_DROP,
     })
+  }
+
+  get columnWidth () {
+    const { column, cellStyleProps } = this
+
+    return column.calculatedWidth! +
+      cellStyleProps.cellLeftPadding +
+      cellStyleProps.cellRightPadding +
+      (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0) +
+      'px'
   }
 }
 </script>

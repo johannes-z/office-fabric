@@ -13,7 +13,25 @@
       <h2>Usage</h2>
 
       <div data-is-scrollable="true" style="overflow-x: auto; max-height: 80vh">
-        <f-details-list :columns="columns" :items="items" />
+        <f-details-list :columns="columns" :items="items">
+          <template #cell.column1="{ item }">
+            <img :src="item.iconName"
+                 :class="classNames.fileIconImg"
+                 :alt="item.fileType + ' file icon'">
+          </template>
+
+          <template #cell.column3="{ item }">
+            <span>{{ item.dateModified }}</span>
+          </template>
+
+          <template #cell.column4="{ item }">
+            <span>{{ item.modifiedBy }}</span>
+          </template>
+
+          <template #cell.column5="{ item }">
+            <span>{{ item.fileSize }}</span>
+          </template>
+        </f-details-list>
       </div>
     </div>
 
@@ -69,6 +87,8 @@ const classNames = mergeStyleSets({
   },
 })
 export default class DetailsListPage extends Vue {
+  classNames = classNames
+
   items: any[] = _generateDocuments();
   columns: any[] = [
     {
@@ -156,7 +176,7 @@ function _copyAndSort<T> (items: T[], columnKey: string, isSortedDescending?: bo
 
 function _generateDocuments () {
   const items: any[] = []
-  for (let i = 0; i < 500; i++) {
+  for (let i = 0; i < 5000; i++) {
     const randomDate = _randomDate(new Date(2012, 0, 1), new Date())
     const randomFileSize = _randomFileSize()
     const randomFileType = _randomFileIcon()

@@ -6,7 +6,17 @@
       :columns="columns"
       :item="item"
       :item-index="0"
-      :column-start-index="showCheckbox ? 1 : 0" />
+      :column-start-index="showCheckbox ? 1 : 0">
+      <!-- Pass on all named slots -->
+      <slot v-for="slot in Object.keys($slots)"
+            :slot="slot"
+            :name="slot" />
+
+      <!-- Pass on all scoped slots -->
+      <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
+        <slot :name="slot" v-bind="scope" />
+      </template>
+    </RowFields>
   </div>
 </template>
 

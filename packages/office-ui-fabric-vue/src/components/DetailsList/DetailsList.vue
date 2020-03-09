@@ -9,8 +9,18 @@
         <List ref="list"
               :items="items"
               role="presentation">
-          <template #cell="{ item }">
-            <DetailsRow :item="item" :columns="adjustedColumns" />
+          <template #item="{ item }">
+            <DetailsRow :item="item" :columns="adjustedColumns">
+              <!-- Pass on all named slots -->
+              <slot v-for="slot in Object.keys($slots)"
+                    :slot="slot"
+                    :name="slot" />
+
+              <!-- Pass on all scoped slots -->
+              <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
+                <slot :name="slot" v-bind="scope" />
+              </template>
+            </DetailsRow>
           </template>
         </List>
       </div>
@@ -59,6 +69,8 @@ export default class DetailsList extends BaseComponent {
 
   created () {
     this._adjustColumns(this.$props)
+    console.log(this.$slots)
+    console.log(this.$scopedSlots)
   }
 
   private _rememberCalculatedWidth (column: any, newCalculatedWidth: number): void {
@@ -100,7 +112,7 @@ export default class DetailsList extends BaseComponent {
 
     let adjustedColumns: any[]
 
-    if (layoutMode === 0) {
+    if (layoutMode !== 0) {
       adjustedColumns = this._getFixedColumns(newColumns)
 
       // Preserve adjusted column calculated widths.
