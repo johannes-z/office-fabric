@@ -5,7 +5,6 @@
 // export * from './DetailsHeader.types'
 // export * from './DetailsList'
 // export * from './DetailsList.base'
-// export * from './DetailsList.types'
 // export * from './DetailsRow'
 // export * from './DetailsRow.base'
 // export * from './DetailsRow.types'
@@ -19,6 +18,8 @@
 // export * from './DetailsColumn.types'
 
 export * from './DetailsList'
+export * from './DetailsList.types'
+
 export * from './DetailsColumn'
 export * from './DetailsHeader'
 export * from './DetailsRow'

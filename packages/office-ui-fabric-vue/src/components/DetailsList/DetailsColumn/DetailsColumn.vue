@@ -8,7 +8,8 @@
       <span :id="`${parentId}-${column.key}`"
             :aria-label="column.isIconOnly ? column.name : undefined"
             :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
-            :class="classNames.cellTitle">
+            :class="classNames.cellTitle"
+            @click="column.onColumnClick($event, column)">
         <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
           <!-- Column Icon -->
           <template v-if="column.iconName || column.iconClassName">

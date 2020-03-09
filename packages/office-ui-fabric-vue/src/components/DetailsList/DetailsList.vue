@@ -36,6 +36,7 @@ import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
+import { IColumn } from '@uifabric-vue/office-ui-fabric-vue'
 
 const getClassNames = classNamesFunction()
 
@@ -43,6 +44,10 @@ const getClassNames = classNamesFunction()
   components: { DetailsHeader, DetailsRow, List },
 })
 export default class DetailsList extends BaseComponent {
+  $refs!: {
+    list: any
+  }
+
   @Prop({ type: Array, required: true }) columns!: any[]
   @Prop({ type: Array, default: () => [] }) items!: any[]
 
@@ -50,7 +55,8 @@ export default class DetailsList extends BaseComponent {
   lastSelectionMode = undefined
 
   columnOverrides = {}
-  adjustedColumns: any[] = []
+
+  lastSortedColumnKey = ''
 
   get classNames () {
     const {
@@ -67,10 +73,61 @@ export default class DetailsList extends BaseComponent {
     })
   }
 
+  get adjustedColumns (): IColumn[] {
+    return this._adjustColumns(this.$props)
+  }
+
   created () {
     this._adjustColumns(this.$props)
-    console.log(this.$slots)
-    console.log(this.$scopedSlots)
+
+    const DEFAULT_COLUMN = {
+      key: '',
+      name: '',
+      fieldName: '',
+      className: '',
+      styles: null,
+      minWidth: 0,
+      ariaLabel: '',
+      isRowHeader: false,
+      maxWidth: 0,
+      columnActionsMode: 1,
+      iconName: '',
+      isIconOnly: false,
+      iconClassName: '',
+      isCollapsible: false,
+      isSorted: false,
+      isSortedDescending: false,
+      isResizable: false,
+      isMultiline: false,
+      onRender: null,
+      getValueKey: null,
+      isFiltered: false,
+      onColumnClick: null,
+      onColumnContextMenu: null,
+      onColumnResize: null,
+      isGrouped: false,
+      data: {},
+      calculatedWidth: 0,
+      currentWidth: 0,
+      headerClassName: '',
+      isPadded: false,
+      sortAscendingAriaLabel: '',
+      sortDescendingAriaLabel: '',
+      groupAriaLabel: '',
+      filterAriaLabel: '',
+      isMenuOpen: false,
+    }
+
+    for (const key in DEFAULT_COLUMN) {
+      if (DEFAULT_COLUMN.hasOwnProperty(key)) {
+        // @ts-ignore
+        const value = DEFAULT_COLUMN[key]
+        this.columns.forEach((col: IColumn) => {
+          // @ts-ignore
+          this.$set(col, key, col[key] !== undefined ? col[key] : value)
+        })
+      }
+    }
   }
 
   private _rememberCalculatedWidth (column: any, newCalculatedWidth: number): void {
@@ -83,15 +140,16 @@ export default class DetailsList extends BaseComponent {
     return (this.columnOverrides[key] = this.columnOverrides[key] || {})
   }
 
-  private _adjustColumns (newProps: any, forceUpdate?: boolean, resizingColumnIndex?: number): void {
+  private _adjustColumns (newProps: any, forceUpdate?: boolean, resizingColumnIndex?: number): IColumn[] {
     const adjustedColumns = this._getAdjustedColumns(newProps, forceUpdate, resizingColumnIndex)
     // const { viewport } = this
     const viewportWidth = 1000
 
     if (adjustedColumns) {
-      this.adjustedColumns = adjustedColumns
+      // this.adjustedColumns = adjustedColumns
       this.lastWidth = viewportWidth
     }
+    return adjustedColumns
   }
 
   /** Returns adjusted columns, given the viewport size and layout mode. */
@@ -244,6 +302,7 @@ export function buildColumns (
   isMultiline?: boolean
 ) {
   const columns: any[] = []
+  console.log('buildColumns')
 
   if (items && items.length) {
     const firstItem = items[0]
