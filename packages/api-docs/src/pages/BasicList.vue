@@ -18,7 +18,7 @@
                 :get-item-count-for-page="getItemCountForPage"
                 :get-page-height="getPageHeight"
                 :rendered-windows-ahead="4">
-          <template #cell="{ item, index }">
+          <template #item="{ item, index }">
             <div :class="classNames.listGridExampleTile"
                  data-is-focusable="true"
                  :style="{ width: 100 / columnCount + '%' }">
