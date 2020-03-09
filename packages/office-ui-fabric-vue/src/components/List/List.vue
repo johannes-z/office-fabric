@@ -13,7 +13,7 @@
         <div v-for="(item, index) in page.items"
              :key="index"
              class="ms-List-cell">
-          <slot name="cell"
+          <slot name="item"
                 :item="item"
                 :index="page.startIndex + index">
             {{ item && item.name || '' }}

@@ -13,7 +13,11 @@
            column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
            showAnimation && rowClassNames.cellAnimation
          )">
-      {{ getCellText(item, column) }}
+      <slot :name="`cell.${column.key}`"
+            :item="item"
+            :column="column">
+        {{ getCellText(item, column) }}
+      </slot>
     </div>
   </div>
 </template>
@@ -52,7 +56,7 @@ export default class DetailsRowFields extends BaseComponent {
   getCellText = getCellText
   showAnimation = true
 
-  private calcWidth (column) {
+  private calcWidth (column: any) {
     const { cellStyleProps } = this
     const width: string | number =
       typeof column.calculatedWidth === 'undefined'
@@ -60,7 +64,7 @@ export default class DetailsRowFields extends BaseComponent {
         : column.calculatedWidth +
           cellStyleProps.cellLeftPadding +
           cellStyleProps.cellRightPadding +
-          (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0)
+          (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0) + 'px'
     return width
   }
 }
