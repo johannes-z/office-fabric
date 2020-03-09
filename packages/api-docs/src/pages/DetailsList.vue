@@ -45,6 +45,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mergeStyleSets } from '@uifabric/styling'
 
+import { IColumn } from '@uifabric-vue/office-ui-fabric-vue'
+
 const classNames = mergeStyleSets({
   fileIconHeaderIcon: {
     padding: 0,
@@ -90,7 +92,7 @@ export default class DetailsListPage extends Vue {
   classNames = classNames
 
   items: any[] = _generateDocuments();
-  columns: any[] = [
+  columns: IColumn[] = [
     {
       key: 'column1',
       name: 'File Type',
@@ -102,10 +104,7 @@ export default class DetailsListPage extends Vue {
       fieldName: 'name',
       minWidth: 16,
       maxWidth: 16,
-      // onColumnClick: this._onColumnClick,
-      // onRender: (item: ann) => {
-      //   return <img src={item.iconName} className={classNames.fileIconImg} alt={item.fileType + ' file icon'} />
-      // },
+      onColumnClick: this.onColumnClick,
     },
     {
       key: 'column2',
@@ -119,7 +118,7 @@ export default class DetailsListPage extends Vue {
       isSortedDescending: false,
       sortAscendingAriaLabel: 'Sorted A to Z',
       sortDescendingAriaLabel: 'Sorted Z to A',
-      // onColumnClick: this._onColumnClick,
+      onColumnClick: this.onColumnClick,
       data: 'string',
       isPadded: true,
     },
@@ -130,11 +129,8 @@ export default class DetailsListPage extends Vue {
       minWidth: 70,
       maxWidth: 90,
       isResizable: true,
-      // onColumnClick: this._onColumnClick,
+      onColumnClick: this.onColumnClick,
       data: 'number',
-      // onRender: (item: IDocument) => {
-      //   return <span>{item.dateModified}</span>
-      // },
       isPadded: true,
     },
     {
@@ -146,10 +142,7 @@ export default class DetailsListPage extends Vue {
       isResizable: true,
       isCollapsible: true,
       data: 'string',
-      // onColumnClick: this._onColumnClick,
-      // onRender: (item: IDocument) => {
-      //   return <span>{item.modifiedBy}</span>
-      // },
+      onColumnClick: this.onColumnClick,
       isPadded: true,
     },
     {
@@ -161,12 +154,22 @@ export default class DetailsListPage extends Vue {
       isResizable: true,
       isCollapsible: true,
       data: 'number',
-      // onColumnClick: this._onColumnClick,
-      // onRender: (item: IDocument) => {
-      //   return <span>{item.fileSize}</span>
-      // },
+      onColumnClick: this.onColumnClick,
     },
   ];
+
+  onColumnClick (ev: MouseEvent, column: IColumn) {
+    this.columns.forEach(col => {
+      if (col.key === column.key) {
+        col.isSortedDescending = column.isSortedDescending = !col.isSortedDescending
+        col.isSorted = column.isSorted = true
+      } else {
+        col.isSorted = false
+        col.isSortedDescending = true
+      }
+    })
+    this.items = _copyAndSort(this.items, column.fieldName!, column.isSortedDescending)
+  }
 }
 
 function _copyAndSort<T> (items: T[], columnKey: string, isSortedDescending?: boolean): T[] {
@@ -176,7 +179,7 @@ function _copyAndSort<T> (items: T[], columnKey: string, isSortedDescending?: bo
 
 function _generateDocuments () {
   const items: any[] = []
-  for (let i = 0; i < 5000; i++) {
+  for (let i = 0; i < 500; i++) {
     const randomDate = _randomDate(new Date(2012, 0, 1), new Date())
     const randomFileSize = _randomFileSize()
     const randomFileType = _randomFileIcon()

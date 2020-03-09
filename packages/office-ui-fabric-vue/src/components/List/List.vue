@@ -162,6 +162,11 @@ export default class List extends BaseComponent {
     })
   }
 
+  @Watch('items')
+  itemsChanged (newVal: any, oldVal: any) {
+    if (newVal !== oldVal) this.updatePages()
+  }
+
   @Watch('isScrolling')
   shouldUpdate (newVal: boolean, oldVal: boolean) {
     if (!newVal && oldVal) this.updatePages()
