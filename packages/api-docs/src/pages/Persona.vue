@@ -226,298 +226,354 @@
 
       <h2>Persona Presence</h2>
 
-      <Label>Online</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        image-alt="Annie Lindqvist, status is online." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        image-alt="Annie Lindqvist, status is online." />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        image-alt="Annie Lindqvist, status is online." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        image-alt="Annie Lindqvist, status is online." />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Online</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              image-alt="Annie Lindqvist, status is online." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              image-alt="Annie Lindqvist, status is online." />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              image-alt="Annie Lindqvist, status is online." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              image-alt="Annie Lindqvist, status is online." />
+          </f-stack>
+        </f-stack>
 
-      <Label>Online + Out of Office</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is online and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is online and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is online and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.online"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is online and out of office." />
+        <f-stack>
+          <Label>Online + Out of Office</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is online and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is online and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is online and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.online"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is online and out of office." />
+          </f-stack>
+        </f-stack>
+      </f-stack>
 
-      <Label>Away</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        image-alt="Annie Lindqvist, status is away." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        image-alt="Annie Lindqvist, status is away." />
-      <Persona v-bind="examplePersona"
-               hide-persona-details
-               :presence="PersonaPresence.away"
-               image-alt="Annie Lindqvist, status is away." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        image-alt="Annie Lindqvist, status is away." />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Away</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              image-alt="Annie Lindqvist, status is away." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              image-alt="Annie Lindqvist, status is away." />
+            <Persona v-bind="examplePersona"
+                     hide-persona-details
+                     :presence="PersonaPresence.away"
+                     image-alt="Annie Lindqvist, status is away." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              image-alt="Annie Lindqvist, status is away." />
+          </f-stack>
+        </f-stack>
 
-      <Label>Away + Out of Office</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is away and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is away and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is away and out of office." />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.away"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is away and out of office." />
+        <f-stack>
+          <Label>Away + Out of Office</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is away and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is away and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is away and out of office." />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.away"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is away and out of office." />
+          </f-stack>
+        </f-stack>
+      </f-stack>
 
-      <Label>Busy</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        image-alt="Annie Lindqvist, status is busy" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        image-alt="Annie Lindqvist, status is busy" />
-      <Persona v-bind="examplePersona"
-               hide-persona-details
-               :presence="PersonaPresence.busy"
-               image-alt="Annie Lindqvist, status is busy" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        image-alt="Annie Lindqvist, status is busy" />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Busy</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              image-alt="Annie Lindqvist, status is busy" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              image-alt="Annie Lindqvist, status is busy" />
+            <Persona v-bind="examplePersona"
+                     hide-persona-details
+                     :presence="PersonaPresence.busy"
+                     image-alt="Annie Lindqvist, status is busy" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              image-alt="Annie Lindqvist, status is busy" />
+          </f-stack>
+        </f-stack>
 
-      <Label>Busy + Out of Office</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is busy and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is busy and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is busy and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.busy"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is busy and out of office" />
+        <f-stack>
+          <Label>Busy + Out of Office</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is busy and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is busy and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is busy and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.busy"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is busy and out of office" />
+          </f-stack>
+        </f-stack>
+      </f-stack>
 
-      <Label>Do not Disturb</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        image-alt="Annie Lindqvist, status is do not disturb" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        image-alt="Annie Lindqvist, status is do not disturb" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        image-alt="Annie Lindqvist, status is do not disturb" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        image-alt="Annie Lindqvist, status is do not disturb" />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Do not Disturb</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              image-alt="Annie Lindqvist, status is do not disturb" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              image-alt="Annie Lindqvist, status is do not disturb" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              image-alt="Annie Lindqvist, status is do not disturb" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              image-alt="Annie Lindqvist, status is do not disturb" />
+          </f-stack>
+        </f-stack>
 
-      <Label>Do not Disturb + Out of Office</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is do not disturb and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is do not disturb and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is do not disturb and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.dnd"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is do not disturb and out of office" />
+        <f-stack>
+          <Label>Do not Disturb + Out of Office</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is do not disturb and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is do not disturb and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is do not disturb and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.dnd"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is do not disturb and out of office" />
+          </f-stack>
+        </f-stack>
+      </f-stack>
 
-      <Label>Blocked</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.blocked"
-        image-alt="Annie Lindqvist, status is blocked" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.blocked"
-        image-alt="Annie Lindqvist, status is blocked" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.blocked"
-        image-alt="Annie Lindqvist, status is blocked" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.blocked"
-        image-alt="Annie Lindqvist, status is blocked" />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Blocked</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.blocked"
+              image-alt="Annie Lindqvist, status is blocked" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.blocked"
+              image-alt="Annie Lindqvist, status is blocked" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.blocked"
+              image-alt="Annie Lindqvist, status is blocked" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.blocked"
+              image-alt="Annie Lindqvist, status is blocked" />
+          </f-stack>
+        </f-stack>
+      </f-stack>
 
-      <Label>Offline</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        image-alt="Annie Lindqvist, status is offline" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        image-alt="Annie Lindqvist, status is offline" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        image-alt="Annie Lindqvist, status is offline" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        image-alt="Annie Lindqvist, status is offline" />
+      <f-stack horizontal>
+        <f-stack>
+          <Label>Offline</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              image-alt="Annie Lindqvist, status is offline" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              image-alt="Annie Lindqvist, status is offline" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              image-alt="Annie Lindqvist, status is offline" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              image-alt="Annie Lindqvist, status is offline" />
+          </f-stack>
+        </f-stack>
 
-      <Label>Offline + Out of Office</Label>
-      <Persona
-        text=""
-        :size="PersonaSize.size8"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is offline and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size24"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is offline and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is offline and out of office" />
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        hide-persona-details
-        :presence="PersonaPresence.offline"
-        is-out-of-office
-        image-alt="Annie Lindqvist, status is offline and out of office" />
+        <f-stack>
+          <Label>Offline + Out of Office</Label>
+          <f-stack horizontal>
+            <Persona
+              text=""
+              :size="PersonaSize.size8"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is offline and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size24"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is offline and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is offline and out of office" />
+            <Persona
+              v-bind="examplePersona"
+              :size="PersonaSize.size72"
+              hide-persona-details
+              :presence="PersonaPresence.offline"
+              is-out-of-office
+              image-alt="Annie Lindqvist, status is offline and out of office" />
+          </f-stack>
+        </f-stack>
+      </f-stack>
     </div>
 
     <div class="content--inner ms-depth-8">
