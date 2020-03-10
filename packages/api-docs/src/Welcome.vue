@@ -11,27 +11,27 @@
       First you have to install some packages using your favorite package manager. Here we're using <code>yarn</code>,
       but you can also use any other package manager:
 
-      <pre>
+      <pre v-highlightjs><code class="shell">
 yarn add "@uifabric-vue/office-ui-fabric-vue"
-      </pre>
+      </code></pre>
 
       That's it! If you're also planning on overriding CSS and add your own styling, you may also want to use these
       packages:
 
-      <pre>
+      <pre v-highlightjs><code class="shell">
 yarn add "@uifabric/merge-styles"
 yarn add "@uifabric/styling"
-      </pre>
+      </code></pre>
     </div>
 
     <div class="content--inner ms-depth-8">
       <h2>Getting Started</h2>
 
       Import the Vue Plugin to start using Office UI Fabric Vue:
-      <pre>
+      <pre v-highlightjs><code class="typescript">
 import Fabric, { IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 Vue.use(Fabric, {} as IPartialTheme, {} as IOptions)
-      </pre>
+      </code></pre>
 
       <p>
         Importing the Typescript-interfaces is optional, but provides you with better intellisense. You can now use
@@ -40,30 +40,32 @@ Vue.use(Fabric, {} as IPartialTheme, {} as IOptions)
       </p>
 
       Or you can import only the components you need for local registration:
-      <pre>
+
+      <pre v-highlightjs><code class="typescript">
 import { Icon, Toggle } from '@uifabric-vue/office-ui-fabric-vue'
-      </pre>
+      </code></pre>
 
       <h3>Icons</h3>
       To use Fabric icons, you first must initialize them. You can use the official <code>@uifabric/icons</code> package
       to do so:
-      <pre>
+
+      <pre v-highlightjs><code class="typescript">
 import { initializeIcons } from '@uifabric/icons'
 initializeIcons()
-      </pre>
+      </code></pre>
 
       Office UI Fabric Vue also exports this function:
-      <pre>
+      <pre v-highlightjs><code class="typescript">
 import { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
 initializeIcons()
-      </pre>
+      </code></pre>
 
       <h3>CSS Variables</h3>
       Office UI Fabric Vue can be configured to use CSS Variables for the color palette, which makes it very easy to
       change colors on the fly directly in the browser. Pass the <code>useCSSVars</code> to the Vue Plugin options to
       enable CSS Vars. This will generate the following css:
 
-      <pre>
+      <pre v-highlightjs><code class="css">
 :root {
     --fabric-bodyBackground: #fff;
     --fabric-bodyBackgroundHovered: #f3f2f1;
@@ -72,7 +74,7 @@ initializeIcons()
     --fabric-bodyFrameBackground: #fff;
     /* ... */
 }
-      </pre>
+      </code></pre>
 
       You can also check out the <a
         href="https://github.com/johannes-z/office-fabric/tree/master/packages/api-docs"
@@ -94,4 +96,7 @@ export default class Welcome extends Vue {
 </script>
 
 <style lang="scss" scoped>
+pre {
+  white-space: pre;
+}
 </style>
