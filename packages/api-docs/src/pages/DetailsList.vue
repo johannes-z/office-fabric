@@ -12,7 +12,7 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
 
-      <h2>DetailsList with 500 documents, sorting, <strike>filtering, marquee selection</strike>, justified columns</h2>
+      <h2>DetailsList with 500 documents, sorting, filtering, <strike>marquee selection</strike>, justified columns</h2>
       <div :class="classNames.controlWrapper">
         <f-toggle v-model="compact"
                   label="Enable compact mode"

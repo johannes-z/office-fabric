@@ -161,6 +161,7 @@ export default class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxSta
 
   mounted () {
     const cb = this._async.throttle(() => {
+      if (!this.$refs.comboBoxWrapper) return
       /** Update `comboBoxMenuWidth` with 60 fps. */
       this.comboBoxMenuWidth = this.$refs.comboBoxWrapper.clientWidth + 2
     }, 1 / 60)
