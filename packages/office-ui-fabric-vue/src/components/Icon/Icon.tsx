@@ -18,7 +18,7 @@ export default class Icon extends StatelessComponent {
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
     const isImage = !!context.props.imageProps
     const iconContent = getIconContent(iconName) || {}
-    const { iconClassName, children } = iconContent
+    const { children, iconClassName } = iconContent
 
     const classNames: any = getClassNames(styles, {
       theme,
@@ -37,6 +37,6 @@ export default class Icon extends StatelessComponent {
         'aria-hidden': 'true',
         'data-icon-name': iconName,
       },
-    }, children)
+    }, typeof children === 'function' ? [children(h)] : children)
   }
 }
