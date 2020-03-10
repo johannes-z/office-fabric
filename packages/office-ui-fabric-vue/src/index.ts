@@ -1,7 +1,10 @@
 import Fabric from './plugin/office-fabric'
 import * as Components from './components'
 
+export * from '@uifabric-vue/utilities'
+// @ts-ignore
 export * from './utilities/positioning'
+
 export * from './components'
 export {
   Fabric,
