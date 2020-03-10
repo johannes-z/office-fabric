@@ -12,8 +12,24 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
 
-      <div data-is-scrollable="true" style="overflow-x: auto; max-height: 80vh">
-        <f-details-list :columns="columns" :items="items">
+      <h2>DetailsList with 500 documents, sorting, <strike>filtering, marquee selection</strike>, justified columns</h2>
+      <div :class="classNames.controlWrapper">
+        <f-toggle v-model="compact"
+                  label="Enable compact mode"
+                  on-text="Compact"
+                  off-text="Normal"
+                  :styles="controlStyles" />
+
+        <f-text-field v-model="text"
+                      label="Filter by name:"
+                      :styles="controlStyles"
+                      @change="onChangeText" />
+      </div>
+      <div style="overflow-x: auto; max-height: 80vh">
+        <f-details-list :columns="columns"
+                        :items="items"
+                        :selection-mode="2"
+                        :compact="compact">
           <template #cell.column1="{ item }">
             <img :src="item.iconName"
                  :class="classNames.fileIconImg"
@@ -45,7 +61,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mergeStyleSets } from '@uifabric/styling'
 
-import { IColumn } from '@uifabric-vue/office-ui-fabric-vue'
+import { IColumn, SelectionMode } from '@uifabric-vue/office-ui-fabric-vue'
 
 const classNames = mergeStyleSets({
   fileIconHeaderIcon: {
@@ -89,9 +105,20 @@ const classNames = mergeStyleSets({
   },
 })
 export default class DetailsListPage extends Vue {
+  compact: boolean = false
+  text: string = ''
   classNames = classNames
 
-  items: any[] = _generateDocuments();
+  controlStyles = {
+    root: {
+      margin: '0 30px 20px 0',
+      maxWidth: '300px',
+    },
+  };
+
+  allItems: any[] = _generateDocuments();
+  items: any[] = []
+
   columns: IColumn[] = [
     {
       key: 'column1',
@@ -158,6 +185,10 @@ export default class DetailsListPage extends Vue {
     },
   ];
 
+  created () {
+    this.items = this.allItems
+  }
+
   onColumnClick (ev: MouseEvent, column: IColumn) {
     this.columns.forEach(col => {
       if (col.key === column.key) {
@@ -169,6 +200,13 @@ export default class DetailsListPage extends Vue {
       }
     })
     this.items = _copyAndSort(this.items, column.fieldName!, column.isSortedDescending)
+  }
+
+  private onChangeText (ev: InputEvent, text: string) {
+    console.log(this.allItems)
+    this.items = text
+      ? this.allItems.filter(i => i.name.toLowerCase().indexOf(text.toLowerCase()) > -1)
+      : this.allItems
   }
 }
 

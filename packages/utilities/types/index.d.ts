@@ -26,4 +26,5 @@ export * from './Rectangle';
 export * from './IRectangle';
 export * from './warn';
 export * from './positioning/positioning.types';
+export * from './selection';
 //# sourceMappingURL=index.d.ts.map

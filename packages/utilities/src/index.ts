@@ -31,3 +31,4 @@ export * from './IRectangle'
 export * from './warn'
 
 export * from './positioning/positioning.types'
+export * from './selection'

@@ -10,7 +10,9 @@
               :items="items"
               role="presentation">
           <template #item="{ item }">
-            <DetailsRow :item="item" :columns="adjustedColumns">
+            <DetailsRow :item="item"
+                        :columns="adjustedColumns"
+                        :compact="compact">
               <!-- Pass on all named slots -->
               <slot v-for="slot in Object.keys($slots)"
                     :slot="slot"
@@ -50,6 +52,7 @@ export default class DetailsList extends BaseComponent {
 
   @Prop({ type: Array, required: true }) columns!: any[]
   @Prop({ type: Array, default: () => [] }) items!: any[]
+  @Prop({ type: Boolean, default: false }) compact!: boolean
 
   lastWidth = -1
   lastSelectionMode = undefined
@@ -63,10 +66,11 @@ export default class DetailsList extends BaseComponent {
       styles,
       theme,
       className,
+      compact,
     } = this
     return getClassNames(styles, {
       theme: theme!,
-      compact: false,
+      compact,
       isFixed: false,
       isHorizontalConstrained: false,
       className,
