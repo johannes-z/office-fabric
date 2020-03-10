@@ -6,7 +6,7 @@
     </div>
 
     <div class="content--inner ms-depth-8">
-      <h2>Best Practicesices</h2>
+      <h2>Best Practices</h2>
     </div>
 
     <div class="content--inner ms-depth-8">

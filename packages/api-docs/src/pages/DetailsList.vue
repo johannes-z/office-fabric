@@ -61,7 +61,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mergeStyleSets } from '@uifabric/styling'
 
-import { IColumn, SelectionMode } from '@uifabric-vue/office-ui-fabric-vue'
+import { IColumn } from '@uifabric-vue/office-ui-fabric-vue'
 
 const classNames = mergeStyleSets({
   fileIconHeaderIcon: {
