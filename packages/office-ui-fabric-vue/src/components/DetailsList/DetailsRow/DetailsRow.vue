@@ -37,6 +37,8 @@ export default class DetailsRow extends BaseComponent {
   @Prop({ type: Array, required: true }) columns!: any[]
   @Prop({ type: Object, required: true }) item!: any
 
+  @Prop({ type: Boolean, required: true }) compact!: boolean
+
   showCheckbox = false
 
   get classNames (): any {
@@ -44,6 +46,7 @@ export default class DetailsRow extends BaseComponent {
       styles,
       theme,
       className,
+      compact,
     } = this
     return {
       // ...this._classNames,
@@ -55,7 +58,7 @@ export default class DetailsRow extends BaseComponent {
         checkboxCellClassName: '',
         droppingClassName: '',
         className,
-        compact: false,
+        compact,
         enableUpdateAnimations: false,
       }),
     }

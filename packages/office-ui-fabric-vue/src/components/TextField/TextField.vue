@@ -24,7 +24,7 @@
                    :style="{ resize: (resizable === false) && 'none' }"
                    @focus="onFocus"
                    @blur="isActive = false"
-                   @input="internalValue = $event.target.value"
+                   @input="onInput($event, $event.target.value)"
                    v-text="internalValue" />
       </div>
     </div>
@@ -107,11 +107,6 @@ export default class TextField extends BaseComponent {
     this.internalValue = newValue
   }
 
-  @Watch('internalValue')
-  private onValueChanged (value: string) {
-    this.$emit('input', value)
-  }
-
   @Watch('multiline')
   private async onMultilineChanged (newValue: boolean, oldValue: boolean) {
     const textElement = this.$refs.textElement
@@ -135,6 +130,12 @@ export default class TextField extends BaseComponent {
   private async onFocus () {
     this.isActive = true
     this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length)
+  }
+
+  private onInput (ev: InputEvent, value: string) {
+    this.internalValue = value
+    this.$emit('input', value)
+    this.$emit('change', ev, value)
   }
 }
 </script>
