@@ -63,13 +63,15 @@
                     :rows="3" />
 
       <h2>Underlined</h2>
-      <f-text-field label="Standard:" underlined />
-      <f-text-field label="Disabled:"
-                    disabled
-                    underlined />
-      <f-text-field label="Required:"
-                    required
-                    underlined />
+      <f-stack :tokens="{ childrenGap: 20 }">
+        <f-text-field label="Standard:" underlined />
+        <f-text-field label="Disabled:"
+                      disabled
+                      underlined />
+        <f-text-field label="Required:"
+                      required
+                      underlined />
+      </f-stack>
     </div>
 
     <div class="content--inner ms-depth-8">

@@ -1,5 +1,6 @@
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { getIcon } from '@uifabric/styling'
+import Vue from 'vue'
 
 export interface IIconContent {
   children?: string;
