@@ -46,17 +46,17 @@ export default class ContextualMenuItem extends BaseComponent {
   };
 
   public dismissSubMenu (): void {
-    const { item, dismissSubMenu } = this
+    // const { item, dismissSubMenu } = this
     // if (hasSubmenu(item) && dismissSubMenu) {
     //   dismissSubMenu()
     // }
   };
 
   public dismissMenu (dismissAll?: boolean): void {
-    const { dismissMenu } = this
-    if (dismissMenu) {
-      dismissMenu(undefined /* ev */, dismissAll)
-    }
+    // const { dismissMenu } = this.props
+    // if (dismissMenu) {
+    //   dismissMenu(undefined /* ev */, dismissAll)
+    // }
   };
 
   renderItemIcon (props: any) {
