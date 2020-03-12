@@ -1,6 +1,13 @@
-import Shimmer from './Shimmer.vue'
+import { styled } from '../styled'
+import ShimmerBase from './Shimmer'
+import { getStyles } from './Shimmer.styles'
+import { VueConstructor } from 'vue'
 
 export * from './Shimmer.types'
-export {
-  Shimmer,
-}
+
+export const Shimmer: VueConstructor = styled(
+  ShimmerBase,
+  getStyles,
+  undefined,
+  { scope: 'Shimmer' }
+)

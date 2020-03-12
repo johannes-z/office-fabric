@@ -83,7 +83,7 @@ export default class Preview extends Vue {
           isExpanded: true,
           links: [
             { name: 'ProgressIndicator', key: 'ProgressIndicator', href: publicPath + '/#/ProgressIndicator' },
-            { name: 'Shimmer WIP', key: 'Shimmer', href: publicPath + '/#/Shimmer', disabled: true },
+            { name: 'Shimmer WIP', key: 'Shimmer', href: publicPath + '/#/Shimmer' },
             { name: 'Spinner', key: 'Spinner', href: publicPath + '/#/Spinner' },
           ],
         }, {
