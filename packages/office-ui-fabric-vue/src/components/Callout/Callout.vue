@@ -4,11 +4,13 @@ import { CreateElement } from 'vue'
 import Layer from '../Layer/Layer.vue'
 import CalloutContent from './CalloutContent.vue'
 import StatelessComponent from '../StatelessComponent'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 @Component
 export default class Callout extends StatelessComponent {
   @Prop({ type: HTMLElement, required: true }) target!: any
   @Prop({ type: Boolean, default: false }) doNotLayer!: boolean
+  @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: boolean
 
   render (h: CreateElement, context: any) {
     if (!(context.props.target instanceof Node)) return

@@ -5,6 +5,8 @@ export * from '@uifabric-vue/utilities'
 // @ts-ignore
 export * from './utilities/positioning'
 
+export * from './common/DirectionalHint'
+
 export * from './components'
 export {
   Fabric,

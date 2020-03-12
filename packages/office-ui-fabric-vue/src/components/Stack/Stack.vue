@@ -29,7 +29,7 @@ export default class Stack extends StatelessComponent {
   render (h: CreateElement, ctx: RenderContext): VNode {
     const { theme, tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = ctx.props
 
-    const classNames: any = getClassNames(mergeStyleSets(ctx.props.styles, styles({
+    const classNames: any = getClassNames(mergeStyleSets(styles({
       className,
       verticalFill,
       horizontal,
@@ -39,7 +39,7 @@ export default class Stack extends StatelessComponent {
       horizontalAlign,
       verticalAlign,
       disableShrink,
-    }, theme, tokens)))
+    }, theme, tokens), ctx.props.styles))
 
     return h('div', {
       ...ctx.data,

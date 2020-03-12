@@ -38,7 +38,7 @@ import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
-import { IColumn } from '@uifabric-vue/office-ui-fabric-vue'
+import { IColumn } from './DetailsList.types'
 
 const getClassNames = classNamesFunction()
 

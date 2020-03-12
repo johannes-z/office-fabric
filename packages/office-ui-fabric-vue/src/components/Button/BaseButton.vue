@@ -1,7 +1,9 @@
 <template>
   <component :is="component"
+             ref="buttonElement"
              :class="classNames.root"
-             :href="href">
+             :href="href"
+             @click="menuHidden = false">
     <span :class="classNames.flexContainer">
       <Icon v-if="iconProps"
             :class="css(classNames.icon, className)"
@@ -18,6 +20,21 @@
           {{ secondaryText }}
         </span>
       </span>
+
+      <template v-if="!isSplitButton && menuProps">
+        <FontIcon icon-name="ChevronDown"
+                  v-bind="menuIconProps"
+                  :class="classNames.menuIcon" />
+      </template>
+      <template v-if="menuProps && !menuProps.doNotLayer">
+        <component :is="MenuType"
+                   v-if="shouldRenderMenu"
+                   :directional-hint="DirectionalHint.bottomLeftEdge"
+                   v-bind="menuProps"
+                   :class="css('ms-BaseButton-menuhost', menuProps.className)"
+                   :target="isSplitButton ? $refs.splitButtonContainer : $refs.buttonElement"
+                   :on-dismiss="() => menuHidden = true" />
+      </template>
     </span>
   </component>
 </template>
@@ -26,13 +43,15 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { getBaseButtonClassNames, IButtonClassNames } from './BaseButton.classNames'
-import { Icon } from '../Icon'
+import { Icon, FontIcon } from '../Icon'
 import { ITheme } from '@uifabric/styling'
+import { DirectionalHint } from '../../common/DirectionalHint'
+import { ContextualMenu } from '../ContextualMenu'
 
 const TouchIdleDelay = 500 /* ms */
 
 @Component({
-  components: { Icon },
+  components: { Icon, FontIcon },
 })
 export default class BaseButton extends BaseComponent<any, any> {
   @Prop({ type: String, default: null }) href!: string
@@ -44,7 +63,10 @@ export default class BaseButton extends BaseComponent<any, any> {
   @Prop({ type: String, default: null }) variantClassName!: string
   @Prop({ type: Object, default: () => {} }) iconProps!: any
   @Prop({ type: Object, default: () => {} }) menuIconProps!: any
+  @Prop({ type: Object, default: null }) menuAs!: any
   @Prop({ type: Object, default: null }) menuProps!: any
+  @Prop({ type: Boolean, default: false }) persistMenu!: boolean
+  @Prop({ type: Boolean, default: false }) renderPersistedMenuHiddenOnMount!: boolean
   @Prop({ type: String, default: null }) secondaryText!: string
   @Prop({ type: Function, default: null }) getClassNames!: (
     theme: ITheme,
@@ -61,11 +83,38 @@ export default class BaseButton extends BaseComponent<any, any> {
   ) => IButtonClassNames;
 
   menuHidden: boolean = true
+  menuOpen: boolean = false
+
+  DirectionalHint = DirectionalHint
+
+  get MenuType () {
+    return this.menuAs || ContextualMenu
+  }
 
   get component (): 'a' | 'button' {
     const { disabled, href } = this
     const renderAsAnchor: boolean = !disabled && !!href
     return renderAsAnchor ? 'a' : 'button'
+  }
+
+  get isSplitButton (): boolean {
+    return !!this.menuProps && this.split === true
+  }
+
+  get shouldRenderMenu (): boolean {
+    const { menuHidden } = this
+    const { persistMenu, renderPersistedMenuHiddenOnMount } = this
+
+    if (!menuHidden) {
+      // Always should render a menu when it is expanded
+      return true
+    } else if (persistMenu && (false || renderPersistedMenuHiddenOnMount)) {
+      // _renderedVisibleMenu ensures that the first rendering of
+      // the menu happens on-screen, as edge's scrollbar calculations are off if done while hidden.
+      return true
+    }
+
+    return false
   }
 
   get classNames (): any {
