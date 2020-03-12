@@ -1,4 +1,6 @@
 
+export * from './DelayedRender'
+
 export * from './DetailsList'
 export * from './List'
 export * from './ContextualMenu'
