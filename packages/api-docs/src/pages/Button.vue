@@ -42,12 +42,40 @@
       </f-compound-button>
 
       <h2>CommandBar Button</h2>
-      <div style="display: flex; flex-direction: row; flex-wrap: nowrap; width: auto; height: 44px; box-sizing: border-box;">
-        <f-command-bar-button icon-name="Mail">Normal</f-command-bar-button>
-        <f-command-bar-button checked>Checked</f-command-bar-button>
-        <f-command-bar-button disabled>Disabled</f-command-bar-button>
-        <f-command-bar-button checked disabled>Checked & Disabled</f-command-bar-button>
-      </div>
+      <f-stack :tokens="{ childrenGap: 20 }">
+        <f-stack :styles="{ root: { height: 44 } }" horizontal>
+          <f-command-bar-button :icon-props="{ iconName: 'Mail' }">Send mail (Normal)</f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Mail' }" checked>Send mail (Checked)</f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Mail' }" disabled>Send mail (Disabled)</f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Mail' }"
+                                checked
+                                disabled>
+            Send mail (Checked & Disabled)
+          </f-command-bar-button>
+        </f-stack>
+        <f-stack :styles="{ root: { height: 44 } }" horizontal>
+          <f-command-bar-button :icon-props="{ iconName: 'Add' }"
+                                :menu-props="menuProps">
+            New item (Normal)
+          </f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Add' }"
+                                :menu-props="menuProps"
+                                checked>
+            New item (Checked)
+          </f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Add' }"
+                                :menu-props="menuProps"
+                                disabled>
+            New item (Disabled)
+          </f-command-bar-button>
+          <f-command-bar-button :icon-props="{ iconName: 'Add' }"
+                                :menu-props="menuProps"
+                                checked
+                                disabled>
+            New item (Checked & Disabled)
+          </f-command-bar-button>
+        </f-stack>
+      </f-stack>
 
       <h2>Icon Button</h2>
       <f-icon-button :icon-props="{ iconName: 'Emoji2' }" />
@@ -107,6 +135,20 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
   components: {},
 })
 export default class ButtonPage extends Vue {
+  menuProps: any = {
+    items: [
+      {
+        key: 'emailMessage',
+        text: 'Email message',
+        iconProps: { iconName: 'Mail' },
+      },
+      {
+        key: 'calendarEvent',
+        text: 'Calendar event',
+        iconProps: { iconName: 'Calendar' },
+      },
+    ],
+  };
 }
 </script>
 

@@ -1,6 +1,7 @@
 
 export * from './DetailsList'
 export * from './List'
+export * from './ContextualMenu'
 
 export * from './Overlay'
 export * from './OverflowSet'
