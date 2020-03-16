@@ -2,8 +2,7 @@
   <component :is="component"
              ref="buttonElement"
              :class="classNames.root"
-             :href="href"
-             @click="menuHidden = false">
+             :href="href">
     <span :class="classNames.flexContainer">
       <Icon v-if="iconProps"
             :class="css(classNames.icon, className)"
