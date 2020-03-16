@@ -121,6 +121,14 @@ export default class DetailsListPage extends Vue {
 
   columns: IColumn[] = [
     {
+      key: 'index',
+      name: 'Index',
+      fieldName: 'index',
+      minWidth: 64,
+      maxWidth: 64,
+      onColumnClick: this.onColumnClick,
+    },
+    {
       key: 'column1',
       name: 'File Type',
       className: classNames.fileIconCell,
@@ -232,6 +240,7 @@ function _generateDocuments () {
       key: i.toString(),
       name: fileName,
       value: fileName,
+      index: i,
       iconName: randomFileType.url,
       fileType: randomFileType.docType,
       modifiedBy: userName,

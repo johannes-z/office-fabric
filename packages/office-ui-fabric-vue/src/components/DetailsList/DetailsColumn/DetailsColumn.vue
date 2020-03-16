@@ -4,12 +4,17 @@
        :aria-colindex="columnIndex"
        role="columnheader"
        :style="{ width: columnWidth }">
+    <component :is="IconComponent"
+               v-if="isDraggable"
+               icon-name="GripperBarVertical"
+               :class-name="classNames.gripperBarVerticalStyle" />
+
     <span :class="classNames.cellTooltip">
       <span :id="`${parentId}-${column.key}`"
             :aria-label="column.isIconOnly ? column.name : undefined"
             :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
             :class="classNames.cellTitle"
-            @click="column.onColumnClick($event, column)">
+            @click="_onColumnClick">
         <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
           <!-- Column Icon -->
           <template v-if="column.iconName || column.iconClassName">
@@ -42,7 +47,10 @@
                    v-if="column.isGrouped"
                    :class="classNames.nearIcon"
                    icon-name="GroupedDescending" />
-      <!-- TODO: columnActionsMode -->
+        <!-- ?? -->
+        <component :is="IconComponent"
+                   v-if="column.columnActionsMode === ColumnActionsMode.hasDropdown && !column.isIconOnly"
+                   icon-name="ChevronDown" />
       </span>
     </span>
   </div>
@@ -54,6 +62,7 @@ import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { DEFAULT_CELL_STYLE_PROPS } from '../DetailsRow/DetailsRow.styles'
 import { Icon } from '../../Icon'
+import { ColumnActionsMode, IColumn } from '../DetailsList.types'
 
 const MOUSEDOWN_PRIMARY_BUTTON = 0 // for mouse down event we are using ev.button property, 0 means left button
 
@@ -66,10 +75,14 @@ const CLASSNAME_ADD_INTERVAL = 20 // ms
   components: {},
 })
 export default class DetailsColumn extends BaseComponent {
+  @Prop({ type: Function, default: null }) onColumnClick!: (ev: MouseEvent, column: IColumn) => void
   @Prop({ type: Object, required: true }) column!: any
   @Prop({ type: Number, required: true }) columnIndex!: number
   @Prop({ type: Number, required: true }) parentId!: number
+  @Prop({ type: Boolean, default: false }) isDraggable!: boolean
   @Prop({ type: Object, default: () => DEFAULT_CELL_STYLE_PROPS }) cellStyleProps!: any
+
+  ColumnActionsMode = ColumnActionsMode
 
   get IconComponent () {
     return Icon// this.useFastIcons ? FontIcon : Icon;
@@ -88,7 +101,7 @@ export default class DetailsColumn extends BaseComponent {
       theme: theme!,
       headerClassName: column.headerClassName,
       iconClassName: column.iconClassName,
-      isActionable: column.columnActionsMode !== 0,
+      isActionable: column.columnActionsMode !== ColumnActionsMode.disabled,
       isEmpty: !column.name,
       isIconVisible: column.isSorted || column.isGrouped || column.isFiltered,
       isPadded: column.isPadded,
@@ -107,6 +120,22 @@ export default class DetailsColumn extends BaseComponent {
       cellStyleProps.cellRightPadding +
       (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0) +
       'px'
+  }
+
+  _onColumnClick (ev: MouseEvent): void {
+    const { onColumnClick, column } = this
+
+    if (column.columnActionsMode === ColumnActionsMode.disabled) {
+      return
+    }
+
+    if (column.onColumnClick) {
+      column.onColumnClick(ev, column)
+    }
+
+    if (onColumnClick) {
+      onColumnClick(ev, column)
+    }
   }
 }
 </script>
