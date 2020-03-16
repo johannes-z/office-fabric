@@ -124,7 +124,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-    const isSelected = ('' + linkIndex) === this.internalSelectedKey
+    const isSelected = link.key === this.internalSelectedKey
     const isLinkWithIcon = link.icon || link.iconProps
 
     const { groups, theme } = this

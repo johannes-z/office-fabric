@@ -82,8 +82,6 @@ export default class DetailsList extends BaseComponent {
   }
 
   created () {
-    this._adjustColumns(this.$props)
-
     const DEFAULT_COLUMN = {
       key: '',
       name: '',

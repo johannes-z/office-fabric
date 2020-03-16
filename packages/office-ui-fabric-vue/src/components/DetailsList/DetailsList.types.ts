@@ -186,3 +186,26 @@ export interface IColumn {
    */
   isMenuOpen?: boolean;
 }
+
+/**
+ * Enum to describe how a particular column header behaves.... This enum is used to
+ * to specify the property IColumn:columnActionsMode.
+ * If IColumn:columnActionsMode is undefined, then it's equivalent to ColumnActionsMode.clickable
+ * {@docCategory DetailsList}
+ */
+export enum ColumnActionsMode {
+  /**
+   * Renders the column header as disabled.
+   */
+  disabled = 0,
+
+  /**
+   * Renders the column header is clickable.
+   */
+  clickable = 1,
+
+  /**
+   * Renders the column header ias clickable and displays the dropdown cheveron.
+   */
+  hasDropdown = 2
+}
