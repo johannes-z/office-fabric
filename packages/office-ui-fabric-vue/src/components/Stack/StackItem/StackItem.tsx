@@ -1,19 +1,21 @@
 
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement, RenderContext } from 'vue'
-import { StackItemStyles as styles } from './StackItem.styles'
-import { getTheme } from '@uifabric/styling'
+import { StackItemStyles as baseStyles } from './StackItem.styles'
+import { getTheme, mergeStyleSets } from '@uifabric/styling'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../../StatelessComponent'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction({
+  disableCaching: true,
+})
 
 @Component({
   components: {},
 })
 export default class StackItem extends StatelessComponent {
-  @Prop() grow
+  @Prop({ type: [Number, Boolean], default: 0 }) grow
   @Prop() shrink
   @Prop() disableShrink
   @Prop() align
@@ -23,9 +25,9 @@ export default class StackItem extends StatelessComponent {
   @Prop({ type: Number, default: 0 }) test!: number
 
   render (h: CreateElement, context: RenderContext<any>) {
-    const { grow, shrink, disableShrink, align, verticalFill, order, className } = context.props
+    const { grow, shrink, disableShrink, align, verticalFill, order, className, styles } = context.props
 
-    const classNames: any = getClassNames(() => styles({
+    const classNames: any = getClassNames(mergeStyleSets(baseStyles({
       grow,
       shrink,
       disableShrink,
@@ -33,10 +35,10 @@ export default class StackItem extends StatelessComponent {
       verticalFill,
       order,
       className,
-    }, getTheme(), {}), {})
+    }, getTheme(), {}), styles))
 
     return (
-      <div className={classNames.root}>{context.children}</div>
+      <div class={classNames.root}>{context.children}</div>
     )
   }
 }

@@ -5,7 +5,7 @@ for (const name in FabricComponents) {
   routes.push({
     name,
     path: `/${name}`,
-    component: () => import(`@/pages/${name}.vue`),
+    component: () => import(`@/pages/${name}/${name}.vue`),
     props: {},
   })
 }
@@ -18,13 +18,13 @@ routes.push({
 routes.push({
   name: 'Button',
   path: `/Button`,
-  component: () => import(`@/pages/Button.vue`),
+  component: () => import(`@/pages/Button/Button.vue`),
   props: {},
 })
 routes.push({
   name: 'BasicList',
   path: `/BasicList`,
-  component: () => import(`@/pages/BasicList.vue`),
+  component: () => import(`@/pages/BasicList/BasicList.vue`),
   props: {},
 })
 
