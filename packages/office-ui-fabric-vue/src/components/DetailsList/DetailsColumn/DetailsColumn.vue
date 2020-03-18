@@ -1,5 +1,7 @@
 <template>
-  <div :class="classNames.root"
+  <div ref="root"
+       :key="column.key"
+       :class="classNames.root"
        :aria-sort="column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none'"
        :aria-colindex="columnIndex"
        role="columnheader"
@@ -14,6 +16,7 @@
             :aria-label="column.isIconOnly ? column.name : undefined"
             :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
             :class="classNames.cellTitle"
+            @contextmenu="_onColumnContextMenu"
             @click="_onColumnClick">
         <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
           <!-- Column Icon -->
@@ -59,14 +62,21 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
-import { classNamesFunction } from '@uifabric-vue/utilities'
+import { IDragDropOptions } from '../../../utilities/dragdrop'
+import { classNamesFunction, EventGroup, Async, IDisposable } from '@uifabric-vue/utilities'
 import { DEFAULT_CELL_STYLE_PROPS } from '../DetailsRow/DetailsRow.styles'
-import { Icon } from '../../Icon'
+import { Icon, FontIcon } from '../../Icon'
 import { ColumnActionsMode, IColumn } from '../DetailsList.types'
+import {
+  IDetailsColumnStyleProps,
+  IDetailsColumnProps,
+  IDetailsColumnStyles,
+  IDetailsColumnRenderTooltipProps,
+} from './DetailsColumn.types'
 
 const MOUSEDOWN_PRIMARY_BUTTON = 0 // for mouse down event we are using ev.button property, 0 means left button
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IDetailsColumnStyleProps, IDetailsColumnStyles>()
 const TRANSITION_DURATION_DRAG = 200 // ms
 const TRANSITION_DURATION_DROP = 1500 // ms
 const CLASSNAME_ADD_INTERVAL = 20 // ms
@@ -75,17 +85,28 @@ const CLASSNAME_ADD_INTERVAL = 20 // ms
   components: {},
 })
 export default class DetailsColumn extends BaseComponent {
-  @Prop({ type: Function, default: null }) onColumnClick!: (ev: MouseEvent, column: IColumn) => void
-  @Prop({ type: Object, required: true }) column!: any
-  @Prop({ type: Number, required: true }) columnIndex!: number
-  @Prop({ type: Number, required: true }) parentId!: number
+  $refs!: {
+    root: HTMLDivElement
+  }
+
+  @Prop({ type: Object, required: true }) column!: IColumn;
+  @Prop({ type: Number, required: true }) columnIndex!: number;
+  @Prop({ type: Number, default: null }) parentId!: number
+  @Prop({ type: Function, default: null }) onColumnClick!: (ev: MouseEvent, column: IColumn) => void;
+  @Prop({ type: Function, default: null }) onColumnContextMenu!: (column: IColumn, ev: MouseEvent) => void;
+  @Prop({ type: Object, default: null }) dragDropHelper!: any | null;
   @Prop({ type: Boolean, default: false }) isDraggable!: boolean
+  @Prop({ type: Function, default: null }) updateDragInfo!: (props: { itemIndex: number }, event?: MouseEvent) => void;
+  @Prop({ type: Boolean, default: false }) isDropped!: boolean;
   @Prop({ type: Object, default: () => DEFAULT_CELL_STYLE_PROPS }) cellStyleProps!: any
+  @Prop({ type: Boolean, default: true }) useFastIcons!: boolean;
+
+  private _dragDropSubscription!: IDisposable;
 
   ColumnActionsMode = ColumnActionsMode
 
   get IconComponent () {
-    return Icon// this.useFastIcons ? FontIcon : Icon;
+    return this.useFastIcons ? FontIcon : Icon
   }
 
   get classNames () {
@@ -122,6 +143,54 @@ export default class DetailsColumn extends BaseComponent {
       'px'
   }
 
+  mounted () {
+    if (this.dragDropHelper && this.isDraggable) {
+      this._addDragDropHandling()
+    }
+
+    const classNames = this.classNames
+
+    if (this.isDropped) {
+      if (this.$refs.root) {
+        this.$refs.root.classList.add(classNames.borderAfterDropping)
+
+        this._async.setTimeout(() => {
+          if (this.$refs.root) {
+            this.$refs.root.classList.add(classNames.noBorderAfterDropping)
+          }
+        }, CLASSNAME_ADD_INTERVAL)
+      }
+
+      this._async.setTimeout(() => {
+        if (this.$refs.root) {
+          this.$refs.root.classList.remove(classNames.borderAfterDropping)
+          this.$refs.root.classList.remove(classNames.noBorderAfterDropping)
+        }
+      }, TRANSITION_DURATION_DROP + CLASSNAME_ADD_INTERVAL)
+    }
+  }
+
+  beforeDestroy () {
+    if (this._dragDropSubscription) {
+      this._dragDropSubscription.dispose()
+      delete this._dragDropSubscription
+    }
+    this._async.dispose()
+    this.events.dispose()
+  }
+
+  updated () {
+    if (!this._dragDropSubscription && this.dragDropHelper && this.isDraggable) {
+      this._addDragDropHandling()
+    }
+
+    if (this._dragDropSubscription && !this.isDraggable) {
+      this._dragDropSubscription.dispose()
+      this.events.off(this.$refs.root, 'mousedown')
+      delete this._dragDropSubscription
+    }
+  }
+
   _onColumnClick (ev: MouseEvent): void {
     const { onColumnClick, column } = this
 
@@ -136,6 +205,76 @@ export default class DetailsColumn extends BaseComponent {
     if (onColumnClick) {
       onColumnClick(ev, column)
     }
+  }
+
+  private _getColumnDragDropOptions (): IDragDropOptions {
+    const { columnIndex } = this
+    const options = {
+      selectionIndex: columnIndex,
+      context: { data: columnIndex, index: columnIndex },
+      canDrag: () => this.isDraggable!,
+      canDrop: () => false,
+      onDragStart: this._onDragStart,
+      updateDropState: () => undefined,
+      onDrop: () => undefined,
+      onDragEnd: this._onDragEnd,
+    }
+    return options
+  }
+
+  private _onDragStart (item?: any, itemIndex?: number, selectedItems?: any[], event?: MouseEvent): void {
+    const classNames = this.classNames
+    if (itemIndex) {
+      this._updateHeaderDragInfo(itemIndex)
+      this.$refs.root!.classList.add(classNames.borderWhileDragging)
+      this._async.setTimeout(() => {
+        if (this.$refs.root) {
+          this.$refs.root.classList.add(classNames.noBorderWhileDragging)
+        }
+      }, CLASSNAME_ADD_INTERVAL)
+    }
+  };
+
+  private _onDragEnd (item?: any, event?: MouseEvent): void {
+    const classNames = this.classNames
+    if (event) {
+      this._updateHeaderDragInfo(-1, event)
+    }
+    this.$refs.root!.classList.remove(classNames.borderWhileDragging)
+    this.$refs.root!.classList.remove(classNames.noBorderWhileDragging)
+  };
+
+  private _updateHeaderDragInfo (itemIndex: number, event?: MouseEvent) {
+    if (this.updateDragInfo) {
+      this.updateDragInfo({ itemIndex }, event)
+    }
+  };
+
+  private _onRootMouseDown (ev: MouseEvent): void {
+    const { isDraggable } = this
+    // Ignore anything except the primary button.
+    if (isDraggable && ev.button === MOUSEDOWN_PRIMARY_BUTTON) {
+      ev.stopPropagation()
+    }
+  };
+
+  private _onColumnContextMenu (ev: MouseEvent): void {
+    const { onColumnContextMenu, column } = this
+    if (column.onColumnContextMenu) {
+      column.onColumnContextMenu(column, ev)
+      ev.preventDefault()
+    }
+    if (onColumnContextMenu) {
+      onColumnContextMenu(column, ev)
+      ev.preventDefault()
+    }
+  };
+
+  private _addDragDropHandling () {
+    this._dragDropSubscription = this.dragDropHelper!.subscribe(this.$refs.root!, this.events, this._getColumnDragDropOptions())
+
+    // We need to use native on this to prevent MarqueeSelection from handling the event before us.
+    this.events.on(this.$refs.root, 'mousedown', this._onRootMouseDown)
   }
 }
 </script>

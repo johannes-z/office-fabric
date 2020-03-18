@@ -1,5 +1,4 @@
-
-// import { any, any, any } from '../DetailsRow.types'
+import { IDetailsRowStyleProps, IDetailsRowStyles, ICellStyleProps } from './DetailsRow.types'
 import {
   AnimationClassNames,
   AnimationStyles,
@@ -28,7 +27,7 @@ export const DetailsRowGlobalClassNames = {
 }
 const IsFocusableSelector = "[data-is-focusable='true']"
 
-export const DEFAULT_CELL_STYLE_PROPS: any = {
+export const DEFAULT_CELL_STYLE_PROPS: ICellStyleProps = {
   cellLeftPadding: 12,
   cellRightPadding: 8,
   cellExtraRightPadding: 24,
@@ -47,7 +46,7 @@ const values = {
   compactRowVerticalPadding: 6,
 }
 
-export const getStyles = (props: any): any => {
+export const getStyles = (props: IDetailsRowStyleProps): IDetailsRowStyles => {
   const {
     theme,
     isSelected,

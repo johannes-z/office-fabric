@@ -1,6 +1,7 @@
 import { getFocusStyle, getGlobalClassNames, hiddenContentStyle, IStyle, FontWeights } from '@uifabric/styling'
 import { DEFAULT_CELL_STYLE_PROPS } from '../DetailsRow/DetailsRow.styles'
 import { getCellStyles } from '../DetailsHeader/DetailsHeader.styles'
+import { IDetailsColumnStyleProps, IDetailsColumnStyles } from './DetailsColumn.types'
 
 const GlobalClassNames = {
   isActionable: 'is-actionable',
@@ -23,7 +24,7 @@ const GlobalClassNames = {
   nearIcon: 'ms-DetailsColumn-nearIcon',
 }
 
-export const getStyles = (props: any): any => {
+export const getStyles = (props: IDetailsColumnStyleProps): IDetailsColumnStyles => {
   const {
     theme,
     headerClassName,
