@@ -1,6 +1,6 @@
 import { getGlobalClassNames, getFocusStyle } from '@uifabric/styling'
-// import { IDetailsRowCheckStyleProps, IDetailsRowCheckStyles } from './DetailsRowCheck.types'
-import { DEFAULT_ROW_HEIGHTS } from './DetailsRow.styles'
+import { IDetailsRowCheckStyleProps, IDetailsRowCheckStyles } from './DetailsRowCheck.types'
+import { DEFAULT_ROW_HEIGHTS } from '../DetailsRow/DetailsRow.styles'
 import { HEADER_HEIGHT } from '../DetailsHeader/DetailsHeader.styles'
 import { CheckGlobalClassNames } from '../../Check/Check.styles'
 
@@ -12,7 +12,7 @@ const GlobalClassNames = {
 
 export const CHECK_CELL_WIDTH = 48
 
-export const getStyles = (props: any): any => {
+export const getStyles = (props: IDetailsRowCheckStyleProps): IDetailsRowCheckStyles => {
   const { theme, className, isHeader, selected, anySelected, canSelect, compact, isVisible } = props
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
   const { rowHeight, compactRowHeight } = DEFAULT_ROW_HEIGHTS
