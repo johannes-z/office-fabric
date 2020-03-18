@@ -33,7 +33,7 @@ export { IPartialTheme } from '@uifabric/styling'
 export default function install (Vue: any, theme: IPartialTheme = {}, options: Partial<IOptions> = {}) {
   for (const _ in Components) {
     const Component: any = (Components as any)[_]
-    if (Component.prototype instanceof Vue) {
+    if (Component && Component.prototype instanceof Vue) {
       const name: string = `${options.prefix || 'f'}-${toKebabCase(_)}`
       Vue.component(name, Component)
     }
