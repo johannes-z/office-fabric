@@ -1,0 +1,15 @@
+ActivityItem:
+  ✔ classNames @done(20-03-18 12:28)
+  ☐ Types
+  Render:
+    ✔ Icon @done(20-03-18 12:51)
+    ✔ ActivityDescription @done(20-03-18 12:37)
+    ✔ Comments @done(20-03-18 12:28)
+    ✔ TimeStamp @done(20-03-18 12:34)
+    ✔ PersonaArray @done(20-03-18 12:59)
+  ☐ Styled
+  Docs:
+    Examples:
+      ✔ Basic @done(20-03-18 13:32)
+      ✔ Compact @done(20-03-18 13:32)
+      ✔ Persona @done(20-03-18 13:32)
