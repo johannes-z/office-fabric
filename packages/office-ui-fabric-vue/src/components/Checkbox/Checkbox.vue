@@ -11,7 +11,9 @@
         <Icon icon-name="CheckMark"
               :class="classNames.checkmark" />
       </div>
-      <span v-if="label || $slots.default" :class="classNames.text">
+      <span v-if="label || $slots.default"
+            :class="classNames.text"
+            :title="title">
         <slot>{{ label }}</slot>
       </span>
     </Label>
@@ -26,23 +28,22 @@ import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import StylableComponent from '../StylableComponent'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
 @Component({
   components: { Label, Icon },
-  inheritAttrs: false,
 })
-export default class Checkbox extends StylableComponent {
+export default class Checkbox extends BaseComponent {
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) indeterminate!: boolean
   @Prop({ type: Boolean, default: false }) defaultIndeterminate!: boolean
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) required!: boolean
   @Prop({ type: String, default: null }) label!: string
-  @Prop({ type: String, default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: string
+  @Prop({ type: String, default: null }) title!: string
+  @Prop({ type: String, default: 'start', validator: v => ['start', 'end'].indexOf(v) > -1 }) boxSide!: 'start' | 'end'
 
   private internalValue: boolean = this.checked || this.defaultChecked
   private isIndeterminate: boolean = this.indeterminate || this.defaultIndeterminate
