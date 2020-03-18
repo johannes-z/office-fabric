@@ -32,7 +32,7 @@ const getClassNames = classNamesFunction()
   name: 'PersonaPresence',
 })
 export default class PersonaPresence extends BaseComponent {
-  @Prop() presence!: any
+  @Prop({ type: Number, required: true }) presence!: PersonaPresenceEnum
   @Prop() size!: any
   @Prop() isOutOfOffice!: any
   @Prop() coinSize!: any
