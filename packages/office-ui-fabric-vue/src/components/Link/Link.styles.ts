@@ -1,11 +1,11 @@
-import { ILinkStyles } from './Link.types'
-import { getGlobalClassNames, HighContrastSelector, HighContrastSelectorBlack, HighContrastSelectorWhite } from '@uifabric/styling'
+import { getGlobalClassNames, HighContrastSelectorWhite, HighContrastSelectorBlack, HighContrastSelector } from '@uifabric/styling'
+import { ILinkStyleProps, ILinkStyles } from './Link.types'
 
 const GlobalClassNames = {
   root: 'ms-Link',
 }
 
-export const getStyles = (props: any): ILinkStyles => {
+export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
   const { className, isButton, isDisabled, theme } = props
   const { semanticColors } = theme
 
@@ -26,13 +26,16 @@ export const getStyles = (props: any): ILinkStyles => {
         outline: 'none',
         fontSize: 'inherit',
         fontWeight: 'inherit',
+        textDecoration: 'none',
+
         selectors: {
           '.ms-Fabric--isFocusVisible &:focus': {
             // Can't use getFocusStyle because it doesn't support wrapping links
             // https://github.com/OfficeDev/office-ui-fabric-react/issues/4883#issuecomment-406743543
-            // A box-shadow allows the focus rect to wrap links that span multiple lines
+            // Using box-shadow and outline allows the focus rect to wrap links that span multiple lines
             // and helps the focus rect avoid getting clipped.
             boxShadow: `0 0 0 1px ${focusBorderColor} inset`,
+            outline: `1px auto ${focusBorderColor}`,
             selectors: {
               [HighContrastSelector]: {
                 outline: '1px solid WindowText',
@@ -67,9 +70,7 @@ export const getStyles = (props: any): ILinkStyles => {
           },
         },
       },
-      !isButton && {
-        textDecoration: 'none',
-      },
+
       isDisabled && [
         'is-disabled',
         {
