@@ -1,7 +1,7 @@
 <template>
   <div role="presentation"
        :class="classNames.coin">
-    <div v-if="size !== PersonaSize.size8 && size !== PersonaSize.size10 && size !== PersonaSize.tiny"
+    <div v-if="size !== PersonaSize.size8"
          role="presentation"
          :class="classNames.imageArea"
          :style="coinSizeStyle">
@@ -47,8 +47,7 @@ import {
 } from '../Persona.types'
 import { PersonaPresence } from '../PersonaPresence/'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
-import { Image } from '../../index'
-import { ImageFit } from '../../Image'
+import { ImageFit, Image } from '../../Image'
 import { Icon } from '../../Icon'
 
 const getClassNames = classNamesFunction()
@@ -58,10 +57,10 @@ const getClassNames = classNamesFunction()
   components: { Icon, OImage: Image, PersonaPresence },
 })
 export default class PersonaCoin extends BaseComponent {
-  @Prop({ type: Boolean, required: true }) allowPhoneInitials!: boolean
-  @Prop({ type: Number, required: true }) presence!: number
-  @Prop({ type: Number, required: true }) size!: number
-  @Prop({ type: Number, required: true }) coinSize!: number
+  @Prop({ type: Boolean, default: false }) allowPhoneInitials!: boolean
+  @Prop({ type: Number, default: PersonaPresenceEnum.none }) presence!: number
+  @Prop({ type: Number, default: null }) size!: number
+  @Prop({ type: Number, default: null }) coinSize!: number
 
   @Prop() coinProps!: any
   @Prop() showUnknownPersonaCoin!: any
