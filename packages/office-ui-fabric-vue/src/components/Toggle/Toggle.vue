@@ -6,6 +6,8 @@
           :disabled="disabled"
           :label="label">
       <Label :class="classNames.label"
+             :for="`Toggle${_uid}`"
+             @click.prevent
              v-text="label" />
     </slot>
     <div :class="classNames.container">
