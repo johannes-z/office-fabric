@@ -63,7 +63,17 @@ initializeIcons()
       <h3>CSS Variables</h3>
       Office UI Fabric Vue can be configured to use CSS Variables for the color palette, which makes it very easy to
       change colors on the fly directly in the browser. Pass the <code>useCSSVars</code> to the Vue Plugin options to
-      enable CSS Vars. This will generate the following css:
+      enable CSS Vars:
+
+      <pre v-highlightjs><code class="css">
+import Fabric, { IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
+
+Vue.use(Fabric, {} as IPartialTheme, {
+  useCSSVars: true,
+} as IOptions)
+      </code></pre>
+
+      This will generate the following css:
 
       <pre v-highlightjs><code class="css">
 :root {
@@ -79,7 +89,7 @@ initializeIcons()
       You can also check out the <a
         href="https://github.com/johannes-z/office-fabric/tree/master/packages/api-docs"
         target="_blank">api-docs</a>
-      package to see a extensive usage of Office UI Fabric Vue.
+      package to see an extensive usage of Office UI Fabric Vue.
     </div>
   </div>
 </template>
