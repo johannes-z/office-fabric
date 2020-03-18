@@ -2,7 +2,6 @@ import { concatStyleSets, keyframes } from '@uifabric/merge-styles'
 import { HighContrastSelector, PulsingBeaconAnimationStyles, getTheme, ITheme } from '@uifabric/styling'
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IActivityItemStyles } from './ActivityItem.types'
-import Vue from 'vue'
 
 const DEFAULT_PERSONA_SIZE = '32px'
 const COMPACT_PERSONA_SIZE = '16px'

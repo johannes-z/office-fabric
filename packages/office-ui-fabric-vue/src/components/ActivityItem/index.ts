@@ -1,6 +1,11 @@
-import ActivityItem from './ActivityItem.vue'
+import ActivityItemBase from './ActivityItem.vue'
+import { getStyles } from './ActivityItem.styles'
+import { VueConstructor } from 'vue'
+import { styled } from '../styled'
 
-export * from './ActivityItem.types'
-export {
-  ActivityItem,
-}
+export const ActivityItem: VueConstructor = styled(
+  ActivityItemBase,
+  getStyles,
+  undefined,
+  { scope: 'ActivityItem' }
+)
