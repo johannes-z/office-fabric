@@ -1,9 +1,9 @@
-import { DetailsRowBase } from './DetailsRow.base'
+import DetailsRowBase from './DetailsRow.vue'
 import { IStyle, ITheme } from '@uifabric/styling'
 import { IColumn, CheckboxVisibility, IDetailsListProps } from '../DetailsList.types'
 import { ISelection, SelectionMode } from '../../../utilities/selection/interfaces'
 import { IDragDropHelper, IDragDropEvents } from '../../../utilities/dragdrop/interfaces'
-import { CollapseAllVisibility } from '../GroupedList/GroupedList.types'
+// import { CollapseAllVisibility } from '../GroupedList/GroupedList.types'
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { IDetailsRowCheckProps, IDetailsCheckboxProps } from '../DetailsRowCheck/DetailsRowCheck.types'
 
@@ -123,7 +123,7 @@ export interface IDetailsRowBaseProps
   /**
    * Collapse all visibility
    */
-  collapseAllVisibility?: CollapseAllVisibility;
+  collapseAllVisibility?: any;
 
   /**
    * Callback for getting the row aria label

@@ -7,7 +7,11 @@ import { ShimmerLine } from '../ShimmerLine/ShimmerLine'
 
 const getClassNames = classNamesFunction()
 
-@Component
+@Component({
+  components: {
+    ShimmerLine,
+  },
+})
 export default class ShimmerElementsGroupBase extends StatelessComponent {
   // @Prop()
 
@@ -22,7 +26,7 @@ export default class ShimmerElementsGroupBase extends StatelessComponent {
 
     return (
       <div class={classNames.root}>
-        <ShimmerLine height={ShimmerElementsDefaultHeights.line} />
+        <shimmer-line height={ShimmerElementsDefaultHeights.line} />
       </div>
     )
   }

@@ -48,11 +48,6 @@ export interface ILinkHTMLAttributes<T> {
  * {@docCategory Link}
  */
 export interface ILinkProps extends ILinkHTMLAttributes<HTMLAnchorElement | HTMLButtonElement | HTMLElement | LinkBase> {
-  /**
-   * Optional callback to access the ILink interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: IRefObject<ILink>;
 
   /**
    * Whether the link is disabled
@@ -77,7 +72,7 @@ export interface ILinkProps extends ILinkHTMLAttributes<HTMLAnchorElement | HTML
   /**
    * Optional keytip for this Link
    */
-  keytipProps?: IKeytipProps;
+  keytipProps?: any;
 }
 
 /**

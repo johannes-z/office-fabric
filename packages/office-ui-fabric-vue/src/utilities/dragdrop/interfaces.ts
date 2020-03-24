@@ -1,4 +1,4 @@
-import { EventGroup } from '../../Utilities'
+import { EventGroup } from '@uifabric-vue/utilities'
 
 /**
  * Helper for subscribing and unsubscribing to

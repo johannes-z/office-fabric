@@ -48,7 +48,7 @@ export interface IDetailsHeaderBaseProps {
   onColumnContextMenu?: (column: IColumn, ev: MouseEvent) => void;
 
   /** Whether to collapse for all visibility */
-  collapseAllVisibility?: CollapseAllVisibility;
+  collapseAllVisibility?: any;
 
   /** Whether or not all is collapsed */
   isAllCollapsed?: boolean;
