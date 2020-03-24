@@ -109,7 +109,6 @@ export default class Sticky extends BaseComponent<any, any> {
 
   @Watch('distanceFromTop')
   onDistanceFromTopChanged (newVal: number, oldVal: number) {
-    console.log(newVal, oldVal)
     const { scrollablePane } = this.context
 
     if (!scrollablePane) {
@@ -158,33 +157,6 @@ export default class Sticky extends BaseComponent<any, any> {
       scrollablePane.syncScrollSticky(this)
     }
   }
-
-  updated () {
-  }
-
-  get offsetHeightDifferent () {
-    return _isOffsetHeightDifferent(this.$refs.nonStickyContent, this.$refs.stickyContentTop) ||
-      _isOffsetHeightDifferent(this.$refs.nonStickyContent, this.$refs.stickyContentBottom) ||
-      _isOffsetHeightDifferent(this.$refs.nonStickyContent, this.$refs.placeHolder)
-  }
-
-  // public shouldComponentUpdate (nextProps: IStickyProps, nextState: IStickyState): boolean {
-  //   // tslint:disable-next-line:deprecation
-  //   if (!this.context.scrollablePane) {
-  //     return true
-  //   }
-
-  //   const { isStickyTop, isStickyBottom, distanceFromTop } = this.state
-
-  //   return (isStickyTop !== nextState.isStickyTop ||
-  //     isStickyBottom !== nextState.isStickyBottom ||
-  //     this.props.stickyPosition !== nextProps.stickyPosition ||
-  //     this.props.children !== nextProps.children ||
-  //     distanceFromTop !== nextState.distanceFromTop ||
-  //     _isOffsetHeightDifferent(this._nonStickyContent, this._stickyContentTop) ||
-  //     _isOffsetHeightDifferent(this._nonStickyContent, this._stickyContentBottom) ||
-  //     _isOffsetHeightDifferent(this._nonStickyContent, this._placeHolder)) as boolean
-  // }
 
   public addSticky (stickyContent: HTMLDivElement): void {
     if (this.$refs.nonStickyContent) {

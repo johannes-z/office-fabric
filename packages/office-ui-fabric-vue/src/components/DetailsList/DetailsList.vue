@@ -3,7 +3,9 @@
        data-is-scrollable="false">
     <div role="grid">
       <div :class="classNames.headerWrapper">
-        <DetailsHeader :columns="adjustedColumns" />
+        <slot name="DetailsHeader" :default-render="onRenderDetailsHeader">
+          <VNodes :vnodes="onRenderDetailsHeader()" />
+        </slot>
       </div>
       <div :class="classNames.contentWrapper">
         <List ref="list"
@@ -39,15 +41,21 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
 import { IColumn } from './DetailsList.types'
+import VNodes from '../VNodes'
+import DetailsHeader from './DetailsHeader/DetailsHeader.vue'
 
 const getClassNames = classNamesFunction()
 
 @Component({
-  components: { DetailsHeader, DetailsRow, List },
+  components: { DetailsHeader,
+    DetailsRow,
+    List,
+    VNodes,
+  },
 })
 export default class DetailsList extends BaseComponent {
   $refs!: {
-    list: any
+    list: List
   }
 
   @Prop({ type: Array, required: true }) columns!: any[]
@@ -57,7 +65,7 @@ export default class DetailsList extends BaseComponent {
   lastWidth = -1
   lastSelectionMode = undefined
 
-  columnOverrides = {}
+  columnOverrides: any = {}
 
   lastSortedColumnKey = ''
 
@@ -79,6 +87,14 @@ export default class DetailsList extends BaseComponent {
 
   get adjustedColumns (): IColumn[] {
     return this._adjustColumns(this.$props)
+  }
+
+  private onRenderDetailsHeader () {
+    return this.$createElement(DetailsHeader, {
+      props: {
+        columns: this.adjustedColumns,
+      },
+    })
   }
 
   created () {

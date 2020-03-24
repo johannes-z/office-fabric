@@ -24,7 +24,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, getRTL } from '@uifabric-vue/utilities'
 import { IScrollablePaneStyleProps, IScrollablePaneStyles, ScrollbarVisibility, IScrollablePaneContext } from './ScrollablePane.types'
 import BaseComponent from '../BaseComponent'
-import Sticky from '../Sticky/Sticky.vue'
+import { Sticky } from '../Sticky/'
 
 const getClassNames = classNamesFunction<IScrollablePaneStyleProps, IScrollablePaneStyles>()
 
@@ -116,8 +116,7 @@ export default class ScrollablePane extends BaseComponent {
           // If mutation occurs in scrollable region, then find Sticky it belongs to and force update
           const stickyList: Sticky[] = []
           this.stickies.forEach(sticky => {
-            const root = sticky.root()
-            if (root && root.contains(mutation[0].target)) {
+            if (sticky.$refs.root && sticky.$refs.root.contains(mutation[0].target)) {
               stickyList.push(sticky)
             }
           })
@@ -373,6 +372,7 @@ export default class ScrollablePane extends BaseComponent {
 
     if (contentContainer) {
       this.stickies.forEach((sticky: Sticky) => {
+        // @ts-ignore
         sticky.syncScroll(contentContainer)
       })
     }

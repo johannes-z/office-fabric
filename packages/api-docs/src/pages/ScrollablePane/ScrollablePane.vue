@@ -14,6 +14,9 @@
 
       <h2>Default</h2>
       <ScrollablePaneBasicExample />
+
+      <h2>DetailsList Locked Header</h2>
+      <ScrollablePaneDetailsHeaderExample />
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -25,10 +28,12 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import ScrollablePaneBasicExample from './examples/ScrollablePane.Basic.Example.vue'
+import ScrollablePaneDetailsHeaderExample from './examples/ScrollablePane.DetailsHeader.Example.vue'
 
 @Component({
   components: {
     ScrollablePaneBasicExample,
+    ScrollablePaneDetailsHeaderExample,
   },
 })
 export default class ScrollablePanePage extends Vue {
