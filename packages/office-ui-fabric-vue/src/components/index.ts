@@ -1,5 +1,7 @@
 
 export * from './DelayedRender'
+export * from './ScrollablePane'
+export * from './Sticky'
 
 export * from './DetailsList'
 export * from './List'

@@ -100,6 +100,7 @@ export default class Preview extends Vue {
             { name: 'Dialog WIP', key: 'Dialog', href: publicPath + '/#/Dialog' },
             { name: 'Modal WIP', key: 'Modal', href: publicPath + '/#/Modal' },
             { name: 'Panel WIP', key: 'Panel', href: publicPath + '/#/Panel' },
+            { name: 'ScrollablePane WIP', key: 'ScrollablePane', href: publicPath + '/#/ScrollablePane' },
           ],
         }, {
           name: 'Utilities',

@@ -12,15 +12,16 @@
       but you can also use any other package manager:
 
       <pre v-highlightjs><code class="shell">
-yarn add "@uifabric-vue/office-ui-fabric-vue"
+yarn add @uifabric-vue/office-ui-fabric-vue
       </code></pre>
 
-      That's it! If you're also planning on overriding CSS and add your own styling, you may also want to use these
-      packages:
+      That's it! If you're also planning on overriding CSS and add your own styling, you may also want to use the
+      following packages. They are already <code>dependencies</code> of <code>@uifabric-vue/office-ui-fabric-vue</code>,
+      but you should also specify that your project relies on those packages.
 
       <pre v-highlightjs><code class="shell">
-yarn add "@uifabric/merge-styles"
-yarn add "@uifabric/styling"
+yarn add @uifabric/merge-styles
+yarn add @uifabric/styling
       </code></pre>
     </div>
 

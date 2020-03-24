@@ -16,11 +16,11 @@
     "ghpages": "yarn workspace api-docs build && cd ./packages/api-docs/dist && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/johannes-z/office-fabric master:gh-pages"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.1.2",
-    "@vue/cli-plugin-eslint": "^4.1.2",
-    "@vue/cli-plugin-router": "^4.1.2",
-    "@vue/cli-plugin-typescript": "^4.1.2",
-    "@vue/cli-service": "^4.1.2",
+    "@vue/cli-plugin-babel": "^4.2.3",
+    "@vue/cli-plugin-eslint": "^4.2.3",
+    "@vue/cli-plugin-router": "^4.2.3",
+    "@vue/cli-plugin-typescript": "^4.2.3",
+    "@vue/cli-service": "^4.2.3",
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/eslint-config-typescript": "^4.0.0",
     "typescript": "^3.8.3",
