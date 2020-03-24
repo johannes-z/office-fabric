@@ -12,7 +12,9 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
       <h2>Default Facepile</h2>
-      <f-facepile :personas="facepilePersonas" />
+      <div :class="styles.container">
+        <f-facepile :personas="facepilePersonas" />
+      </div>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -24,9 +26,31 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { PersonaInitialsColor } from '@uifabric-vue/office-ui-fabric-vue'
+import { mergeStyleSets } from '@uifabric/styling'
+
+const styles = mergeStyleSets({
+  container: {
+    maxWidth: 300,
+  },
+  control: {
+    paddingTop: 20,
+  },
+  slider: {
+    margin: '10px 0',
+  },
+  checkbox: {
+    paddingTop: 15,
+  },
+  dropdown: {
+    paddingTop: 0,
+    margin: '10px 0',
+  },
+})
 
 @Component
 export default class FacepilePage extends Vue {
+  styles = styles
+
   facepilePersonas = [
     {
       imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,

@@ -4,9 +4,10 @@
       <ul :class="classNames.members" role="listbox">
         <li v-for="(persona, index) in personas"
             :key="singlePersona ? 'persona' : `personaCoin-${index}`"
+            :class="classNames.member"
             role="option">
-          <FacepileButton :class="classNames.itemButton"
-                          :title="persona.personaName">
+          <div :class="classNames.itemButton"
+               :title="persona.personaName">
             <Persona
               v-bind="persona"
               :image-initials="persona.imageInitials"
@@ -21,7 +22,7 @@
                   flex: '1 0 auto'
                 }
               }" />
-          </FacepileButton>
+          </div>
         </li>
       </ul>
     </div>

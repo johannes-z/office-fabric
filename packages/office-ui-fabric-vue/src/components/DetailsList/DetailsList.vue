@@ -42,7 +42,6 @@ import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
 import { IColumn } from './DetailsList.types'
 import VNodes from '../VNodes'
-import DetailsHeader from './DetailsHeader/DetailsHeader.vue'
 
 const getClassNames = classNamesFunction()
 
@@ -320,7 +319,6 @@ export function buildColumns (
   isMultiline?: boolean
 ) {
   const columns: any[] = []
-  console.log('buildColumns')
 
   if (items && items.length) {
     const firstItem = items[0]
