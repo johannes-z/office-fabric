@@ -1,7 +1,7 @@
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { IStyle, ITheme } from '@uifabric/styling'
 import ScrollablePane from './ScrollablePane.vue'
-import { Sticky } from '../Sticky/Sticky'
+import { Sticky } from '../Sticky/'
 
 /**
  * {@docCategory ScrollablePane}

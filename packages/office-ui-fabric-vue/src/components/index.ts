@@ -1,10 +1,13 @@
+import VNodes from './VNodes'
+export { VNodes }
 
-export * from './DelayedRender'
+export * from './List'
+export * from './DetailsList'
 export * from './ScrollablePane'
 export * from './Sticky'
 
-export * from './DetailsList'
-export * from './List'
+export * from './DelayedRender'
+
 export * from './ContextualMenu'
 
 export * from './Overlay'
