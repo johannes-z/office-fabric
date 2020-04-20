@@ -9,5 +9,5 @@ export const Link: VueConstructor = styled(
   LinkBase,
   getStyles,
   undefined,
-  { scope: 'Link' }
+  { scope: 'Link' },
 )

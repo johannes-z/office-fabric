@@ -31,7 +31,7 @@ const getDisabledStyles = memoizeFunction(
         },
       },
     }
-  }
+  },
 )
 
 const listOptionHighContrastStyles: IRawStyle = {
@@ -61,7 +61,7 @@ export const getOptionStyles = memoizeFunction(
     customStylesForAllOptions?: Partial<IComboBoxOptionStyles>,
     customOptionStylesForCurrentOption?: Partial<IComboBoxOptionStyles>,
     isPending?: boolean,
-    isHidden?: boolean
+    isHidden?: boolean,
   ): Partial<IComboBoxOptionStyles> => {
     const { palette, semanticColors } = theme
 
@@ -156,7 +156,7 @@ export const getOptionStyles = memoizeFunction(
     }
 
     return concatStyleSets(optionStyles, customStylesForAllOptions, customOptionStylesForCurrentOption)
-  }
+  },
 )
 
 export const getCaretDownButtonStyles = memoizeFunction(
@@ -242,7 +242,7 @@ export const getCaretDownButtonStyles = memoizeFunction(
       ],
     }
     return concatStyleSets(styles, customStyles)
-  }
+  },
 )
 
 export const getStyles = memoizeFunction(
@@ -484,5 +484,5 @@ export const getStyles = memoizeFunction(
     }
 
     return concatStyleSets(styles, customStyles)
-  }
+  },
 )

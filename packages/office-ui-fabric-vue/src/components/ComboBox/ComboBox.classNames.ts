@@ -31,7 +31,7 @@ export const getClassNames = memoizeFunction(
     required: boolean,
     focused: boolean,
     allowFreeForm: boolean,
-    hasErrorMessage: boolean
+    hasErrorMessage: boolean,
   ): IComboBoxClassNames => {
     return {
       container: mergeStyles('ms-ComboBox-container', className, styles.container),
@@ -50,7 +50,7 @@ export const getClassNames = memoizeFunction(
             ':focus': hasErrorMessage ? styles.rootError : styles.rootFocused,
           },
         },
-        disabled && ['is-disabled', styles.rootDisabled]
+        disabled && ['is-disabled', styles.rootDisabled],
       ),
       input: mergeStyles('ms-ComboBox-Input', styles.input, disabled && styles.inputDisabled),
       errorMessage: mergeStyles(styles.errorMessage),
@@ -61,7 +61,7 @@ export const getClassNames = memoizeFunction(
       divider: mergeStyles('ms-ComboBox-divider', styles.divider),
       screenReaderText: mergeStyles(styles.screenReaderText),
     }
-  }
+  },
 )
 
 export const getComboBoxOptionClassNames = memoizeFunction(
@@ -77,5 +77,5 @@ export const getComboBoxOptionClassNames = memoizeFunction(
       }),
       optionTextWrapper: mergeStyles(styles.optionTextWrapper),
     }
-  }
+  },
 )

@@ -7,5 +7,5 @@ export const ShimmerLine: VueConstructor = styled(
   ShimmerLineBase,
   getStyles,
   undefined,
-  { scope: 'ShimmerLine' }
+  { scope: 'ShimmerLine' },
 )

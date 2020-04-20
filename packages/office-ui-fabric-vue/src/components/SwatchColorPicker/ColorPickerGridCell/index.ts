@@ -9,5 +9,5 @@ export const ColorPickerGridCell: VueConstructor = styled(
   ColorPickerGridCellBase,
   getStyles,
   undefined,
-  { scope: 'ColorPickerGridCell' }
+  { scope: 'ColorPickerGridCell' },
 )

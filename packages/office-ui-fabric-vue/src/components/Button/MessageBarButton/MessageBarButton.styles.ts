@@ -25,5 +25,5 @@ export const getStyles = memoizeFunction(
     }
 
     return concatStyleSets(baseButtonStyles, messageBarButtonStyles, customStyles)!
-  }
+  },
 )

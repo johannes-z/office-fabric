@@ -31,7 +31,7 @@ const _getValueUnitGap = (gap: string): { value: number; unit: string } => {
  */
 export const parseGap = (
   gap: IStackProps['gap'],
-  theme: ITheme
+  theme: ITheme,
 ): { rowGap: { value: number; unit: string }; columnGap: { value: number; unit: string } } => {
   if (gap === undefined || gap === '') {
     return {

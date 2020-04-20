@@ -191,7 +191,7 @@ export default class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxSta
       !!required,
       !!focused,
       !!allowFreeform,
-      !!hasErrorMessage
+      !!hasErrorMessage,
     )
   }
 

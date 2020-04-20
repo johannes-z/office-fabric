@@ -9,5 +9,5 @@ export const Checkbox: VueConstructor = styled(
   CheckboxBase,
   getStyles,
   undefined,
-  { scope: 'Checkbox' }
+  { scope: 'Checkbox' },
 )

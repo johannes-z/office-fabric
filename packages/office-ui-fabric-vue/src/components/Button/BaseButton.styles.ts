@@ -123,5 +123,5 @@ export const getStyles = memoizeFunction(
 
       screenReaderText: hiddenContentStyle,
     }
-  }
+  },
 )

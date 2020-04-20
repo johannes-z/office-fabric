@@ -9,5 +9,5 @@ export const Overlay: VueConstructor = styled(
   OverlayBase,
   getStyles,
   undefined,
-  { scope: 'Overlay' }
+  { scope: 'Overlay' },
 )

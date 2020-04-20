@@ -9,7 +9,7 @@ export const Icon: VueConstructor = styled(
   IconBase,
   getStyles,
   undefined,
-  { scope: 'Icon' }
+  { scope: 'Icon' },
 )
 
 export * from './FontIcon'

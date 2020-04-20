@@ -32,7 +32,7 @@ export function styled<
   baseStyles: IStyleFunctionOrObject<any, any>,
   getProps?: (props: any) => Partial<any>,
   customizable?: ICustomizableProps,
-  pure?: boolean
+  pure?: boolean,
 ): VueConstructor<Vue> {
   customizable = customizable || { scope: '', fields: undefined }
 

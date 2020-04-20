@@ -36,7 +36,7 @@ const getColorPickerGridCellButtonClassNames = memoizeFunction(
     disabled: boolean,
     checked: boolean,
     expanded: boolean,
-    isSplit: boolean | undefined
+    isSplit: boolean | undefined,
   ): IButtonClassNames => {
     const styles = getActionButtonStyles(theme)
     return mergeStyleSets({
@@ -66,7 +66,7 @@ const getColorPickerGridCellButtonClassNames = memoizeFunction(
       ],
       flexContainer: ['ms-Button-flexContainer', styles.flexContainer],
     })
-  }
+  },
 )
 
 const getClassNames = classNamesFunction<IColorPickerGridCellStyleProps, IColorPickerGridCellStyles>()

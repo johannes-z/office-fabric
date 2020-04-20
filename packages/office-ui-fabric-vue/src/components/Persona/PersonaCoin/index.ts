@@ -7,5 +7,5 @@ export const PersonaCoin: VueConstructor = styled(
   PersonaCoinBase,
   getStyles,
   undefined,
-  { scope: 'PersonaCoin' }
+  { scope: 'PersonaCoin' },
 )

@@ -9,5 +9,5 @@ export const Rating: VueConstructor = styled(
   RatingBase,
   getStyles,
   undefined,
-  { scope: 'Rating' }
+  { scope: 'Rating' },
 )

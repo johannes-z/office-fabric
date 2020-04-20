@@ -7,5 +7,5 @@ export const DetailsColumn: VueConstructor = styled(
   DetailsColumnBase,
   getStyles,
   undefined,
-  { scope: 'DetailsColumn' }
+  { scope: 'DetailsColumn' },
 )

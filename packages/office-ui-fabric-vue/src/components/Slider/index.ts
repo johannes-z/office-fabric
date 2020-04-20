@@ -9,5 +9,5 @@ export const Slider: VueConstructor = styled(
   SliderBase,
   getStyles,
   undefined,
-  { scope: 'Slider' }
+  { scope: 'Slider' },
 )

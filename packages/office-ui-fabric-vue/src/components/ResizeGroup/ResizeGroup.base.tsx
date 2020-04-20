@@ -99,7 +99,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
   function _shrinkContentsUntilTheyFit (
     data: any,
     onReduceData: (prevData: any) => any,
-    getElementToMeasureDimension: () => number
+    getElementToMeasureDimension: () => number,
   ): IResizeGroupState {
     let dataToMeasure = data
     let measuredDimension: number | undefined = _getMeasuredDimension(data, getElementToMeasureDimension)
@@ -150,7 +150,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
     data: any,
     onGrowData: (prevData: any) => any,
     getElementToMeasureDimension: () => number,
-    onReduceData: (prevData: any) => any
+    onReduceData: (prevData: any) => any,
   ): IResizeGroupState {
     let dataToMeasure = data
     let measuredDimension: number | undefined = _getMeasuredDimension(data, getElementToMeasureDimension)
@@ -198,7 +198,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
     newDimension: number,
     fullDimensionData: any,
     renderedData: any,
-    onGrowData?: (prevData: any) => any
+    onGrowData?: (prevData: any) => any,
   ): IResizeGroupState {
     let nextState: IResizeGroupState
     if (newDimension > _containerDimension!) {
@@ -227,7 +227,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
     props: IResizeGroupProps,
     currentState: IResizeGroupState,
     getElementToMeasureDimension: () => number,
-    newContainerDimension?: number
+    newContainerDimension?: number,
   ): IResizeGroupState | undefined {
     // If there is no new container width/height or data to measure, there is no need for a new state update
     if (newContainerDimension === undefined && currentState.dataToMeasure === undefined) {
@@ -367,7 +367,7 @@ export class ResizeGroupBase extends BaseComponent {
             ? refToMeasure.scrollHeight
             : refToMeasure.scrollWidth
         },
-        containerDimension
+        containerDimension,
       )
 
       if (nextState) {

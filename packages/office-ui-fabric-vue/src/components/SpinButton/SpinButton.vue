@@ -155,7 +155,7 @@ export default class SpinButton extends BaseComponent {
           newValue = precisionRound(newValue, this.precision)
           this.internalValue = newValue
         },
-        this.STEP_DELAY
+        this.STEP_DELAY,
       )
     }, this.INITIAL_STEP_DELAY)
   }

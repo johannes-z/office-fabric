@@ -8,5 +8,5 @@ export const DetailsList: VueConstructor = styled(
   DetailsListBase,
   getStyles,
   undefined,
-  { scope: 'DetailsList' }
+  { scope: 'DetailsList' },
 )

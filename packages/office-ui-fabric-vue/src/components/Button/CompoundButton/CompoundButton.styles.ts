@@ -138,7 +138,7 @@ export const getStyles = memoizeFunction(
       primary ? primaryStyles(theme) : standardStyles(theme),
       primary ? primaryCompoundTheme : standardCompoundTheme,
       splitButtonStyles,
-      customStyles
+      customStyles,
     )!
-  }
+  },
 )

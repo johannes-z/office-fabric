@@ -9,5 +9,5 @@ export const Toggle: VueConstructor = styled(
   ToggleBase,
   getStyles,
   undefined,
-  { scope: 'Toggle' }
+  { scope: 'Toggle' },
 )

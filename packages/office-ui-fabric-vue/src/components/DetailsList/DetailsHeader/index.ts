@@ -8,5 +8,5 @@ export const DetailsHeader: VueConstructor = styled(
   DetailsHeaderBase,
   getStyles,
   undefined,
-  { scope: 'DetailsHeader' }
+  { scope: 'DetailsHeader' },
 )

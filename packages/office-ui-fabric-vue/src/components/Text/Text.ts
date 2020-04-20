@@ -9,5 +9,5 @@ export const Text: VueConstructor = styled(
   TextView,
   getStyles,
   undefined,
-  { scope: 'Text' }
+  { scope: 'Text' },
 )

@@ -12,5 +12,5 @@ export const Persona: VueConstructor = styled(
   PersonaBase,
   getStyles,
   undefined,
-  { scope: 'Persona' }
+  { scope: 'Persona' },
 )

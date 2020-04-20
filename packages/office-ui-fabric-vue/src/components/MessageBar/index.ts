@@ -9,5 +9,5 @@ export const MessageBar: VueConstructor = styled(
   MessageBarBase,
   getStyles,
   undefined,
-  { scope: 'MessageBar' }
+  { scope: 'MessageBar' },
 )

@@ -9,5 +9,5 @@ export const Image: VueConstructor = styled(
   ImageBase,
   getStyles,
   undefined,
-  { scope: 'Image' }
+  { scope: 'Image' },
 )

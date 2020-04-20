@@ -132,7 +132,7 @@ export default class BaseButton extends BaseComponent<any, any> {
         !this.menuHidden,
         !!this.menuProps,
         this.split,
-        !!this.allowDisabledFocus
+        !!this.allowDisabledFocus,
       )
       : getBaseButtonClassNames(
         theme!,
@@ -145,7 +145,7 @@ export default class BaseButton extends BaseComponent<any, any> {
         !!this.menuProps,
         checked!,
         !this.menuHidden,
-        this.split
+        this.split,
       )
   }
 }

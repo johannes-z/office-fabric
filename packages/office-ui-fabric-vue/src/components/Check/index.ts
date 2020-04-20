@@ -7,5 +7,5 @@ export const Check: VueConstructor = styled(
   CheckBase,
   getStyles,
   undefined,
-  { scope: 'Check' }
+  { scope: 'Check' },
 )

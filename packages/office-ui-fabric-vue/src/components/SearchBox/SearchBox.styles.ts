@@ -81,7 +81,7 @@ export function getStyles (props: any): ISearchBoxStyles {
         getInputFocusStyle(
           semanticColors.inputFocusBorderAlt,
           underlined ? 0 : effects.roundedCorner2,
-          underlined ? 'borderBottom' : 'border'
+          underlined ? 'borderBottom' : 'border',
         ),
       ],
       disabled && [

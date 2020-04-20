@@ -57,7 +57,7 @@ export const getSplitButtonVerticalDividerClassNames = memoizeFunction(
         width: 1,
       },
     })
-  }
+  },
 )
 
 const GlobalClassNames = {
@@ -101,7 +101,7 @@ export const getItemClassNames = memoizeFunction(
     iconClassName?: string,
     subMenuClassName?: string,
     primaryDisabled?: boolean,
-    className?: string
+    className?: string,
   ): any => {
     const styles = getMenuItemStyles(theme)
     const classNames = getGlobalClassNames(GlobalClassNames, theme)
@@ -210,7 +210,7 @@ export const getItemClassNames = memoizeFunction(
         ],
       ],
     })
-  }
+  },
 )
 
 /**
@@ -249,6 +249,6 @@ export const getItemStyles = (props: any): any => {
     iconClassName,
     subMenuClassName,
     primaryDisabled,
-    className
+    className,
   )
 }

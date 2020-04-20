@@ -9,5 +9,5 @@ export const SearchBox: VueConstructor = styled(
   SearchBoxBase,
   getStyles,
   undefined,
-  { scope: 'SearchBox' }
+  { scope: 'SearchBox' },
 )

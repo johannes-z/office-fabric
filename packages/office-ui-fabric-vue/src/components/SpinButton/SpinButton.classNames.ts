@@ -20,7 +20,7 @@ export const getClassNames = memoizeFunction(
     isFocused: boolean,
     keyboardSpinDirection: KeyboardSpinDirection,
     labelPosition: Position = Position.start,
-    className: string | undefined = undefined
+    className: string | undefined = undefined,
   ): ISpinButtonClassNames => {
     return {
       root: mergeStyles(styles.root, className),
@@ -44,7 +44,7 @@ export const getClassNames = memoizeFunction(
             },
           },
         ],
-        disabled && styles.spinButtonWrapperDisabled
+        disabled && styles.spinButtonWrapperDisabled,
       ),
       input: mergeStyles(
         'ms-spinButton-input',
@@ -54,11 +54,11 @@ export const getClassNames = memoizeFunction(
             '::selection': styles.inputTextSelected,
           },
         },
-        disabled && styles.inputDisabled
+        disabled && styles.inputDisabled,
       ),
       arrowBox: mergeStyles(styles.arrowButtonsContainer, disabled && styles.arrowButtonsContainerDisabled),
     }
-  }
+  },
 )
 
 /**

@@ -9,5 +9,5 @@ export const Panel: VueConstructor = styled(
   PanelBase,
   getStyles,
   undefined,
-  { scope: 'Panel' }
+  { scope: 'Panel' },
 )

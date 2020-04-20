@@ -387,7 +387,7 @@ export default class List extends BaseComponent {
 
   private _getPageSpecification (
     itemIndex: number,
-    visibleRect: IRectangle
+    visibleRect: IRectangle,
   ): {
     // These return values are now no longer optional.
       itemCount: number;
@@ -598,7 +598,7 @@ export default class List extends BaseComponent {
         }
 
         this.estimatedPageHeight = Math.round(
-          (this.estimatedPageHeight * this.totalEstimates + newClientRect.height) / (this.totalEstimates + 1)
+          (this.estimatedPageHeight * this.totalEstimates + newClientRect.height) / (this.totalEstimates + 1),
         )
 
         this.totalEstimates++
@@ -615,7 +615,7 @@ export default class List extends BaseComponent {
     count: number = items ? items.length : 0,
     style: any = {},
     data?: any,
-    isSpacer?: boolean
+    isSpacer?: boolean,
   ): any {
     pageKey = pageKey || PAGE_KEY_PREFIX + startIndex
     const cachedPage = this.pageCache[pageKey]

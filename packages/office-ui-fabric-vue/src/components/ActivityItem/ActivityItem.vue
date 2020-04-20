@@ -74,7 +74,7 @@ export default class ActivityItem extends BaseComponent {
       getStyles(theme, styles, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact),
       className!,
       activityPersonas!,
-      isCompact!
+      isCompact!,
     )
   }
 }
