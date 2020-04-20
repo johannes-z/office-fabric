@@ -4,6 +4,7 @@
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
+  "sideEffects": false,
   "scripts": {
     "build": "tsc"
   },
