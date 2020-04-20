@@ -62,7 +62,7 @@ export default class CalloutContent extends BaseComponent {
     this.internalKey = new Date()
   }
 
-  async mounted () {
+  mounted () {
     this.updatePosition()
   }
 
