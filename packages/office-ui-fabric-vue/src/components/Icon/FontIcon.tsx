@@ -30,7 +30,7 @@ export const getIconContent = memoizeFunction(
   },
   undefined,
   // @ts-ignore
-  true
+  true,
 )
 
 @Component

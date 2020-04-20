@@ -8,5 +8,5 @@ export const DetailsRowCheck: VueConstructor = styled(
   getStyles,
   undefined,
   { scope: 'DetailsRowCheck' },
-  true
+  true,
 )

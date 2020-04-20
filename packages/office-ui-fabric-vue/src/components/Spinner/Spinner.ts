@@ -7,5 +7,5 @@ export const Spinner: VueConstructor = styled(
   SpinnerBase,
   getStyles,
   undefined,
-  { scope: 'Spinner' }
+  { scope: 'Spinner' },
 )

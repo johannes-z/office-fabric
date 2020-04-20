@@ -7,5 +7,5 @@ export const ShimmerElementsGroup: VueConstructor = styled(
   ShimmerElementsGroupBase,
   getStyles,
   undefined,
-  { scope: 'ShimmerElementsGroup' }
+  { scope: 'ShimmerElementsGroup' },
 )

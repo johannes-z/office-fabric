@@ -18,14 +18,14 @@ export const getStyles = memoizeFunction(
     animateBeaconSignal?: any['animateBeaconSignal'],
     beaconColorOne?: any['beaconColorOne'],
     beaconColorTwo?: any['beaconColorTwo'],
-    isCompact?: any['isCompact']
+    isCompact?: any['isCompact'],
   ): IActivityItemStyles => {
     const continuousPulse = PulsingBeaconAnimationStyles.continuousPulseAnimationSingle(
       beaconColorOne || theme.palette.themePrimary,
       beaconColorTwo || theme.palette.themeTertiary,
       ANIMATION_INNER_DIMENSION,
       ANIMATION_OUTER_DIMENSION,
-      ANIMATION_BORDER_WIDTH
+      ANIMATION_BORDER_WIDTH,
     )
 
     const fadeIn: string = keyframes({
@@ -198,5 +198,5 @@ export const getStyles = memoizeFunction(
     }
 
     return concatStyleSets(ActivityItemStyles, customStyles)
-  }
+  },
 )

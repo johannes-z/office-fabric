@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :class="classNames.root">
     <div :class="classNames.iconContainer"
          role="search">

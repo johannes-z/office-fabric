@@ -9,5 +9,5 @@ export const SwatchColorPicker: VueConstructor = styled(
   SwatchColorPickerBase,
   getStyles,
   undefined,
-  { scope: 'SwatchColorPicker' }
+  { scope: 'SwatchColorPicker' },
 )

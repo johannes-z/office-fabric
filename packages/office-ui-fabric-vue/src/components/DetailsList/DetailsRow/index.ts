@@ -8,5 +8,5 @@ export const DetailsRow: VueConstructor = styled(
   DetailsRowBase,
   getStyles,
   undefined,
-  { scope: 'DetailsRow' }
+  { scope: 'DetailsRow' },
 )

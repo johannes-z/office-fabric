@@ -9,5 +9,5 @@ export const TextField: VueConstructor = styled(
   TextFieldBase,
   getStyles,
   undefined,
-  { scope: 'TextField' }
+  { scope: 'TextField' },
 )

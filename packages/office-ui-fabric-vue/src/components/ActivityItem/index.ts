@@ -7,5 +7,5 @@ export const ActivityItem: VueConstructor = styled(
   ActivityItemBase,
   getStyles,
   undefined,
-  { scope: 'ActivityItem' }
+  { scope: 'ActivityItem' },
 )

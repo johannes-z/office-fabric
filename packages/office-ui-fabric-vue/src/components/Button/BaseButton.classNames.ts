@@ -38,7 +38,7 @@ export const getBaseButtonClassNames = memoizeFunction(
     hasMenu: boolean,
     checked: boolean,
     expanded: boolean,
-    isSplit: boolean | undefined
+    isSplit: boolean | undefined,
   ): IButtonClassNames => {
     const classNames = getGlobalClassNames(ButtonGlobalClassNames, theme || {})
 
@@ -124,5 +124,5 @@ export const getBaseButtonClassNames = memoizeFunction(
       ],
       screenReaderText: [classNames.msButtonScreenReaderText, styles.screenReaderText],
     })
-  }
+  },
 )

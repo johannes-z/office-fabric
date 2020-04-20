@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :area-label="areaLabel"
        :class="classNames.root"
        :style="{ '--size': `${size}px` }">

@@ -10,5 +10,5 @@ export const Separator: VueConstructor = styled<ISeparatorProps, ISeparatorStyle
   SeparatorBase,
   getStyles,
   undefined,
-  { scope: 'Separator' }
+  { scope: 'Separator' },
 )

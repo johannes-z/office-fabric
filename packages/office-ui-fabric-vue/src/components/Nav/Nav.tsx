@@ -66,7 +66,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     if (!links || !links.length) return null
 
     const linkElements: VNode[] = links.map((link: INavLink, linkIndex: number) =>
-      this.renderLink(link, linkIndex, nestingLevel)
+      this.renderLink(link, linkIndex, nestingLevel),
     )
 
     const { groups, theme } = this

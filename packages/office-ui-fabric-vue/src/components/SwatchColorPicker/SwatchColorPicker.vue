@@ -1,6 +1,6 @@
 <template>
   <Grid :items="colorCells" :column-count="columnCount">
-    <template #default="{ cell: item, index }">
+    <template #default="{ cell: item }">
       <ColorPickerGridCell
         :color="item.color"
         :circle="cellShape === 'circle'"

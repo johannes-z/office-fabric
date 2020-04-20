@@ -188,5 +188,5 @@ export const getStyles = memoizeFunction(
     }
 
     return concatStyleSets(splitButtonStyles, customStyles)!
-  }
+  },
 )

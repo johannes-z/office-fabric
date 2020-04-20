@@ -9,5 +9,5 @@ export const Dropdown: VueConstructor = styled(
   DropdownBase,
   getStyles,
   undefined,
-  { scope: 'Dropdown' }
+  { scope: 'Dropdown' },
 )

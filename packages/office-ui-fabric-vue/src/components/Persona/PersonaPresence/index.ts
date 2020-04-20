@@ -7,5 +7,5 @@ export const PersonaPresence: VueConstructor = styled(
   PersonaPresenceBase,
   getStyles,
   undefined,
-  { scope: 'PersonaPresence' }
+  { scope: 'PersonaPresence' },
 )

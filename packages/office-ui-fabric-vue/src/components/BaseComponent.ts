@@ -4,12 +4,6 @@ import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
 import { getTheme, ITheme } from '@uifabric/styling'
 
-interface BaseProps {
-  theme: ITheme
-  styles: any
-  className: string
-}
-
 // @ts-ignore
 @Component
 export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vue {

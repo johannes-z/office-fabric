@@ -226,7 +226,7 @@ export default class DetailsList extends BaseComponent {
     newColumns: any[],
     viewportWidth: number,
     props: any,
-    resizingColumnIndex: number
+    resizingColumnIndex: number,
   ): any[] {
     const fixedColumns = newColumns.slice(0, resizingColumnIndex)
     fixedColumns.forEach(column => (column.calculatedWidth = this._getColumnOverride(column.key).currentWidth))
@@ -316,7 +316,7 @@ export function buildColumns (
   sortedColumnKey?: string,
   isSortedDescending?: boolean,
   groupedColumnKey?: string,
-  isMultiline?: boolean
+  isMultiline?: boolean,
 ) {
   const columns: any[] = []
 

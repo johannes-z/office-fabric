@@ -9,5 +9,5 @@ export const ScrollablePane: VueConstructor = styled(
   ScrollablePaneBase,
   getStyles,
   undefined,
-  { scope: 'ScrollablePane' }
+  { scope: 'ScrollablePane' },
 )

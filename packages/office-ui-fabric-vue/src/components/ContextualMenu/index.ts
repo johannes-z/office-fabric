@@ -9,5 +9,5 @@ export const ContextualMenu: VueConstructor = styled(
   ContextualMenuBase,
   getStyles,
   undefined,
-  { scope: 'ContextualMenu' }
+  { scope: 'ContextualMenu' },
 )

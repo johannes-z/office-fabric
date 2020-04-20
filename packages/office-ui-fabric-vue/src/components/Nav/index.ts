@@ -9,5 +9,5 @@ export const Nav: VueConstructor = styled(
   NavBase,
   getStyles,
   undefined,
-  { scope: 'Nav' }
+  { scope: 'Nav' },
 )

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div :class="classNames.root"
        :style="coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : undefined">
     <PersonaCoin v-bind="$props" />

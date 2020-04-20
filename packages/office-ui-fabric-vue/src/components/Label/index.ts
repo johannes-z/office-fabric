@@ -9,5 +9,5 @@ export const Label: VueConstructor = styled(
   LabelBase,
   getStyles,
   undefined,
-  { scope: 'Label' }
+  { scope: 'Label' },
 )

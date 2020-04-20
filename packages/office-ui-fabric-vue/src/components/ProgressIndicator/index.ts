@@ -9,5 +9,5 @@ export const ProgressIndicator: VueConstructor = styled(
   ProgressIndicatorBase,
   getStyles,
   undefined,
-  { scope: 'ProgressIndicator' }
+  { scope: 'ProgressIndicator' },
 )

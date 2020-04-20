@@ -9,5 +9,5 @@ export const Shimmer: VueConstructor = styled(
   ShimmerBase,
   getStyles,
   undefined,
-  { scope: 'Shimmer' }
+  { scope: 'Shimmer' },
 )

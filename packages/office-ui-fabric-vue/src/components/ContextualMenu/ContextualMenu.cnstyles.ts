@@ -26,7 +26,7 @@ const getItemHighContrastStyles = memoizeFunction(
         },
       },
     }
-  }
+  },
 )
 
 export const getMenuItemStyles = memoizeFunction(
@@ -237,5 +237,5 @@ export const getMenuItemStyles = memoizeFunction(
     }
 
     return concatStyleSets(menuItemStyles)
-  }
+  },
 )

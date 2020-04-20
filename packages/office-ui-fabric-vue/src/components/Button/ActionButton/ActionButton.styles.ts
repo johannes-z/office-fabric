@@ -81,5 +81,5 @@ export const getStyles = memoizeFunction(
     }
 
     return concatStyleSets(baseButtonStyles, actionButtonStyles, customStyles)!
-  }
+  },
 )

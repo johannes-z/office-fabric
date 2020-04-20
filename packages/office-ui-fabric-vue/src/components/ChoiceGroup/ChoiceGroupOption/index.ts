@@ -9,5 +9,5 @@ export const ChoiceGroupOption: VueConstructor = styled(
   ChoiceGroupOptionBase,
   getStyles,
   undefined,
-  { scope: 'ChoiceGroupOption' }
+  { scope: 'ChoiceGroupOption' },
 )

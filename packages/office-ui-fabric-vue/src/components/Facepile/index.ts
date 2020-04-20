@@ -9,5 +9,5 @@ export const Facepile: VueConstructor = styled(
   FacepileBase,
   getStyles,
   undefined,
-  { scope: 'Facepile' }
+  { scope: 'Facepile' },
 )

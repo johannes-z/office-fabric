@@ -29,7 +29,7 @@ const _getDisabledStyles = memoizeFunction(
         },
       },
     }
-  }
+  },
 )
 
 export const getArrowButtonStyles = memoizeFunction(
@@ -114,9 +114,9 @@ export const getArrowButtonStyles = memoizeFunction(
     return concatStyleSets(
       defaultArrowButtonStyles,
       isUpArrow ? defaultUpArrowButtonStyles : defaultDownArrowButtonStyles,
-      customSpecificArrowStyles
+      customSpecificArrowStyles,
     ) as IButtonStyles
-  }
+  },
 )
 
 export const getStyles = memoizeFunction(
@@ -254,5 +254,5 @@ export const getStyles = memoizeFunction(
       arrowButtonsContainerDisabled: _getDisabledStyles(theme),
     }
     return concatStyleSets(defaultStyles, customStyles) as ISpinButtonStyles
-  }
+  },
 )
