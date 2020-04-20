@@ -7,6 +7,9 @@
       "packages/utilities",
       "packages/office-ui-fabric-vue",
       "packages/api-docs"
+    ],
+    "nohoist": [
+      "**@uifabric-vue/utilities**"
     ]
   },
   "scripts": {
