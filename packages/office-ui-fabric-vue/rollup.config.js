@@ -19,9 +19,10 @@ export default {
   //   /id/,
   //   'id2',
   // ],
-  input: 'src/index.ts',
+  input: './src/index.ts',
   output: {
-    dir: './lib',
+    dir: 'lib',
+    // file: 'dist/office-ui-fabric-vue.esm.js',
     format: 'esm',
     sourcemap: false,
   },
@@ -36,20 +37,25 @@ export default {
     alias({
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: [
-        // { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
-        // { find: '@uifabric/utilities', replacement: '@uifabric-vue/utilities' },
+        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
+        { find: '@uifabric/utilities', replacement: '@uifabric-vue/utilities' },
       ],
     }),
+    vue(),
+    resolve({
+      extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+      preferBuiltins: true,
+    }),
+    commonjs({ include: /node_modules/ }),
     typescript({
       abortOnError: false,
       typescript: require('typescript'),
       useTsconfigDeclarationDir: true,
-      verbosity: 2,
+      check: false,
     }),
-    vue(),
     babel({
       exclude: /node_modules/,
-      extensions: ['.jsx', '.tsx'],
+      extensions: ['.js', '.json', '.jsx', '.tsx'],
       configFile: false,
       presets: [
         ['@vue/cli-plugin-babel/preset', {
@@ -60,7 +66,5 @@ export default {
         }],
       ],
     }),
-    resolve(),
-    commonjs(),
   ],
 }

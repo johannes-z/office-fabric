@@ -2,7 +2,7 @@
   "name": "@uifabric-vue/office-ui-fabric-vue",
   "version": "1.0.0",
   "main": "./dist/office-ui-fabric-vue.umd.min.js",
-  "module": "./lib/index.js",
+  "module": "./lib/packages/office-ui-fabric-vue/src/index.js",
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -38,7 +38,6 @@
     "@vue/cli-service": "^4.3.1",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^5.0.2",
-    "bili": "^4.9.0",
     "resolve": "^1.16.1",
     "rollup": "^2.6.1",
     "rollup-plugin-babel": "^4.4.0",
