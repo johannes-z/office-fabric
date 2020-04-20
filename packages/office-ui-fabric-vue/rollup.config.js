@@ -60,9 +60,7 @@ export default {
         }],
       ],
     }),
-    resolve({
-      rootDir: process.cwd(),
-    }),
+    resolve(),
     commonjs(),
   ],
 }

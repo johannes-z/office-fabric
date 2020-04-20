@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="sidebar">
-      <f-nav :groups="groups" />
+      <Nav :groups="groups" />
     </div>
     <div class="content">
       <div class="">
@@ -13,12 +13,15 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Nav } from '@uifabric-vue/office-ui-fabric-vue'
 
 const publicPath = process.env.NODE_ENV === 'production'
   ? '/office-fabric'
   : ''
 
-@Component
+@Component({
+  components: { Nav },
+})
 export default class Preview extends Vue {
   groups = [
     {

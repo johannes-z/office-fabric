@@ -52,7 +52,7 @@ const TouchIdleDelay = 500 /* ms */
 @Component({
   components: { Icon, FontIcon },
 })
-export default class BaseButton extends BaseComponent<any, any> {
+export default class BaseButton extends BaseComponent {
   @Prop({ type: String, default: null }) href!: string
   @Prop({ type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: false }) split!: boolean
