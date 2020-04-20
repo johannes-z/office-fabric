@@ -14,6 +14,12 @@ import pkg from './package.json'
 
 const packageRoot = path.resolve(__dirname)
 
+console.log([
+  ...Object.keys(pkg.dependencies),
+  '@microsoft/load-themed-styles',
+  '@uifabric/set-version'
+]);
+
 export default {
   // external: [
   //   /id/,
@@ -26,7 +32,11 @@ export default {
     format: 'esm',
     sourcemap: false,
   },
-  external: Object.keys(pkg.dependencies),
+  external: [
+    ...Object.keys(pkg.dependencies),
+    '@microsoft/load-themed-styles',
+    '@uifabric/set-version'
+  ],
   preserveModules: true,
   preserveSymlinks: true,
   plugins: [
@@ -44,11 +54,6 @@ export default {
     vue({
       css: false,
     }),
-    resolve({
-      extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
-      preferBuiltins: true,
-    }),
-    commonjs({ include: /node_modules/ }),
     typescript({
       abortOnError: false,
       typescript: require('typescript'),
@@ -60,6 +65,11 @@ export default {
         },
       },
     }),
+    resolve({
+      extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+      preferBuiltins: true,
+    }),
+    commonjs({ include: /node_modules/ }),
     babel({
       exclude: /node_modules/,
       extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
@@ -69,7 +79,6 @@ export default {
         ['@vue/cli-plugin-babel/preset', {
           modules: false,
           useBuiltIns: false,
-          jsx: true,
           polyfills: [],
         }],
       ],
