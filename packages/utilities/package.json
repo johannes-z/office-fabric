@@ -1,20 +1,13 @@
 {
   "name": "@uifabric-vue/utilities",
   "version": "1.0.0",
-  "main": "./dist/index.umd.min.js",
+  "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "scripts": {
-    "build": "yarn build:browser && yarn build:module",
-    "build:browser": "bili",
-    "build:module": "tsc"
+    "build": "tsc"
   },
   "devDependencies": {
-    "bili": "^4.8.1",
-    "rollup": "^1.30.0",
-    "rollup-plugin-alias": "^2.2.0",
-    "rollup-plugin-typescript2": "^0.25.3",
-    "rollup-plugin-vue": "5.1.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   }
 }
