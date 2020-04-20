@@ -1,1 +1,0 @@
-{"version":3,"file":"IVirtualElement.d.ts","sourceRoot":"","sources":["../../src/dom/IVirtualElement.ts"],"names":[],"mappings":"AAAA;;;GAGG;AACH,MAAM,WAAW,eAAgB,SAAQ,WAAW;IAClD,QAAQ,EAAE;QACR,MAAM,CAAC,EAAE,eAAe,CAAC;QACzB,QAAQ,EAAE,eAAe,EAAE,CAAC;KAC7B,CAAC;CACH"}
