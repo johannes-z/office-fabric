@@ -1,13 +1,13 @@
 <template>
   <Layer>
-    <div :class="classNames.root">
-      <div :class="classNames.container">
-        Modal
-        asfd
-        asdf
-        asdf
+    <Popup>
+      <div :class="classNames.root">
+        <Overlay />
+        <div :class="classNames.main">
+          <slot />
+        </div>
       </div>
-    </div>
+    </Popup>
   </Layer>
 </template>
 
@@ -15,14 +15,16 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IModalProps, IModalStyles } from './Modal.types'
 import BaseComponent from '../BaseComponent'
-import { Layer } from '../'
+import { Layer } from '../Layer'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { getStyles } from './Modal.styles'
+import { Popup } from '../Popup'
+import { Overlay } from '../Overlay'
 
 const getClassNames = classNamesFunction<any, any>()
 
 @Component({
-  components: { Layer },
+  components: { Layer, Popup, Overlay },
 })
 export default class Modal extends BaseComponent<IModalProps, IModalStyles> {
   @Prop({ type: Object, default: null }) layerProps!: any
@@ -36,9 +38,21 @@ export default class Modal extends BaseComponent<IModalProps, IModalStyles> {
   @Prop({ type: Object, default: null }) dragOptions!: any
 
   get classNames () {
-    const { theme, className, layerProps, containerClassName, scrollableContentClassName, isVisible, hasBeenOpened, modalRectangleTop, topOffsetFixed, isModeless, dragOptions } = this
+    const {
+      theme,
+      className,
+      layerProps,
+      containerClassName,
+      scrollableContentClassName,
+      isVisible,
+      hasBeenOpened,
+      modalRectangleTop,
+      topOffsetFixed,
+      isModeless,
+      dragOptions,
+    } = this
 
-    const layerClassName = layerProps === undefined ? '' : layerProps.className
+    const layerClassName = layerProps == null ? '' : layerProps.className
 
     return getClassNames(getStyles, {
       theme,

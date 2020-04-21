@@ -52,7 +52,7 @@ import VNodes from '../VNodes'
 
 import { getClassNames } from './ComboBox.classNames'
 import { IComboBoxOption, IComboBoxOptionStyles, IComboBoxProps } from './ComboBox.types'
-import { Callout } from '../index'
+import { Callout } from '../Callout'
 import { Checkbox } from '../Checkbox'
 
 export interface IComboBoxState {
