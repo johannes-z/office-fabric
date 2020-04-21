@@ -6,7 +6,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getStyles } from './MessageBarButton.styles'
 import BaseComponent from '../../BaseComponent'
-import { DefaultButton } from '../'
+import DefaultButton from '../DefaultButton/DefaultButton.vue'
 
 @Component({
   components: { DefaultButton },

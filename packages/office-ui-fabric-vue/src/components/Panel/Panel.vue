@@ -44,7 +44,9 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { IPanelProps, IPanelStyles, PanelType } from './Panel.types'
 import BaseComponent from '../BaseComponent'
-import { Layer, Overlay, IconButton } from '../index'
+import { Layer } from '../Layer'
+import { Overlay } from '../Overlay'
+import { IconButton } from '../Button'
 import { classNamesFunction, getId, elementContains, getRTL } from '@uifabric-vue/utilities'
 import { IconFontSizes } from '@uifabric/styling'
 

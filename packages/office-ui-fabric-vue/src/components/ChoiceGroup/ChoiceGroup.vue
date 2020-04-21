@@ -30,7 +30,7 @@ import BaseComponent from '../BaseComponent'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-import { Label } from '../'
+import { Label } from '../Label'
 
 const getClassNames = classNamesFunction()
 
