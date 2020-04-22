@@ -1,5 +1,102 @@
-import { IStyle } from '@uifabric/merge-styles'
+import { IPersonaSharedProps } from '../Persona'
+import { IStyle } from '@uifabric/styling'
 
+/**
+ * {@docCategory ActivityItem}
+ */
+export interface IActivityItemProps {
+  /**
+   * An element describing the activity that took place. If no activityDescription, activityDescriptionText, or
+   * onRenderActivityDescription are included, no description of the activity is shown.
+   */
+  activityDescription?: any;
+
+  /**
+   * Text describing the activity that occurred and naming the people involved in it.
+   * Deprecated, use `activityDescription` instead.
+   * @deprecated Use `activityDescription` instead.
+   */
+  activityDescriptionText?: string;
+
+  /**
+   * An element containing an icon shown next to the activity item.
+   */
+  activityIcon?: any;
+
+  /**
+   * If activityIcon is not set, then the persona props in this array will be used as the icon for this activity item.
+   */
+  activityPersonas?: Array<IPersonaSharedProps>;
+
+  /**
+   * An element containing the text of comments or \@mention messages.
+   * If no comments, commentText, or onRenderComments are included, no comments are shown.
+   */
+  comments?: any;
+
+  /**
+   * Text of comments or \@mention messages.
+   * Deprecated, use `comments` instead.
+   * @deprecated Use `comments` instead.
+   */
+  commentText?: string;
+
+  /**
+   * Indicated if the compact styling should be used.
+   */
+  isCompact?: boolean;
+
+  /**
+   * A renderer for the description of the current activity.
+   */
+  onRenderActivityDescription?: any;
+
+  /**
+   * A renderer that adds the text of a comment below the activity description.
+   */
+  onRenderComments?: any;
+
+  /**
+   * A renderer to create the icon next to the activity item.
+   */
+  onRenderIcon?: any;
+
+  /**
+   * A renderer adds a time stamp. If not included, timeStamp is shown as plain text below the activity.
+   */
+  onRenderTimeStamp?: any;
+
+  /**
+   * Optional styling for the elements within the Activity Item.
+   */
+  styles?: IActivityItemStyles;
+
+  /**
+   * Element shown as a timestamp on this activity. If not included, no timestamp is shown.
+   */
+  timeStamp?: string | any;
+
+  /**
+   * Beacon color one
+   */
+  beaconColorOne?: string;
+
+  /**
+   * Beacon color two
+   */
+  beaconColorTwo?: string;
+
+  /**
+   * Enables/Disables the beacon that radiates
+   * from the center of the center of the activity icon. Signals an activity has started.
+   * @defaultvalue false
+   */
+  animateBeaconSignal?: boolean;
+}
+
+/**
+ * {@docCategory ActivityItem}
+ */
 export interface IActivityItemStyles {
   /**
    * Styles applied to the root activity item container.
