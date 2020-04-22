@@ -47,7 +47,7 @@
                 label="Show host" />
 
       <LayerHost v-if="showHost"
-                 :id="layerHostId"
+                 :host-id="layerHostId"
                  :class="$style.layerHost" />
 
       <p>
