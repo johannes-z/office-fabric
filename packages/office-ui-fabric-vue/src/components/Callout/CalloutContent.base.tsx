@@ -1,20 +1,4 @@
-<template>
-  <div ref="hostElement" :class="classNames.container">
-    <div ref="calloutElement"
-         :class="classNames.root"
-         :style="positionCss ? positionCss.elementPosition : null">
-      <div v-if="isBeakVisible"
-           :class="classNames.beak"
-           :style="positionCss && positionCss.beakPosition ? positionCss.beakPosition.elementPosition : null" />
-      <div v-if="isBeakVisible" :class="classNames.beakCurtain" />
-      <div :class="classNames.calloutMain">
-        <slot />
-      </div>
-    </div>
-  </div>
-</template>
 
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction, getWindow, getDocument, ICalloutPositionedInfo, assign, IRectangle, IPosition } from '@uifabric-vue/utilities'
@@ -26,10 +10,8 @@ import { positionCallout } from '../../utilities/positioning/'
 
 const getClassNames = classNamesFunction()
 
-@Component({
-  components: {},
-})
-export default class CalloutContent extends BaseComponent {
+@Component
+export class CalloutContentBase extends BaseComponent {
   $refs!: {
     hostElement: HTMLDivElement
     calloutElement: HTMLDivElement
@@ -156,5 +138,24 @@ export default class CalloutContent extends BaseComponent {
     }
     return true
   }
+
+  render () {
+    const { classNames, positionCss, isBeakVisible } = this
+    return (
+      <div ref="hostElement" class={classNames.container}>
+        <div ref="calloutElement"
+          class={classNames.root}
+          style={positionCss ? positionCss.elementPosition : null}>
+          {isBeakVisible && (
+            <div class={classNames.beak}
+              style={(positionCss && positionCss.beakPosition) ? positionCss.beakPosition.elementPosition : null} />
+          )}
+          {isBeakVisible && (<div class={classNames.beakCurtain} />)}
+          <div class={classNames.calloutMain}>
+            {this.$slots.default}
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
-</script>
