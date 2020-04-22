@@ -5,7 +5,7 @@ import { VueConstructor } from 'vue'
 
 export * from './Image.types'
 
-export const Image: VueConstructor = styled(
+export const Image = styled(
   ImageBase,
   getStyles,
   undefined,
