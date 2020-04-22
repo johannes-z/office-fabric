@@ -1,43 +1,17 @@
-<template>
-  <div :area-label="areaLabel"
-       :class="classNames.root"
-       :style="{ '--size': `${size}px` }">
-    <div :class="classNames.ratingFocusZone">
-      <button v-for="ratingLevel in ratingLevels"
-              :key="ratingLevel"
-              :class="classNames.ratingButton"
-              v-bind="$attrs"
-              :disabled="disabled"
-              @click="!disabled && !readonly && setRating(ratingLevel)">
-        <span :class="classNames.labelText">{{ `Select ${ratingLevel} of ${max}` }}</span>
-        <div :class="classNames.ratingStar">
-          <Icon
-            :icon-name="getRatingIconName(ratingLevel)"
-            :class="classNames.ratingStarBack" />
-          <Icon :icon-name="iconName"
-                :class="classNames.ratingStarFront"
-                :style="{ width: getRatingFillPercentage(ratingLevel) }" />
-        </div>
-      </button>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Icon } from '../Icon/'
-import { IconButton } from '../Button/'
-import { IRatingProps, IRatingStyles } from './Rating.types'
+import { Icon } from '../Icon'
+import { IconButton } from '../Button'
+import { IRatingProps, IRatingStyles, IRatingStyleProps } from './Rating.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IRatingStyleProps, IRatingStyles>()
 
 @Component({
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class Rating extends BaseComponent {
+export class RatingBase extends BaseComponent<IRatingProps> {
   @Prop({ type: Number, default: 16 }) size!: number
   @Prop({ type: Number, default: 0 }) min!: number
   @Prop({ type: Number, default: 10 }) max!: number
@@ -54,7 +28,7 @@ export default class Rating extends BaseComponent {
     const { disabled, readonly, theme } = this
     return getClassNames(this.styles, {
       disabled,
-      readonly,
+      readOnly: readonly,
       theme,
     })
   }
@@ -96,5 +70,36 @@ export default class Rating extends BaseComponent {
   private onValueChanged (value: string) {
     this.$emit('input', value)
   }
+
+  render () {
+    const { classNames, readonly, max, size, disabled, iconName } = this
+    return (
+      <div area-label="areaLabel"
+        class={classNames.root}
+        style={{ '--size': `${size}px` }}>
+        <div class={classNames.ratingFocusZone}>
+          {this.ratingLevels.map(ratingLevel => (
+            <button
+              key={ratingLevel}
+              {...{ attrs: this.$attrs }}
+              class={classNames.ratingButton}
+              disabled={disabled}
+              onClick={() => { !disabled && !readonly && this.setRating(ratingLevel) }}>
+              <span class={classNames.labelText}>{ `Select ${ratingLevel} of ${max}` }</span>
+
+              <div class={classNames.ratingStar}>
+                <Icon
+                  icon-name={this.getRatingIconName(ratingLevel)}
+                  class={classNames.ratingStarBack} />
+                <Icon
+                  icon-name={iconName}
+                  class={classNames.ratingStarFront}
+                  style={{ width: this.getRatingFillPercentage(ratingLevel) }} />
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
 }
-</script>
