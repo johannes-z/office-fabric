@@ -1,11 +1,10 @@
 import { styled } from '../../styled'
-import ChoiceGroupOptionBase from './ChoiceGroupOption.vue'
+import { ChoiceGroupOptionBase } from './ChoiceGroupOption.base'
 import { getStyles } from './ChoiceGroupOption.styles'
-import { VueConstructor } from 'vue'
 
 export * from './ChoiceGroupOption.types'
 
-export const ChoiceGroupOption: VueConstructor = styled(
+export const ChoiceGroupOption = styled(
   ChoiceGroupOptionBase,
   getStyles,
   undefined,

@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import ChoiceGroupBase from './ChoiceGroup.vue'
+import { ChoiceGroupBase } from './ChoiceGroup.base'
 import { getStyles } from './ChoiceGroup.styles'
 import { VueConstructor } from 'vue'
 
