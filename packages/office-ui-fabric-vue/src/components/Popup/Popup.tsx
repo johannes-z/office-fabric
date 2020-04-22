@@ -98,6 +98,8 @@ export class Popup extends BaseComponent<IPopupProps> {
 
   private _getScrollBar (): void {
     // If overflowY is overriden, don't waste time calculating whether the scrollbar is necessary.
+    // TODO remove ts-ignore and fix `this.style`
+    // @ts-ignore
     if (this.style && this.style.overflowY) {
       return
     }
