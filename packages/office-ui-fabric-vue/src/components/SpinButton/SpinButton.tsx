@@ -12,6 +12,7 @@ import {
 
 import { getClassNames } from './SpinButton.classNames'
 import { getStyles, getArrowButtonStyles } from './SpinButton.styles'
+import { ISpinButtonProps } from './SpinButton.types'
 
 export enum KeyboardSpinDirection {
   down = -1,

@@ -3,6 +3,7 @@ import { IIconProps } from '../Icon'
 import { IButtonClassNames } from './BaseButton.classNames'
 import { ISplitButtonClassNames } from './SplitButton/SplitButton.classNames'
 import { KeyCodes } from '@uifabric-vue/utilities'
+import { IKeytipProps } from '../Keytip/Keytip.types'
 
 /**
  * {@docCategory Button}
