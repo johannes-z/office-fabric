@@ -1,7 +1,2 @@
-import SpinButton from './SpinButton.vue'
-
+export * from './SpinButton'
 export * from './SpinButton.types'
-
-export {
-  SpinButton,
-}
