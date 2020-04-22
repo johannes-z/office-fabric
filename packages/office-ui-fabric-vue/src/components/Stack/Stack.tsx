@@ -1,9 +1,8 @@
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { styles } from './Stack.styles'
-import { IStackTokens } from './Stack.types'
+import { IStackTokens, IStackProps } from './Stack.types'
 import StatelessComponent from '../StatelessComponent'
 import { VNode, CreateElement, RenderContext } from 'vue'
 import { mergeStyleSets } from '@uifabric/styling'
@@ -13,7 +12,7 @@ const getClassNames = classNamesFunction()
 @Component({
   components: {},
 })
-export default class Stack extends StatelessComponent {
+export class Stack extends StatelessComponent<IStackProps> {
   @Prop({ type: String, default: '' }) verticalFill!: string
   @Prop({ type: Boolean, default: false }) horizontal!: boolean
   @Prop({ type: Boolean, default: false }) reversed!: boolean
@@ -47,4 +46,3 @@ export default class Stack extends StatelessComponent {
     }, ctx.children)
   }
 }
-</script>
