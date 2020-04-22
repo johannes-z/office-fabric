@@ -1,44 +1,3 @@
-<template>
-  <component :is="component"
-             ref="buttonElement"
-             :class="classNames.root"
-             :href="href">
-    <span :class="classNames.flexContainer">
-      <Icon v-if="iconProps"
-            :class="css(classNames.icon, className)"
-            v-bind="iconProps" />
-
-      <slot name="flex" />
-
-      <span v-if="$slots.default"
-            :class="classNames.textContainer">
-        <span :class="classNames.label">
-          <slot />
-        </span>
-        <span v-if="secondaryText" :class="classNames.description">
-          {{ secondaryText }}
-        </span>
-      </span>
-
-      <template v-if="!isSplitButton && menuProps">
-        <FontIcon icon-name="ChevronDown"
-                  v-bind="menuIconProps"
-                  :class="classNames.menuIcon" />
-      </template>
-      <template v-if="menuProps && !menuProps.doNotLayer">
-        <component :is="MenuType"
-                   v-if="shouldRenderMenu"
-                   :directional-hint="DirectionalHint.bottomLeftEdge"
-                   v-bind="menuProps"
-                   :class="css('ms-BaseButton-menuhost', menuProps.className)"
-                   :target="isSplitButton ? $refs.splitButtonContainer : $refs.buttonElement"
-                   :on-dismiss="() => menuHidden = true" />
-      </template>
-    </span>
-  </component>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { getBaseButtonClassNames, IButtonClassNames } from './BaseButton.classNames'
@@ -46,13 +5,20 @@ import { Icon, FontIcon } from '../Icon'
 import { ITheme } from '@uifabric/styling'
 import { DirectionalHint } from '../../common/DirectionalHint'
 import { ContextualMenu } from '../ContextualMenu'
+import { IButtonProps } from './Button.types'
 
 const TouchIdleDelay = 500 /* ms */
 
-@Component({
-  components: { Icon, FontIcon },
-})
-export default class BaseButton extends BaseComponent {
+/**
+ * {@docCategory Button}
+ */
+export interface IBaseButtonProps extends IButtonProps {
+  baseClassName?: string;
+  variantClassName?: string;
+}
+
+@Component
+export class BaseButton extends BaseComponent<IBaseButtonProps> {
   @Prop({ type: String, default: null }) href!: string
   @Prop({ type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: false }) split!: boolean
@@ -83,8 +49,6 @@ export default class BaseButton extends BaseComponent {
 
   menuHidden: boolean = true
   menuOpen: boolean = false
-
-  DirectionalHint = DirectionalHint
 
   get MenuType () {
     return this.menuAs || ContextualMenu
@@ -148,5 +112,42 @@ export default class BaseButton extends BaseComponent {
         this.split,
       )
   }
+
+  render () {
+    const ButtonComponent = this.component
+    const MenuComponent = this.MenuType
+    const { classNames, href, iconProps, className, css, secondaryText, isSplitButton, menuProps, menuIconProps, shouldRenderMenu } = this
+    return (
+      <ButtonComponent
+        ref="buttonElement"
+        class={classNames.root}
+        href={href}>
+        <span class={classNames.flexContainer}>
+          {iconProps && (<Icon class={css(classNames.icon, className)} {...{ props: iconProps }} />)}
+
+          {this.$slots.flex}
+
+          {this.$scopedSlots.default && (
+            <span class={classNames.textContainer}>
+              <span class={classNames.label}>
+                {this.$scopedSlots.default({})}
+              </span>
+              {secondaryText && (<span class={classNames.description}>{secondaryText}</span>)}
+            </span>
+          )}
+
+          {(!isSplitButton && menuProps) && (<FontIcon icon-name="ChevronDown" {...{ props: menuIconProps }} class={classNames.menuIcon} />)}
+
+          {(menuProps && !menuProps.doNotLayer && shouldRenderMenu) && (
+            <MenuComponent
+              directional-hint={DirectionalHint.bottomLeftEdge}
+              {...{ props: menuProps }}
+              class={css('ms-BaseButton-menuhost', menuProps.className)}
+              target={isSplitButton ? this.$refs.splitButtonContainer : this.$refs.buttonElement}
+              onDismiss={() => (this.menuHidden = true)} />
+          )}
+        </span>
+      </ButtonComponent>
+    )
+  }
 }
-</script>

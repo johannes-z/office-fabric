@@ -3,7 +3,7 @@ import { Icon } from '../Icon'
 import { Label } from '../Label'
 import BaseComponent from '../BaseComponent'
 
-import IconButton from '../Button/IconButton/IconButton.vue'
+import { IconButton } from '../Button/IconButton/IconButton'
 import { Position } from '../../utilities/positioning'
 import {
   calculatePrecision,

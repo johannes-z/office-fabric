@@ -1,8 +1,7 @@
-import { concatStyleSets } from '@uifabric/merge-styles'
-import { HighContrastSelector, ITheme } from '@uifabric/styling'
-import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button.types'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
+import { memoizeFunction } from '@uifabric-vue/utilities'
+import { ITheme, HighContrastSelector, concatStyleSets } from '@uifabric/styling'
 
 const DEFAULT_BUTTON_HEIGHT = '40px'
 const DEFAULT_PADDING = '0 4px'

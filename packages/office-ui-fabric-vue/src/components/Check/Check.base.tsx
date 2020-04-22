@@ -11,6 +11,7 @@ const getClassNames = classNamesFunction<ICheckStyleProps, ICheckStyles>()
 export class CheckBase extends StatelessComponent {
   @Prop({ type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: true }) useFastIcons!: boolean
+
   render (h, ctx: RenderContext) {
     const { checked, className, theme, styles, useFastIcons } = ctx.props
 
