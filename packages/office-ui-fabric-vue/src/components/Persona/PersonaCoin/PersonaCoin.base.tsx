@@ -1,41 +1,3 @@
-<template>
-  <div role="presentation"
-       :class="classNames.coin">
-    <div v-if="size !== PersonaSize.size8"
-         role="presentation"
-         :class="classNames.imageArea"
-         :style="coinSizeStyle">
-      <div v-if="shouldRenderInitials"
-           :class="mergeStyles(
-             classNames.initials,
-             !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor($props) }
-           )"
-           :style="coinSizeStyle"
-           aria-hidden="true">
-        <span v-if="initials">{{ initials }}</span>
-        <Icon v-else icon-name="Contact" />
-      </div>
-      <OImage v-if="imageUrl"
-              :class="classNames.image"
-              :image-fit="ImageFit.cover"
-              :src="imageUrl"
-              :width="dimension"
-              :height="dimension" />
-      <PersonaPresence v-bind="personaPresenceProps" />
-    </div>
-
-    <template v-else>
-      <PersonaPresence v-if="presence" v-bind="personaPresenceProps" />
-      <Icon v-else
-            icon-name="Contact"
-            :class="classNames.size10WithoutPresenceIcon" />
-    </template>
-
-    <slot />
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { classNamesFunction, getInitials, getRTL } from '@uifabric-vue/utilities'
@@ -44,19 +6,26 @@ import { getPersonaInitialsColor } from '../PersonaInitialsColor'
 import {
   PersonaSize,
   PersonaPresence as PersonaPresenceEnum,
+  IPersonaCoinStyleProps,
+  IPersonaCoinStyles,
+  IPersonaCoinProps,
 } from '../Persona.types'
 import { PersonaPresence } from '../PersonaPresence/'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
 import { ImageFit, Image } from '../../Image'
 import { Icon } from '../../Icon'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IPersonaCoinStyleProps, IPersonaCoinStyles>({
+  // There can be many PersonaCoin rendered with different sizes.
+  // Therefore setting a larger cache size.
+  cacheSize: 100,
+})
 
 @Component({
   inheritAttrs: false,
   components: { Icon, OImage: Image, PersonaPresence },
 })
-export default class PersonaCoin extends BaseComponent {
+export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
   @Prop({ type: Boolean, default: false }) allowPhoneInitials!: boolean
   @Prop({ type: Number, default: PersonaPresenceEnum.none }) presence!: number
   @Prop({ type: Number, default: null }) size!: number
@@ -119,5 +88,48 @@ export default class PersonaCoin extends BaseComponent {
       showUnknownPersonaCoin,
     })
   }
+
+  render () {
+    const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
+    return (
+      <div role="presentation"
+        class={classNames.coin}>
+        {(size !== PersonaSize.size8) ? (
+          <div role="presentation"
+            class={classNames.imageArea}
+            style={coinSizeStyle}>
+            { shouldRenderInitials && (
+              <div class={mergeStyles(
+                classNames.initials,
+                !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor(this.$props as any) },
+              )}
+              style={coinSizeStyle}
+              aria-hidden="true">
+                {initials
+                  ? (<span>{initials}</span>)
+                  : (<Icon icon-name="Contact" />)
+                }
+              </div>
+            )}
+
+            {imageUrl && (
+              <Image class={classNames.image}
+                image-fit={ImageFit.cover}
+                src={imageUrl}
+                width={dimension}
+                height={dimension} />
+            )}
+            <PersonaPresence {...{ props: personaPresenceProps }} />
+          </div>
+        ) : presence ? (
+          <PersonaPresence {...{ props: personaPresenceProps }} />
+        ) : (
+          <Icon icon-name="Contact"
+            class={classNames.size10WithoutPresenceIcon} />
+        )}
+
+        {this.$slots.default}
+      </div>
+    )
+  }
 }
-</script>

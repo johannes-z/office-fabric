@@ -1,14 +1,13 @@
 import { styled } from '../styled'
-import PersonaBase from './Persona.vue'
+import { PersonaBase } from './Persona.base'
 import { getStyles } from './Persona.styles'
-import { VueConstructor } from 'vue'
 
 export * from './Persona.types'
 export * from './PersonaConsts'
 export * from './PersonaCoin'
 export { getPersonaInitialsColor } from './PersonaInitialsColor'
 
-export const Persona: VueConstructor = styled(
+export const Persona = styled(
   PersonaBase,
   getStyles,
   undefined,

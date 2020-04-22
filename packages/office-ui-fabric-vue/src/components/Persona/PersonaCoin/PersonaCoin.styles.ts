@@ -1,6 +1,6 @@
-import { PersonaSize } from '../Persona.types'
-import { HighContrastSelector, FontWeights, getGlobalClassNames } from '@uifabric/styling'
+import { IPersonaCoinStyleProps, IPersonaCoinStyles, PersonaSize } from '../Persona.types'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
+import { getGlobalClassNames, HighContrastSelector, FontWeights } from '@uifabric/styling'
 
 const GlobalClassNames = {
   coin: 'ms-Persona-coin',
@@ -21,7 +21,7 @@ const GlobalClassNames = {
   size120: 'ms-Persona--size120',
 }
 
-export const getStyles = (props: any): any => {
+export const getStyles = (props: IPersonaCoinStyleProps): IPersonaCoinStyles => {
   const { className, theme, coinSize } = props
 
   const { palette, fonts } = theme
@@ -115,7 +115,8 @@ export const getStyles = (props: any): any => {
         color: props.showUnknownPersonaCoin ? unknownPersonaFontColor : palette.white,
         fontSize: fonts.large.fontSize,
         fontWeight: FontWeights.semibold,
-        lineHeight: dimension === 48 ? 46 : dimension, // copying the logic for the dimensions; defaulted to 46 for size48
+        // copying the logic for the dimensions; defaulted to 46 for size48
+        lineHeight: dimension === 48 ? 46 : dimension,
         height: dimension,
 
         selectors: {

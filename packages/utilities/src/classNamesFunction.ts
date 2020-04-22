@@ -1,10 +1,13 @@
 import { mergeCssSets, IStyleSet, IProcessedStyleSet, Stylesheet, IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { getRTL } from './rtl'
+import { getWindow } from './dom'
 
 const MAX_CACHE_COUNT = 50
 let _memoizedClassNames = 0
 
 const stylesheet = Stylesheet.getInstance()
+
+type AppWindow = (Window & { FabricConfig?: { enableClassNameCacheFullWarning?: boolean } }) | undefined;
 
 if (stylesheet && stylesheet.onReset) {
   stylesheet.onReset(() => _memoizedClassNames++)
@@ -27,6 +30,11 @@ export interface IClassNamesFunctionOptions {
    * Disables class caching for scenarios where styleProp parts mutate frequently.
    */
   disableCaching?: boolean;
+
+  /**
+   * Size of the cache. It overwrites default cache size when defined.
+   */
+  cacheSize?: number;
 }
 
 /**
@@ -38,7 +46,7 @@ export interface IClassNamesFunctionOptions {
  * these will cause extra recalcs to occur.
  */
 export function classNamesFunction<TStyleProps extends {}, TStyleSet extends IStyleSet<TStyleSet>> (
-  options: IClassNamesFunctionOptions = {}
+  options: IClassNamesFunctionOptions = {},
 ): (getStyles: IStyleFunctionOrObject<TStyleProps, TStyleSet> | undefined, styleProps?: TStyleProps) => IProcessedStyleSet<TStyleSet> {
   // We build a trie where each node is a Map. The map entry key represents an argument
   // value, and the entry value is another node (Map). Each node has a `__retval__`
@@ -48,16 +56,18 @@ export function classNamesFunction<TStyleProps extends {}, TStyleSet extends ISt
   // exist in the trie. At the last node, if there is a `__retval__` we return that. Otherwise
   // we call the `getStyles` api to evaluate, cache on the property, and return that.
   let map: IRecursiveMemoNode = new Map()
-  let resultCount = 0
+  let styleCalcCount = 0
+  let getClassNamesCount = 0
   let currentMemoizedClassNames = _memoizedClassNames
 
   const getClassNames = (
     styleFunctionOrObject: IStyleFunctionOrObject<TStyleProps, TStyleSet> | undefined,
-    styleProps: TStyleProps = {} as TStyleProps
+    styleProps: TStyleProps = {} as TStyleProps,
   ): IProcessedStyleSet<TStyleSet> => {
+    getClassNamesCount++
     let current: Map<any, any> = map
     const { theme } = styleProps as any
-    const rtl = (theme && theme.rtl) || getRTL()
+    const rtl = theme && theme.rtl !== undefined ? theme.rtl : getRTL()
 
     const disableCaching = options.disableCaching
 
@@ -65,7 +75,7 @@ export function classNamesFunction<TStyleProps extends {}, TStyleSet extends ISt
     if (currentMemoizedClassNames !== _memoizedClassNames) {
       currentMemoizedClassNames = _memoizedClassNames
       map = new Map()
-      resultCount = 0
+      styleCalcCount = 0
     }
 
     if (!options.disableCaching) {
@@ -79,32 +89,34 @@ export function classNamesFunction<TStyleProps extends {}, TStyleSet extends ISt
       } else {
         (current as any)[RetVal] = mergeCssSets(
           [
-            (typeof styleFunctionOrObject === 'function' ? styleFunctionOrObject(styleProps) : styleFunctionOrObject) as IStyleSet<TStyleSet>,
+            (typeof styleFunctionOrObject === 'function'
+              ? styleFunctionOrObject(styleProps)
+              : styleFunctionOrObject) as IStyleSet<TStyleSet>,
           ],
-          { rtl: !!rtl }
+          { rtl: !!rtl },
         )
       }
 
       if (!disableCaching) {
-        resultCount++
+        styleCalcCount++
       }
     }
 
-    if (resultCount > MAX_CACHE_COUNT) {
+    if (styleCalcCount > (options.cacheSize || MAX_CACHE_COUNT)) {
+      const win = getWindow() as AppWindow
+      if (win?.FabricConfig?.enableClassNameCacheFullWarning) {
+        console.warn(
+          `Styles are being recalculated too frequently. Cache miss rate is ${styleCalcCount}/${getClassNamesCount}.`,
+        )
+        // tslint:disable-next-line:no-console
+        console.trace()
+      }
+
       map.clear()
-      resultCount = 0
+      styleCalcCount = 0
 
       // Mutate the options passed in, that's all we can do.
       options.disableCaching = true
-
-      // Note: this code is great for debugging problems with styles being recaculated, but commenting it out
-      // to avoid confusing consumers.
-
-      // if (process.env.NODE_ENV !== 'production') {
-      //  console.log('Styles are being recalculated far too frequently. Something is mutating the class over and over.');
-      //  // tslint:disable-next-line:no-console
-      //  console.trace();
-      // }
     }
 
     // Note: the RetVal is an attached property on the Map; not a key in the Map. We use this attached property to
