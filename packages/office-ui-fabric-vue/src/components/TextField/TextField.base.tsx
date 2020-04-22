@@ -1,8 +1,9 @@
 import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
-import { Label } from '../Label/'
+import { Label, ILabelStyles, ILabelStyleProps } from '../Label/'
 import { ITextFieldProps, ITextFieldStyles, ITextFieldStyleProps } from './TextField.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
@@ -102,14 +103,17 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
 
     const Component = multiline ? 'textarea' : 'input'
 
+    const labelStyles = classNames.subComponentStyles
+      ? (classNames.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
+      : undefined
+
     return (
 
       <div class={classNames.root}>
         <div class={classNames.wrapper}>
           {label && (
             <Label
-              class={classNames.label}
-              styles={classNames.subComponentStyles.label}
+              styles={labelStyles}
               for={`TextField${this.uid}`}
               required={required}>{label}</Label>
           )}
@@ -124,7 +128,7 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
               readonly={readonly}
               required={required}
               placeholder={placeholder}
-              rows={this.$attrs.rows || 1}
+              rows={+this.$attrs.rows || 1}
               type="text"
               autocomplete="off"
               style={{ resize: (resizable === false) && 'none' }}

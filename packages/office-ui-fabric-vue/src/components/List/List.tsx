@@ -73,7 +73,7 @@ const _measureScrollRect = measurePageRect
 @Component({
   components: {},
 })
-export class List extends BaseComponent {
+export class List extends BaseComponent<IListProps> {
   $refs!: {
     root: HTMLDivElement
     surface: HTMLDivElement
