@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import OverlayBase from './Overlay.vue'
+import { OverlayBase } from './Overlay.base'
 import { getStyles } from './Overlay.styles'
 import { VueConstructor } from 'vue'
 
