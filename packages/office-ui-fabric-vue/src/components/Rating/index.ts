@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import RatingBase from './Rating.vue'
+import { RatingBase } from './Rating.base'
 import { getStyles } from './Rating.styles'
-import { VueConstructor } from 'vue'
 
 export * from './Rating.types'
 
-export const Rating: VueConstructor = styled(
+export const Rating = styled(
   RatingBase,
   getStyles,
   undefined,
