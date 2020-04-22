@@ -1,13 +1,12 @@
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement } from 'vue'
 import { Layer } from '../Layer/'
-import CalloutContent from './CalloutContent.vue'
+import { CalloutContent } from './CalloutContent'
 import StatelessComponent from '../StatelessComponent'
 import { DirectionalHint } from '../../common/DirectionalHint'
 
 @Component
-export default class Callout extends StatelessComponent {
+export class Callout extends StatelessComponent {
   @Prop({ type: HTMLElement, required: true }) target!: any
   @Prop({ type: Boolean, default: false }) doNotLayer!: boolean
   @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: boolean
@@ -33,7 +32,3 @@ export default class Callout extends StatelessComponent {
     }, [content])
   }
 }
-</script>
-
-<style lang="scss" scoped>
-</style>
