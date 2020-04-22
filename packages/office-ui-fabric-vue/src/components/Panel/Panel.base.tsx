@@ -1,48 +1,5 @@
-<template>
-  <Layer v-if="!(!isOpen && !isAnimating && !isHiddenOnDismiss)">
-    <div ref="panel" :class="classNames.root">
-      <Overlay v-if="isBlocking && isOpen" :class="classNames.overlay" />
-      <div :class="classNames.main">
-        <div :class="classNames.commands">
-          <div :class="classNames.navigation">
-            <IconButton :class="classNames.closeButton"
-                        :styles="{
-                          root: {
-                            height: 'auto',
-                            width: '44px',
-                            color: theme.palette.neutralSecondary,
-                            fontSize: IconFontSizes.large
-                          },
-                          rootHovered: {
-                            color: theme.palette.neutralPrimary
-                          }
-                        }"
-                        :icon-props="{ iconName: 'Cancel' }"
-                        @click.native="dismiss" />
-          </div>
-        </div>
-
-        <div :class="classNames.contentInner">
-          <div :class="classNames.header">
-            <p :class="classNames.headerText">
-              <slot name="header">{{ headerText }}</slot>
-            </p>
-          </div>
-
-          <div ref="scrollableContent" :class="classNames.scrollableContent">
-            <div :class="classNames.content">
-              <slot />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Layer>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { IPanelProps, IPanelStyles, PanelType } from './Panel.types'
+import { IPanelProps, IPanelStyles, PanelType, IPanelStyleProps } from './Panel.types'
 import BaseComponent from '../BaseComponent'
 import { Layer } from '../Layer'
 import { Overlay } from '../Overlay'
@@ -50,7 +7,7 @@ import { IconButton } from '../Button'
 import { classNamesFunction, getId, elementContains, getRTL } from '@uifabric-vue/utilities'
 import { IconFontSizes } from '@uifabric/styling'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IPanelStyleProps, IPanelStyles>()
 
 enum PanelVisibilityState {
   closed,
@@ -59,10 +16,8 @@ enum PanelVisibilityState {
   animatingClosed
 }
 
-@Component({
-  components: { Layer, Overlay, IconButton },
-})
-export default class Panel extends BaseComponent {
+@Component
+export class PanelBase extends BaseComponent<IPanelProps> {
   $refs!: {
     scrollableContent: HTMLDivElement
     panel: HTMLDivElement
@@ -243,5 +198,52 @@ export default class Panel extends BaseComponent {
       this.onDismissed()
     }
   }
+
+  render () {
+    const { classNames, isOpen, isAnimating, isHiddenOnDismiss, isBlocking, theme, headerText } = this
+    if (!isOpen && !isAnimating && !isHiddenOnDismiss) return
+
+    return (
+      <Layer>
+        <div ref="panel" class={classNames.root}>
+          {(isBlocking && isOpen) && (<Overlay class={classNames.overlay} />)}
+          <div class={classNames.main}>
+            <div class={classNames.commands}>
+              <div class={classNames.navigation}>
+                <IconButton
+                  class={classNames.closeButton}
+                  styles={{
+                    root: {
+                      height: 'auto',
+                      width: '44px',
+                      color: theme.palette.neutralSecondary,
+                      fontSize: IconFontSizes.large,
+                    },
+                    rootHovered: {
+                      color: theme.palette.neutralPrimary,
+                    },
+                  }}
+                  icon-props={{ iconName: 'Cancel' }}
+                  nativeOnClick={this.dismiss} />
+              </div>
+            </div>
+
+            <div class={classNames.contentInner}>
+              <div class={classNames.header}>
+                <p class={classNames.headerText}>
+                  {this.$slots.header || headerText}
+                </p>
+              </div>
+
+              <div ref="scrollableContent" class={classNames.scrollableContent}>
+                <div class={classNames.content}>
+                  <slot />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Layer>
+    )
+  }
 }
-</script>

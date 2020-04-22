@@ -1,79 +1,228 @@
-import { IStyle } from '@uifabric/merge-styles'
+import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
+import { ITheme } from '@uifabric/styling'
+import { ILayerProps } from '../Layer'
+import { IOverlayProps } from '../Overlay'
+import { IButtonStyles } from '../Button/Button.types'
 
-export interface IPanelProps {
+/**
+ * {@docCategory Panel}
+ */
+export interface IPanel {
+  /**
+   * Forces the panel to open.
+   */
+  open: () => void;
 
+  /**
+   * Forces the panel to dismiss.
+   */
+  dismiss: (ev?: KeyboardEvent) => void;
 }
 
-export interface IPanelStyles {
+/**
+ * {@docCategory Panel}
+ */
+export interface IPanelProps {
   /**
-   * Style for the root element.
+   * Whether the panel is displayed.
+   * If true, will cause panel to stay open even if dismissed.
+   * If false, will cause panel to stay hidden.
+   * If undefined, will allow the panel to control its own visility through open/dismiss methods.
+   * @defaultvalue undefined
    */
-  root?: IStyle;
+  isOpen?: boolean;
 
   /**
-   * Style for the overlay element.
+   * Has the close button visible.
+   * @defaultvalue true
    */
-  overlay?: IStyle;
+  hasCloseButton?: boolean;
 
   /**
-   * Style for the hidden element.
+   * Whether the panel can be light dismissed.
+   * @defaultvalue false
    */
-  hiddenPanel?: IStyle;
+  isLightDismiss?: boolean;
 
   /**
-   * Style for the main section element.
+   * Whether the panel is hidden on dismiss, instead of destroyed in the DOM.
+   * Protects the contents from being destroyed when the panel is dismissed.
+   * @defaultvalue false
    */
-  main?: IStyle;
+  isHiddenOnDismiss?: boolean;
 
   /**
-   * Style for the navigation container element.
+   * Whether the panel uses a modal overlay or not
+   * @defaultvalue true
    */
-  commands?: IStyle;
+  isBlocking?: boolean;
 
   /**
-   * Style for the Body and Footer container element.
+   * Determines if content should stretch to fill available space putting footer at the bottom of the page
+   * @defaultvalue false
    */
-  contentInner?: IStyle;
+  isFooterAtBottom?: boolean;
 
   /**
-   * Style for the scrollable content area container element.
+   * Header text for the Panel.
+   * @defaultvalue ""
    */
-  scrollableContent?: IStyle;
+  headerText?: string;
 
   /**
-   * Style for the close button container element.
+   * The props for header text container.
    */
-  navigation?: IStyle;
+  headerTextProps?: any;
 
   /**
-   * Style for the close button IconButton element.
+   * A callback function for when the Panel is opened, before the animation completes.
    */
-  closeButton?: IStyle;
+  onOpen?: () => void;
 
   /**
-   * Style for the header container div element.
+   * A callback function for when the Panel is opened, after the animation completes.
    */
-  header?: IStyle;
+  onOpened?: () => void;
 
   /**
-   * Style for the header inner p element.
+   * A callback function for when the panel is closed, before the animation completes.
+   * If the panel should NOT be dismissed based on some keyboard event, then simply call ev.preventDefault() on it
    */
-  headerText?: IStyle;
+  onDismiss?: (ev?: any) => void;
 
   /**
-   * Style for the body div element.
+   * A callback function which is called **after** the Panel is dismissed and the animation is complete.
+   * (If you need to update the Panel's `isOpen` prop in response to a dismiss event, use `onDismiss` instead.)
    */
-  content?: IStyle;
+  onDismissed?: () => void;
 
   /**
-   * Style for the footer div element.
+   * Call to provide customized styling that will layer on top of the variant rules.
    */
-  footer?: IStyle;
+  styles?: IStyleFunctionOrObject<IPanelStyleProps, IPanelStyles>;
 
   /**
-   * Style for the inner footer div element.
+   * Theme provided by High-Order Component.
    */
-  footerInner?: IStyle;
+  theme?: ITheme;
+
+  /**
+   * Additional css class to apply to the Panel
+   * @defaultvalue undefined
+   */
+  className?: string;
+
+  /**
+   * Type of the panel.
+   * @defaultvalue PanelType.smallFixedFar
+   */
+  type?: PanelType;
+
+  /**
+   * Custom panel width, used only when `type` is set to `PanelType.custom`.
+   */
+  customWidth?: string;
+
+  /**
+   * Aria label on close button
+   */
+  closeButtonAriaLabel?: string;
+
+  /**
+   * Optional parameter to provider the class name for header text
+   */
+  headerClassName?: string;
+
+  /**
+   * Sets the HTMLElement to focus on when exiting the FocusTrapZone.
+   * @defaultvalue The element.target that triggered the Panel.
+   */
+  elementToFocusOnDismiss?: HTMLElement;
+
+  /**
+   * Indicates if this Panel will ignore keeping track of HTMLElement that activated the Zone.
+   * Deprecated, use `focusTrapZoneProps`.
+   * @defaultvalue false
+   * @deprecated Use `focusTrapZoneProps`.
+   */
+  ignoreExternalFocusing?: boolean;
+
+  /**
+   * Indicates whether Panel should force focus inside the focus trap zone.
+   * If not explicitly specified, behavior aligns with FocusTrapZone's default behavior.
+   * Deprecated, use `focusTrapZoneProps`.
+   * @deprecated Use `focusTrapZoneProps`.
+   */
+  forceFocusInsideTrap?: boolean;
+
+  /**
+   * Indicates the selector for first focusable item.
+   * Deprecated, use `focusTrapZoneProps`.
+   * @deprecated Use `focusTrapZoneProps`.
+   */
+  firstFocusableSelector?: string;
+
+  /**
+   * Optional props to pass to the FocusTrapZone component to manage focus in the panel.
+   */
+  focusTrapZoneProps?: IFocusTrapZoneProps;
+
+  /**
+   * Optional props to pass to the Layer component hosting the panel.
+   */
+  layerProps?: ILayerProps;
+
+  /**
+   * Optional props to pass to the Overlay component that the panel uses.
+   */
+  overlayProps?: IOverlayProps;
+
+  /**
+   * Optional custom function to handle clicks outside the panel in lightdismiss mode
+   */
+  onLightDismissClick?: () => void;
+
+  /**
+   * Optional custom function to handle clicks outside this component
+   */
+  onOuterClick?: () => void;
+
+  /**
+   * Optional custom renderer navigation region. Replaces the region that contains the close button.
+   */
+  onRenderNavigation?: any;
+
+  /**
+   * Optional custom renderer for content in the navigation region. Replaces current close button.
+   */
+  onRenderNavigationContent?: any;
+
+  /**
+   * Optional custom renderer for body region. Replaces any children passed into the component.
+   */
+  onRenderBody?: any;
+
+  /**
+   * Optional custom renderer for footer region. Replaces sticky footer.
+   */
+  onRenderFooter?: any;
+
+  /**
+   * Custom renderer for content in the sticky footer
+   */
+  onRenderFooterContent?: any;
+
+  /**
+   * Deprecated property. Serves no function.
+   * @deprecated Serves no function.
+   */
+  componentId?: string;
+
+  /**
+   * Allow body scroll on content and overlay on touch devices. Changing after mounting has no effect.
+   * @defaultvalue false
+   */
+  allowTouchBodyScroll?: boolean;
 }
 
 /**
@@ -132,7 +281,8 @@ export enum PanelType {
   large = 4,
 
   /**
-   * Renders the Panel in `large` size, anchored to the far side (right in LTR mode), with a fixed width at XX-Large breakpoint.
+   * Renders the Panel in `large` size, anchored to the far side (right in LTR mode), with a fixed width at
+   * XX-Large breakpoint.
    * - Small (320-479): adapts to `PanelType.smallFluid` at this breakpoint
    * - Medium (480-639): adapts to `PanelType.smallFixedFar` at this breakpoint
    * - Large (640-1023): adapts to `PanelType.medium` at this breakpoint
@@ -166,5 +316,164 @@ export enum PanelType {
    * - When screen width reaches the `customWidth` value it will behave like a fluid width Panel
    * taking up 100% of the viewport width
    */
-  customNear = 8
+  customNear = 8,
+}
+
+/**
+ * {@docCategory Panel}
+ */
+export interface IPanelStyleProps {
+  /**
+   * Theme provided by High-Order Component.
+   */
+  theme: ITheme;
+
+  /**
+   * Accept custom classNames
+   */
+  className?: string;
+
+  /**
+   * Is Panel open
+   */
+  isOpen?: boolean;
+
+  /**
+   * Is animation currently running
+   */
+  isAnimating?: boolean;
+
+  /**
+   * Is panel on right side
+   */
+  isOnRightSide?: boolean;
+
+  /**
+   * Is panel hidden on dismiss
+   */
+  isHiddenOnDismiss?: boolean;
+
+  /**
+   * Classname for FocusTrapZone element
+   */
+  focusTrapZoneClassName?: string;
+
+  /**
+   * Determines if content should stretch to fill available space putting footer at the bottom of the page
+   */
+  isFooterAtBottom?: boolean;
+
+  /**
+   * Based on state value setting footer to sticky or not
+   */
+  isFooterSticky?: boolean;
+
+  /**
+   * Panel has close button
+   */
+  hasCloseButton?: boolean;
+
+  /**
+   * Type of the panel.
+   */
+  type?: PanelType;
+
+  /**
+   * Optional parameter to provider the class name for header text
+   */
+  headerClassName?: string;
+
+  /**
+   * Determines where the header is rendered based on whether the user
+   * has passed in a custom onRenderNavigation or onRenderNavigationContent render callback
+   */
+  hasCustomNavigation?: boolean;
+}
+
+export interface IPanelSubComponentStyles {
+  /**
+   * Styling for close button child component.
+   */
+  closeButton: Partial<IButtonStyles>;
+}
+
+/**
+ * {@docCategory Panel}
+ */
+export interface IPanelStyles {
+  /**
+   * Style for the root element.
+   */
+  root: IStyle;
+
+  /**
+   * Style for the overlay element.
+   */
+  overlay: IStyle;
+
+  /**
+   * Style for the hidden element.
+   */
+  hiddenPanel: IStyle;
+
+  /**
+   * Style for the main section element.
+   */
+  main: IStyle;
+
+  /**
+   * Style for the navigation container element.
+   */
+  commands: IStyle;
+
+  /**
+   * Style for the Body and Footer container element.
+   */
+  contentInner: IStyle;
+
+  /**
+   * Style for the scrollable content area container element.
+   */
+  scrollableContent: IStyle;
+
+  /**
+   * Style for the close button container element.
+   */
+  navigation: IStyle;
+
+  /**
+   * Style for the close button IconButton element.
+   * @deprecated Use `subComponentStyles.closeButton` instead.
+   */
+  closeButton?: IStyle;
+
+  /**
+   * Style for the header container div element.
+   */
+  header: IStyle;
+
+  /**
+   * Style for the header text div element.
+   */
+  headerText: IStyle;
+
+  /**
+   * Style for the body div element.
+   */
+  content: IStyle;
+
+  /**
+   * Style for the footer div element.
+   */
+  footer: IStyle;
+
+  /**
+   * Style for the inner footer div element.
+   */
+  footerInner: IStyle;
+
+  /**
+   * Styling for subcomponents.
+   */
+  subComponentStyles: IPanelSubComponentStyles;
 }
