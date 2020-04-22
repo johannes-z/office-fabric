@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import TextFieldBase from './TextField.vue'
+import { TextFieldBase } from './TextField.base'
 import { getStyles } from './TextField.styles'
-import { VueConstructor } from 'vue'
 
 export * from './TextField.types'
 
-export const TextField: VueConstructor = styled(
+export const TextField = styled(
   TextFieldBase,
   getStyles,
   undefined,
