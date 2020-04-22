@@ -7,19 +7,19 @@ import BaseComponent from '../BaseComponent'
   components: {},
 })
 export class LayerHost extends BaseComponent<ILayerHostProps, ILayerHostStyles> {
-  @Prop({ type: String, default: null }) layerId!: string
+  @Prop({ type: String, default: null }) hostId!: string
 
   render () {
     return (
-      <div id={this.layerId} class="LayerHost" />
+      <div id={this.hostId} class="LayerHost" />
     )
   }
 
   mounted () {
-    notifyHostChanged(this.layerId!)
+    notifyHostChanged(this.hostId!)
   }
 
   beforeDestroy () {
-    notifyHostChanged(this.layerId!)
+    notifyHostChanged(this.hostId!)
   }
 }
