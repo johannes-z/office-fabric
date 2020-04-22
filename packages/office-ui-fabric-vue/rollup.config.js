@@ -8,17 +8,12 @@ import vue from 'rollup-plugin-vue'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript2'
+import sucrase from '@rollup/plugin-sucrase'
 // @ts-ignore
 import babel from 'rollup-plugin-babel'
 import pkg from './package.json'
 
 const packageRoot = path.resolve(__dirname)
-
-console.log([
-  ...Object.keys(pkg.dependencies),
-  '@microsoft/load-themed-styles',
-  '@uifabric/set-version'
-]);
 
 export default {
   // external: [
@@ -35,10 +30,10 @@ export default {
   external: [
     ...Object.keys(pkg.dependencies),
     '@microsoft/load-themed-styles',
-    '@uifabric/set-version'
+    '@uifabric/set-version',
   ],
   preserveModules: true,
-  preserveSymlinks: true,
+  // preserveSymlinks: true,
   plugins: [
     json(),
     replace({
@@ -53,29 +48,38 @@ export default {
     }),
     vue({
       css: false,
-    }),
-    typescript({
-      abortOnError: false,
-      typescript: require('typescript'),
-      useTsconfigDeclarationDir: true,
-      check: false,
-      tsconfigOverride: {
-        compilerOptions: {
-          module: 'esnext',
-        },
+      template: {
+        isProduction: true,
       },
     }),
     resolve({
-      extensions: ['.js', '.json', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       preferBuiltins: true,
     }),
-    commonjs({ include: /node_modules/ }),
+    commonjs({
+      include: /node_modules/,
+      sourceMap: false,
+    }),
+    // typescript({
+    //   abortOnError: false,
+    //   typescript: require('typescript'),
+    //   useTsconfigDeclarationDir: true,
+    //   check: false,
+    //   tsconfigOverride: {
+    //     compilerOptions: {
+    //       module: 'esnext',
+    //     },
+    //   },
+    // }),
     babel({
       exclude: /node_modules/,
-      extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx', '.vue'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelrc: false,
       configFile: false,
       presets: [
+        ['@babel/preset-typescript', {
+          allowNamespaces: true,
+        }],
         ['@vue/cli-plugin-babel/preset', {
           modules: false,
           useBuiltIns: false,

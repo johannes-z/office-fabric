@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import ToggleBase from './Toggle.vue'
+import { ToggleBase } from './Toggle.base'
 import { getStyles } from './Toggle.styles'
 import { VueConstructor } from 'vue'
 

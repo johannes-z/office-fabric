@@ -13,7 +13,7 @@ import { ITheme, IStyle } from '@uifabric/styling'
 import { IDetailsCheckboxProps } from './DetailsRowCheck/DetailsRowCheck.types'
 import { IDetailsColumnStyleProps, IDetailsColumnProps, IDetailsColumnStyles } from './DetailsColumn/DetailsColumn.types'
 
-export {
+export type {
   IDetailsHeaderProps,
   IDetailsRowBaseProps,
   IDetailsHeaderBaseProps,
