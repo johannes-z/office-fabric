@@ -1,9 +1,8 @@
 import { styled } from '../styled'
-import CheckBase from './Check.vue'
+import { CheckBase } from './Check.base'
 import { getStyles } from './Check.styles'
-import { VueConstructor } from 'vue'
 
-export const Check: VueConstructor = styled(
+export const Check = styled(
   CheckBase,
   getStyles,
   undefined,
