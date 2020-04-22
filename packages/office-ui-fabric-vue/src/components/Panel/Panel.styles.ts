@@ -1,20 +1,5 @@
-import { IPanelStyles, PanelType } from './Panel.types'
-import {
-  AnimationClassNames,
-  AnimationVariables,
-  getGlobalClassNames,
-  HighContrastSelector,
-  ScreenWidthMinMedium,
-  ScreenWidthMinLarge,
-  ScreenWidthMinXLarge,
-  ScreenWidthMinXXLarge,
-  ScreenWidthMinUhfMobile,
-  IStyle,
-} from '@uifabric/styling'
-
-// TODO -Issue #5689: Comment in once Button is converted to mergeStyles
-// import { IStyleFunctionOrObject } from '../../Utilities';
-// import { IButtonStyles, IButtonStyleProps } from '../../Button';
+import { IPanelStyleProps, IPanelStyles, PanelType } from './Panel.types'
+import { ScreenWidthMinMedium, ScreenWidthMinLarge, ScreenWidthMinXLarge, ScreenWidthMinUhfMobile, ScreenWidthMinXXLarge, IStyle, getGlobalClassNames, AnimationClassNames, HighContrastSelector, AnimationVariables, IconFontSizes } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-Panel',
@@ -153,27 +138,11 @@ const getPanelBreakpoints = (type: PanelType): { [x: string]: IStyle } | undefin
 const commandBarHeight = '44px'
 
 const sharedPaddingStyles = {
-  paddingLeft: '16px',
-  paddingRight: '16px',
+  paddingLeft: '24px',
+  paddingRight: '24px',
 }
 
-// // TODO -Issue #5689: Comment in once Button is converted to mergeStyles
-// function getIconButtonStyles(props: any): IStyleFunctionOrObject<IButtonStyleProps, IButtonStyles> {
-//   const { theme } = props;
-//   return () => ({
-//     root: {
-//       height: 'auto',
-//       width: '44px',
-//       color: theme.palette.neutralSecondary,
-//       fontSize: IconFontSizes.large
-//     },
-//     rootHovered: {
-//       color: theme.palette.neutralPrimary
-//     }
-//   });
-// }
-
-export const getStyles = (props: any): IPanelStyles => {
+export const getStyles = (props: IPanelStyleProps): IPanelStyles => {
   const {
     className,
     focusTrapZoneClassName,
@@ -185,6 +154,7 @@ export const getStyles = (props: any): IPanelStyles => {
     isOnRightSide,
     isOpen,
     isHiddenOnDismiss,
+    hasCustomNavigation,
     theme,
     type = PanelType.smallFixedFar,
   } = props
@@ -239,7 +209,7 @@ export const getStyles = (props: any): IPanelStyles => {
         WebkitOverflowScrolling: 'touch',
         bottom: 0,
         top: 0,
-        // (left, right, width) - Properties to be overridden depending on the type of the Panel and the screen breakpoint.
+        // left, right, width are overridden depending on the type of the Panel and the screen breakpoint.
         left: panelMargin.auto,
         right: panelMargin.none,
         width: panelWidth.full,
@@ -272,17 +242,25 @@ export const getStyles = (props: any): IPanelStyles => {
       !isOpen && isAnimating && isOnRightSide && AnimationClassNames.slideRightOut40,
       focusTrapZoneClassName,
     ],
-    commands: [classNames.commands],
+    commands: [
+      classNames.commands,
+      {
+        marginTop: 18,
+      },
+      hasCustomNavigation && {
+        marginTop: 'inherit',
+      },
+    ],
     navigation: [
       classNames.navigation,
       {
-        padding: '0 5px',
-        height: commandBarHeight,
         display: 'flex',
         justifyContent: 'flex-end',
       },
+      hasCustomNavigation && {
+        height: commandBarHeight,
+      },
     ],
-    closeButton: [classNames.closeButton],
     contentInner: [
       classNames.contentInner,
       {
@@ -296,14 +274,15 @@ export const getStyles = (props: any): IPanelStyles => {
       classNames.header,
       sharedPaddingStyles,
       {
-        margin: '14px 0',
+        alignSelf: 'flex-start',
+      },
+      hasCloseButton &&
+        !hasCustomNavigation && {
+        flexGrow: 1,
+      },
+      hasCustomNavigation && {
         // Ensure that title doesn't shrink if screen is too small
         flexShrink: 0,
-        selectors: {
-          [`@media (min-width: ${ScreenWidthMinXLarge}px)`]: {
-            marginTop: '30px',
-          },
-        },
       },
     ],
     headerText: [
@@ -312,7 +291,6 @@ export const getStyles = (props: any): IPanelStyles => {
       {
         color: semanticColors.bodyText,
         lineHeight: '27px',
-        margin: 0,
         overflowWrap: 'break-word',
         wordWrap: 'break-word',
         wordBreak: 'break-word',
@@ -333,7 +311,6 @@ export const getStyles = (props: any): IPanelStyles => {
       classNames.content,
       sharedPaddingStyles,
       {
-        marginBottom: 0,
         paddingBottom: 20,
       },
     ],
@@ -358,8 +335,25 @@ export const getStyles = (props: any): IPanelStyles => {
         paddingTop: 16,
       },
     ],
-    // subComponentStyles: {
-    //   iconButton: getIconButtonStyles(props)
-    // }
+    subComponentStyles: {
+      closeButton: {
+        root: [
+          classNames.closeButton,
+          {
+            marginRight: 14,
+            color: theme.palette.neutralSecondary,
+            fontSize: IconFontSizes.large,
+          },
+          hasCustomNavigation && {
+            marginRight: 0,
+            height: 'auto',
+            width: '44px',
+          },
+        ],
+        rootHovered: {
+          color: theme.palette.neutralPrimary,
+        },
+      },
+    },
   }
 }

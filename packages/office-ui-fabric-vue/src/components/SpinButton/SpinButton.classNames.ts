@@ -1,7 +1,8 @@
 import { memoizeFunction } from '@uifabric-vue/utilities'
 import { mergeStyles, IStyle } from '@uifabric/styling'
-import { ISpinButtonStyles, KeyboardSpinDirection } from './SpinButton.types'
+import { ISpinButtonStyles } from './SpinButton.types'
 import { Position } from '../../utilities/positioning'
+import { KeyboardSpinDirection } from './SpinButton'
 
 export interface ISpinButtonClassNames {
   root: string;

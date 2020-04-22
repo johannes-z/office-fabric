@@ -23,8 +23,8 @@ export default class ContextualMenuItem extends BaseComponent {
     console.log(classNames)
 
     return (
-      <button className={classNames.root}>
-        <div className={item.split ? classNames.linkContentMenu : classNames.linkContent}>
+      <button class={classNames.root}>
+        <div class={item.split ? classNames.linkContentMenu : classNames.linkContent}>
           {this.renderCheckMarkIcon(this)}
           {this.renderItemIcon(this)}
           {this.renderItemName(this)}
@@ -72,7 +72,7 @@ export default class ContextualMenuItem extends BaseComponent {
       return item.onRenderIcon(props)
     }
 
-    return <Icon {...iconProps} className={classNames.icon} />
+    return <Icon {...iconProps} class={classNames.icon} />
   }
 
   renderCheckMarkIcon ({ onCheckmarkClick, item, classNames }: any) {
@@ -91,7 +91,7 @@ export default class ContextualMenuItem extends BaseComponent {
   renderItemName ({ item, classNames }: any) {
   // tslint:disable:deprecation
     if (item.text || item.name) {
-      return <span className={classNames.label}>{item.text || item.name}</span>
+      return <span class={classNames.label}>{item.text || item.name}</span>
     }
     // tslint:enable:deprecation
     return null
@@ -99,15 +99,15 @@ export default class ContextualMenuItem extends BaseComponent {
 
   renderSecondaryText ({ item, classNames }: any) {
     if (item.secondaryText) {
-      return <span className={classNames.secondaryText}>{item.secondaryText}</span>
+      return <span class={classNames.secondaryText}>{item.secondaryText}</span>
     }
     return null
   }
 
   renderSubMenuIcon ({ item, classNames, theme }: any) {
-  // if (hasSubmenu(item)) {
-  //   return <Icon iconName={getRTL(theme) ? 'ChevronLeft' : 'ChevronRight'} {...item.submenuIconProps} className={classNames.subMenuIcon} />
-  // }
+    // if (hasSubmenu(item)) {
+    //   return <Icon iconName={getRTL(theme) ? 'ChevronLeft' : 'ChevronRight'} {...item.submenuIconProps} class={classNames.subMenuIcon} />
+    // }
     return null
   }
 }
