@@ -29,14 +29,14 @@ export class CheckboxBase extends BaseComponent {
 
     return (
       <div class={classNames.root}>
-        <input id={`Checkbox${this.id}`}
+        <input id={`Checkbox${this.uid}`}
           class={classNames.input}
           {...this.$attrs}
           disabled={this.disabled}
           type="checkbox"
           onInput={this.onInput} />
 
-        <Label class={classNames.label} for={`Checkbox${this.id}`}>
+        <Label class={classNames.label} for={`Checkbox${this.uid}`}>
           <div class={classNames.checkbox}>
             <Icon icon-name="CheckMark" class={classNames.checkmark} />
           </div>

@@ -29,17 +29,17 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
         {this.$scopedSlots.label
           ? this.$scopedSlots.label({ checked: internalChecked, disabled, label })
           : (
-            <Label class={classNames.label} for={`Toggle${this.id}`}>
+            <Label class={classNames.label} for={`Toggle${this.uid}`}>
               {label}
             </Label>
           )}
         <div class={classNames.container}>
-          <button id={`Toggle${this.id}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
+          <button id={`Toggle${this.uid}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
             <div class={classNames.thumb} />
           </button>
           {((internalChecked && onText) || (!internalChecked && offText)) && (
 
-            <Label class={classNames.text} for={`Toggle${this.id}`}>
+            <Label class={classNames.text} for={`Toggle${this.uid}`}>
               { internalChecked ? onText : offText }
             </Label>
           )}
