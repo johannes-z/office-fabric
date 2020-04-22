@@ -92,8 +92,7 @@ export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
   render () {
     const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
     return (
-      <div role="presentation"
-        class={classNames.coin}>
+      <div role="presentation" class={classNames.coin}>
         {(size !== PersonaSize.size8) ? (
           <div role="presentation"
             class={classNames.imageArea}
@@ -113,7 +112,8 @@ export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
             )}
 
             {imageUrl && (
-              <Image class={classNames.image}
+              <Image
+                class={classNames.image}
                 image-fit={ImageFit.cover}
                 src={imageUrl}
                 width={dimension}
@@ -121,12 +121,9 @@ export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
             )}
             <PersonaPresence {...{ props: personaPresenceProps }} />
           </div>
-        ) : presence ? (
-          <PersonaPresence {...{ props: personaPresenceProps }} />
-        ) : (
-          <Icon icon-name="Contact"
-            class={classNames.size10WithoutPresenceIcon} />
-        )}
+        ) : presence
+          ? (<PersonaPresence {...{ props: personaPresenceProps }} />)
+          : (<Icon icon-name="Contact" class={classNames.size10WithoutPresenceIcon} />)}
 
         {this.$slots.default}
       </div>
