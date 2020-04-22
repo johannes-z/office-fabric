@@ -1,47 +1,17 @@
-<template>
-  <div :class="classNames.root">
-    <div :class="classNames.iconContainer"
-         role="search">
-      <Icon :class="classNames.icon" :icon-name="iconName" />
-    </div>
-    <input
-      ref="input"
-      v-bind="$attrs"
-      :class="classNames.field"
-      :disabled="disabled"
-      :value="internalValue"
-      :area-label="placeholder"
-      :placeholder="placeholder"
-      @input="internalValue = $event.target.value"
-      @focus="onFocus"
-      @blur="onBlur"
-      @keydown.enter="submit"
-      @keydown.esc="onEscape">
-    <div v-if="internalValue"
-         :class="classNames.clearButton">
-      <IconButton
-        :styles="{ root: { height: 'auto' }, icon: { fontSize: '12px' } }"
-        :icon-props="{ iconName: 'Clear' }"
-        @click.native="clearInput" />
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Icon } from '../Icon/'
-import { IconButton } from '../Button/'
+import { Icon } from '../Icon'
+import { IconButton } from '../Button'
 import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
-import { classNamesFunction } from '@uifabric-vue/utilities'
+import { classNamesFunction, KeyCodes } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<any, ISearchBoxStyles>()
 
 @Component({
   components: { Icon, IconButton },
   inheritAttrs: false,
 })
-export default class SearchBox extends BaseComponent {
+export class SearchBoxBase extends BaseComponent {
   $refs!: {
     input: HTMLInputElement
   }
@@ -55,6 +25,39 @@ export default class SearchBox extends BaseComponent {
 
   isActive: boolean = false
   internalValue: string = this.value
+
+  render () {
+    const { classNames, disabled, internalValue, placeholder, iconName } = this
+    return (
+
+      <div class={classNames.root}>
+        <div class={classNames.iconContainer}
+          role="search">
+          <Icon class={classNames.icon} icon-name={iconName} />
+        </div>
+        <input
+          ref="input"
+          {...this.$attrs}
+          class={classNames.field}
+          disabled={disabled}
+          value={internalValue}
+          area-label={placeholder}
+          placeholder={placeholder}
+          onInput={(ev) => (this.internalValue = ev.target.value as string)}
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onKeydown={this.onKeyDown} />
+        {internalValue && (
+          <div class={classNames.clearButton}>
+            <IconButton
+              styles={{ root: { height: 'auto' }, icon: { fontSize: '12px' } }}
+              icon-props={{ iconName: 'Clear' }}
+              onClick={this.clearInput} />
+          </div>
+        )}
+      </div>
+    )
+  }
 
   get classNames () {
     const { theme, underlined, disabled, isActive, className, disableAnimation, internalValue } = this
@@ -78,6 +81,30 @@ export default class SearchBox extends BaseComponent {
   private onValueChanged (value: string) {
     this.$emit('input', value)
     this.$emit('change', value)
+  }
+
+  private onKeyDown (ev: KeyboardEvent) {
+    switch (ev.which) {
+      case KeyCodes.escape:
+        this.$emit('escape', ev)
+        if (ev.defaultPrevented) return
+        else this.clearInput()
+        break
+
+      case KeyCodes.enter:
+        this.$emit('search', this.internalValue)
+        return
+
+      default:
+        if (!ev.defaultPrevented) {
+          return
+        }
+    }
+
+    // We only get here if the keypress has been handled,
+    // or preventDefault was called in case of default keyDown handler
+    ev.preventDefault()
+    ev.stopPropagation()
   }
 
   submit () {
@@ -109,4 +136,3 @@ export default class SearchBox extends BaseComponent {
     this.isActive = false
   }
 }
-</script>
