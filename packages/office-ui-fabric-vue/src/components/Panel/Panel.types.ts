@@ -3,6 +3,7 @@ import { ITheme } from '@uifabric/styling'
 import { ILayerProps } from '../Layer'
 import { IOverlayProps } from '../Overlay'
 import { IButtonStyles } from '../Button/Button.types'
+import { IFocusTrapZoneProps } from '../FocusTrapZone/FocusTrapZone.types'
 
 /**
  * {@docCategory Panel}
