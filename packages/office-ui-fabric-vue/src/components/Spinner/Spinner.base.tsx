@@ -2,13 +2,14 @@ import { Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 import { CreateElement, RenderContext } from 'vue'
+import { ISpinnerProps, SpinnerLabelPosition } from './Spinner.types'
 
 const getClassNames = classNamesFunction()
 
 @Component
-export default class Spinner extends StatelessComponent {
+export default class Spinner extends StatelessComponent<ISpinnerProps> {
   @Prop({ type: String, default: null }) label!: string
-  @Prop({ type: String, default: null }) labelPosition!: string
+  @Prop({ type: String, default: 'bottom' }) labelPosition!: SpinnerLabelPosition
   @Prop({ type: Number, default: 20 }) size!: number
 
   render (h: CreateElement, context: RenderContext) {

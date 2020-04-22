@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import SearchBoxBase from './SearchBox.vue'
+import { SearchBoxBase } from './SearchBox.base'
 import { getStyles } from './SearchBox.styles'
 import { VueConstructor } from 'vue'
 
