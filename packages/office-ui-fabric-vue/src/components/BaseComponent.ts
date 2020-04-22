@@ -52,7 +52,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
     }
   }
 
-  protected get id (): number {
+  protected get uid (): number {
     // @ts-ignore
     return this._uid
   }
