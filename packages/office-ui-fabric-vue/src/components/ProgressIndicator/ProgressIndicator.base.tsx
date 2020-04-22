@@ -1,21 +1,3 @@
-<template>
-  <div :class="classNames.root">
-    <div v-if="label" :class="classNames.itemName">
-      {{ label }}
-    </div>
-
-    <div v-if="!progressHidden" :class="classNames.itemProgress">
-      <div :class="classNames.progressTrack" />
-      <div :class="classNames.progressBar" :style="progressBarStyles" />
-    </div>
-
-    <div v-if="description" :class="classNames.itemDescription">
-      {{ description }}
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
@@ -28,7 +10,7 @@ const getClassNames = classNamesFunction<IProgressIndicatorProps, IProgressIndic
 const ZERO_THRESHOLD = 0.01
 
 @Component
-export default class ProgressIndicator extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
+export class ProgressIndicatorBase extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ type: Boolean, default: false }) progressHidden!: boolean
   @Prop({ type: Boolean, default: false }) indeterminate!: boolean
   @Prop({ type: Number, default: 0 }) percentComplete!: number
@@ -54,5 +36,22 @@ export default class ProgressIndicator extends BaseComponent<IProgressIndicatorP
       transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
     }
   }
+
+  render () {
+    const { classNames, label, progressHidden, progressBarStyles, description } = this
+    return (
+      <div class={classNames.root}>
+        {label && (<div class={classNames.itemName}>{ label }</div>)}
+
+        {!progressHidden && (
+          <div class={classNames.itemProgress}>
+            <div class={classNames.progressTrack} />
+            <div class={classNames.progressBar} style={progressBarStyles} />
+          </div>
+        )}
+
+        {description && (<div class={classNames.itemDescription}>{ description }</div>)}
+      </div>
+    )
+  }
 }
-</script>
