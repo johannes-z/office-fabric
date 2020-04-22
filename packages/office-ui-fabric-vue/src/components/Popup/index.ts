@@ -1,6 +1,2 @@
-import Popup from './Popup.vue'
-
+export * from './Popup'
 export * from './Popup.types'
-export {
-  Popup,
-}
