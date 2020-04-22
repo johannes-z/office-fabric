@@ -3,10 +3,11 @@ import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
 import { getTheme, ITheme } from '@uifabric/styling'
+import { Component as TsxComponent } from 'vue-tsx-support'
 
 // @ts-ignore
 @Component
-export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vue {
+export default abstract class BaseComponent<TProps = {}, TState = {}> extends TsxComponent<TProps, any, any> {
   $props!: TProps
 
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
