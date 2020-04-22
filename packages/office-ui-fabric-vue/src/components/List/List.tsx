@@ -1,30 +1,3 @@
-<template>
-  <div ref="root"
-       :role="pages.length > 0 ? role : undefined"
-       :class="css('ms-List', className)">
-    <div ref="surface"
-         class="ms-List-surface"
-         role="presentation">
-      <div v-for="page in pages"
-           :key="page.key"
-           :ref="page.key"
-           class="ms-List-page"
-           :style="getPageStyle(page)">
-        <div v-for="(item, index) in page.items"
-             :key="index"
-             class="ms-List-cell">
-          <slot name="item"
-                :item="item"
-                :index="page.startIndex + index">
-            {{ item && item.name || '' }}
-          </slot>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { IList, IListProps, IPage, IPageProps, ScrollToMode } from './List.types'
 import BaseComponent from '../BaseComponent'
@@ -100,7 +73,7 @@ const _measureScrollRect = measurePageRect
 @Component({
   components: {},
 })
-export default class List extends BaseComponent {
+export class List extends BaseComponent {
   $refs!: {
     root: HTMLDivElement
     surface: HTMLDivElement
@@ -113,7 +86,7 @@ export default class List extends BaseComponent {
   @Prop({ type: Number, default: 0 }) startIndex!: number
   @Prop({ type: Boolean, default: false }) ignoreScrollingState!: boolean
 
-  pages = []
+  pages: IPage<any>[] = []
   isScrolling = false
   measureVersion = 0
 
@@ -147,6 +120,37 @@ export default class List extends BaseComponent {
     };
   } = {}
   estimatedPageHeight: number = 0
+
+  render () {
+    const { pages, className, css, role } = this
+    return (
+      <div
+        ref="root"
+        role={pages.length > 0 ? role : undefined}
+        class={css('ms-List', className)}>
+        <div
+          ref="surface"
+          class="ms-List-surface"
+          role="presentation">
+          {pages.map(page => (
+            <div
+              key={page.key}
+              ref={page.key}
+              class="ms-List-page"
+              style={this.getPageStyle(page)}>
+              {page.items && page.items.map((item, index) => (
+                <div key={index} class="ms-List-cell">
+                  {this.$scopedSlots.item
+                    ? this.$scopedSlots.item({ item, index: page.startIndex + index })
+                    : (item ? item.name : '')}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
 
   created () {
     // @ts-ignore
@@ -742,4 +746,3 @@ function _mergeRect (targetRect: IRectangle, newRect: IRectangle): IRectangle {
 
   return targetRect
 }
-</script>
