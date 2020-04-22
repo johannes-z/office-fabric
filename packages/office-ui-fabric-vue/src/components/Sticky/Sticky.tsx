@@ -1,37 +1,3 @@
-<template>
-  <div ref="root">
-    <div v-if="canStickyTop"
-         ref="stickyContentTop"
-         :aria-hidden="!isStickyTop"
-         :style="{ pointerEvents: isStickyTop ? 'auto' : 'none' }">
-      <div :style="getStickyPlaceholderHeight(isStickyTop)" />
-    </div>
-
-    <div v-if="canStickyBottom"
-         ref="stickyContentBottom"
-         :aria-hidden="!isStickyBottom"
-         :style="{ pointerEvents: isStickyBottom ? 'auto' : 'none' }">
-      <div :style="getStickyPlaceholderHeight(isStickyBottom)" />
-    </div>
-
-    <div ref="placeHolder" :style="getNonStickyPlaceholderHeightAndWidth()">
-      <span v-if="(isStickyTop || isStickyBottom)"
-            :style="hiddenContentStyle">
-        <slot />
-      </span>
-
-      <div
-        ref="nonStickyContent"
-        :aria-hidden="isStickyTop || isStickyBottom"
-        :class="isStickyTop || isStickyBottom ? stickyClassName : undefined"
-        :style="getContentStyles(isStickyTop || isStickyBottom)">
-        <slot />
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch, Model, Inject } from 'vue-property-decorator'
 import { hiddenContentStyle } from '@uifabric/styling'
 import { IScrollablePaneContext } from '../ScrollablePane/ScrollablePane.types'
@@ -40,7 +6,7 @@ import BaseComponent from '../BaseComponent'
 
 @Component({
 })
-export default class Sticky extends BaseComponent<any, any> {
+export class Sticky extends BaseComponent<any, any> {
   $refs!: {
     root: HTMLDivElement
     stickyContentTop: HTMLDivElement
@@ -64,6 +30,45 @@ export default class Sticky extends BaseComponent<any, any> {
   distanceFromTop = 0
 
   activeElement: HTMLElement | void | null = null
+
+  render () {
+    const { canStickyTop, canStickyBottom, isStickyTop, isStickyBottom, stickyClassName } = this
+    return (
+      <div ref="root">
+        {canStickyTop && (
+          <div ref="stickyContentTop"
+            aria-hidden={!isStickyTop}
+            style={{ pointerEvents: isStickyTop ? 'auto' : 'none' }}>
+            <div style={this.getStickyPlaceholderHeight(isStickyTop)} />
+          </div>
+        )}
+
+        {canStickyBottom && (
+          <div ref="stickyContentBottom"
+            aria-hidden={!isStickyBottom}
+            style={{ pointerEvents: isStickyBottom ? 'auto' : 'none' }}>
+            <div style={this.getStickyPlaceholderHeight(isStickyBottom)} />
+          </div>
+        )}
+
+        <div ref="placeHolder" style={this.getNonStickyPlaceholderHeightAndWidth()}>
+          {(isStickyTop || isStickyBottom) && (
+            <span style={hiddenContentStyle}>
+              {this.$slots.default}
+            </span>
+          )}
+
+          <div
+            ref="nonStickyContent"
+            aria-hidden={isStickyTop || isStickyBottom}
+            class={isStickyTop || isStickyBottom ? stickyClassName : undefined}
+            style={this.getContentStyles(isStickyTop || isStickyBottom)}>
+            {this.$slots.default}
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   public root () {
     return this.$refs.root
@@ -322,5 +327,3 @@ export default class Sticky extends BaseComponent<any, any> {
 function _isOffsetHeightDifferent (a: HTMLElement | null, b: HTMLElement | null): boolean {
   return (a && b && a && b && a.offsetHeight !== b.offsetHeight) as boolean
 }
-
-</script>
