@@ -1,8 +1,3 @@
-<template>
-  <div :id="id" class="LayerHost" />
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { notifyHostChanged } from './Layer.notification'
 import { ILayerHostProps, ILayerHostStyles } from './LayerHost.types'
@@ -11,15 +6,20 @@ import BaseComponent from '../BaseComponent'
 @Component({
   components: {},
 })
-export default class LayerHost extends BaseComponent<ILayerHostProps, ILayerHostStyles> {
-  @Prop({ type: String, default: null }) id!: string
+export class LayerHost extends BaseComponent<ILayerHostProps, ILayerHostStyles> {
+  @Prop({ type: String, default: null }) layerId!: string
+
+  render () {
+    return (
+      <div id={this.layerId} class="LayerHost" />
+    )
+  }
 
   mounted () {
-    notifyHostChanged(this.id!)
+    notifyHostChanged(this.layerId!)
   }
 
   beforeDestroy () {
-    notifyHostChanged(this.id!)
+    notifyHostChanged(this.layerId!)
   }
 }
-</script>
