@@ -5,7 +5,7 @@ import { VueConstructor } from 'vue'
 
 export * from './ChoiceGroup.types'
 
-export const ChoiceGroup: VueConstructor = styled(
+export const ChoiceGroup = styled(
   ChoiceGroupBase,
   getStyles,
   undefined,
