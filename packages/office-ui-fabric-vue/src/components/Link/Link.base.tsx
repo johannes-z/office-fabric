@@ -7,7 +7,7 @@ import StatelessComponent from '../StatelessComponent'
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
 @Component
-export default class Link extends StatelessComponent<ILinkProps> {
+export class LinkBase extends StatelessComponent<ILinkProps> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: String, default: '' }) href!: string
 

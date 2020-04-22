@@ -1,4 +1,4 @@
-import LinkBase from './Link'
+import { LinkBase } from './Link.base'
 
 import { IStyle, ITheme } from '@uifabric/styling'
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
