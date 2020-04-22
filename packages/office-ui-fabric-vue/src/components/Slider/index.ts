@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import SliderBase from './Slider.vue'
+import { SliderBase } from './Slider.base'
 import { getStyles } from './Slider.styles'
-import { VueConstructor } from 'vue'
 
 export * from './Slider.types'
 
-export const Slider: VueConstructor = styled(
+export const Slider = styled(
   SliderBase,
   getStyles,
   undefined,

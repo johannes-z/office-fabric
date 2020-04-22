@@ -1,58 +1,17 @@
-<template>
-  <div :class="classNames.root">
-    <Label :class="classNames.titleLabel" v-text="label" />
-    <div :class="classNames.container">
-      <div :class="classNames.slideBox"
-           :tabindex="disabled ? void 0 : 0"
-           @mousedown="onMouseDown"
-           @keydown="onKeyDown">
-        <div ref="sliderLine" :class="classNames.line">
-          <span v-if="originFromZero"
-                :class="classNames.zeroTick"
-                :style="{ [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` }" />
-          <span :class="classNames.thumb"
-                :style="{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` }" />
-
-          <template v-if="originFromZero">
-            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
-                  :style="{ [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` }" />
-            <span :class="css(classNames.lineContainer, classNames.activeSection)"
-                  :style="{ [lengthString]: `${Math.abs(zeroOffsetPercent - thumbOffsetPercent)}%` }" />
-            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
-                  :style="{ [lengthString]: `${Math.min(100 - thumbOffsetPercent, 100 - zeroOffsetPercent)}%` }" />
-          </template>
-          <template v-else>
-            <span :class="css(classNames.lineContainer, classNames.activeSection)"
-                  :style="{ [lengthString]: `${thumbOffsetPercent}%` }" />
-            <span :class="css(classNames.lineContainer, classNames.inactiveSection)"
-                  :style="{ [lengthString]: `${100 - thumbOffsetPercent}%` }" />
-          </template>
-        </div>
-      </div>
-      <Label :class="classNames.valueLabel">
-        <slot name="value" :value="internalValue">
-          {{ internalValue }}
-        </slot>
-      </Label>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Label } from '../Label/'
-import { ISliderProps, ISliderStyles } from './Slider.types'
+import { ISliderProps, ISliderStyles, ISliderStyleProps } from './Slider.types'
 import BaseComponent from '../BaseComponent'
 import { KeyCodes, classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<ISliderStyleProps, ISliderStyles>()
 
 export const ONKEYDOWN_TIMEOUT_DURATION = 1000
 
 @Component({
   components: { Label },
 })
-export default class Slider extends BaseComponent {
+export class SliderBase extends BaseComponent<ISliderProps> {
   $refs!: {
     sliderLine: HTMLDivElement
   }
@@ -251,5 +210,60 @@ export default class Slider extends BaseComponent {
     this.onKeyDownTimer = setTimeout(() => {
     }, ONKEYDOWN_TIMEOUT_DURATION)
   };
+
+  render () {
+    const { classNames, disabled, originFromZero, vertical, zeroOffsetPercent, thumbOffsetPercent, lengthString, internalValue, css, label } = this
+
+    // TODO(code) `originFromZero` fragments/spans look ugly; maybe could be improved
+    return (
+      <div class={classNames.root}>
+        <Label class={classNames.titleLabel}>{label}</Label>
+
+        <div class={classNames.container}>
+          <div class={classNames.slideBox}
+            tabindex={disabled ? void 0 : 0}
+            onMousedown={this.onMouseDown}
+            onKeydown={this.onKeyDown}>
+            <div ref="sliderLine" class={classNames.line}>
+              {originFromZero && (
+                <span class= {classNames.zeroTick}
+                  style={{ [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` }} />
+              )}
+              <span class= {classNames.thumb}
+                style={{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` }} />
+
+              {originFromZero && (
+                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
+                  style={{ [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` }} />
+              )}
+              {originFromZero && (
+                <span class={css(classNames.lineContainer, classNames.activeSection)}
+                  style={{ [lengthString]: `${Math.abs(zeroOffsetPercent - thumbOffsetPercent)}%` }} />
+              )}
+              {originFromZero && (
+                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
+                  style={{ [lengthString]: `${Math.min(100 - thumbOffsetPercent, 100 - zeroOffsetPercent)}%` }} />
+              )}
+
+              {!originFromZero && (
+                <span class={css(classNames.lineContainer, classNames.activeSection)}
+                  style={{ [lengthString]: `${thumbOffsetPercent}%` }} />
+              )}
+              {!originFromZero && (
+                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
+                  style={{ [lengthString]: `${100 - thumbOffsetPercent}%` }} />
+              )}
+            </div>
+          </div>
+
+          <Label class={classNames.valueLabel}>
+            {this.$scopedSlots.value
+              ? this.$scopedSlots.value({ value: internalValue })
+              : internalValue
+            }
+          </Label>
+        </div>
+      </div>
+    )
+  }
 }
-</script>
