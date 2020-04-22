@@ -1,12 +1,12 @@
+import { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 import { getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
-import { IOverlayStyles } from './Overlay.types'
 
 const GlobalClassNames = {
   root: 'ms-Overlay',
   rootDark: 'ms-Overlay--dark',
 }
 
-export const getStyles = (props: any): IOverlayStyles => {
+export const getStyles = (props: IOverlayStyleProps): IOverlayStyles => {
   const { className, theme, isNone, isDark } = props
 
   const { palette } = theme

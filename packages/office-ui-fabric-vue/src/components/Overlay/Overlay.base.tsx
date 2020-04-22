@@ -1,19 +1,13 @@
-<template>
-  <div :class="classNames.root">
-    <slot />
-  </div>
-</template>
 
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IOverlayProps, IOverlayStyles } from './Overlay.types'
+import { IOverlayProps, IOverlayStyles, IOverlayStyleProps } from './Overlay.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IOverlayStyleProps, IOverlayStyles>()
 
 @Component
-export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles> {
+export class OverlayBase extends BaseComponent<IOverlayProps, IOverlayStyles> {
   @Prop({ type: Boolean, default: false }) dark!: boolean
 
   get classNames () {
@@ -24,5 +18,13 @@ export default class Overlay extends BaseComponent<IOverlayProps, IOverlayStyles
       isDark: dark,
     })
   }
+
+  render () {
+    const { classNames } = this
+    return (
+      <div class={classNames.root}>
+        {this.$slots.default}
+      </div>
+    )
+  }
 }
-</script>
