@@ -5,7 +5,7 @@ import { VueConstructor } from 'vue'
 
 export * from './Label.types'
 
-export const Label: VueConstructor = styled(
+export const Label = styled(
   LabelBase,
   getStyles,
   undefined,

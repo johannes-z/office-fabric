@@ -1,10 +1,10 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import { Label } from '../Label/'
 import BaseComponent from '../BaseComponent'
-import { IToggleProps, IToggleStyles } from './Toggle.types'
+import { IToggleProps, IToggleStyles, IToggleStyleProps } from './Toggle.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
 @Component
 export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
@@ -34,7 +34,7 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
             </Label>
           )}
         <div class={classNames.container}>
-          <button id={`Toggle${this.id}`} ref="toggleButton" class={classNames.pill} onclick={this.onClick}>
+          <button id={`Toggle${this.id}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
             <div class={classNames.thumb} />
           </button>
           {((internalChecked && onText) || (!internalChecked && offText)) && (
@@ -48,7 +48,7 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
     )
   }
 
-  get classNames (): any {
+  get classNames () {
     const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
     return getClassNames(this.styles, {
       theme: theme,

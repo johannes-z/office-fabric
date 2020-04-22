@@ -1,5 +1,5 @@
 import { Component, Prop } from 'vue-property-decorator'
-import { ITextStyles } from './Text.types'
+import { ITextStyles, ITextProps } from './Text.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { CreateElement, RenderContext } from 'vue'
 import StatelessComponent from '../StatelessComponent'
@@ -7,7 +7,7 @@ import StatelessComponent from '../StatelessComponent'
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
 @Component
-export default class Text extends StatelessComponent {
+export default class Text extends StatelessComponent<ITextProps> {
   @Prop({ type: Boolean, default: false }) nowrap!: boolean
   @Prop({ type: Boolean, default: false }) block!: boolean
   @Prop({ type: String, default: 'medium' }) variant!: string

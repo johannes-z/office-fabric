@@ -1,4 +1,71 @@
-import { IStyle } from '@uifabric/merge-styles'
+import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import { ITheme } from '@uifabric/styling'
+
+export interface IImageProps {
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules
+   */
+  styles?: IStyleFunctionOrObject<IImageStyleProps, IImageStyles>;
+
+  /**
+   * Theme provided by HOC.
+   */
+  theme?: ITheme;
+
+  /**
+   * Additional css class to apply to the Component
+   * @defaultvalue undefined
+   */
+  className?: string;
+
+  /**
+   * If true, fades the image in when loaded.
+   * @defaultvalue true
+   */
+  shouldFadeIn?: boolean;
+
+  /**
+   * If true, the image starts as visible and is hidden on error. Otherwise, the image is hidden until
+   * it is successfully loaded. This disables shouldFadeIn.
+   * @defaultvalue false;
+   */
+  shouldStartVisible?: boolean;
+
+  /**
+   * Used to determine how the image is scaled and cropped to fit the frame.
+   *
+   * @defaultvalue If both dimensions are provided, then the image is fit using ImageFit.scale.
+   * Otherwise, the image won't be scaled or cropped.
+   */
+  imageFit?: ImageFit;
+
+  /**
+   * Deprecated at v1.3.6, to replace the src in case of errors, use `onLoadingStateChange` instead and
+   * rerender the Image with a difference src.
+   * @deprecated Use `onLoadingStateChange` instead and
+   * rerender the Image with a difference src.
+   */
+  errorSrc?: string;
+
+  /**
+   * If true, the image frame will expand to fill its parent container.
+   */
+  maximizeFrame?: boolean;
+
+  /**
+   * Optional callback method for when the image load state has changed.
+   * The 'loadState' parameter indicates the current state of the Image.
+   */
+  onLoadingStateChange?: (loadState: ImageLoadState) => void;
+
+  /**
+   * Specifies the cover style to be used for this image. If not
+   * specified, this will be dynamically calculated based on the
+   * aspect ratio for the image.
+   */
+  coverStyle?: ImageCoverStyle;
+}
 
 export interface IImageStyleProps {
 }

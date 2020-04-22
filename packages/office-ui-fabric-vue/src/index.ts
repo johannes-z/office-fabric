@@ -1,3 +1,5 @@
+import 'vue-tsx-support/enable-check'
+
 import Fabric from './plugin/office-fabric'
 import * as Components from './components'
 

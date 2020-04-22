@@ -4,6 +4,7 @@ import Vue, { RenderContext, VNode, CreateElement } from 'vue'
 import StatelessComponent from '../StatelessComponent'
 import { Component, Prop } from 'vue-property-decorator'
 import { MS_ICON, classNames } from './Icon.styles'
+import { IIconProps } from './Icon.types'
 
 export interface IIconContent {
   children?: string;
@@ -34,7 +35,7 @@ export const getIconContent = memoizeFunction(
 )
 
 @Component
-export class FontIcon extends StatelessComponent {
+export class FontIcon extends StatelessComponent<IIconProps> {
   @Prop({ type: String, default: '' }) iconName!: string
 
   render (h: CreateElement, ctx: RenderContext): VNode {

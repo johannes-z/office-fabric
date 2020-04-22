@@ -4,11 +4,12 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 
 import { getIconContent } from './FontIcon'
+import { IIconProps } from './Icon.types'
 
 const getClassNames = classNamesFunction({ disableCaching: true })
 
 @Component
-export default class Icon extends StatelessComponent {
+export default class Icon extends StatelessComponent<IIconProps> {
   @Prop({ type: String, default: '' }) iconName!: string
   @Prop({ type: Object, default: null }) imageProps!: any
 

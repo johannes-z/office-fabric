@@ -1,6 +1,8 @@
 import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import Vue, { VueConstructor, CreateElement, RenderContext, VNode } from 'vue'
 
+import { componentFactory } from 'vue-tsx-support'
+
 import { Component as VueComponent } from 'vue-property-decorator'
 import { Customizations } from '@uifabric-vue/utilities'
 
@@ -28,19 +30,19 @@ export function styled<
   TStyleProps,
   TStyleSet extends IStyleSet<TStyleSet>
 > (
-  Component: VueConstructor<Vue>,
+  Component: any,
   baseStyles: IStyleFunctionOrObject<any, any>,
   getProps?: (props: any) => Partial<any>,
   customizable?: ICustomizableProps,
   pure?: boolean,
-): VueConstructor<Vue> {
+) {
   customizable = customizable || { scope: '', fields: undefined }
 
   const { scope, fields = DefaultFields } = customizable
 
   let _styles: any
 
-  return Vue.extend({
+  return componentFactory.create({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
     functional: true,
     render (h: CreateElement, context: RenderContext<any>): VNode {
