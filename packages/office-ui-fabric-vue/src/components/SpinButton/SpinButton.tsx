@@ -1,91 +1,46 @@
-<template>
-  <div :class="classNames.root">
-    <div v-if="labelPosition !== Position.bottom && (iconProps || label)" :class="classNames.labelWrapper">
-      <Icon v-if="iconProps"
-            :class-name="classNames.icon"
-            v-bind="iconProps" />
-      <Label :for="`SpinButton${_uid}`"
-             :class-name="classNames.label"
-             v-text="label" />
-    </div>
-
-    <div :class="classNames.spinButtonWrapper">
-      <input :id="`SpinButton${_uid}`"
-             :class="classNames.input"
-             :value="internalValue"
-             type="text"
-             role="spinbutton"
-             @focus="isFocused = true"
-             @blur="isFocused = false"
-             @input="internalValue = $event.target.value">
-      <span :class="classNames.arrowBox">
-        <IconButton class="ms-UpButton"
-                    :styles="getArrowButtonStyles(theme, true, customUpArrowButtonStyles)"
-                    :icon-props="{ iconName: 'ChevronUpSmall' }"
-                    @mousedown.native="startSpin(1)"
-                    @mouseup.native="stopSpin" />
-        <IconButton class="ms-DownButton"
-                    :styles="getArrowButtonStyles(theme, false, customDownArrowButtonStyles)"
-                    :icon-props="{ iconName: 'ChevronDownSmall' }"
-                    @mousedown.native="startSpin(-1)"
-                    @mouseup.native="stopSpin" />
-      </span>
-    </div>
-
-    <div v-if="labelPosition === Position.bottom && (iconProps || label)" :class="classNames.labelWrapper">
-      <Icon v-if="iconProps"
-            :class-name="classNames.icon"
-            v-bind="iconProps" />
-      <Label v-if="label"
-             :for="`SpinButton${_uid}`"
-             :class="classNames.label"
-             v-text="label" />
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import BaseComponent from '../BaseComponent'
 
 import IconButton from '../Button/IconButton/IconButton.vue'
-import { KeyboardSpinDirection } from './SpinButton.types'
 import { Position } from '../../utilities/positioning'
+import {
+  calculatePrecision,
+  precisionRound,
+} from '@uifabric-vue/utilities'
 
 import { getClassNames } from './SpinButton.classNames'
 import { getStyles, getArrowButtonStyles } from './SpinButton.styles'
 
-function calculatePrecision (value: number | string): number {
-  /**
-   * Group 1:
-   * [1-9]([0]+$) matches trailing zeros
-   * Group 2:
-   * \.([0-9]*) matches all digits after a decimal point.
-   */
-  const groups = /[1-9]([0]+$)|\.([0-9]*)/.exec(String(value))
-  if (!groups) {
-    return 0
-  }
-  if (groups[1]) {
-    return -groups[1].length
-  }
-  if (groups[2]) {
-    return groups[2].length
-  }
-  return 0
+export enum KeyboardSpinDirection {
+  down = -1,
+  notSpinning = 0,
+  up = 1,
 }
 
-function precisionRound (value: number, precision: number, base: number = 10): number {
-  const exp = Math.pow(base, precision)
-  return Math.round(value * exp) / exp
+export interface ISpinButtonState {
+  /**
+   * Is true when the control has focus.
+   */
+  isFocused: boolean;
+
+  /**
+   * the value of the spin button
+   */
+  value: string;
+
+  /**
+   * keyboard spin direction, used to style the up or down button
+   * as active when up/down arrow is pressed
+   */
+  keyboardSpinDirection: KeyboardSpinDirection;
 }
 
 @Component({
   components: { IconButton, Icon, Label },
 })
-export default class SpinButton extends BaseComponent {
+export class SpinButton extends BaseComponent<ISpinButtonProps> {
   @Prop({ default: false }) disabled!: boolean
   @Prop({ default: false }) required!: boolean
   @Prop({ default: 0 }) defaultValue!: number
@@ -169,5 +124,55 @@ export default class SpinButton extends BaseComponent {
     clearTimeout(this.timeout)
     clearInterval(this.interval)
   }
+
+  render () {
+    const { theme, customUpArrowButtonStyles, customDownArrowButtonStyles, classNames, labelPosition, iconProps, label, internalValue } = this
+    return (
+      <div class={classNames.root}>
+        {(labelPosition !== Position.bottom && (iconProps || label)) && (
+          <div class={classNames.labelWrapper}>
+            {iconProps && (<Icon class-name={classNames.icon} {...{ props: iconProps }} />)}
+            <Label for={`SpinButton${this.uid}`} class={classNames.label}>{label}</Label>
+          </div>
+        )}
+
+        <div class={classNames.spinButtonWrapper}>
+          <input id={`SpinButton${this.uid}`}
+            class={classNames.input}
+            value={internalValue}
+            type="text"
+            role="spinbutton"
+            onFocus={() => (this.isFocused = true)}
+            onBlur={() => (this.isFocused = false)}
+            onInput={ev => (this.internalValue = +(ev.target.value || 0))} />
+          <span class={classNames.arrowBox}>
+            <IconButton
+              class="ms-UpButton"
+              styles={getArrowButtonStyles(theme, true, customUpArrowButtonStyles)}
+              icon-props={{ iconName: 'ChevronUpSmall' }}
+              nativeOnMousedown={() => this.startSpin(1)}
+              nativeOnMouseup={() => this.stopSpin()} />
+            <IconButton
+              class="ms-DownButton"
+              styles={getArrowButtonStyles(theme, false, customDownArrowButtonStyles)}
+              icon-props={{ iconName: 'ChevronDownSmall' }}
+              nativeOnMousedown={() => this.startSpin(-1)}
+              nativeOnMouseup={() => this.stopSpin()} />
+          </span>
+        </div>
+
+        {(labelPosition === Position.bottom && (iconProps || label)) && (
+          <div class={classNames.labelWrapper}>
+            {iconProps && (
+              <Icon class-name={classNames.icon} {...{ props: iconProps }} />
+            )}
+            {label && (
+              <Label for={`SpinButton${this.uid}`} class={classNames.label}>{label}</Label>
+            )}
+          </div>
+        )}
+
+      </div>
+    )
+  }
 }
-</script>
