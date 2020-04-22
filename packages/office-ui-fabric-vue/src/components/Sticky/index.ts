@@ -1,6 +1,2 @@
-import Sticky from './Sticky.vue'
+export * from './Sticky'
 export * from './Sticky.types'
-
-export {
-  Sticky,
-}
