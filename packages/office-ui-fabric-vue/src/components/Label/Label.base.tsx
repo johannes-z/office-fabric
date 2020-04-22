@@ -9,7 +9,7 @@ const getClassNames = classNamesFunction<any, ILabelStyles>({
 })
 
 @Component
-export default class Label extends StatelessComponent<ILabelProps> {
+export class LabelBase extends StatelessComponent<ILabelProps> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) required!: boolean
 
