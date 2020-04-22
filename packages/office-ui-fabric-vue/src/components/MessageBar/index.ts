@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import MessageBarBase from './MessageBar.vue'
+import { MessageBarBase } from './MessageBar.base'
 import { getStyles } from './MessageBar.styles'
-import { VueConstructor } from 'vue'
 
 export * from './MessageBar.types'
 
-export const MessageBar: VueConstructor = styled(
+export const MessageBar = styled(
   MessageBarBase,
   getStyles,
   undefined,
