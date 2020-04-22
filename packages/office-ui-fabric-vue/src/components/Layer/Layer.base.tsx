@@ -1,31 +1,18 @@
-<template>
-  <MountingPortal
-    v-if="hasTarget"
-    :mount-to="hostId ? `#${hostId}` : 'body'"
-    :append="append">
-    <div :class="classNames.root">
-      <div :class="classNames.content">
-        <slot />
-      </div>
-    </div>
-  </MountingPortal>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { MountingPortal } from 'portal-vue'
 import { registerLayer, getDefaultTarget, unregisterLayer } from './Layer.notification'
-import { ILayerProps, ILayerStyles } from './Layer.types'
+import { ILayerProps, ILayerStyles, ILayerStyleProps } from './Layer.types'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Layer.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { ofType } from 'vue-tsx-support'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<ILayerStyleProps, ILayerStyles>()
 
-@Component({
-  components: { MountingPortal },
-})
-export default class Layer extends BaseComponent {
+const TypedMountingPortal = ofType<any>().convert(MountingPortal)
+
+@Component
+export class LayerBase extends BaseComponent {
   @Prop({ type: String, default: null }) hostId!: string
   @Prop({ type: Boolean, default: true }) append!: boolean
 
@@ -84,5 +71,19 @@ export default class Layer extends BaseComponent {
         : doc.body
     }
   }
+
+  render () {
+    if (!this.hasTarget) return
+
+    const { classNames, hostId, append } = this
+    return (
+      <TypedMountingPortal mount-to={hostId ? `#${hostId}` : 'body'} append={append}>
+        <div class={classNames.root}>
+          <div class={classNames.content}>
+            {this.$slots.default}
+          </div>
+        </div>
+      </TypedMountingPortal>
+    )
+  }
 }
-</script>

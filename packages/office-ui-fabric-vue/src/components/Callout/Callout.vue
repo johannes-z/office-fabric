@@ -1,7 +1,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement } from 'vue'
-import Layer from '../Layer/Layer.vue'
+import { Layer } from '../Layer/'
 import CalloutContent from './CalloutContent.vue'
 import StatelessComponent from '../StatelessComponent'
 import { DirectionalHint } from '../../common/DirectionalHint'
