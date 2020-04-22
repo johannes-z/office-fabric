@@ -52,6 +52,11 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
     }
   }
 
+  protected get id (): number {
+    // @ts-ignore
+    return this._uid
+  }
+
   protected get classNames (): IProcessedStyleSet<any> {
     return {} as any
   }

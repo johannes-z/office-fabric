@@ -1,32 +1,3 @@
-<template>
-  <div :class="classNames.root"
-       @click="onClick">
-    <slot name="label"
-          :checked="internalChecked"
-          :disabled="disabled"
-          :label="label">
-      <Label :class="classNames.label"
-             :for="`Toggle${_uid}`"
-             @click.prevent
-             v-text="label" />
-    </slot>
-    <div :class="classNames.container">
-      <button :id="`Toggle${_uid}`"
-              ref="toggleButton"
-              :class="classNames.pill">
-        <div :class="classNames.thumb" />
-      </button>
-      <Label v-if="(internalChecked && onText) || (!internalChecked && offText)"
-             :class="classNames.text"
-             :for="`Toggle${_uid}`"
-             @click.prevent>
-        {{ internalChecked ? onText : offText }}
-      </Label>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import { Label } from '../Label/'
 import BaseComponent from '../BaseComponent'
@@ -35,10 +6,8 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction()
 
-@Component({
-  components: { Label },
-})
-export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
+@Component
+export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
   $refs!: {
     toggleButton: HTMLButtonElement
   }
@@ -53,7 +22,33 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
 
   internalChecked: boolean = this.defaultChecked || this.checked
 
-  get classNames () {
+  render () {
+    const { classNames, internalChecked, disabled, label, onText, offText } = this
+    return (
+      <div class={classNames.root}>
+        {this.$scopedSlots.label
+          ? this.$scopedSlots.label({ checked: internalChecked, disabled, label })
+          : (
+            <Label class={classNames.label} for={`Toggle${this.id}`}>
+              {label}
+            </Label>
+          )}
+        <div class={classNames.container}>
+          <button id={`Toggle${this.id}`} ref="toggleButton" class={classNames.pill} onclick={this.onClick}>
+            <div class={classNames.thumb} />
+          </button>
+          {((internalChecked && onText) || (!internalChecked && offText)) && (
+
+            <Label class={classNames.text} for={`Toggle${this.id}`}>
+              { internalChecked ? onText : offText }
+            </Label>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  get classNames (): any {
     const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
     return getClassNames(this.styles, {
       theme: theme,
@@ -79,4 +74,3 @@ export default class Toggle extends BaseComponent<IToggleProps, IToggleStyles> {
     this.internalChecked = !this.internalChecked
   }
 }
-</script>

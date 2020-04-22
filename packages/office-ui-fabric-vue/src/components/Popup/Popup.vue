@@ -1,6 +1,6 @@
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { getDocument, getWindow, on, Async, doesElementContainFocus } from '@uifabric-vue/utilities'
+import { getDocument, getWindow, on, Async, doesElementContainFocus, KeyCodes } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 import { CreateElement, VNode } from 'vue'
 
@@ -12,17 +12,13 @@ export default class Popup extends BaseComponent {
     current: HTMLDivElement
   }
   @Prop({ type: Boolean, default: true }) shouldRestoreFocus!: boolean
-  @Prop({ type: Object, default: () => {} }) style!: any
+  @Prop({ type: Function, default: null }) onDismiss!: (ev: KeyboardEvent) => any
 
   private _originalFocusedElement!: HTMLElement;
-  private _async!: Async;
   private needsVerticalScrollBar = false;
   private _containsFocus = false;
-  // @ts-ignore
-  private _disposables: (() => void)[] = [];
 
   created () {
-    this._async = new Async(this)
     this._originalFocusedElement = getDocument()!.activeElement as HTMLElement
   }
 
@@ -77,18 +73,18 @@ export default class Popup extends BaseComponent {
     )
   }
 
-  private _onKeyDown = (ev: Event): void => {
-    // switch (ev.which) {
-    //   case KeyCodes.escape:
-    //     if (this.onDismiss) {
-    //       this.onDismiss(ev)
+  private _onKeyDown (ev: KeyboardEvent): void {
+    switch (ev.which) {
+      case KeyCodes.escape:
+        if (this.onDismiss) {
+          this.onDismiss(ev)
 
-    //       ev.preventDefault()
-    //       ev.stopPropagation()
-    //     }
+          ev.preventDefault()
+          ev.stopPropagation()
+        }
 
-    //     break
-    // }
+        break
+    }
   };
 
   private _updateScrollBarAsync (): void {
@@ -125,11 +121,11 @@ export default class Popup extends BaseComponent {
     }
   }
 
-  private _onFocus = (): void => {
+  private _onFocus (): void {
     this._containsFocus = true
   };
 
-  private _onBlur = (ev: FocusEvent): void => {
+  private _onBlur (ev: FocusEvent): void {
     if (this.$refs.current && this.$refs.current.contains(ev.relatedTarget as HTMLElement)) {
       this._containsFocus = false
     }

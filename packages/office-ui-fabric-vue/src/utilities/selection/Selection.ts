@@ -1,1 +1,1 @@
-export { ISelectionOptions, Selection } from '@uifabric-vue/utilities'
+export type { ISelectionOptions, Selection } from '@uifabric-vue/utilities'

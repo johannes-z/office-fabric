@@ -4,6 +4,12 @@ import { IPartialTheme, ITheme, createTheme, loadTheme as baseLoadTheme } from '
 import { registerCSSVars } from './registerCSSVars'
 import { toKebabCase } from '../utilities'
 
+export type { IPartialTheme } from '@uifabric/styling'
+export interface IOptions {
+  useCSSVars: boolean
+  prefix?: string
+}
+
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
   let _theme = createTheme(theme)
 
@@ -22,13 +28,6 @@ export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): I
 
   return _theme
 }
-
-export interface IOptions {
-  useCSSVars: boolean
-  prefix?: string
-}
-
-export { IPartialTheme } from '@uifabric/styling'
 
 export default function install (Vue: any, theme: IPartialTheme = {}, options: Partial<IOptions> = {}) {
   for (const componentName in Components) {
