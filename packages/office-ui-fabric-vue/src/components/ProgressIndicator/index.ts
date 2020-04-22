@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import ProgressIndicatorBase from './ProgressIndicator.vue'
+import { ProgressIndicatorBase } from './ProgressIndicator.base'
 import { getStyles } from './ProgressIndicator.styles'
-import { VueConstructor } from 'vue'
 
 export * from './ProgressIndicator.types'
 
-export const ProgressIndicator: VueConstructor = styled(
+export const ProgressIndicator = styled(
   ProgressIndicatorBase,
   getStyles,
   undefined,
