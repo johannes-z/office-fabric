@@ -1,25 +1,3 @@
-<template>
-  <div ref="root" :class="classNames.root">
-    <div ref="stickyAbove"
-         aria-hidden="true"
-         :class="classNames.stickyAbove"
-         :style="getStickyContainerStyle(stickyTopHeight, true)" />
-
-    <div ref="contentContainer"
-         :class="classNames.contentContainer"
-         :data-is-scrollable="true">
-      <slot />
-    </div>
-
-    <div aria-hidden="true"
-         :class="classNames.stickyBelow"
-         :style="getStickyContainerStyle(stickyBottomHeight, false)">
-      <div ref="stickyBelow" :class="classNames.stickyBelowItems" />
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, getRTL } from '@uifabric-vue/utilities'
 import { IScrollablePaneStyleProps, IScrollablePaneStyles, ScrollbarVisibility, IScrollablePaneContext } from './ScrollablePane.types'
@@ -30,7 +8,7 @@ const getClassNames = classNamesFunction<IScrollablePaneStyleProps, IScrollableP
 
 @Component({
   components: {},
-  provide (this: ScrollablePane) {
+  provide (this: ScrollablePaneBase) {
     return {
       context: {
         scrollablePane: {
@@ -48,7 +26,7 @@ const getClassNames = classNamesFunction<IScrollablePaneStyleProps, IScrollableP
     }
   },
 })
-export default class ScrollablePane extends BaseComponent {
+export class ScrollablePaneBase extends BaseComponent {
   $refs!: {
     root: HTMLDivElement
     stickyAbove: HTMLDivElement
@@ -379,5 +357,28 @@ export default class ScrollablePane extends BaseComponent {
 
     this.notifyThrottled()
   };
+
+  render () {
+    const { classNames, stickyBottomHeight, stickyTopHeight } = this
+    return (
+      <div ref="root" class={classNames.root}>
+        <div ref="stickyAbove"
+          aria-hidden="true"
+          class={classNames.stickyAbove}
+          style={this.getStickyContainerStyle(stickyTopHeight, true)} />
+
+        <div ref="contentContainer"
+          class={classNames.contentContainer}
+          data-is-scrollable="true">
+          {this.$slots.default}
+        </div>
+
+        <div aria-hidden="true"
+          class={classNames.stickyBelow}
+          style={this.getStickyContainerStyle(stickyBottomHeight, false)}>
+          <div ref="stickyBelow" class={classNames.stickyBelowItems} />
+        </div>
+      </div>
+    )
+  }
 }
-</script>

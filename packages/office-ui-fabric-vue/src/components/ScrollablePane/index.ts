@@ -1,11 +1,10 @@
 import { styled } from '../styled'
-import ScrollablePaneBase from './ScrollablePane.vue'
+import { ScrollablePaneBase } from './ScrollablePane.base'
 import { getStyles } from './ScrollablePane.styles'
-import { VueConstructor } from 'vue'
 
 export * from './ScrollablePane.types'
 
-export const ScrollablePane: VueConstructor = styled(
+export const ScrollablePane = styled(
   ScrollablePaneBase,
   getStyles,
   undefined,
