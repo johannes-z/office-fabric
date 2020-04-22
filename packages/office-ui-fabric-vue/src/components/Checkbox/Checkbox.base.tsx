@@ -1,29 +1,6 @@
-<template>
-  <div :class="classNames.root">
-    <input :id="`Checkbox${_uid}`"
-           :class="classNames.input"
-           v-bind="$attrs"
-           type="checkbox"
-           @input="onInput">
-    <Label :for="`Checkbox${_uid}`"
-           :class="classNames.label">
-      <div :class="classNames.checkbox">
-        <Icon icon-name="CheckMark"
-              :class="classNames.checkmark" />
-      </div>
-      <span v-if="label || $slots.default"
-            :class="classNames.text"
-            :title="title">
-        <slot>{{ label }}</slot>
-      </span>
-    </Label>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
-import { Label } from '../Label/'
-import { Icon } from '../Icon/'
+import { Label } from '../Label'
+import { Icon } from '../Icon'
 import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
@@ -32,9 +9,8 @@ import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabri
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
 @Component({
-  components: { Label, Icon },
 })
-export default class Checkbox extends BaseComponent {
+export class CheckboxBase extends BaseComponent {
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
   @Prop({ type: Boolean, default: false }) indeterminate!: boolean
@@ -47,6 +23,33 @@ export default class Checkbox extends BaseComponent {
 
   private internalValue: boolean = this.checked || this.defaultChecked
   private isIndeterminate: boolean = this.indeterminate || this.defaultIndeterminate
+
+  render () {
+    const { classNames, title, label } = this
+
+    return (
+      <div class={classNames.root}>
+        <input id={`Checkbox${this.id}`}
+          class={classNames.input}
+          {...this.$attrs}
+          disabled={this.disabled}
+          type="checkbox"
+          onInput={this.onInput} />
+
+        <Label class={classNames.label} for={`Checkbox${this.id}`}>
+          <div class={classNames.checkbox}>
+            <Icon icon-name="CheckMark" class={classNames.checkmark} />
+          </div>
+
+          {(label || this.$slots.default) && (
+            <span class={classNames.text} title={title}>
+              {this.$slots.default || label}
+            </span>
+          )}
+        </Label>
+      </div>
+    )
+  }
 
   get classNames () {
     const { theme, className, disabled, isIndeterminate, internalValue, boxSide } = this
@@ -67,6 +70,8 @@ export default class Checkbox extends BaseComponent {
   }
 
   private onInput () {
+    if (this.disabled) return
+
     if (this.isIndeterminate) {
       this.internalValue = this.defaultChecked
       this.isIndeterminate = false
@@ -75,4 +80,3 @@ export default class Checkbox extends BaseComponent {
     }
   }
 }
-</script>

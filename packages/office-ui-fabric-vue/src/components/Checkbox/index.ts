@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import CheckboxBase from './Checkbox.vue'
+import { CheckboxBase } from './Checkbox.base'
 import { getStyles } from './Checkbox.styles'
 import { VueConstructor } from 'vue'
 

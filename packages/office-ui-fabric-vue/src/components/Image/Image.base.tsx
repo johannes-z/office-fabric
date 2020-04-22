@@ -1,41 +1,43 @@
-<template>
-  <div :class="classNames.root"
-       :style="{ width: width + 'px', height: height + 'px' }">
-    <img v-bind="$attrs"
-         :class="classNames.image"
-         :src="src"
-         alt=""
-         @load="onImageLoaded"
-         @error="onImageError">
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle, ImageLoadState } from './Image.types'
+import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle, ImageLoadState, IImageProps } from './Image.types'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Image.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IImageStyleProps, IImageStyles>()
 
 @Component({
   inheritAttrs: false,
 })
-export default class Image extends BaseComponent {
+export class ImageBase extends BaseComponent<IImageProps> {
   @Prop({ type: String, required: true }) src!: string
   @Prop({ type: String, default: '' }) alt!: string
   @Prop({ type: [String, Number], default: '' }) width!: string | number
   @Prop({ type: [String, Number], default: '' }) height!: string | number
   @Prop({ type: Number, default: null }) imageFit!: number
   @Prop({ type: Boolean, default: null }) maximizeFrame!: boolean
-  @Prop({ type: Boolean, default: null }) shouldFadeIn!: boolean
+  @Prop({ type: Boolean, default: true }) shouldFadeIn!: boolean
   @Prop({ type: Boolean, default: null }) shouldStartVisible!: boolean
   @Prop({ type: Number, default: ImageCoverStyle.portrait }) coverStyle!: number
 
   loadState: ImageLoadState = ImageLoadState.notLoaded
 
   private static svgRegex = /\.svg$/i;
+
+  render () {
+    const { classNames, src, alt, width, height } = this
+    return (
+      <div class={classNames.root} style={{ width: width + 'px', height: height + 'px' }}>
+        <img
+          {...this.$attrs}
+          class={classNames.image}
+          src={src}
+          alt={alt}
+          onLoad={this.onImageLoaded}
+          onError={this.onImageError} />
+      </div>
+    )
+  }
 
   get classNames () {
     const { styles, loadState, coverStyle, imageFit, theme, className, width, height, maximizeFrame, shouldFadeIn, shouldStartVisible } = this
@@ -57,7 +59,7 @@ export default class Image extends BaseComponent {
       isCover: imageFit === ImageFit.cover,
       isNone: imageFit === ImageFit.none,
       isError: loadState === ImageLoadState.error,
-      isNotImageFit: imageFit === undefined,
+      isNotImageFit: imageFit == null,
     })
   }
 
@@ -68,4 +70,3 @@ export default class Image extends BaseComponent {
     this.loadState = ImageLoadState.error
   }
 }
-</script>
