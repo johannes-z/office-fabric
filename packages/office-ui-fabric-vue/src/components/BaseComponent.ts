@@ -7,6 +7,8 @@ import { getTheme, ITheme } from '@uifabric/styling'
 // @ts-ignore
 @Component
 export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vue {
+  $props!: TProps
+
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
@@ -21,13 +23,13 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
   protected state: TState = {} as TState
   protected props: TProps = {} as TProps
 
-  created () {
-    for (const key in this.$props) {
-      if (this.$props.hasOwnProperty(key)) {
-        this.$set(this.props as any, key, this.$props[key])
-      }
-    }
-  }
+  // created () {
+  //   for (const key in this.$props) {
+  //     if (this.$props.hasOwnProperty(key)) {
+  //       this.$set(this.props as any, key, this.$props[key])
+  //     }
+  //   }
+  // }
 
   /**
    * When the component has mounted, update the componentRef.

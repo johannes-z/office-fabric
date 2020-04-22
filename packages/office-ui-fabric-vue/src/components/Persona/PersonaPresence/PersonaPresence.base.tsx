@@ -1,21 +1,8 @@
-<template>
-  <div v-if="presence !== PersonaPresenceEnum.none"
-       :class="classNames.presence"
-       :title="presenceTitle"
-       :style="coinSizeWithPresenceStyle">
-    <Icon v-if="renderIcon"
-          :class="classNames.presenceIcon"
-          :icon-name="icon"
-          :style="coinSizeWithPresenceIconStyle" />
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import {
-  PersonaPresence as PersonaPresenceEnum, PersonaSize,
+  PersonaPresence as PersonaPresenceEnum, PersonaSize, IPersonaPresenceStyleProps, IPersonaPresenceStyles, IPersonaPresenceProps,
 } from '../Persona.types'
 import { sizeBoolean } from '../PersonaConsts'
 import { Icon } from '../../Icon'
@@ -25,13 +12,17 @@ const coinSizePresenceScaleFactor = 3
 const presenceMaxSize = 40
 const presenceFontMaxSize = 20
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IPersonaPresenceStyleProps, IPersonaPresenceStyles>({
+  // There can be many PersonaPresence rendered with different sizes.
+  // Therefore setting a larger cache size.
+  cacheSize: 100,
+})
 
 @Component({
   components: { Icon },
   name: 'PersonaPresence',
 })
-export default class PersonaPresence extends BaseComponent {
+export class PersonaPresenceBase extends BaseComponent<IPersonaPresenceProps> {
   @Prop({ type: Number, required: true }) presence!: PersonaPresenceEnum
   @Prop() size!: any
   @Prop() isOutOfOffice!: any
@@ -113,5 +104,23 @@ export default class PersonaPresence extends BaseComponent {
 
     return ''
   }
+
+  render () {
+    const { classNames, presence, presenceTitle, coinSizeWithPresenceStyle, coinSizeWithPresenceIconStyle, icon, renderIcon } = this
+    if (presence === PersonaPresenceEnum.none) return
+
+    return (
+      <div
+        class={classNames.presence}
+        title={presenceTitle}
+        style={coinSizeWithPresenceStyle}>
+        {renderIcon && (
+          <Icon
+            class={classNames.presenceIcon}
+            icon-name={icon}
+            style={coinSizeWithPresenceIconStyle} />
+        )}
+      </div>
+    )
+  }
 }
-</script>

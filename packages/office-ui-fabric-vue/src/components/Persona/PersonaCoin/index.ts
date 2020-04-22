@@ -1,4 +1,4 @@
-import PersonaCoinBase from './PersonaCoin.vue'
+import { PersonaCoinBase } from './PersonaCoin.base'
 import { getStyles } from './PersonaCoin.styles'
 import { VueConstructor } from 'vue'
 import { styled } from '../../styled'

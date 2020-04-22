@@ -1,28 +1,3 @@
-<template>
-  <div :class="classNames.root"
-       :style="coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : undefined">
-    <PersonaCoin v-bind="$props" />
-
-    <div v-if="!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)"
-         :class="classNames.details">
-      <div dir="auto" :class="classNames.primaryText">
-        <div :class="classNames.tooltipHostRoot">{{ text }}</div>
-      </div>
-      <div dir="auto" :class="classNames.secondaryText">
-        <div :class="classNames.tooltipHostRoot">{{ secondaryText }}</div>
-      </div>
-      <div dir="auto" :class="classNames.tertiaryText">
-        <div :class="classNames.tooltipHostRoot">{{ tertiaryText }}</div>
-      </div>
-      <div dir="auto" :class="classNames.optionalText">
-        <div :class="classNames.tooltipHostRoot">{{ optionalText }}</div>
-      </div>
-      <slot />
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Icon } from '../Icon/'
 import BaseComponent from '../BaseComponent'
@@ -30,15 +5,12 @@ import { IPersonaProps, IPersonaStyles } from '../Persona'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { PersonaCoin } from './PersonaCoin/'
-import { PersonaSize, PersonaPresence } from './Persona.types'
+import { PersonaSize, PersonaPresence, IPersonaStyleProps } from './Persona.types'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IPersonaStyleProps, IPersonaStyles>()
 
-@Component({
-  name: 'OPersona',
-  components: { Icon, PersonaCoin },
-})
-export default class Persona extends BaseComponent {
+@Component
+export class PersonaBase extends BaseComponent<IPersonaProps> {
   @Prop({ type: Boolean, default: false }) allowPhoneInitials!: boolean
   @Prop({ type: Number, default: PersonaPresence.none }) presence!: number
   @Prop({ type: Number, default: PersonaSize.size48 }) size!: number
@@ -70,6 +42,35 @@ export default class Persona extends BaseComponent {
       size,
     })
   }
-}
 
-</script>
+  render () {
+    const { classNames, coinSize, text, secondaryText, tertiaryText, optionalText, hidePersonaDetails, size } = this
+
+    return (
+      <div class={classNames.root}
+        style={coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : {}}>
+        <PersonaCoin {...{ props: this.$props }} />
+
+        {(!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)) && (
+          <div class={classNames.details}>
+            <div dir="auto" class={classNames.primaryText}>
+              <div>{text}</div>
+            </div>
+            <div dir="auto" class={classNames.secondaryText}>
+              <div>{secondaryText}</div>
+            </div>
+            <div dir="auto" class={classNames.tertiaryText}>
+              <div>{tertiaryText}</div>
+            </div>
+            <div dir="auto" class={classNames.optionalText}>
+              <div>{optionalText}</div>
+            </div>
+
+            {this.$slots.default}
+          </div>
+        )
+        }
+      </div>
+    )
+  }
+}
