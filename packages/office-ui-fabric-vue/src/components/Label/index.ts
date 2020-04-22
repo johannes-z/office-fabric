@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import LabelBase from './Label'
+import { LabelBase } from './Label.base'
 import { getStyles } from './Label.styles'
 import { VueConstructor } from 'vue'
 
