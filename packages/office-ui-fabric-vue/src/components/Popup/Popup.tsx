@@ -1,13 +1,13 @@
-<script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getDocument, getWindow, on, Async, doesElementContainFocus, KeyCodes } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 import { CreateElement, VNode } from 'vue'
+import { IPopupProps } from './Popup.types'
 
 @Component({
   components: {},
 })
-export default class Popup extends BaseComponent {
+export class Popup extends BaseComponent<IPopupProps> {
   $refs!: {
     current: HTMLDivElement
   }
@@ -25,7 +25,10 @@ export default class Popup extends BaseComponent {
   mounted () {
     if (this.$refs.current) {
       // @ts-ignore
-      this._disposables.push(on(this.$refs.current, 'focus', this._onFocus, true), on(this.$refs.current, 'blur', this._onBlur, true))
+      this._disposables.push(
+        on(this.$refs.current, 'focus', this._onFocus, true),
+        on(this.$refs.current, 'blur', this._onBlur, true),
+      )
       const currentWindow = getWindow(this.$refs.current)
       if (currentWindow) {
         this._disposables.push(on(currentWindow, 'keydown', this._onKeyDown as any))
@@ -65,8 +68,8 @@ export default class Popup extends BaseComponent {
 
     return (
       <div ref="current"
-        className={className}
-        onKeyDown={this._onKeyDown}
+        class={className}
+        onKeydown={this._onKeyDown}
         style={{ overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }}>
         {this.$slots.default}
       </div>
@@ -131,7 +134,3 @@ export default class Popup extends BaseComponent {
     }
   };
 }
-</script>
-
-<style lang="scss" scoped>
-</style>
