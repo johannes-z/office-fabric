@@ -67,8 +67,6 @@ export class Autofill extends BaseComponent<IAutofillProps> {
   private onKeyDown (ev: any) {
     this.$emit('keydown', ev)
 
-    console.log(ev.isComposing)
-
     // If the event is actively being composed, then don't alert autofill.
     // Right now typing does not have isComposing, once that has been fixed any should be removed.
     if (!(ev as any).isComposing) {
