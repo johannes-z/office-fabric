@@ -11,6 +11,7 @@ export class Popup extends BaseComponent<IPopupProps> {
   $refs!: {
     current: HTMLDivElement
   }
+
   @Prop({ type: Boolean, default: true }) shouldRestoreFocus!: boolean
   @Prop({ type: Function, default: null }) onDismiss!: (ev: KeyboardEvent) => any
 
@@ -47,7 +48,6 @@ export class Popup extends BaseComponent<IPopupProps> {
   }
 
   public beforeDestroy (): void {
-    this._disposables.forEach((dispose: () => void) => dispose())
     if (
       this.shouldRestoreFocus &&
       this._originalFocusedElement &&

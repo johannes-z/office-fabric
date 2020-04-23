@@ -45,7 +45,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Ts
   beforeDestroy () {
     if (this.__disposables) {
       for (let i = 0, len = this._disposables.length; i < len; i++) {
-        let disposable = this.__disposables[i]
+        const disposable = this.__disposables[i]
 
         if (disposable.dispose) {
           disposable.dispose()

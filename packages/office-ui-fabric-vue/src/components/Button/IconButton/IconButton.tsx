@@ -12,8 +12,8 @@ export class IconButton extends BaseComponent {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
 
   get internalStyles () {
-    const { theme } = this
-    return getStyles(theme, this.styles)
+    const { theme, styles } = this
+    return getStyles(theme, styles)
   }
 
   render () {
