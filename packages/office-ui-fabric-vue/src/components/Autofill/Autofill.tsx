@@ -180,6 +180,7 @@ export class Autofill extends BaseComponent<IAutofillProps> {
     return (
       <input
         ref="inputElement"
+        // @ts-ignore
         autoCapitalize="off"
         autoComplete="off"
         aria-autocomplete={'both'}
