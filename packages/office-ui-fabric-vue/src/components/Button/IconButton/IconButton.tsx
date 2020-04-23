@@ -17,8 +17,9 @@ export class IconButton extends BaseComponent {
   }
 
   render () {
-    const { internalStyles } = this
+    const { disabled, internalStyles } = this
     const props: IBaseButtonProps = {
+      disabled,
       variantClassName: 'ms-Button--icon',
       styles: internalStyles,
     }
