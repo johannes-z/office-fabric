@@ -1,25 +1,13 @@
-<template>
-  <input ref="inputElement"
-         autocomplete="off"
-         autocapitalize="off"
-         :value="displayValue"
-         @input="onInputChanged"
-         @keydown="onKeyDown"
-         @keyup="$emit('keyup', $event)">
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { isIE11, KeyCodes } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
+import { IAutofillProps } from './Autofill.types'
 
 const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'
 
-@Component({
-  components: {},
-})
-export default class Autofill extends BaseComponent {
+@Component
+export class Autofill extends BaseComponent<IAutofillProps> {
   $refs!: {
     inputElement: HTMLInputElement
   }
@@ -79,6 +67,8 @@ export default class Autofill extends BaseComponent {
   private onKeyDown (ev: any) {
     this.$emit('keydown', ev)
 
+    console.log(ev.isComposing)
+
     // If the event is actively being composed, then don't alert autofill.
     // Right now typing does not have isComposing, once that has been fixed any should be removed.
     if (!(ev as any).isComposing) {
@@ -104,11 +94,11 @@ export default class Autofill extends BaseComponent {
     }
   };
 
-  private onInputChanged (ev: Event) {
+  private onInputChanged (ev: any) {
     const value: string = this.getCurrentInputValue(ev)
 
     if (!this.isComposing) {
-      this.tryEnableAutofill(value, this.value, ev.composed)
+      this.tryEnableAutofill(value, this.value, ev.isComposing)
     }
 
     // If it is not IE11 and currently composing, update the value
@@ -145,7 +135,12 @@ export default class Autofill extends BaseComponent {
 
   private getDisplayValue (inputValue: string, suggestedDisplayValue?: string): string {
     let displayValue = inputValue
-    if (suggestedDisplayValue && inputValue && this.doesTextStartWith(suggestedDisplayValue, displayValue) && this.autoFillEnabled) {
+    if (
+      suggestedDisplayValue &&
+      inputValue &&
+      this.doesTextStartWith(suggestedDisplayValue, displayValue) &&
+      this.autoFillEnabled
+    ) {
       displayValue = suggestedDisplayValue
     }
     return displayValue
@@ -181,8 +176,25 @@ export default class Autofill extends BaseComponent {
       this.autoFillEnabled = true
     }
   }
-}
-</script>
 
-<style lang="scss" scoped>
-</style>
+  render () {
+    const { displayValue } = this
+    return (
+      <input
+        ref="inputElement"
+        autoCapitalize="off"
+        autoComplete="off"
+        aria-autocomplete={'both'}
+        // {...nativeProps}
+        value={displayValue}
+        // onCompositionStart={this._onCompositionStart}
+        // onCompositionUpdate={this._onCompositionUpdate}
+        // onCompositionEnd={this._onCompositionEnd}
+        onInput={this.onInputChanged}
+        onKeydown={this.onKeyDown}
+        onClick={ev => this.$emit('click', ev)}
+        data-lpignore={true}
+      />
+    )
+  }
+}
