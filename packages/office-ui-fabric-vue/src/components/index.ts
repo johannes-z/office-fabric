@@ -1,5 +1,6 @@
 export { default as VNodes } from './VNodes'
 
+export * from './Autofill'
 export * from './Divider'
 export * from './List'
 export * from './DetailsList'
