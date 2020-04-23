@@ -57,20 +57,33 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { DefaultPalette } from '@uifabric/styling'
+import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
 export default class OverflowSetPage extends Vue {
   items = [
-    { key: 'item1', name: 'Link 1' },
-    { key: 'item2', name: 'Link 2' },
-    { key: 'item3', name: 'Link 3' },
+    {
+      key: 'item1',
+      name: 'Link 1',
+      icon: 'Add',
+    },
+    {
+      key: 'item2',
+      name: 'Link 2',
+      icon: 'Upload',
+    },
+    {
+      key: 'item3',
+      name: 'Link 3',
+      icon: 'Share',
+    },
   ];
+
   overflowItems = [
     { key: 'item4', name: 'Overflow Link 1' },
     { key: 'item5', name: 'Overflow Link 2' },
   ];
+
   buttonStyles = {
     root: {
       minWidth: 0,
