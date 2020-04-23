@@ -1,3 +1,3 @@
 export * from './OverflowSet'
-export * from './OverflowSet.base.vue'
+export * from './OverflowSet.base'
 export * from './OverflowSet.types'
