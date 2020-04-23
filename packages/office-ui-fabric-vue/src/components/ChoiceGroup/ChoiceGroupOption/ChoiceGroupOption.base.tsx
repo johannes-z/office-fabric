@@ -78,7 +78,6 @@ export class ChoiceGroupOptionBase extends BaseComponent<IChoiceGroupOptionProps
               <div class={classNames.labelWrapper}>
                 <span class="ms-ChoiceFieldLabel">
                   {this.$slots.default || text}
-                  <slot>{{ text }}</slot>
                 </span>
               </div>
             ) : (
