@@ -11,11 +11,11 @@ export class OverlayBase extends BaseComponent<IOverlayProps, IOverlayStyles> {
   @Prop({ type: Boolean, default: false }) dark!: boolean
 
   get classNames () {
-    const { theme, className, dark } = this
+    const { theme, className, dark: isDark } = this
     return getClassNames(this.styles, {
       theme,
       className,
-      isDark: dark,
+      isDark,
     })
   }
 
