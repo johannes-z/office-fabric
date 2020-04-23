@@ -1,6 +1,6 @@
-import VNodes from './VNodes'
-export { VNodes }
+export { default as VNodes } from './VNodes'
 
+export * from './Divider'
 export * from './List'
 export * from './DetailsList'
 export * from './ScrollablePane'
