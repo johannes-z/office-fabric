@@ -36,14 +36,14 @@ export class ChoiceGroupBase extends BaseComponent<IChoiceGroupProps> {
   }
 
   render () {
-    const { classNames, label, selectedOption, options } = this
+    const { classNames, label, required, disabled, selectedOption, options } = this
     return (
       <div class={classNames.applicationRole}>
         <div class={classNames.root}>
           {label && (
             <Label class={classNames.label}
-              required="required"
-              disabled="disabled">
+              required={required}
+              disabled={disabled}>
               { label }
             </Label>
           )}
