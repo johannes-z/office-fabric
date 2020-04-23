@@ -47,7 +47,7 @@ import { getStyles, getOptionStyles } from './ComboBox.styles'
 import BaseComponent from '../BaseComponent'
 import { Label } from '../Label/'
 import { IconButton, ActionButton } from '../Button'
-import Autofill from '../Autofill/Autofill.vue'
+import { Autofill } from '../Autofill/'
 import VNodes from '../VNodes'
 
 import { getClassNames } from './ComboBox.classNames'
