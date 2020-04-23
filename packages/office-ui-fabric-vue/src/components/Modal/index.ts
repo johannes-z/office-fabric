@@ -1,6 +1,2 @@
-import Modal from './Modal.vue'
-
+export * from './Modal'
 export * from './Modal.types'
-export {
-  Modal,
-}
