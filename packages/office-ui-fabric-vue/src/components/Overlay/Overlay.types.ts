@@ -30,7 +30,7 @@ export interface IOverlayProps {
    * Whether to use the dark-themed overlay.
    * @defaultvalue false
    */
-  isDarkThemed?: boolean;
+  dark?: boolean;
 
   onClick?: () => void;
 
