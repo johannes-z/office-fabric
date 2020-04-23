@@ -23,12 +23,6 @@ export interface IPopupProps {
   ariaDescribedBy?: string;
 
   /**
-   * A callback function for when the popup is dismissed from the close button or light dismiss. If provided, will
-   * handle escape keypresses and call this. The event will be stopped/canceled.
-   */
-  onDismiss?: (ev?: Event) => any;
-
-  /**
    *  Optional class name for the root popup div.
    */
   className?: string;

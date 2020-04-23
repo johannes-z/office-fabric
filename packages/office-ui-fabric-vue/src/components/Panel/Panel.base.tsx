@@ -237,7 +237,7 @@ export class PanelBase extends BaseComponent<IPanelProps> {
 
               <div ref="scrollableContent" class={classNames.scrollableContent}>
                 <div class={classNames.content}>
-                  <slot />
+                  {this.$slots.default}
                 </div>
               </div>
             </div>
