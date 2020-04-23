@@ -7,8 +7,7 @@ import { getStyles } from './CommandBarButton.styles'
 @Component
 export class CommandBarButton extends BaseComponent {
   get internalStyles () {
-    const { theme } = this
-    const styles = {}
+    const { theme, styles } = this
     return getStyles(theme, styles)
   }
 
