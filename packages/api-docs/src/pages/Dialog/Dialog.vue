@@ -14,7 +14,7 @@
       <h2>Default Dialog</h2>
 
       <f-default-button @click.native="showDialog = true">Open Dialog</f-default-button>
-      <f-dialog v-if="showDialog">
+      <f-dialog :hidden="!showDialog">
         Test
       </f-dialog>
     </div>
