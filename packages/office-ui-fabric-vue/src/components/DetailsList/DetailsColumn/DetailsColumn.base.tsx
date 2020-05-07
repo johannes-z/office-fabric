@@ -1,65 +1,3 @@
-<template>
-  <div ref="root"
-       :key="column.key"
-       :class="classNames.root"
-       :aria-sort="column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none'"
-       :aria-colindex="columnIndex"
-       role="columnheader"
-       :style="{ width: columnWidth }">
-    <component :is="IconComponent"
-               v-if="isDraggable"
-               icon-name="GripperBarVertical"
-               :class-name="classNames.gripperBarVerticalStyle" />
-
-    <span :class="classNames.cellTooltip">
-      <span :id="`${parentId}-${column.key}`"
-            :aria-label="column.isIconOnly ? column.name : undefined"
-            :aria-labelledby="column.isIconOnly ? undefined : `${parentId}-${column.key}-name`"
-            :class="classNames.cellTitle"
-            @contextmenu="_onColumnContextMenu"
-            @click="_onColumnClick">
-        <span :id="`${parentId}-${column.key}-name`" :class="classNames.cellName">
-          <!-- Column Icon -->
-          <template v-if="column.iconName || column.iconClassName">
-            <component :is="IconComponent"
-                       :class="classNames.iconClassName"
-                       :icon-name="column.iconName" />
-          </template>
-
-          <!-- Column Name -->
-          <template v-if="column.isIconOnly">
-            <span :class="classNames.accessibleLabel">{{ column.name }}</span>
-          </template>
-          <template v-else>
-            {{ column.name }}
-          </template>
-        </span>
-
-        <!-- Filter Indicator -->
-        <component :is="IconComponent"
-                   v-if="column.isFiltered"
-                   :class="classNames.nearIcon"
-                   icon-name="Filter" />
-        <!-- Sort Indicator -->
-        <component :is="IconComponent"
-                   v-if="column.isSorted"
-                   :class="classNames.sortIcon"
-                   :icon-name="column.isSortedDescending ? 'SortDown' : 'SortUp'" />
-        <!-- Group Indicator -->
-        <component :is="IconComponent"
-                   v-if="column.isGrouped"
-                   :class="classNames.nearIcon"
-                   icon-name="GroupedDescending" />
-        <!-- ?? -->
-        <component :is="IconComponent"
-                   v-if="column.columnActionsMode === ColumnActionsMode.hasDropdown && !column.isIconOnly"
-                   icon-name="ChevronDown" />
-      </span>
-    </span>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { IDragDropOptions } from '../../../utilities/dragdrop'
@@ -84,7 +22,7 @@ const CLASSNAME_ADD_INTERVAL = 20 // ms
 @Component({
   components: {},
 })
-export default class DetailsColumn extends BaseComponent {
+export class DetailsColumnBase extends BaseComponent {
   $refs!: {
     root: HTMLDivElement
   }
@@ -276,5 +214,70 @@ export default class DetailsColumn extends BaseComponent {
     // We need to use native on this to prevent MarqueeSelection from handling the event before us.
     this.events.on(this.$refs.root, 'mousedown', this._onRootMouseDown)
   }
+
+  render () {
+    const { classNames, column, columnIndex, columnWidth, IconComponent, isDraggable, parentId } = this
+    return (
+      <div ref="root"
+        key={column.key}
+        class={classNames.root}
+        aria-sort={column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none'}
+        aria-colindex={columnIndex}
+        role="columnheader"
+        style={{ width: columnWidth }}>
+        {isDraggable && (
+          <IconComponent
+            icon-name="GripperBarVertical"
+            class={classNames.gripperBarVerticalStyle} />
+        )}
+
+        <span class={classNames.cellTooltip}>
+          <span id={`${parentId}-${column.key}`}
+            aria-label={column.isIconOnly ? column.name : undefined}
+            aria-labelledby={column.isIconOnly ? undefined : `${parentId}-${column.key}-name`}
+            class={classNames.cellTitle}
+            onContextmenu={this._onColumnContextMenu}
+            onClick={this._onColumnClick}>
+            <span id={`${parentId}-${column.key}-name`} class={classNames.cellName}>
+              {/* Column Icon */}
+              {(column.iconName || column.iconClassName) && (
+                <IconComponent
+                  class={classNames.iconClassName}
+                  icon-name={column.iconName} />
+              )}
+
+              {/* Column Name */}
+              {column.isIconOnly ? (<span class={classNames.accessibleLabel}>{column.name}</span>) : column.name}
+            </span>
+
+            {/* Filter Indicator */}
+            {column.isFiltered && (
+              <IconComponent
+                class={classNames.nearIcon}
+                icon-name="Filter" />
+            )}
+
+            {/* Sort Indicator */}
+            {column.isSorted && (
+              <IconComponent
+                class={classNames.sortIcon}
+                icon-name={column.isSortedDescending ? 'SortDown' : 'SortUp'} />
+            )}
+
+            {/* Group Indicator */}
+            {column.isGrouped && (
+              <IconComponent
+                class={classNames.nearIcon}
+                icon-name="GroupedDescending" />
+            )}
+
+            {/* ?? */}
+            { column.columnActionsMode === ColumnActionsMode.hasDropdown && !column.isIconOnly && (
+              <IconComponent icon-name="ChevronDown" />
+            )}
+          </span>
+        </span>
+      </div>
+    )
+  }
 }
-</script>

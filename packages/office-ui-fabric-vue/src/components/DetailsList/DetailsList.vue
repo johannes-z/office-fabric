@@ -46,7 +46,8 @@ import VNodes from '../VNodes'
 const getClassNames = classNamesFunction()
 
 @Component({
-  components: { DetailsHeader,
+  components: {
+    DetailsHeader,
     DetailsRow,
     List,
     VNodes,
