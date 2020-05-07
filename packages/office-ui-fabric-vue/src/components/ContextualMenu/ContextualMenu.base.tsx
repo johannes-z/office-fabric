@@ -1,25 +1,3 @@
-<template>
-  <Callout :target="target"
-           :directional-hint="directionalHint"
-           :class="css('ms-ContextualMenu-Callout', calloutProps && calloutProps.className)"
-           :is-beak-visible="false"
-           @dismiss="onDismiss">
-    <div :style="contextMenuStyle"
-         :class="classNames.container">
-      <div :class="classNames.root">
-        <ul :class="classNames.list" role="menu">
-          <li v-for="(item, index) in items"
-              :key="item.key || index"
-              :class="classNames.item">
-            <ContextualMenuItem :item="item" :prop-class-names="classNames" />
-          </li>
-        </ul>
-      </div>
-    </div>
-  </Callout>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Callout } from '../Callout'
 import { DirectionalHint } from '../../common/DirectionalHint'
@@ -35,7 +13,7 @@ const getClassNames = classNamesFunction<any, any>({
 @Component({
   components: { Callout, ContextualMenuItem },
 })
-export default class ContextualMenu extends BaseComponent {
+export class ContextualMenuBase extends BaseComponent {
   @Prop() target!: HTMLElement
   @Prop({ type: Object, default: () => {} }) calloutProps!: any
   @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: boolean
@@ -62,8 +40,29 @@ export default class ContextualMenu extends BaseComponent {
       width: `${targetWidth}px`,
     }
   }
-}
-</script>
 
-<style lang="scss" scoped>
-</style>
+  render () {
+    const { target, directionalHint, calloutProps, onDismiss, contextMenuStyle, classNames, items } = this
+    return (
+      <Callout target={target}
+        directional-hint={directionalHint}
+        class={css('ms-ContextualMenu-Callout', calloutProps && calloutProps.className)}
+        is-beak-visible={false}
+        onDismiss={onDismiss}>
+        <div style={contextMenuStyle}
+          class={classNames.container}>
+          <div class={classNames.root}>
+            <ul class={classNames.list} role="menu">
+              {items.map((item, index) => (
+                <li key={item.key || index}
+                  class={classNames.item}>
+                  <ContextualMenuItem item={item} prop-class-names={classNames} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Callout>
+    )
+  }
+}
