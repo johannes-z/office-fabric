@@ -1,26 +1,4 @@
-<template>
-  <div :class="classNames.root">
-    <DetailsRowFields
-      :row-class-names="rowClassNames"
-      cells-by-column="{cellsByColumn}"
-      :columns="columns"
-      :item="item"
-      :item-index="0"
-      :column-start-index="showCheckbox ? 1 : 0">
-      <!-- Pass on all named slots -->
-      <slot v-for="slot in Object.keys($slots)"
-            :slot="slot"
-            :name="slot" />
 
-      <!-- Pass on all scoped slots -->
-      <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
-        <slot :name="slot" v-bind="scope" />
-      </template>
-    </DetailsRowFields>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
@@ -30,10 +8,8 @@ const getClassNames = classNamesFunction()
 
 const NO_COLUMNS: any[] = []
 
-@Component({
-  components: { DetailsRowFields },
-})
-export default class DetailsRow extends BaseComponent {
+@Component
+export class DetailsRowBase extends BaseComponent {
   @Prop({ type: Array, required: true }) columns!: any[]
   @Prop({ type: Object, required: true }) item!: any
 
@@ -99,8 +75,22 @@ export default class DetailsRow extends BaseComponent {
     //   },
     // })
   }
-}
-</script>
 
-<style lang="scss" scoped>
-</style>
+  render () {
+    const { classNames, rowClassNames, item, columns, showCheckbox } = this
+    return (
+      <div class={classNames.root}>
+        <DetailsRowFields
+          row-class-names={rowClassNames}
+          // cells-by-column={{cellsByColumn}}
+          columns={columns}
+          item={item}
+          item-index={0}
+          column-start-index={showCheckbox ? 1 : 0}
+          {...{
+            scopedSlots: this.$scopedSlots,
+          }} />
+      </div>
+    )
+  }
+}
