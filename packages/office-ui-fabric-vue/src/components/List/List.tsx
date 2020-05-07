@@ -2,6 +2,7 @@ import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { IList, IListProps, IPage, IPageProps, ScrollToMode } from './List.types'
 import BaseComponent from '../BaseComponent'
 import { IRectangle, findScrollableParent, getWindow, findIndex, getParent } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const RESIZE_DELAY = 16
 const MIN_SCROLL_UPDATE_DELAY = 100
@@ -123,8 +124,9 @@ export class List extends BaseComponent<IListProps> {
 
   estimatedPageHeight: number = 0
 
-  render () {
+  render (h: CreateElement) {
     const { pages, className, css, role } = this
+
     return (
       <div
         ref="root"
@@ -138,13 +140,14 @@ export class List extends BaseComponent<IListProps> {
             <div
               key={page.key}
               ref={page.key}
+              refInFor={true}
               class="ms-List-page"
               style={this.getPageStyle(page)}>
               {page.items && page.items.map((item, index) => (
                 <div key={index} class="ms-List-cell">
                   {this.$scopedSlots.item
                     ? this.$scopedSlots.item({ item, index: page.startIndex + index })
-                    : ((item && item.name) || '')}
+                    : (item ? item.name : '')}
                 </div>
               ))}
             </div>
@@ -155,7 +158,6 @@ export class List extends BaseComponent<IListProps> {
   }
 
   created () {
-    // @ts-ignore
     this._onScrollingDone = this._async.debounce(this._onScrollingDone, DONE_SCROLLING_WAIT, {
       leading: false,
     })
