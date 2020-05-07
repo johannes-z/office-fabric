@@ -24,7 +24,7 @@ export class GridBase extends BaseComponent {
     return getClassNames(styles, { theme })
   }
 
-  render (h) {
+  render () {
     const { classNames, rowsOfItems } = this
     return (
       <table class={classNames.root}>

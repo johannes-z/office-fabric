@@ -18,21 +18,20 @@ export class GridCell extends BaseComponent {
 
   @Prop() getClassNames!: any
 
-  render (h) {
+  render () {
     const { className, item, cellDisabledStyle, cellIsSelectedStyle, selected, disabled } = this
-    return (
 
+    return (
       <ActionButton class={css(className, {
         ['' + cellIsSelectedStyle]: selected,
         ['' + cellDisabledStyle]: disabled,
       })}
-      get-class-names={this.getClassNames}
+      getClassNames={this.getClassNames}
       { ...{
         scopedSlots: {
-          flex: this.$scopedSlots.default ? this.$scopedSlots.default({ item }) : null,
+          flex: this.$scopedSlots.default,
         },
-      }}>
-      </ActionButton>
+      }} />
     )
   }
 }
