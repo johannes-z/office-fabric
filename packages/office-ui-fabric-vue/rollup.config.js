@@ -7,8 +7,6 @@ import path from 'path'
 import vue from 'rollup-plugin-vue'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-import typescript from 'rollup-plugin-typescript2'
-import sucrase from '@rollup/plugin-sucrase'
 // @ts-ignore
 import babel from 'rollup-plugin-babel'
 import pkg from './package.json'
@@ -20,7 +18,7 @@ export default {
   //   /id/,
   //   'id2',
   // ],
-  input: './src/index.ts',
+  input: './tmp/index.js',
   output: {
     dir: path.resolve('lib'),
     // file: 'dist/office-ui-fabric-vue.esm.js',
@@ -31,6 +29,7 @@ export default {
     ...Object.keys(pkg.dependencies),
     '@microsoft/load-themed-styles',
     '@uifabric/set-version',
+    'vue-tsx-support',
   ],
   preserveModules: true,
   // preserveSymlinks: true,
@@ -60,26 +59,12 @@ export default {
       include: /node_modules/,
       sourceMap: false,
     }),
-    // typescript({
-    //   abortOnError: false,
-    //   typescript: require('typescript'),
-    //   useTsconfigDeclarationDir: true,
-    //   check: false,
-    //   tsconfigOverride: {
-    //     compilerOptions: {
-    //       module: 'esnext',
-    //     },
-    //   },
-    // }),
     babel({
       exclude: /node_modules/,
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelrc: false,
       configFile: false,
       presets: [
-        ['@babel/preset-typescript', {
-          allowNamespaces: true,
-        }],
         ['@vue/cli-plugin-babel/preset', {
           modules: false,
           useBuiltIns: false,
