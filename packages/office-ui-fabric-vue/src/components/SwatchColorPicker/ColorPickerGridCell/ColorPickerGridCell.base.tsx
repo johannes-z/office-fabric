@@ -1,20 +1,3 @@
-<template>
-  <GridCell :class="classNames.colorCell">
-    <svg :class="classNames.svg"
-         viewBox="0 0 20 20"
-         :fill="getColorFromString(color).str">
-      <circle v-if="circle"
-              cx="50%"
-              cy="50%"
-              r="50%" />
-      <rect v-else
-            width="100%"
-            height="100%" />
-    </svg>
-  </GridCell>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ITheme, mergeStyleSets } from '@uifabric/styling'
 
@@ -74,7 +57,7 @@ const getClassNames = classNamesFunction<IColorPickerGridCellStyleProps, IColorP
 @Component({
   components: { GridCell },
 })
-export default class ColorPickerGridCell extends BaseComponent {
+export class ColorPickerGridCellBase extends BaseComponent {
   @Prop({ type: Boolean, default: true }) circle!: boolean
   @Prop({ type: String }) color!: string
 
@@ -84,8 +67,6 @@ export default class ColorPickerGridCell extends BaseComponent {
   @Prop({ type: Number, default: 20 }) height!: number
   @Prop({ type: Number, default: 20 }) width!: number
   @Prop({ type: Number, default: 2 }) borderWidth!: number
-
-  getColorFromString = getColorFromString
 
   get classNames () {
     const { styles, theme, circle, color, disabled, selected, height, width, borderWidth } = this
@@ -105,5 +86,27 @@ export default class ColorPickerGridCell extends BaseComponent {
     const color = getColorFromString(inputColor!)
     return color!.hex === 'ffffff'
   }
+
+  render () {
+    const { classNames, color, circle } = this
+    return (
+
+      <GridCell class={classNames.colorCell}>
+        <svg class={classNames.svg}
+          viewBox="0 0 20 20"
+          fill={getColorFromString(color)!.str}>
+          {circle ? (
+            <circle
+              cx="50%"
+              cy="50%"
+              r="50%" />
+          ) : (
+            <rect
+              width="100%"
+              height="100%" />
+          )}
+        </svg>
+      </GridCell>
+    )
+  }
 }
-</script>

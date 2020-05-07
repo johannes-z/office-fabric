@@ -1,13 +1,6 @@
-import { styled } from '../styled'
-import SwatchColorPickerBase from './SwatchColorPicker.vue'
-import { getStyles } from './SwatchColorPicker.styles'
-import { VueConstructor } from 'vue'
 
+export * from './SwatchColorPicker'
+export * from './SwatchColorPicker.base'
 export * from './SwatchColorPicker.types'
 
-export const SwatchColorPicker: VueConstructor = styled(
-  SwatchColorPickerBase,
-  getStyles,
-  undefined,
-  { scope: 'SwatchColorPicker' },
-)
+export * from './ColorPickerGridCell'
