@@ -7,9 +7,10 @@
   "sideEffects": false,
   "scripts": {
     "build": "yarn build:check && build:types && build:lib",
-    "build:lib": "vue-cli-service --target lib --formats umd-min,commonjs build src/index.ts",
+    "build:lib": "rollup -c",
     "build:check": "tsc --noEmit",
     "build:types": "tsc --emitDeclarationOnly",
+    "build:tsc": "tsc",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
