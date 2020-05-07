@@ -1,10 +1,9 @@
-// import { IDetailsListProps, IDetailsListBaseProps, IDetailsListStyleProps, IDetailsListStyles } from './DetailsList.types'
-import DetailsListBase from './DetailsList.vue'
-import { getStyles } from './DetailsList.styles'
-import { VueConstructor } from 'vue'
 import { styled } from '../styled'
+import { getStyles } from './DetailsList.styles'
+import { IDetailsListProps, IDetailsListStyleProps, IDetailsListStyles } from './DetailsList.types'
+import { DetailsListBase } from './DetailsList.base'
 
-export const DetailsList: VueConstructor = styled(
+export const DetailsList = styled<IDetailsListProps, IDetailsListStyleProps, IDetailsListStyles>(
   DetailsListBase,
   getStyles,
   undefined,
