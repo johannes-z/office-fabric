@@ -1,4 +1,4 @@
-import DetailsRowCheckBase from './DetailsRowCheck.vue'
+import { DetailsRowCheckBase } from './DetailsRowCheck.base'
 import { getStyles } from './DetailsRowCheck.styles'
 import { VueConstructor } from 'vue'
 import { styled } from '../../styled'
