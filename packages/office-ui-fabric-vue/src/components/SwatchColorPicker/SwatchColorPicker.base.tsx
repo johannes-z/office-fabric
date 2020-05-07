@@ -1,16 +1,3 @@
-<template>
-  <Grid :items="colorCells" :column-count="columnCount">
-    <template #default="{ cell: item }">
-      <ColorPickerGridCell
-        :color="item.color"
-        :circle="cellShape === 'circle'"
-        :width="cellWidth"
-        :height="cellHeight" />
-    </template>
-  </Grid>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 
@@ -27,7 +14,7 @@ const getClassNames = classNamesFunction<ISwatchColorPickerStyleProps, ISwatchCo
   components: { Grid, ColorPickerGridCell },
   inheritAttrs: false,
 })
-export default class SwatchColorPicker extends BaseComponent {
+export class SwatchColorPickerBase extends BaseComponent {
   @Prop({ default: 10 }) cellMargin!: number
 
   @Prop({ type: Array, default: () => [] }) colorCells!: any[]
@@ -45,5 +32,23 @@ export default class SwatchColorPicker extends BaseComponent {
       cellMargin,
     })
   }
+
+  render () {
+    const { colorCells, columnCount, cellShape, cellWidth, cellHeight } = this
+    return (
+
+      <Grid items={colorCells} column-count={columnCount} {...{
+        scopedSlots: {
+          default: ({ cell: item }) => (
+            <ColorPickerGridCell
+              color={item.color}
+              circle={cellShape === 'circle'}
+              width={cellWidth}
+              height={cellHeight} />
+          ),
+        },
+      }}>
+      </Grid>
+    )
+  }
 }
-</script>
