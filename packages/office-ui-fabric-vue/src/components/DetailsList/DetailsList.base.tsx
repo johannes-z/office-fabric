@@ -1,39 +1,4 @@
-<template>
-  <div :class="classNames.root"
-       data-is-scrollable="false">
-    <div role="grid">
-      <div :class="classNames.headerWrapper">
-        <slot name="DetailsHeader" :default-render="onRenderDetailsHeader">
-          <VNodes :vnodes="onRenderDetailsHeader()" />
-        </slot>
-      </div>
-      <div :class="classNames.contentWrapper">
-        <List ref="list"
-              :items="items"
-              role="presentation">
-          <template #item="{ item }">
-            <DetailsRow :item="item"
-                        :columns="adjustedColumns"
-                        :compact="compact">
-              <!-- Pass on all named slots -->
-              <slot v-for="slot in Object.keys($slots)"
-                    :slot="slot"
-                    :name="slot" />
-
-              <!-- Pass on all scoped slots -->
-              <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
-                <slot :name="slot" v-bind="scope" />
-              </template>
-            </DetailsRow>
-          </template>
-        </List>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Component, Prop } from 'vue-property-decorator'
 import { DetailsHeader } from './DetailsHeader'
 import { DetailsRow } from './DetailsRow'
 import BaseComponent from '../BaseComponent'
@@ -41,19 +6,11 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
 import { IColumn } from './DetailsList.types'
-import VNodes from '../VNodes'
 
 const getClassNames = classNamesFunction()
 
-@Component({
-  components: {
-    DetailsHeader,
-    DetailsRow,
-    List,
-    VNodes,
-  },
-})
-export default class DetailsList extends BaseComponent {
+@Component
+export class DetailsListBase extends BaseComponent {
   $refs!: {
     list: List
   }
@@ -68,6 +25,39 @@ export default class DetailsList extends BaseComponent {
   columnOverrides: any = {}
 
   lastSortedColumnKey = ''
+
+  render () {
+    const { classNames, items, adjustedColumns, compact } = this
+    return (
+      <div class={classNames.root} data-is-scrollable="false">
+        <div role="grid">
+          <div class={classNames.headerWrapper}>
+            {this.$scopedSlots.DetailsHeader
+              ? this.$scopedSlots.DetailsHeader({ defaultRender: this.onRenderDetailsHeader })
+              : this.onRenderDetailsHeader()}
+          </div>
+
+          <div class={classNames.contentWrapper}>
+            <List ref="list"
+              items={items}
+              role="presentation"
+              {...{
+                scopedSlots: {
+                  item: ({ item }) => (
+                    <DetailsRow
+                      item={item}
+                      columns={adjustedColumns}
+                      compact={compact}
+                      {...{ scopedSlots: this.$scopedSlots }} />
+                  ),
+                },
+              }}>
+            </List>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   get classNames () {
     const {
@@ -90,11 +80,7 @@ export default class DetailsList extends BaseComponent {
   }
 
   private onRenderDetailsHeader () {
-    return this.$createElement(DetailsHeader, {
-      props: {
-        columns: this.adjustedColumns,
-      },
-    })
+    return (<DetailsHeader columns={this.adjustedColumns} />)
   }
 
   created () {
@@ -360,7 +346,3 @@ function getPaddedWidth (column: any, isFirst: boolean, props: any): number {
     (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0)
   )
 }
-</script>
-
-<style lang="scss" scoped>
-</style>
