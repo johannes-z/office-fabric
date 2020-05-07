@@ -117,6 +117,7 @@ export class BaseButton extends BaseComponent<IBaseButtonProps> {
     const ButtonComponent = this.component
     const MenuComponent = this.MenuType
     const { classNames, href, iconProps, className, css, secondaryText, isSplitButton, menuProps, menuIconProps, shouldRenderMenu } = this
+
     return (
       <ButtonComponent
         ref="buttonElement"
@@ -125,7 +126,7 @@ export class BaseButton extends BaseComponent<IBaseButtonProps> {
         <span class={classNames.flexContainer}>
           {iconProps && (<Icon class={css(classNames.icon, className)} {...{ props: iconProps }} />)}
 
-          {this.$slots.flex}
+          {this.$scopedSlots.flex ? this.$scopedSlots.flex({}) : null}
 
           {this.$scopedSlots.default && (
             <span class={classNames.textContainer}>
