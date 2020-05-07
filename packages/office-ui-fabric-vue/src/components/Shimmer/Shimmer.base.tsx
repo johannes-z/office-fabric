@@ -1,17 +1,3 @@
-<template>
-  <div :class="classNames.root">
-    <div :style="{ width: width ? width : '100%' }" :class="classNames.shimmerWrapper">
-      <div :class="classNames.shimmerGradient" />
-      <ShimmerElementsGroup :shimmer-elements="shimmerElements"
-                            :background-color="shimmerColors && shimmerColors.background" />
-    </div>
-    <!-- <div v-if="$slots.default" :class="classNames.dataWrapper">
-      <slot />
-    </div> -->
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IShimmerProps, IShimmerStyles } from './Shimmer.types'
@@ -25,7 +11,7 @@ const TRANSITION_ANIMATION_INTERVAL = 200 /* ms */
 @Component({
   components: { ShimmerElementsGroup },
 })
-export default class Shimmer extends BaseComponent {
+export class ShimmerBase extends BaseComponent {
   @Prop({ default: null }) shimmerColors!: any
   @Prop({ type: Boolean, default: false }) isDataLoaded!: boolean
   @Prop({ type: Array, default: () => [] }) shimmerElements!: any[]
@@ -62,5 +48,17 @@ export default class Shimmer extends BaseComponent {
       this.contentLoaded = this.isDataLoaded
     }
   }
+
+  render () {
+    const { classNames, width, shimmerElements, shimmerColors } = this
+    return (
+      <div class={classNames.root}>
+        <div style={{ width: width || '100%' }} class={classNames.shimmerWrapper}>
+          <div class={classNames.shimmerGradient} />
+          <ShimmerElementsGroup shimmer-elements={shimmerElements}
+            background-color={shimmerColors && shimmerColors.background} />
+        </div>
+      </div>
+    )
+  }
 }
-</script>
