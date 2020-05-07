@@ -1,69 +1,3 @@
-<template>
-  <div :class="classNames.root">
-    <Label :class="classNames.label"
-           :required="required"
-           :disabled="disabled">
-      {{ label }}
-    </Label>
-    <div ref="dropdown"
-         :class="classNames.dropdown"
-         @click="isOpen = true">
-      <span :class="classNames.title">
-        <template v-if="selectedOptions.length">
-          {{ selectedOptions.map(i => i.text).join(multiSelectDelimiter) }}
-        </template>
-        <template v-else>
-          {{ placeholder }}
-        </template>
-      </span>
-      <span :class="classNames.caretDownWrapper">
-        <Icon :class="classNames.caretDown" icon-name="ChevronDown" />
-      </span>
-    </div>
-
-    <div v-if="isOpen">
-      <Callout :target="$refs.dropdown"
-               :is-beak-visible="false"
-               :callout-width="dropdownWidth || ($refs.dropdown ? $refs.dropdown.clientWidth : 0)"
-               @dismiss="isOpen = false"
-               @positioned="onPositioned">
-        <div :class="classNames.dropdownItemsWrapper"
-             tabindex="0">
-          <components :is="multiSelect ? 'Checkbox' : 'ActionButton'"
-                      v-for="(option, index) in options"
-                      :key="index"
-                      :class="
-                        option.hidden
-                          ? classNames.dropdownItemHidden
-                          : option.isItemSelected && option.disabled === true
-                            ? classNames.dropdownItemSelectedAndDisabled
-                            : option.isItemSelected
-                              ? classNames.dropdownItemSelected
-                              : option.disabled === true
-                                ? classNames.dropdownItemDisabled
-                                : classNames.dropdownItem"
-                      :disabled="option.disabled"
-                      :title="option.text"
-                      :checked="option.isItemSelected"
-                      :styles="multiSelect ? multiSelectItemStyles : null"
-                      role="option"
-                      @click.native="!multiSelect && select(option)"
-                      @input="multiSelect && select(option)">
-            {{ option.text }}
-          </components>
-        </div>
-      </Callout>
-    </div>
-
-    <div v-if="hasErrorMessage"
-         role="alert"
-         :class="classNames.errorMessage">
-      {{ errorMessage }}
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { RectangleEdge, ICalloutPositionedInfo, classNamesFunction } from '@uifabric-vue/utilities'
@@ -79,7 +13,7 @@ const getClassNames = classNamesFunction()
 @Component({
   components: { Callout, ActionButton, Checkbox, Icon, Label },
 })
-export default class Dropdown extends BaseComponent {
+export class DropdownBase extends BaseComponent {
   $refs!: {
     dropdown: HTMLDivElement
   }
@@ -161,5 +95,75 @@ export default class Dropdown extends BaseComponent {
       this.calloutRenderEdge = positions.targetEdge
     }
   }
+
+  render () {
+    const { classNames, label, selectedOptions, multiSelect, multiSelectDelimiter, placeholder, isOpen, dropdownWidth, options, hasErrorMessage, errorMessage, required, disabled } = this
+
+    const OptionComponent = multiSelect ? Checkbox : ActionButton
+
+    return (
+      <div class={classNames.root}>
+        <Label class={classNames.label}
+          required={required}
+          disabled={disabled}>
+          { label }
+        </Label>
+        <div ref="dropdown"
+          class={classNames.dropdown}
+          onClick={() => (this.isOpen = true)}>
+          <span class={classNames.title}>
+            {selectedOptions.length
+              ? selectedOptions.map(i => i.text).join(multiSelectDelimiter)
+              : placeholder}
+          </span>
+          <span class={classNames.caretDownWrapper}>
+            <Icon class={classNames.caretDown} icon-name="ChevronDown" />
+          </span>
+        </div>
+
+        {isOpen && (
+          <div>
+            <Callout target={this.$refs.dropdown}
+              is-beak-visible={false}
+              callout-width={dropdownWidth || (this.$refs.dropdown ? this.$refs.dropdown.clientWidth : 0)}
+              onDismiss={() => (this.isOpen = false)}
+              onPositioned={this.onPositioned}>
+              <div class={classNames.dropdownItemsWrapper}
+                tabindex={0}>
+                {options.map((option, index) => (
+                  <OptionComponent
+                    key={index}
+                    class={
+                      option.hidden
+                        ? classNames.dropdownItemHidden
+                        : option.isItemSelected && option.disabled === true
+                          ? classNames.dropdownItemSelectedAndDisabled
+                          : option.isItemSelected
+                            ? classNames.dropdownItemSelected
+                            : option.disabled === true
+                              ? classNames.dropdownItemDisabled
+                              : classNames.dropdownItem}
+                    disabled={option.disabled}
+                    title={option.text}
+                    checked={option.isItemSelected}
+                    styles={multiSelect ? this.multiSelectItemStyles : null}
+                    role={option}
+                    nativeOnClick={() => (!multiSelect && this.select(option))}
+                    onInput={() => (multiSelect && this.select(option))}>
+                    { option.text }
+                  </OptionComponent>
+                ))}
+              </div>
+            </Callout>
+          </div>
+        )}
+
+        {hasErrorMessage && (
+          <div role="alert" class={classNames.errorMessage}>
+            { errorMessage }
+          </div>
+        )}
+      </div>
+    )
+  }
 }
-</script>

@@ -1,48 +1,6 @@
-<template>
-  <div :class="classNames.container">
-    <Label :for="`ComboBox${_uid}`" :class="classNames.label">Label</Label>
-    <div ref="comboBoxWrapper" :class="classNames.root">
-      <Autofill :id="`ComboBox${_uid}`"
-                ref="autofill"
-                type="text"
-                role="combobox"
-                :class="classNames.input" />
-      <IconButton class="ms-ComboBox-CaretDown-button"
-                  :icon-props="{ iconName: 'ChevronDown' }"
-                  @focus.native="onFocus"
-                  @blur.native="onBlur" />
-    </div>
-
-    <VNodes :vnodes="test()" />
-
-    <div v-if="persistMenu || state.isOpen">
-      <Callout :class="css(classNames.callout, calloutProps ? calloutProps.className : undefined)"
-               :target="$refs.comboBoxWrapper"
-               :is-beak-visible="false"
-               :gap-space="0"
-               :do-not-layer="false"
-               :callout-width="getComboBoxMenuWidth()"
-               :callout-max-width="getComboBoxMenuWidth()"
-               :hidden="persistMenu ? !state.isOpen : undefined">
-        <div ref="comboBoxMenu" :class="classNames.optionsContainerWrapper">
-          <div :class="classNames.optionsContainer" role="listbox">
-            <Checkbox v-if="multiSelect" class="ms-ComboBox-option">
-              Test
-            </Checkbox>
-            <ActionButton class="ms-ComboBox-option">
-              Test
-            </ActionButton>
-          </div>
-        </div>
-      </Callout>
-    </div>
-  </div>
-</template>
-
-<script lang="tsx">
 import { ResizeObserver } from 'resize-observer'
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { classNamesFunction, KeyCodes, Async } from '@uifabric-vue/utilities'
+import { classNamesFunction, KeyCodes, Async, css } from '@uifabric-vue/utilities'
 import { getStyles, getOptionStyles } from './ComboBox.styles'
 import BaseComponent from '../BaseComponent'
 import { Label } from '../Label/'
@@ -126,7 +84,7 @@ interface IComboBoxOptionWrapperProps extends IComboBoxOption {
 @Component({
   components: { Autofill, Label, IconButton, Callout, ActionButton, Checkbox, VNodes },
 })
-export default class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxState> {
+export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> {
   $refs!: {
     comboBoxWrapper: HTMLDivElement
     comboBoxMenu: HTMLDivElement
@@ -210,5 +168,48 @@ export default class ComboBox extends BaseComponent<IComboBoxProps, IComboBoxSta
   private onBlur (e: FocusEvent) {
     console.log(e)
   }
+
+  render () {
+    const { classNames, onFocus, onBlur, calloutProps, persistMenu, state, multiSelect } = this
+    return (
+      <div class={classNames.container}>
+        <Label for={`ComboBox${this.uid}`} class={classNames.label}>Label</Label>
+        <div ref="comboBoxWrapper" class={classNames.root}>
+          <Autofill id={`ComboBox${this.uid}`}
+            ref="autofill"
+            type="text"
+            role="combobox"
+            class={classNames.input} />
+          <IconButton class="ms-ComboBox-CaretDown-button"
+            icon-props={{ iconName: 'ChevronDown' }}
+            nativeOnFocus={onFocus}
+            nativeOnBlur={onBlur} />
+        </div>
+
+        {this.test()}
+
+        {(persistMenu || state.isOpen) && (
+          <div>
+            <Callout
+              class={css(classNames.callout, calloutProps ? calloutProps.className : undefined)}
+              target={this.$refs.comboBoxWrapper}
+              is-beak-visible={false}
+              gap-space={0}
+              do-not-layer={false}
+              callout-width={this.getComboBoxMenuWidth()}
+              callout-max-width={this.getComboBoxMenuWidth()}
+              hidden={persistMenu ? !state.isOpen : undefined}>
+              <div ref="comboBoxMenu" class={classNames.optionsContainerWrapper}>
+                <div class={classNames.optionsContainer} role="listbox">
+                  {multiSelect && (<Checkbox class="ms-ComboBox-option" />)}
+                  <ActionButton class="ms-ComboBox-option">
+                  </ActionButton>
+                </div>
+              </div>
+            </Callout>
+          </div>
+        )}
+      </div>
+    )
+  }
 }
-</script>
