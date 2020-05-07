@@ -159,7 +159,7 @@ export const getStyles = memoizeFunction(
             },
           },
           [HighContrastSelector]: {
-            border: `1px solid GrayText`,
+            border: '1px solid GrayText',
             color: 'GrayText',
             backgroundColor: 'Window',
           },
