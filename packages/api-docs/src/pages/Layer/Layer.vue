@@ -98,9 +98,11 @@ export default class LayerPage extends Vue {
   created () {
     this.timer = setInterval(() => (this.date = new Date()), 1000)
   }
+
   beforeDestroy () {
     clearInterval(this.timer)
   }
+
   get dateString () {
     return this.date.toLocaleString()
   }

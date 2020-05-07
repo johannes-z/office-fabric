@@ -18,6 +18,7 @@ module.exports = {
       'error',
       2,
     ],
+    'no-unused-vars': 0,
     'standard/no-callback-literal': 0,
 
     'generator-star-spacing': 'off',

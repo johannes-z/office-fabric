@@ -87,6 +87,7 @@ export default class BasicStack extends Vue {
       background: DefaultPalette.themeTertiary,
     },
   }
+
   stackItemStyles: any = mergeStyles({
     alignItems: 'center',
     background: DefaultPalette.themePrimary,
@@ -104,26 +105,32 @@ export default class BasicStack extends Vue {
     childrenGap: 10,
     padding: 10,
   };
+
   customSpacingStackTokens: IStackTokens = {
     childrenGap: '20%',
     padding: 'm 40px',
   };
+
   themedExtraSmallStackTokens: IStackTokens = {
     childrenGap: 's2',
     padding: 's2',
   };
+
   themedSmallStackTokens: IStackTokens = {
     childrenGap: 's1',
     padding: 's1',
   };
+
   themedMediumStackTokens: IStackTokens = {
     childrenGap: 'm',
     padding: 'm',
   };
+
   themedLargeStackTokens: IStackTokens = {
     childrenGap: 'l1',
     padding: 'l1',
   };
+
   themedExtraLargeStackTokens: IStackTokens = {
     childrenGap: 'l2',
     padding: 'l2',

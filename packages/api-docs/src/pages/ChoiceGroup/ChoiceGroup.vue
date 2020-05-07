@@ -45,6 +45,7 @@ export default class ChoiceGroupPage extends Vue {
     { key: 'C', text: 'Option C', disabled: true },
     { key: 'D', text: 'Option D' },
   ]
+
   imageOptions = [
     {
       key: 'bar',
@@ -61,6 +62,7 @@ export default class ChoiceGroupPage extends Vue {
       text: 'Pie chart',
     },
   ]
+
   iconOptions = [
     {
       key: 'day',

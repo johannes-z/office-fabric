@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <h1>Rating</h1>
     <div class="content--inner ms-depth-8">
