@@ -1,28 +1,3 @@
-<template>
-  <div :class="rowClassNames.fields" role="presentation">
-    <div v-for="(column, columnIndex) in columns"
-         :key="columnIndex"
-         :role="column.isRowHeader ? 'rowheader' : 'gridcell'"
-         aria-readonly
-         :style="{ width: calcWidth(column) }"
-         :class="css(
-           column.className,
-           column.isMultiline && rowClassNames.isMultiline,
-           column.isRowHeader && rowClassNames.isRowHeader,
-           rowClassNames.cell,
-           column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
-           showAnimation && rowClassNames.cellAnimation
-         )">
-      <slot :name="`cell.${column.key}`"
-            :item="item"
-            :column="column">
-        {{ getCellText(item, column) }}
-      </slot>
-    </div>
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 // import { IColumn } from './DetailsList.types'
 import { css } from '@uifabric-vue/utilities'
@@ -43,17 +18,14 @@ const getCellText = (item: any, column: any): string => {
   return value
 }
 
-@Component({
-  components: {},
-})
-export default class DetailsRowFields extends BaseComponent {
+@Component
+export class DetailsRowFields extends BaseComponent {
   @Prop({ type: Object, required: true }) rowClassNames!: any
   @Prop({ type: Array, required: true }) columns!: any[]
   @Prop({ type: Object, required: true }) item!: any
   @Prop({ type: Number, required: true }) itemIndex!: number
   @Prop({ type: Object, default: () => DEFAULT_CELL_STYLE_PROPS }) cellStyleProps!: any
 
-  getCellText = getCellText
   showAnimation = true
 
   private calcWidth (column: any) {
@@ -67,8 +39,30 @@ export default class DetailsRowFields extends BaseComponent {
           (column.isPadded ? cellStyleProps.cellExtraRightPadding : 0) + 'px'
     return width
   }
-}
-</script>
 
-<style lang="scss" scoped>
-</style>
+  render () {
+    const { rowClassNames, columns, showAnimation, item } = this
+    return (
+      <div class={rowClassNames.fields} role="presentation">
+        {columns.map((column, columnIndex) => (
+          <div key={columnIndex}
+            role={column.isRowHeader ? 'rowheader' : 'gridcell'}
+            aria-readonly
+            style={{ width: this.calcWidth(column) }}
+            class={css(
+              column.className,
+              column.isMultiline && rowClassNames.isMultiline,
+              column.isRowHeader && rowClassNames.isRowHeader,
+              rowClassNames.cell,
+              column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
+              showAnimation && rowClassNames.cellAnimation,
+            )}>
+            {this.$scopedSlots[`cell.${column.key}`]
+              ? this.$scopedSlots[`cell.${column.key}`]({ item, column })
+              : getCellText(item, column) }
+          </div>
+        ))}
+      </div>
+    )
+  }
+}

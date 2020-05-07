@@ -1,25 +1,15 @@
-<template>
-  <div :class="classNames.root" role="row">
-    <DetailsColumn v-for="(column, index) in columns"
-                   :key="column.key"
-                   :column="column"
-                   :column-index="index"
-                   :parent-id="_uid" />
-  </div>
-</template>
-
-<script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { DetailsColumn } from '../DetailsColumn'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { IDetailsHeaderStyleProps, IDetailsHeaderStyles } from './DetailsHeader.types'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IDetailsHeaderStyleProps, IDetailsHeaderStyles>()
 
 @Component({
   components: { DetailsColumn },
 })
-export default class DetailsHeader extends BaseComponent {
+export class DetailsHeaderBase extends BaseComponent {
   @Prop({ type: Array, required: true }) columns!: any[]
 
   get classNames () {
@@ -39,5 +29,19 @@ export default class DetailsHeader extends BaseComponent {
       className,
     })
   }
+
+  render () {
+    const { classNames, columns } = this
+    return (
+      <div class={classNames.root} role="row">
+        {columns.map((column, index) => (
+          <DetailsColumn
+            key={column.key}
+            column={column}
+            columnIndex={index}
+            parentId={this.uid} />
+        ))}
+      </div>
+    )
+  }
 }
-</script>
