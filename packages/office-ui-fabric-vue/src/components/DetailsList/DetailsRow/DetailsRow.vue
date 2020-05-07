@@ -1,6 +1,6 @@
 <template>
   <div :class="classNames.root">
-    <RowFields
+    <DetailsRowFields
       :row-class-names="rowClassNames"
       cells-by-column="{cellsByColumn}"
       :columns="columns"
@@ -16,7 +16,7 @@
       <template v-for="slot in Object.keys($scopedSlots)" v-slot:[slot]="scope">
         <slot :name="slot" v-bind="scope" />
       </template>
-    </RowFields>
+    </DetailsRowFields>
   </div>
 </template>
 
@@ -24,14 +24,14 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import RowFields from './DetailsRowFields.vue'
+import { DetailsRowFields } from './DetailsRowFields'
 
 const getClassNames = classNamesFunction()
 
 const NO_COLUMNS: any[] = []
 
 @Component({
-  components: { RowFields },
+  components: { DetailsRowFields },
 })
 export default class DetailsRow extends BaseComponent {
   @Prop({ type: Array, required: true }) columns!: any[]
