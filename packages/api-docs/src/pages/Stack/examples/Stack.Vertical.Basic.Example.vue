@@ -72,6 +72,7 @@ export default class BasicStack extends Vue {
       background: DefaultPalette.themeTertiary,
     },
   }
+
   stackItemStyles: any = {
     root: {
       background: DefaultPalette.themePrimary,
@@ -79,16 +80,19 @@ export default class BasicStack extends Vue {
       padding: 5,
     },
   }
+
   // Tokens definition
   containerStackTokens: any = { childrenGap: 5 }
   verticalGapStackTokens: IStackTokens = {
     childrenGap: 10,
     padding: 10,
   }
+
   itemAlignmentsStackTokens: any = {
     childrenGap: 5,
     padding: 10,
   }
+
   clickableStackTokens: any = {
     padding: 10,
   }

@@ -11,20 +11,20 @@ for (const name in FabricComponents) {
 }
 routes.push({
   name: 'Welcome',
-  path: `/`,
-  component: () => import(`@/Welcome.vue`),
+  path: '/',
+  component: () => import('@/Welcome.vue'),
   props: {},
 })
 routes.push({
   name: 'Button',
-  path: `/Button`,
-  component: () => import(`@/pages/Button/Button.vue`),
+  path: '/Button',
+  component: () => import('@/pages/Button/Button.vue'),
   props: {},
 })
 routes.push({
   name: 'BasicList',
-  path: `/BasicList`,
-  component: () => import(`@/pages/BasicList/BasicList.vue`),
+  path: '/BasicList',
+  component: () => import('@/pages/BasicList/BasicList.vue'),
   props: {},
 })
 

@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <h1>SearchBox</h1>
     <div class="content--inner ms-depth-8">
@@ -61,18 +61,23 @@ export default class SearchBoxPage extends Vue {
   onClear (e: Event) {
     console.log('clear')
   }
+
   onChange (val: string) {
     console.log('Current value: ' + val)
   }
+
   onSearch (val: string) {
     console.log('Search with value: ' + val)
   }
+
   onFocus (e: FocusEvent) {
     console.log('focus')
   }
+
   onBlur (e: FocusEvent) {
     console.log('blur')
   }
+
   onEscape (e: KeyboardEvent) {
     console.log('escape')
   }

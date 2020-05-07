@@ -31,6 +31,7 @@ export default class StackVerticalGrowExample extends Vue {
       height: 250,
     },
   }
+
   stackItemStyles: any = {
     root: {
       alignItems: 'center',

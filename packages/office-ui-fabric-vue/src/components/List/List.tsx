@@ -78,6 +78,7 @@ export class List extends BaseComponent<IListProps> {
     root: HTMLDivElement
     surface: HTMLDivElement
   }
+
   @Prop({ type: Array, required: true }) items!: any
   @Prop({ type: Function, default: null }) getItemCountForPage!: (...args: any[]) => number
   @Prop({ type: Function, default: null }) getPageHeight!: (...args: any[]) => number
@@ -119,6 +120,7 @@ export class List extends BaseComponent<IListProps> {
       measureVersion: number;
     };
   } = {}
+
   estimatedPageHeight: number = 0
 
   render () {
@@ -142,7 +144,7 @@ export class List extends BaseComponent<IListProps> {
                 <div key={index} class="ms-List-cell">
                   {this.$scopedSlots.item
                     ? this.$scopedSlots.item({ item, index: page.startIndex + index })
-                    : (item ? item.name : '')}
+                    : ((item && item.name) || '')}
                 </div>
               ))}
             </div>

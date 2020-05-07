@@ -53,12 +53,12 @@ export default class FacepilePage extends Vue {
 
   facepilePersonas = [
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       personaName: 'Annie Lindqvist',
       data: '50%',
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       personaName: 'Aaron Reid',
       data: '$1,000',
     },
@@ -77,7 +77,7 @@ export default class FacepilePage extends Vue {
       data: '25%',
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Valentina Lovric',
       initialsColor: PersonaInitialsColor.lightBlue,
@@ -89,7 +89,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.lightGreen,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'PV',
       personaName: 'Annie Lindqvist2',
       initialsColor: PersonaInitialsColor.lightPink,
@@ -116,7 +116,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.purple,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Valentina Lovric2',
       initialsColor: PersonaInitialsColor.red,
@@ -127,7 +127,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.teal,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Another A Name',
       initialsColor: PersonaInitialsColor.blue,
@@ -138,7 +138,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.darkBlue,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Another Anecdotal A Name',
       initialsColor: PersonaInitialsColor.darkGreen,
@@ -149,7 +149,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.darkRed,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Aerobic A Name',
       initialsColor: PersonaInitialsColor.green,
@@ -160,7 +160,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.lightBlue,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Valentina Lovric2',
       initialsColor: PersonaInitialsColor.lightGreen,
@@ -171,7 +171,7 @@ export default class FacepilePage extends Vue {
       initialsColor: PersonaInitialsColor.lightPink,
     },
     {
-      imageUrl: `https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png`,
+      imageUrl: 'https://static2.sharepointonline.com/files/fabric/office-ui-fabric-react-assets/persona-female.png',
       imageInitials: 'VL',
       personaName: 'Valentina Lovric2',
       initialsColor: PersonaInitialsColor.magenta,
