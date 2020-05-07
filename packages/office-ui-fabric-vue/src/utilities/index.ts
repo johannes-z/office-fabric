@@ -9,3 +9,4 @@ export * from './semanticColors'
 export * from './toKebabCase'
 
 export * from './responsiveMode'
+export * from './selectableOption'

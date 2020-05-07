@@ -2,6 +2,7 @@ import { IStyle } from '@uifabric/merge-styles'
 import { IButtonStyles } from '../Button/Button.types'
 import { IComboBoxClassNames } from './ComboBox.classNames'
 import { ITheme } from '@uifabric/styling'
+import { ISelectableOption } from '@/utilities'
 
 /**
  * {@docCategory ComboBox}
@@ -29,7 +30,7 @@ export interface IComboBox {
 /**
  * {@docCategory ComboBox}
  */
-export interface IComboBoxOption {
+export interface IComboBoxOption extends ISelectableOption {
   /**
    * Specific styles for each comboBox option. If you intend to give
    * common styles to all comboBox option please use
