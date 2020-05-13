@@ -20,8 +20,8 @@ export default {
   // ],
   input: './tmp/index.js',
   output: {
-    dir: path.resolve('lib'),
-    // file: 'dist/office-ui-fabric-vue.esm.js',
+    // dir: path.resolve('lib'),
+    file: 'dist/office-ui-fabric-vue.esm.js',
     format: 'esm',
     sourcemap: false,
   },
@@ -32,7 +32,7 @@ export default {
     'vue',
     'vue-tsx-support',
   ],
-  preserveModules: true,
+  // preserveModules: true,
   // preserveSymlinks: true,
   plugins: [
     json(),

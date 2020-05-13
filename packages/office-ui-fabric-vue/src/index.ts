@@ -16,6 +16,7 @@ export {
 }
 export { loadTheme } from './plugin/office-fabric'
 export { initializeIcons } from '@uifabric/icons'
+export * from './registerIcons'
 
 export type { IPartialTheme, IOptions } from './plugin/office-fabric'
 

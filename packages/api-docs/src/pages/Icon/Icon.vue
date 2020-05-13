@@ -49,8 +49,8 @@
 
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { mergeStyles, mergeStyleSets, registerIcons } from '@uifabric/styling'
-import { Icon } from '@uifabric-vue/office-ui-fabric-vue'
+import { mergeStyles, mergeStyleSets } from '@uifabric/styling'
+import { Icon, registerIcons } from '@uifabric-vue/office-ui-fabric-vue'
 
 registerIcons({
   icons: {
@@ -72,7 +72,7 @@ registerIcons({
           />
         </g>
       </svg>
-    ),
+    ) as any,
     'yammer-svg': h => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,2048,2048">
         <g class="thing">
@@ -92,7 +92,7 @@ registerIcons({
           />
         </g>
       </svg>
-    ),
+    ) as any,
     'borderblinds-svg': h => (
       <svg viewBox="0 0 40 40" style={{ marginLeft: 'calc(50% - 0.5em)' }}>
         <g transform="scale(0.03125 0.03125)">
@@ -101,7 +101,7 @@ registerIcons({
           <path class="borderblinds-part3" d="M768 224l256-192v768l-256 192z" />
         </g>
       </svg>
-    ),
+    ) as any,
   },
 })
 
