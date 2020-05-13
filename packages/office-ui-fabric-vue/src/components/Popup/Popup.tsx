@@ -25,13 +25,15 @@ export class Popup extends BaseComponent<IPopupProps> {
 
   mounted () {
     if (this.$refs.current) {
-      // @ts-ignore
       this._disposables.push(
+        // @ts-ignore
         on(this.$refs.current, 'focus', this._onFocus, true),
+        // @ts-ignore
         on(this.$refs.current, 'blur', this._onBlur, true),
       )
       const currentWindow = getWindow(this.$refs.current)
       if (currentWindow) {
+        // @ts-ignore
         this._disposables.push(on(currentWindow, 'keydown', this._onKeyDown as any))
       }
       if (doesElementContainFocus(this.$refs.current)) {

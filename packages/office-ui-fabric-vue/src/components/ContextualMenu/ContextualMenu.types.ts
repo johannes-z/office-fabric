@@ -3,7 +3,7 @@ import { ITheme } from '@uifabric/styling'
 import { Target, ICalloutContentStyleProps, ICalloutProps } from '../Callout/Callout.types'
 import { DirectionalHint } from '../Callout'
 import { IRectangle } from '@uifabric-vue/utilities'
-import { IContextualMenuClassNames } from './ContextualMenu.classNames'
+import { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames'
 import { IIconProps } from '../Icon'
 import { IKeytipProps } from '../Keytip/Keytip.types'
 import { IButtonStyles } from '../Button/Button.types'
@@ -227,7 +227,7 @@ export interface IContextualMenuProps {
    * is specified in the focusZoneProps (even if other focusZoneProps are defined)
    * @defaultvalue \{ direction: FocusZoneDirection.vertical \}
    */
-  focusZoneProps?: IFocusZoneProps;
+  focusZoneProps?: any;
 
   /**
    * If true, renders the ContextualMenu in a hidden state.
@@ -415,7 +415,7 @@ export interface IContextualMenuItem {
   /**
    * Optional IContextualMenuItemProps overrides to customize behaviors such as item styling via `styles`.
    */
-  itemProps?: Partial<IContextualMenuItemProps>;
+  itemProps?: Partial<any>;
 
   /**
    * Method to provide the classnames to style the Vertical Divider of a split button inside a menu.
@@ -423,7 +423,7 @@ export interface IContextualMenuItem {
    * @defaultvalue getSplitButtonVerticalDividerClassNames
    */
   // tslint:disable-next-line:deprecation
-  getSplitButtonVerticalDividerClassNames?: (theme: ITheme) => IVerticalDividerClassNames;
+  getSplitButtonVerticalDividerClassNames?: (theme: ITheme) => any;
 
   /**
    * Properties to apply to render this item as a section.
@@ -624,5 +624,5 @@ export interface IContextualMenuSubComponentStyles {
   callout: IStyleFunctionOrObject<ICalloutContentStyleProps, any>;
 
   /** Styles for each menu item. */
-  menuItem: IStyleFunctionOrObject<IContextualMenuItemStyleProps, any>;
+  menuItem: IStyleFunctionOrObject<any, any>;
 }
