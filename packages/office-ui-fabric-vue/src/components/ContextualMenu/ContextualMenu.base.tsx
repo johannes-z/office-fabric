@@ -24,7 +24,7 @@ export class ContextualMenuBase extends BaseComponent {
     console.log(this.target)
   }
 
-  get classNames () {
+  get classNames (): any {
     const { styles, theme, className } = this
 
     return getClassNames(styles, {

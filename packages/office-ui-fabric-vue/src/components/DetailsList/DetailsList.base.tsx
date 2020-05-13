@@ -5,9 +5,9 @@ import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
-import { IColumn } from './DetailsList.types'
+import { IColumn, IDetailsListStyleProps, IDetailsListStyles } from './DetailsList.types'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IDetailsListStyleProps, IDetailsListStyles>()
 
 @Component
 export class DetailsListBase extends BaseComponent {
@@ -123,7 +123,7 @@ export class DetailsListBase extends BaseComponent {
     }
 
     for (const key in DEFAULT_COLUMN) {
-      if (DEFAULT_COLUMN.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(DEFAULT_COLUMN, key)) {
         // @ts-ignore
         const value = DEFAULT_COLUMN[key]
         this.columns.forEach((col: IColumn) => {
@@ -311,7 +311,7 @@ export function buildColumns (
     const firstItem = items[0]
 
     for (const propName in firstItem) {
-      if (firstItem.hasOwnProperty(propName)) {
+      if (Object.prototype.hasOwnProperty.call(firstItem, propName)) {
         columns.push({
           key: propName,
           name: propName,

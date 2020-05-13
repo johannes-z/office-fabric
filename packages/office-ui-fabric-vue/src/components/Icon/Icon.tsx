@@ -38,6 +38,7 @@ export default class Icon extends StatelessComponent<IIconProps> {
         'aria-hidden': 'true',
         'data-icon-name': iconName,
       },
-    }, typeof children === 'function' ? [children(h)] : children)
+    }, children)
+    // }, typeof children === 'function' ? [children(h)] : children)
   }
 }

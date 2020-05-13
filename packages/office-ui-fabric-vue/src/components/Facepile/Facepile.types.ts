@@ -2,6 +2,7 @@ import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
 import { ITheme } from '@uifabric/styling'
 import { PersonaSize, IPersonaSharedProps, PersonaInitialsColor } from '../Persona'
 import { IButtonProps } from '../Button/Button.types'
+import { IKeytipProps } from '../Keytip/Keytip.types'
 
 /**
  * {@docCategory Facepile}

@@ -29,6 +29,7 @@ export default {
     ...Object.keys(pkg.dependencies),
     '@microsoft/load-themed-styles',
     '@uifabric/set-version',
+    'vue',
     'vue-tsx-support',
   ],
   preserveModules: true,
