@@ -8,6 +8,8 @@ import { IIconProps } from './Icon.types'
 
 const getClassNames = classNamesFunction({ disableCaching: true })
 
+type IconContentChildren = string | undefined | ((h: CreateElement) => any)
+
 @Component
 export default class Icon extends StatelessComponent<IIconProps> {
   @Prop({ type: String, default: '' }) iconName!: string
@@ -19,7 +21,8 @@ export default class Icon extends StatelessComponent<IIconProps> {
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
     const isImage = !!context.props.imageProps
     const iconContent = getIconContent(iconName) || {}
-    const { children, iconClassName } = iconContent
+    const children = iconContent.children as IconContentChildren
+    const { iconClassName } = iconContent
 
     const classNames: any = getClassNames(styles, {
       theme,
@@ -38,7 +41,6 @@ export default class Icon extends StatelessComponent<IIconProps> {
         'aria-hidden': 'true',
         'data-icon-name': iconName,
       },
-    }, children)
-    // }, typeof children === 'function' ? [children(h)] : children)
+    }, typeof children === 'function' ? [children(h)] : children)
   }
 }
