@@ -4,6 +4,7 @@ dist
 lib
 types
 tmp
+api
 
 # local env files
 .env.local
