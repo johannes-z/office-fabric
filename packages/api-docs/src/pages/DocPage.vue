@@ -1,32 +1,42 @@
 <template>
   <div>
-    <h1><slot /></h1>
+    <h1 v-if="docs.isHeaderVisible">
+      {{ docs.title }}
+      <small>
+        <a :href="docs.componentUrl">
+          <img :src="githubLogo" width="20">
+        </a>
+      </small>
+    </h1>
+
     <div class="content--inner ms-depth-8">
       <h2>Overview</h2>
-      <slot name="overview" />
+      <div v-html="docs.overview" />
     </div>
 
     <div class="content--inner ms-depth-8">
       <h2>Best Practices</h2>
+      <div v-html="docs.bestPractices" />
+
       <div class="doSection">
         <h3>Do</h3>
-        <div class="doList">
-          <slot name="dos" />
-        </div>
+        <div class="doList" v-html="docs.dos" />
       </div>
+
       <div class="dontSection">
         <h3>Don't</h3>
-        <div class="dontList">
-          <slot name="donts" />
-        </div>
+        <div class="dontList" v-html="docs.donts" />
       </div>
     </div>
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <h2><slot /></h2>
 
-      <slot name="usage" />
+      <div v-for="example in docs.examples" :key="example.title">
+        <h3>{{ example.title }}</h3>
+
+        <component :is="example.view" />
+      </div>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -40,16 +50,17 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-@Component({
-  components: {},
-})
-export default class BasePage extends Vue {
+import githubLogo from '../../assets/github.svg'
 
+@Component
+export default class DocPage extends Vue {
+  @Prop({ type: Object, required: true }) docs!: any
+
+  githubLogo = githubLogo
 }
 </script>
 
 <style lang="scss" >
-
 .doList, .dontList {
   ul {
     padding-left: 24px;
