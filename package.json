@@ -6,7 +6,7 @@
     "packages": [
       "packages/utilities",
       "packages/office-ui-fabric-vue",
-      "packages/website"
+      "packages/docs"
     ],
     "nohoist": [
       "**@uifabric-vue/utilities**"
