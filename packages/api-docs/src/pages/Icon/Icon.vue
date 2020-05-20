@@ -1,17 +1,20 @@
 <template>
-  <div>
-    <h1>Icon</h1>
-    <div class="content--inner ms-depth-8">
-      <h2>Overview</h2>
-    </div>
+  <BasePage>
+    Icon
 
-    <div class="content--inner ms-depth-8">
-      <h2>Best Practices</h2>
-    </div>
+    <template #overview>
+      <div v-html="docs.Overview" />
+    </template>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Usage</h2>
-      <h2>Icon</h2>
+    <template #dos>
+      <div v-html="docs.Dos" />
+    </template>
+
+    <template #donts>
+      <div v-html="docs.Donts" />
+    </template>
+
+    <template #usage>
       <div>
         <f-icon icon-name="CompassNW" :class="iconClass" />
         <f-icon icon-name="Dictionary" :class="iconClass" />
@@ -39,18 +42,22 @@
                 })" />
         <BorderBlindsIcon color3="pink" />
       </div>
-    </div>
+    </template>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Implementation</h2>
-    </div>
-  </div>
+    <template #implementation>
+      WIP
+    </template>
+  </BasePage>
 </template>
 
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mergeStyles, mergeStyleSets } from '@uifabric/styling'
 import { Icon, registerIcons } from '@uifabric-vue/office-ui-fabric-vue'
+
+import Dos from './docs/IconDos.md'
+import Donts from './docs/IconDonts.md'
+import Overview from './docs/IconOverview.md'
 
 registerIcons({
   icons: {
@@ -72,7 +79,7 @@ registerIcons({
           />
         </g>
       </svg>
-    ) as any,
+    ),
     'yammer-svg': h => (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0,0,2048,2048">
         <g class="thing">
@@ -92,7 +99,7 @@ registerIcons({
           />
         </g>
       </svg>
-    ) as any,
+    ),
     'borderblinds-svg': h => (
       <svg viewBox="0 0 40 40" style={{ marginLeft: 'calc(50% - 0.5em)' }}>
         <g transform="scale(0.03125 0.03125)">
@@ -101,7 +108,7 @@ registerIcons({
           <path class="borderblinds-part3" d="M768 224l256-192v768l-256 192z" />
         </g>
       </svg>
-    ) as any,
+    ),
   },
 })
 
@@ -157,6 +164,12 @@ const BorderBlindsIcon = Vue.extend({
 export default class IconPage extends Vue {
   mergeStyles = mergeStyles
   iconClass = iconClass
+
+  docs = {
+    Dos,
+    Donts,
+    Overview,
+  }
 
   classNames = mergeStyleSets({
     deepSkyBlue: [{ color: 'deepskyblue' }, this.iconClass],

@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <h1>Spinner</h1>
-    <div class="content--inner ms-depth-8">
-      <h2>Overview</h2>
-    </div>
+  <BasePage>
+    Icon
 
-    <div class="content--inner ms-depth-8">
-      <h2>Best Practices</h2>
-    </div>
+    <template #overview>
+      <div v-html="docs.Overview" />
+    </template>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Usage</h2>
+    <template #dos>
+      <div v-html="docs.Dos" />
+    </template>
+
+    <template #donts>
+      <div v-html="docs.Donts" />
+    </template>
+
+    <template #usage>
       <h2>Default Spinner</h2>
 
       <Stack :tokens="tokens.sectionStack">
@@ -57,17 +61,21 @@
           <f-spinner label="Nope, still loading..." label-position="left" />
         </div>
       </Stack>
-    </div>
+    </template>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Implementation</h2>
-    </div>
-  </div>
+    <template #implementation>
+      WIP
+    </template>
+  </BasePage>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Stack, IStackProps, IStackTokens } from '@uifabric-vue/office-ui-fabric-vue'
+
+import Dos from './docs/SpinnerDos.md'
+import Donts from './docs/SpinnerDonts.md'
+import Overview from './docs/SpinnerOverview.md'
 
 @Component({
   components: {
@@ -76,6 +84,12 @@ import { Stack, IStackProps, IStackTokens } from '@uifabric-vue/office-ui-fabric
 })
 export default class SpinnerPage extends Vue {
   rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' };
+
+  docs = {
+    Dos,
+    Donts,
+    Overview,
+  }
 
   tokens = {
     sectionStack: {
