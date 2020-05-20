@@ -11,7 +11,7 @@ export interface IOptions {
 }
 
 export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
-  let _theme = createTheme(theme)
+  const _theme = createTheme(theme)
 
   if (useCSSVars) {
     let { palette, semanticColors } = _theme
@@ -29,7 +29,7 @@ export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): I
   return _theme
 }
 
-export default function install (Vue: any, theme: IPartialTheme = {}, options: Partial<IOptions> = {}) {
+export default function install (Vue: any, options: Partial<IOptions> = {}, theme: IPartialTheme = {}) {
   for (const componentName in Components) {
     const Component: any = (Components as any)[componentName]
     if (Component && Component.prototype instanceof Vue) {

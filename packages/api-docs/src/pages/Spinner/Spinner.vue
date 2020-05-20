@@ -28,6 +28,7 @@ export default class SpinnerPage extends Vue {
           dos: require<string>('./docs/SpinnerDos.md'),
           donts: require<string>('./docs/SpinnerDonts.md'),
           isHeaderVisible: true,
+          implementation: require<string>('./docs/SpinnerImplementation.md'),
         },
       },
     })

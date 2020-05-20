@@ -32,27 +32,28 @@
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
 
-      <div v-for="example in docs.examples" :key="example.title">
-        <h3>{{ example.title }}</h3>
-
-        <component :is="example.view" />
-      </div>
+      <ExampleCard v-for="example in docs.examples"
+                   :key="example.title"
+                   v-bind="example" />
     </div>
 
     <div class="content--inner ms-depth-8">
       <h2>Implementation</h2>
 
-      <slot name="implementation" />
+      <div class="Implementation" v-html="docs.implementation" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import ExampleCard from './ExampleCard.vue'
 
 import githubLogo from '../../assets/github.svg'
 
-@Component
+@Component({
+  components: { ExampleCard },
+})
 export default class DocPage extends Vue {
   @Prop({ type: Object, required: true }) docs!: any
 
@@ -60,7 +61,7 @@ export default class DocPage extends Vue {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 .doList, .dontList {
   ul {
     padding-left: 24px;
@@ -112,5 +113,32 @@ export default class DocPage extends Vue {
   box-sizing: border-box;
   display: inline-block;
   vertical-align: top;
+}
+
+.Implementation {
+  table {
+    width: 100%;
+    border-spacing: 0;
+
+    tr:hover {
+      td {
+        background-color: #efefef;
+      }
+    }
+
+    td:first-child {
+      white-space: nowrap;
+    }
+
+    th, td {
+      padding: 6px 12px;
+    }
+    th {
+      border-bottom: 2px solid #ddd;
+    }
+    td {
+      border-bottom: 1px solid #ddd;
+    }
+  }
 }
 </style>

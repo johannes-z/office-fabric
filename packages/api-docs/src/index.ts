@@ -10,9 +10,7 @@ import Fabric, { initializeIcons, IOptions, IPartialTheme } from '@uifabric-vue/
 
 initializeIcons()
 
-Vue.use(Fabric, {} as IPartialTheme, {
-  useCSSVars: true,
-} as IOptions)
+Vue.use(Fabric, { useCSSVars: true } as IOptions, {} as IPartialTheme)
 
 Vue.use(VueRouter)
 Vue.use(VueHighlightJS)
