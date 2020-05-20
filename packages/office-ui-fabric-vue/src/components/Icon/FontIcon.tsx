@@ -39,14 +39,16 @@ export class FontIcon extends StatelessComponent<IIconProps> {
   @Prop({ type: String, default: '' }) iconName!: string
 
   render (h: CreateElement, ctx: RenderContext): VNode {
-    const { iconName, className, style = {} } = ctx.props
+    const className = ctx.props.className || ctx.data.class
+    const { iconName, style = {} } = ctx.props
     const iconContent = getIconContent(iconName) || {}
-    const { iconClassName, children, fontFamily } = iconContent
+    const children = iconContent.children as unknown as ((h: CreateElement) => JSX.Element) | string
+    const { iconClassName, fontFamily } = iconContent
 
     return (
       <i class={css(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className)}
         style={{ fontFamily, ...style }}>
-        {children}
+        {typeof children === 'function' ? children(h) : children}
       </i>
     )
   }
