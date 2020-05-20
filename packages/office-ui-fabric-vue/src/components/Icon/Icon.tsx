@@ -8,7 +8,7 @@ import { IIconProps } from './Icon.types'
 
 const getClassNames = classNamesFunction({ disableCaching: true })
 
-type IconContentChildren = string | undefined | ((h: CreateElement) => any)
+type IconContentChildren = string | undefined | ((h: CreateElement) => JSX.Element)
 
 @Component
 export default class Icon extends StatelessComponent<IIconProps> {
