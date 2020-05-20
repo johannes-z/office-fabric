@@ -1,14 +1,8 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Stack, IStackProps, IStackTokens } from '@uifabric-vue/office-ui-fabric-vue'
-
 import { CreateElement } from 'vue'
 
-@Component({
-  components: {
-    Stack,
-  },
-})
+@Component
 export default class SpinnerPage extends Vue {
   render (h: CreateElement) {
     return h('DocPage', {

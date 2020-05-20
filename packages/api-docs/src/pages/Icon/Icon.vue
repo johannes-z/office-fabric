@@ -1,16 +1,6 @@
 <script lang="tsx">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { mergeStyles, mergeStyleSets } from '@uifabric/styling'
-import { Icon, registerIcons } from '@uifabric-vue/office-ui-fabric-vue'
-
 import { CreateElement } from 'vue'
-
-const iconClass = mergeStyles({
-  fontSize: 50,
-  height: 50,
-  width: 50,
-  margin: '0 25px',
-})
 
 @Component
 export default class IconPage extends Vue {
