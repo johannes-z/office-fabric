@@ -1,4 +1,8 @@
+config
 src
+docs
+tmp
+
 NOTE.md
 .browserslistrc
 .eslintrc.js
@@ -6,4 +10,5 @@ babel.config.js
 postcss.config.js
 rollup.config.js
 tsconfig.json
+typedoc.json
 vue.config.js

@@ -2,17 +2,23 @@
 
 const sortBy = require('lodash.sortby')
 const fs = require('fs')
-const api = require('@uifabric-vue/office-ui-fabric-vue/docs/components.api.json')
-
-const someComponent = require('@uifabric-vue/office-ui-fabric-vue/dist/office-ui-fabric-vue.cjs.js')
-
-console.log(someComponent)
+const api = require('@uifabric-vue/office-ui-fabric-vue/metadata/components.api.json')
 
 const components = api.children
 
 function mapType (type) {
   if (type.type === 'stringLiteral') return `'${type.value}'`
   if (type.type === 'intrinsic') return type.name
+  if (type.type === 'union') {
+    return type.types
+      .map(mapType)
+      .filter(t => t !== 'undefined')
+      .join(' | ')
+  }
+  if (type.type === 'reference') {
+    if (type.typeArguments) return `${type.name}<${type.typeArguments.map(t => t.name).join(', ')}>`
+    return type.name
+  }
   return type
 }
 
@@ -28,20 +34,16 @@ function mapMember (member) {
     return {
       name: member.name,
       type: member.kindString,
+      description: member.comment.shortText,
       value: member.type.types.map(mapType).join(' | '),
     }
   } else if (member.kindString === 'Interface') {
-    const properties = (member.children || []).map(property => {
+    const properties = sortBy((member.children || []), ['id']).map(property => {
       const { isOptional } = property.flags
       return {
-        name: property.name + (isOptional ? '?' : ''),
+        name: property.name,
         required: !isOptional,
-        type: property.type.name
-          ? property.type.name
-          : property.type.types
-            .map(mapType)
-            .filter(t => t !== 'undefined')
-            .join(' | '),
+        type: mapType(property.type),
         description: property.comment.shortText,
         default: getDefaultValue(property.comment.tags),
       }
@@ -50,7 +52,7 @@ function mapMember (member) {
       name: member.name,
       type: member.kindString,
       description: member.comment && member.comment.shortText,
-      properties: sortBy(properties, [p => !p.required, 'name']),
+      properties: properties, // sortBy(properties, [p => !p.required, 'name']),
     }
   }
 }

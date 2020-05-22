@@ -6,55 +6,55 @@
             "type": "Interface",
             "properties": [
                 {
-                    "name": "ariaLabel?",
-                    "required": false,
-                    "type": "string",
-                    "description": "Alternative status label for screen reader"
-                },
-                {
-                    "name": "ariaLive?",
-                    "required": false,
-                    "type": "'assertive' | 'polite' | 'off'",
-                    "description": "Politeness setting for label update announcement.",
-                    "default": "polite"
-                },
-                {
-                    "name": "className?",
-                    "required": false,
-                    "type": "string",
-                    "description": "Additional CSS class(es) to apply to the Spinner."
-                },
-                {
-                    "name": "label?",
-                    "required": false,
-                    "type": "string",
-                    "description": "The label to show next to the Spinner. Label updates will be announced to the screen readers.\nUse ariaLive to control politeness level."
-                },
-                {
-                    "name": "labelPosition?",
-                    "required": false,
-                    "type": "SpinnerLabelPosition",
-                    "description": "The position of the label in regards of the spinner animation.",
-                    "default": "SpinnerLabelPosition.bottom"
-                },
-                {
-                    "name": "size?",
+                    "name": "size",
                     "required": false,
                     "type": "number",
                     "description": "The size of Spinner to render in px.",
                     "default": "20"
                 },
                 {
-                    "name": "styles?",
+                    "name": "label",
                     "required": false,
-                    "type": "IStyleFunctionOrObject",
-                    "description": "Call to provide customized styling that will layer on top of the variant rules."
+                    "type": "string",
+                    "description": "The label to show next to the Spinner. Label updates will be announced to the screen readers.\nUse ariaLive to control politeness level."
                 },
                 {
-                    "name": "theme?",
+                    "name": "className",
+                    "required": false,
+                    "type": "string",
+                    "description": "Additional CSS class(es) to apply to the Spinner."
+                },
+                {
+                    "name": "ariaLive",
+                    "required": false,
+                    "type": "'assertive' | 'polite' | 'off'",
+                    "description": "Politeness setting for label update announcement.",
+                    "default": "polite"
+                },
+                {
+                    "name": "ariaLabel",
+                    "required": false,
+                    "type": "string",
+                    "description": "Alternative status label for screen reader"
+                },
+                {
+                    "name": "theme",
                     "required": false,
                     "type": "ITheme",
                     "description": "Theme (provided through customization.)"
+                },
+                {
+                    "name": "styles",
+                    "required": false,
+                    "type": "IStyleFunctionOrObject<ISpinnerStyleProps, ISpinnerStyles>",
+                    "description": "Call to provide customized styling that will layer on top of the variant rules."
+                },
+                {
+                    "name": "labelPosition",
+                    "required": false,
+                    "type": "SpinnerLabelPosition",
+                    "description": "The position of the label in regards of the spinner animation.",
+                    "default": "SpinnerLabelPosition.bottom"
                 }
             ]
         },
@@ -70,22 +70,22 @@
                     "description": "Theme provided by High-Order Component."
                 },
                 {
-                    "name": "className?",
+                    "name": "size",
+                    "required": false,
+                    "type": "number",
+                    "description": "Size of the spinner animation."
+                },
+                {
+                    "name": "className",
                     "required": false,
                     "type": "string",
                     "description": "CSS class name for the component attached to the root stylable area."
                 },
                 {
-                    "name": "labelPosition?",
+                    "name": "labelPosition",
                     "required": false,
                     "type": "SpinnerLabelPosition",
                     "description": "Position of the label in regards to the spinner animation."
-                },
-                {
-                    "name": "size?",
-                    "required": false,
-                    "type": "number",
-                    "description": "Size of the spinner animation."
                 }
             ]
         },
@@ -94,25 +94,25 @@
             "type": "Interface",
             "properties": [
                 {
-                    "name": "circle?",
-                    "required": false,
-                    "type": "IStyle",
-                    "description": "Styles for the spinner circle animation."
-                },
-                {
-                    "name": "label?",
-                    "required": false,
-                    "type": "IStyle",
-                    "description": "Styles for the label accompanying the circle."
-                },
-                {
-                    "name": "root?",
+                    "name": "root",
                     "required": false,
                     "type": "IStyle",
                     "description": "Styles for the root element. Refers to the wrapper containing both the\ncircle and the label."
                 },
                 {
-                    "name": "screenReaderText?",
+                    "name": "circle",
+                    "required": false,
+                    "type": "IStyle",
+                    "description": "Styles for the spinner circle animation."
+                },
+                {
+                    "name": "label",
+                    "required": false,
+                    "type": "IStyle",
+                    "description": "Styles for the label accompanying the circle."
+                },
+                {
+                    "name": "screenReaderText",
                     "required": false,
                     "type": "IStyle",
                     "description": "Styles for the hidden helper element to aid with screen readers."
@@ -122,6 +122,7 @@
         {
             "name": "SpinnerLabelPosition",
             "type": "Type alias",
+            "description": "Possible locations of the label in regards to the spinner",
             "value": "'top' | 'right' | 'bottom' | 'left'"
         }
     ]

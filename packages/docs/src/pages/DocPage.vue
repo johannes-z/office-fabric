@@ -41,23 +41,25 @@
       <h2>Implementation</h2>
 
       <div class="Implementation">
-        <h1>Props</h1>
-
-        <div v-for="member in api.members" :key="member.name">
+        <h1 v-if="types.members.length">Types</h1>
+        <div v-for="member in types.members"
+             :key="member.name">
           <h2>{{ member.name }}</h2>
+          <p>{{ member.description }}</p>
+
           <table v-if="member.type === 'Interface'">
             <thead>
               <tr>
-                <th width="10%">Name</th>
-                <th width="10%">Type</th>
-                <th width="5%">Required</th>
-                <th width="10%">Default</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Default</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="prop in member.properties" :key="prop.name">
-                <td>{{ prop.name }}</td>
+                <td>{{ prop.name }}{{ prop.required ? '' : '?' }}</td>
                 <td>{{ prop.type }}</td>
                 <td>{{ prop.required }}</td>
                 <td>{{ prop.default }}</td>
@@ -67,9 +69,11 @@
           </table>
 
           <div v-else-if="member.type === 'Type alias'">
-            {{ member.value }}
+            <code>export declare type {{ member.name }} = {{ member.value }}</code>
           </div>
         </div>
+
+        <div v-html="api" />
       </div>
     </div>
   </div>
@@ -80,17 +84,22 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import ExampleCard from './ExampleCard.vue'
 
 import githubLogo from '../../assets/github.svg'
+import { DetailsList } from '@uifabric-vue/office-ui-fabric-vue'
 
 @Component({
-  components: { ExampleCard },
+  components: { ExampleCard, DetailsList },
 })
 export default class DocPage extends Vue {
   @Prop({ type: Object, required: true }) docs!: any
 
   githubLogo = githubLogo
 
+  get types () {
+    return this.docs.implementation.types || {}
+  }
+
   get api () {
-    return this.docs.api || {}
+    return this.docs.implementation.api || {}
   }
 }
 </script>
@@ -154,8 +163,6 @@ export default class DocPage extends Vue {
     width: 100%;
     border-spacing: 0;
 
-    table-layout: fixed;
-
     tr:hover {
       td {
         background-color: #efefef;
@@ -168,13 +175,13 @@ export default class DocPage extends Vue {
 
     th, td {
       text-align: left;
-      padding: 6px 12px;
+      padding: 8px 12px;
     }
     th {
-      border-bottom: 2px solid #ddd;
+      border-bottom: 1px solid #ddd;
     }
     td {
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #efefef;
     }
   }
 }

@@ -4,7 +4,7 @@ dist
 lib
 types
 tmp
-docs
+metadata
 
 # local env files
 .env.local
