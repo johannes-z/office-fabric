@@ -40,7 +40,37 @@
     <div class="content--inner ms-depth-8">
       <h2>Implementation</h2>
 
-      <div class="Implementation" v-html="docs.implementation" />
+      <div class="Implementation">
+        <h1>Props</h1>
+
+        <div v-for="member in api.members" :key="member.name">
+          <h2>{{ member.name }}</h2>
+          <table v-if="member.type === 'Interface'">
+            <thead>
+              <tr>
+                <th width="10%">Name</th>
+                <th width="10%">Type</th>
+                <th width="5%">Required</th>
+                <th width="10%">Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="prop in member.properties" :key="prop.name">
+                <td>{{ prop.name }}</td>
+                <td>{{ prop.type }}</td>
+                <td>{{ prop.required }}</td>
+                <td>{{ prop.default }}</td>
+                <td>{{ prop.description }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div v-else-if="member.type === 'Type alias'">
+            {{ member.value }}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +88,10 @@ export default class DocPage extends Vue {
   @Prop({ type: Object, required: true }) docs!: any
 
   githubLogo = githubLogo
+
+  get api () {
+    return this.docs.api || {}
+  }
 }
 </script>
 
@@ -120,6 +154,8 @@ export default class DocPage extends Vue {
     width: 100%;
     border-spacing: 0;
 
+    table-layout: fixed;
+
     tr:hover {
       td {
         background-color: #efefef;
@@ -131,6 +167,7 @@ export default class DocPage extends Vue {
     }
 
     th, td {
+      text-align: left;
       padding: 6px 12px;
     }
     th {

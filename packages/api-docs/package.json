@@ -1,12 +1,12 @@
 {
-  "name": "@uifabric-vue/api-docs",
+  "name": "api-docs",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "scripts": {
-    "build": "node ./src/index.js"
+  "dependencies": {
+    "@uifabric-vue/office-ui-fabric-vue": "^1.0.0"
   },
   "devDependencies": {
-    "@uifabric/api-docs": "^7.2.81"
+    "lodash.sortby": "^4.7.0"
   }
 }

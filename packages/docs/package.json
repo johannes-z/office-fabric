@@ -8,6 +8,7 @@
     "build": "vue-cli-service build src/index.ts --mode production"
   },
   "dependencies": {
+    "api-docs": "^1.0.0",
     "@babel/runtime": "^7.9.6",
     "@uifabric-vue/office-ui-fabric-vue": "^1.0.0",
     "@uifabric/example-data": "^7.0.14",

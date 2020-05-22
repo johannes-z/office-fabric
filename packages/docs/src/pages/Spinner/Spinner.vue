@@ -2,6 +2,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement } from 'vue'
 
+import api from 'api-docs/pages/Spinner.json'
+
 @Component
 export default class SpinnerPage extends Vue {
   render (h: CreateElement) {
@@ -28,7 +30,7 @@ export default class SpinnerPage extends Vue {
           dos: require<string>('./docs/SpinnerDos.md'),
           donts: require<string>('./docs/SpinnerDonts.md'),
           isHeaderVisible: true,
-          implementation: require<string>('./docs/SpinnerImplementation.md'),
+          api: api,
         },
       },
     })

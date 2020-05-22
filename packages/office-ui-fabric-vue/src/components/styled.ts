@@ -42,7 +42,7 @@ export function styled<
 
   let _styles: any
 
-  return componentFactory.create({
+  const styledComponent = componentFactory.create({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
     functional: true,
     render (h: CreateElement, context: RenderContext<any>): VNode {
@@ -67,4 +67,7 @@ export function styled<
       }, context.children)
     },
   })
+  // styledComponent.prototype.BaseComponent = Component
+
+  return styledComponent
 }

@@ -14,10 +14,6 @@ import pkg from './package.json'
 const packageRoot = path.resolve(__dirname)
 
 export default {
-  // external: [
-  //   /id/,
-  //   'id2',
-  // ],
   input: './tmp/index.js',
   output: {
     // dir: path.resolve('lib'),

@@ -1,0 +1,5 @@
+{
+  "includeDeclarations": true,
+  "excludeExternals": true,
+  "excludeNotExported": false
+}
