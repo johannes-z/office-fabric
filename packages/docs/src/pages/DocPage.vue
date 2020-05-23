@@ -1,79 +1,81 @@
 <template>
   <div>
-    <h1 v-if="docs.isHeaderVisible">
-      {{ docs.title }}
-      <small>
+    <div class="Page">
+      <div class="Page-header">
+        <h1 v-if="docs.isHeaderVisible">
+          {{ docs.title }}
+        </h1>
+
         <a :href="docs.componentUrl">
-          <img :src="githubLogo" width="20">
+          <img :src="githubLogo" width="32">
         </a>
-      </small>
-    </h1>
-
-    <div class="content--inner ms-depth-8">
-      <h2>Overview</h2>
-      <div v-html="docs.overview" />
-    </div>
-
-    <div class="content--inner ms-depth-8">
-      <h2>Best Practices</h2>
-      <div v-html="docs.bestPractices" />
-
-      <div class="doSection">
-        <h3>Do</h3>
-        <div class="doList" v-html="docs.dos" />
       </div>
 
-      <div class="dontSection">
-        <h3>Don't</h3>
-        <div class="dontList" v-html="docs.donts" />
+      <div class="ms-depth-8 Section">
+        <h2 class="Section-header">Overview</h2>
+        <div v-html="docs.overview" />
       </div>
-    </div>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Usage</h2>
+      <div class="ms-depth-8 Section">
+        <h2 class="Section-header">Best Practices</h2>
+        <div v-html="docs.bestPractices" />
 
-      <ExampleCard v-for="example in docs.examples"
-                   :key="example.title"
-                   v-bind="example" />
-    </div>
-
-    <div class="content--inner ms-depth-8">
-      <h2>Implementation</h2>
-
-      <div class="Implementation">
-        <h1 v-if="types.members.length">Types</h1>
-        <div v-for="member in types.members"
-             :key="member.name">
-          <h2>{{ member.name }}</h2>
-          <p>{{ member.description }}</p>
-
-          <table v-if="member.type === 'Interface'">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th width="150px">Type</th>
-                <th>Required</th>
-                <th>Default</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="prop in member.properties" :key="prop.name">
-                <td>{{ prop.name }}{{ prop.required ? '' : '?' }}</td>
-                <td>{{ prop.type }}</td>
-                <td>{{ prop.required }}</td>
-                <td>{{ prop.default }}</td>
-                <td>{{ prop.description }}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div v-else-if="member.type === 'Type alias'">
-            <code>export declare type {{ member.name }} = {{ member.value }}</code>
-          </div>
+        <div class="doSection">
+          <h3>Do</h3>
+          <div class="doList" v-html="docs.dos" />
         </div>
 
-        <div v-html="api" />
+        <div class="dontSection">
+          <h3>Don't</h3>
+          <div class="dontList" v-html="docs.donts" />
+        </div>
+      </div>
+
+      <div class="ms-depth-8 Section">
+        <h2 class="Section-header">Usage</h2>
+
+        <ExampleCard v-for="example in docs.examples"
+                     :key="example.title"
+                     v-bind="example" />
+      </div>
+
+      <div class="ms-depth-8 Section">
+        <h2 class="Section-header">Implementation</h2>
+
+        <div class="Implementation">
+          <div v-for="member in types.members"
+               :key="member.name">
+            <h3>{{ member.name }}</h3>
+            <p>{{ member.description }}</p>
+
+            <table v-if="member.type === 'Interface'">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th width="150px">Type</th>
+                  <th>Required</th>
+                  <th>Default</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="prop in member.properties" :key="prop.name">
+                  <td>{{ prop.name }}{{ prop.required ? '' : '?' }}</td>
+                  <td>{{ prop.type }}</td>
+                  <td>{{ prop.required }}</td>
+                  <td>{{ prop.default }}</td>
+                  <td>{{ prop.description }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div v-else-if="member.type === 'Type alias'">
+              <code>export declare type {{ member.name }} = {{ member.value }}</code>
+            </div>
+          </div>
+
+          <div v-html="api" />
+        </div>
       </div>
     </div>
   </div>
@@ -105,6 +107,32 @@ export default class DocPage extends Vue {
 </script>
 
 <style lang="scss">
+.Page {
+  &-header {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      flex: 1;
+    }
+  }
+  max-width: 1080px;
+}
+
+.Section {
+  background: white;
+  padding: 28px;
+  margin: 20px 0;
+  font-size: 16px;
+
+  &-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+}
+
 .doList, .dontList {
   ul {
     padding-left: 24px;
