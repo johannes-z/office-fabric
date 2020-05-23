@@ -1,0 +1,637 @@
+{
+    "name": "TextField",
+    "members": [
+        {
+            "name": "ITextField",
+            "type": "Interface",
+            "description": "{@docCategory TextField}",
+            "properties": [
+                {
+                    "name": "value",
+                    "required": true,
+                    "type": "string",
+                    "description": "Gets the current value of the input."
+                },
+                {
+                    "name": "focus",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3261,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3262,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 11,
+                                    "character": 10
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Sets focus to the input."
+                },
+                {
+                    "name": "blur",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3264,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3265,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 13,
+                                    "character": 9
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Blurs the input"
+                },
+                {
+                    "name": "select",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3267,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3268,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 15,
+                                    "character": 11
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Select the value of the text field."
+                },
+                {
+                    "name": "setSelectionStart",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3270,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3271,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "parameters": [
+                                        {
+                                            "id": 3272,
+                                            "name": "value",
+                                            "kind": 32768,
+                                            "kindString": "Parameter",
+                                            "flags": {
+                                                "isExported": true
+                                            },
+                                            "type": {
+                                                "type": "intrinsic",
+                                                "name": "number"
+                                            }
+                                        }
+                                    ],
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 17,
+                                    "character": 22
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Sets the selection start of the text field to a specified value."
+                },
+                {
+                    "name": "setSelectionEnd",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3274,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3275,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "parameters": [
+                                        {
+                                            "id": 3276,
+                                            "name": "value",
+                                            "kind": 32768,
+                                            "kindString": "Parameter",
+                                            "flags": {
+                                                "isExported": true
+                                            },
+                                            "type": {
+                                                "type": "intrinsic",
+                                                "name": "number"
+                                            }
+                                        }
+                                    ],
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 19,
+                                    "character": 20
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Sets the selection end of the text field to a specified value."
+                },
+                {
+                    "name": "setSelectionRange",
+                    "required": true,
+                    "type": {
+                        "type": "reflection",
+                        "declaration": {
+                            "id": 3278,
+                            "name": "__type",
+                            "kind": 65536,
+                            "kindString": "Type literal",
+                            "flags": {
+                                "isExported": true
+                            },
+                            "signatures": [
+                                {
+                                    "id": 3279,
+                                    "name": "__call",
+                                    "kind": 4096,
+                                    "kindString": "Call signature",
+                                    "flags": {
+                                        "isExported": true
+                                    },
+                                    "parameters": [
+                                        {
+                                            "id": 3280,
+                                            "name": "start",
+                                            "kind": 32768,
+                                            "kindString": "Parameter",
+                                            "flags": {
+                                                "isExported": true
+                                            },
+                                            "type": {
+                                                "type": "intrinsic",
+                                                "name": "number"
+                                            }
+                                        },
+                                        {
+                                            "id": 3281,
+                                            "name": "end",
+                                            "kind": 32768,
+                                            "kindString": "Parameter",
+                                            "flags": {
+                                                "isExported": true
+                                            },
+                                            "type": {
+                                                "type": "intrinsic",
+                                                "name": "number"
+                                            }
+                                        }
+                                    ],
+                                    "type": {
+                                        "type": "intrinsic",
+                                        "name": "void"
+                                    }
+                                }
+                            ],
+                            "sources": [
+                                {
+                                    "fileName": "packages/office-ui-fabric-vue/types/components/TextField/TextField.types.d.ts",
+                                    "line": 26,
+                                    "character": 22
+                                }
+                            ]
+                        }
+                    },
+                    "description": "Sets the start and end positions of a selection in a text field.\nCall with start and end set to the same value to set the cursor position."
+                },
+                {
+                    "name": "selectionStart",
+                    "required": true,
+                    "type": "number | null",
+                    "description": "Gets the selection start of the text field. Returns -1 if there is no selection."
+                },
+                {
+                    "name": "selectionEnd",
+                    "required": true,
+                    "type": "number | null",
+                    "description": "Gets the selection end of the text field. Returns -1 if there is no selection."
+                }
+            ]
+        },
+        {
+            "name": "ITextFieldProps",
+            "type": "Interface",
+            "description": "TextField component props.\n{@docCategory TextField}",
+            "properties": [
+                {
+                    "name": "multiline",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Whether or not the text field is a multiline text field.",
+                    "default": "false"
+                },
+                {
+                    "name": "resizable",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "For multiline text fields, whether or not the field is resizable.",
+                    "default": "true"
+                },
+                {
+                    "name": "autoAdjustHeight",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "For multiline text fields, whether or not to auto adjust text field height.",
+                    "default": "false"
+                },
+                {
+                    "name": "underlined",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Whether or not the text field is underlined.",
+                    "default": "false"
+                },
+                {
+                    "name": "borderless",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Whether or not the text field is borderless.",
+                    "default": "false"
+                },
+                {
+                    "name": "label",
+                    "required": false,
+                    "type": "string",
+                    "description": "Label displayed above the text field (and read by screen readers)."
+                },
+                {
+                    "name": "onRenderLabel",
+                    "required": false,
+                    "type": "any",
+                    "description": "Custom renderer for the label.\nIf you don't call defaultRender, ensure that you give your custom-rendered label an id and that\nyou set the textfield's aria-labelledby prop to that id."
+                },
+                {
+                    "name": "description",
+                    "required": false,
+                    "type": "string",
+                    "description": "Description displayed below the text field to provide additional details about what text to enter."
+                },
+                {
+                    "name": "onRenderDescription",
+                    "required": false,
+                    "type": "any",
+                    "description": "Custom renderer for the description."
+                },
+                {
+                    "name": "prefix",
+                    "required": false,
+                    "type": "string",
+                    "description": "Prefix displayed before the text field contents. This is not included in the value.\nEnsure a descriptive label is present to assist screen readers, as the value does not include the prefix."
+                },
+                {
+                    "name": "suffix",
+                    "required": false,
+                    "type": "string",
+                    "description": "Suffix displayed after the text field contents. This is not included in the value.\nEnsure a descriptive label is present to assist screen readers, as the value does not include the suffix."
+                },
+                {
+                    "name": "onRenderPrefix",
+                    "required": false,
+                    "type": "any",
+                    "description": "Custom render function for prefix."
+                },
+                {
+                    "name": "onRenderSuffix",
+                    "required": false,
+                    "type": "any",
+                    "description": "Custom render function for suffix."
+                },
+                {
+                    "name": "iconProps",
+                    "required": false,
+                    "type": "IIconProps",
+                    "description": "Props for an optional icon, displayed in the far right end of the text field."
+                },
+                {
+                    "name": "defaultValue",
+                    "required": false,
+                    "type": "string",
+                    "description": "Default value of the text field. Only provide this if the text field is an uncontrolled component;\notherwise, use the `value` property."
+                },
+                {
+                    "name": "value",
+                    "required": false,
+                    "type": "string",
+                    "description": "Current value of the text field. Only provide this if the text field is a controlled component where you\nare maintaining its current state; otherwise, use the `defaultValue` property."
+                },
+                {
+                    "name": "disabled",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Disabled state of the text field.",
+                    "default": "false"
+                },
+                {
+                    "name": "readOnly",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "If true, the text field is readonly.",
+                    "default": "false"
+                },
+                {
+                    "name": "errorMessage",
+                    "required": false,
+                    "type": "string | JSX.Element",
+                    "description": "Static error message displayed below the text field. Use `onGetErrorMessage` to dynamically\nchange the error message displayed (if any) based on the current value. `errorMessage` and\n`onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence)."
+                },
+                {
+                    "name": "onChange",
+                    "required": false,
+                    "type": "[object Object]",
+                    "description": "Callback for when the input value changes.\nThis is called on both `input` and `change` events.\n(In a later version, this will probably only be called for the `change` event.)"
+                },
+                {
+                    "name": "onNotifyValidationResult",
+                    "required": false,
+                    "type": "[object Object]",
+                    "description": "Function called after validation completes."
+                },
+                {
+                    "name": "onGetErrorMessage",
+                    "required": false,
+                    "type": "[object Object]",
+                    "description": "Function used to determine whether the input value is valid and get an error message if not.\nMutually exclusive with the static string `errorMessage` (it will take precedence over this)."
+                },
+                {
+                    "name": "deferredValidationTime",
+                    "required": false,
+                    "type": "number",
+                    "description": "Text field will start to validate after users stop typing for `deferredValidationTime` milliseconds.\nUpdates to this prop will not be respected.",
+                    "default": "200"
+                },
+                {
+                    "name": "className",
+                    "required": false,
+                    "type": "string",
+                    "description": "Optional class name that is added to the container of the component."
+                },
+                {
+                    "name": "inputClassName",
+                    "required": false,
+                    "type": "string",
+                    "description": "Optional class name that is added specifically to the input/textarea element."
+                },
+                {
+                    "name": "ariaLabel",
+                    "required": false,
+                    "type": "string",
+                    "description": "Aria label for the text field."
+                },
+                {
+                    "name": "validateOnFocusIn",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Run validation when focus moves into the input, and **do not** validate on change.",
+                    "default": "false"
+                },
+                {
+                    "name": "validateOnFocusOut",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Run validation when focus moves out of the input, and **do not** validate on change.",
+                    "default": "false"
+                },
+                {
+                    "name": "validateOnLoad",
+                    "required": false,
+                    "type": "false | true",
+                    "description": "Whether validation should run when the input is initially rendered.",
+                    "default": "true"
+                },
+                {
+                    "name": "theme",
+                    "required": false,
+                    "type": "ITheme",
+                    "description": "Theme (provided through customization)."
+                },
+                {
+                    "name": "styles",
+                    "required": false,
+                    "type": "IStyleFunctionOrObject<ITextFieldStyleProps, ITextFieldStyles>",
+                    "description": "Call to provide customized styling that will layer on top of the variant rules."
+                },
+                {
+                    "name": "autoComplete",
+                    "required": false,
+                    "type": "string",
+                    "description": "Whether the input field should have autocomplete enabled.\nThis tells the browser to display options based on earlier typed values.\nCommon values are 'on' and 'off' but for all possible values see the following links:\nhttps://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#Values\nhttps://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill"
+                },
+                {
+                    "name": "mask",
+                    "required": false,
+                    "type": "string",
+                    "description": "Only used by MaskedTextField:\nThe masking string that defines the mask's behavior.\nA backslash will escape any character.\nSpecial format characters are:\n'9': [0-9]\n'a': [a-zA-Z]\n'*': [a-zA-Z0-9]"
+                },
+                {
+                    "name": "maskChar",
+                    "required": false,
+                    "type": "string",
+                    "description": "Only used by MaskedTextField:\nThe character to show in place of unfilled characters of the mask.",
+                    "default": "'_'"
+                },
+                {
+                    "name": "maskFormat",
+                    "required": false,
+                    "type": "[object Object]",
+                    "description": "Only used by MaskedTextField:\nAn object defining the format characters and corresponding regexp values.\nDefault format characters: \\{\n '9': /[0-9]/,\n 'a': /[a-zA-Z]/,\n '*': /[a-zA-Z0-9]/\n\\}"
+                }
+            ]
+        },
+        {
+            "name": "ITextFieldStyles",
+            "type": "Interface",
+            "description": "{@docCategory TextField}",
+            "properties": [
+                {
+                    "name": "root",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for root element."
+                },
+                {
+                    "name": "fieldGroup",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for field group encompassing entry area (prefix, field, icon and suffix)."
+                },
+                {
+                    "name": "prefix",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for prefix element."
+                },
+                {
+                    "name": "suffix",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for suffix element."
+                },
+                {
+                    "name": "field",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for main field entry element."
+                },
+                {
+                    "name": "icon",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for icon prop element."
+                },
+                {
+                    "name": "description",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for description element."
+                },
+                {
+                    "name": "wrapper",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for TextField wrapper element."
+                },
+                {
+                    "name": "errorMessage",
+                    "required": true,
+                    "type": "IStyle",
+                    "description": "Style for error message element."
+                },
+                {
+                    "name": "subComponentStyles",
+                    "required": true,
+                    "type": "ITextFieldSubComponentStyles",
+                    "description": "Styling for subcomponents."
+                }
+            ]
+        },
+        {
+            "name": "ITextFieldSubComponentStyles",
+            "type": "Interface",
+            "description": "{@docCategory TextField}",
+            "properties": [
+                {
+                    "name": "label",
+                    "required": true,
+                    "type": "IStyleFunctionOrObject<any, any>",
+                    "description": "Styling for Label child component."
+                }
+            ]
+        },
+        {
+            "name": "ITextFieldStyleProps",
+            "type": "Type alias",
+            "description": "{@docCategory TextField}",
+            "value": "any"
+        }
+    ]
+}

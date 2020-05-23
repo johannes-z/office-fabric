@@ -9,28 +9,55 @@
       </ActionButton>
     </div>
 
+    <div v-if="showCode"
+         ref="code"
+         class="ExampleCard-code"
+         style="height: 500px" />
     <div class="ExampleCard-example">
-      <div v-if="showCode">
-        <pre v-highlightjs><code class="vue">{{ code }}</code></pre>
-      </div>
       <component :is="view" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { ActionButton } from '@uifabric-vue/office-ui-fabric-vue'
+
+import * as monaco from 'monaco-editor'
+
+console.log(monaco)
 
 @Component({
   components: { ActionButton },
 })
 export default class ExampleCard extends Vue {
+  $refs!: {
+    code: HTMLPreElement
+  }
+
   @Prop({ type: String, required: true }) title!: string
   @Prop({ type: Function, required: true }) view!: any
   @Prop({ type: String, required: true }) code!: string
 
   showCode: boolean = false
+
+  @Watch('showCode')
+  async onShowCode (newVal: boolean, oldVal: boolean) {
+    if (!newVal) return
+    await this.$nextTick()
+
+    monaco.editor.create(this.$refs.code, {
+      minimap: { enabled: false },
+      value: this.code,
+      language: 'html',
+      lineNumbers: 'off',
+      scrollBeyondLastLine: false,
+      readOnly: true,
+      folding: true,
+      fontSize: 12,
+      lineHeight: 19,
+    })
+  }
 }
 </script>
 
@@ -95,6 +122,16 @@ export default class ExampleCard extends Vue {
     background: none;
     border-bottom: 0px;
     transition: border 0.367s cubic-bezier(0.1, 0.9, 0.2, 1) 0s;
+  }
+  &-code {
+    background-color: rgb(243, 242, 241);
+    display: block;
+    margin-bottom: 20px;
+    border-width: 0px 1px 1px;
+    border-style: solid solid solid;
+    border-color: rgb(161, 159, 157) rgb(161, 159, 157) rgb(161, 159, 157);
+    border-image: initial;
+    border-top: 0px;
   }
 }
 </style>

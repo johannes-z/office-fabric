@@ -1,3 +1,5 @@
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
+
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
     ? '/office-fabric/'
@@ -13,6 +15,10 @@ module.exports = {
       .options({
         raw: true,
       })
+
+    config.plugin('monaco-editor').use(new MonacoWebpackPlugin({
+      languages: ['typescript', 'javascript', 'html'],
+    }))
   },
   configureWebpack: {
     resolve: {

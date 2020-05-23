@@ -51,7 +51,7 @@
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Type</th>
+                <th width="150px">Type</th>
                 <th>Required</th>
                 <th>Default</th>
                 <th>Description</th>

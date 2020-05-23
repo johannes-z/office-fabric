@@ -35,7 +35,9 @@ function mapMember (member) {
       name: member.name,
       type: member.kindString,
       description: member.comment.shortText,
-      value: member.type.types.map(mapType).join(' | '),
+      value: member.type.types
+        ? member.type.types.map(mapType).join(' | ')
+        : member.type.name,
     }
   } else if (member.kindString === 'Interface') {
     const properties = sortBy((member.children || []), ['id']).map(property => {
@@ -57,7 +59,7 @@ function mapMember (member) {
   }
 }
 
-components.filter(c => c.name.indexOf('Spinner.types') > -1).forEach(component => {
+components.filter(c => c.name.indexOf('TextField.types') > -1).forEach(component => {
   const componentName = JSON.parse(component.name).split('/')[0]
 
   const componentApi = {
