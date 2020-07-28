@@ -2,7 +2,7 @@
   "name": "@uifabric-vue/office-ui-fabric-vue",
   "version": "1.0.0",
   "main": "./dist/office-ui-fabric-vue.umd.min.js",
-  "module": "src/index.ts",
+  "module": "./dist/office-ui-fabric-vue.esm.js",
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
-    "@uifabric-vue/utilities": "^1.0.0",
     "@uifabric/icons": "^7.3.38",
     "@uifabric/merge-styles": "^7.12.0",
     "@uifabric/styling": "^7.12.5",
@@ -29,6 +28,7 @@
     "vue-runtime-helpers": "^1.1.2"
   },
   "devDependencies": {
+    "@uifabric-vue/utilities": "^1.0.0",
     "@babel/preset-typescript": "^7.9.0",
     "@rollup/plugin-alias": "^3.1.0",
     "@rollup/plugin-commonjs": "^11.1.0",
