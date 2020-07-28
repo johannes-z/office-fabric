@@ -6,7 +6,7 @@
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn build:check && build:types && build:lib",
+    "build": "yarn build:check && yarn build:types && yarn build:tsc && yarn build:lib",
     "build:lib": "rollup -c",
     "build:check": "tsc --noEmit",
     "build:types": "tsc --emitDeclarationOnly",
