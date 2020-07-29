@@ -22,8 +22,7 @@ export default {
     sourcemap: false,
   },
   external: [
-    ...Object.keys(pkg.dependencies).filter(e => !e.startsWith('@uifabric')),
-    '@microsoft/load-themed-styles',
+    ...Object.keys(pkg.dependencies),
   ],
   // preserveModules: true,
   // preserveSymlinks: true,

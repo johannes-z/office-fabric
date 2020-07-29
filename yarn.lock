@@ -1577,6 +1577,11 @@
   resolved "https://registry.npmjs.org/@microsoft/load-themed-styles/-/load-themed-styles-1.10.49.tgz#628117fe9eb68c274011e5101757b70fa94d11c7"
   integrity sha512-9FJjHq83ekoHXUe4vjOCtOUM5CVE5UrFMmjp9e/iaxBA0IzP2TsWbdyUgwa1BSM5Yg4nb0EmEnH6Y/z8HLNchw==
 
+"@microsoft/load-themed-styles@^1.10.65":
+  version "1.10.65"
+  resolved "https://registry.yarnpkg.com/@microsoft/load-themed-styles/-/load-themed-styles-1.10.65.tgz#c4d51883adcc472a381560036ccc1306e977f081"
+  integrity sha512-4sLbMM9aywtSMRHebh912/6n4/lC/go6QlTbbQfIBBtfy0oQJdDOW1KtfZfSGPggoPiNEzA7xnVsFCFyMnZyEg==
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.npmjs.org/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
