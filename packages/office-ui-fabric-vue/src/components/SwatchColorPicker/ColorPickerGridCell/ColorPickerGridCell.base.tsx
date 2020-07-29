@@ -2,9 +2,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ITheme, mergeStyleSets } from '@uifabric/styling'
 
 import { getStyles as getActionButtonStyles } from '../../Button/ActionButton/ActionButton.styles'
-import { memoizeFunction } from '@uifabric/utilities'
+import { memoizeFunction, classNamesFunction } from '@uifabric-vue/utilities'
 import { IButtonClassNames } from '../../Button/BaseButton.classNames'
-import { classNamesFunction } from '@uifabric-vue/utilities'
+
 import { IColorPickerGridCellStyleProps, IColorPickerGridCellStyles } from './ColorPickerGridCell.types'
 import BaseComponent from '../../BaseComponent'
 import { getColorFromString, GridCell } from '../../../utilities'

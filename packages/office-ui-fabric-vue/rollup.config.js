@@ -22,9 +22,8 @@ export default {
     sourcemap: false,
   },
   external: [
-    ...Object.keys(pkg.dependencies),
+    ...Object.keys(pkg.dependencies).filter(e => !e.startsWith('@uifabric')),
     '@microsoft/load-themed-styles',
-    '@uifabric/set-version',
   ],
   // preserveModules: true,
   // preserveSymlinks: true,
@@ -37,7 +36,7 @@ export default {
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
-        { find: '@uifabric/utilities', replacement: '@uifabric-vue/utilities' },
+        { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
       ],
     }),
     vue({
