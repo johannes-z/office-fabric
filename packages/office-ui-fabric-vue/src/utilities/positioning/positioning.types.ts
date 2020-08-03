@@ -118,3 +118,15 @@ export interface IRelativePositions {
   directionalClassName: string;
   submenuDirection: DirectionalHint;
 }
+
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export interface Point {
+  left?: number;
+  top?: number;
+  /** @deprecated Use `left` instead */
+  x?: number;
+  /** @deprecated Use `top` instead */
+  y?: number;
+}
+
+export interface IPoint extends Point {}
