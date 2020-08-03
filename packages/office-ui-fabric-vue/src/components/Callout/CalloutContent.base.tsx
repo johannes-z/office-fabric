@@ -99,7 +99,8 @@ export class CalloutContentBase extends BaseComponent {
   }
 
   private onGlobalScroll (e: Event) {
-    this.$emit('dismiss', true)
+    const outside = clickedOutside(e, this.$refs.calloutElement)
+    if (outside) this.$emit('dismiss', true)
   }
 
   private get bounds (): IRectangle {
