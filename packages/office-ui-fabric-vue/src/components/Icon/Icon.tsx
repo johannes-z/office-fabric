@@ -15,8 +15,6 @@ const getClassNames = classNamesFunction({
   cacheSize: 100,
 })
 
-type IconContentChildren = string | undefined | ((h: CreateElement) => JSX.Element)
-
 @Component
 export default class Icon extends BaseComponent<IIconProps> {
   @Prop({ type: String, default: '' }) iconName!: string
