@@ -5,6 +5,15 @@ import { FileTypeIconMap } from './FileTypeIconMap'
 const PNG_SUFFIX = '_png'
 const SVG_SUFFIX = '_svg'
 
+// ==== Expose Vue h ====
+let h!: CreateElement
+const _vue = new Vue({
+  created () {
+    h = this.$createElement
+  },
+})
+// ======================
+
 const DEFAULT_BASE_URL = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20200708.002/assets/item-types/'
 const ICON_SIZES: number[] = [16, 20, 24, 32, 40, 48, 64, 96]
 
@@ -20,20 +29,8 @@ function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIco
 
   iconTypes.forEach((type: string) => {
     const baseUrlSizeType = baseUrl + size + '/' + type
-    fileTypeIcons[type + size + PNG_SUFFIX] = new Vue({
-      // @ts-ignore
-      functional: true,
-      render: (h: CreateElement) => (
-        <img src={baseUrlSizeType + '.png'} alt="" />
-      ),
-    })
-    fileTypeIcons[type + size + SVG_SUFFIX] = new Vue({
-      // @ts-ignore
-      functional: true,
-      render: (h: CreateElement) => (
-        <img src={baseUrlSizeType + '.svg'} alt="" />
-      ),
-    })
+    fileTypeIcons[type + size + PNG_SUFFIX] = <img src={baseUrlSizeType + '.png'} alt="" />
+    fileTypeIcons[type + size + SVG_SUFFIX] = <img src={baseUrlSizeType + '.svg'} alt="" />
 
     // For high resolution screens, register additional versions
     // Apply height=100% and width=100% to force image to fit into containing element
@@ -42,43 +39,13 @@ function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIco
     // 1.5x is a special case where both SVGs and PNGs need a different image.
     // Remove if statements when missing image files for 20_1.5x are provided.
     if (size !== 20) {
-      fileTypeIcons[type + size + '_1.5x' + PNG_SUFFIX] = new Vue({
-        // @ts-ignore
-        functional: true,
-        render: (h: CreateElement) => (
-          <img src={baseUrl + size + '_1.5x/' + type + '.png'} height="100%" width="100%" />
-        ),
-      })
-      fileTypeIcons[type + size + '_1.5x' + SVG_SUFFIX] = new Vue({
-        // @ts-ignore
-        functional: true,
-        render: (h: CreateElement) => (
-          <img src={baseUrl + size + '_1.5x/' + type + '.svg'} height="100%" width="100%" />
-        ),
-      })
+      fileTypeIcons[type + size + '_1.5x' + PNG_SUFFIX] = <img src={baseUrl + size + '_1.5x/' + type + '.png'} height="100%" width="100%" />
+      fileTypeIcons[type + size + '_1.5x' + SVG_SUFFIX] = <img src={baseUrl + size + '_1.5x/' + type + '.svg'} height="100%" width="100%" />
     }
 
-    fileTypeIcons[type + size + '_2x' + PNG_SUFFIX] = new Vue({
-      // @ts-ignore
-      functional: true,
-      render: (h: CreateElement) => (
-        <img src={baseUrl + size + '_2x/' + type + '.png'} height="100%" width="100%" />
-      ),
-    })
-    fileTypeIcons[type + size + '_3x' + PNG_SUFFIX] = new Vue({
-      // @ts-ignore
-      functional: true,
-      render: (h: CreateElement) => (
-        <img src={baseUrl + size + '_3x/' + type + '.png'} height="100%" width="100%" />
-      ),
-    })
-    fileTypeIcons[type + size + '_4x' + PNG_SUFFIX] = new Vue({
-      // @ts-ignore
-      functional: true,
-      render: (h: CreateElement) => (
-        <img src={baseUrl + size + '_4x/' + type + '.png'} height="100%" width="100%" />
-      ),
-    })
+    fileTypeIcons[type + size + '_2x' + PNG_SUFFIX] = <img src={baseUrl + size + '_2x/' + type + '.png'} height="100%" width="100%" />
+    fileTypeIcons[type + size + '_3x' + PNG_SUFFIX] = <img src={baseUrl + size + '_3x/' + type + '.png'} height="100%" width="100%" />
+    fileTypeIcons[type + size + '_4x' + PNG_SUFFIX] = <img src={baseUrl + size + '_4x/' + type + '.png'} height="100%" width="100%" />
   })
 
   registerIcons(

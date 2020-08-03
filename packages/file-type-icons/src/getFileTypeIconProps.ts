@@ -1,21 +1,21 @@
-import { FileTypeIconMap } from './FileTypeIconMap';
-import { FileIconType, FileIconTypeInput } from './FileIconType';
+import { FileTypeIconMap } from './FileTypeIconMap'
+import { FileIconType, FileIconTypeInput } from './FileIconType'
 
-let _extensionToIconName: { [key: string]: string };
+let _extensionToIconName: { [key: string]: string }
 
-const GENERIC_FILE = 'genericfile';
-const FOLDER = 'folder';
-const SHARED_FOLDER = 'sharedfolder';
-const DOCSET_FOLDER = 'docset';
-const LIST_ITEM = 'splist';
-const MULTIPLE_ITEMS = 'multiple';
-const NEWS = 'sponews';
-const STREAM = 'stream';
-const DESKTOP_FOLDER = 'desktopfolder';
-const DOCUMENTS_FOLDER = 'documentfolder';
-const PICTURES_FOLDER = 'picturesfolder';
-const LINKED_FOLDER = 'linkedfolder';
-const DEFAULT_ICON_SIZE: FileTypeIconSize = 16;
+const GENERIC_FILE = 'genericfile'
+const FOLDER = 'folder'
+const SHARED_FOLDER = 'sharedfolder'
+const DOCSET_FOLDER = 'docset'
+const LIST_ITEM = 'splist'
+const MULTIPLE_ITEMS = 'multiple'
+const NEWS = 'sponews'
+const STREAM = 'stream'
+const DESKTOP_FOLDER = 'desktopfolder'
+const DOCUMENTS_FOLDER = 'documentfolder'
+const PICTURES_FOLDER = 'picturesfolder'
+const LINKED_FOLDER = 'linkedfolder'
+const DEFAULT_ICON_SIZE: FileTypeIconSize = 16
 
 export type FileTypeIconSize = 16 | 20 | 24 | 32 | 40 | 48 | 64 | 96;
 export type ImageFileType = 'svg' | 'png';
@@ -52,69 +52,69 @@ export interface IFileTypeIconOptions {
  *
  * @param options
  */
-export function getFileTypeIconProps(options: IFileTypeIconOptions): { iconName: string } {
+export function getFileTypeIconProps (options: IFileTypeIconOptions): { iconName: string } {
   // First, obtain the base name of the icon using the extension or type.
-  let iconBaseName: string = GENERIC_FILE;
+  let iconBaseName: string = GENERIC_FILE
 
   if (options.extension) {
-    iconBaseName = _getFileTypeIconNameFromExtension(options.extension);
+    iconBaseName = _getFileTypeIconNameFromExtension(options.extension)
   } else if (options.type) {
     switch (options.type) {
       case FileIconType.docset:
-        iconBaseName = DOCSET_FOLDER;
-        break;
+        iconBaseName = DOCSET_FOLDER
+        break
       case FileIconType.folder:
-        iconBaseName = FOLDER;
-        break;
+        iconBaseName = FOLDER
+        break
       case FileIconType.listItem:
-        iconBaseName = LIST_ITEM;
-        break;
+        iconBaseName = LIST_ITEM
+        break
       case FileIconType.sharedFolder:
-        iconBaseName = SHARED_FOLDER;
-        break;
+        iconBaseName = SHARED_FOLDER
+        break
       case FileIconType.stream:
-        iconBaseName = STREAM;
-        break;
+        iconBaseName = STREAM
+        break
       case FileIconType.multiple:
-        iconBaseName = MULTIPLE_ITEMS;
-        break;
+        iconBaseName = MULTIPLE_ITEMS
+        break
       case FileIconType.news:
-        iconBaseName = NEWS;
-        break;
+        iconBaseName = NEWS
+        break
       case FileIconType.desktopFolder:
-        iconBaseName = DESKTOP_FOLDER;
-        break;
+        iconBaseName = DESKTOP_FOLDER
+        break
       case FileIconType.documentsFolder:
-        iconBaseName = DOCUMENTS_FOLDER;
-        break;
+        iconBaseName = DOCUMENTS_FOLDER
+        break
       case FileIconType.picturesFolder:
-        iconBaseName = PICTURES_FOLDER;
-        break;
+        iconBaseName = PICTURES_FOLDER
+        break
       case FileIconType.linkedFolder:
-        iconBaseName = LINKED_FOLDER;
-        break;
+        iconBaseName = LINKED_FOLDER
+        break
     }
   }
 
   // Next, obtain the suffix using the icon size, user's device pixel ratio, and
   // preference for svg or png
-  let size: FileTypeIconSize = options.size || DEFAULT_ICON_SIZE;
-  let suffix: string = _getFileTypeIconSuffix(size, options.imageFileType);
+  const size: FileTypeIconSize = options.size || DEFAULT_ICON_SIZE
+  const suffix: string = _getFileTypeIconSuffix(size, options.imageFileType)
 
-  return { iconName: iconBaseName + suffix };
+  return { iconName: iconBaseName + suffix }
 }
 
-function _getFileTypeIconNameFromExtension(extension: string): string {
+function _getFileTypeIconNameFromExtension (extension: string): string {
   if (!_extensionToIconName) {
-    _extensionToIconName = {};
+    _extensionToIconName = {}
 
     for (const iconName in FileTypeIconMap) {
       if (FileTypeIconMap.hasOwnProperty(iconName)) {
-        const extensions = FileTypeIconMap[iconName].extensions;
+        const extensions = FileTypeIconMap[iconName].extensions
 
         if (extensions) {
           for (let i = 0; i < extensions.length; i++) {
-            _extensionToIconName[extensions[i]] = iconName;
+            _extensionToIconName[extensions[i]] = iconName
           }
         }
       }
@@ -122,35 +122,35 @@ function _getFileTypeIconNameFromExtension(extension: string): string {
   }
 
   // Strip periods, force lowercase.
-  extension = extension.replace('.', '').toLowerCase();
+  extension = extension.replace('.', '').toLowerCase()
 
-  return _extensionToIconName[extension] || GENERIC_FILE;
+  return _extensionToIconName[extension] || GENERIC_FILE
 }
 
-function _getFileTypeIconSuffix(size: FileTypeIconSize, imageFileType: ImageFileType = 'svg'): string {
-  let devicePixelRatio: number = window.devicePixelRatio;
-  let devicePixelRatioSuffix = ''; // Default is 1x
+function _getFileTypeIconSuffix (size: FileTypeIconSize, imageFileType: ImageFileType = 'svg'): string {
+  const devicePixelRatio: number = window.devicePixelRatio
+  let devicePixelRatioSuffix = '' // Default is 1x
 
   // SVGs scale well, so you can generally use the default image.
   // 1.5x is a special case where SVGs need a different image.
   if (imageFileType === 'svg' && devicePixelRatio > 1 && devicePixelRatio <= 1.5) {
     // Currently missing 1.5x SVGs at size 20, snap to 1x for now
     if (size !== 20) {
-      devicePixelRatioSuffix = '_1.5x';
+      devicePixelRatioSuffix = '_1.5x'
     }
   } else if (imageFileType === 'png') {
     // To look good, PNGs should use a different image for higher device pixel ratios
     if (devicePixelRatio > 1 && devicePixelRatio <= 1.5) {
       // Currently missing 1.5x icons for size 20, snap to 2x for now
-      devicePixelRatioSuffix = size === 20 ? '_2x' : '_1.5x';
+      devicePixelRatioSuffix = size === 20 ? '_2x' : '_1.5x'
     } else if (devicePixelRatio > 1.5 && devicePixelRatio <= 2) {
-      devicePixelRatioSuffix = '_2x';
+      devicePixelRatioSuffix = '_2x'
     } else if (devicePixelRatio > 2 && devicePixelRatio <= 3) {
-      devicePixelRatioSuffix = '_3x';
+      devicePixelRatioSuffix = '_3x'
     } else if (devicePixelRatio > 3) {
-      devicePixelRatioSuffix = '_4x';
+      devicePixelRatioSuffix = '_4x'
     }
   }
 
-  return size + devicePixelRatioSuffix + '_' + imageFileType;
+  return size + devicePixelRatioSuffix + '_' + imageFileType
 }
