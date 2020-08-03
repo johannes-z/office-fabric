@@ -97,7 +97,7 @@ const BorderBlindsIcon = Vue.extend({
   },
   render (h, ctx) {
     return (
-      <Icon icon-name="borderblinds-svg" class-name={mergeStyles(iconClass, {
+      <Icon icon-name="borderblinds-svg" class={mergeStyles(iconClass, {
         width: 50,
         height: 50,
         selectors: {

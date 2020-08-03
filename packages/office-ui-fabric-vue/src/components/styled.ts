@@ -57,11 +57,12 @@ export function styled<
 
       return h(Component, {
         ...context.data,
+        class: [context.props.className, context.data.class].filter(e => e).join(' '),
         props: {
           ...rest,
           ...additionalProps,
           ...context.props,
-          className: context.props.className || context.data.class,
+          className: [context.props.className, context.data.class].filter(e => e).join(' '),
           styles: _styles,
         },
       }, context.children)

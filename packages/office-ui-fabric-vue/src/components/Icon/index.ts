@@ -12,3 +12,4 @@ export const Icon = styled(
 )
 
 export * from './FontIcon'
+export * from './ImageIcon'
