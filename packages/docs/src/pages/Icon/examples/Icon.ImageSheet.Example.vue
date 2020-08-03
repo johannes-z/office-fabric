@@ -64,7 +64,7 @@ const classNames = mergeStyleSets({
 @Component({
   components: { ImageIcon },
 })
-export default class IconBasicExample extends Vue {
+export default class IconImageSheetExample extends Vue {
   css = css
   TestImages = TestImages
   classNames = classNames

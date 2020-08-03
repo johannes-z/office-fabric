@@ -27,10 +27,15 @@ export default class IconPage extends Vue {
               code: require<any>('!raw-loader!./examples/Icon.Svg.Example.vue').default,
               view: () => import('./examples/Icon.Svg.Example.vue'),
             },
+            // {
+            //   title: 'Icon using image sheet',
+            //   code: require<any>('!raw-loader!./examples/Icon.ImageSheet.Example.vue').default,
+            //   view: () => import('./examples/Icon.ImageSheet.Example.vue'),
+            // },
             {
-              title: 'Icon using image sheet',
-              code: require<any>('!raw-loader!./examples/Icon.ImageSheet.Example.vue').default,
-              view: () => import('./examples/Icon.ImageSheet.Example.vue'),
+              title: 'Icon using file type icons',
+              code: require<any>('!raw-loader!./examples/Icon.FileTypeIcons.Example.vue').default,
+              view: () => import('./examples/Icon.FileTypeIcons.Example.vue'),
             },
           ],
           overview: require<string>('./docs/IconOverview.md'),
