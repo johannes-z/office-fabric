@@ -42,3 +42,35 @@ with `onRenderComment (comment: string) ...` is `<template #comment="{ comment }
 
 ### Caveats
 * Use `JSX/TSX` instead of `SFC`s when writing a recursive template to avoid circular imports.
+* There are still references to @uifabric/utilities which has a react dependency. As of today, you will have to create
+  an alias to @uifabric-vue/utilities to fix this:
+
+#### Rollup
+```js
+{
+  ...
+  plugins: [
+    alias({
+      resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+      entries: [
+        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
+        { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
+      ],
+    }),
+  ]
+  ...
+}
+```
+
+#### Webpack
+```js
+{
+  ...
+  resolve: {
+    alias: {
+      '@uifabric/utilities': '@uifabric-vue/utilities',
+    },
+  },
+  ...
+}
+```

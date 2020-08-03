@@ -5,6 +5,7 @@
   "workspaces": {
     "packages": [
       "packages/utilities",
+      "packages/file-type-icons",
       "packages/office-ui-fabric-vue",
       "packages/api-docs",
       "packages/docs"
