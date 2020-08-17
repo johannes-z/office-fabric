@@ -64,7 +64,7 @@ export default class Icon extends StatelessComponent<IIconProps> {
       }
 
     return (
-      <RootType data-icon-name={iconName} {...{ props: containerProps }} class={classNames.root}>
+      <RootType data-icon-name={iconName} {...{ ...ctx.data, props: containerProps }} class={classNames.root}>
         {isImage
           // @ts-ignore
           ? (<ImageType {...{ props: imageProps }} />)
