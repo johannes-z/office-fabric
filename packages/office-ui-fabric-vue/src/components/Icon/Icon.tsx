@@ -50,7 +50,7 @@ export default class Icon extends StatelessComponent<IIconProps> {
     }
     const ImageType = (imageLoadError && imageErrorAs) || Image
 
-    const ariaLabel = ctx.props.attrs['aria-label'] || ctx.props.attrs.ariaLabel
+    const ariaLabel = ctx.data.attrs && (ctx.data.attrs['aria-label'] || ctx.data.attrs.ariaLabel)
     const containerProps = ariaLabel
       ? {
         'aria-label': ariaLabel,
