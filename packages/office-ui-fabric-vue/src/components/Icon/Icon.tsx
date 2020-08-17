@@ -16,18 +16,12 @@ const getClassNames = classNamesFunction({
 })
 
 @Component
-export default class Icon extends BaseComponent<IIconProps> {
-  @Prop({ type: String, default: '' }) iconName!: string
-  @Prop({ type: Object, default: null }) imageProps!: any
-  @Prop({ type: String, default: '' }) imageErrorAs!: string
-
-  imageLoadError = false
-
-  render (h: CreateElement) {
-    const { className, iconName, theme, styles, imageErrorAs, imageLoadError } = this
+export default class Icon extends StatelessComponent<IIconProps> {
+  render (this: null, h: CreateElement, ctx: RenderContext) {
+    const { className, iconName, theme, styles, imageErrorAs } = ctx.props
 
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
-    const isImage = !!this.imageProps
+    const isImage = !!ctx.props.imageProps
     const iconContent = getIconContent(iconName) || {}
     const { iconClassName } = iconContent
     const iconContentChildren = iconContent.children as any
@@ -42,26 +36,34 @@ export default class Icon extends BaseComponent<IIconProps> {
 
     const RootType = isImage ? 'span' : 'i'
 
+    let imageLoadError = false
     const imageProps: IImageProps = {
-      ...this.imageProps,
-      onLoadingStateChange: this._onImageLoadingStateChange,
+      ...ctx.props.imageProps,
+      onLoadingStateChange: (state: ImageLoadState): void => {
+        if (ctx.props.imageProps && ctx.props.imageProps.onLoadingStateChange) {
+          ctx.props.imageProps.onLoadingStateChange(state)
+        }
+        if (state === ImageLoadState.error) {
+          imageLoadError = true
+        }
+      },
     }
     const ImageType = (imageLoadError && imageErrorAs) || Image
 
-    const ariaLabel = this.$attrs['aria-label'] || this.$attrs.ariaLabel
+    const ariaLabel = ctx.props.attrs['aria-label'] || ctx.props.attrs.ariaLabel
     const containerProps = ariaLabel
       ? {
         'aria-label': ariaLabel,
       }
       : {
-        'aria-hidden': !(this.props['aria-labelledby'] || imageProps['aria-labelledby']),
+        'aria-hidden': !(ctx.props['aria-labelledby'] || imageProps['aria-labelledby']),
       }
 
     return (
       <RootType data-icon-name={iconName} {...{ props: containerProps }} class={classNames.root}>
         {isImage
           ? (<ImageType {...{ props: imageProps }} />)
-          : ((this.$scopedSlots.default && this.$scopedSlots.default({})) || (
+          : ((ctx.props.scopedSlots.default && ctx.props.scopedSlots.default({})) || (
             typeof iconContentChildren === 'function'
               ? iconContentChildren(h)
               : iconContentChildren))
@@ -69,13 +71,4 @@ export default class Icon extends BaseComponent<IIconProps> {
       </RootType>
     )
   }
-
-  private _onImageLoadingStateChange = (state: ImageLoadState): void => {
-    if (this.imageProps && this.imageProps.onLoadingStateChange) {
-      this.imageProps.onLoadingStateChange(state)
-    }
-    if (state === ImageLoadState.error) {
-      this.imageLoadError = true
-    }
-  };
 }
