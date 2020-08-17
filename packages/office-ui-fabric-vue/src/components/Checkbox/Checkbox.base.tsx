@@ -64,6 +64,11 @@ export class CheckboxBase extends BaseComponent {
     })
   }
 
+  @Watch('checked')
+  private onCheckedChanged (value: boolean) {
+    this.internalValue = value
+  }
+
   @Watch('internalValue')
   private onValueChanged (value: boolean) {
     this.$emit('input', value)
