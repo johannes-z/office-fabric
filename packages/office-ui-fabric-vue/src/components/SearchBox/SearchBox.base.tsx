@@ -15,6 +15,7 @@ export class SearchBoxBase extends BaseComponent {
   $refs!: {
     input: HTMLInputElement
   }
+
   @Prop({ type: Boolean, default: false }) underlined?: boolean
   @Prop({ type: String, default: null }) defaultValue?: string
   @Prop({ type: String, default: 'Search' }) placeholder?: string
@@ -52,7 +53,7 @@ export class SearchBoxBase extends BaseComponent {
             <IconButton
               styles={{ root: { height: 'auto' }, icon: { fontSize: '12px' } }}
               icon-props={{ iconName: 'Clear' }}
-              onClick={this.clearInput} />
+              nativeOnClick={this.clearInput} />
           </div>
         )}
       </div>
