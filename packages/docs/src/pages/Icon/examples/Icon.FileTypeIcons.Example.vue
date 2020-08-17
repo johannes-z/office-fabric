@@ -1,6 +1,7 @@
 <template>
   <div>
     <Icon icon-name="xlsx16_svg" />
+    <Icon icon-name="docx16_svg" />
   </div>
 </template>
 

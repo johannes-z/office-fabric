@@ -49,6 +49,7 @@ export default {
       preferBuiltins: true,
     }),
     commonjs({
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       include: /node_modules/,
       sourceMap: false,
     }),

@@ -17,7 +17,11 @@ const getClassNames = classNamesFunction({
 
 @Component
 export default class Icon extends StatelessComponent<IIconProps> {
-  render (this: null, h: CreateElement, ctx: RenderContext) {
+  @Prop({ type: String, default: '' }) iconName!: string
+  @Prop({ type: Object, default: null }) imageProps!: any
+  @Prop({ type: [String, Object], default: null }) imageErrorAs!: any
+
+  render (h: CreateElement, ctx: RenderContext) {
     const { className, iconName, theme, styles, imageErrorAs } = ctx.props
 
     const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
