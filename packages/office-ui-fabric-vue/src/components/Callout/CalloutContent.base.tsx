@@ -121,12 +121,12 @@ export class CalloutContentBase extends BaseComponent {
 
   private onGlobalClick (e: Event) {
     const outside = clickedOutside(e, this.$refs.calloutElement)
-    if (outside) this.$emit('dismiss', true)
+    if (outside) this.$emit('dismiss', e, 'click')
   }
 
   private onGlobalScroll (e: Event) {
     const outside = clickedOutside(e, this.$refs.calloutElement)
-    if (outside) this.$emit('dismiss', true)
+    if (outside) this.$emit('dismiss', e, 'scroll')
   }
 
   private _arePositionsEqual (positions: ICalloutPositionedInfo, newPosition: ICalloutPositionedInfo): boolean {
