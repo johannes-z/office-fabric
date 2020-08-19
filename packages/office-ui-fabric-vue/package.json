@@ -21,7 +21,7 @@
     "@uifabric-vue/utilities": "^7.0.0",
     "@uifabric/icons": "^7.3.65",
     "@uifabric/merge-styles": "^7.16.3",
-    "@uifabric/styling": "^7.14.5",
+    "@uifabric/styling": "^7.14.13",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
     "@vue/babel-preset-jsx": "^1.1.2",
     "core-js": "^3.6.5",

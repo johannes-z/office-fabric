@@ -4,15 +4,11 @@ import json from '@rollup/plugin-json'
 
 import path from 'path'
 
-import vue from 'rollup-plugin-vue'
-import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 import babel from '@rollup/plugin-babel'
 import pkg from './package.json'
 
 const packageRoot = path.resolve(__dirname)
-
-process.env.VUE_CLI_TRANSPILE_BABEL_RUNTIME = false
 
 export default {
   input: './tmp/index.js',
@@ -36,21 +32,10 @@ export default {
         { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
       ],
     }),
-    vue({
-      css: false,
-      template: {
-        isProduction: true,
-      },
-    }),
     resolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       preferBuiltins: true,
     }),
-    // commonjs({
-    //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
-    //   include: /node_modules/,
-    //   sourceMap: false,
-    // }),
     babel({
       exclude: /node_modules/,
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],

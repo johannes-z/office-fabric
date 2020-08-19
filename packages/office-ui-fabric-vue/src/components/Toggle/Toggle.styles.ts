@@ -1,5 +1,5 @@
 import { IToggleStyles } from './Toggle.types'
-import { HighContrastSelector, FontWeights, getFocusStyle } from '@uifabric/styling/'
+import { FontWeights, getFocusStyle, HighContrastSelector } from '@uifabric/styling/'
 
 const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20
