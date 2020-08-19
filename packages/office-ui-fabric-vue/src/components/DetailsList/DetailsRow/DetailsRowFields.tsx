@@ -44,24 +44,27 @@ export class DetailsRowFields extends BaseComponent {
     const { rowClassNames, columns, showAnimation, item } = this
     return (
       <div class={rowClassNames.fields} role="presentation">
-        {columns.map((column, columnIndex) => (
-          <div key={columnIndex}
-            role={column.isRowHeader ? 'rowheader' : 'gridcell'}
-            aria-readonly
-            style={{ width: this.calcWidth(column) }}
-            class={css(
-              column.className,
-              column.isMultiline && rowClassNames.isMultiline,
-              column.isRowHeader && rowClassNames.isRowHeader,
-              rowClassNames.cell,
-              column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
-              showAnimation && rowClassNames.cellAnimation,
-            )}>
-            {this.$scopedSlots[`cell.${column.key}`]
-              ? this.$scopedSlots[`cell.${column.key}`]({ item, column })
-              : getCellText(item, column) }
-          </div>
-        ))}
+        {columns.map((column, columnIndex) => {
+          const slot = this.$scopedSlots[`cell.${column.key}`]
+          return (
+            <div key={columnIndex}
+              role={column.isRowHeader ? 'rowheader' : 'gridcell'}
+              aria-readonly
+              style={{ width: this.calcWidth(column) }}
+              class={css(
+                column.className,
+                column.isMultiline && rowClassNames.isMultiline,
+                column.isRowHeader && rowClassNames.isRowHeader,
+                rowClassNames.cell,
+                column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
+                showAnimation && rowClassNames.cellAnimation,
+              )}>
+              {slot
+                ? slot({ item, column })
+                : getCellText(item, column) }
+            </div>
+          )
+        })}
       </div>
     )
   }

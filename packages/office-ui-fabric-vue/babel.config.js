@@ -2,12 +2,11 @@ module.exports = {
   presets: [
     [
       '@vue/cli-plugin-babel/preset',
-      process.env.BUILD_TYPE === 'module'
-        ? {
-          useBuiltIns: false,
-          polyfills: false,
-        }
-        : {},
+      {
+        useBuiltIns: false,
+        polyfills: false,
+        modules: false,
+      },
     ],
   ],
 }

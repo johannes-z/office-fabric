@@ -65,8 +65,9 @@ export class CheckboxBase extends BaseComponent {
   }
 
   @Watch('checked')
-  private onCheckedChanged (value: boolean) {
-    this.internalValue = value
+  private onCheckedChanged (newVal, oldVal) {
+    if (newVal === oldVal) return
+    this.internalValue = newVal
   }
 
   @Watch('internalValue')

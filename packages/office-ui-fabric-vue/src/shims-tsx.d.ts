@@ -10,5 +10,6 @@ declare global {
     interface IntrinsicElements {
       [elem: string]: any
     }
+    type LibraryManagedAttributes<C, P> = {[name: string]: any};
   }
 }

@@ -5,11 +5,8 @@ import { ILayerProps, ILayerStyles, ILayerStyleProps } from './Layer.types'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Layer.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { ofType } from 'vue-tsx-support'
 
 const getClassNames = classNamesFunction<ILayerStyleProps, ILayerStyles>()
-
-const TypedMountingPortal = ofType<any>().convert(MountingPortal)
 
 @Component
 export class LayerBase extends BaseComponent {
@@ -77,13 +74,13 @@ export class LayerBase extends BaseComponent {
 
     const { classNames, hostId, append } = this
     return (
-      <TypedMountingPortal mount-to={hostId ? `#${hostId}` : 'body'} append={append}>
+      <MountingPortal mount-to={hostId ? `#${hostId}` : 'body'} append={append}>
         <div class={classNames.root}>
           <div class={classNames.content}>
             {this.$slots.default}
           </div>
         </div>
-      </TypedMountingPortal>
+      </MountingPortal>
     )
   }
 }

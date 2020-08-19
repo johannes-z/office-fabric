@@ -7,25 +7,23 @@ import path from 'path'
 import vue from 'rollup-plugin-vue'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-// @ts-ignore
-import babel from 'rollup-plugin-babel'
+import babel from '@rollup/plugin-babel'
 import pkg from './package.json'
 
 const packageRoot = path.resolve(__dirname)
 
+process.env.VUE_CLI_TRANSPILE_BABEL_RUNTIME = false
+
 export default {
   input: './tmp/index.js',
   output: {
-    // dir: path.resolve('lib'),
-    file: 'dist/office-ui-fabric-vue.esm.js',
-    format: 'esm',
+    dir: 'lib',
+    format: 'es',
     sourcemap: false,
+    preserveModules: true,
   },
-  external: [
-    ...Object.keys(pkg.dependencies),
-  ],
-  // preserveModules: true,
-  // preserveSymlinks: true,
+  external: id => id in pkg.dependencies || id.startsWith('@babel/runtime'),
+  preserveSymlinks: true,
   plugins: [
     json(),
     replace({
@@ -48,23 +46,23 @@ export default {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       preferBuiltins: true,
     }),
-    commonjs({
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
-      include: /node_modules/,
-      sourceMap: false,
-    }),
+    // commonjs({
+    //   extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+    //   include: /node_modules/,
+    //   sourceMap: false,
+    // }),
     babel({
       exclude: /node_modules/,
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelrc: false,
       configFile: false,
+      babelHelpers: 'runtime',
       presets: [
-        ['@vue/cli-plugin-babel/preset', {
-          modules: false,
-          useBuiltIns: false,
-          polyfills: [],
-        }],
+        '@vue/babel-preset-jsx'
       ],
+      plugins: [
+        '@babel/plugin-transform-runtime'
+      ]
     }),
   ],
 }
