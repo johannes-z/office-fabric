@@ -1,12 +1,12 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "7.0.14",
+  "version": "7.0.15",
   "main": "./dist/office-ui-fabric-vue.umd.min.js",
-  "module": "./lib/index.js",
+  "module": "./lib/tmp/index.js",
   "types": "./types/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "build": "pnpm run build:tsc && pnpm run build:lib && node ./scripts/postbuild.js",
+    "build": "pnpm run build:tsc && pnpm run build:lib",
     "build:lib": "rollup -c",
     "build:tsc": "tsc",
     "lint": "vue-cli-service lint"
