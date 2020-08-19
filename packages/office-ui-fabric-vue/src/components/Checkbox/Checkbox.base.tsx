@@ -8,8 +8,7 @@ import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabri
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
-@Component({
-})
+@Component
 export class CheckboxBase extends BaseComponent {
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
@@ -62,12 +61,6 @@ export class CheckboxBase extends BaseComponent {
       reversed: boxSide !== 'start',
       isUsingCustomLabelRender: true,
     })
-  }
-
-  @Watch('checked')
-  private onCheckedChanged (newVal, oldVal) {
-    if (newVal === oldVal) return
-    this.internalValue = newVal
   }
 
   @Watch('internalValue')
