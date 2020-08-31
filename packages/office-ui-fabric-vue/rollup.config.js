@@ -18,7 +18,7 @@ export default {
     sourcemap: false,
     preserveModules: true,
   },
-  external: id => id in pkg.dependencies || id.startsWith('@babel/runtime'),
+  external: Object.keys(pkg.dependencies),
   preserveSymlinks: true,
   plugins: [
     json(),
@@ -43,11 +43,11 @@ export default {
       configFile: false,
       babelHelpers: 'runtime',
       presets: [
-        '@vue/babel-preset-jsx'
+        '@vue/babel-preset-jsx',
       ],
       plugins: [
-        '@babel/plugin-transform-runtime'
-      ]
+        '@babel/plugin-transform-runtime',
+      ],
     }),
   ],
 }

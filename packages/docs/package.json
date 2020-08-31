@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "main": "./src/index.ts",
+  "sideEffects": false,
   "scripts": {
     "serve": "vue-cli-service serve src/index.ts",
     "build": "vue-cli-service build src/index.ts --mode production"
