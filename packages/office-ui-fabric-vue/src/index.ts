@@ -12,7 +12,7 @@ export {
   Fabric,
   Components as FabricComponents,
 }
-export { loadTheme } from './plugin/office-fabric'
+export { loadTheme } from './plugin/loadTheme'
 export { initializeIcons } from '@uifabric/icons'
 export * from './registerIcons'
 
