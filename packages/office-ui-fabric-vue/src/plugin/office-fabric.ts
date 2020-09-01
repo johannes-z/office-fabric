@@ -4,6 +4,7 @@ import { toKebabCase } from '../utilities'
 import { loadTheme } from './loadTheme'
 
 export type { IPartialTheme } from '@uifabric/styling'
+
 export interface IOptions {
   useCSSVars: boolean
   prefix?: string

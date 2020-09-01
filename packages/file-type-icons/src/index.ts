@@ -1,7 +1,7 @@
-export { initializeFileTypeIcons } from './initializeFileTypeIcons';
+import './version'
 
-export { FileTypeIconSize, IFileTypeIconOptions, ImageFileType, getFileTypeIconProps } from './getFileTypeIconProps';
+export { initializeFileTypeIcons } from './initializeFileTypeIcons'
 
-export { FileIconType } from './FileIconType';
+export { FileTypeIconSize, IFileTypeIconOptions, ImageFileType, getFileTypeIconProps } from './getFileTypeIconProps'
 
-import './version';
+export { FileIconType } from './FileIconType'

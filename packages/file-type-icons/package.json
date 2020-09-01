@@ -25,6 +25,7 @@
     "rollup-plugin-vue": "^5.1.9"
   },
   "dependencies": {
+    "vue": "^2.6.12",
     "@uifabric/set-version": "^7.0.18",
     "@uifabric/styling": "^7.14.6",
     "tslib": "^1.10.0"
