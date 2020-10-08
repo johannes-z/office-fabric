@@ -17,13 +17,13 @@ export function getRTL (theme: { rtl?: boolean } = {}): boolean {
   }
   if (_isRTL === undefined) {
     // Fabric supports persisting the RTL setting between page refreshes via session storage
-    let savedRTL = getItem(RTL_LOCAL_STORAGE_KEY)
+    const savedRTL = getItem(RTL_LOCAL_STORAGE_KEY)
     if (savedRTL !== null) {
       _isRTL = savedRTL === '1'
       setRTL(_isRTL)
     }
 
-    let doc = getDocument()
+    const doc = getDocument()
     if (_isRTL === undefined && doc) {
       _isRTL = ((doc.body && doc.body.getAttribute('dir')) || doc.documentElement.getAttribute('dir')) === 'rtl'
       mergeStylesSetRTL(_isRTL)
@@ -37,7 +37,7 @@ export function getRTL (theme: { rtl?: boolean } = {}): boolean {
  * Sets the rtl state of the page (by adjusting the dir attribute of the html element.)
  */
 export function setRTL (isRTL: boolean, persistSetting: boolean = false): void {
-  let doc = getDocument()
+  const doc = getDocument()
   if (doc) {
     doc.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr')
   }

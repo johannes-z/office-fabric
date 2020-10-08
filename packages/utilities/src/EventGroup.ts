@@ -78,13 +78,13 @@ export class EventGroup {
     eventName: string,
     // tslint:disable-next-line:no-any
     eventArgs?: any,
-    bubbleEvent?: boolean
+    bubbleEvent?: boolean,
   ): boolean | undefined {
     let retVal
 
     if (EventGroup._isElement(target)) {
       if (typeof document !== 'undefined' && document.createEvent) {
-        let ev = document.createEvent('HTMLEvents')
+        const ev = document.createEvent('HTMLEvents')
 
         ev.initEvent(eventName, bubbleEvent || false, true)
 
@@ -92,25 +92,25 @@ export class EventGroup {
 
         retVal = target.dispatchEvent(ev)
         // tslint:disable-next-line:no-any
-      } else if (typeof document !== 'undefined' && (document as any)['createEventObject']) {
+      } else if (typeof document !== 'undefined' && (document as any).createEventObject) {
         // IE8
         // tslint:disable-next-line:no-any
-        let evObj = (document as any)['createEventObject'](eventArgs)
+        const evObj = (document as any).createEventObject(eventArgs)
         // cannot set cancelBubble on evObj, fireEvent will overwrite it
         target.fireEvent('on' + eventName, evObj)
       }
     } else {
       while (target && retVal !== false) {
-        let events = <IEventRecordsByName>target.__events__
-        let eventRecords = events ? events[eventName] : null
+        const events = <IEventRecordsByName>target.__events__
+        const eventRecords = events ? events[eventName] : null
 
         if (eventRecords) {
-          for (let id in eventRecords) {
+          for (const id in eventRecords) {
             if (eventRecords.hasOwnProperty(id)) {
-              let eventRecordList = <IEventRecord[]>eventRecords[id]
+              const eventRecordList = <IEventRecord[]>eventRecords[id]
 
               for (let listIndex = 0; retVal !== false && listIndex < eventRecordList.length; listIndex++) {
-                let record = eventRecordList[listIndex]
+                const record = eventRecordList[listIndex]
 
                 if (record.objectCallback) {
                   retVal = record.objectCallback.call(record.parent, eventArgs)
@@ -130,7 +130,7 @@ export class EventGroup {
 
   // tslint:disable-next-line:no-any
   public static isObserved (target: any, eventName: string): boolean {
-    let events = target && <IEventRecordsByName>target.__events__
+    const events = target && <IEventRecordsByName>target.__events__
 
     return !!events && !!events[eventName]
   }
@@ -138,7 +138,7 @@ export class EventGroup {
   /** Check to see if the target has declared support of the given event. */
   // tslint:disable-next-line:no-any
   public static isDeclared (target: any, eventName: string): boolean {
-    let declaredEvents = target && <IDeclaredEventsByName>target.__declaredEvents
+    const declaredEvents = target && <IDeclaredEventsByName>target.__declaredEvents
 
     return !!declaredEvents && !!declaredEvents[eventName]
   }
@@ -176,7 +176,7 @@ export class EventGroup {
   /** On the target, attach a set of events, where the events object is a name to function mapping. */
   // tslint:disable-next-line:no-any
   public onAll (target: any, events: { [key: string]: (args?: any) => void }, useCapture?: boolean): void {
-    for (let eventName in events) {
+    for (const eventName in events) {
       if (events.hasOwnProperty(eventName)) {
         this.on(target, eventName, events[eventName], useCapture)
       }
@@ -189,14 +189,14 @@ export class EventGroup {
   // tslint:disable-next-line:no-any
   public on (target: any, eventName: string, callback: (args?: any) => void, options?: boolean | AddEventListenerOptions): void {
     if (eventName.indexOf(',') > -1) {
-      let events = eventName.split(/[ ,]+/)
+      const events = eventName.split(/[ ,]+/)
 
       for (let i = 0; i < events.length; i++) {
         this.on(target, events[i], callback, options)
       }
     } else {
-      let parent = this._parent
-      let eventRecord: IEventRecord = {
+      const parent = this._parent
+      const eventRecord: IEventRecord = {
         target: target,
         eventName: eventName,
         parent: parent,
@@ -205,7 +205,7 @@ export class EventGroup {
       }
 
       // Initialize and wire up the record on the target, so that it can call the callback if the event fires.
-      let events = <IEventRecordsByName>(target.__events__ = target.__events__ || {})
+      const events = <IEventRecordsByName>(target.__events__ = target.__events__ || {})
       events[eventName] =
         events[eventName] ||
         <IEventRecordList>{
@@ -217,7 +217,7 @@ export class EventGroup {
 
       if (EventGroup._isElement(target)) {
         // tslint:disable-next-line:no-any
-        let processElementEvent = (...args: any[]) => {
+        const processElementEvent = (...args: any[]) => {
           if (this._isDisposed) {
             return
           }
@@ -227,7 +227,7 @@ export class EventGroup {
             // @ts-ignore
             result = callback.apply(parent, args)
             if (result === false && args[0]) {
-              let e = args[0]
+              const e = args[0]
 
               if (e.preventDefault) {
                 e.preventDefault()
@@ -258,7 +258,7 @@ export class EventGroup {
         }
       } else {
         // tslint:disable-next-line:no-any
-        let processObjectEvent = (...args: any[]) => {
+        const processObjectEvent = (...args: any[]) => {
           if (this._isDisposed) {
             return
           }
@@ -278,16 +278,16 @@ export class EventGroup {
   // tslint:disable-next-line:no-any
   public off (target?: any, eventName?: string, callback?: (args?: any) => void, options?: boolean | AddEventListenerOptions): void {
     for (let i = 0; i < this._eventRecords.length; i++) {
-      let eventRecord = this._eventRecords[i]
+      const eventRecord = this._eventRecords[i]
       if (
         (!target || target === eventRecord.target) &&
         (!eventName || eventName === eventRecord.eventName) &&
         (!callback || callback === eventRecord.callback) &&
         (typeof options !== 'boolean' || options === eventRecord.options)
       ) {
-        let events = <IEventRecordsByName>eventRecord.target.__events__
-        let targetArrayLookup = events[eventRecord.eventName]
-        let targetArray = targetArrayLookup ? <IEventRecord[]>targetArrayLookup[this._id] : null
+        const events = <IEventRecordsByName>eventRecord.target.__events__
+        const targetArrayLookup = events[eventRecord.eventName]
+        const targetArray = targetArrayLookup ? <IEventRecord[]>targetArrayLookup[this._id] : null
 
         // We may have already target's entries, so check for null.
         if (targetArray) {
@@ -326,7 +326,7 @@ export class EventGroup {
 
   /** Declare an event as being supported by this instance of EventGroup. */
   public declare (event: string | string[]): void {
-    let declaredEvents = (this._parent.__declaredEvents = this._parent.__declaredEvents || {})
+    const declaredEvents = (this._parent.__declaredEvents = this._parent.__declaredEvents || {})
 
     if (typeof event === 'string') {
       declaredEvents[event] = true

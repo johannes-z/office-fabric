@@ -26,7 +26,7 @@ export function findIndex<T> (array: T[], cb: (item: T, index: number) => boolea
  * @param cb - Callback which returns true on matches
  */
 export function find<T> (array: T[], cb: (item: T, index: number) => boolean): T | undefined {
-  let index = findIndex(array, cb)
+  const index = findIndex(array, cb)
 
   if (index < 0) {
     return undefined
@@ -43,7 +43,7 @@ export function find<T> (array: T[], cb: (item: T, index: number) => boolean): T
  * @param getItem - Callback to populate given cell index.
  */
 export function createArray<T> (size: number, getItem: (index: number) => T): T[] {
-  let array: T[] = []
+  const array: T[] = []
 
   for (let i = 0; i < size; i++) {
     array.push(getItem(i))
@@ -71,7 +71,7 @@ export function toMatrix<T> (items: T[], columnCount: number): T[][] {
       }
       return rows
     },
-    [] as T[][]
+    [] as T[][],
   )
 }
 

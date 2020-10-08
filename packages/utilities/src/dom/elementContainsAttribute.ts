@@ -6,6 +6,6 @@ import { findElementRecursive } from './findElementRecursive'
  * @returns the value of the first instance found
  */
 export function elementContainsAttribute (element: HTMLElement, attribute: string): string | null {
-  let elementMatch = findElementRecursive(element, (testElement: HTMLElement) => testElement.hasAttribute(attribute))
+  const elementMatch = findElementRecursive(element, (testElement: HTMLElement) => testElement.hasAttribute(attribute))
   return elementMatch && elementMatch.getAttribute(attribute)
 }

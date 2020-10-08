@@ -12,7 +12,7 @@ export function elementContains (parent: HTMLElement | null, child: HTMLElement 
     if (allowVirtualParents) {
       isContained = false
       while (child) {
-        let nextParent: HTMLElement | null = getParent(child)
+        const nextParent: HTMLElement | null = getParent(child)
         if (nextParent === parent) {
           isContained = true
           break

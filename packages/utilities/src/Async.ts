@@ -152,7 +152,7 @@ export class Async {
       }
 
       /* tslint:disable:ban-native-functions */
-      let setImmediateCallback = () => {
+      const setImmediateCallback = () => {
         // Time to execute the timeout, enqueue it as a foreground task to be executed.
 
         try {
@@ -255,13 +255,13 @@ export class Async {
     options?: {
       leading?: boolean;
       trailing?: boolean;
-    }
+    },
   ): T | (() => void) {
     if (this._isDisposed) {
       return this._noop
     }
 
-    let waitMS = wait || 0
+    const waitMS = wait || 0
     let leading = true
     let trailing = true
     let lastExecuteTime = 0
@@ -278,10 +278,10 @@ export class Async {
       trailing = options.trailing
     }
 
-    let callback = (userCall?: boolean) => {
-      let now = new Date().getTime()
-      let delta = now - lastExecuteTime
-      let waitLength = leading ? waitMS - delta : waitMS
+    const callback = (userCall?: boolean) => {
+      const now = new Date().getTime()
+      const delta = now - lastExecuteTime
+      const waitLength = leading ? waitMS - delta : waitMS
       if (delta >= waitMS && (!userCall || leading)) {
         lastExecuteTime = now
         if (timeoutId) {
@@ -297,7 +297,7 @@ export class Async {
     }
 
     // tslint:disable-next-line:no-any
-    let resultFunction: () => T = (...args: any[]) => {
+    const resultFunction: () => T = (...args: any[]) => {
       lastArgs = args
       return callback(true)
     }
@@ -327,10 +327,10 @@ export class Async {
       leading?: boolean;
       maxWait?: number;
       trailing?: boolean;
-    }
+    },
   ): ICancelable<T> & (() => void) {
     if (this._isDisposed) {
-      let noOpFunction: ICancelable<T> & (() => T) = (() => {
+      const noOpFunction: ICancelable<T> & (() => T) = (() => {
         /** Do nothing */
       }) as ICancelable<T> & (() => T)
 
@@ -345,7 +345,7 @@ export class Async {
       return noOpFunction
     }
 
-    let waitMS = wait || 0
+    const waitMS = wait || 0
     let leading = false
     let trailing = true
     let maxWait: number | null = null
@@ -368,7 +368,7 @@ export class Async {
       maxWait = options.maxWait
     }
 
-    let markExecuted = (time: number) => {
+    const markExecuted = (time: number) => {
       if (timeoutId) {
         this.clearTimeout(timeoutId)
         timeoutId = null
@@ -376,13 +376,13 @@ export class Async {
       lastExecuteTime = time
     }
 
-    let invokeFunction = (time: number) => {
+    const invokeFunction = (time: number) => {
       markExecuted(time)
       lastResult = func.apply(this._parent, lastArgs)
     }
 
-    let callback = (userCall?: boolean) => {
-      let now = new Date().getTime()
+    const callback = (userCall?: boolean) => {
+      const now = new Date().getTime()
       let executeImmediately = false
       if (userCall) {
         if (leading && now - lastCallTime >= waitMS) {
@@ -390,9 +390,9 @@ export class Async {
         }
         lastCallTime = now
       }
-      let delta = now - lastCallTime
+      const delta = now - lastCallTime
       let waitLength = waitMS - delta
-      let maxWaitDelta = now - lastExecuteTime
+      const maxWaitDelta = now - lastExecuteTime
       let maxWaitExpired = false
 
       if (maxWait !== null) {
@@ -413,18 +413,18 @@ export class Async {
       return lastResult
     }
 
-    let pending = (): boolean => {
+    const pending = (): boolean => {
       return !!timeoutId
     }
 
-    let cancel = (): void => {
+    const cancel = (): void => {
       if (pending()) {
         // Mark the debounced function as having executed
         markExecuted(new Date().getTime())
       }
     }
 
-    let flush = (): T => {
+    const flush = (): T => {
       if (pending()) {
         invokeFunction(new Date().getTime())
       }
@@ -433,7 +433,7 @@ export class Async {
     }
 
     // tslint:disable-next-line:no-any
-    let resultFunction: ICancelable<T> & (() => T) = ((...args: any[]) => {
+    const resultFunction: ICancelable<T> & (() => T) = ((...args: any[]) => {
       lastArgs = args
       return callback(true)
     }) as ICancelable<T> & (() => T)
@@ -455,7 +455,7 @@ export class Async {
       }
 
       /* tslint:disable:ban-native-functions */
-      let animationFrameCallback = () => {
+      const animationFrameCallback = () => {
         try {
           // Now delete the record and call the callback.
           if (this._animationFrameIds) {

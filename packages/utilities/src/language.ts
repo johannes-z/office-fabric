@@ -11,7 +11,7 @@ let _language: string | null
  */
 export function getLanguage (): string | null {
   if (_language === undefined) {
-    let doc = getDocument()
+    const doc = getDocument()
     const savedLanguage = getItem('language')
 
     if (savedLanguage !== null) {
@@ -36,7 +36,7 @@ export function getLanguage (): string | null {
  * @public
  */
 export function setLanguage (language: string, avoidPersisting: boolean = false): void {
-  let doc = getDocument()
+  const doc = getDocument()
 
   if (doc) {
     doc.documentElement.setAttribute('lang', language)

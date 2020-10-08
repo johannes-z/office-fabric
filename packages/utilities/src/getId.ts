@@ -5,7 +5,7 @@ const CURRENT_ID_PROPERTY = '__currentId__'
 const DEFAULT_ID_STRING = 'id__'
 
 // tslint:disable-next-line:no-any
-let _global: any = getWindow() || {}
+const _global: any = getWindow() || {}
 
 if (_global[CURRENT_ID_PROPERTY] === undefined) {
   _global[CURRENT_ID_PROPERTY] = 0
@@ -17,7 +17,7 @@ if (_global[CURRENT_ID_PROPERTY] === undefined) {
  * @public
  */
 export function getId (prefix?: string): string {
-  let index = _global[CURRENT_ID_PROPERTY]++
+  const index = _global[CURRENT_ID_PROPERTY]++
 
   return (prefix || DEFAULT_ID_STRING) + index
 }

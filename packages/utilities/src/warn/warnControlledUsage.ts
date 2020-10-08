@@ -76,7 +76,7 @@ export function warnControlledUsage<P> (params: IWarnControlledUsageParams<P>): 
         warn(
           `Warning: You provided a '${valueProp}' prop to a ${componentName} without an '${onChangeProp}' handler. ` +
             `This will render a read-only field. If the field should be mutable use '${defaultValueProp}'. ` +
-            `Otherwise, set '${onChangeProp}'${readOnlyProp ? ` or '${readOnlyProp}'` : ''}.`
+            `Otherwise, set '${onChangeProp}'${readOnlyProp ? ` or '${readOnlyProp}'` : ''}.`,
         )
       }
 
@@ -88,7 +88,7 @@ export function warnControlledUsage<P> (params: IWarnControlledUsageParams<P>): 
           `Warning: You provided both '${valueProp}' and '${defaultValueProp}' to a ${componentName}. ` +
             `Form fields must be either controlled or uncontrolled (specify either the '${valueProp}' prop, ` +
             `or the '${defaultValueProp}' prop, but not both). Decide between using a controlled or uncontrolled ` +
-            `${componentName} and remove one of these props. More info: https://fb.me/react-controlled-components`
+            `${componentName} and remove one of these props. More info: https://fb.me/react-controlled-components`,
         )
       }
     }
@@ -104,8 +104,8 @@ export function warnControlledUsage<P> (params: IWarnControlledUsageParams<P>): 
         warn(
           `Warning: A component is changing ${oldType} ${componentName} to be ${newType}. ` +
             `${componentName}s should not switch from controlled to uncontrolled (or vice versa). ` +
-            `Decide between using controlled or uncontrolled for the lifetime of the component. ` +
-            `More info: https://fb.me/react-controlled-components`
+            'Decide between using controlled or uncontrolled for the lifetime of the component. ' +
+            'More info: https://fb.me/react-controlled-components',
         )
       }
     }

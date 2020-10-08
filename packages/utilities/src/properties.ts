@@ -402,6 +402,6 @@ export function getNativeProps<T> (props: {}, allowedPropNames: string[], exclud
       )
     },
     {},
-    props
+    props,
   ) as T
 }

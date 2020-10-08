@@ -31,7 +31,7 @@ function _scopedSettingsMergeWith (scopedSettingsFromProps: ISettings = {}): (sc
   return (oldScopedSettings: ISettings): ISettings => {
     const newScopedSettings: ISettings = { ...oldScopedSettings }
 
-    for (let scopeName in scopedSettingsFromProps) {
+    for (const scopeName in scopedSettingsFromProps) {
       if (scopedSettingsFromProps.hasOwnProperty(scopeName)) {
         newScopedSettings[scopeName] = { ...oldScopedSettings[scopeName], ...scopedSettingsFromProps[scopeName] }
       }

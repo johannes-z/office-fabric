@@ -24,7 +24,7 @@ export interface ICustomizations {
 const CustomizationsGlobalKey = 'customizations'
 const NO_CUSTOMIZATIONS = { settings: {}, scopedSettings: {}, inCustomizerContext: false }
 
-let _allSettings = GlobalSettings.getValue<ICustomizations>(CustomizationsGlobalKey, {
+const _allSettings = GlobalSettings.getValue<ICustomizations>(CustomizationsGlobalKey, {
   settings: {},
   scopedSettings: {},
   inCustomizerContext: false,
@@ -53,7 +53,7 @@ export class Customizations {
   public static getSettings (
     properties: string[],
     scopeName?: string,
-    localSettings: ICustomizations = NO_CUSTOMIZATIONS
+    localSettings: ICustomizations = NO_CUSTOMIZATIONS,
     // tslint:disable-next-line:no-any
   ): any {
     // tslint:disable-next-line:no-any
@@ -61,7 +61,7 @@ export class Customizations {
     const localScopedSettings = (scopeName && localSettings.scopedSettings[scopeName]) || {}
     const globalScopedSettings = (scopeName && _allSettings.scopedSettings[scopeName]) || {}
 
-    for (let property of properties) {
+    for (const property of properties) {
       settings[property] =
         localScopedSettings[property] ||
         localSettings.settings[property] ||

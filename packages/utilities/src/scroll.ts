@@ -94,7 +94,7 @@ const _disableIosBodyScroll = (event: TouchEvent) => {
  * @public
  */
 export function disableBodyScroll (): void {
-  let doc = getDocument()
+  const doc = getDocument()
 
   if (doc && doc.body && !_bodyScrollDisabledCount) {
     doc.body.classList.add(DisabledScrollClassName)
@@ -111,7 +111,7 @@ export function disableBodyScroll (): void {
  */
 export function enableBodyScroll (): void {
   if (_bodyScrollDisabledCount > 0) {
-    let doc = getDocument()
+    const doc = getDocument()
 
     if (doc && doc.body && _bodyScrollDisabledCount === 1) {
       doc.body.classList.remove(DisabledScrollClassName)
@@ -129,7 +129,7 @@ export function enableBodyScroll (): void {
  */
 export function getScrollbarWidth (): number {
   if (_scrollbarWidth === undefined) {
-    let scrollDiv: HTMLElement = document.createElement('div')
+    const scrollDiv: HTMLElement = document.createElement('div')
     scrollDiv.style.setProperty('width', '100px')
     scrollDiv.style.setProperty('height', '100px')
     scrollDiv.style.setProperty('overflow', 'scroll')
@@ -170,7 +170,7 @@ export function findScrollableParent (startingElement: HTMLElement | null): HTML
   while (el && el !== doc.body) {
     if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) !== 'false') {
       const computedStyles = getComputedStyle(el)
-      let overflowY = computedStyles ? computedStyles.getPropertyValue('overflow-y') : ''
+      const overflowY = computedStyles ? computedStyles.getPropertyValue('overflow-y') : ''
 
       if (overflowY && (overflowY === 'scroll' || overflowY === 'auto')) {
         return el

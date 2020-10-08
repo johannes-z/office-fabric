@@ -3,7 +3,7 @@ import { resetIds } from './getId'
 
 // tslint:disable-next-line:no-any
 function checkProperties (a: any, b: any): boolean {
-  for (let propName in a) {
+  for (const propName in a) {
     if (a.hasOwnProperty(propName)) {
       if (!b.hasOwnProperty(propName) || b[propName] !== a[propName]) {
         return false
@@ -55,9 +55,9 @@ export function assign (target: any, ...args: any[]): any {
 export function filteredAssign (isAllowed: (propName: string) => boolean, target: any, ...args: any[]): any {
   target = target || {}
 
-  for (let sourceObject of args) {
+  for (const sourceObject of args) {
     if (sourceObject) {
-      for (let propName in sourceObject) {
+      for (const propName in sourceObject) {
         if (sourceObject.hasOwnProperty(propName) && (!isAllowed || isAllowed(propName))) {
           target[propName] = sourceObject[propName]
         }
@@ -82,7 +82,7 @@ if (stylesheet && stylesheet.onReset) {
 export function mapEnumByName<T> (
   // tslint:disable-next-line:no-any
   theEnum: any,
-  callback: (name?: string, value?: string | number) => T | undefined
+  callback: (name?: string, value?: string | number) => T | undefined,
 ): (T | undefined)[] | undefined {
   // map<any> to satisfy compiler since it doesn't realize we strip out undefineds in the .filter() call
   return Object.keys(theEnum)

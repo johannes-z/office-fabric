@@ -49,14 +49,14 @@ export function resetMemoizations (): void {
 export function memoize<T extends Function> (
   target: any,
   key: string,
-  descriptor: TypedPropertyDescriptor<T>
+  descriptor: TypedPropertyDescriptor<T>,
 ): {
     configurable: boolean;
     get(): T;
   } {
   // We bind to "null" to prevent people from inadvertently pulling values from "this",
   // rather than passing them in as input values which can be memoized.
-  let fn = memoizeFunction(descriptor.value && descriptor.value.bind(null))
+  const fn = memoizeFunction(descriptor.value && descriptor.value.bind(null))
 
   return {
     configurable: true,
@@ -106,7 +106,7 @@ export function memoizeFunction<T extends (...args: any[]) => RET_TYPE, RET_TYPE
 
     // Traverse the tree until we find the match.
     for (let i = 0; i < args.length; i++) {
-      let arg = _normalizeArg(args[i])
+      const arg = _normalizeArg(args[i])
 
       if (!currentNode.map.has(arg)) {
         currentNode.map.set(arg, _createNode())
