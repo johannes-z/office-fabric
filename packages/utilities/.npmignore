@@ -1,5 +1,9 @@
-src
+.eslintrc*
+.gitattributes
+.gitignore
+.vscode
 
-.eslintrc.js
-NOTE.md
+src
+node_modules
+
 tsconfig.json

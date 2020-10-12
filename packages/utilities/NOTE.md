@@ -1,1 +1,0 @@
-Package `@uifabric/utilities` can't be used because of its `react` dependency.

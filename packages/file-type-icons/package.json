@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/file-type-icons",
-  "version": "7.6.9",
+  "version": "7.6.9-1",
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -10,7 +10,7 @@
   "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/microsoft/fluentui"
+    "url": "https://github.com/johannes-z/office-fabric"
   },
   "license": "MIT",
   "scripts": {

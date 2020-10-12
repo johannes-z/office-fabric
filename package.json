@@ -2,16 +2,6 @@
   "name": "office-ui-fabric-vue",
   "version": "1.0.0",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "packages/utilities",
-      "packages/office-ui-fabric-vue",
-      "packages/api-docs"
-    ],
-    "nohoist": [
-      "**@uifabric-vue/utilities**"
-    ]
-  },
   "scripts": {
     "serve": "yarn workspace api-docs serve",
     "dev": "yarn workspace @uifabric-vue/office-ui-fabric-vue build -w",
@@ -19,22 +9,22 @@
     "ghpages": "yarn workspace api-docs build && cd ./packages/api-docs/dist && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/johannes-z/office-fabric master:gh-pages"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-babel": "^4.3.1",
-    "@vue/cli-plugin-eslint": "^4.3.1",
-    "@vue/cli-plugin-router": "^4.3.1",
-    "@vue/cli-plugin-typescript": "^4.3.1",
-    "@vue/cli-service": "^4.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/parser": "^4.4.0",
+    "@vue/cli-plugin-babel": "^4.5.7",
+    "@vue/cli-plugin-eslint": "^4.5.7",
+    "@vue/cli-plugin-router": "^4.5.7",
+    "@vue/cli-plugin-typescript": "^4.5.7",
+    "@vue/cli-service": "^4.5.7",
     "@vue/eslint-config-standard": "^5.1.2",
-    "@vue/eslint-config-typescript": "^5.0.2",
-    "eslint": "^6.8.0",
-    "eslint-plugin-import": "^2.20.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^7.10.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-vue": "^6.2.2",
-    "typescript": "^3.9.2",
-    "vue-template-compiler": "^2.6.11"
+    "eslint-plugin-vue": "^7.0.1",
+    "typescript": "^4.0.3",
+    "vue-template-compiler": "^2.6.12"
   }
 }
