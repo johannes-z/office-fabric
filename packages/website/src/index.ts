@@ -6,6 +6,8 @@ import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
 import BasePage from './pages/BasePage.vue'
 
+import '@uifabric-vue/ie11-polyfills'
+
 import Fabric, { initializeIcons, IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 
 initializeIcons()

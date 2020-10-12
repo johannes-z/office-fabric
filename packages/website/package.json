@@ -11,6 +11,7 @@
     "@babel/runtime": "^7.11.2",
     "@fluentui/theme": "^1.3.0",
     "@microsoft/load-themed-styles": "^1.10.109",
+    "@uifabric-vue/ie11-polyfills": "workspace:^0.1.2",
     "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.0.0-alpha1",
     "@uifabric/example-data": "^7.1.5",
     "@uifabric/merge-styles": "^7.19.1",
