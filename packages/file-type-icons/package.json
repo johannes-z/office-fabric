@@ -1,0 +1,30 @@
+{
+  "name": "@uifabric-vue/file-type-icons",
+  "version": "7.6.9",
+  "description": "Fluent UI Vue file type icon set.",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "sideEffects": [
+    "lib/version.js"
+  ],
+  "typings": "lib/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/fluentui"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "vue": "^2.6.12"
+  },
+  "dependencies": {
+    "@uifabric/set-version": "^7.0.23",
+    "@uifabric/styling": "^7.16.10",
+    "tslib": "^2.0.3"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.12"
+  }
+}
