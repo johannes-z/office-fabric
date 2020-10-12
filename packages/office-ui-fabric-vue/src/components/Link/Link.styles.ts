@@ -1,4 +1,8 @@
-import { getGlobalClassNames, HighContrastSelectorWhite, HighContrastSelectorBlack, HighContrastSelector } from '@uifabric/styling'
+import {
+  getEdgeChromiumNoHighContrastAdjustSelector,
+  getGlobalClassNames,
+  HighContrastSelector,
+} from '@uifabric/styling'
 import { ILinkStyleProps, ILinkStyles } from './Link.types'
 
 const GlobalClassNames = {
@@ -31,7 +35,7 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
         selectors: {
           '.ms-Fabric--isFocusVisible &:focus': {
             // Can't use getFocusStyle because it doesn't support wrapping links
-            // https://github.com/OfficeDev/office-ui-fabric-react/issues/4883#issuecomment-406743543
+            // https://github.com/microsoft/fluentui/issues/4883#issuecomment-406743543
             // Using box-shadow and outline allows the focus rect to wrap links that span multiple lines
             // and helps the focus rect avoid getting clipped.
             boxShadow: `0 0 0 1px ${focusBorderColor} inset`,
@@ -62,11 +66,17 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
         userSelect: 'text',
         borderBottom: '1px solid transparent', // For Firefox high contrast mode
         selectors: {
-          [HighContrastSelectorBlack]: {
-            color: '#FFFF00',
+          [HighContrastSelector]: {
+            color: 'LinkText',
           },
-          [HighContrastSelectorWhite]: {
-            color: '#00009F',
+          ...getEdgeChromiumNoHighContrastAdjustSelector(),
+        },
+      },
+      !isButton && {
+        selectors: {
+          [HighContrastSelector]: {
+            // This is mainly for MessageBar, which sets MsHighContrastAdjust: none by default
+            MsHighContrastAdjust: 'auto',
           },
         },
       },
@@ -90,9 +100,21 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
           '&:active, &:hover, &:active:hover': {
             color: linkInteractedColor,
             textDecoration: 'underline',
+
+            selectors: {
+              [HighContrastSelector]: {
+                color: 'LinkText',
+              },
+            },
           },
           '&:focus': {
             color: linkColor,
+
+            selectors: {
+              [HighContrastSelector]: {
+                color: 'LinkText',
+              },
+            },
           },
         },
       },
