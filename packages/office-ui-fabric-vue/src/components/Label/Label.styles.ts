@@ -1,7 +1,7 @@
-import { ILabelStyles } from './Label.types'
-import { HighContrastSelector, FontWeights } from '@uifabric/styling'
+import { HighContrastSelector, FontWeights, getEdgeChromiumNoHighContrastAdjustSelector } from '@uifabric/styling'
+import { ILabelStyleProps, ILabelStyles } from './Label.types'
 
-export const getStyles = (props: any): ILabelStyles => {
+export const getStyles = (props: ILabelStyleProps): ILabelStyles => {
   const { theme, className, disabled, required } = props
   const { semanticColors } = theme
 
@@ -32,6 +32,7 @@ export const getStyles = (props: any): ILabelStyles => {
           [HighContrastSelector]: {
             color: 'GrayText',
           },
+          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
       required && {

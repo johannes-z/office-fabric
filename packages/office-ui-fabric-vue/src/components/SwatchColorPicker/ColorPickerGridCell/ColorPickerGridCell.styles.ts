@@ -69,7 +69,7 @@ export const getStyles = (props: IColorPickerGridCellStyleProps): IColorPickerGr
             bottom: -calculatedBorderWidth,
             selectors: {
               [HighContrastSelector]: {
-                outline: `1px solid ButtonText`,
+                outline: '1px solid ButtonText',
               },
             },
           },

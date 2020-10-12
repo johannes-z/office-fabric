@@ -233,6 +233,7 @@ export interface ITextFieldProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
+  // eslint-disable-next-line no-use-before-define
   styles?: IStyleFunctionOrObject<ITextFieldStyleProps, ITextFieldStyles>;
 
   /**
@@ -296,6 +297,7 @@ export interface ITextFieldSubComponentStyles {
 /**
  * {@docCategory TextField}
  */
+// @ts-ignore
 export interface ITextFieldStyles extends IStyleSet<ITextFieldStyles> {
   /**
    * Style for root element.

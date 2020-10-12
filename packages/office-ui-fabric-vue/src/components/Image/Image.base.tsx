@@ -66,6 +66,7 @@ export class ImageBase extends BaseComponent<IImageProps> {
   private onImageLoaded () {
     this.loadState = ImageLoadState.loaded
   }
+
   private onImageError () {
     this.loadState = ImageLoadState.error
   }

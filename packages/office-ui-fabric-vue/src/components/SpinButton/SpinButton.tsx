@@ -84,18 +84,18 @@ export class SpinButton extends BaseComponent<ISpinButtonProps> {
   }
 
   private updateValue (value: number) {
-    let newValue = precisionRound(value, this.precision)
+    const newValue = precisionRound(value, this.precision)
     this.internalValue = newValue
     return newValue
   }
 
   private onIncrement () {
-    let newValue = Math.min(this.internalValue + this.step, this.max)
+    const newValue = Math.min(this.internalValue + this.step, this.max)
     return this.updateValue(newValue)
   }
 
   private onDecrement () {
-    let newValue = Math.max(this.internalValue - this.step, this.min)
+    const newValue = Math.max(this.internalValue - this.step, this.min)
     return this.updateValue(newValue)
   }
 

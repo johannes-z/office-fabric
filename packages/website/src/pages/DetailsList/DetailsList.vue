@@ -30,7 +30,7 @@
                         :items="items"
                         :selection-mode="2"
                         :compact="compact">
-          <template #cell.column1="{ item }">
+                        <!-- <template #cell.column1="{ item }">
             <img :src="item.iconName"
                  :class="classNames.fileIconImg"
                  :alt="item.fileType + ' file icon'">
@@ -46,7 +46,7 @@
 
           <template #cell.column5="{ item }">
             <span>{{ item.fileSize }}</span>
-          </template>
+          </template> -->
         </f-details-list>
       </div>
     </div>

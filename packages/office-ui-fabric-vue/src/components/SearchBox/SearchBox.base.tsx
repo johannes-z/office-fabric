@@ -15,6 +15,7 @@ export class SearchBoxBase extends BaseComponent {
   $refs!: {
     input: HTMLInputElement
   }
+
   @Prop({ type: Boolean, default: false }) underlined?: boolean
   @Prop({ type: String, default: null }) defaultValue?: string
   @Prop({ type: String, default: 'Search' }) placeholder?: string

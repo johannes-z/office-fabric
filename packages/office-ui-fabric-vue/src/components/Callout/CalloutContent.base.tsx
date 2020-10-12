@@ -75,8 +75,7 @@ export class CalloutContentBase extends BaseComponent {
   private updatePosition () {
     const positions = this.positions
 
-    let currentProps: any
-    currentProps = assign(currentProps, this.$props)
+    const currentProps: any = this.$props
     currentProps!.bounds = this.bounds
     currentProps!.target = this.target!
     const newPositions = positionCallout(currentProps, this.$refs.hostElement, this.$refs.calloutElement, this.positions)

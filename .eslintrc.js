@@ -19,8 +19,10 @@ module.exports = {
       2,
     ],
     'no-prototype-builtins': 0,
+    'no-use-before-define': 0,
     'no-unused-vars': 0,
     'standard/no-callback-literal': 0,
+    quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
 
     'generator-star-spacing': 'off',
     'comma-dangle': [

@@ -8,32 +8,30 @@ import vue from 'rollup-plugin-vue'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 // @ts-ignore
-import babel from 'rollup-plugin-babel'
+import babel from '@rollup/plugin-babel'
 import pkg from './package.json'
 
 const packageRoot = path.resolve(__dirname)
 
 export default {
-  // external: [
-  //   /id/,
-  //   'id2',
-  // ],
   input: './tmp/index.js',
   output: {
-    // dir: path.resolve('lib'),
-    file: 'dist/office-ui-fabric-vue.esm.js',
+    dir: 'lib',
     format: 'esm',
+    preserveModules: true,
     sourcemap: false,
   },
-  external: [
-    ...Object.keys(pkg.dependencies),
-    '@microsoft/load-themed-styles',
-    '@uifabric/set-version',
-    'vue',
-    'vue-tsx-support',
-  ],
-  // preserveModules: true,
-  // preserveSymlinks: true,
+  external: id => {
+    if ([
+      ...Object.keys(pkg.dependencies),
+      '@microsoft/load-themed-styles',
+      '@uifabric/set-version',
+      '@uifabric/styling',
+      'vue',
+      'vue-tsx-support',
+    ].indexOf(id) > -1) return true
+    return /(@babel\/runtime)|(@uifabric\/styling)/gi.test(id)
+  },
   plugins: [
     json(),
     replace({
@@ -65,12 +63,16 @@ export default {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       babelrc: false,
       configFile: false,
+      babelHelpers: 'runtime',
       presets: [
         ['@vue/cli-plugin-babel/preset', {
           modules: false,
           useBuiltIns: false,
           polyfills: [],
         }],
+      ],
+      plugins: [
+        '@babel/plugin-transform-runtime',
       ],
     }),
   ],

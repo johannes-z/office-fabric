@@ -52,16 +52,6 @@ const classNames = mergeStyleSets({
   },
 })
 
-const _footerItem: IScrollablePaneDetailsListExampleItem = {
-  key: 'footer',
-  test1: 'Footer 1',
-  test2: 'Footer 2',
-  test3: 'Footer 3',
-  test4: 'Footer 4',
-  test5: 'Footer 5',
-  test6: 'Footer 6',
-}
-
 export interface IScrollablePaneDetailsListExampleItem {
   key: number | string;
   test1: string;
@@ -70,6 +60,16 @@ export interface IScrollablePaneDetailsListExampleItem {
   test4: string;
   test5: string;
   test6: string;
+}
+
+const _footerItem: IScrollablePaneDetailsListExampleItem = {
+  key: 'footer',
+  test1: 'Footer 1',
+  test2: 'Footer 2',
+  test3: 'Footer 3',
+  test4: 'Footer 4',
+  test5: 'Footer 5',
+  test6: 'Footer 6',
 }
 
 export interface IScrollablePaneDetailsListExampleState {

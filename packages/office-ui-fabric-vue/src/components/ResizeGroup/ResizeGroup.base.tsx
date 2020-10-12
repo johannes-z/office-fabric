@@ -304,6 +304,7 @@ export class ResizeGroupBase extends BaseComponent {
     updateHiddenDiv: HTMLDivElement
     initialHiddenDiv: HTMLDivElement
   }
+
   private nextResizeGroupStateProvider = getNextResizeGroupStateProvider()
   private hasRenderedContent = false;
   dataToMeasure = {}

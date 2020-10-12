@@ -37,7 +37,7 @@ export class RatingBase extends BaseComponent<IRatingProps> {
     const { min, max } = this
     if (min < 0 || max <= min) return []
 
-    var i = min + 1
+    let i = min + 1
     return Array(max - min).fill(undefined).map(() => i++)
   }
 

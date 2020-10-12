@@ -15,6 +15,7 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
   $refs!: {
     textElement: HTMLTextAreaElement | HTMLInputElement
   }
+
   @Prop({ type: Boolean, default: false }) multiline!: boolean
   @Prop({ type: Boolean, default: null }) resizable!: boolean
   @Prop({ type: Boolean, default: null }) autoAdjustHeight!: boolean
@@ -34,8 +35,10 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
   internalValue: string = this.value
 
   get classNames () {
-    const { theme, className, disabled, isActive: focused, required, multiline, label, borderless, underlined,
-      resizable, autoAdjustHeight } = this
+    const {
+      theme, className, disabled, isActive: focused, required, multiline, label, borderless, underlined,
+      resizable, autoAdjustHeight,
+    } = this
     return getClassNames(this.styles, {
       theme,
       className,

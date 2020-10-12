@@ -11,6 +11,7 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
   $refs!: {
     toggleButton: HTMLButtonElement
   }
+
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: String, default: '' }) label!: string
   @Prop({ type: Boolean, default: false }) defaultChecked!: boolean

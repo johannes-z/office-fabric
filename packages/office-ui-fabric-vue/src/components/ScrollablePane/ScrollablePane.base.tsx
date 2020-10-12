@@ -33,6 +33,7 @@ export class ScrollablePaneBase extends BaseComponent {
     stickyBelow: HTMLDivElement
     contentContainer: HTMLDivElement
   }
+
   @Prop({ type: Number, default: 0 }) initialScrollPosition!: number;
   @Prop({ type: String, default: ScrollbarVisibility.auto }) scrollbarVisibility!: ScrollbarVisibility;
 

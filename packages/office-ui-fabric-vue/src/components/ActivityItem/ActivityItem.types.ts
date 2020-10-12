@@ -69,6 +69,7 @@ export interface IActivityItemProps {
   /**
    * Optional styling for the elements within the Activity Item.
    */
+  // eslint-disable-next-line no-use-before-define
   styles?: IActivityItemStyles;
 
   /**

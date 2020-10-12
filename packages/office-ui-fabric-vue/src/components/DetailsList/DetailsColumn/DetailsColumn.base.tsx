@@ -111,6 +111,7 @@ export class DetailsColumnBase extends BaseComponent {
   beforeDestroy () {
     if (this._dragDropSubscription) {
       this._dragDropSubscription.dispose()
+      // @ts-ignore
       delete this._dragDropSubscription
     }
     this._async.dispose()
@@ -125,6 +126,7 @@ export class DetailsColumnBase extends BaseComponent {
     if (this._dragDropSubscription && !this.isDraggable) {
       this._dragDropSubscription.dispose()
       this.events.off(this.$refs.root, 'mousedown')
+      // @ts-ignore
       delete this._dragDropSubscription
     }
   }

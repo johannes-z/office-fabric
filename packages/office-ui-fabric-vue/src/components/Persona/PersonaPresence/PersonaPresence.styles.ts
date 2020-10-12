@@ -121,7 +121,7 @@ export const getStyles = (props: any): any => {
             [HighContrastSelector]: {
               selectors: {
                 ':after': {
-                  width: `calc(100% - 4px)`,
+                  width: 'calc(100% - 4px)',
                   left: '2px',
                   backgroundColor: 'Window',
                 },
@@ -158,8 +158,8 @@ export const getStyles = (props: any): any => {
 
               selectors: {
                 ':before': {
-                  width: `calc(100% - 2px)`,
-                  height: `calc(100% - 2px)`,
+                  width: 'calc(100% - 2px)',
+                  height: 'calc(100% - 2px)',
                   top: '1px',
                   left: '1px',
                   borderColor: 'Window',

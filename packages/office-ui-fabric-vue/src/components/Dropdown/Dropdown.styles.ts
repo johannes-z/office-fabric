@@ -245,7 +245,7 @@ export const getStyles: IStyleFunction<any, IDropdownStyles> = (props: any) => {
         !hasLabel && {
         selectors: {
           ':after': {
-            content: `'*'`,
+            content: '\'*\'',
             color: semanticColors.errorText,
             position: 'absolute',
             top: -5,
@@ -274,7 +274,7 @@ export const getStyles: IStyleFunction<any, IDropdownStyles> = (props: any) => {
         display: 'block',
         height: DROPDOWN_HEIGHT,
         lineHeight: DROPDOWN_HEIGHT - 2,
-        padding: `0 28px 0 8px`,
+        padding: '0 28px 0 8px',
         position: 'relative',
         overflow: 'hidden',
         whiteSpace: 'nowrap',

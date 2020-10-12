@@ -1,5 +1,6 @@
 packages:
+  - 'packages/ie11-polyfills'
   - 'packages/utilities'
   - 'packages/file-type-icons'
   - 'packages/office-ui-fabric-vue'
-  - 'packages/api-docs'
+  - 'packages/website'

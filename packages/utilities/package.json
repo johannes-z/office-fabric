@@ -3,11 +3,11 @@
   "version": "7.32.3",
   "description": "Fluent UI Vue utilities for building components.",
   "main": "./lib/index.js",
-  "module": "lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./types/index.d.ts",
   "sideEffects": [
-    "lib/version.js"
+    "./lib/version.js"
   ],
-  "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/johannes-z/office-fabric"

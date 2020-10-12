@@ -106,9 +106,9 @@ export function getStyles (props: any): any {
       getFocusStyle(theme),
       classNames.ratingButton,
       {
-        fontSize: `var(--size)`,
-        lineHeight: `var(--size)`,
-        height: `var(--size)`,
+        fontSize: 'var(--size)',
+        lineHeight: 'var(--size)',
+        height: 'var(--size)',
         backgroundColor: 'transparent',
         padding: `${ratingVerticalPadding}px ${ratingHorizontalPadding}px`,
         boxSizing: 'content-box',

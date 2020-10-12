@@ -250,7 +250,7 @@ export function getStyles (props: any): ITextFieldStyles {
         required && {
         selectors: {
           ':before': {
-            content: `'*'`,
+            content: '\'*\'',
             color: semanticColors.errorText,
             position: 'absolute',
             top: -5,

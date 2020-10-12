@@ -6,25 +6,23 @@ import { toKebabCase } from '../utilities'
 
 export type { IPartialTheme } from '@uifabric/styling'
 export interface IOptions {
-  useCSSVars: boolean
   prefix?: string
 }
 
-export function loadTheme (theme: IPartialTheme, useCSSVars: boolean = false): ITheme {
+export function loadTheme (theme: IPartialTheme): ITheme {
+  // eslint-disable-next-line prefer-const
   let _theme = createTheme(theme)
 
-  if (useCSSVars) {
-    let { palette, semanticColors } = _theme
-    // generate new css vars
-    palette = registerCSSVars('palette', palette)
-    semanticColors = registerCSSVars('semanticColors', semanticColors)
+  let { palette, semanticColors } = _theme
+  // generate new css vars
+  palette = registerCSSVars('palette', palette)
+  semanticColors = registerCSSVars('semanticColors', semanticColors)
 
-    // update theme
-    baseLoadTheme({
-      palette,
-      semanticColors,
-    })
-  }
+  // update theme
+  baseLoadTheme({
+    palette,
+    semanticColors,
+  })
 
   return _theme
 }
@@ -38,7 +36,7 @@ export default function install (Vue: any, theme: IPartialTheme = {}, options: P
     }
   }
 
-  loadTheme(theme, options.useCSSVars)
+  loadTheme(theme)
 }
 
 /*

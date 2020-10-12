@@ -15,6 +15,7 @@ export class SliderBase extends BaseComponent<ISliderProps> {
   $refs!: {
     sliderLine: HTMLDivElement
   }
+
   @Prop({ type: String, default: null }) label!: string
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) vertical!: boolean

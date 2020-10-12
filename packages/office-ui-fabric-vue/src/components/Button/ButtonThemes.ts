@@ -164,7 +164,7 @@ export function primaryStyles (theme: ITheme): IButtonStyles {
         [`.${IsFocusVisibleClassName} &:focus`]: {
           selectors: {
             ':after': {
-              border: `none`,
+              border: 'none',
               outlineColor: p.white,
             },
           },
