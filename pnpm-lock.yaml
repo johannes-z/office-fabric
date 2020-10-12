@@ -150,8 +150,6 @@ importers:
   packages/website:
     dependencies:
       '@babel/runtime': 7.11.2
-      '@fluentui/theme': 1.3.0
-      '@microsoft/load-themed-styles': 1.10.109
       '@uifabric-vue/ie11-polyfills': 'link:../ie11-polyfills'
       '@uifabric-vue/office-ui-fabric-vue': 'link:../office-ui-fabric-vue'
       '@uifabric/example-data': 7.1.5
@@ -185,8 +183,6 @@ importers:
       vue-template-compiler: 2.6.12
     specifiers:
       '@babel/runtime': ^7.11.2
-      '@fluentui/theme': ^1.3.0
-      '@microsoft/load-themed-styles': ^1.10.109
       '@uifabric-vue/ie11-polyfills': 'workspace:^0.1.2'
       '@uifabric-vue/office-ui-fabric-vue': 'workspace:^8.0.0-alpha1'
       '@uifabric-vue/utilities': 'workspace:^7.32.3'
@@ -1323,10 +1319,6 @@ packages:
       webpack: ^4.0.0
     resolution:
       integrity: sha512-zN69TnSr0viRSU6cEDIcuPcP67QcpQ6uHACg58FiN9PDrU6SLyGW3MR4tiISbYxy1kDWAVPwD+XwQTWE5cigAA==
-  /@microsoft/load-themed-styles/1.10.109:
-    dev: false
-    resolution:
-      integrity: sha512-SmMg0H0HiYfGRahbMeNpvZo6+eQ2+Er1oXzDdHGiNqNY/9lwnKRVL98GtN0kguQfSs2uRjxv3UB7B0+kAT4wIg==
   /@microsoft/load-themed-styles/1.10.73:
     dev: false
     resolution:
@@ -2060,7 +2052,7 @@ packages:
       integrity: sha512-6fWob1xh2W0uif2++YhNiBWITDBsAEktdgnLRgIgM/UqUg9oFpz9tqs0i85PQwjUDIn/erMT2ID3hnOncYTxxQ==
   /@vue/cli-plugin-router/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
       '@vue/cli-shared-utils': 4.5.7
     dev: true
     peerDependencies:
@@ -2070,7 +2062,7 @@ packages:
   /@vue/cli-plugin-typescript/4.5.7_a4bd582f63aa115a6c6a7a9b5ce372bd:
     dependencies:
       '@types/webpack-env': 1.15.2
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
       '@vue/cli-shared-utils': 4.5.7
       cache-loader: 4.1.0_webpack@4.44.1
       fork-ts-checker-webpack-plugin: 3.1.1
@@ -2095,7 +2087,7 @@ packages:
       integrity: sha512-QXcJwFKxB3DYcZCc0FeobvxPeo4QH42DpZrEJqPDhtpmKKDh+TAD+FHfRtY5t0JYmDOKPw4hppucB0G6TWqdFg==
   /@vue/cli-plugin-vuex/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
     dev: true
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
