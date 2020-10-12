@@ -24,7 +24,7 @@ export class IconButton extends BaseComponent {
       styles: internalStyles,
     }
     return (
-      <BaseButton {...{ props, attrs: this.$attrs }}>
+      <BaseButton {...{ props, attrs: this.$attrs, on: this.$listeners }}>
         {this.$slots.default}
       </BaseButton>
     )

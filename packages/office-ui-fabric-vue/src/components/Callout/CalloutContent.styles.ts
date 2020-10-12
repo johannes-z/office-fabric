@@ -1,5 +1,5 @@
-import { focusClear, HighContrastSelector, getGlobalClassNames } from '@uifabric/styling'
-import { IRawStyle } from '@uifabric/merge-styles'
+import { HighContrastSelector, IRawStyle, focusClear, getGlobalClassNames } from '@uifabric/styling'
+import { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
 
 function getBeakStyle (beakWidth?: number): IRawStyle {
   return {
@@ -16,12 +16,14 @@ const GlobalClassNames = {
   calloutMain: 'ms-Callout-main',
 }
 
-export const getStyles = (props: any): any => {
+export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyles => {
   const { theme, className, overflowYHidden, calloutWidth, beakWidth, backgroundColor, calloutMaxWidth } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
   const { semanticColors, effects } = theme
+
+  console.log(semanticColors.menuBackground)
 
   return {
     container: [

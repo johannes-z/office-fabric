@@ -24,6 +24,9 @@ export class CalloutContentBase extends BaseComponent {
   @Prop({ type: Boolean, default: true }) isBeakVisible!: boolean
   @Prop({ type: Boolean, default: false }) coverTarget!: boolean
   @Prop({ type: Number, default: 0 }) gapSpace!: number
+  @Prop({ type: Number, default: undefined }) finalHeight!: number
+  @Prop({ type: Number, default: undefined }) calloutMaxWidth!: number
+  @Prop({ type: String, default: undefined }) backgroundColor!: string
 
   private internalKey = new Date()
   private positions: any = null
@@ -49,11 +52,18 @@ export class CalloutContentBase extends BaseComponent {
   }
 
   get classNames (): any {
-    const { theme, className, positions, styles, calloutWidth, beakWidth } = this
+    const { theme, className, calloutMaxWidth, backgroundColor, finalHeight, positions, styles, calloutWidth, beakWidth } = this
 
-    return getClassNames(concatStyleSetsWithProps({
-      theme, className, overflowYHidden: false, calloutWidth, beakWidth, backgroundColor: '#fff', calloutMaxWidth: '100%',
-    }, getStyles, styles))
+    return getClassNames(styles!, {
+      theme: theme!,
+      className,
+      overflowYHidden: !!finalHeight,
+      calloutWidth,
+      positions,
+      beakWidth,
+      backgroundColor,
+      calloutMaxWidth,
+    })
   }
 
   get actualBeakWidth () {

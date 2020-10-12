@@ -122,7 +122,8 @@ export class BaseButton extends BaseComponent<IBaseButtonProps> {
       <ButtonComponent
         ref="buttonElement"
         class={classNames.root}
-        href={href}>
+        href={href}
+        onClick={ev => this.$emit('click', ev)}>
         <span class={classNames.flexContainer}>
           {iconProps && (<Icon class={css(classNames.icon, className)} {...{ props: iconProps }} />)}
 
