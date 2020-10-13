@@ -1,4 +1,4 @@
-import { IChoiceGroupStyles } from './ChoiceGroup.types'
+import { IChoiceGroupStyleProps, IChoiceGroupStyles } from './ChoiceGroup.types'
 import { getGlobalClassNames } from '@uifabric/styling'
 
 const GlobalClassNames = {
@@ -6,16 +6,14 @@ const GlobalClassNames = {
   flexContainer: 'ms-ChoiceFieldGroup-flexContainer',
 }
 
-export const getStyles = (props: any): IChoiceGroupStyles => {
+export const getStyles = (props: IChoiceGroupStyleProps): IChoiceGroupStyles => {
   const { className, optionsContainIconOrImage, theme } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
   return {
-    // TODO (Fabric 8?) - merge className back into `root` and apply root style to
-    // the actual root role=application element
-    applicationRole: className,
     root: [
+      className,
       classNames.root,
       theme.fonts.medium,
       {

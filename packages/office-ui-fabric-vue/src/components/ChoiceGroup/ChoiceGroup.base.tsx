@@ -38,30 +38,28 @@ export class ChoiceGroupBase extends BaseComponent<IChoiceGroupProps> {
   render () {
     const { classNames, label, required, disabled, selectedOption, options } = this
     return (
-      <div class={classNames.applicationRole}>
-        <div class={classNames.root}>
-          {label && (
-            <Label class={classNames.label}
-              required={required}
-              disabled={disabled}>
-              { label }
-            </Label>
-          )}
+      <div class={classNames.root}>
+        {label && (
+          <Label class={classNames.label}
+            required={required}
+            disabled={disabled}>
+            { label }
+          </Label>
+        )}
 
-          <div class={classNames.flexContainer}>
-            {options.map(option => {
-              return (
-                <ChoiceGroupOption
-                  id={option.key}
-                  key={option.key}
-                  {...{ props: option }}
-                  checked={selectedOption.key === option.key}
-                  nativeOnClick={ev => this.onClick(ev, option)}>
-                  { option.text }
-                </ChoiceGroupOption>
-              )
-            })}
-          </div>
+        <div class={classNames.flexContainer}>
+          {options.map(option => {
+            return (
+              <ChoiceGroupOption
+                id={option.key}
+                key={option.key}
+                {...{ props: option }}
+                checked={selectedOption.key === option.key}
+                nativeOnClick={ev => this.onClick(ev, option)}>
+                { option.text }
+              </ChoiceGroupOption>
+            )
+          })}
         </div>
       </div>
     )
