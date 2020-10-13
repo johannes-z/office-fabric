@@ -6,7 +6,12 @@ import StatelessComponent from '../StatelessComponent'
 import { getIconContent } from './FontIcon'
 import { IIconProps } from './Icon.types'
 
-const getClassNames = classNamesFunction({ disableCaching: true })
+const getClassNames = classNamesFunction({
+  // Icon is used a lot by other components.
+  // It's likely to see expected cases which pass different className to the Icon.
+  // Therefore setting a larger cache size.
+  cacheSize: 100,
+})
 
 type IconContentChildren = string | undefined | ((h: CreateElement) => JSX.Element)
 
