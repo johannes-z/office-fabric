@@ -1,5 +1,5 @@
-import { ITheme } from '@uifabric/styling'
-import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
+import { ITheme, IStyle } from '@uifabric/styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 
 /**
  * {@docCategory Label}
@@ -13,7 +13,13 @@ export interface ILabelProps {
   /**
    * Render the root element as another type.
    */
-  as?: any;
+  as?: string;
+
+  /**
+   * Optional callback to access the ILabel interface. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<ILabel>;
 
   /**
    * Whether the associated form field is required or not
