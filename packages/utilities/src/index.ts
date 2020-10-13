@@ -33,3 +33,5 @@ export * from './warn'
 
 export * from './positioning/positioning.types'
 export * from './selection'
+
+export { IStyleFunctionOrObject, Omit } from '@uifabric/merge-styles'
