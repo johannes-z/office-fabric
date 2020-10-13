@@ -1,21 +1,22 @@
+import { Position } from '../../Positioning'
+// import { IButtonStyles } from '../Button'
 import { IIconProps } from '../Icon'
 import { ITheme, IStyle } from '@uifabric/styling'
-import { ISpinButtonClassNames } from './SpinButton.classNames'
-import { KeyboardSpinDirection } from './SpinButton'
-import { IButtonStyles } from '../Button/Button.types'
+// import { IKeytipProps } from '../Keytip'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { IButtonProps } from '../Button/Button.types'
 
 /**
  * {@docCategory SpinButton}
  */
 export interface ISpinButton {
   /**
-   * The value of the SpinButton. Use this if you intend to pass in a new value as a result of onChange events.
-   * This value is mutually exclusive to defaultValue. Use one or the other.
+   * Current value of the control.
    */
   value?: string;
 
   /**
-   * Sets focus to the spin button.
+   * Sets focus to the control.
    */
   focus: () => void;
 }
@@ -23,159 +24,169 @@ export interface ISpinButton {
 /**
  * {@docCategory SpinButton}
  */
+export enum KeyboardSpinDirection {
+  down = -1,
+  notSpinning = 0,
+  up = 1,
+}
+
+/**
+ * {@docCategory SpinButton}
+ */
 export interface ISpinButtonProps {
+  /**
+   * Gets the component ref.
+   */
+  // componentRef?: IRefObject<ISpinButton>;
 
   /**
-   * The initial value of the SpinButton. Use this if you intend for the SpinButton to be an uncontrolled component.
-   * This value is mutually exclusive to value. Use one or the other.
+   * Initial value of the control. Updates to this prop will not be respected.
+   *
+   * Use this if you intend for the SpinButton to be an uncontrolled component which maintains its own value.
+   * Mutually exclusive with `value`.
    * @defaultvalue 0
    */
   defaultValue?: string;
 
   /**
-   * The value of the SpinButton. Use this if you intend to pass in a new value as a result of onChange events.
-   * This value is mutually exclusive to defaultValue. Use one or the other.
+   * Current value of the control.
+   *
+   * Use this if you intend to pass in a new value as a result of change events.
+   * Mutually exclusive with `defaultValue`.
    */
   value?: string;
 
   /**
-   * The min value of the SpinButton.
+   * Min value of the control.
    * @defaultvalue 0
    */
   min?: number;
 
   /**
-   * The max value of the SpinButton.
+   * Max value of the control.
    * @defaultvalue 100
    */
   max?: number;
 
   /**
-   * The difference between the two adjacent values of the SpinButton.
-   * This value is sued to calculate the precision of the input if no
-   * precision is given. The precision calculated this way will always
-   * be \>= 0.
+   * Difference between two adjacent values of the control.
+   * This value is used to calculate the precision of the input if no `precision` is given.
+   * The precision calculated this way will always be \>= 0.
    * @defaultvalue 1
    */
   step?: number;
 
   /**
-   * A description of the SpinButton for the benefit of screen readers.
+   * A description of the control for the benefit of screen reader users.
    */
   ariaLabel?: string;
 
   /**
-   * Optional prop to add a string id that can be referenced inside the aria-describedby attribute
+   * ID of a label which describes the control, if not using the default label.
    */
   ariaDescribedBy?: string;
 
   /**
-   * A title for the SpinButton used for a more descriptive name that's also visible on its tooltip.
+   * A more descriptive title for the control, visible on its tooltip.
    */
   title?: string;
 
   /**
-   * Whether or not the SpinButton is disabled.
+   * Whether or not the control is disabled.
    */
   disabled?: boolean;
 
   /**
-   * Optional className for SpinButton.
+   * Custom className for the control.
    */
   className?: string;
 
   /**
-   * Descriptive label for the SpinButton.
+   * Descriptive label for the control.
    */
   label?: string;
 
   /**
+   * Where to position the control's label.
    * @defaultvalue Left
    */
   labelPosition?: Position;
 
   /**
-   * Icon that goes along with the label for the whole SpinButton
+   * Props for an icon to display alongside the control's label.
    */
   iconProps?: IIconProps;
 
   /**
-   * This callback is triggered when the value inside the SpinButton should be validated.
-   * @param value - The value entered in the SpinButton to validate
-   * @param event - The event that triggered this validate, if any. (For accessibility)
-   * @returns If a string is returned, it will be used as the value of the SpinButton.
+   * Callback for when the entered value should be validated.
+   * @param value - The entered value to validate
+   * @param event - The event that triggered this validate, if any (for accessibility)
+   * @returns If a string is returned, it will be used as the new value
    */
-  onValidate?: (value: string, event?: any) => string | void;
+  onValidate?: (value: string, event?: Event) => string | void;
 
   /**
-   * This callback is triggered when the increment button is pressed or if the user presses up arrow
-   * with focus on the input of the spinButton
-   * @returns If a string is returned, it will be used as the value of the SpinButton.
+   * Callback for when the increment button or up arrow key is pressed.
+   * @param value - The current value to be incremented
+   * @param event - The event that triggered this increment
+   * @returns If a string is returned, it will be used as the new value
    */
-  onIncrement?: (value: string) => string | void;
+  onIncrement?: (
+    value: string,
+    event?: Event,
+  ) => string | void;
 
   /**
-   * This callback is triggered when the decrement button is pressed or if the user presses down arrow
-   * with focus on the input of the spinButton
-   * @returns If a string is returned, it will be used as the value of the SpinButton.
+   * Callback for when the decrement button or down arrow key is pressed.
+   * @param value - The current value to be decremented
+   * @param event - The event that triggered this decrement
+   * @returns If a string is returned, it will be used as the new value
    */
-  onDecrement?: (value: string) => string | void;
+  onDecrement?: (
+    value: string,
+    event?: Event,
+  ) => string | void;
 
   /**
-   * A callback for when the user put focus on the picker
+   * Callback for when the user focuses the control.
    */
-  onFocus?: FocusEvent;
+  onFocus?: any;
 
   /**
-   * A callback for when the user moves the focus away from the picker
+   * Callback for when the control loses focus.
    */
-  onBlur?: FocusEvent;
+  onBlur?: any;
 
   /**
-   * Icon for the increment button of the spinButton
+   * Custom props for the increment button.
    */
   incrementButtonIcon?: IIconProps;
 
   /**
-   * Icon for the decrement button of the spinButton
+   * Custom props for the decrement button.
    */
   decrementButtonIcon?: IIconProps;
 
   /**
-   * Custom styling for individual elements within the button DOM.
+   * Custom styling for individual elements within the control.
    */
-  styles?: Partial<ISpinButtonStyles>;
+  styles?: IStyleFunctionOrObject<ISpinButtonStyleProps, ISpinButtonStyles>;
 
   /**
-   * Custom function for providing the classNames for the spinbutton. Can be used to provide
-   * all styles for the component instead of applying them on top of the default styles.
-   */
-  getClassNames?: (
-    theme: ITheme,
-    disabled: boolean,
-    isFocused: boolean,
-    keyboardSpinDirection: KeyboardSpinDirection,
-    labelPosition?: Position,
-    className?: string,
-  ) => ISpinButtonClassNames;
-
-  /**
-   * Custom styles for the upArrow button.
+   * Custom styles for the up arrow button.
    *
-   * Note: The buttons are in a checked state when arrow keys are used to
-   * incremenent/decrement the spinButton. Use rootChecked instead of rootPressed
-   * for styling when that is the case.
+   * Note: The buttons are in a checked state when arrow keys are used to increment/decrement
+   * the SpinButton. Use `rootChecked` instead of `rootPressed` for styling when that is the case.
    */
-  upArrowButtonStyles?: Partial<IButtonStyles>;
+  upArrowButtonStyles?: any;
 
   /**
-   * Custom styles for the downArrow button.
+   * Custom styles for the down arrow button.
    *
-   * Note: The buttons are in a checked state when arrow keys are used to
-   * incremenent/decrement the spinButton. Use rootChecked instead of rootPressed
-   * for styling when that is the case.
+   * Note: The buttons are in a checked state when arrow keys are used to increment/decrement
+   * the SpinButton. Use `rootChecked` instead of `rootPressed` for styling when that is the case.
    */
-  downArrowButtonStyles?: Partial<IButtonStyles>;
+  downArrowButtonStyles?: any;
 
   /**
    * Theme provided by HOC.
@@ -183,59 +194,59 @@ export interface ISpinButtonProps {
   theme?: ITheme;
 
   /**
-   * Accessibile label text for the increment button for the benefit of the screen reader.
+   * Accessible label text for the increment button (for screen reader users).
    */
   incrementButtonAriaLabel?: string;
 
   /**
-   * Accessibile label text for the decrement button for the benefit of the screen reader.
+   * Accessible label text for the decrement button (for screen reader users).
    */
   decrementButtonAriaLabel?: string;
 
   /**
    * How many decimal places the value should be rounded to.
+   *
    * The default is calculated based on the precision of `step`: i.e. if step = 1, precision = 0.
    * step = 0.0089, precision = 4. step = 300, precision = 2. step = 23.00, precision = 2.
    */
   precision?: number;
 
   /**
-   * The position in the parent set (if in a set) for aria-posinset.
+   * The position in the parent set (if in a set).
    */
   ariaPositionInSet?: number;
 
   /**
-   * The total size of the parent set (if in a set) for aria-setsize.
+   * The total size of the parent set (if in a set).
    */
   ariaSetSize?: number;
 
   /**
-   * Sets the aria-valuenow of the spin button. The component must be
-   * controlled by the creator who controls the value externally.
-   * ariaValueNow would be the numeric form of value.
+   * Sets the control's aria-valuenow. This is the numeric form of `value`.
+   * Providing this only makes sense when using as a controlled component.
    */
   ariaValueNow?: number;
 
   /*
-   * Sets the aria-valuetext of the spin button. The component must be
-   * controlled by the creator who controls the values externally.
+   * Sets the control's aria-valuetext.
+   * Providing this only makes sense when using as a controlled component.
    */
   ariaValueText?: string;
 
   /**
-   * Optional keytip for this spin button
+   * Keytip for the control.
    */
-  keytipProps?: any;
+  // keytipProps?: IKeytipProps;
 
   /**
-   * Optional input props on spin button
+   * Additional props for the input field.
    */
-  inputProps?: any
+  inputProps?: any;
 
   /**
-   * Optional iconButton props on spin button
+   * Additional props for the up and down arrow buttons.
    */
-  iconButtonProps?: any;
+  iconButtonProps?: IButtonProps;
 }
 
 /**
@@ -243,35 +254,14 @@ export interface ISpinButtonProps {
  */
 export interface ISpinButtonStyles {
   /**
-   * Styles for the root of the spin button component.
+   * Styles for the root of the component.
    */
   root: IStyle;
 
   /**
-   * Style for the label wrapper element of the component.
-   * The label wrapper contains the icon and the label.
+   * Style for the label wrapper element, which contains the icon and label.
    */
   labelWrapper: IStyle;
-
-  /**
-   * Style override when the label is positioned at the start.
-   */
-  labelWrapperStart: IStyle;
-
-  /**
-   * Style override when the label is positioned at the end.
-   */
-  labelWrapperEnd: IStyle;
-
-  /**
-   * Style override when the label is positioned at the top.
-   */
-  labelWrapperTop: IStyle;
-
-  /**
-   * Style override when the label is positioned at the bottom.
-   */
-  labelWrapperBottom: IStyle;
 
   /**
    * Style for the icon.
@@ -279,45 +269,14 @@ export interface ISpinButtonStyles {
   icon: IStyle;
 
   /**
-   * Style for the icon.
-   */
-  iconDisabled: IStyle;
-
-  /**
-   * Style for the label text
+   * Style for the label text.
    */
   label: IStyle;
 
   /**
-   * Style for the label text
-   * @deprecated Disabled styles taken care by `Label` component.
-   */
-  labelDisabled: IStyle;
-
-  /**
-   * Style for spinButtonWrapper when enabled.
+   * Style for the wrapper element of the input field and arrow buttons.
    */
   spinButtonWrapper: IStyle;
-
-  /**
-   * Style override when label is positioned at the top/bottom.
-   */
-  spinButtonWrapperTopBottom: IStyle;
-
-  /**
-   * Style override when spinButton is enabled/hovered.
-   */
-  spinButtonWrapperHovered: IStyle;
-
-  /**
-   * Style override when spinButton is enabled/focused.
-   */
-  spinButtonWrapperFocused: IStyle;
-
-  /**
-   * Style override when spinButton is disabled.
-   */
-  spinButtonWrapperDisabled: IStyle;
 
   /**
    * Styles for the input.
@@ -325,22 +284,19 @@ export interface ISpinButtonStyles {
   input: IStyle;
 
   /**
-   * Style override for ::selection
-   */
-  inputTextSelected: IStyle;
-
-  /**
-   * Style override when spinButton is disabled.
-   */
-  inputDisabled: IStyle;
-
-  /**
    * Styles for the arrowButtonsContainer
    */
   arrowButtonsContainer: IStyle;
+}
 
-  /**
-   * Style override for the arrowButtonsContainer when spin button is disabled.
-   */
-  arrowButtonsContainerDisabled: IStyle;
+/**
+ * {@docCategory SpinButton}
+ */
+export interface ISpinButtonStyleProps {
+  theme: ITheme;
+  className: string | undefined;
+  disabled: boolean;
+  isFocused: boolean;
+  keyboardSpinDirection: KeyboardSpinDirection;
+  labelPosition: Position;
 }

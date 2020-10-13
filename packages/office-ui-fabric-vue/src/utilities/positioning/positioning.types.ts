@@ -1,21 +1,31 @@
-import { IRectangle } from '@uifabric-vue/utilities'
 import { DirectionalHint } from '../../common/DirectionalHint'
+import { IRectangle, Point } from '@uifabric-vue/utilities'
+
+export { Point, IPoint } from '@uifabric-vue/utilities'
 
 export enum RectangleEdge {
   top = 1,
   bottom = -1,
   left = 2,
-  right = -2
+  right = -2,
 }
 
 export enum Position {
   top = 0,
   bottom = 1,
   start = 2,
-  end = 3
+  end = 3,
 }
+
+/**
+ * Window with typings for experimental features regarding Dual Screen devices.
+ */
+export interface IWindowWithSegments extends Window {
+  getWindowSegments?: () => DOMRect[];
+}
+
 export interface IPositionProps {
-  target?: Element | MouseEvent | IPoint;
+  target?: Element | MouseEvent | Point;
   /** how the element should be positioned */
   directionalHint?: DirectionalHint;
   /**
@@ -98,11 +108,6 @@ export interface IPosition {
   bottom?: number;
   right?: number;
   [key: string]: number | undefined;
-}
-
-export interface IPoint {
-  x: number;
-  y: number;
 }
 
 export interface IPositionDirectionalHintData {
