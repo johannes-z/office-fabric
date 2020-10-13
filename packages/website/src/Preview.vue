@@ -38,6 +38,7 @@ export default class Preview extends Vue {
       links: [{
         name: 'Office UI Fabric Vue',
         isExpanded: true,
+        key: 'Main',
         links: [
           { name: 'Get started', key: 'Start', href: publicPath + '/#/' },
         ],

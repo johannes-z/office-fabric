@@ -1,14 +1,16 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { RectangleEdge, ICalloutPositionedInfo, classNamesFunction } from '@uifabric-vue/utilities'
+import { RectangleEdge, ICalloutPositionedInfo } from '../../Positioning'
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import { Callout } from '../Callout'
 import { ActionButton } from '../Button'
 import { Checkbox } from '../Checkbox'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+import { IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
 
-const getClassNames = classNamesFunction()
+const getClassNames = classNamesFunction<IDropdownStyleProps, IDropdownStyles>()
 
 @Component({
   components: { Callout, ActionButton, Checkbox, Icon, Label },
@@ -35,7 +37,7 @@ export class DropdownBase extends BaseComponent {
   @Prop({ type: Object, default: () => {} }) calloutProps!: any
 
   isOpen: boolean = false
-  calloutRenderEdge: RectangleEdge | null = null
+  calloutRenderEdge: RectangleEdge | undefined = undefined
 
   created () {
     this.options.forEach(option => {
@@ -56,8 +58,8 @@ export class DropdownBase extends BaseComponent {
       required,
       disabled,
       isRenderingPlaceholder: !selectedOptions.length,
-      panelClassName: panelProps ? panelProps.className : undefined,
-      calloutClassName: calloutProps ? calloutProps.className : undefined,
+      panelClassName: panelProps?.className,
+      calloutClassName: calloutProps?.className,
       calloutRenderEdge: calloutRenderEdge,
     })
   }

@@ -1,13 +1,8 @@
-import { DirectionalHint } from '@/common/DirectionalHint'
-import { IPoint, IRectangle, ICalloutPositionedInfo } from '@uifabric-vue/utilities'
-import { ILayerProps } from '../Layer'
-import { ITheme } from '@uifabric/styling'
-import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
-
-/**
- * {@docCategory Callout}
- */
-export type Target = Element | string | MouseEvent | IPoint | null | Vue;
+import { IStyle, ITheme } from '../../Styling'
+import { DirectionalHint } from '../../common/DirectionalHint'
+import { IRectangle, IStyleFunctionOrObject } from '../../Utilities'
+import { ICalloutPositionedInfo } from '../../utilities/positioning'
+import { ILayerProps } from '../../Layer'
 
 /**
  * {@docCategory Callout}
@@ -18,7 +13,7 @@ export interface ICalloutProps {
    * It can be either an Element a querySelector string of a valid Element
    * or a MouseEvent. If MouseEvent is given then the origin point of the event will be used.
    */
-  target?: Target;
+  target?: any;
 
   /**
    * How the element should be positioned
@@ -67,7 +62,7 @@ export interface ICalloutProps {
   /**
    * The bounding rectangle (or callback that returns a rectangle) for which  the contextual menu can appear in.
    */
-  bounds?: IRectangle | ((target?: Target, targetWindow?: Window) => IRectangle | undefined);
+  bounds?: IRectangle | ((target?: any, targetWindow?: Window) => IRectangle | undefined);
 
   /**
    * The minimum distance the callout will be away from the edge of the screen.
@@ -84,20 +79,43 @@ export interface ICalloutProps {
   /**
    * If true then the callout will not dismiss on scroll
    * @defaultvalue false
+   * @deprecated use preventDismissOnEvent callback instead
    */
   preventDismissOnScroll?: boolean;
 
   /**
    * If true then the callout will not dismiss on resize
    * @defaultvalue false
+   * @deprecated use preventDismissOnEvent callback instead
    */
   preventDismissOnResize?: boolean;
 
   /**
    * If true then the callout will not dismiss when it loses focus
    * @defaultvalue false
+   * @deprecated use preventDismissOnEvent callback instead
    */
   preventDismissOnLostFocus?: boolean;
+
+  /**
+   * If true then the callout will dismiss when the target element is clicked
+   * @defaultvalue false
+   */
+  dismissOnTargetClick?: boolean;
+
+  /**
+   * If true then the callout will dismiss when the window gets focus
+   * @defaultvalue false
+   */
+  shouldDismissOnWindowFocus?: boolean;
+
+  /**
+   * If defined, then takes priority over preventDismissOnLostFocus, preventDismissOnResize,
+   * and preventDismissOnScroll.
+   * If it returns true, then callout will not dismiss for this event.
+   * If not defined or returns false, callout can dismiss for this event.
+   */
+  preventDismissOnEvent?: (ev: Event) => boolean;
 
   /**
    * If true the position returned will have the menu element cover the target.
@@ -242,12 +260,25 @@ export interface ICalloutProps {
   shouldUpdateWhenHidden?: boolean;
 
   /**
-   * If specified, determines whether the underlying "Popup" component should try to restore
-   * focus when it is dismissed.  When set to false, the Popup won't try to restore focus to
-   * the last focused element.
-   * @defaultvalue true;
+   * If true, when this component is unmounted, focus will be restored to the element that had focus when the component
+   * first mounted.
+   * @defaultvalue true
+   * @deprecated use onRestoreFocus callback instead
    */
   shouldRestoreFocus?: boolean;
+
+  /**
+   * Called when the component is unmounting, and focus needs to be restored.
+   * Argument passed down contains two variables, the element that the underlying
+   * popup believes focus should go to * and whether or not the popup currently
+   * contains focus. If this is provided, focus will not be restored automatically,
+   * you'll need to call originalElement.focus()
+   */
+  onRestoreFocus?: (options: {
+    originalElement?: HTMLElement | Window;
+    containsFocus: boolean;
+    documentContainsFocus: boolean;
+  }) => void;
 }
 
 /**

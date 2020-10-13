@@ -1,9 +1,13 @@
 import { styled } from '../styled'
 import { getStyles } from './Dropdown.styles'
-// import { IDropdownProps, IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
 import { DropdownBase } from './Dropdown.base'
+import { IDropdownProps, IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
 
-export const Dropdown = styled<any, any, any>(
+export const Dropdown = styled<
+IDropdownProps,
+IDropdownStyleProps,
+IDropdownStyles
+>(
   DropdownBase,
   getStyles,
   undefined,
