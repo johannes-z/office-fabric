@@ -88,6 +88,7 @@ importers:
       '@uifabric/set-version': 7.0.23
       '@uifabric/styling': 7.16.10
       '@vue/babel-helper-vue-jsx-merge-props': 1.0.0
+      '@vue/composition-api': 1.0.0-beta.16_vue@2.6.12
       core-js: 3.6.5
       portal-vue: 2.1.7_vue@2.6.12
       resize-observer: 1.0.0
@@ -141,6 +142,7 @@ importers:
       '@vue/cli-plugin-babel': ^4.5.7
       '@vue/cli-plugin-typescript': ^4.5.7
       '@vue/cli-service': ^4.5.7
+      '@vue/composition-api': ^1.0.0-beta.16
       '@vue/eslint-config-standard': ^5.1.2
       '@vue/eslint-config-typescript': ^7.0.0
       core-js: ^3.6.5
@@ -2326,7 +2328,7 @@ packages:
       integrity: sha512-6fWob1xh2W0uif2++YhNiBWITDBsAEktdgnLRgIgM/UqUg9oFpz9tqs0i85PQwjUDIn/erMT2ID3hnOncYTxxQ==
   /@vue/cli-plugin-router/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
+      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
       '@vue/cli-shared-utils': 4.5.7
     dev: true
     peerDependencies:
@@ -2336,7 +2338,7 @@ packages:
   /@vue/cli-plugin-typescript/4.5.7_a4bd582f63aa115a6c6a7a9b5ce372bd:
     dependencies:
       '@types/webpack-env': 1.15.2
-      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
+      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
       '@vue/cli-shared-utils': 4.5.7
       cache-loader: 4.1.0_webpack@4.44.1
       fork-ts-checker-webpack-plugin: 3.1.1
@@ -2361,7 +2363,7 @@ packages:
       integrity: sha512-QXcJwFKxB3DYcZCc0FeobvxPeo4QH42DpZrEJqPDhtpmKKDh+TAD+FHfRtY5t0JYmDOKPw4hppucB0G6TWqdFg==
   /@vue/cli-plugin-vuex/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
+      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
     dev: true
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
@@ -2601,6 +2603,15 @@ packages:
       vue-template-compiler: '*'
     resolution:
       integrity: sha512-B221AV3T/6PF37WnkoqUKIxBeHXmGuZsi/8pby89MAVSj9zmDdLCEZ7LDT8+DJWbElFrPELgnSvEadXxDRcrJQ==
+  /@vue/composition-api/1.0.0-beta.16_vue@2.6.12:
+    dependencies:
+      tslib: 2.0.3
+      vue: 2.6.12
+    dev: false
+    peerDependencies:
+      vue: '>= 2.5 < 3'
+    resolution:
+      integrity: sha512-FZgmL2qb2Hy3TGFKCEXHwaddFdTfG17GoA1YFCNGTg5mD3+GfWVchsKKR7XxHIAwOaXiHK/djWWsviSD1NeFFw==
   /@vue/eslint-config-standard/5.1.2_005f2fdc993eea160105b0cd5fd929b6:
     dependencies:
       '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0

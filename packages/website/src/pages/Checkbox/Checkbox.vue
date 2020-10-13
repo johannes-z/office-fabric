@@ -11,7 +11,7 @@
 
     <div class="content--inner ms-depth-8">
       <h2>Usage</h2>
-      <h2>Basic Checkboxes</h2>
+      <h3>Basic Checkboxes</h3>
       <Stack :tokens="stackTokens">
         <Checkbox>Unchecked checkbox</Checkbox>
         <Checkbox checked label="Checked checkbox" />
@@ -19,7 +19,7 @@
         <Checkbox checked disabled>Disabled checked checkbox</Checkbox>
       </Stack>
 
-      <h2>Controlled</h2>
+      <h3>Controlled</h3>
       <Stack :tokens="stackTokens">
         <Checkbox v-model="value1"
                   :label="value1 ? 'Controlled Checkbox checked' : 'Controlled Checkbox unchecked'" />
@@ -35,7 +35,7 @@
         </Checkbox>
       </Stack>
 
-      <h2>Indeterminate Checkboxes</h2>
+      <h3>Indeterminate Checkboxes</h3>
       <Stack :tokens="stackTokens">
         <Checkbox label="Indeterminate checkbox (uncontrolled)" default-indeterminate />
 
@@ -53,6 +53,19 @@
                   indeterminate
                   checked />
       </Stack>
+
+      <h3>Array Checkboxes</h3>
+      <Stack :tokens="stackTokens">
+        <Checkbox v-for="item in items"
+                  :key="item.index"
+                  :checked="selection.indexOf(item.index) > -1"
+                  @input="onSelect(item)">
+          {{ item.text }}
+        </Checkbox>
+
+        <DefaultButton @click.native="selectAll">Select All</DefaultButton>
+        <DefaultButton @click.native="deselectAll">Deselect All</DefaultButton>
+      </Stack>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -63,18 +76,25 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Stack, Checkbox, IStackTokens } from '@uifabric-vue/office-ui-fabric-vue'
+import { Stack, Checkbox, IStackTokens, DefaultButton } from '@uifabric-vue/office-ui-fabric-vue'
 
 @Component({
   components: {
     Checkbox,
     Stack,
+    DefaultButton,
   },
 })
 export default class CheckboxPage extends Vue {
   value1: boolean = true
   value2: boolean = false
   stackTokens: IStackTokens = { childrenGap: 10 }
+
+  selection: any[] = []
+  items = Array(5).fill(null).map((_, i) => ({
+    index: i,
+    text: `Item #${i + 1}`,
+  }))
 
   onFocus () {
     console.log('Checkbox is focused')
@@ -83,8 +103,22 @@ export default class CheckboxPage extends Vue {
   onBlur () {
     console.log('Checkbox is blurred')
   }
+
+  onSelect (item: { index: number }) {
+    const index = this.selection.indexOf(item.index)
+    if (index > -1) {
+      this.selection.splice(index, 1)
+    } else {
+      this.selection.push(item.index)
+    }
+  }
+
+  selectAll () {
+    this.selection = this.items.map(i => i.index)
+  }
+
+  deselectAll () {
+    this.selection = []
+  }
 }
 </script>
-
-<style lang="scss" module>
-</style>

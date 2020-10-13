@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="topNav">
+    <div class="topNav" :style="{ boxShadow: theme.effects.elevation8 }">
       <DefaultButton @click.native="toggleTheme('light')">Light Theme</DefaultButton>
       <DefaultButton @click.native="toggleTheme('dark')">Dark Theme</DefaultButton>
     </div>
@@ -21,6 +21,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { DefaultButton, IPartialTheme, loadTheme, Nav } from '@uifabric-vue/office-ui-fabric-vue'
+import { DefaultEffects, getTheme } from '@uifabric/styling'
 
 const publicPath = process.env.NODE_ENV === 'production'
   ? '/office-fabric'
@@ -30,6 +31,8 @@ const publicPath = process.env.NODE_ENV === 'production'
   components: { DefaultButton, Nav },
 })
 export default class Preview extends Vue {
+  theme = getTheme()
+
   groups = [
     {
       links: [{
@@ -208,6 +211,7 @@ body {
   background: var(--fabric-neutralLighter);
   align-items: center;
   justify-content: flex-end;
+  z-index: 1;
 }
 .page {
   background: var(--fabric-neutralLighter);
