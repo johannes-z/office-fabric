@@ -1,10 +1,9 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
 import { Label } from '../Label'
 import { Icon } from '../Icon'
-import { ICheckboxProps, ICheckboxStyles } from './Checkbox.types'
+import { ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { mergeStyles, concatStyleSets, concatStyleSetsWithProps } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
@@ -23,6 +22,11 @@ export class CheckboxBase extends BaseComponent {
 
   private internalValue: boolean = this.checked || this.defaultChecked
   private isIndeterminate: boolean = this.indeterminate || this.defaultIndeterminate
+
+  @Watch('checked')
+  onCheckedChanged (newVal: boolean) {
+    this.internalValue = newVal
+  }
 
   render () {
     const { classNames, title, label } = this
@@ -64,11 +68,6 @@ export class CheckboxBase extends BaseComponent {
     })
   }
 
-  @Watch('internalValue')
-  private onValueChanged (value: boolean) {
-    this.$emit('input', value)
-  }
-
   private onInput () {
     if (this.disabled) return
 
@@ -78,5 +77,6 @@ export class CheckboxBase extends BaseComponent {
     } else {
       this.internalValue = !this.internalValue
     }
+    this.$emit('input', this.internalValue)
   }
 }
