@@ -8,6 +8,7 @@
     "isolatedModules": false,
     "moduleResolution": "Node",
     "strict": true,
+    "resolveJsonModule": true,
     "jsx": "preserve",
     "jsxFactory": "h",
     "importHelpers": true,
