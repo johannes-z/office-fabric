@@ -53,8 +53,8 @@ export function setRTL (isRTL: boolean, persistSetting: boolean = false): void {
 /**
  * Returns the given key, but flips right/left arrows if necessary.
  */
-export function getRTLSafeKeyCode (key: number): number {
-  if (getRTL()) {
+export function getRTLSafeKeyCode (key: number, theme: { rtl?: boolean } = {}): number {
+  if (getRTL(theme)) {
     if (key === KeyCodes.left) {
       key = KeyCodes.right
     } else if (key === KeyCodes.right) {

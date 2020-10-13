@@ -50,8 +50,8 @@ export function getLastFocusable (
 }
 
 /**
- * Gets the first tabbable element.
- * The difference between focusable and tabbable is that tabbable elements are focusable elements that also have tabIndex != -1.
+ * Gets the first tabbable element. (The difference between focusable and tabbable is that tabbable elements are
+ * focusable elements that also have tabIndex != -1.)
  * @param rootElement - The parent element to search beneath.
  * @param currentElement - The descendant of rootElement to start the search at.  This element is the first one checked,
  * and iteration continues forward.  Typical use passes rootElement.firstChild.
@@ -73,13 +73,13 @@ export function getFirstTabbable (
     false /* suppressChildTraversal */,
     includeElementsInFocusZones,
     false /* allowFocusRoot */,
-    true, /* tabbable */
+    true /* tabbable */,
   )
 }
 
 /**
- * Gets the last tabbable element.
- * The difference between focusable and tabbable is that tabbable elements are focusable elements that also have tabIndex != -1.
+ * Gets the last tabbable element. (The difference between focusable and tabbable is that tabbable elements are
+ * focusable elements that also have tabIndex != -1.)
  * @param rootElement - The parent element to search beneath.
  * @param currentElement - The descendant of rootElement to start the search at.  This element is the first one checked,
  * and iteration continues in reverse.  Typical use passes rootElement.lastChild.
@@ -101,7 +101,7 @@ export function getLastTabbable (
     true /* traverseChildren */,
     includeElementsInFocusZones,
     false /* allowFocusRoot */,
-    true, /* tabbable */
+    true /* tabbable */,
   )
 }
 
@@ -353,14 +353,15 @@ export function isElementVisible (element: HTMLElement | undefined | null): bool
   return (
     element.offsetHeight !== 0 ||
     element.offsetParent !== null ||
-    // tslint:disable-next-line:no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (element as any).isVisible === true
   ) // used as a workaround for testing.
 }
 
 /**
  * Determines if an element can receive focus programmatically or via a mouse click.
- * If checkTabIndex is true, additionally checks to ensure the element can be focused with the tab key, meaning tabIndex != -1.
+ * If checkTabIndex is true, additionally checks to ensure the element can be focused with the tab key,
+ * meaning tabIndex != -1.
  *
  * @public
  */
@@ -371,7 +372,7 @@ export function isElementTabbable (element: HTMLElement, checkTabIndex?: boolean
   }
 
   let tabIndex = 0
-  let tabIndexAttributeValue: string | null = null
+  let tabIndexAttributeValue: null | string = null
 
   if (element && element.getAttribute) {
     tabIndexAttributeValue = element.getAttribute('tabIndex')
@@ -391,6 +392,7 @@ export function isElementTabbable (element: HTMLElement, checkTabIndex?: boolean
       element.tagName === 'BUTTON' ||
       element.tagName === 'INPUT' ||
       element.tagName === 'TEXTAREA' ||
+      element.tagName === 'SELECT' ||
       isFocusableAttribute === 'true' ||
       isTabIndexSet)
 
@@ -435,7 +437,10 @@ export function doesElementContainFocus (element: HTMLElement): boolean {
  * @param noWrapDataAttribute - the no wrap data attribute to match (either)
  * @returns true if focus should wrap, false otherwise
  */
-export function shouldWrapFocus (element: HTMLElement, noWrapDataAttribute: 'data-no-vertical-wrap' | 'data-no-horizontal-wrap'): boolean {
+export function shouldWrapFocus (
+  element: HTMLElement,
+  noWrapDataAttribute: 'data-no-vertical-wrap' | 'data-no-horizontal-wrap',
+): boolean {
   return elementContainsAttribute(element, noWrapDataAttribute) !== 'true'
 }
 
@@ -504,7 +509,6 @@ export function getFocusableByIndexPath (parent: HTMLElement, path: number[]): H
 export function getElementIndexPath (fromElement: HTMLElement, toElement: HTMLElement): number[] {
   const path: number[] = []
 
-  // eslint-disable-next-line
   while (toElement && fromElement && toElement !== fromElement) {
     const parent = getParent(toElement, true)
 

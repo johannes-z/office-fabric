@@ -38,7 +38,9 @@ export function css (...args: ICssInput[]): string {
       } else if (arg.hasOwnProperty('toString') && typeof arg.toString === 'function') {
         classes.push(arg.toString())
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         for (const key in arg as any) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if ((arg as any)[key]) {
             classes.push(key)
           }
