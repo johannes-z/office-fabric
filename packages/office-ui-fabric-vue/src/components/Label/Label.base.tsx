@@ -27,8 +27,6 @@ export class LabelBase extends StatelessComponent<ILabelProps> {
       theme: theme!,
     })
 
-    console.log(context.data)
-
     return h(RootType, {
       class: classNames.root,
       ...context.data,

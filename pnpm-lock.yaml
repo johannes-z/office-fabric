@@ -2326,7 +2326,7 @@ packages:
       integrity: sha512-6fWob1xh2W0uif2++YhNiBWITDBsAEktdgnLRgIgM/UqUg9oFpz9tqs0i85PQwjUDIn/erMT2ID3hnOncYTxxQ==
   /@vue/cli-plugin-router/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
       '@vue/cli-shared-utils': 4.5.7
     dev: true
     peerDependencies:
@@ -2336,7 +2336,7 @@ packages:
   /@vue/cli-plugin-typescript/4.5.7_a4bd582f63aa115a6c6a7a9b5ce372bd:
     dependencies:
       '@types/webpack-env': 1.15.2
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
       '@vue/cli-shared-utils': 4.5.7
       cache-loader: 4.1.0_webpack@4.44.1
       fork-ts-checker-webpack-plugin: 3.1.1
@@ -2361,7 +2361,7 @@ packages:
       integrity: sha512-QXcJwFKxB3DYcZCc0FeobvxPeo4QH42DpZrEJqPDhtpmKKDh+TAD+FHfRtY5t0JYmDOKPw4hppucB0G6TWqdFg==
   /@vue/cli-plugin-vuex/4.5.7_@vue+cli-service@4.5.7:
     dependencies:
-      '@vue/cli-service': 4.5.7_65781e2ca243f3813cd9753520de9ff1
+      '@vue/cli-service': 4.5.7_c75c5ca5b7d2c4370af16073c0c3bfe0
     dev: true
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0

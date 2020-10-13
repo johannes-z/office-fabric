@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@uifabric/set-version": "^7.0.23",
-    "@uifabric/styling": "^7.16.10",
+    "@uifabric/styling": "^7.16.11",
     "tslib": "^2.0.3"
   },
   "peerDependencies": {
