@@ -40,11 +40,7 @@ export interface ISpinButtonState {
 
 const getClassNames = classNamesFunction<ISpinButtonStyleProps, ISpinButtonStyles>()
 
-const COMPONENT_NAME = 'SpinButton'
-
-@Component({
-  components: { IconButton, Icon, Label },
-})
+@Component
 export class SpinButtonBase extends BaseComponent<ISpinButtonProps> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) required!: boolean
