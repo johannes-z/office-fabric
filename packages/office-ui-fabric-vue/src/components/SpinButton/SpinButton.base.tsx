@@ -46,17 +46,17 @@ const COMPONENT_NAME = 'SpinButton'
   components: { IconButton, Icon, Label },
 })
 export class SpinButtonBase extends BaseComponent<ISpinButtonProps> {
-  @Prop({ default: false }) disabled!: boolean
-  @Prop({ default: false }) required!: boolean
-  @Prop({ default: 0 }) defaultValue!: number
-  @Prop({ default: null }) value!: number
+  @Prop({ type: Boolean, default: false }) disabled!: boolean
+  @Prop({ type: Boolean, default: false }) required!: boolean
+  @Prop({ type: Number, default: 0 }) defaultValue!: number
+  @Prop({ type: Number, default: null }) value!: number
 
-  @Prop({ default: null }) label!: string
-  @Prop({ default: Position.start }) labelPosition!: number
+  @Prop({ type: String, default: null }) label!: string
+  @Prop({ type: Number, default: Position.start }) labelPosition!: number
 
-  @Prop({ default: 0 }) min!: number
-  @Prop({ default: 10 }) max!: number
-  @Prop({ default: 1 }) step!: number
+  @Prop({ type: Number, default: 0 }) min!: number
+  @Prop({ type: Number, default: 10 }) max!: number
+  @Prop({ type: Number, default: 1 }) step!: number
 
   @Prop({ type: Object, default: () => {} }) iconProps!: any
 
