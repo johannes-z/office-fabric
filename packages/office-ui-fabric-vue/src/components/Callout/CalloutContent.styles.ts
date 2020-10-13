@@ -23,8 +23,6 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
 
   const { semanticColors, effects } = theme
 
-  console.log(semanticColors.menuBackground)
-
   return {
     container: [
       classNames.container,

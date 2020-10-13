@@ -1,7 +1,13 @@
-import { IProgressIndicatorStyles } from './ProgressIndicator.types'
-import { keyframes, IRawStyle } from '@uifabric/merge-styles'
-import { getGlobalClassNames, HighContrastSelector, noWrap } from '@uifabric/styling'
-import { getRTL } from '@uifabric-vue/utilities'
+import {
+  HighContrastSelector,
+  keyframes,
+  noWrap,
+  getGlobalClassNames,
+  IRawStyle,
+  getEdgeChromiumNoHighContrastAdjustSelector,
+} from '@uifabric/styling'
+import { getRTL, memoizeFunction } from '@uifabric-vue/utilities'
+import { IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 
 const GlobalClassNames = {
   root: 'ms-ProgressIndicator',
@@ -12,25 +18,30 @@ const GlobalClassNames = {
   progressBar: 'ms-ProgressIndicator-progressBar',
 }
 
-const IndeterminateProgress = keyframes({
-  '0%': {
-    left: '-30%',
-  },
-  '100%': {
-    left: '100%',
-  },
-})
-const IndeterminateProgressRTL = keyframes({
-  '100%': {
-    right: '-30%',
-  },
-  '0%': {
-    right: '100%',
-  },
-})
+const IndeterminateProgress = memoizeFunction(() =>
+  keyframes({
+    '0%': {
+      left: '-30%',
+    },
+    '100%': {
+      left: '100%',
+    },
+  }),
+)
 
-export const getStyles = (props: any): IProgressIndicatorStyles => {
-  const isRTL = getRTL()
+const IndeterminateProgressRTL = memoizeFunction(() =>
+  keyframes({
+    '100%': {
+      right: '-30%',
+    },
+    '0%': {
+      right: '100%',
+    },
+  }),
+)
+
+export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicatorStyles => {
+  const isRTL = getRTL(props.theme)
   const { className, indeterminate, theme, barHeight = 2 } = props
 
   const { palette, semanticColors, fonts } = theme
@@ -98,8 +109,9 @@ export const getStyles = (props: any): IProgressIndicatorStyles => {
 
         selectors: {
           [HighContrastSelector]: {
-            backgroundColor: 'WindowText',
+            backgroundColor: 'highlight',
           },
+          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
 
@@ -107,8 +119,15 @@ export const getStyles = (props: any): IProgressIndicatorStyles => {
         ? ({
           position: 'absolute',
           minWidth: '33%',
-          background: `linear-gradient(to right, ${progressTrackColor} 0%, ${palette.themePrimary} 50%, ${progressTrackColor} 100%)`,
-          animation: `${isRTL ? IndeterminateProgressRTL : IndeterminateProgress} 3s infinite`,
+          background:
+              `linear-gradient(to right, ${progressTrackColor} 0%, ` +
+              `${palette.themePrimary} 50%, ${progressTrackColor} 100%)`,
+          animation: `${isRTL ? IndeterminateProgressRTL() : IndeterminateProgress()} 3s infinite`,
+          selectors: {
+            [HighContrastSelector]: {
+              background: `highlight`,
+            },
+          },
         } as IRawStyle)
         : ({
           transition: 'width .15s linear',

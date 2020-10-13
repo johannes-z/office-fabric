@@ -1,9 +1,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IProgressIndicatorProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
+import { IProgressIndicatorProps, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-const getClassNames = classNamesFunction<IProgressIndicatorProps, IProgressIndicatorStyles>()
+const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
 // if the percentComplete is near 0, don't animate it.
 // This prevents animations on reset to 0 scenarios
@@ -12,28 +12,33 @@ const ZERO_THRESHOLD = 0.01
 @Component
 export class ProgressIndicatorBase extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
   @Prop({ type: Boolean, default: false }) progressHidden!: boolean
-  @Prop({ type: Boolean, default: false }) indeterminate!: boolean
-  @Prop({ type: Number, default: 0 }) percentComplete!: number
+  @Prop({ type: Number, default: undefined }) percentComplete!: number
   @Prop({ type: String, default: null }) label!: string
   @Prop({ type: String, default: null }) description!: string
 
   @Prop({ type: Number, default: 2 }) barHeight!: number
 
+  get internalPercentComplete () {
+    return typeof this.percentComplete === 'number'
+      ? Math.min(100, Math.max(0, this.percentComplete * 100))
+      : undefined
+  }
+
   get classNames () {
-    const { className, indeterminate, theme, barHeight } = this
-    return getClassNames(this.styles, {
+    const { styles, theme, className, internalPercentComplete, barHeight } = this
+    return getClassNames(styles, {
+      theme: theme!,
       className,
-      indeterminate,
-      theme,
       barHeight,
+      indeterminate: internalPercentComplete === undefined,
     })
   }
 
   get progressBarStyles () {
-    const { percentComplete } = this
+    const { internalPercentComplete } = this
     return {
-      width: percentComplete !== undefined ? percentComplete + '%' : undefined,
-      transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
+      width: internalPercentComplete !== undefined ? internalPercentComplete + '%' : undefined,
+      transition: internalPercentComplete !== undefined && internalPercentComplete < ZERO_THRESHOLD ? 'none' : undefined,
     }
   }
 

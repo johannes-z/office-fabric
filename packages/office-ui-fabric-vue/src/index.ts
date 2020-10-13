@@ -15,10 +15,10 @@ export {
   Fabric,
   Components as FabricComponents,
 }
-export { loadTheme } from './plugin/office-fabric'
 export { initializeIcons } from '@uifabric/icons'
 export * from './registerIcons'
 
+export { loadTheme } from './plugin/loadTheme'
 export type { IPartialTheme, IOptions } from './plugin/office-fabric'
 
 export default Fabric
