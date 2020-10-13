@@ -1,5 +1,5 @@
 import { styled } from '../../styled'
-import ShimmerLineBase from './ShimmerLine.base'
+import { ShimmerLineBase } from './ShimmerLine.base'
 import { getStyles } from './ShimmerLine.styles'
 import { VueConstructor } from 'vue'
 

@@ -6,11 +6,13 @@ import { CreateElement, RenderContext } from 'vue'
 const getClassNames = classNamesFunction()
 
 @Component
-export default class ShimmerLineBase extends StatelessComponent {
-  @Prop({ type: Number, default: 0 }) height!: number
+export class ShimmerLineBase extends StatelessComponent {
+  @Prop({ type: Number, default: 16 }) height!: number
+  @Prop({ type: String, default: '100%' }) width!: string
+  @Prop({ type: String, default: '' }) borderStyle!: string
 
   render (h: CreateElement, ctx: RenderContext) {
-    const { height, styles, width = '100%', borderStyle, theme } = ctx.props
+    const { height, styles, width, borderStyle, theme } = ctx.props
 
     const classNames: any = getClassNames(styles!, {
       theme: theme!,

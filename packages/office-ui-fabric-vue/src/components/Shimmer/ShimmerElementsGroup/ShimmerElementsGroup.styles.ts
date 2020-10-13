@@ -1,10 +1,11 @@
-import { getGlobalClassNames } from '@uifabric/styling'
+import { IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles } from './ShimmerElementsGroup.types'
+import { getGlobalClassNames } from '../../../Styling'
 
 const GlobalClassNames = {
   root: 'ms-ShimmerElementsGroup-root',
 }
 
-export function getStyles (props: any): any {
+export function getStyles (props: IShimmerElementsGroupStyleProps): IShimmerElementsGroupStyles {
   const { flexWrap, theme } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)

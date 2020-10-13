@@ -1,7 +1,12 @@
-import { hiddenContentStyle, HighContrastSelector, getGlobalClassNames } from '@uifabric/styling'
-import { getRTL } from '@uifabric-vue/utilities'
-import { IShimmerStyles } from './Shimmer.types'
-import { keyframes } from '@uifabric/merge-styles'
+import { IShimmerStyleProps, IShimmerStyles } from './Shimmer.types'
+import {
+  keyframes,
+  getGlobalClassNames,
+  hiddenContentStyle,
+  HighContrastSelector,
+  getEdgeChromiumNoHighContrastAdjustSelector,
+} from '../../Styling'
+import { getRTL, memoizeFunction } from '../../Utilities'
 
 const GlobalClassNames = {
   root: 'ms-Shimmer-container',
@@ -12,31 +17,35 @@ const GlobalClassNames = {
 
 const BACKGROUND_OFF_SCREEN_POSITION = '100%'
 
-const shimmerAnimation: string = keyframes({
-  '0%': {
-    transform: `translateX(-${BACKGROUND_OFF_SCREEN_POSITION})`,
-  },
-  '100%': {
-    transform: `translateX(${BACKGROUND_OFF_SCREEN_POSITION})`,
-  },
-})
+const shimmerAnimation = memoizeFunction(() =>
+  keyframes({
+    '0%': {
+      transform: `translateX(-${BACKGROUND_OFF_SCREEN_POSITION})`,
+    },
+    '100%': {
+      transform: `translateX(${BACKGROUND_OFF_SCREEN_POSITION})`,
+    },
+  }),
+)
 
-const shimmerAnimationRTL: string = keyframes({
-  '100%': {
-    transform: `translateX(-${BACKGROUND_OFF_SCREEN_POSITION})`,
-  },
-  '0%': {
-    transform: `translateX(${BACKGROUND_OFF_SCREEN_POSITION})`,
-  },
-})
+const shimmerAnimationRTL = memoizeFunction(() =>
+  keyframes({
+    '100%': {
+      transform: `translateX(-${BACKGROUND_OFF_SCREEN_POSITION})`,
+    },
+    '0%': {
+      transform: `translateX(${BACKGROUND_OFF_SCREEN_POSITION})`,
+    },
+  }),
+)
 
-export function getStyles (props: any): IShimmerStyles {
+export function getStyles (props: IShimmerStyleProps): IShimmerStyles {
   const { isDataLoaded, className, theme, transitionAnimationInterval, shimmerColor, shimmerWaveColor } = props
 
   const { semanticColors } = theme
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
-  const isRTL = getRTL()
+  const isRTL = getRTL(theme)
 
   return {
     root: [
@@ -70,6 +79,7 @@ export function getStyles (props: any): IShimmerStyles {
                         0 0 / 90% 100%
                         no-repeat`,
           },
+          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
       isDataLoaded && {
@@ -102,7 +112,7 @@ export function getStyles (props: any): IShimmerStyles {
         animationTimingFunction: 'ease-in-out',
         animationDirection: 'normal',
         animationIterationCount: 'infinite',
-        animationName: isRTL ? shimmerAnimationRTL : shimmerAnimation,
+        animationName: isRTL ? shimmerAnimationRTL() : shimmerAnimation(),
       },
     ],
     dataWrapper: [

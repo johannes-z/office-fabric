@@ -1,17 +1,11 @@
-import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
-import { ITheme } from '@uifabric/styling'
-
-/**
- * {@docCategory Shimmer}
- */
-export interface IShimmer {}
+import { IStyle, ITheme } from '../../Styling'
+import { IStyleFunctionOrObject } from '../../Utilities'
 
 /**
  * Shimmer component props.
  * {@docCategory Shimmer}
  */
 export interface IShimmerProps {
-
   /**
    * Sets the width value of the shimmer wave wrapper.
    * @defaultvalue 100%
@@ -28,6 +22,11 @@ export interface IShimmerProps {
    * Elements to render in one line of the Shimmer.
    */
   shimmerElements?: IShimmerElement[];
+
+  /**
+   * Custom elements when necessary to build complex placeholder skeletons.
+   */
+  customElementsGroup?: any;
 
   /**
    * Localized string of the status label for screen reader

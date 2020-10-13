@@ -14,7 +14,7 @@ const TRANSITION_ANIMATION_INTERVAL = 200 /* ms */
 export class ShimmerBase extends BaseComponent {
   @Prop({ default: null }) shimmerColors!: any
   @Prop({ type: Boolean, default: false }) isDataLoaded!: boolean
-  @Prop({ type: Array, default: () => [] }) shimmerElements!: any[]
+  @Prop({ type: Array, default: undefined }) shimmerElements!: any[]
   @Prop({ type: [Number, String], default: null }) width!: number | string
 
   lastTimeoutId!: number

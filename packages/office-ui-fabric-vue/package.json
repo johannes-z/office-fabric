@@ -26,6 +26,7 @@
     "@uifabric/set-version": "^7.0.23",
     "@uifabric/styling": "^7.16.10",
     "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
+    "@vue/composition-api": "^1.0.0-beta.16",
     "core-js": "^3.6.5",
     "portal-vue": "^2.1.7",
     "resize-observer": "^1.0.0",

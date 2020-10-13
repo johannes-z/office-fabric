@@ -3,6 +3,10 @@ import 'vue-tsx-support/enable-check'
 
 import Fabric from './plugin/office-fabric'
 import * as Components from './components'
+import Vue from 'vue'
+import VueCompositionAPI from '@vue/composition-api'
+
+Vue.use(VueCompositionAPI)
 
 export * from '@uifabric-vue/utilities'
 // @ts-ignore

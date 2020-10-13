@@ -1,4 +1,5 @@
-import { getGlobalClassNames, IRawStyle, HighContrastSelector } from '@uifabric/styling'
+import { IShimmerLineStyleProps, IShimmerLineStyles } from './ShimmerLine.types'
+import { IRawStyle, getGlobalClassNames, HighContrastSelector } from '../../../Styling'
 
 const GlobalClassNames = {
   root: 'ms-ShimmerLine-root',
@@ -8,8 +9,7 @@ const GlobalClassNames = {
   bottomRightCorner: 'ms-ShimmerLine-bottomRightCorner',
 }
 
-export function getStyles (props: any): any {
-  // tslint:disable-next-line:deprecation
+export function getStyles (props: IShimmerLineStyleProps): IShimmerLineStyles {
   const { height, borderStyle, theme } = props
 
   const { semanticColors } = theme
