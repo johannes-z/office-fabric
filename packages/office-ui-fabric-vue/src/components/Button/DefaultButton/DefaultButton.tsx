@@ -3,6 +3,7 @@ import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './DefaultButton.styles'
 import BaseComponent from '../../BaseComponent'
 import { IButtonProps } from '../Button.types'
+import { h } from '@vue/composition-api'
 
 @Component
 export class DefaultButton extends BaseComponent<IButtonProps> {

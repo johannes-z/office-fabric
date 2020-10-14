@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "noImplicitAny": false,
-    "outDir": "tmp",
-    "target": "ESNext",
+    "outDir": "lib",
+    "target": "es5",
     "module": "ESNext",
     "isolatedModules": false,
     "moduleResolution": "Node",

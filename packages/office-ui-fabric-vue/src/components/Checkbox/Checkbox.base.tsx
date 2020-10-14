@@ -4,6 +4,7 @@ import { Icon } from '../Icon'
 import { ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
@@ -31,28 +32,44 @@ export class CheckboxBase extends BaseComponent {
   render () {
     const { classNames, title, label } = this
 
-    return (
-      <div class={classNames.root}>
-        <input id={`Checkbox${this.uid}`}
-          class={classNames.input}
-          {...this.$attrs}
-          disabled={this.disabled}
-          type="checkbox"
-          onInput={this.onInput} />
+    const $input = h('input', {
+      class: classNames.input,
+      attrs: {
+        id: `Checkbox${this.uid}`,
+        ...this.$attrs,
+        disabled: this.disabled,
+        type: 'checkbox',
+      },
+      on: {
+        input: this.onInput,
+      },
+    })
 
-        <Label class={classNames.label} for={`Checkbox${this.uid}`}>
-          <div class={classNames.checkbox}>
-            <Icon icon-name="CheckMark" class={classNames.checkmark} />
-          </div>
+    const $icon = h(Icon, {
+      class: classNames.checkmark,
+      props: {
+        iconName: 'CheckMark',
+      },
+    })
+    const $checkbox = h('div', { class: classNames.checkbox }, [$icon])
 
-          {(label || this.$slots.default) && (
-            <span class={classNames.text} title={title}>
-              {this.$slots.default || label}
-            </span>
-          )}
-        </Label>
-      </div>
-    )
+    const $text = (label || this.$slots.default) && h('span', {
+      class: classNames.text,
+      attrs: {
+        title: title,
+      },
+    }, this.$slots.default || label)
+
+    return h('div', { class: classNames.root }, [
+      $input,
+      h(Label, {
+        class: classNames.label,
+        attrs: { for: `Checkbox${this.uid}` },
+      }, [
+        $checkbox,
+        $text,
+      ]),
+    ])
   }
 
   get classNames () {

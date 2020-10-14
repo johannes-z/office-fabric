@@ -6,6 +6,7 @@ import { ITheme } from '@uifabric/styling'
 import { DirectionalHint } from '../../common/DirectionalHint'
 import { ContextualMenu } from '../ContextualMenu'
 import { IButtonProps } from './Button.types'
+import { h } from '@vue/composition-api'
 
 const TouchIdleDelay = 500 /* ms */
 

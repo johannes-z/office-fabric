@@ -5,6 +5,7 @@ import BaseComponent from '../BaseComponent'
 import { Icon } from '../Icon/'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { h } from '@vue/composition-api'
 
 const getClassNames: any = classNamesFunction()
 

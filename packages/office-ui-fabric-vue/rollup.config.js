@@ -24,13 +24,9 @@ export default {
   external: id => {
     if ([
       ...Object.keys(pkg.dependencies),
-      '@microsoft/load-themed-styles',
-      '@uifabric/set-version',
-      '@uifabric/styling',
-      'vue',
-      'vue-tsx-support',
+      ...Object.keys(pkg.peerDependencies),
     ].indexOf(id) > -1) return true
-    return /(@babel\/runtime)|(@uifabric\/styling)/gi.test(id)
+    return /node_modules|vue-runtime-helpers|@babel\/runtime|core-js/gi.test(id)
   },
   plugins: [
     json(),
@@ -59,17 +55,14 @@ export default {
       sourceMap: false,
     }),
     babel({
-      exclude: /node_modules/,
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
+      exclude: /node_modules\/(?!vue-runtime-helpers)/gi,
+      extensions: ['.js', '.jsx'],
       babelrc: false,
       configFile: false,
       babelHelpers: 'runtime',
       presets: [
-        ['@vue/cli-plugin-babel/preset', {
-          modules: false,
-          useBuiltIns: false,
-          polyfills: [],
-        }],
+        '@vue/babel-preset-jsx',
+        '@babel/preset-env',
       ],
       plugins: [
         '@babel/plugin-transform-runtime',
