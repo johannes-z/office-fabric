@@ -38,13 +38,11 @@
     ]
   },
   "include": [
+    "node_modules/vue-tsx-support/enable-check.d.ts",
     "src/**/*.js",
     "src/**/*.jsx",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules"
   ]
 }

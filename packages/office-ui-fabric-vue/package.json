@@ -1,8 +1,8 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "8.0.0-alpha2",
+  "version": "8.0.0-alpha6",
   "main": "./lib/index.js",
-  "module": "./src/index.ts",
+  "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "sideEffects": [
     "tmp/version.js"
@@ -20,7 +20,7 @@
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/runtime": "^7.11.2",
     "@fluentui/theme": "^1.4.0",
-    "@uifabric-vue/utilities": "workspace:^7.32.3",
+    "@uifabric-vue/utilities": "^7.32.4",
     "@uifabric/icons": "^7.5.10",
     "@uifabric/merge-styles": "^7.19.1",
     "@uifabric/set-version": "^7.0.23",
@@ -33,7 +33,8 @@
     "tslib": "^2.0.3",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.0.2",
-    "vue-runtime-helpers": "^1.1.2"
+    "vue-runtime-helpers": "^1.1.2",
+    "vue-tsx-support": "^2.3.3"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.10.4",
@@ -57,7 +58,6 @@
     "sass-loader": "^10.0.3",
     "typescript": "^4.0.3",
     "vue": "^2.6.12",
-    "vue-template-compiler": "^2.6.12",
-    "vue-tsx-support": "^2.3.3"
+    "vue-template-compiler": "^2.6.12"
   }
 }

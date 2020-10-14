@@ -1,4 +1,4 @@
-import { Position } from '../../Positioning'
+import { Position } from '../../utilities/positioning'
 // import { IButtonStyles } from '../Button'
 import { IIconProps } from '../Icon'
 import { ITheme, IStyle } from '@uifabric/styling'

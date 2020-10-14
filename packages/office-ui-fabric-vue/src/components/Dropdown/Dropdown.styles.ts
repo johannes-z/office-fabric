@@ -1,6 +1,6 @@
 import { IDropdownStyles, IDropdownStyleProps } from './Dropdown.types'
 import { IStyleFunction, IsFocusVisibleClassName } from '../../Utilities'
-import { RectangleEdge } from '../../Positioning'
+import { RectangleEdge } from '../../utilities/positioning'
 import {
   FontWeights,
   HighContrastSelector,

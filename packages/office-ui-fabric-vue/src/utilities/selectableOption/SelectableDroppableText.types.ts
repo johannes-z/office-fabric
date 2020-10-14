@@ -1,5 +1,5 @@
 // import { ICalloutProps } from '../../Callout'
-import { IPanelProps } from '../../Panel'
+import { IPanelProps } from '../../components/Panel'
 import { ISelectableOption } from '../../utilities/selectableOption/SelectableOption.types'
 
 /**

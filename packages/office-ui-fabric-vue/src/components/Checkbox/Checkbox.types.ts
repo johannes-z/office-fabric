@@ -2,8 +2,8 @@
 
 import { IStyle, ITheme } from '@uifabric/styling'
 import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
-import { IIconProps } from '../../Icon'
-import { IKeytipProps } from '../../Keytip'
+import { IIconProps } from '../Icon'
+import { IKeytipProps } from '../Keytip'
 
 /**
  * Checkbox class interface.

@@ -1,6 +1,6 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import { RectangleEdge, ICalloutPositionedInfo } from '../../Positioning'
+import { RectangleEdge, ICalloutPositionedInfo } from '../../utilities/positioning'
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'

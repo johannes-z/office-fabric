@@ -1,13 +1,12 @@
 import { mergeOverflows, ktpTargetFromSequences } from '../../utilities/keytips/KeytipUtils'
-import { Callout } from '../../Callout'
-import { DirectionalHint } from '../../ContextualMenu'
+import { Callout, ICalloutProps } from '../Callout'
+import { DirectionalHint } from '../../components/ContextualMenu'
 import { IKeytipProps } from './Keytip.types'
 import { KeytipContent } from './KeytipContent'
 import { getCalloutStyles, getCalloutOffsetStyles } from './Keytip.styles'
 import BaseComponent from '../BaseComponent'
 import { Prop } from 'vue-property-decorator'
 import { Point } from '@uifabric-vue/utilities'
-import { ICalloutProps } from '../Callout'
 
 /**
  * A callout corresponding to another Fabric component to describe a key sequence that will activate that component

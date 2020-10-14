@@ -222,7 +222,7 @@ export class SliderBase extends BaseComponent<ISliderProps> {
 
         <div class={classNames.container}>
           <div class={classNames.slideBox}
-            tabindex={disabled ? void 0 : 0}
+            tabindex={disabled ? undefined : 0}
             onMousedown={this.onMouseDown}
             onKeydown={this.onKeyDown}>
             <div ref="sliderLine" class={classNames.line}>

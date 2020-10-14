@@ -1,5 +1,5 @@
 import { IKeytipStyleProps, IKeytipStyles } from './Keytip.types'
-import { ICalloutContentStyleProps, ICalloutContentStyles } from '../../Callout'
+import { ICalloutContentStyleProps, ICalloutContentStyles } from '../../components/Callout'
 import { IStyleFunction, Point } from '../../Utilities'
 import { mergeStyleSets, HighContrastSelector } from '../../Styling'
 
