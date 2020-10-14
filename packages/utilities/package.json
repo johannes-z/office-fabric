@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/utilities",
-  "version": "7.32.3",
+  "version": "7.32.3-1",
   "description": "Fluent UI Vue utilities for building components.",
   "main": "./lib/index.js",
   "module": "./lib/index.js",

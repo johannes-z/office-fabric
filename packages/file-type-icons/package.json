@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/file-type-icons",
-  "version": "7.6.9-1",
+  "version": "7.6.9-2",
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",

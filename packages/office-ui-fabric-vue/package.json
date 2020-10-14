@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "8.0.0-alpha1",
+  "version": "8.0.0-alpha2",
   "main": "./lib/index.js",
   "module": "./src/index.ts",
   "types": "./types/index.d.ts",
