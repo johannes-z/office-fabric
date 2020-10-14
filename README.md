@@ -2,10 +2,6 @@
 This is a WIP of Office UI Fabric Vue. It aims to use as much official `Office UI Fabric React` code as possible, by
 re-using official files and packages.
 
-* NPM release is still missing.
-* Build setup (`module` and `browser/umd`) has to be improved.
-* Export of `office-ui-fabric-vue` needs improvement.
-
 ## Discord
 Join our [Discord Server](https://discord.gg/2awzj7Q)!
 
@@ -20,34 +16,4 @@ components are subject to Microsoft's license models. Please check `office-ui-fa
 The `Vue`-components also borrow code from `office-ui-fabric-react`, making it easier to merge changes.
 
 # Usage
-**WIP**
-
-`api-docs` can be used as an example on how to use `office-ui-fabric-vue`.
-
-# Contributing
-## Projects
-`office-ui-fabric-vue` is a `yarn` monorepo, consisting of 3 projects:
-
-1. `@uifabric-vue/office-ui-fabric-vue`, the main project defining all the vue components for Fabric.
-2. `@uifabric-vue/utilities`, which is basically a fork of `@uifabric/utilities` but re-written without `react`
-   dependencies. See https://github.com/OfficeDev/office-ui-fabric-react/issues/11815.
-3. `api-docs` (WIP), the homepage and showcase of the components.
-
-## Vue Caveats
-* ~~`class` has to be passed to subcomponents using the `class-name` property, because Vue doesn't expose
-  `this.$attrs.class`.~~
-
-## Project setup
-```
-yarn
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
+The `website`-code is the best starting point if you want to see how components work. The documentation is still a WIP.
