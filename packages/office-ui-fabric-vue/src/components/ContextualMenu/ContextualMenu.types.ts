@@ -8,6 +8,8 @@ import { IIconProps } from '../Icon'
 import { IKeytipProps } from '../Keytip/Keytip.types'
 import { IButtonStyles } from '../Button/Button.types'
 
+export { DirectionalHint } from '../../common/DirectionalHint'
+
 /**
  * {@docCategory ContextualMenu}
  */

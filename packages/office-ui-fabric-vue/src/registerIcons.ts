@@ -5,7 +5,7 @@ import { registerIcons as originalRegisterIcons, IIconOptions } from '@uifabric/
 export interface IIconSubset {
   fontFace?: IFontFace;
   icons: {
-    [key: string]: (h: CreateElement) => string | JSX.Element;
+    [key: string]: (h: CreateElement) => any | Element | string | JSX.Element;
   };
   style?: IRawStyle;
 }

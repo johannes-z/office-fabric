@@ -6,6 +6,28 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
+// import { defineComponent, ref, reactive } from '@vue/composition-api'
+// export default defineComponent({
+//   model: {
+//     prop: 'checked',
+//     event: 'input',
+//   },
+//   props: {
+//     disabled: { type: Boolean, default: false },
+//     checked: { type: Boolean, default: false },
+//     defaultChecked: { type: Boolean, default: false },
+//     label: { type: String, default: '' },
+//     inlineLabel: { type: Boolean, default: false },
+//     onText: { type: String, default: null },
+//     offText: { type: String, default: null },
+//   },
+//   setup (props) {
+//     console.log(props)
+
+//     return () => <div>test</div>
+//   },
+// })
+
 @Component
 export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
   $refs!: {
@@ -23,30 +45,9 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
 
   internalChecked: boolean = this.defaultChecked || this.checked
 
-  render () {
-    const { classNames, internalChecked, disabled, label, onText, offText } = this
-    return (
-      <div class={classNames.root}>
-        {this.$scopedSlots.label
-          ? this.$scopedSlots.label({ checked: internalChecked, disabled, label })
-          : (
-            <Label class={classNames.label} for={`Toggle${this.uid}`}>
-              {label}
-            </Label>
-          )}
-        <div class={classNames.container}>
-          <button id={`Toggle${this.uid}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
-            <div class={classNames.thumb} />
-          </button>
-          {((internalChecked && onText) || (!internalChecked && offText)) && (
-
-            <Label class={classNames.text} for={`Toggle${this.uid}`}>
-              { internalChecked ? onText : offText }
-            </Label>
-          )}
-        </div>
-      </div>
-    )
+  @Watch('checked')
+  onCheckedChanged (checked: boolean) {
+    this.internalChecked = checked
   }
 
   get classNames () {
@@ -61,17 +62,47 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
     })
   }
 
-  public focus () {
-    this.$refs.toggleButton.focus()
+  render () {
+    const { classNames } = this
+    return (
+      <div class={classNames.root}>
+        {this.renderLabel()}
+        <div class={classNames.container}>
+          <button id={`Toggle${this.uid}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
+            <div class={classNames.thumb} />
+          </button>
+          {this.renderStateLabel()}
+        </div>
+      </div>
+    )
   }
 
-  @Watch('internalChecked')
-  private onCheckedChanged (checked: boolean, prevVal: boolean) {
-    this.$emit('input', checked)
+  renderLabel () {
+    const { classNames, internalChecked, disabled, label } = this
+    if (this.$scopedSlots.label) return this.$scopedSlots.label({ checked: internalChecked, disabled, label })
+    return (
+      <Label class={classNames.label} for={`Toggle${this.uid}`}>
+        {label}
+      </Label>
+    )
+  }
+
+  renderStateLabel () {
+    const { classNames, internalChecked, onText, offText } = this
+    return ((internalChecked && onText) || (!internalChecked && offText)) && (
+      <Label class={classNames.text} for={`Toggle${this.uid}`}>
+        { internalChecked ? onText : offText }
+      </Label>
+    )
+  }
+
+  public focus () {
+    this.$refs.toggleButton.focus()
   }
 
   private onClick () {
     if (this.disabled) return
     this.internalChecked = !this.internalChecked
+    this.$emit('input', this.internalChecked)
   }
 }

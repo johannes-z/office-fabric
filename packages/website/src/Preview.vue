@@ -189,7 +189,7 @@ export default class Preview extends Vue {
         white: '#323130',
       }
     }
-    loadTheme(_theme, true)
+    loadTheme(_theme)
   }
 }
 </script>

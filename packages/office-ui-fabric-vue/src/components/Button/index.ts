@@ -1,4 +1,5 @@
 export * from './BaseButton'
+export * from './Button.types'
 
 export * from './ActionButton/ActionButton'
 export * from './DefaultButton/DefaultButton'

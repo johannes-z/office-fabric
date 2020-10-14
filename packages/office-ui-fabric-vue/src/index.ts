@@ -8,6 +8,20 @@ import VueCompositionAPI from '@vue/composition-api'
 
 Vue.use(VueCompositionAPI)
 
+export * from './Callout'
+export * from './Checkbox'
+export * from './ContextualMenu'
+export * from './Icon'
+export * from './Keytip'
+export * from './Label'
+export * from './Layer'
+export * from './Panel'
+
+export * from './Positioning'
+export * from './SelectableOption'
+export * from './Styling'
+export * from './Utilities'
+
 export * from '@uifabric-vue/utilities'
 // @ts-ignore
 export * from './utilities/positioning'
@@ -20,7 +34,8 @@ export {
   Components as FabricComponents,
 }
 export { initializeIcons } from '@uifabric/icons'
-export * from './registerIcons'
+export type { IIconSubset } from './registerIcons'
+export { registerIcons } from './registerIcons'
 
 export { loadTheme } from './plugin/loadTheme'
 export type { IPartialTheme, IOptions } from './plugin/office-fabric'

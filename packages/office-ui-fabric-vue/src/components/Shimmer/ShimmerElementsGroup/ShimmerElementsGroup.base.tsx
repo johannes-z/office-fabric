@@ -15,11 +15,7 @@ import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles>()
 
-@Component({
-  components: {
-    ShimmerLine,
-  },
-})
+@Component
 export default class ShimmerElementsGroupBase extends StatelessComponent {
   @Prop({ type: Array, default: undefined }) shimmerElements!: any[]
   @Prop({ type: String, default: 'auto' }) width!: string
@@ -74,6 +70,7 @@ function getRenderedElements (
       },
     )
   ) : (
+    // @ts-ignore
     <ShimmerLine height={ShimmerElementsDefaultHeights.line} />
   )
 

@@ -23,7 +23,7 @@ export function initializeFileTypeIcons (baseUrl: string = DEFAULT_BASE_URL, opt
 
 function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIconOptions>): void {
   const iconTypes: string[] = Object.keys(FileTypeIconMap)
-  const fileTypeIcons: { [key: string]: JSX.Element } = {}
+  const fileTypeIcons: { [key: string]: any } = {}
 
   iconTypes.forEach((type: string) => {
     const baseUrlSizeType = baseUrl + size + '/' + type

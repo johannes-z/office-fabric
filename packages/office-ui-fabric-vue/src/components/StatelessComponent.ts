@@ -1,5 +1,4 @@
 import { Prop, Component } from 'vue-property-decorator'
-import { css } from '@uifabric-vue/utilities'
 import { getTheme } from '@uifabric/styling'
 import { Component as TsxComponent } from 'vue-tsx-support'
 
@@ -13,8 +12,4 @@ export default abstract class StatelessComponent<TProps = {}> extends TsxCompone
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
   @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
-
-  css () {
-    return css(...arguments)
-  }
 }
