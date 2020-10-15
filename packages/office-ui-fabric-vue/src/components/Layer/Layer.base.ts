@@ -6,6 +6,7 @@ import BaseComponent from '../BaseComponent'
 import { getStyles } from './Layer.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { ofType } from 'vue-tsx-support'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<ILayerStyleProps, ILayerStyles>()
 
@@ -72,18 +73,22 @@ export class LayerBase extends BaseComponent {
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     if (!this.hasTarget) return
 
     const { classNames, hostId, append } = this
-    return (
-      <TypedMountingPortal mount-to={hostId ? `#${hostId}` : 'body'} append={append}>
-        <div class={classNames.root}>
-          <div class={classNames.content}>
-            {this.$slots.default}
-          </div>
-        </div>
-      </TypedMountingPortal>
-    )
+
+    return h(TypedMountingPortal, {
+      props: {
+        mountTo: hostId ? `#${hostId}` : 'body',
+        append,
+      },
+    }, [
+      h('div', { class: classNames.root }, [
+        h('div', { class: classNames.content }, [
+          this.$scopedSlots.default({}),
+        ]),
+      ]),
+    ])
   }
 }
