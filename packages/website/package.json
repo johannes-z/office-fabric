@@ -27,6 +27,7 @@
     "vue-property-decorator": "^9.0.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.12.0",
     "@uifabric-vue/utilities": "workspace:^7.32.3",
     "@vue/cli-plugin-babel": "^4.5.7",
     "@vue/cli-plugin-eslint": "^4.5.7",
