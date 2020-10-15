@@ -28,8 +28,8 @@ export class LabelBase extends StatelessComponent<ILabelProps> {
     })
 
     return h(RootType, {
-      class: classNames.root,
       ...context.data,
+      class: classNames.root,
     }, context.children)
   }
 }

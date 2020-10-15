@@ -1,8 +1,9 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
-import { Label } from '../Label/'
+import { Label } from '../Label'
 import BaseComponent from '../BaseComponent'
 import { IToggleProps, IToggleStyles, IToggleStyleProps } from './Toggle.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
@@ -62,38 +63,47 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
     })
   }
 
-  render () {
-    const { classNames } = this
-    return (
-      <div class={classNames.root}>
-        {this.renderLabel()}
-        <div class={classNames.container}>
-          <button id={`Toggle${this.uid}`} ref="toggleButton" class={classNames.pill} onClick={this.onClick}>
-            <div class={classNames.thumb} />
-          </button>
-          {this.renderStateLabel()}
-        </div>
-      </div>
-    )
-  }
+  render (h: CreateElement) {
+    const { classNames, internalChecked, disabled, label, onText, offText } = this
+    const id = `Toggle${this.uid}`
 
-  renderLabel () {
-    const { classNames, internalChecked, disabled, label } = this
-    if (this.$scopedSlots.label) return this.$scopedSlots.label({ checked: internalChecked, disabled, label })
-    return (
-      <Label class={classNames.label} for={`Toggle${this.uid}`}>
-        {label}
-      </Label>
-    )
-  }
+    const $label = h(Label, {
+      class: classNames.label,
+      attrs: {
+        for: id,
+      },
+    }, this.$scopedSlots.label ? [
+      this.$scopedSlots.label({ checked: internalChecked, disabled, label }),
+    ] : label)
 
-  renderStateLabel () {
-    const { classNames, internalChecked, onText, offText } = this
-    return ((internalChecked && onText) || (!internalChecked && offText)) && (
-      <Label class={classNames.text} for={`Toggle${this.uid}`}>
-        { internalChecked ? onText : offText }
-      </Label>
-    )
+    const $pill = h('button', {
+      ref: 'toggleButton',
+      class: classNames.pill,
+      attrs: {
+        id: id,
+      },
+      on: {
+        click: this.onClick,
+      },
+    }, [
+      h('div', { class: classNames.thumb }),
+    ])
+
+    const $stateLabel = ((internalChecked && onText) || (!internalChecked && offText)) && h(Label, {
+      class: classNames.text,
+      attrs: {
+        for: id,
+      },
+    }, internalChecked ? onText : offText)
+    const $container = h('div', { class: classNames.container }, [
+      $pill,
+      $stateLabel,
+    ])
+
+    return h('div', { class: classNames.root }, [
+      $label,
+      $container,
+    ])
   }
 
   public focus () {

@@ -3,6 +3,7 @@ import { IImageStyleProps, IImageStyles, ImageFit, ImageCoverStyle, ImageLoadSta
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Image.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IImageStyleProps, IImageStyles>()
 
@@ -24,19 +25,27 @@ export class ImageBase extends BaseComponent<IImageProps> {
 
   private static svgRegex = /\.svg$/i;
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, src, alt, width, height } = this
-    return (
-      <div class={classNames.root} style={{ width: width + 'px', height: height + 'px' }}>
-        <img
-          {...this.$attrs}
-          class={classNames.image}
-          src={src}
-          alt={alt}
-          onLoad={this.onImageLoaded}
-          onError={this.onImageError} />
-      </div>
-    )
+
+    const $image = h('img', {
+      attrs: {
+        ...this.$attrs,
+        src,
+        alt,
+      },
+      class: classNames.image,
+      on: {
+        load: this.onImageLoaded,
+        error: this.onImageError,
+      },
+    })
+    return h('div', {
+      class: classNames.root,
+      style: { width: width + 'px', height: height + 'px' },
+    }, [
+      $image,
+    ])
   }
 
   get classNames () {

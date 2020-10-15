@@ -12,8 +12,8 @@ export default class Text extends StatelessComponent<ITextProps> {
   @Prop({ type: Boolean, default: false }) block!: boolean
   @Prop({ type: String, default: 'medium' }) variant!: string
 
-  render (h: CreateElement, context: RenderContext) {
-    const { theme, styles, block, nowrap, variant } = context.props
+  render (h: CreateElement, ctx: RenderContext) {
+    const { theme, styles, block, nowrap, variant } = ctx.props
     const classNames = getClassNames(styles, {
       theme,
       block,
@@ -21,10 +21,9 @@ export default class Text extends StatelessComponent<ITextProps> {
       variant,
     })
 
-    return (
-      <span {...context.data} class={classNames.root}>
-        {context.children}
-      </span>
-    )
+    return h('span', {
+      ...ctx.data,
+      class: classNames.root,
+    }, ctx.children)
   }
 }

@@ -12,8 +12,8 @@ export default class Spinner extends StatelessComponent<ISpinnerProps> {
   @Prop({ type: String, default: 'bottom' }) labelPosition!: SpinnerLabelPosition
   @Prop({ type: Number, default: 20 }) size!: number
 
-  render (h: CreateElement, context: RenderContext) {
-    const { theme, styles, className, size, label, labelPosition } = context.props
+  render (h: CreateElement, ctx: RenderContext) {
+    const { theme, styles, className, size, label, labelPosition } = ctx.props
     const classNames: any = getClassNames(styles, {
       theme,
       size,
@@ -21,18 +21,15 @@ export default class Spinner extends StatelessComponent<ISpinnerProps> {
       labelPosition,
     })
 
-    return (
-      <div class={classNames.root}>
-        <div class={classNames.circle} />
-        {(context.scopedSlots.default || label) && (
-          <div class={classNames.label}>
-            {context.scopedSlots.default
-              ? context.scopedSlots.default({})
-              : label
-            }
-          </div>
-        ) }
-      </div>
-    )
+    const $circle = h('div', { class: classNames.circle })
+    const $label = (ctx.scopedSlots.default || label) && h('div',
+      { class: classNames.label }, ctx.scopedSlots.default ? [
+        ctx.scopedSlots.default({}),
+      ] : label)
+
+    return h('div', { class: classNames.root }, [
+      $circle,
+      $label,
+    ])
   }
 }

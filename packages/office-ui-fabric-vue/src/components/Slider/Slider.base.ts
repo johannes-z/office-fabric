@@ -1,8 +1,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Label } from '../Label/'
+import { Label } from '../Label'
 import { ISliderProps, ISliderStyles, ISliderStyleProps } from './Slider.types'
 import BaseComponent from '../BaseComponent'
 import { KeyCodes, classNamesFunction } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<ISliderStyleProps, ISliderStyles>()
 
@@ -212,59 +213,68 @@ export class SliderBase extends BaseComponent<ISliderProps> {
     }, ONKEYDOWN_TIMEOUT_DURATION)
   };
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, disabled, originFromZero, vertical, zeroOffsetPercent, thumbOffsetPercent, lengthString, internalValue, css, label } = this
 
-    // TODO(code) `originFromZero` fragments/spans look ugly; maybe could be improved
-    return (
-      <div class={classNames.root}>
-        <Label class={classNames.titleLabel}>{label}</Label>
+    const $label = h(Label, { class: classNames.titleLabel }, label)
+    const $sliderLine = h('div', {
+      ref: 'sliderLine',
+      class: classNames.line,
+    }, [
+      originFromZero && h('span', {
+        class: classNames.zeroTick,
+        style: { [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` },
+      }),
+      h('span', {
+        class: classNames.thumb,
+        style: { [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` },
+      }),
+      originFromZero && h('span', {
+        class: css(classNames.lineContainer, classNames.inactiveSection),
+        style: { [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` },
+      }),
+      originFromZero && h('span', {
+        class: css(classNames.lineContainer, classNames.activeSection),
+        style: { [lengthString]: `${Math.abs(zeroOffsetPercent - thumbOffsetPercent)}%` },
+      }),
+      originFromZero && h('span', {
+        class: css(classNames.lineContainer, classNames.inactiveSection),
+        style: { [lengthString]: `${Math.min(100 - thumbOffsetPercent, 100 - zeroOffsetPercent)}%` },
+      }),
+      !originFromZero && h('span', {
+        class: css(classNames.lineContainer, classNames.activeSection),
+        style: { [lengthString]: `${thumbOffsetPercent}%` },
+      }),
+      !originFromZero && h('span', {
+        class: css(classNames.lineContainer, classNames.inactiveSection),
+        style: { [lengthString]: `${100 - thumbOffsetPercent}%` },
+      }),
+    ])
+    const $valueLabel = h(Label, {
+      class: classNames.valueLabel,
+    }, this.$scopedSlots.value ? [
+      this.$scopedSlots.value({ value: internalValue }),
+    ] : `${internalValue}`)
 
-        <div class={classNames.container}>
-          <div class={classNames.slideBox}
-            tabindex={disabled ? undefined : 0}
-            onMousedown={this.onMouseDown}
-            onKeydown={this.onKeyDown}>
-            <div ref="sliderLine" class={classNames.line}>
-              {originFromZero && (
-                <span class= {classNames.zeroTick}
-                  style={{ [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` }} />
-              )}
-              <span class= {classNames.thumb}
-                style={{ [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` }} />
+    const $container = h('div', { class: classNames.container }, [
+      h('div', {
+        class: classNames.slideBox,
+        attrs: {
+          tabindenx: disabled ? undefined : 0,
+        },
+        on: {
+          mousedown: this.onMouseDown,
+          keydown: this.onKeyDown,
+        },
+      }, [
+        $sliderLine,
+      ]),
+      $valueLabel,
+    ])
 
-              {originFromZero && (
-                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
-                  style={{ [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` }} />
-              )}
-              {originFromZero && (
-                <span class={css(classNames.lineContainer, classNames.activeSection)}
-                  style={{ [lengthString]: `${Math.abs(zeroOffsetPercent - thumbOffsetPercent)}%` }} />
-              )}
-              {originFromZero && (
-                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
-                  style={{ [lengthString]: `${Math.min(100 - thumbOffsetPercent, 100 - zeroOffsetPercent)}%` }} />
-              )}
-
-              {!originFromZero && (
-                <span class={css(classNames.lineContainer, classNames.activeSection)}
-                  style={{ [lengthString]: `${thumbOffsetPercent}%` }} />
-              )}
-              {!originFromZero && (
-                <span class={css(classNames.lineContainer, classNames.inactiveSection)}
-                  style={{ [lengthString]: `${100 - thumbOffsetPercent}%` }} />
-              )}
-            </div>
-          </div>
-
-          <Label class={classNames.valueLabel}>
-            {this.$scopedSlots.value
-              ? this.$scopedSlots.value({ value: internalValue })
-              : internalValue
-            }
-          </Label>
-        </div>
-      </div>
-    )
+    return h('div', { class: classNames.root }, [
+      $label,
+      $container,
+    ])
   }
 }

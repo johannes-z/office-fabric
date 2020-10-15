@@ -4,6 +4,7 @@ import { IconButton } from '../Button'
 import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction, KeyCodes } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<any, ISearchBoxStyles>()
 
@@ -27,37 +28,44 @@ export class SearchBoxBase extends BaseComponent {
   isActive: boolean = false
   internalValue: string = this.value
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, disabled, internalValue, placeholder, iconName } = this
-    return (
 
-      <div class={classNames.root}>
-        <div class={classNames.iconContainer}
-          role="search">
-          <Icon class={classNames.icon} icon-name={iconName} />
-        </div>
-        <input
-          ref="input"
-          {...this.$attrs}
-          class={classNames.field}
-          disabled={disabled}
-          value={internalValue}
-          area-label={placeholder}
-          placeholder={placeholder}
-          onInput={(ev) => (this.internalValue = ev.target.value as string)}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          onKeydown={this.onKeyDown} />
-        {internalValue && (
-          <div class={classNames.clearButton}>
-            <IconButton
-              styles={{ root: { height: 'auto' }, icon: { fontSize: '12px' } }}
-              icon-props={{ iconName: 'Clear' }}
-              onClick={this.clearInput} />
-          </div>
-        )}
-      </div>
-    )
+    const $iconContainer = h('div', { class: classNames.iconContainer }, [
+      h(Icon, { class: classNames.icon, props: { iconName } }),
+    ])
+    const $clearButton = internalValue && h('div', { class: classNames.clearButton }, [
+      h(IconButton, {
+        props: {
+          styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } },
+          iconProps: { iconName: 'Clear' },
+        },
+        on: { click: this.clearInput },
+      }),
+    ])
+    const $input = h('input', {
+      ref: 'input',
+      class: classNames.field,
+      attrs: {
+        ...this.$attrs,
+        disabled,
+        value: internalValue,
+        'aria-label': placeholder,
+        placeholder,
+      },
+      on: {
+        input: this.onInput,
+        focus: this.onFocus,
+        blur: this.onBlur,
+        keydown: this.onKeyDown,
+      },
+    })
+
+    return h('div', { class: classNames.root }, [
+      $iconContainer,
+      $input,
+      $clearButton,
+    ])
   }
 
   get classNames () {
@@ -135,5 +143,9 @@ export class SearchBoxBase extends BaseComponent {
     this.$emit('blur', e)
     if (e.defaultPrevented) return
     this.isActive = false
+  }
+
+  private onInput (e: InputEvent) {
+    this.internalValue = (<HTMLInputElement>e.target).value
   }
 }

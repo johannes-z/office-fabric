@@ -1,7 +1,6 @@
-import { IImageStyles } from './Image.types'
-import { getGlobalClassNames, AnimationClassNames } from '@uifabric/styling'
-import { IStyle } from '@uifabric/merge-styles'
-import { getWindow } from '@uifabric-vue/utilities'
+import { AnimationClassNames, getGlobalClassNames, IStyle } from '../../Styling'
+import { IImageStyleProps, IImageStyles } from './Image.types'
+import { getWindow } from '../../Utilities'
 
 const GlobalClassNames = {
   root: 'ms-Image',
@@ -17,7 +16,7 @@ const GlobalClassNames = {
   imagePortrait: 'ms-Image-image--portrait',
 }
 
-export const getStyles = (props: any): IImageStyles => {
+export const getStyles = (props: IImageStyleProps): IImageStyles => {
   const {
     className,
     width,
@@ -51,7 +50,9 @@ export const getStyles = (props: any): IImageStyles => {
   const window: Window | undefined = getWindow()
   const supportsObjectFit: boolean = window !== undefined && window.navigator.msMaxTouchPoints === undefined
   const fallbackObjectFitStyles =
-    (isContain && isLandscape) || (isCover && !isLandscape) ? { width: '100%', height: 'auto' } : { width: 'auto', height: '100%' }
+    (isContain && isLandscape) || (isCover && !isLandscape)
+      ? { width: '100%', height: 'auto' }
+      : { width: 'auto', height: '100%' }
 
   return {
     root: [

@@ -1,7 +1,17 @@
-import { IconFontSizes, HighContrastSelector, getPlaceholderStyles, normalize, getGlobalClassNames, AnimationClassNames } from '@uifabric/styling'
-import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
-import { ITextFieldStyles } from './TextField.types'
-import { ILabelStyles } from '../Label'
+import {
+  AnimationClassNames,
+  getGlobalClassNames,
+  getInputFocusStyle,
+  HighContrastSelector,
+  IStyle,
+  normalize,
+  getPlaceholderStyles,
+  IconFontSizes,
+  getEdgeChromiumNoHighContrastAdjustSelector,
+} from '../../Styling'
+import { ILabelStyles, ILabelStyleProps } from '../Label'
+import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 
 const globalClassNames = {
   root: 'ms-TextField',
@@ -23,7 +33,7 @@ const globalClassNames = {
   active: 'is-active',
 }
 
-function getLabelStyles (props: any): IStyleFunctionOrObject<any, ILabelStyles> {
+function getLabelStyles (props: ITextFieldStyleProps): IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> {
   const { underlined, disabled, focused, theme } = props
   const { palette, fonts } = theme
 
@@ -53,7 +63,7 @@ function getLabelStyles (props: any): IStyleFunctionOrObject<any, ILabelStyles> 
   })
 }
 
-export function getStyles (props: any): ITextFieldStyles {
+export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
   const {
     theme,
     className,
@@ -76,7 +86,8 @@ export function getStyles (props: any): ITextFieldStyles {
   const classNames = getGlobalClassNames(globalClassNames, theme)
 
   const fieldPrefixSuffix: IStyle = {
-    background: semanticColors.disabledBackground, // Suffix/Prefix are not editable so the disabled slot perfectly fits.
+    // Suffix/Prefix are not editable so the disabled slot perfectly fits.
+    background: semanticColors.disabledBackground,
     color: !disabled ? semanticColors.inputPlaceholderText : semanticColors.disabledText,
     display: 'flex',
     alignItems: 'center',
@@ -84,6 +95,12 @@ export function getStyles (props: any): ITextFieldStyles {
     lineHeight: 1,
     whiteSpace: 'nowrap',
     flexShrink: 0,
+    selectors: {
+      [HighContrastSelector]: {
+        background: 'Window',
+        color: disabled ? 'GrayText' : 'WindowText',
+      },
+    },
   }
 
   // placeholder style constants
@@ -92,35 +109,22 @@ export function getStyles (props: any): ITextFieldStyles {
     {
       color: semanticColors.inputPlaceholderText,
       opacity: 1,
+      selectors: {
+        [HighContrastSelector]: {
+          color: 'GrayText',
+        },
+      },
     },
   ]
 
   const disabledPlaceholderStyles: IStyle = {
     color: semanticColors.disabledText,
-  }
-
-  const getFocusBorder = (color: string, borderType: 'border' | 'borderBottom' = 'border'): IStyle => ({
-    borderColor: color,
     selectors: {
-      ':after': {
-        pointerEvents: 'none',
-        content: "''",
-        position: 'absolute',
-        left: -1,
-        top: -1,
-        bottom: -1,
-        right: -1,
-        [borderType]: '2px solid ' + color,
-        borderRadius: effects.roundedCorner2,
-        width: borderType === 'borderBottom' ? '100%' : undefined,
-        selectors: {
-          [HighContrastSelector]: {
-            [borderType === 'border' ? 'borderColor' : 'borderBottomColor']: 'Highlight',
-          },
-        },
+      [HighContrastSelector]: {
+        color: 'GrayText',
       },
     },
-  })
+  }
 
   return {
     root: [
@@ -153,6 +157,7 @@ export function getStyles (props: any): ITextFieldStyles {
             [HighContrastSelector]: {
               borderColor: 'GrayText',
             },
+            ...getEdgeChromiumNoHighContrastAdjustSelector(),
           },
         },
         !disabled && {
@@ -163,11 +168,21 @@ export function getStyles (props: any): ITextFieldStyles {
                 [HighContrastSelector]: {
                   borderBottomColor: 'Highlight',
                 },
+                ...getEdgeChromiumNoHighContrastAdjustSelector(),
               },
             },
           },
         },
-        focused && getFocusBorder(!hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText, 'borderBottom'),
+        focused && [
+          {
+            position: 'relative',
+          },
+          getInputFocusStyle(
+            !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
+            0,
+            'borderBottom',
+          ),
+        ],
       ],
     ],
     fieldGroup: [
@@ -199,18 +214,25 @@ export function getStyles (props: any): ITextFieldStyles {
               [HighContrastSelector]: {
                 borderColor: 'Highlight',
               },
+              ...getEdgeChromiumNoHighContrastAdjustSelector(),
             },
           },
         },
       },
 
-      focused && !underlined && getFocusBorder(!hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText),
+      focused &&
+        !underlined &&
+        getInputFocusStyle(
+          !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
+          effects.roundedCorner2,
+        ),
       disabled && {
         borderColor: semanticColors.disabledBackground,
         selectors: {
           [HighContrastSelector]: {
             borderColor: 'GrayText',
           },
+          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
 
         cursor: 'default',
@@ -250,7 +272,7 @@ export function getStyles (props: any): ITextFieldStyles {
         required && {
         selectors: {
           ':before': {
-            content: '\'*\'',
+            content: `'*'`,
             color: semanticColors.errorText,
             position: 'absolute',
             top: -5,
@@ -259,6 +281,7 @@ export function getStyles (props: any): ITextFieldStyles {
           [HighContrastSelector]: {
             selectors: {
               ':before': {
+                color: 'WindowText',
                 right: -14, // moving the * 4 pixel to right to alleviate border clipping in HC mode.
               },
             },
@@ -285,6 +308,10 @@ export function getStyles (props: any): ITextFieldStyles {
           '&:active, &:focus, &:hover': { outline: 0 },
           '::-ms-clear': {
             display: 'none',
+          },
+          [HighContrastSelector]: {
+            background: 'Window',
+            color: disabled ? 'GrayText' : 'WindowText',
           },
         },
       },
@@ -386,7 +413,6 @@ export function getStyles (props: any): ITextFieldStyles {
     ],
     prefix: [classNames.prefix, fieldPrefixSuffix],
     suffix: [classNames.suffix, fieldPrefixSuffix],
-    // @ts-ignore
     subComponentStyles: {
       label: getLabelStyles(props),
     },

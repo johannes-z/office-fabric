@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { IProgressIndicatorProps, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
@@ -42,21 +43,22 @@ export class ProgressIndicatorBase extends BaseComponent<IProgressIndicatorProps
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, label, progressHidden, progressBarStyles, description } = this
-    return (
-      <div class={classNames.root}>
-        {label && (<div class={classNames.itemName}>{ label }</div>)}
+    const $label = label && h('div', { class: classNames.itemName }, label)
 
-        {!progressHidden && (
-          <div class={classNames.itemProgress}>
-            <div class={classNames.progressTrack} />
-            <div class={classNames.progressBar} style={progressBarStyles} />
-          </div>
-        )}
+    const $progress = !progressHidden &&
+    h('div', { class: classNames.itemProgress }, [
+      h('div', { class: classNames.progressTrack }),
+      h('div', { class: classNames.progressBar, style: progressBarStyles }),
+    ])
 
-        {description && (<div class={classNames.itemDescription}>{ description }</div>)}
-      </div>
-    )
+    const $description = description && h('div', { class: classNames.itemDescription }, description)
+
+    return h('div', { class: classNames.root }, [
+      $label,
+      $progress,
+      $description,
+    ])
   }
 }

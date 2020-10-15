@@ -24,8 +24,8 @@ export default class StackItem extends StatelessComponent {
 
   @Prop({ type: Number, default: 0 }) test!: number
 
-  render (h: CreateElement, context: RenderContext<any>) {
-    const { grow, shrink, disableShrink, align, verticalFill, order, className, styles } = context.props
+  render (h: CreateElement, ctx: RenderContext<any>) {
+    const { grow, shrink, disableShrink, align, verticalFill, order, className, styles } = ctx.props
 
     const classNames: any = getClassNames(mergeStyleSets(baseStyles({
       grow,
@@ -37,8 +37,6 @@ export default class StackItem extends StatelessComponent {
       className,
     }, getTheme(), {}), styles))
 
-    return (
-      <div class={classNames.root}>{context.children}</div>
-    )
+    return h('div', { class: classNames.root }, ctx.children)
   }
 }

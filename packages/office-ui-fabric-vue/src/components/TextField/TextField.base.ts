@@ -1,9 +1,10 @@
 import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
-import { Label, ILabelStyles, ILabelStyleProps } from '../Label/'
+import { Label, ILabelStyles, ILabelStyleProps } from '../Label'
 import { ITextFieldProps, ITextFieldStyles, ITextFieldStyleProps } from './TextField.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
@@ -31,12 +32,12 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
   @Prop({ type: String, default: null }) placeholder!: string
   @Prop({ type: String, default: null }) description!: string
 
-  isActive: boolean = false
+  isFocused: boolean = false
   internalValue: string = this.value
 
   get classNames () {
     const {
-      theme, className, disabled, isActive: focused, required, multiline, label, borderless, underlined,
+      theme, className, disabled, isFocused: focused, required, multiline, label, borderless, underlined,
       resizable, autoAdjustHeight,
     } = this
     return getClassNames(this.styles, {
@@ -75,7 +76,7 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
     const textElement = this.$refs.textElement
     const start = textElement.selectionStart || 0
     const end = textElement.selectionEnd || 0
-    if ((newValue !== oldValue) && this.isActive) {
+    if ((newValue !== oldValue) && this.isFocused) {
       await this.$nextTick()
       this.$refs.textElement.focus()
       this.$refs.textElement.setSelectionRange(start, end)
@@ -91,7 +92,7 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
   }
 
   private async onFocus () {
-    this.isActive = true
+    this.isFocused = true
     this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length)
   }
 
@@ -101,7 +102,7 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
     this.$emit('change', ev, value)
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, required, label, errorMessage, disabled, multiline, internalValue, readonly, placeholder, resizable } = this
 
     const Component = multiline ? 'textarea' : 'input'
@@ -110,46 +111,57 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
       ? (classNames.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
       : undefined
 
-    return (
+    const id = `TextField${this.uid}`
 
-      <div class={classNames.root}>
-        <div class={classNames.wrapper}>
-          {label && (
-            <Label
-              styles={labelStyles}
-              for={`TextField${this.uid}`}
-              required={required}>{label}</Label>
-          )}
-          <div class={classNames.fieldGroup}>
-            <Component
-              id={this.$attrs.id || `TextField${this.uid}`}
-              ref="textElement"
-              class={classNames.field}
-              value={internalValue}
-              {...{ attrs: this.$attrs }}
-              disabled={disabled}
-              readonly={readonly}
-              required={required}
-              placeholder={placeholder}
-              rows={+this.$attrs.rows || 1}
-              type="text"
-              autocomplete="off"
-              style={{ resize: (resizable === false) && 'none' }}
-              onFocus={this.onFocus}
-              onBlur={() => (this.isActive = false)}
-              onInput={ev => this.onInput(ev, ev.target.value)}>{internalValue}</Component>
-          </div>
-        </div>
-        {errorMessage && (
-          <div class={classNames.description}>
-            <div role="alert">
-              <p class={classNames.errorMessage}>
-                <span>{errorMessage}</span>
-              </p>
-            </div>
-          </div>
-        )}
-      </div>
-    )
+    const $label = label && h(Label, {
+      attrs: {
+        for: id,
+        required: required,
+      },
+      props: {
+        styles: labelStyles,
+      },
+    }, label)
+
+    const $fieldGroup = h('div', { class: classNames.fieldGroup }, [
+      h(Component, {
+        ref: 'textElement',
+        class: classNames.field,
+        attrs: {
+          id: this.$attrs.id || id,
+          value: internalValue,
+          ...this.$attrs,
+          disabled: disabled,
+          readonly: readonly,
+          required: required,
+          placeholder: placeholder,
+          rows: +this.$attrs.rows || 1,
+          type: 'text',
+          autocomplete: 'off',
+        },
+        style: { resize: (resizable === false) && 'none' },
+        on: {
+          focus: this.onFocus,
+          blur: () => (this.isFocused = false),
+          input: ev => this.onInput(ev, ev.target.value),
+        },
+      }, internalValue),
+    ])
+
+    const $errorMessage = errorMessage && h('div', { class: classNames.description }, [
+      h('div', { attrs: { role: 'alert' } }, [
+        h('p', { class: classNames.errorMessage }, [
+          h('span', errorMessage),
+        ]),
+      ]),
+    ])
+
+    return h('div', { class: classNames.root }, [
+      h('div', { class: classNames.wrapper }, [
+        $label,
+        $fieldGroup,
+      ]),
+      $errorMessage,
+    ])
   }
 }

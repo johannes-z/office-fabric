@@ -21,12 +21,14 @@ export class SeparatorBase extends StatelessComponent {
       vertical,
     })
 
-    return (
-      <div class={classNames.root}>
-        <div class={classNames.content} role="separator" aria-orientation={vertical ? 'vertical' : 'horizontal'}>
-          {context.children}
-        </div>
-      </div>
-    )
+    const $content = h('div', {
+      class: classNames.content,
+      attrs: {
+        role: 'separator',
+        'aria-orientation': vertical ? 'vertical' : 'horizontal',
+      },
+    }, context.children)
+
+    return h('div', { class: classNames.root }, [$content])
   }
 }
