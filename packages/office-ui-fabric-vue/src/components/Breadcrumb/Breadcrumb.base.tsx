@@ -5,6 +5,7 @@ import { getStyles } from './Breadcrumb.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { Link } from '../Link'
 import { Icon } from '../Icon'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
 
@@ -26,7 +27,7 @@ export class BreadcrumbBase extends BaseComponent<IBreadcrumbProps, IBreadcrumbS
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, items } = this
     return (
       <div class={classNames.root} role="navigation">

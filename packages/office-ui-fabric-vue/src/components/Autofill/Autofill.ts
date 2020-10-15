@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { isIE11, KeyCodes } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 import { IAutofillProps } from './Autofill.types'
+import { CreateElement } from 'vue'
 
 const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'
@@ -175,25 +176,21 @@ export class Autofill extends BaseComponent<IAutofillProps> {
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { displayValue } = this
-    return (
-      <input
-        ref="inputElement"
-        // @ts-ignore
-        autoCapitalize="off"
-        autoComplete="off"
-        aria-autocomplete={'both'}
-        // {...nativeProps}
-        value={displayValue}
-        // onCompositionStart={this._onCompositionStart}
-        // onCompositionUpdate={this._onCompositionUpdate}
-        // onCompositionEnd={this._onCompositionEnd}
-        onInput={this.onInputChanged}
-        onKeydown={this.onKeyDown}
-        onClick={ev => this.$emit('click', ev)}
-        data-lpignore={true}
-      />
-    )
+
+    return h('input', {
+      ref: 'inputElement',
+      attrs: {
+        autoCapitalize: 'off',
+        autoComplete: 'off',
+        'aria-autocomplete': 'both',
+        value: displayValue,
+      },
+      on: {
+        change: this.onInputChanged,
+        click: ev => this.$emit('click', ev),
+      },
+    })
   }
 }

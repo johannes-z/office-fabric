@@ -1,4 +1,4 @@
-import { HighContrastSelector, IRawStyle, focusClear, getGlobalClassNames } from '@uifabric/styling'
+import { HighContrastSelector, IRawStyle, focusClear, getGlobalClassNames } from '../../Styling'
 import { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
 
 function getBeakStyle (beakWidth?: number): IRawStyle {

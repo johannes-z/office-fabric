@@ -1,7 +1,16 @@
-import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
-import { getFocusStyle, HighContrastSelector, FontWeights, getGlobalClassNames, getScreenSelector, ScreenWidthMinMedium, ScreenWidthMaxMedium, ScreenWidthMaxSmall } from '@uifabric/styling'
-import { IRawStyle } from '@uifabric/merge-styles'
-import { IBreadcrumbStyles } from './Breadcrumb.types'
+import {
+  HighContrastSelector,
+  IRawStyle,
+  ScreenWidthMaxMedium,
+  ScreenWidthMaxSmall,
+  ScreenWidthMinMedium,
+  getFocusStyle,
+  getScreenSelector,
+  getGlobalClassNames,
+  FontWeights,
+} from '../../Styling'
+import { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
+import { IsFocusVisibleClassName } from '../../Utilities'
 
 const GlobalClassNames = {
   root: 'ms-Breadcrumb',
@@ -28,7 +37,7 @@ const itemFontSize = 18
 const MinimumScreenSelector = getScreenSelector(0, ScreenWidthMaxSmall)
 const MediumScreenSelector = getScreenSelector(ScreenWidthMinMedium, ScreenWidthMaxMedium)
 
-export const getStyles = (props: any): IBreadcrumbStyles => {
+export const getStyles = (props: IBreadcrumbStyleProps): IBreadcrumbStyles => {
   const { className, theme } = props
   const { palette, semanticColors, fonts } = theme
 
@@ -180,7 +189,7 @@ export const getStyles = (props: any): IBreadcrumbStyles => {
             color: palette.neutralDark,
           },
           [`.${IsFocusVisibleClassName} &:focus`]: {
-            outline: 'none',
+            outline: `none`,
           },
           ...itemStateSelectors,
         },

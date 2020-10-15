@@ -1,5 +1,5 @@
-import { IPersonaSharedProps } from '../Persona'
-import { IStyle } from '@uifabric/styling'
+import { IStyle } from '../../Styling'
+import { IPersonaSharedProps } from '../../Persona'
 
 /**
  * {@docCategory ActivityItem}
@@ -49,27 +49,26 @@ export interface IActivityItemProps {
   /**
    * A renderer for the description of the current activity.
    */
-  onRenderActivityDescription?: any;
+  // onRenderActivityDescription?: IRenderFunction<IActivityItemProps>;
 
   /**
    * A renderer that adds the text of a comment below the activity description.
    */
-  onRenderComments?: any;
+  // onRenderComments?: IRenderFunction<IActivityItemProps>;
 
   /**
    * A renderer to create the icon next to the activity item.
    */
-  onRenderIcon?: any;
+  // onRenderIcon?: IRenderFunction<IActivityItemProps>;
 
   /**
    * A renderer adds a time stamp. If not included, timeStamp is shown as plain text below the activity.
    */
-  onRenderTimeStamp?: any;
+  // onRenderTimeStamp?: IRenderFunction<IActivityItemProps>;
 
   /**
    * Optional styling for the elements within the Activity Item.
    */
-  // eslint-disable-next-line no-use-before-define
   styles?: IActivityItemStyles;
 
   /**

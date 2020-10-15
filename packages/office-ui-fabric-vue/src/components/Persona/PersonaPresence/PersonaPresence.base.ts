@@ -6,6 +6,7 @@ import {
 } from '../Persona.types'
 import { sizeBoolean } from '../PersonaConsts'
 import { Icon } from '../../Icon'
+import { CreateElement } from 'vue'
 
 const coinSizeFontScaleFactor = 6
 const coinSizePresenceScaleFactor = 3
@@ -105,22 +106,24 @@ export class PersonaPresenceBase extends BaseComponent<IPersonaPresenceProps> {
     return ''
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, presence, presenceTitle, coinSizeWithPresenceStyle, coinSizeWithPresenceIconStyle, icon, renderIcon } = this
     if (presence === PersonaPresenceEnum.none) return
 
-    return (
-      <div
-        class={classNames.presence}
-        title={presenceTitle}
-        style={coinSizeWithPresenceStyle}>
-        {renderIcon && (
-          <Icon
-            class={classNames.presenceIcon}
-            icon-name={icon}
-            style={coinSizeWithPresenceIconStyle} />
-        )}
-      </div>
-    )
+    return h('div', {
+      class: classNames.presence,
+      attrs: {
+        title: presenceTitle,
+      },
+      style: coinSizeWithPresenceStyle,
+    }, [
+      renderIcon && h(Icon, {
+        class: classNames.presenceIcon,
+        style: coinSizeWithPresenceIconStyle,
+        props: {
+          iconName: icon,
+        },
+      }),
+    ])
   }
 }

@@ -6,7 +6,7 @@ import { ITheme } from '@uifabric/styling'
 import { DirectionalHint } from '../../common/DirectionalHint'
 import { ContextualMenu } from '../ContextualMenu'
 import { IButtonProps } from './Button.types'
-import { h } from '@vue/composition-api'
+import { CreateElement } from 'vue'
 
 const TouchIdleDelay = 500 /* ms */
 
@@ -114,7 +114,7 @@ export class BaseButton extends BaseComponent<IBaseButtonProps> {
       )
   }
 
-  render () {
+  render (h: CreateElement) {
     const ButtonComponent = this.component
     const MenuComponent = this.MenuType
     const { classNames, href, iconProps, className, css, secondaryText, isSplitButton, menuProps, menuIconProps, shouldRenderMenu } = this

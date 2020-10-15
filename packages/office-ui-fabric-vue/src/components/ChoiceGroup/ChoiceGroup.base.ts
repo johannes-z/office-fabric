@@ -6,6 +6,7 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { Label } from '../Label'
 import { IChoiceGroupStyleProps, IChoiceGroupStyles, IChoiceGroupProps, IChoiceGroupOption } from './ChoiceGroup.types'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IChoiceGroupStyleProps, IChoiceGroupStyles>()
 
@@ -35,33 +36,36 @@ export class ChoiceGroupBase extends BaseComponent<IChoiceGroupProps> {
     this.selectedOption = option
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, label, required, disabled, selectedOption, options } = this
-    return (
-      <div class={classNames.root}>
-        {label && (
-          <Label class={classNames.label}
-            required={required}
-            disabled={disabled}>
-            { label }
-          </Label>
-        )}
 
-        <div class={classNames.flexContainer}>
-          {options.map(option => {
-            return (
-              <ChoiceGroupOption
-                id={option.key}
-                key={option.key}
-                {...{ props: option }}
-                checked={selectedOption.key === option.key}
-                nativeOnClick={ev => this.onClick(ev, option)}>
-                { option.text }
-              </ChoiceGroupOption>
-            )
-          })}
-        </div>
-      </div>
-    )
+    const $label = label && h(Label, {
+      class: classNames.label,
+      attrs: {
+        required,
+        disabled,
+      },
+    }, label)
+
+    const $flexContainer = h('div', {
+      class: classNames.flexContainer,
+    }, options.map(option => h(ChoiceGroupOption, {
+      key: option.key,
+      attrs: {
+        id: option.key,
+      },
+      props: {
+        ...option,
+        checked: selectedOption.key === option.key,
+      },
+      nativeOn: {
+        click: ev => this.onClick(ev, option),
+      },
+    }, option.text)))
+
+    return h('div', { class: classNames.root }, [
+      $label,
+      $flexContainer,
+    ])
   }
 }

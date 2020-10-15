@@ -3,7 +3,7 @@ import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './DefaultButton.styles'
 import BaseComponent from '../../BaseComponent'
 import { IButtonProps } from '../Button.types'
-import { h } from '@vue/composition-api'
+import { CreateElement } from 'vue'
 
 @Component
 export class DefaultButton extends BaseComponent<IButtonProps> {
@@ -16,17 +16,18 @@ export class DefaultButton extends BaseComponent<IButtonProps> {
     return getStyles(theme, this.styles, primary)
   }
 
-  render () {
+  render (h: CreateElement) {
     const { primary, internalStyles } = this
     const props: IBaseButtonProps = {
       ...this.$props,
       variantClassName: primary ? 'ms-Button--primary' : 'ms-Button--default',
       styles: internalStyles,
     }
-    return (
-      <BaseButton {...{ props, attrs: this.$attrs }}>
-        {this.$slots.default}
-      </BaseButton>
-    )
+    return h(BaseButton, {
+      props,
+      attrs: this.$attrs,
+      on: this.$listeners,
+      scopedSlots: this.$scopedSlots,
+    })
   }
 }

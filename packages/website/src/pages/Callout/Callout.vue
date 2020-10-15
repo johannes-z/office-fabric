@@ -25,7 +25,7 @@
       <f-callout v-if="showCallout"
                  :target="target"
                  :styles="{ calloutMain: { maxWidth: 300 } }"
-                 :is-beak-visible="false"
+                 :is-beak-visible="true"
                  @dismiss="onDismiss">
         <div :class="$style.header">
           <p :class="$style.title">
@@ -77,6 +77,7 @@ export default class CalloutPage extends Vue {
   padding-right: 24px;
   padding-bottom: 12px;
   padding-left: 24px;
+  color: var(--fabric-bodyText);
 }
 .title {
   font-size: 20px;
@@ -85,7 +86,7 @@ export default class CalloutPage extends Vue {
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
-  color: rgb(50, 49, 48);
+  color: var(--fabric-bodyText);
 }
 .inner {
   height: 100%;
@@ -93,6 +94,7 @@ export default class CalloutPage extends Vue {
   padding-right: 24px;
   padding-bottom: 20px;
   padding-left: 24px;
+  color: var(--fabric-bodyText);
 }
 .subtext {
   font-size: 12px;
@@ -101,13 +103,14 @@ export default class CalloutPage extends Vue {
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
-  color: rgb(50, 49, 48);
+  color: var(--fabric-bodyText);
 }
 .actions {
   position: relative;
   margin-top: 20px;
   width: 100%;
   white-space: nowrap;
+  color: var(--fabric-bodyText);
 }
 .link {
 }

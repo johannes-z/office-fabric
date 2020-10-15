@@ -1,5 +1,5 @@
 import { Component, Prop } from 'vue-property-decorator'
-import Vue from 'vue'
+import Vue, { CreateElement } from 'vue'
 
 @Component
 export class DelayedRender extends Vue {
@@ -18,9 +18,7 @@ export class DelayedRender extends Vue {
     if (this.timeoutId) clearTimeout(this.timeoutId)
   }
 
-  render () {
-    return this.isRendered ? (
-      <div>{this.$slots.default}</div>
-    ) : null
+  render (h: CreateElement) {
+    return this.isRendered ? h('div', [this.$slots.default]) : null
   }
 }

@@ -1,4 +1,5 @@
-import { KeyCodes } from '@uifabric-vue/utilities'
+import { Autofill } from './Autofill'
+import { KeyCodes } from '../../Utilities'
 
 /**
  * {@docCategory Autofill}
@@ -46,12 +47,18 @@ export interface IAutofill {
  */
 export interface IAutofillProps {
   /**
+   * Gets the components ref.
+   */
+  // componentRef?: IRefObject<IAutofill>;
+
+  /**
    * The suggested autofill value that will display.
    */
   suggestedDisplayValue?: string;
 
   /**
-   * A callback for when the current input value changes.
+   * A callback for when the current input value changes. Called after
+   * the state has been changed.
    *
    * @param composing - true if the change event was triggered while the
    * inner input was in the middle of a multi-character composition.
@@ -61,8 +68,8 @@ export interface IAutofillProps {
 
   /**
    * When the user uses left arrow, right arrow, clicks, or deletes text autofill is disabled
-   * Since the user has taken control. It is automatically reenabled when the user enters text and the
-   * cursor is at the end of the text in the input box. This specifies other key presses that will reenabled
+   * Since the user has taken control. It is automatically re-enabled when the user enters text and the
+   * cursor is at the end of the text in the input box. This specifies other key presses that will re-enabled.
    * autofill.
    * @defaultvalue [KeyCodes.down, KeyCodes.up]
    */
@@ -80,13 +87,15 @@ export interface IAutofillProps {
    * Handler for checking and updating the value if needed
    * in componentWillReceiveProps
    *
+   * @deprecated use standard input Value prop instead if
+   * the autofill should act like a controlled component
    * @returns - the updated value to set, if needed
    */
   updateValueInWillReceiveProps?: () => string | null;
 
   /**
    * Handler for checking if the full value of the input should
-   * be seleced in componentDidUpdate
+   * be selected in componentDidUpdate
    *
    * @returns - should the full value of the input be selected?
    */
@@ -94,12 +103,15 @@ export interface IAutofillProps {
 
   /**
    * A callback used to modify the input string.
+   * Do not use this to return a string anymore. Instead pass in
+   * value like you would any other controlled component.
+   * Called before the state has been updated.
    *
    * @param composing - true if the change event was triggered while the
    * inner input was in the middle of a multi-character composition.
    * (for example, jp-hiragana IME input)
    */
-  onInputChange?: (value: string, composing: boolean) => string;
+  onInputChange?: (value: string, composing: boolean) => string | void;
 
   /**
    * Should the value of the input be selected? True if we're focused on our input, false otherwise.

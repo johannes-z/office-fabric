@@ -1,8 +1,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Icon } from '../../Icon/'
+import { Icon } from '../../Icon'
 import BaseComponent from '../../BaseComponent'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './CommandBarButton.styles'
+import { CreateElement } from 'vue'
 
 @Component
 export class CommandBarButton extends BaseComponent {
@@ -11,15 +12,16 @@ export class CommandBarButton extends BaseComponent {
     return getStyles(theme, styles)
   }
 
-  render () {
+  render (h: CreateElement) {
     const props: IBaseButtonProps = {
       variantClassName: 'ms-Button--commandBar',
       styles: this.internalStyles,
     }
-    return (
-      <BaseButton {...{ props, attrs: this.$attrs }}>
-        {this.$slots.default}
-      </BaseButton>
-    )
+    return h(BaseButton, {
+      props,
+      attrs: this.$attrs,
+      on: this.$listeners,
+      scopedSlots: this.$scopedSlots,
+    })
   }
 }

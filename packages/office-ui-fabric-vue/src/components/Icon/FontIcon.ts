@@ -43,11 +43,9 @@ export class FontIcon extends StatelessComponent<IIconProps> {
     const iconContent = getIconContent(iconName) || {}
     const { iconClassName, children, fontFamily } = iconContent
 
-    return (
-      <i class={css(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className)}
-        style={{ fontFamily, ...style }}>
-        {children}
-      </i>
-    )
+    return h('i', {
+      class: css(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className),
+      style: { fontFamily, ...style },
+    }, children)
   }
 }

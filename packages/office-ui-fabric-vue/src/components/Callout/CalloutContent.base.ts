@@ -6,6 +6,7 @@ import { IPosition, ICalloutPositionedInfo, positionCallout } from '../../utilit
 import { getStyles } from './CalloutContent.styles'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { clickedOutside } from '../../utilities/clickedOutside'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction()
 
@@ -84,7 +85,7 @@ export class CalloutContentBase extends BaseComponent {
   private updatePosition () {
     const positions = this.positions
 
-    const currentProps: any = this.$props
+    const currentProps: any = { ...this.$props }
     currentProps!.bounds = this.bounds
     currentProps!.target = this.target!
     const newPositions = positionCallout(currentProps, this.$refs.hostElement, this.$refs.calloutElement, this.positions)
@@ -147,23 +148,27 @@ export class CalloutContentBase extends BaseComponent {
     return true
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, positionCss, isBeakVisible } = this
-    return (
-      <div ref="hostElement" class={classNames.container}>
-        <div ref="calloutElement"
-          class={classNames.root}
-          style={positionCss ? positionCss.elementPosition : null}>
-          {isBeakVisible && (
-            <div class={classNames.beak}
-              style={(positionCss && positionCss.beakPosition) ? positionCss.beakPosition.elementPosition : null} />
-          )}
-          {isBeakVisible && (<div class={classNames.beakCurtain} />)}
-          <div class={classNames.calloutMain}>
-            {this.$slots.default}
-          </div>
-        </div>
-      </div>
-    )
+
+    return h('div', {
+      ref: 'hostElement',
+      class: classNames.container,
+    }, [
+      h('div', {
+        ref: 'calloutElement',
+        class: classNames.root,
+        style: positionCss ? positionCss.elementPosition : null,
+      }, [
+        isBeakVisible && h('div', {
+          class: classNames.beak,
+          style: (positionCss && positionCss.beakPosition) ? positionCss.beakPosition.elementPosition : null,
+        }),
+        isBeakVisible && h('div', { class: classNames.beakCurtain }),
+        h('div', { class: classNames.calloutMain }, [
+          this.$slots.default,
+        ]),
+      ]),
+    ])
   }
 }

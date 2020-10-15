@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { getStyles } from './CompoundButton.styles'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
+import { CreateElement } from 'vue'
 
 @Component
 export class CompoundButton extends BaseComponent {
@@ -13,16 +14,17 @@ export class CompoundButton extends BaseComponent {
     return getStyles(theme, styles, primary)
   }
 
-  render () {
+  render (h: CreateElement) {
     const { primary, internalStyles } = this
     const props: IBaseButtonProps = {
       variantClassName: primary ? 'ms-Button--compoundPrimary' : 'ms-Button--compound',
       styles: internalStyles,
     }
-    return (
-      <BaseButton {...{ props, attrs: this.$attrs }}>
-        {this.$slots.default}
-      </BaseButton>
-    )
+    return h(BaseButton, {
+      props,
+      attrs: this.$attrs,
+      on: this.$listeners,
+      scopedSlots: this.$scopedSlots,
+    })
   }
 }

@@ -14,6 +14,7 @@ import { PersonaPresence } from '../PersonaPresence/'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
 import { ImageFit, Image } from '../../Image'
 import { Icon } from '../../Icon'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IPersonaCoinStyleProps, IPersonaCoinStyles>({
   // There can be many PersonaCoin rendered with different sizes.
@@ -89,7 +90,7 @@ export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
     return (
       <div role="presentation" class={classNames.coin}>

@@ -14,19 +14,11 @@ import pkg from './package.json'
 const packageRoot = path.resolve(__dirname)
 
 export default {
-  input: './tmp/index.js',
+  input: './lib/index.js',
   output: {
-    dir: 'lib',
-    format: 'esm',
-    preserveModules: true,
+    file: 'dist/office-ui-fabric-vue.umd',
+    format: 'umd',
     sourcemap: false,
-  },
-  external: id => {
-    if ([
-      ...Object.keys(pkg.dependencies),
-      ...Object.keys(pkg.peerDependencies),
-    ].indexOf(id) > -1) return true
-    return /node_modules|vue-runtime-helpers|@babel\/runtime|core-js/gi.test(id)
   },
   plugins: [
     json(),
@@ -40,12 +32,6 @@ export default {
         { find: '@uifabric/utilities', replacement: '@uifabric-vue/utilities' },
       ],
     }),
-    vue({
-      css: false,
-      template: {
-        isProduction: true,
-      },
-    }),
     resolve({
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       preferBuiltins: true,
@@ -53,20 +39,6 @@ export default {
     commonjs({
       include: /node_modules/,
       sourceMap: false,
-    }),
-    babel({
-      exclude: /node_modules\/(?!vue-runtime-helpers)/gi,
-      extensions: ['.js', '.jsx'],
-      babelrc: false,
-      configFile: false,
-      babelHelpers: 'runtime',
-      presets: [
-        '@vue/babel-preset-jsx',
-        '@babel/preset-env',
-      ],
-      plugins: [
-        '@babel/plugin-transform-runtime',
-      ],
     }),
   ],
 }

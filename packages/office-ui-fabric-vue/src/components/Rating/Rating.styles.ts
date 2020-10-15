@@ -1,5 +1,5 @@
-import { hiddenContentStyle, getFocusStyle, getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
-import { IRatingStyles } from './Rating.types'
+import { getFocusStyle, hiddenContentStyle, HighContrastSelector, getGlobalClassNames } from '../../Styling'
+import { IRatingStyleProps, IRatingStyles } from './Rating.types'
 
 const GlobalClassNames = {
   root: 'ms-RatingStar-root',
@@ -26,7 +26,7 @@ function _getColorWithHighContrast (color: string, highContrastColor: string) {
   }
 }
 
-export function getStyles (props: any): any {
+export function getStyles (props: IRatingStyleProps): IRatingStyles {
   const { disabled, readOnly, theme } = props
 
   const { semanticColors, palette } = theme
@@ -106,9 +106,6 @@ export function getStyles (props: any): any {
       getFocusStyle(theme),
       classNames.ratingButton,
       {
-        fontSize: 'var(--size)',
-        lineHeight: 'var(--size)',
-        height: 'var(--size)',
         backgroundColor: 'transparent',
         padding: `${ratingVerticalPadding}px ${ratingHorizontalPadding}px`,
         boxSizing: 'content-box',

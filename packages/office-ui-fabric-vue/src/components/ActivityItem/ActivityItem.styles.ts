@@ -1,7 +1,13 @@
-import { concatStyleSets, keyframes } from '@uifabric/merge-styles'
-import { HighContrastSelector, PulsingBeaconAnimationStyles, getTheme, ITheme } from '@uifabric/styling'
-import { memoizeFunction } from '@uifabric-vue/utilities'
-import { IActivityItemStyles } from './ActivityItem.types'
+import {
+  concatStyleSets,
+  ITheme,
+  getTheme,
+  HighContrastSelector,
+  keyframes,
+  PulsingBeaconAnimationStyles,
+} from '../../Styling'
+import { memoizeFunction } from '../../Utilities'
+import { IActivityItemStyles, IActivityItemProps } from './ActivityItem.types'
 
 const DEFAULT_PERSONA_SIZE = '32px'
 const COMPACT_PERSONA_SIZE = '16px'
@@ -11,14 +17,28 @@ const ANIMATION_INNER_DIMENSION = '4px'
 const ANIMATION_OUTER_DIMENSION = '28px'
 const ANIMATION_BORDER_WIDTH = '4px'
 
+const fadeIn = memoizeFunction(() =>
+  keyframes({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+  }),
+)
+
+const slideIn = memoizeFunction(() =>
+  keyframes({
+    from: { transform: 'translateX(-10px)' },
+    to: { transform: 'translateX(0)' },
+  }),
+)
+
 export const getStyles = memoizeFunction(
   (
     theme: ITheme = getTheme(),
     customStyles?: IActivityItemStyles,
-    animateBeaconSignal?: any['animateBeaconSignal'],
-    beaconColorOne?: any['beaconColorOne'],
-    beaconColorTwo?: any['beaconColorTwo'],
-    isCompact?: any['isCompact'],
+    animateBeaconSignal?: IActivityItemProps['animateBeaconSignal'],
+    beaconColorOne?: IActivityItemProps['beaconColorOne'],
+    beaconColorTwo?: IActivityItemProps['beaconColorTwo'],
+    isCompact?: IActivityItemProps['isCompact'],
   ): IActivityItemStyles => {
     const continuousPulse = PulsingBeaconAnimationStyles.continuousPulseAnimationSingle(
       beaconColorOne || theme.palette.themePrimary,
@@ -28,16 +48,6 @@ export const getStyles = memoizeFunction(
       ANIMATION_BORDER_WIDTH,
     )
 
-    const fadeIn: string = keyframes({
-      from: { opacity: 0 },
-      to: { opacity: 1 },
-    })
-
-    const slideIn: string = keyframes({
-      from: { transform: 'translateX(-10px)' },
-      to: { transform: 'translateX(0)' },
-    })
-
     const continuousPulseAnimation = {
       animationName: continuousPulse,
       animationIterationCount: '1',
@@ -46,13 +56,13 @@ export const getStyles = memoizeFunction(
     }
 
     const slideInAnimation = {
-      animationName: slideIn,
+      animationName: slideIn(),
       animationIterationCount: '1',
       animationDuration: '.5s',
     }
 
     const fadeInAnimation = {
-      animationName: fadeIn,
+      animationName: fadeIn(),
       animationIterationCount: '1',
       animationDuration: '.5s',
     }

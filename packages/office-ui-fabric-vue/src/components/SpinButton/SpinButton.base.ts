@@ -13,6 +13,7 @@ import {
 
 import { getStyles, getArrowButtonStyles } from './SpinButton.styles'
 import { ISpinButtonProps, ISpinButtonStyleProps, ISpinButtonStyles } from './SpinButton.types'
+import { CreateElement } from 'vue'
 
 export enum KeyboardSpinDirection {
   down = -1,
@@ -133,54 +134,69 @@ export class SpinButtonBase extends BaseComponent<ISpinButtonProps> {
     clearInterval(this.interval)
   }
 
-  render () {
+  render (h: CreateElement) {
     const { theme, customUpArrowButtonStyles, customDownArrowButtonStyles, classNames, labelPosition, iconProps, label, internalValue } = this
-    return (
-      <div class={classNames.root}>
-        {(labelPosition !== Position.bottom && (iconProps || label)) && (
-          <div class={classNames.labelWrapper}>
-            {iconProps && (<Icon class-name={classNames.icon} {...{ props: iconProps }} />)}
-            <Label for={`SpinButton${this.uid}`} class={classNames.label}>{label}</Label>
-          </div>
-        )}
 
-        <div class={classNames.spinButtonWrapper}>
-          <input id={`SpinButton${this.uid}`}
-            class={classNames.input}
-            value={internalValue}
-            type="text"
-            role="spinbutton"
-            onFocus={() => (this.isFocused = true)}
-            onBlur={() => (this.isFocused = false)}
-            onInput={ev => (this.internalValue = +(ev.target.value || 0))} />
-          <span class={classNames.arrowBox}>
-            <IconButton
-              class="ms-UpButton"
-              styles={getArrowButtonStyles(theme, true, customUpArrowButtonStyles)}
-              icon-props={{ iconName: 'ChevronUpSmall' }}
-              nativeOnMousedown={() => this.startSpin(1)}
-              nativeOnMouseup={() => this.stopSpin()} />
-            <IconButton
-              class="ms-DownButton"
-              styles={getArrowButtonStyles(theme, false, customDownArrowButtonStyles)}
-              icon-props={{ iconName: 'ChevronDownSmall' }}
-              nativeOnMousedown={() => this.startSpin(-1)}
-              nativeOnMouseup={() => this.stopSpin()} />
-          </span>
-        </div>
+    const $label = h('div', { class: classNames.labelWrapper }, [
+      iconProps && h(Icon, {
+        class: classNames.icon,
+        props: {
+          ...iconProps,
+        },
+      }),
+      h('Label', {
+        class: classNames.label,
+        attrs: {
+          for: `SpinButton${this.uid}`,
+        },
+      }, label),
+    ])
 
-        {(labelPosition === Position.bottom && (iconProps || label)) && (
-          <div class={classNames.labelWrapper}>
-            {iconProps && (
-              <Icon class-name={classNames.icon} {...{ props: iconProps }} />
-            )}
-            {label && (
-              <Label for={`SpinButton${this.uid}`} class={classNames.label}>{label}</Label>
-            )}
-          </div>
-        )}
+    const $spinButtonWrapper = h('div', { class: classNames.spinButtonWrapper }, [
+      h('input', {
+        class: classNames.input,
+        attrs: {
+          id: `SpinButton${this.uid}`,
+          value: internalValue,
+          type: 'text',
+          role: 'spinbutton',
+        },
+        on: {
+          focus: () => (this.isFocused = true),
+          blur: () => (this.isFocused = false),
+          onput: ev => (this.internalValue = +(ev.target.value || 0)),
+        },
+      }),
+      h('span', { class: classNames.arrowBox }, [
+        h(IconButton, {
+          staticClass: 'ms-UpButton',
+          props: {
+            styles: getArrowButtonStyles(theme, true, customUpArrowButtonStyles),
+            iconProps: { iconName: 'ChevronUpSmall' },
+          },
+          nativeOn: {
+            mousedown: () => this.startSpin(1),
+            mouseup: () => this.stopSpin(),
+          },
+        }),
+        h(IconButton, {
+          staticClass: 'ms-DownButton',
+          props: {
+            styles: getArrowButtonStyles(theme, false, customDownArrowButtonStyles),
+            iconProps: { iconName: 'ChevronDownSmall' },
+          },
+          nativeOn: {
+            mousedown: () => this.startSpin(-1),
+            mouseup: () => this.stopSpin(),
+          },
+        }),
+      ]),
+    ])
 
-      </div>
-    )
+    return h('div', { class: classNames.root }, [
+      (labelPosition !== Position.bottom && (iconProps || label)) && $label,
+      $spinButtonWrapper,
+      (labelPosition === Position.bottom && (iconProps || label)) && $label,
+    ])
   }
 }

@@ -1,11 +1,12 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Icon } from '../Icon/'
+import { Icon } from '../Icon'
 import BaseComponent from '../BaseComponent'
-import { IPersonaProps, IPersonaStyles } from '../Persona'
+import { IPersonaProps, IPersonaStyles } from '.'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-import { PersonaCoin } from './PersonaCoin/'
+import { PersonaCoin } from './PersonaCoin'
 import { PersonaSize, PersonaPresence, IPersonaStyleProps } from './Persona.types'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IPersonaStyleProps, IPersonaStyles>()
 
@@ -43,34 +44,23 @@ export class PersonaBase extends BaseComponent<IPersonaProps> {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, coinSize, text, secondaryText, tertiaryText, optionalText, hidePersonaDetails, size } = this
 
-    return (
-      <div class={classNames.root}
-        style={coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : {}}>
-        <PersonaCoin {...{ props: this.$props }} />
+    const $details = (!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)) && h('div', { class: classNames.details }, [
+      h('div', { class: classNames.primaryText }, text),
+      h('div', { class: classNames.secondaryText }, secondaryText),
+      h('div', { class: classNames.tertiaryText }, tertiaryText),
+      h('div', { class: classNames.optionalText }, optionalText),
+      this.$slots.default,
+    ])
 
-        {(!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)) && (
-          <div class={classNames.details}>
-            <div dir="auto" class={classNames.primaryText}>
-              <div>{text}</div>
-            </div>
-            <div dir="auto" class={classNames.secondaryText}>
-              <div>{secondaryText}</div>
-            </div>
-            <div dir="auto" class={classNames.tertiaryText}>
-              <div>{tertiaryText}</div>
-            </div>
-            <div dir="auto" class={classNames.optionalText}>
-              <div>{optionalText}</div>
-            </div>
-
-            {this.$slots.default}
-          </div>
-        )
-        }
-      </div>
-    )
+    return h('div', {
+      class: classNames.root,
+      style: coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : {},
+    }, [
+      h(PersonaCoin, { props: this.$props }),
+      $details,
+    ])
   }
 }

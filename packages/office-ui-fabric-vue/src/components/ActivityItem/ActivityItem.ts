@@ -5,6 +5,7 @@ import { IActivityItemProps } from './ActivityItem.types'
 import { getClassNames } from './ActivityItem.classNames'
 import { PersonaCoin } from '../Persona/PersonaCoin'
 import { PersonaSize } from '../Persona/Persona.types'
+import { CreateElement } from 'vue'
 
 @Component({
   components: { PersonaCoin },
@@ -46,50 +47,50 @@ export class ActivityItem extends BaseComponent<IActivityItemProps> {
     )
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, activityPersonas, animateBeaconSignal, isCompact, personasToRender, personaStyle } = this
 
-    return (
-      <div class={classNames.root}>
-        {(activityPersonas || this.$slots.icon) && (
-          <div class={classNames.activityTypeIcon}>
-            {(animateBeaconSignal && isCompact) && (<div class={classNames.pulsingBeacon} />)}
+    const $activityDescription = this.$slots.activityDescription && h('span', {
+      class: classNames.activityText,
+    }, this.$slots.activityDescription)
 
-            {(activityPersonas.length > 0) && (
-              <div class={classNames.personaContainer}>
-                {personasToRender.map((person, index) => (
-                  <PersonaCoin
-                    {...{ props: person }}
-                    key={person.key || index}
-                    class={classNames.activityPersona}
-                    size={(activityPersonas.length > 1 || isCompact) ? PersonaSize.size16 : PersonaSize.size32}
-                    style={personaStyle} />
-                ))}
-              </div>
-            )}
+    const $commentText = (!isCompact && this.$slots.comments) && h('div', {
+      class: classNames.commentText,
+    }, this.$slots.comments)
 
-            {this.$slots.icon}
-          </div>
-        )}
+    const $timeStamp = (!isCompact && this.$slots.timeStamp) && h('div', {
+      class: classNames.timeStamp,
+    }, this.$slots.timeStamp)
 
-        <div class={classNames.activityContent}>
-          {this.$slots.activityDescription && (
-            <span class={classNames.activityText}>
-              {this.$slots.activityDescription}
-            </span>
-          )}
-          {(!isCompact && this.$slots.comments) && (
-            <div class={classNames.commentText}>
-              {this.$slots.comments}
-            </div>
-          )}
-          {(!isCompact && this.$slots.timeStamp) && (
-            <div class={classNames.timeStamp}>
-              {this.$slots.timeStamp}
-            </div>
-          )}
-        </div>
-      </div>
-    )
+    const $activityContent = h('div', { class: classNames.activityContent }, [
+      $activityDescription,
+      $commentText,
+      $timeStamp,
+    ])
+
+    const $activityTypeIcon = (activityPersonas || this.$slots.icon) && h('div', { class: classNames.activityTypeIcon }, [
+      (animateBeaconSignal && isCompact) && h('div', {
+        class: classNames.pulsingBeacon,
+      }),
+      (activityPersonas.length > 0) && h('div', {
+        class: classNames.personaContainer,
+      }, personasToRender.map((person, index) => h(PersonaCoin, {
+        props: {
+          ...person,
+          size: (activityPersonas.length > 1 || isCompact) ? PersonaSize.size16 : PersonaSize.size32,
+        },
+        key: person.key || index,
+        class: classNames.activityPersona,
+        style: personaStyle,
+      }))),
+      this.$slots.icon,
+    ])
+
+    return h('div', {
+      class: classNames.root,
+    }, [
+      $activityTypeIcon,
+      $activityContent,
+    ])
   }
 }
