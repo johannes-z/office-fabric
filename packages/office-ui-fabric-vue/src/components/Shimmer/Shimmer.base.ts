@@ -3,6 +3,7 @@ import BaseComponent from '../BaseComponent'
 import { IShimmerProps, IShimmerStyles } from './Shimmer.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { ShimmerElementsGroup } from './ShimmerElementsGroup/ShimmerElementsGroup'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<any, IShimmerStyles>()
 
@@ -49,16 +50,24 @@ export class ShimmerBase extends BaseComponent {
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, width, shimmerElements, shimmerColors } = this
-    return (
-      <div class={classNames.root}>
-        <div style={{ width: width || '100%' }} class={classNames.shimmerWrapper}>
-          <div class={classNames.shimmerGradient} />
-          <ShimmerElementsGroup shimmer-elements={shimmerElements}
-            background-color={shimmerColors && shimmerColors.background} />
-        </div>
-      </div>
-    )
+
+    return h('div', {
+      class: classNames.root,
+    }, [
+      h('div', {
+        style: { width: width || '100%' },
+        class: classNames.shimmerWrapper,
+      }, [
+        h('div', { class: classNames.shimmerGradient }),
+        h(ShimmerElementsGroup, {
+          attrs: {
+            shimmerElements,
+            backgroundColor: shimmerColors && shimmerColors.background,
+          },
+        }),
+      ]),
+    ])
   }
 }

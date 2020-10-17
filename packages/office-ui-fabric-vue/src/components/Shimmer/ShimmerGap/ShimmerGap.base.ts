@@ -20,11 +20,9 @@ export class ShimmerGapBase extends StatelessComponent {
       borderStyle,
     })
 
-    return (
-      <div
-        style={{ width: width, minWidth: typeof width === 'number' ? `${width}px` : 'auto' }}
-        class={classNames.root}
-      />
-    )
+    return h('div', {
+      class: classNames.root,
+      style: { width: width, minWidth: typeof width === 'number' ? `${width}px` : 'auto' },
+    })
   }
 }

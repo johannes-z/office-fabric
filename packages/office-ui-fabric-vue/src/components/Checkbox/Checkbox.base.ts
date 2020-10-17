@@ -4,7 +4,7 @@ import { Icon } from '../../Icon'
 import { ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { h } from '@vue/composition-api'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<any, ICheckboxStyles>()
 
@@ -29,7 +29,7 @@ export class CheckboxBase extends BaseComponent {
     this.internalValue = newVal
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, title, label } = this
 
     const $input = h('input', {
@@ -43,11 +43,12 @@ export class CheckboxBase extends BaseComponent {
       on: {
         input: this.onInput,
       },
+
     })
 
     const $icon = h(Icon, {
       class: classNames.checkmark,
-      props: {
+      attrs: {
         iconName: 'CheckMark',
       },
     })

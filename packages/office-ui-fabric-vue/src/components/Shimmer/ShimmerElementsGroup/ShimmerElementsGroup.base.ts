@@ -11,7 +11,7 @@ import { IRawStyle } from '@uifabric/styling'
 import { ShimmerCircle } from '../ShimmerCircle/ShimmerCircle'
 import { ShimmerGap } from '../ShimmerGap/ShimmerGap'
 import { IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles } from './ShimmerElementsGroup.types'
-import { h } from '@vue/composition-api'
+import { h } from '../../../renderFunction'
 
 const getClassNames = classNamesFunction<IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles>()
 
@@ -37,11 +37,12 @@ export default class ShimmerElementsGroupBase extends StatelessComponent {
       flexWrap,
     })
 
-    return (
-      <div style={{ width: width }} class={classNames.root}>
-        {getRenderedElements(shimmerElements, backgroundColor, rowHeight)}
-      </div>
-    )
+    return h('div', {
+      class: classNames.root,
+      style: { width },
+    }, [
+      getRenderedElements(shimmerElements, backgroundColor, rowHeight),
+    ])
   }
 }
 
@@ -50,29 +51,38 @@ function getRenderedElements (
   backgroundColor?: string,
   rowHeight?: number,
 ): any {
-  const renderedElements: any = shimmerElements ? (
-    shimmerElements.map(
-      // false positive
-      // eslint-disable-next-line array-callback-return
+  const renderedElements: any = shimmerElements
+    ? shimmerElements.map(
+    // false positive
+    // eslint-disable-next-line array-callback-return
       (element: IShimmerElement, index: number): JSX.Element => {
         const { type, ...filteredElem } = element
         const { verticalAlign, height } = filteredElem
         const styles = getElementStyles(verticalAlign, type, height, backgroundColor, rowHeight)
 
+        const props = {
+          key: index,
+          attrs: {
+            ...filteredElem,
+            styles,
+          },
+        }
+
         switch (element.type) {
           case ShimmerElementType.circle:
-            return <ShimmerCircle key={index} {...{ props: { ...filteredElem, styles } }} />
+            return h(ShimmerCircle, props)
           case ShimmerElementType.gap:
-            return <ShimmerGap key={index} {...{ props: { ...filteredElem, styles } }} />
+            return h(ShimmerGap, props)
           case ShimmerElementType.line:
-            return <ShimmerLine key={index} {...{ props: { ...filteredElem, styles } }} />
+            return h(ShimmerLine, props)
         }
       },
     )
-  ) : (
-    // @ts-ignore
-    <ShimmerLine height={ShimmerElementsDefaultHeights.line} />
-  )
+    : h(ShimmerLine, {
+      attrs: {
+        height: ShimmerElementsDefaultHeights.line,
+      },
+    })
 
   return renderedElements
 }
