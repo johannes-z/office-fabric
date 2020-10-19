@@ -68,13 +68,17 @@ export class Popup extends BaseComponent<IPopupProps> {
   public render (h: CreateElement, context: any): VNode {
     const { className } = this
 
-    return (
-      <div ref="current"
-        class={className}
-        onKeydown={this._onKeyDown}
-        style={{ overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' }}>
-        {this.$slots.default}
-      </div>
+    return h(
+      'div',
+      {
+        ref: 'current',
+        class: className,
+        style: { overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' },
+        on: {
+          keydown: this._onKeyDown,
+        },
+      },
+      this.$slots.default,
     )
   }
 
