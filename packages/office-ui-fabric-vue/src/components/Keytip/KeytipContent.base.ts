@@ -18,10 +18,8 @@ export class KeytipContentBase extends StatelessComponent {
       visible,
     })
 
-    return (
-      <div class={classNames.container}>
-        <span class={classNames.root}>{content}</span>
-      </div>
-    )
+    return h('div', { class: classNames.container }, [
+      h('span', { class: classNames.root }, content),
+    ])
   }
 }

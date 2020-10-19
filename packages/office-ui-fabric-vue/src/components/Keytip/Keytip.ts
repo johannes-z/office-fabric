@@ -1,12 +1,13 @@
 import { mergeOverflows, ktpTargetFromSequences } from '../../utilities/keytips/KeytipUtils'
 import { Callout, ICalloutProps } from '../Callout'
-import { DirectionalHint } from '../../components/ContextualMenu'
+import { DirectionalHint } from '../ContextualMenu'
 import { IKeytipProps } from './Keytip.types'
 import { KeytipContent } from './KeytipContent'
 import { getCalloutStyles, getCalloutOffsetStyles } from './Keytip.styles'
 import BaseComponent from '../BaseComponent'
 import { Prop } from 'vue-property-decorator'
 import { Point } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 /**
  * A callout corresponding to another Fabric component to describe a key sequence that will activate that component
@@ -17,7 +18,7 @@ export class Keytip extends BaseComponent {
   @Prop({ type: Array, default: undefined }) overflowSetSequence!: string[]
   @Prop({ type: Object, default: undefined }) calloutProps!: ICalloutProps
 
-  public render (): JSX.Element {
+  public render (h: CreateElement): JSX.Element {
     const { keySequences, offset, overflowSetSequence } = this
     let { calloutProps } = this
 
@@ -47,18 +48,20 @@ export class Keytip extends BaseComponent {
       }
     }
 
-    return (
-      <Callout
-        {...calloutProps}
-        isBeakVisible={false}
-        doNotLayer={true}
-        minPagePadding={0}
-        styles={offset ? getCalloutOffsetStyles(offset) : getCalloutStyles}
-        preventDismissOnScroll={true}
-        target={keytipTarget}
-      >
-        <KeytipContent {...{ props: this.$props }} />
-      </Callout>
+    return h(
+      Callout,
+      {
+        attrs: {
+          ...calloutProps,
+          isBeakVisible: false,
+          doNotLayer: true,
+          minPagePadding: 0,
+          styles: offset ? getCalloutOffsetStyles(offset) : getCalloutStyles,
+          preventDismissOnScroll: true,
+          target: keytipTarget,
+        },
+      },
+      [h(KeytipContent, { props: this.$props })],
     )
   }
 }
