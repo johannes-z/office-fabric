@@ -6,6 +6,7 @@ import { Overlay } from '../Overlay'
 import { IconButton } from '../Button'
 import { classNamesFunction, getId, elementContains, getRTL } from '@uifabric-vue/utilities'
 import { IconFontSizes } from '@uifabric/styling'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IPanelStyleProps, IPanelStyles>()
 
@@ -199,51 +200,60 @@ export class PanelBase extends BaseComponent<IPanelProps> {
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, isOpen, isAnimating, isHiddenOnDismiss, isBlocking, theme, headerText } = this
     if (!isOpen && !isAnimating && !isHiddenOnDismiss) return
 
-    return (
-      <Layer>
-        <div ref="panel" class={classNames.root}>
-          {(isBlocking && isOpen) && (<Overlay class={classNames.overlay} />)}
-          <div class={classNames.main}>
-            <div class={classNames.commands}>
-              <div class={classNames.navigation}>
-                <IconButton
-                  class={classNames.closeButton}
-                  styles={{
-                    root: {
-                      height: 'auto',
-                      width: '44px',
-                      color: theme.palette.neutralSecondary,
-                      fontSize: IconFontSizes.large,
-                    },
-                    rootHovered: {
-                      color: theme.palette.neutralPrimary,
-                    },
-                  }}
-                  icon-props={{ iconName: 'Cancel' }}
-                  nativeOnClick={this.dismiss} />
-              </div>
-            </div>
-
-            <div class={classNames.contentInner}>
-              <div class={classNames.header}>
-                <p class={classNames.headerText}>
-                  {this.$slots.header || headerText}
-                </p>
-              </div>
-
-              <div ref="scrollableContent" class={classNames.scrollableContent}>
-                <div class={classNames.content}>
-                  {this.$slots.default}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Layer>
-    )
+    const $commands = h('div', {
+      class: classNames.commands,
+    }, [
+      h('div', {
+        class: classNames.navigation,
+      }, [
+        h(IconButton, {
+          class: classNames.closeButton,
+          attrs: {
+            styles: {
+              root: {
+                height: 'auto',
+                width: '44px',
+                color: theme.palette.neutralSecondary,
+                fontSize: IconFontSizes.large,
+              },
+              rootHovered: {
+                color: theme.palette.neutralPrimary,
+              },
+            },
+            iconProps: { iconName: 'Cancel' },
+          },
+          nativeOn: {
+            click: this.dismiss,
+          },
+        }),
+      ]),
+    ])
+    const $contentInner = h('div', { class: classNames.contentInner }, [
+      h('div', { class: classNames.header }, [
+        h('p', { class: classNames.headerText }, this.$slots.header || headerText),
+      ]),
+      h('div', {
+        ref: 'scrollableContent',
+        class: classNames.scrollableContent,
+      }, [
+        h('div', { class: classNames.content }, this.$slots.default),
+      ]),
+    ])
+    return h(Layer, [
+      h('div', {
+        ref: 'panel',
+        class: classNames.root,
+      }, [
+        (isBlocking && isOpen) && h(Overlay, { class: classNames.overlay }),
+        h('div', { class: classNames.main }, [
+          $commands,
+          $contentInner,
+        ]),
+      ]),
+    ])
   }
 }
