@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, toMatrix } from '@uifabric-vue/utilities'
 import { IGrid, IGridProps, IGridStyleProps, IGridStyles } from './Grid.types'
 import BaseComponent from '../../components/BaseComponent'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IGridStyleProps, IGridStyles>()
 
@@ -24,23 +25,20 @@ export class GridBase extends BaseComponent {
     return getClassNames(styles, { theme })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, rowsOfItems } = this
-    return (
-      <table class={classNames.root}>
-        <tbody>
-          {rowsOfItems.map((rows, rowIndex) => (
-            <tr key={`${this.uid}-${rowIndex}-row`} role="row">
-              {rows.map((cell, cellIndex) => (
-                <td key={`${this.uid}-${rowIndex}-${cellIndex}-cell`}
-                  class={classNames.tableCell}>
-                  {this.$scopedSlots.default ? this.$scopedSlots.default({ cell, index: cellIndex }) : null}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    )
+
+    return h('table', {
+      class: classNames.root,
+    }, [
+      h('tbody', rowsOfItems.map((rows, rowIndex) => h('tr', {
+        key: `${this.uid}-${rowIndex}-row`,
+        attrs: { role: 'row' },
+      }, rows.map((cell, cellIndex) => h('td', {
+        key: `${this.uid}-${rowIndex}-${cellIndex}-cell`,
+        class: classNames.tableCell,
+      }, this.$scopedSlots.default ? this.$scopedSlots.default({ cell, index: cellIndex }) : null)),
+      ))),
+    ])
   }
 }

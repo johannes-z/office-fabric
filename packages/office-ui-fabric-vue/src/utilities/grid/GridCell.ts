@@ -1,8 +1,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../components/BaseComponent'
 
-import { ActionButton } from '../../components/Button/'
+import { ActionButton } from '../../components/Button'
 import { css } from '@uifabric-vue/utilities'
+import { CreateElement } from 'vue'
 
 @Component({
   components: { ActionButton },
@@ -18,20 +19,20 @@ export class GridCell extends BaseComponent {
 
   @Prop() getClassNames!: any
 
-  render () {
+  render (h: CreateElement) {
     const { className, item, cellDisabledStyle, cellIsSelectedStyle, selected, disabled } = this
 
-    return (
-      <ActionButton class={css(className, {
+    return h(ActionButton, {
+      class: css(className, {
         ['' + cellIsSelectedStyle]: selected,
         ['' + cellDisabledStyle]: disabled,
-      })}
-      getClassNames={this.getClassNames}
-      { ...{
-        scopedSlots: {
-          flex: this.$scopedSlots.default,
-        },
-      }} />
-    )
+      }),
+      attrs: {
+        getClassNames: this.getClassNames,
+      },
+      scopedSlots: {
+        flex: this.$scopedSlots.default,
+      },
+    })
   }
 }

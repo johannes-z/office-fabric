@@ -1,12 +1,13 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 
-import { Grid } from '../../utilities/grid/'
+import { Grid } from '../../utilities/grid'
 
 import { ISwatchColorPickerProps, ISwatchColorPickerStyleProps, ISwatchColorPickerStyles } from './SwatchColorPicker.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
-import { ColorPickerGridCell } from './ColorPickerGridCell/'
+import { ColorPickerGridCell } from './ColorPickerGridCell'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<ISwatchColorPickerStyleProps, ISwatchColorPickerStyles>()
 
@@ -33,22 +34,24 @@ export class SwatchColorPickerBase extends BaseComponent {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { colorCells, columnCount, cellShape, cellWidth, cellHeight } = this
-    return (
 
-      <Grid items={colorCells} column-count={columnCount} {...{
-        scopedSlots: {
-          default: ({ cell: item }) => (
-            <ColorPickerGridCell
-              color={item.color}
-              circle={cellShape === 'circle'}
-              width={cellWidth}
-              height={cellHeight} />
-          ),
-        },
-      }}>
-      </Grid>
-    )
+    return h(Grid, {
+      attrs: {
+        items: colorCells,
+        columnCount,
+      },
+      scopedSlots: {
+        default: ({ cell: item }) => h(ColorPickerGridCell, {
+          attrs: {
+            color: item.color,
+            circle: cellShape === 'circle',
+            width: cellWidth,
+            height: cellHeight,
+          },
+        }),
+      },
+    })
   }
 }

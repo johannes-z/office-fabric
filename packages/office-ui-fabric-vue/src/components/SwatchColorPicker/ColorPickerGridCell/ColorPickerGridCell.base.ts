@@ -8,6 +8,7 @@ import { IButtonClassNames } from '../../Button/BaseButton.classNames'
 import { IColorPickerGridCellStyleProps, IColorPickerGridCellStyles } from './ColorPickerGridCell.types'
 import BaseComponent from '../../BaseComponent'
 import { getColorFromString, GridCell } from '../../../utilities'
+import { CreateElement } from 'vue'
 
 const getColorPickerGridCellButtonClassNames = memoizeFunction(
   (
@@ -87,26 +88,22 @@ export class ColorPickerGridCellBase extends BaseComponent {
     return color!.hex === 'ffffff'
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, color, circle } = this
-    return (
-
-      <GridCell class={classNames.colorCell}>
-        <svg class={classNames.svg}
-          viewBox="0 0 20 20"
-          fill={getColorFromString(color)!.str}>
-          {circle ? (
-            <circle
-              cx="50%"
-              cy="50%"
-              r="50%" />
-          ) : (
-            <rect
-              width="100%"
-              height="100%" />
-          )}
-        </svg>
-      </GridCell>
-    )
+    return h(GridCell, {
+      class: classNames.colorCell,
+    }, [
+      h('svg', {
+        class: classNames.svg,
+        attrs: {
+          viewBox: '0 0 20 20',
+          fill: getColorFromString(color)!.str,
+        },
+      }, [
+        circle
+          ? h('circle', { attrs: { cx: '50%', cy: '50%', r: '50% ' } })
+          : h('rect', { attrs: { width: '100%', height: '100%' } }),
+      ]),
+    ])
   }
 }
