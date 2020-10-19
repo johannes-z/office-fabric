@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 import { IOverflowSetStyleProps, IOverflowSetStyles, IOverflowSetProps } from './OverflowSet.types'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IOverflowSetStyleProps, IOverflowSetStyles>()
 
@@ -18,22 +19,19 @@ export class OverflowSetBase extends BaseComponent<IOverflowSetProps> {
     return getClassNames(styles, { className, vertical })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, items, overflowItems } = this
-    return (
-      <div class={classNames.root}>
-        {items.map((item, index) => (
-          <div key={index} class={classNames.item}>
-            {this.$scopedSlots.item && this.$scopedSlots.item({ item })}
-          </div>
-        ))}
-
-        {(overflowItems && overflowItems.length > 0) && (
-          <div class={classNames.overflowButton}>
-            {this.$scopedSlots.overflow && this.$scopedSlots.overflow({ items: overflowItems })}
-          </div>
-        )}
-      </div>
-    )
+    return h('div', { class: classNames.root }, [
+      items.map((item, index) => h(
+        'div', { class: classNames.item }, [
+          this.$scopedSlots.item && this.$scopedSlots.item({ item }),
+        ],
+      )),
+      (overflowItems && overflowItems.length > 0) && h(
+        'div', {
+          class: classNames.overflowButton,
+        }, this.$scopedSlots.overflow && this.$scopedSlots.overflow({ items: overflowItems }),
+      ),
+    ])
   }
 }
