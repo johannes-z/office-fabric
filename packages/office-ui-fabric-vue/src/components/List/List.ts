@@ -127,34 +127,35 @@ export class List extends BaseComponent<IListProps> {
   render (h: CreateElement) {
     const { pages, className, css, role } = this
 
-    return (
-      <div
-        ref="root"
-        role={pages.length > 0 ? role : undefined}
-        class={css('ms-List', className)}>
-        <div
-          ref="surface"
-          class="ms-List-surface"
-          role="presentation">
-          {pages.map(page => (
-            <div
-              key={page.key}
-              ref={page.key}
-              refInFor={true}
-              class="ms-List-page"
-              style={this.getPageStyle(page)}>
-              {page.items && page.items.map((item, index) => (
-                <div key={index} class="ms-List-cell">
-                  {this.$scopedSlots.item
-                    ? this.$scopedSlots.item({ item, index: page.startIndex + index })
-                    : (item ? item.name : '')}
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    )
+    const $pages = pages.map(page => h('div', {
+      key: page.key,
+      ref: page.key,
+      refInFor: true,
+      class: 'ms-List-page',
+      attrs: {
+        style: this.getPageStyle(page),
+      },
+    }, page.items && page.items.map((item, index) => h('div', {
+      key: index,
+      class: 'ms-List-cell',
+    }, this.$scopedSlots.item
+      ? this.$scopedSlots.item({ item, index: page.startIndex + index })
+      : (item ? item.name : ''))),
+    ))
+
+    return h('div', {
+      ref: 'root',
+      class: css('ms-List', className),
+      attrs: {
+        role: pages.length > 0 ? role : undefined,
+      },
+    }, [
+      h('div', {
+        ref: 'surface',
+        class: 'ms-List-surface',
+        attrs: { role: 'presentation' },
+      }, $pages),
+    ])
   }
 
   created () {
