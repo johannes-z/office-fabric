@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "noImplicitAny": false,
+    "tsBuildInfoFile": "./.cache/tsconfig.tsbuildinfo",
+    "incremental": true,
     "outDir": "lib",
     "target": "es5",
     "module": "ESNext",
