@@ -3,9 +3,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, KeyCodes, Async, css } from '@uifabric-vue/utilities'
 import { getStyles, getOptionStyles } from './ComboBox.styles'
 import BaseComponent from '../BaseComponent'
-import { Label } from '../Label/'
+import { Label } from '../Label'
 import { IconButton, ActionButton } from '../Button'
-import { Autofill } from '../Autofill/'
+import { Autofill } from '../Autofill'
 import VNodes from '../VNodes'
 
 import { getClassNames } from './ComboBox.classNames'
@@ -166,43 +166,54 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
 
   render (h: CreateElement) {
     const { classNames, onFocus, onBlur, calloutProps, persistMenu, state, multiSelect } = this
-    return (
-      <div class={classNames.container}>
-        <Label for={`ComboBox${this.uid}`} class={classNames.label}>Label</Label>
-        <div ref="comboBoxWrapper" class={classNames.root}>
-          <Autofill id={`ComboBox${this.uid}`}
-            ref="autofill"
-            type="text"
-            role="combobox"
-            class={classNames.input} />
-          <IconButton class="ms-ComboBox-CaretDown-button"
-            icon-props={{ iconName: 'ChevronDown' }}
-            nativeOnFocus={onFocus}
-            nativeOnBlur={onBlur} />
-        </div>
 
-        {(persistMenu || state.isOpen) && (
-          <div>
-            <Callout
-              class={css(classNames.callout, calloutProps ? calloutProps.className : undefined)}
-              target={this.$refs.comboBoxWrapper}
-              is-beak-visible={false}
-              gap-space={0}
-              do-not-layer={false}
-              callout-width={this.getComboBoxMenuWidth()}
-              callout-max-width={this.getComboBoxMenuWidth()}
-              hidden={persistMenu ? !state.isOpen : undefined}>
-              <div ref="comboBoxMenu" class={classNames.optionsContainerWrapper}>
-                <div class={classNames.optionsContainer} role="listbox">
-                  {multiSelect && (<Checkbox class="ms-ComboBox-option" />)}
-                  <ActionButton class="ms-ComboBox-option">
-                  </ActionButton>
-                </div>
-              </div>
-            </Callout>
-          </div>
-        )}
-      </div>
-    )
+    return h('div', { class: classNames.container }, [
+      h(Label, {
+        class: classNames.label,
+        attrs: {
+          for: `ComboBox${this.uid}`,
+        },
+      }, 'Label'),
+      h('div', { class: classNames.root, ref: 'comboBoxWrapper' }, [
+        h(Autofill, {
+          ref: 'autofill',
+          class: classNames.input,
+          attrs: {
+            id: `ComboBox${this.uid}`,
+            type: 'text',
+            role: 'combobox',
+          },
+        }),
+        h(IconButton, {
+          class: 'ms-ComboBox-CaretDown-button',
+          attrs: {
+            iconProps: { iconName: 'ChevronDown' },
+          },
+          nativeOn: {
+            focus: onFocus,
+            blur: onBlur,
+          },
+        }),
+      ]),
+      (persistMenu || state.isOpen) && h(Callout, {
+        class: css(classNames.callout, calloutProps ? calloutProps.className : undefined),
+        attrs: {
+          target: this.$refs.comboBoxWrapper,
+          isBeakVisible: false,
+          gapSpace: 0,
+          doNotLayer: false,
+          calloutWidth: this.getComboBoxMenuWidth(),
+          calloutMaxWidth: this.getComboBoxMenuWidth(),
+          hidden: persistMenu ? !state.isOpen : undefined,
+        },
+      }, [
+        h('div', { class: classNames.optionsContainerWrapper, ref: 'comboBoxMenu' }, [
+          h('div', { class: classNames.optionsContainer, attrs: { role: 'listbox' } }, [
+            multiSelect && h(Checkbox, { staticClass: 'ms-ComboBox-option' }),
+            h(ActionButton, { staticClass: 'ms-ComboBox-option' }),
+          ]),
+        ]),
+      ]),
+    ])
   }
 }
