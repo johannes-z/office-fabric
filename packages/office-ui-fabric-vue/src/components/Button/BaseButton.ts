@@ -119,38 +119,43 @@ export class BaseButton extends BaseComponent<IBaseButtonProps> {
     const MenuComponent = this.MenuType
     const { classNames, href, iconProps, className, css, secondaryText, isSplitButton, menuProps, menuIconProps, shouldRenderMenu } = this
 
-    return (
-      <ButtonComponent
-        ref="buttonElement"
-        class={classNames.root}
-        href={href}
-        onClick={ev => this.$emit('click', ev)}>
-        <span class={classNames.flexContainer}>
-          {iconProps && (<Icon class={css(classNames.icon, className)} {...{ props: iconProps }} />)}
-
-          {this.$scopedSlots.flex ? this.$scopedSlots.flex({}) : null}
-
-          {this.$scopedSlots.default && (
-            <span class={classNames.textContainer}>
-              <span class={classNames.label}>
-                {this.$scopedSlots.default({})}
-              </span>
-              {secondaryText && (<span class={classNames.description}>{secondaryText}</span>)}
-            </span>
-          )}
-
-          {(!isSplitButton && menuProps) && (<FontIcon icon-name="ChevronDown" {...{ props: menuIconProps }} class={classNames.menuIcon} />)}
-
-          {(menuProps && !menuProps.doNotLayer && shouldRenderMenu) && (
-            <MenuComponent
-              directional-hint={DirectionalHint.bottomLeftEdge}
-              {...{ props: menuProps }}
-              class={css('ms-BaseButton-menuhost', menuProps.className)}
-              target={isSplitButton ? this.$refs.splitButtonContainer : this.$refs.buttonElement}
-              onDismiss={() => (this.menuHidden = true)} />
-          )}
-        </span>
-      </ButtonComponent>
-    )
+    return h(ButtonComponent, {
+      ref: 'buttonElement',
+      class: classNames.root,
+      attrs: { href },
+      on: {
+        click: ev => this.$emit('click', ev),
+      },
+    }, [
+      h('span', { class: classNames.flexContainer }, [
+        iconProps && h(Icon, {
+          class: css(classNames.icon, className),
+          props: iconProps,
+        }),
+        this.$scopedSlots.flex && this.$scopedSlots.flex({}),
+        this.$scopedSlots.default && h('span', { class: classNames.textContainer }, [
+          h('span', { class: classNames.label }, this.$scopedSlots.default({})),
+          secondaryText && h('span', { class: classNames.description }, secondaryText),
+        ]),
+        (!isSplitButton && menuProps) && h(FontIcon, {
+          class: classNames.menuIcon,
+          attrs: {
+            iconName: 'ChevronDown',
+          },
+          props: menuIconProps,
+        }),
+        (menuProps && !menuProps.doNotLayer && shouldRenderMenu) && h(MenuComponent, {
+          class: css('ms-BaseButton-menuhost', menuProps.className),
+          attrs: {
+            directionalHint: DirectionalHint.bottomLeftEdge,
+            target: isSplitButton ? this.$refs.splitButtonContainer : this.$refs.buttonElement,
+          },
+          props: menuProps,
+          on: {
+            dismiss: () => (this.menuHidden = true),
+          },
+        }),
+      ]),
+    ])
   }
 }
