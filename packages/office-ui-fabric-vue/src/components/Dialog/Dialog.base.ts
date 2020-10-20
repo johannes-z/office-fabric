@@ -8,6 +8,7 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDialogContentProps, DialogType } from './DialogContent.types'
 import { ICSSPixelUnitRule, ICSSRule } from '@uifabric/merge-styles/lib/IRawStyleBase'
 import { ResponsiveMode } from '../../utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IDialogStyleProps, IDialogStyles>()
 
@@ -90,7 +91,7 @@ export class DialogBase extends BaseComponent<IDialogProps, IDialogStyles> {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, mergedModalProps, hidden, responsiveMode } = this
     const onDismiss = ev => this.$emit('dismiss', ev)
 
@@ -105,39 +106,38 @@ export class DialogBase extends BaseComponent<IDialogProps, IDialogStyles> {
       },
     }
 
-    return (
-      <Modal
-        // elementToFocusOnDismiss={elementToFocusOnDismiss}
-        // firstFocusableSelector={firstFocusableSelector}
-        // forceFocusInsideTrap={forceFocusInsideTrap}
-        // ignoreExternalFocusing={ignoreExternalFocusing}
-        // isClickableOutsideFocusTrap={isClickableOutsideFocusTrap}
-        responsiveMode={responsiveMode}
-        {...mergedModalProps}
-        isDarkOverlay={mergedModalProps.isDarkOverlay}
-        isBlocking={mergedModalProps.isBlocking}
-        isOpen={!hidden}
-        class={classNames.root}
-        containerClassName={classNames.main}
-        onDismiss={onDismiss || mergedModalProps.onDismiss}
-        subtitleAriaId={this._getSubTextId()}
-        titleAriaId={this._getTitleTextId()}
-      >
-        <DialogContent
-          subTextId={this._getSubTextId()}
-          title={dialogContentProps.title}
-          subText={dialogContentProps.subText}
-          showCloseButton={mergedModalProps.isBlocking}
-          topButtonsProps={dialogContentProps.topButtonsProps}
-          type={dialogContentProps.type}
-          onDismiss={onDismiss || dialogContentProps.onDismiss}
-          class={dialogContentProps.className}
-          {...dialogContentProps}
-        >
-          {this.$slots.default}
-        </DialogContent>
-      </Modal>
-    )
+    const $dialogContent = h(DialogContent, {
+      attrs: {
+        subTextId: this._getSubTextId(),
+        title: dialogContentProps.title,
+        subText: dialogContentProps.subText,
+        showCloseButton: mergedModalProps.isBlocking,
+        topButtonsProps: dialogContentProps.topButtonsProps,
+        type: dialogContentProps.type,
+        onDismiss: onDismiss || dialogContentProps.onDismiss,
+        class: dialogContentProps.className,
+        ...dialogContentProps,
+      },
+    }, this.$slots.default)
+
+    const $modal = h(Modal, {
+      attrs: {
+        responsiveMode: responsiveMode,
+        ...mergedModalProps,
+        isDarkOverlay: mergedModalProps.isDarkOverlay,
+        isBlocking: mergedModalProps.isBlocking,
+        isOpen: !hidden,
+        class: classNames.root,
+        containerClassName: classNames.main,
+        onDismiss: onDismiss || mergedModalProps.onDismiss,
+        subtitleAriaId: this._getSubTextId(),
+        titleAriaId: this._getTitleTextId(),
+      },
+    }, [
+      $dialogContent,
+    ])
+
+    return $modal
   }
 
   private _getSubTextId (): string | undefined {

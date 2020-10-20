@@ -393,21 +393,18 @@ export class ResizeGroupBase extends BaseComponent {
 
     const isInitialMeasure = !this.hasRenderedContent && dataNeedsMeasuring
 
-    return (
-      <div class={className} ref="root">
-        <div style={hiddenParentStyles}>
-          {dataNeedsMeasuring && !isInitialMeasure && (
-            <div style={hiddenDivStyles} ref="updateHiddenDiv">
-              Test
-            </div>
-          )}
+    return h('div', { class: className, attrs: { ref: 'root' } }, [
+      h('div', { style: hiddenParentStyles }, [
+        dataNeedsMeasuring && !isInitialMeasure && h('div', {
+          ref: 'updateHiddenDiv',
+          style: hiddenDivStyles,
+        }, 'Test'),
 
-          <div ref="initialHiddenDiv" style={isInitialMeasure ? hiddenDivStyles : undefined}>
-            {this.$slots.default}
-            {/* {isInitialMeasure ? onRenderData(dataToMeasure) : renderedData && onRenderData(renderedData)} */}
-          </div>
-        </div>
-      </div>
-    )
+        h('div', {
+          ref: 'initialHiddenDiv',
+          style: isInitialMeasure ? hiddenDivStyles : undefined,
+        }, this.$slots.default),
+      ]),
+    ])
   }
 }

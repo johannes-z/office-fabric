@@ -3,6 +3,7 @@ import BaseComponent from '../../BaseComponent'
 import { DetailsColumn } from '../DetailsColumn'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDetailsHeaderStyleProps, IDetailsHeaderStyles } from './DetailsHeader.types'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IDetailsHeaderStyleProps, IDetailsHeaderStyles>()
 
@@ -30,18 +31,22 @@ export class DetailsHeaderBase extends BaseComponent {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, columns } = this
-    return (
-      <div class={classNames.root} role="row">
-        {columns.map((column, index) => (
-          <DetailsColumn
-            key={column.key}
-            column={column}
-            columnIndex={index}
-            parentId={this.uid} />
-        ))}
-      </div>
-    )
+
+    return h('div', {
+      class: classNames.root, attrs: { role: 'row' },
+    }, columns.map((column, index) => h(
+      DetailsColumn,
+      {
+        key: column.key,
+        attrs: {
+          column,
+          columnIndex: column.index,
+          index,
+          parentId: this.uid,
+        },
+      },
+    )))
   }
 }

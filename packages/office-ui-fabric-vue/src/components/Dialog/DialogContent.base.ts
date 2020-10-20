@@ -4,6 +4,7 @@ import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDialogContentStyleProps, IDialogContentStyles, IDialogContentProps, DialogType } from './DialogContent.types'
 import { IconButton } from '../Button'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IDialogContentStyleProps, IDialogContentStyles>()
 
@@ -30,55 +31,53 @@ export class DialogContentBase extends BaseComponent<IDialogContentProps> {
     })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, css, title, type, showCloseButton, closeButtonAriaLabel, subText, subTextId } = this
 
     const titleProps = this.titleProps || {}
 
-    let subTextContent
-    if (subText) {
-      subTextContent = (
-        <p class={classNames.subText} id={subTextId}>
-          {subText}
-        </p>
-      )
-    }
+    const $subTextContent = subText && h('p', {
+      class: classNames.subText,
+      attrs: { id: subTextId },
+    }, subText)
 
-    return (
-      <div class={classNames.content}>
-        <div class={classNames.header}>
-          <div
-            id={titleProps.id}
-            role="heading"
-            aria-level={1}
-            {...titleProps}
-            class={css(classNames.title, titleProps.className)}
-          >
-            {title}
-          </div>
-          <div class={classNames.topButton}>
-            {/* {this.topButtonsProps!.map((props, index) => (
-              <IconButton key={props.uniqueId || index} {...props} />
-            ))} */}
-            {(type === DialogType.close || (showCloseButton && type !== DialogType.largeHeader)) && (
-              <IconButton
-                class={classNames.button}
-                iconProps={{ iconName: 'Cancel' }}
-                ariaLabel={closeButtonAriaLabel}
-                onClick={ev => this.$emit('dismiss', ev)}
-                title={closeButtonAriaLabel}
-              />
-            )}
-          </div>
-        </div>
-        <div class={classNames.inner}>
-          <div class={classNames.innerContent}>
-            {subTextContent}
-            {this.$slots.default}
-          </div>
-          {this.$slots.footer}
-        </div>
-      </div>
-    )
+    const $inner = h('div', { class: classNames.inner }, [
+      h('div', { class: classNames.innerContent }, [
+        $subTextContent,
+        this.$slots.default,
+      ]),
+      this.$slots.footer,
+    ])
+
+    const $title = h('div', {
+      class: css(classNames.title, titleProps.className),
+      attrs: {
+        role: 'heading',
+        'aria-level': 1,
+        ...titleProps,
+      },
+    }, title)
+
+    const $topButton = h('div', { class: classNames.topButton }, [
+      (type === DialogType.close || (showCloseButton && type !== DialogType.largeHeader)) && h(IconButton, {
+        class: classNames.button,
+        attrs: {
+          iconProps: { iconName: 'Cancel' },
+          ariaLabel: closeButtonAriaLabel,
+          title: closeButtonAriaLabel,
+        },
+        on: {
+          click: ev => this.$emit('dismiss', ev),
+        },
+      }),
+    ])
+
+    return h('div', { class: classNames.content }, [
+      h('div', { class: classNames.header }, [
+        $title,
+        $topButton,
+      ]),
+      $inner,
+    ])
   }
 }

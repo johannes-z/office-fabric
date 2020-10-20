@@ -3,6 +3,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { DetailsRowFields } from './DetailsRowFields'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction()
 
@@ -76,21 +77,21 @@ export class DetailsRowBase extends BaseComponent {
     // })
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, rowClassNames, item, columns, showCheckbox } = this
-    return (
-      <div class={classNames.root}>
-        <DetailsRowFields
-          row-class-names={rowClassNames}
-          // cells-by-column={{cellsByColumn}}
-          columns={columns}
-          item={item}
-          item-index={0}
-          column-start-index={showCheckbox ? 1 : 0}
-          {...{
-            scopedSlots: this.$scopedSlots,
-          }} />
-      </div>
-    )
+
+    h('div', { class: classNames.root }, [
+      h(DetailsRowFields, {
+        attrs: {
+          rowClassNames: rowClassNames,
+          // cells-by-column: {cellsByColumn},
+          columns: columns,
+          item: item,
+          itemIndex: 0,
+          columnStartIndex: showCheckbox ? 1 : 0,
+        },
+        scopedSlots: this.$scopedSlots,
+      }),
+    ])
   }
 }

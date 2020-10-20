@@ -2,7 +2,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, getRTL } from '@uifabric-vue/utilities'
 import { IScrollablePaneStyleProps, IScrollablePaneStyles, ScrollbarVisibility, IScrollablePaneContext } from './ScrollablePane.types'
 import BaseComponent from '../BaseComponent'
-import { Sticky } from '../Sticky/'
+import { Sticky } from '../Sticky'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IScrollablePaneStyleProps, IScrollablePaneStyles>()
 
@@ -359,27 +360,45 @@ export class ScrollablePaneBase extends BaseComponent {
     this.notifyThrottled()
   };
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, stickyBottomHeight, stickyTopHeight } = this
-    return (
-      <div ref="root" class={classNames.root}>
-        <div ref="stickyAbove"
-          aria-hidden="true"
-          class={classNames.stickyAbove}
-          style={this.getStickyContainerStyle(stickyTopHeight, true)} />
+    const $stickyAbove = h('div', {
+      ref: 'stickyAbove',
+      class: classNames.stickyAbove,
+      style: this.getStickyContainerStyle(stickyTopHeight, true),
+      attrs: {
+        'aria-hidden': 'true',
+      },
+    })
 
-        <div ref="contentContainer"
-          class={classNames.contentContainer}
-          data-is-scrollable="true">
-          {this.$slots.default}
-        </div>
+    const $contentContainer = h('div', {
+      ref: 'contentContainer',
+      class: classNames.contentContainer,
+      attrs: {
+        'data-is-scrollable': 'true',
+      },
+    }, this.$slots.default)
 
-        <div aria-hidden="true"
-          class={classNames.stickyBelow}
-          style={this.getStickyContainerStyle(stickyBottomHeight, false)}>
-          <div ref="stickyBelow" class={classNames.stickyBelowItems} />
-        </div>
-      </div>
-    )
+    const $stickyBelow = h('div', {
+      class: classNames.stickyBelow,
+      style: this.getStickyContainerStyle(stickyBottomHeight, false),
+      attrs: {
+        'aria-hidden': 'true',
+      },
+    }, [
+      h('div', {
+        ref: 'stickyBelow',
+        class: classNames.stickyBelowItems,
+      }),
+    ])
+
+    return h('div', {
+      ref: 'root',
+      class: classNames.root,
+    }, [
+      $stickyAbove,
+      $contentContainer,
+      $stickyBelow,
+    ])
   }
 }

@@ -3,6 +3,7 @@ import { hiddenContentStyle } from '@uifabric/styling'
 import { IScrollablePaneContext } from '../ScrollablePane/ScrollablePane.types'
 import { IStickyProps, StickyPositionType } from './Sticky.types'
 import BaseComponent from '../BaseComponent'
+import { CreateElement } from 'vue'
 
 @Component({
 })
@@ -31,43 +32,51 @@ export class Sticky extends BaseComponent<any, any> {
 
   activeElement: HTMLElement | void | null = null
 
-  render () {
+  render (h: CreateElement) {
     const { canStickyTop, canStickyBottom, isStickyTop, isStickyBottom, stickyClassName } = this
-    return (
-      <div ref="root">
-        {canStickyTop && (
-          <div ref="stickyContentTop"
-            aria-hidden={!isStickyTop}
-            style={{ pointerEvents: isStickyTop ? 'auto' : 'none' }}>
-            <div style={this.getStickyPlaceholderHeight(isStickyTop)} />
-          </div>
-        )}
 
-        {canStickyBottom && (
-          <div ref="stickyContentBottom"
-            aria-hidden={!isStickyBottom}
-            style={{ pointerEvents: isStickyBottom ? 'auto' : 'none' }}>
-            <div style={this.getStickyPlaceholderHeight(isStickyBottom)} />
-          </div>
-        )}
+    const $stickyTop = canStickyTop && h('div', {
+      ref: 'stickyContentTop',
+      style: { pointerEvents: isStickyTop ? 'auto' : 'none' },
+      attrs: {
+        'aria-hidden': !isStickyTop,
+      },
+    }, [
+      h('div', { style: this.getStickyPlaceholderHeight(isStickyTop) }),
+    ])
 
-        <div ref="placeHolder" style={this.getNonStickyPlaceholderHeightAndWidth()}>
-          {(isStickyTop || isStickyBottom) && (
-            <span style={hiddenContentStyle}>
-              {this.$slots.default}
-            </span>
-          )}
+    const $stickyBottom = canStickyBottom && h('div', {
+      ref: 'stickyContentBottom',
+      style: { pointerEvents: isStickyBottom ? 'auto' : 'none' },
+      attrs: {
+        'aria-hidden': !isStickyBottom,
+      },
+    }, [
+      h('div', { style: this.getStickyPlaceholderHeight(isStickyBottom) }),
+    ])
 
-          <div
-            ref="nonStickyContent"
-            aria-hidden={isStickyTop || isStickyBottom}
-            class={isStickyTop || isStickyBottom ? stickyClassName : undefined}
-            style={this.getContentStyles(isStickyTop || isStickyBottom)}>
-            {this.$slots.default}
-          </div>
-        </div>
-      </div>
-    )
+    const $placeHolder = h('div', {
+      ref: 'placeHolder',
+      style: this.getNonStickyPlaceholderHeightAndWidth(),
+    }, [
+      (isStickyTop || isStickyBottom) && h('span', {
+        style: hiddenContentStyle,
+      }, this.$slots.default),
+      h('div', {
+        ref: 'nonStickyContent',
+        class: isStickyTop || isStickyBottom ? stickyClassName : undefined,
+        style: this.getContentStyles(isStickyTop || isStickyBottom),
+        attrs: {
+          'aria-hidden': isStickyTop || isStickyBottom,
+        },
+      }, this.$slots.default),
+    ])
+
+    return h('div', { ref: 'root' }, [
+      $stickyTop,
+      $stickyBottom,
+      $placeHolder,
+    ])
   }
 
   public root () {
