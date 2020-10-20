@@ -42,8 +42,7 @@ export class DetailsHeaderBase extends BaseComponent {
         key: column.key,
         attrs: {
           column,
-          columnIndex: column.index,
-          index,
+          columnIndex: index,
           parentId: this.uid,
         },
       },

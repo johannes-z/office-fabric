@@ -126,15 +126,14 @@ export class List extends BaseComponent<IListProps> {
 
   render (h: CreateElement) {
     const { pages, className, css, role } = this
+    console.log(pages)
 
     const $pages = pages.map(page => h('div', {
       key: page.key,
       ref: page.key,
       refInFor: true,
       class: 'ms-List-page',
-      attrs: {
-        style: this.getPageStyle(page),
-      },
+      style: this.getPageStyle(page),
     }, page.items && page.items.map((item, index) => h('div', {
       key: index,
       class: 'ms-List-cell',

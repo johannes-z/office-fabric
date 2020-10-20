@@ -80,7 +80,7 @@ export class DetailsRowBase extends BaseComponent {
   render (h: CreateElement) {
     const { classNames, rowClassNames, item, columns, showCheckbox } = this
 
-    h('div', { class: classNames.root }, [
+    return h('div', { class: classNames.root }, [
       h(DetailsRowFields, {
         attrs: {
           rowClassNames: rowClassNames,

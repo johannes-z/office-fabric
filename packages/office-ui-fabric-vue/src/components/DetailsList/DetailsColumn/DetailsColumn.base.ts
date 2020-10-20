@@ -11,6 +11,7 @@ import {
   IDetailsColumnStyles,
   IDetailsColumnRenderTooltipProps,
 } from './DetailsColumn.types'
+import { h } from '@vue/composition-api'
 
 const MOUSEDOWN_PRIMARY_BUTTON = 0 // for mouse down event we are using ev.button property, 0 means left button
 
@@ -219,67 +220,69 @@ export class DetailsColumnBase extends BaseComponent {
 
   render () {
     const { classNames, column, columnIndex, columnWidth, IconComponent, isDraggable, parentId } = this
-    return (
-      <div ref="root"
-        key={column.key}
-        class={classNames.root}
-        aria-sort={column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none'}
-        aria-colindex={columnIndex}
-        role="columnheader"
-        style={{ width: columnWidth }}>
-        {isDraggable && (
-          <IconComponent
-            icon-name="GripperBarVertical"
-            class={classNames.gripperBarVerticalStyle} />
-        )}
 
-        <span class={classNames.cellTooltip}>
-          <span id={`${parentId}-${column.key}`}
-            aria-label={column.isIconOnly ? column.name : undefined}
-            aria-labelledby={column.isIconOnly ? undefined : `${parentId}-${column.key}-name`}
-            class={classNames.cellTitle}
-            onContextmenu={this._onColumnContextMenu}
-            onClick={this._onColumnClick}>
-            <span id={`${parentId}-${column.key}-name`} class={classNames.cellName}>
-              {/* Column Icon */}
-              {(column.iconName || column.iconClassName) && (
-                <IconComponent
-                  class={classNames.iconClassName}
-                  icon-name={column.iconName} />
-              )}
+    return h('div', {
+      ref: 'root',
+      key: column.key,
+      class: classNames.root,
+      style: { width: columnWidth },
+      attrs: {
+        ariaSort: column.isSorted ? (column.isSortedDescending ? 'descending' : 'ascending') : 'none',
+        ariaColindex: columnIndex,
+        role: 'columnheader',
+      },
+    }, [
+      isDraggable && h(IconComponent, {
+        class: classNames.gripperBarVerticalStyle,
+        attrs: {
+          iconName: 'GripperBarVertical',
+        },
+      }),
+      h('span', { class: classNames.cellTooltip }, [
+        h('span', {
+          class: classNames.cellTitle,
+          attrs: {
+            id: `${parentId}-${column.key}`,
+            ariaLabel: column.isIconOnly ? column.name : undefined,
+            ariaLabelledby: column.isIconOnly ? undefined : `${parentId}-${column.key}-name`,
+          },
+          on: {
+            contextmenu: this._onColumnContextMenu,
+            click: this._onColumnClick,
+          },
+        }, [
+          h('span', {
+            class: classNames.cellName,
+            attrs: { id: `${parentId}-${column.key}-name` },
+          }, [
+            (column.iconName || column.iconClassName) && h(IconComponent, {
+              class: classNames.iconClassName,
+              attrs: { iconName: column.iconName },
+            }),
+            column.isIconOnly
+              ? h('span', { class: classNames.accessibleLabel }, column.name)
+              : column.name,
+          ]),
 
-              {/* Column Name */}
-              {column.isIconOnly ? (<span class={classNames.accessibleLabel}>{column.name}</span>) : column.name}
-            </span>
-
-            {/* Filter Indicator */}
-            {column.isFiltered && (
-              <IconComponent
-                class={classNames.nearIcon}
-                icon-name="Filter" />
-            )}
-
-            {/* Sort Indicator */}
-            {column.isSorted && (
-              <IconComponent
-                class={classNames.sortIcon}
-                icon-name={column.isSortedDescending ? 'SortDown' : 'SortUp'} />
-            )}
-
-            {/* Group Indicator */}
-            {column.isGrouped && (
-              <IconComponent
-                class={classNames.nearIcon}
-                icon-name="GroupedDescending" />
-            )}
-
-            {/* ?? */}
-            { column.columnActionsMode === ColumnActionsMode.hasDropdown && !column.isIconOnly && (
-              <IconComponent icon-name="ChevronDown" />
-            )}
-          </span>
-        </span>
-      </div>
-    )
+          column.isFiltered && h(IconComponent, {
+            class: classNames.nearIcon,
+            attrs: { iconName: 'Filter' },
+          }),
+          column.isSorted && h(IconComponent, {
+            class: classNames.sortIcon,
+            attrs: { iconName: column.isSortedDescending ? 'SortDown' : 'SortUp' },
+          }),
+          column.isGrouped && h(IconComponent, {
+            class: classNames.nearIcon,
+            attrs: { iconName: 'GroupedDescending' },
+          }),
+          column.columnActionsMode === ColumnActionsMode.hasDropdown && !column.isIconOnly && h(IconComponent, {
+            attrs: {
+              iconName: 'ChevronDown',
+            },
+          }),
+        ]),
+      ]),
+    ])
   }
 }

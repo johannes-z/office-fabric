@@ -9,6 +9,7 @@ import { Overlay, IOverlayProps } from '../Overlay'
 import { Icon } from '../Icon'
 import { DirectionalHint } from '../Callout'
 import { ResponsiveMode } from '../../utilities'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()
 
@@ -133,7 +134,7 @@ export class ModalBase extends BaseComponent<IModalProps, IModalStyles> {
     this.$emit('dismiss', ev)
   }
 
-  render () {
+  render (h: CreateElement) {
     const {
       dragOptions,
       isInKeyboardMoveMode,
@@ -163,76 +164,73 @@ export class ModalBase extends BaseComponent<IModalProps, IModalStyles> {
       className: classNames.layer,
     }
 
-    const modalContent = (
-      <div class={classNames.main}>
-        {dragOptions && isInKeyboardMoveMode && (
-          <div class={classNames.keyboardMoveIconContainer}>
-            {dragOptions.keyboardMoveIconProps ? (
-              <Icon {...dragOptions.keyboardMoveIconProps} />
-            ) : (
-              <Icon iconName="move" class={classNames.keyboardMoveIcon} />
-            )}
-          </div>
-        )}
-        <div ref="scrollableContent" class={classNames.scrollableContent} data-is-scrollable={true}>
-          {dragOptions && this.isModalMenuOpen && (
-            <dragOptions.menu
-              items={[
-                { key: 'move', text: dragOptions.moveMenuItemText, onClick: this.onEnterKeyboardMoveMode },
-                { key: 'close', text: dragOptions.closeMenuItemText, onClick: this.onModalClose },
-              ]}
-              onDismiss={this.onModalContextMenuClose}
-              alignTargetEdge={true}
-              coverTarget={true}
-              directionalHint={DirectionalHint.topLeftEdge}
-              directionalHintFixed={true}
-              shouldFocusOnMount={true}
-              target={this.$refs.scrollableContent}
-            />
-          )}
-          {this.$slots.default}
-        </div>
-      </div>
-    )
+    const modalContent = h('div', { class: classNames.main }, [
+      dragOptions && isInKeyboardMoveMode && h('div', {
+        class: classNames.keyboardMoveIconContainer,
+      }, [
+        dragOptions.keyboardMoveIconProps
+          ? h(Icon, { attrs: dragOptions.keyboardMoveIconProps })
+          : h(Icon, { class: classNames.keyboardMoveIcon, attrs: { iconName: 'move' } }),
+      ]),
+      h('div', {
+        ref: 'scrollableContent',
+        class: classNames.scrollableContent,
+        attrs: {
+          dataIsScrollable: true,
+        },
+      }, [
+        dragOptions && this.isModalMenuOpen && h(dragOptions.menu, {
+          attrs: {
+            items: [
+              { key: 'move', text: dragOptions.moveMenuItemText, onClick: this.onEnterKeyboardMoveMode },
+              { key: 'close', text: dragOptions.closeMenuItemText, onClick: this.onModalClose },
+            ],
+            alignTargetEdge: true,
+            coverTarget: true,
+            directionalHint: DirectionalHint.topLeftEdge,
+            directionalHintFixed: true,
+            shouldFocusOnMount: true,
+            target: this.$refs.scrollableContent,
+          },
+          on: {
+            dismiss: this.onModalContextMenuClose,
+          },
+        }),
+        this.$slots.default,
+      ]),
+    ])
 
     if (responsiveMode! >= ResponsiveMode.small) {
-      return (
-        <Layer {...mergedLayerProps}>
-          <Popup
-            role={isModeless || !isBlocking ? 'dialog' : 'alertdialog'}
-            aria-modal={!isModeless}
-            ariaLabelledBy={titleAriaId}
-            ariaDescribedBy={subtitleAriaId}
-            onDismiss={onDismiss}
-            shouldRestoreFocus={!ignoreExternalFocusing}
-          >
-            <div class={classNames.root}>
-              {!isModeless && (
-                <Overlay
-                  dark={isDarkOverlay}
-                  onClick={isBlocking ? undefined : (onDismiss as any)}
-                  allowTouchBodyScroll={this.allowTouchBodyScroll}
-                  {...{ props: overlay }}
-                />
-              )}
-              {dragOptions ? (
-                // <DraggableZone
-                //   handleSelector={dragOptions.dragHandleSelector || `.${classNames.main.split(' ')[0]}`}
-                //   preventDragSelector="button"
-                //   onStart={this._onDragStart}
-                //   onDragChange={this._onDrag}
-                //   onStop={this._onDragStop}
-                //   position={{ x: x, y: y }}
-                // >
-                modalContent
-                // </DraggableZone>
-              ) : (
-                modalContent
-              )}
-            </div>
-          </Popup>
-        </Layer>
-      )
+      return h(Layer, { attrs: mergedLayerProps }, [
+        h(Popup, {
+          attrs: {
+            role: isModeless || !isBlocking ? 'dialog' : 'alertdialog',
+            ariaModal: !isModeless,
+            ariaLabelledBy: titleAriaId,
+            ariaDescribedBy: subtitleAriaId,
+            shouldRestoreFocus: !ignoreExternalFocusing,
+          },
+          on: {
+            dismiss: onDismiss,
+          },
+        }, [
+          h('div', { class: classNames.root }, [
+            !isModeless && h(Overlay, {
+              attrs: {
+                dark: isDarkOverlay,
+                allowTouchBodyScroll: this.allowTouchBodyScroll,
+                ...overlay,
+              },
+              on: {
+                ...!isBlocking ? { click: onDismiss } : {},
+              },
+            }),
+            dragOptions
+              ? modalContent
+              : modalContent,
+          ]),
+        ]),
+      ])
     }
   }
 }
