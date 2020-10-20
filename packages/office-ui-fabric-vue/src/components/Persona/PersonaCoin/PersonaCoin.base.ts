@@ -10,7 +10,7 @@ import {
   IPersonaCoinStyles,
   IPersonaCoinProps,
 } from '../Persona.types'
-import { PersonaPresence } from '../PersonaPresence/'
+import { PersonaPresence } from '../PersonaPresence'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
 import { ImageFit, Image } from '../../Image'
 import { Icon } from '../../Icon'
@@ -92,42 +92,43 @@ export class PersonaCoinBase extends BaseComponent<IPersonaCoinProps> {
 
   render (h: CreateElement) {
     const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
-    return (
-      <div role="presentation" class={classNames.coin}>
-        {(size !== PersonaSize.size8) ? (
-          <div role="presentation"
-            class={classNames.imageArea}
-            style={coinSizeStyle}>
-            { shouldRenderInitials && (
-              <div class={mergeStyles(
-                classNames.initials,
-                !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor(this.$props as any) },
-              )}
-              style={coinSizeStyle}
-              aria-hidden="true">
-                {initials
-                  ? (<span>{initials}</span>)
-                  : (<Icon icon-name="Contact" />)
-                }
-              </div>
-            )}
 
-            {imageUrl && (
-              <Image
-                class={classNames.image}
-                image-fit={ImageFit.cover}
-                src={imageUrl}
-                width={dimension}
-                height={dimension} />
-            )}
-            <PersonaPresence {...{ props: personaPresenceProps }} />
-          </div>
-        ) : presence
-          ? (<PersonaPresence {...{ props: personaPresenceProps }} />)
-          : (<Icon icon-name="Contact" class={classNames.size10WithoutPresenceIcon} />)}
-
-        {this.$slots.default}
-      </div>
-    )
+    return h('div', {
+      class: classNames.coin,
+      attrs: { role: 'presentation' },
+    }, [
+      (size !== PersonaSize.size8)
+        ? h('div', {
+          class: classNames.imageArea,
+          style: this.coinSizeStyle,
+          attrs: { role: 'presentation' },
+        }, [
+          shouldRenderInitials && h('div', {
+            class: mergeStyles(
+              classNames.initials,
+              !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor(this.$props as any) },
+            ),
+            style: coinSizeStyle,
+            attrs: { ariaHidden: 'true' },
+          }, [
+            initials
+              ? h('span', initials)
+              : h(Icon, { attrs: { iconName: 'Contact' } }),
+          ]),
+          imageUrl && h(Image, {
+            class: classNames.image,
+            attrs: {
+              imageFit: ImageFit.cover,
+              src: imageUrl,
+              width: dimension,
+              height: dimension,
+            },
+          }),
+          h(PersonaPresence, { props: personaPresenceProps }),
+        ])
+        : presence
+          ? h(PersonaPresence, { props: personaPresenceProps })
+          : h(Icon, { class: classNames.size10WithoutPresenceIcon, attrs: { iconName: 'Contact' } }),
+    ])
   }
 }

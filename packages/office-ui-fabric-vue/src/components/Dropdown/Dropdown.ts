@@ -7,9 +7,6 @@ export const Dropdown = styled<
 IDropdownProps,
 IDropdownStyleProps,
 IDropdownStyles
->(
-  DropdownBase,
-  getStyles,
-  undefined,
-  { scope: 'Dropdown' },
-)
+>(DropdownBase, getStyles, undefined, {
+  scope: 'Dropdown',
+})

@@ -12,6 +12,7 @@ import { getClassNames } from './ComboBox.classNames'
 import { IComboBoxOption, IComboBoxOptionStyles, IComboBoxProps } from './ComboBox.types'
 import { Callout } from '../Callout'
 import { Checkbox } from '../Checkbox'
+import { CreateElement } from 'vue'
 
 export interface IComboBoxState {
   /** The open state */
@@ -124,13 +125,7 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
       this.comboBoxMenuWidth = this.$refs.comboBoxWrapper.clientWidth + 2
     }, 1 / 60)
     const observer = new ResizeObserver(cb)
-    observer.observe(this.$refs.comboBoxWrapper)
-  }
-
-  test () {
-    return (
-      <div>Test {this.comboBoxMenuWidth}</div>
-    )
+    // observer.observe(this.$refs.comboBoxWrapper)
   }
 
   get hasErrorMessage () {
@@ -169,7 +164,7 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
     console.log(e)
   }
 
-  render () {
+  render (h: CreateElement) {
     const { classNames, onFocus, onBlur, calloutProps, persistMenu, state, multiSelect } = this
     return (
       <div class={classNames.container}>
@@ -185,8 +180,6 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
             nativeOnFocus={onFocus}
             nativeOnBlur={onBlur} />
         </div>
-
-        {this.test()}
 
         {(persistMenu || state.isOpen) && (
           <div>

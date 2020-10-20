@@ -4,11 +4,13 @@ import { RectangleEdge, ICalloutPositionedInfo } from '../../utilities/positioni
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
-import { Callout } from '../Callout'
+import { Callout, DirectionalHint } from '../Callout'
 import { ActionButton } from '../Button'
 import { Checkbox } from '../Checkbox'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
+import { CreateElement } from 'vue'
+import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<IDropdownStyleProps, IDropdownStyles>()
 
@@ -98,7 +100,96 @@ export class DropdownBase extends BaseComponent {
     }
   }
 
-  render () {
+  private onDismiss () {
+    this.isOpen = false
+  }
+
+  /**
+   * Scroll handler for the callout to make sure the mouse events
+   * for updating focus are not interacting during scroll
+   */
+  private onScroll (): void {
+    // if (!this._isScrollIdle && this._scrollIdleTimeoutId !== undefined) {
+    //   clearTimeout(this._scrollIdleTimeoutId);
+    //   this._scrollIdleTimeoutId = undefined;
+    // } else {
+    //   this._isScrollIdle = false;
+    // }
+
+    // this._scrollIdleTimeoutId = window.setTimeout(() => {
+    //   this._isScrollIdle = true;
+    // }, this._scrollIdleDelay);
+  };
+
+  // private onRenderContainer (props: any) {
+  //   const { calloutProps, panelProps } = props
+  //   // const { responsiveMode, dropdownWidth } = this.props;
+  //   const dropdownWidth = 0
+
+  //   const isSmall = true // responsiveMode! <= ResponsiveMode.medium;
+
+  //   const panelStyles = this.classNames.subComponentStyles
+  //     ? this.classNames.subComponentStyles.panel
+  //     : undefined
+
+  //   return isSmall
+  //     ? h('Panel', {
+  //       attrs: {
+  //         isOpen: true,
+  //         isLightDismiss: true,
+  //         hasCloseButton: false,
+  //         styles: panelStyles,
+  //         ...panelProps,
+  //       },
+  //       on: {
+  //         dismiss: this.onDismiss,
+  //       },
+  //     }, [
+  //       this.renderFocusableList(props),
+  //     ])
+  //     : h(Callout, {
+  //       class: this.classNames.callout,
+  //       attrs: {
+  //         isBeakVisible: false,
+  //         gapSpace: 0,
+  //         doNotLayer: false,
+  //         directionalHintFixed: false,
+  //         directionalHint: DirectionalHint.bottomLeftEdge,
+  //         ...calloutProps,
+  //         target: this.$refs.dropdown,
+  //         calloutWidth: dropdownWidth || (this.$refs.dropdown ? this.$refs.dropdown.clientWidth : 0),
+  //       },
+  //       on: {
+  //         dismiss: this.onDismiss,
+  //         scroll: this.onScroll,
+  //         positioned: this.onPositioned,
+  //       },
+  //     }, [
+  //       this.renderFocusableList(props),
+  //     ])
+  // }
+
+  // private renderFocusableList (props: any) {
+  //   const { onRenderList = this.onRenderList, label, ariaLabel, multiSelect } = props
+
+  //   return h('div', {
+  //     class: this.classNames.dropdownItemsWrapper,
+  //     ref: 'host',
+  //     attrs: {
+  //       tabIndex: 0,
+  //     },
+  //     on: {
+  //       // keydown: this.onZoneKeyDown,
+  //       // keyup: this.onZoneKeyUp,
+  //     },
+  //   }, onRenderList(props, this.onRenderList))
+  // }
+
+  // private onRenderList (props: any) {
+  //   // return
+  // }
+
+  render (h: CreateElement) {
     const { classNames, label, selectedOptions, multiSelect, multiSelectDelimiter, placeholder, isOpen, dropdownWidth, options, hasErrorMessage, errorMessage, required, disabled } = this
 
     const OptionComponent = multiSelect ? Checkbox : ActionButton

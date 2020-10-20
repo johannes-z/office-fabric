@@ -1,8 +1,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { ActionButton } from '../Button/'
+import { ActionButton } from '../Button'
 import { CreateElement, VNode } from 'vue'
 import BaseComponent from '../BaseComponent'
-import { Icon } from '../Icon/'
+import { Icon } from '../Icon'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { h } from '@vue/composition-api'
@@ -40,11 +40,10 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
     const classNames: any = getClassNames(this.styles, { theme: theme!, className, isOnTop, groups })
 
-    return (
-      <nav role="navigation" class={classNames.root}>
-        {groupElements}
-      </nav>
-    )
+    return h('nav', {
+      class: classNames.root,
+      attrs: { role: 'navigation' },
+    }, groupElements)
   }
 
   private renderGroup (group: INavLinkGroup, groupIndex: number): VNode {
@@ -56,11 +55,11 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
       groups,
     })
 
-    return (
-      <div key={groupIndex}>
-        <div class={classNames.groupContent}>{this.renderLinks(group.links, 0)}</div>
-      </div>
-    )
+    return h('div', { key: groupIndex }, [
+      h('div', { class: classNames.groupContent }, [
+        this.renderLinks(group.links, 0),
+      ]),
+    ])
   }
 
   private renderLinks (links: INavLink[] | undefined, nestingLevel: number): VNode | null {
@@ -73,23 +72,24 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
     const { groups, theme } = this
     const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
 
-    return (
-      <ul role="list" class={classNames.navItems}>
-        {linkElements}
-      </ul>
-    )
+    return h('ul', {
+      class: classNames.navItems,
+      attrs: { role: 'list' },
+    }, linkElements)
   }
 
   private renderLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
     const { groups, theme } = this
     const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
 
-    return (
-      <li key={linkIndex} role="listitem" class={classNames.navItem}>
-        {this.renderCompositeLink(link, linkIndex, nestingLevel)}
-        {link.isExpanded ? this.renderLinks(link.links, ++nestingLevel) : null}
-      </li>
-    )
+    return h('li', {
+      key: linkIndex,
+      class: classNames.navItem,
+      attrs: { role: 'listItem' },
+    }, [
+      this.renderCompositeLink(link, linkIndex, nestingLevel),
+      link.isExpanded && this.renderLinks(link.links, ++nestingLevel),
+    ])
   }
 
   private renderCompositeLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
@@ -104,20 +104,27 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
       groups,
     })
 
-    return (
-      <div key={linkIndex} class={classNames.compositeLink}>
-        {link.links && link.links.length > 0 ? (
-          <button onClick={this.onLinkExpandClicked.bind(this, link)} class={classNames.chevronButton}>
-            <Icon
-              class-name={classNames.chevronIcon}
-              // @ts-ignore
-              style={link.isExpanded && { transform: 'rotate(-180deg)' }}
-              icon-name="ChevronDown" />
-          </button>
-        ) : null}
-        {this.renderNavLink(link, linkIndex, nestingLevel)}
-      </div>
-    )
+    return h('div', {
+      key: linkIndex,
+      class: classNames.compositeLink,
+    }, [
+      (link.links && link.links.length > 0) &&
+      h('button', {
+        class: classNames.chevronButton,
+        on: {
+          click: this.onLinkExpandClicked.bind(this, link),
+        },
+      }, [
+        h(Icon, {
+          style: link.isExpanded ? { transform: 'rotate(-180deg)' } : {},
+          attrs: {
+            iconName: 'ChevronDown',
+            class: classNames.chevronIcon,
+          },
+        }),
+      ]),
+      this.renderNavLink(link, linkIndex, nestingLevel),
+    ])
   }
 
   private onLinkExpandClicked (link: INavLink) {
@@ -139,19 +146,19 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
       groups,
     })
 
-    return (
-      <ActionButton
-        // @ts-ignore
-        href={link.href || (link.forceAnchor ? '#' : undefined)}
-        title={link.title || link.name}
-        target={link.target}
-        disabled={link.disabled}
-        nativeOnClick={this.onNavLinkClicked.bind(this, link, linkIndex)}
-        class={[classNames.link, isSelected && classNames.selected]}
-        style={{ paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` }}>
-        {link.name}
-      </ActionButton>
-    )
+    return h(ActionButton, {
+      attrs: {
+        href: link.href || (link.forceAnchor ? '#' : undefined),
+        title: link.title || link.name,
+        target: link.target,
+        disabled: link.disabled,
+      },
+      class: [classNames.link, isSelected && classNames.selected],
+      style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
+      nativeOn: {
+        click: this.onNavLinkClicked.bind(this, link, linkIndex),
+      },
+    }, link.name)
   }
 
   private onNavLinkClicked (link: INavLink, linkIndex: number) {
