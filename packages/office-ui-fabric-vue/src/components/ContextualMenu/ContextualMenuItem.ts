@@ -1,5 +1,5 @@
 import { styled } from '../styled'
-import ContextualMenuItemBase from './ContextualMenuItem.base'
+import { ContextualMenuItemBase } from './ContextualMenuItem.base'
 import { getItemStyles } from './ContextualMenu.classNames'
 
 // export * from './ContextualMenuItem.types'

@@ -3,6 +3,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { css } from '@uifabric-vue/utilities'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow.styles'
 import BaseComponent from '../../BaseComponent'
+import { CreateElement } from 'vue'
 
 const getCellText = (item: any, column: any): string => {
   let value = item && column && column.fieldName ? item[column.fieldName] : ''
@@ -40,29 +41,33 @@ export class DetailsRowFields extends BaseComponent {
     return width
   }
 
-  render () {
+  render (h: CreateElement) {
     const { rowClassNames, columns, showAnimation, item } = this
-    return (
-      <div class={rowClassNames.fields} role="presentation">
-        {columns.map((column, columnIndex) => (
-          <div key={columnIndex}
-            role={column.isRowHeader ? 'rowheader' : 'gridcell'}
-            aria-readonly
-            style={{ width: this.calcWidth(column) }}
-            class={css(
-              column.className,
-              column.isMultiline && rowClassNames.isMultiline,
-              column.isRowHeader && rowClassNames.isRowHeader,
-              rowClassNames.cell,
-              column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
-              showAnimation && rowClassNames.cellAnimation,
-            )}>
-            {this.$scopedSlots[`cell.${column.key}`]
-              ? this.$scopedSlots[`cell.${column.key}`]({ item, column })
-              : getCellText(item, column) }
-          </div>
-        ))}
-      </div>
+
+    return h('div', {
+      class: rowClassNames.fields,
+      attrs: { role: 'presentation' },
+    }, columns.map((column, columnIndex) =>
+      h('div', {
+        key: columnIndex,
+        style: { width: this.calcWidth(column) },
+        class: css(
+          column.className,
+          column.isMultiline && rowClassNames.isMultiline,
+          column.isRowHeader && rowClassNames.isRowHeader,
+          rowClassNames.cell,
+          column.isPadded ? rowClassNames.cellPadded : rowClassNames.cellUnpadded,
+          showAnimation && rowClassNames.cellAnimation,
+        ),
+        attrs: {
+          role: column.isRowHeader ? 'rowheader' : 'gridcell',
+          ariaReadonly: true,
+        },
+      }, [
+        this.$scopedSlots[`cell.${column.key}`]
+          ? this.$scopedSlots[`cell.${column.key}`]({ item, column })
+          : getCellText(item, column),
+      ])),
     )
   }
 }

@@ -194,69 +194,80 @@ export class DropdownBase extends BaseComponent {
 
     const OptionComponent = multiSelect ? Checkbox : ActionButton
 
-    return (
-      <div class={classNames.root}>
-        <Label class={classNames.label}
-          required={required}
-          disabled={disabled}>
-          { label }
-        </Label>
-        <div ref="dropdown"
-          class={classNames.dropdown}
-          onClick={() => (this.isOpen = true)}>
-          <span class={classNames.title}>
-            {selectedOptions.length
-              ? selectedOptions.map(i => i.text).join(multiSelectDelimiter)
-              : placeholder}
-          </span>
-          <span class={classNames.caretDownWrapper}>
-            <Icon class={classNames.caretDown} icon-name="ChevronDown" />
-          </span>
-        </div>
+    const $label = h(Label, {
+      class: classNames.label,
+      attrs: {
+        required,
+        disabled,
+      },
+    }, label)
+    const $dropdown = h('div', {
+      ref: 'dropdown',
+      class: classNames.dropdown,
+      on: { click: () => (this.isOpen = true) },
+    }, [
+      h('span',
+        { class: classNames.title },
+        selectedOptions.length
+          ? selectedOptions.map(i => i.text).join(multiSelectDelimiter)
+          : placeholder,
+      ),
+      h('span', { class: classNames.caretDownWrapper }, [
+        h(Icon, { class: classNames.caretDown, attrs: { iconName: 'ChevronDown' } }),
+      ]),
+    ])
+    const $errorMessage = hasErrorMessage && h('div', {
+      class: classNames.errorMessage,
+      attrs: {
+        role: 'alert',
+      },
+    }, errorMessage)
 
-        {isOpen && (
-          <div>
-            <Callout target={this.$refs.dropdown}
-              is-beak-visible={false}
-              callout-width={dropdownWidth || (this.$refs.dropdown ? this.$refs.dropdown.clientWidth : 0)}
-              onDismiss={() => (this.isOpen = false)}
-              onPositioned={this.onPositioned}>
-              <div class={classNames.dropdownItemsWrapper}
-                tabindex={0}>
-                {options.map((option, index) => (
-                  <OptionComponent
-                    key={index}
-                    class={
-                      option.hidden
-                        ? classNames.dropdownItemHidden
-                        : option.isItemSelected && option.disabled === true
-                          ? classNames.dropdownItemSelectedAndDisabled
-                          : option.isItemSelected
-                            ? classNames.dropdownItemSelected
-                            : option.disabled === true
-                              ? classNames.dropdownItemDisabled
-                              : classNames.dropdownItem}
-                    disabled={option.disabled}
-                    title={option.text}
-                    checked={option.isItemSelected}
-                    styles={multiSelect ? this.multiSelectItemStyles : null}
-                    role={option}
-                    nativeOnClick={() => (!multiSelect && this.select(option))}
-                    onInput={() => (multiSelect && this.select(option))}>
-                    { option.text }
-                  </OptionComponent>
-                ))}
-              </div>
-            </Callout>
-          </div>
-        )}
+    const $callout = isOpen && h(Callout, {
+      attrs: {
+        target: this.$refs.dropdown,
+        isBeakVisible: false,
+        calloutWidth: dropdownWidth || (this.$refs.dropdown ? this.$refs.dropdown.clientWidth : 0),
+      },
+      on: {
+        dismiss: this.onDismiss,
+        positioned: this.onPositioned,
+      },
+    }, [
+      h('div', { class: classNames.dropdownItemsWrapper, attrs: { tabindex: 0 } }, [
+        options.map((option, index) => h(OptionComponent, {
+          key: index,
+          class: option.hidden
+            ? classNames.dropdownItemHidden
+            : option.isItemSelected && option.disabled === true
+              ? classNames.dropdownItemSelectedAndDisabled
+              : option.isItemSelected
+                ? classNames.dropdownItemSelected
+                : option.disabled === true
+                  ? classNames.dropdownItemDisabled
+                  : classNames.dropdownItem,
+          style: multiSelect ? this.multiSelectItemStyles : null,
+          attrs: {
+            disabled: option.disabled,
+            title: option.text,
+            checked: option.isItemSelected,
+            role: option,
+          },
+          nativeOn: {
+            click: () => (!multiSelect && this.select(option)),
+          },
+          on: {
+            input: () => (multiSelect && this.select(option)),
+          },
+        }, option.text)),
+      ]),
+    ])
 
-        {hasErrorMessage && (
-          <div role="alert" class={classNames.errorMessage}>
-            { errorMessage }
-          </div>
-        )}
-      </div>
-    )
+    return h('div', { class: classNames.root }, [
+      $label,
+      $dropdown,
+      $callout,
+      $errorMessage,
+    ])
   }
 }

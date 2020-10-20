@@ -2,6 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import Icon from '../Icon/Icon'
 import { classNamesFunction } from '@uifabric-vue/utilities'
+import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction(
 
@@ -9,7 +10,7 @@ const getClassNames = classNamesFunction(
 @Component({
   components: {},
 })
-export default class ContextualMenuItem extends BaseComponent {
+export class ContextualMenuItemBase extends BaseComponent {
   @Prop({ type: Object, default: () => {} }) item!: any
 
   get classNames (): any {
@@ -20,19 +21,16 @@ export default class ContextualMenuItem extends BaseComponent {
 
   public render () {
     const { item, classNames } = this
-    console.log(classNames)
 
-    return (
-      <button class={classNames.root}>
-        <div class={item.split ? classNames.linkContentMenu : classNames.linkContent}>
-          {this.renderCheckMarkIcon(this)}
-          {this.renderItemIcon(this)}
-          {this.renderItemName(this)}
-          {this.renderSecondaryText(this)}
-          {this.renderSubMenuIcon(this)}
-        </div>
-      </button>
-    )
+    return h('button', { class: classNames.root }, [
+      h('div', { class: item.split ? classNames.linkContentMenu : classNames.linkContent }, [
+        this.renderCheckMarkIcon(this),
+        this.renderItemIcon(this),
+        this.renderItemName(this),
+        this.renderSecondaryText(this),
+        this.renderSubMenuIcon(this),
+      ]),
+    ])
   }
 
   public openSubMenu = (): void => {
@@ -72,7 +70,10 @@ export default class ContextualMenuItem extends BaseComponent {
       return item.onRenderIcon(props)
     }
 
-    return <Icon {...iconProps} class={classNames.icon} />
+    return h(Icon, {
+      class: classNames.icon,
+      props: iconProps,
+    })
   }
 
   renderCheckMarkIcon ({ onCheckmarkClick, item, classNames }: any) {
@@ -81,25 +82,29 @@ export default class ContextualMenuItem extends BaseComponent {
     // Ensures that the item is passed as the first argument to the checkmark click callback.
       const onClick = (e: any) => onCheckmarkClick(item, e)
 
-      return (
-        <Icon icon-name={item.canCheck !== false && isItemChecked ? 'CheckMark' : ''} class-name={classNames.checkmarkIcon} on-click={onClick} />
-      )
+      return h(Icon, {
+        class: classNames.checkmarkIcon,
+        attrs: {
+          iconName: item.canCheck !== false && isItemChecked ? 'CheckMark' : '',
+        },
+        on: {
+          click: onClick,
+        },
+      })
     }
     return null
   }
 
   renderItemName ({ item, classNames }: any) {
-  // tslint:disable:deprecation
     if (item.text || item.name) {
-      return <span class={classNames.label}>{item.text || item.name}</span>
+      return h('span', { class: classNames.label }, item.text || item.name)
     }
-    // tslint:enable:deprecation
     return null
   }
 
   renderSecondaryText ({ item, classNames }: any) {
     if (item.secondaryText) {
-      return <span class={classNames.secondaryText}>{item.secondaryText}</span>
+      return h('span', { class: classNames.secondaryText }, item.secondaryText)
     }
     return null
   }

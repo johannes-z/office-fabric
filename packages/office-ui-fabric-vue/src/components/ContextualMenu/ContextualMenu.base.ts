@@ -5,6 +5,7 @@ import { css, classNamesFunction } from '@uifabric-vue/utilities'
 import BaseComponent from '../BaseComponent'
 
 import { ContextualMenuItem } from './ContextualMenuItem'
+import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<any, any>({
   disableCaching: true,
@@ -41,28 +42,37 @@ export class ContextualMenuBase extends BaseComponent {
     }
   }
 
-  render () {
+  render (h: CreateElement) {
     const { target, directionalHint, calloutProps, onDismiss, contextMenuStyle, classNames, items } = this
-    return (
-      <Callout target={target}
-        directional-hint={directionalHint}
-        class={css('ms-ContextualMenu-Callout', calloutProps && calloutProps.className)}
-        is-beak-visible={false}
-        onDismiss={onDismiss}>
-        <div style={contextMenuStyle}
-          class={classNames.container}>
-          <div class={classNames.root}>
-            <ul class={classNames.list} role="menu">
-              {items.map((item, index) => (
-                <li key={item.key || index}
-                  class={classNames.item}>
-                  <ContextualMenuItem item={item} prop-class-names={classNames} />
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </Callout>
-    )
+
+    return h(Callout, {
+      class: css('ms-ContextualMenu-Callout', calloutProps && calloutProps.className),
+      attrs: {
+        target,
+        directionalHint,
+        isBeakVisible: false,
+      },
+      on: {
+        dismiss: onDismiss,
+      },
+    }, [
+      h('div', { style: contextMenuStyle, class: classNames.container }, [
+        h('div', { class: classNames.root }, [
+          h('ul', { class: classNames.list, attrs: { role: 'menu' } },
+            items.map((item, index) => h('li', {
+              key: item.key || index,
+              class: classNames.item,
+            }, [
+              h(ContextualMenuItem, {
+                attrs: {
+                  item,
+                  propClassNames: classNames,
+                },
+              }),
+            ])),
+          ),
+        ]),
+      ]),
+    ])
   }
 }
