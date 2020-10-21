@@ -5,7 +5,7 @@
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "sideEffects": [
-    "tmp/version.js"
+    "lib/version.js"
   ],
   "scripts": {
     "build": "pnpm run build:tsc && pnpm run build:lib",
