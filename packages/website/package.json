@@ -8,15 +8,15 @@
     "build": "vue-cli-service build src/index.ts --mode production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.2",
+    "@babel/runtime": "^7.12.1",
     "@uifabric-vue/ie11-polyfills": "workspace:^0.1.2",
     "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.0.0-alpha1",
     "@uifabric/example-data": "^7.1.5",
     "@uifabric/merge-styles": "^7.19.1",
     "@uifabric/set-version": "^7.0.23",
-    "@uifabric/styling": "^7.16.11",
+    "@uifabric/styling": "^7.16.13",
     "core-js": "^3.6.5",
-    "highlight.js": "^10.2.1",
+    "highlight.js": "^10.3.1",
     "html-loader": "^1.3.2",
     "markdown-loader": "^6.0.0",
     "regenerator-runtime": "^0.13.7",
@@ -27,20 +27,20 @@
     "vue-property-decorator": "^9.0.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.12.0",
+    "@babel/preset-env": "^7.12.1",
     "@uifabric-vue/utilities": "workspace:^7.32.3",
-    "@vue/cli-plugin-babel": "^4.5.7",
-    "@vue/cli-plugin-eslint": "^4.5.7",
-    "@vue/cli-plugin-router": "^4.5.7",
-    "@vue/cli-plugin-typescript": "^4.5.7",
-    "@vue/cli-service": "^4.5.7",
+    "@vue/cli-plugin-babel": "^4.5.8",
+    "@vue/cli-plugin-eslint": "^4.5.8",
+    "@vue/cli-plugin-router": "^4.5.8",
+    "@vue/cli-plugin-typescript": "^4.5.8",
+    "@vue/cli-service": "^4.5.8",
     "@vue/eslint-config-standard": "^5.1.2",
     "@vue/eslint-config-typescript": "^7.0.0",
     "faker": "^5.1.0",
     "sass": "^1.27.0",
     "sass-loader": "^10.0.3",
     "typescript": "^4.0.3",
-    "vue-router": "^3.4.6",
+    "vue-router": "^3.4.7",
     "vue-template-compiler": "^2.6.12"
   }
 }
