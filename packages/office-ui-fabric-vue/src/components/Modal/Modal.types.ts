@@ -3,8 +3,6 @@ import { IIconProps } from '../Icon'
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { ILayerProps } from '../Layer'
 import { IOverlayProps } from '../Overlay'
-import { TsxComponent } from 'vue-tsx-support'
-import { VueConstructor } from 'vue'
 
 export interface IDragOptions {
   /**

@@ -4,22 +4,26 @@ import json from '@rollup/plugin-json'
 
 import path from 'path'
 
-import vue from 'rollup-plugin-vue'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
-// @ts-ignore
-import babel from '@rollup/plugin-babel'
-import pkg from './package.json'
+import { terser } from 'rollup-plugin-terser'
 
 const packageRoot = path.resolve(__dirname)
 
 export default {
   input: './lib/index.js',
   output: {
-    file: 'dist/office-ui-fabric-vue.umd',
+    file: 'dist/fluent-ui.umd.min.js',
     format: 'umd',
+    name: 'FluentUIVue',
+    exports: 'named',
     sourcemap: false,
+    globals: {
+      vue: 'Vue',
+    },
   },
+  external: ['vue'],
+  preserveSymlinks: true,
   plugins: [
     json(),
     replace({
@@ -29,7 +33,7 @@ export default {
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: [
         { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
-        { find: '@uifabric/utilities', replacement: '@uifabric-vue/utilities' },
+        { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
       ],
     }),
     resolve({
@@ -40,5 +44,23 @@ export default {
       include: /node_modules/,
       sourceMap: false,
     }),
+    terser(),
+    // babel({
+    //   exclude: /node_modules\/(?!vue-runtime-helpers)/gi,
+    //   extensions: ['.js', '.jsx'],
+    //   babelrc: false,
+    //   configFile: false,
+    //   babelHelpers: 'runtime',
+    //   presets: [
+    //     '@vue/babel-preset-jsx',
+    //     ['@babel/preset-env', {
+    //       loose: true,
+    //       bugfixes: true,
+    //     }],
+    //   ],
+    //   plugins: [
+    //     '@babel/plugin-transform-runtime',
+    //   ],
+    // }),
   ],
 }

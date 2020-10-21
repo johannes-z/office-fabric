@@ -65,7 +65,7 @@ export class DetailsRowFields extends BaseComponent {
         },
       }, [
         this.$scopedSlots[`cell.${column.key}`]
-          ? this.$scopedSlots[`cell.${column.key}`]({ item, column })
+          ? (this.$scopedSlots[`cell.${column.key}`] as any)({ item, column })
           : getCellText(item, column),
       ])),
     )

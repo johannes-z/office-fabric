@@ -5,12 +5,9 @@ import { ILayerProps, ILayerStyles, ILayerStyleProps } from './Layer.types'
 import BaseComponent from '../BaseComponent'
 import { getStyles } from './Layer.styles'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { ofType } from 'vue-tsx-support'
 import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<ILayerStyleProps, ILayerStyles>()
-
-const TypedMountingPortal = ofType<any>().convert(MountingPortal)
 
 @Component
 export class LayerBase extends BaseComponent {
@@ -78,7 +75,7 @@ export class LayerBase extends BaseComponent {
 
     const { classNames, hostId, append } = this
 
-    return h(TypedMountingPortal, {
+    return h(MountingPortal, {
       props: {
         mountTo: hostId ? `#${hostId}` : 'body',
         append,
@@ -86,7 +83,7 @@ export class LayerBase extends BaseComponent {
     }, [
       h('div', { class: classNames.root }, [
         h('div', { class: classNames.content }, [
-          this.$scopedSlots.default({}),
+          this.$scopedSlots.default && this.$scopedSlots.default({}),
         ]),
       ]),
     ])
