@@ -1,8 +1,8 @@
 import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
-import { getTheme } from '../plugin/getTheme'
 import Vue from 'vue'
+import { getTheme, ITheme } from '@uifabric/styling'
 
 // @ts-ignore
 @Component
@@ -11,7 +11,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
 
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
-  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
+  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: ITheme
 
   componentRef: HTMLElement | null = null
   css = css

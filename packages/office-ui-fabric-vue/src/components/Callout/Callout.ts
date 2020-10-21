@@ -26,9 +26,7 @@ export class Callout extends StatelessComponent {
 
     return context.props.doNotLayer ? content : h(Layer, {
       ...context.data,
-      props: {
-        ...layerProps,
-      },
+      props: layerProps,
     }, [content])
   }
 }

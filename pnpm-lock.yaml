@@ -36,8 +36,6 @@ importers:
       eslint-plugin-vue: ^7.1.0
       typescript: ^4.0.3
       vue-template-compiler: ^2.6.12
-  ../../.nvm/versions/node/v14.13.1/pnpm-global:
-    specifiers: {}
   packages/api-docs:
     dependencies:
       '@microsoft/api-extractor-model': 7.7.1
@@ -57,7 +55,7 @@ importers:
       '@microsoft/tsdoc': 0.12.14
       '@types/fs-extra': ^8.0.1
       '@types/node': ^10.3.2
-      '@uifabric-vue/utilities': 'workspace:^7.32.3'
+      '@uifabric-vue/utilities': 'workspace:^7.32.4'
       '@uifabric/merge-styles': ^7.19.1
       '@uifabric/styling': ^7.16.9
       fs-extra: ^8.1.0
@@ -202,7 +200,7 @@ importers:
       '@babel/preset-env': ^7.12.1
       '@babel/runtime': ^7.12.1
       '@uifabric-vue/ie11-polyfills': 'workspace:^0.1.2'
-      '@uifabric-vue/office-ui-fabric-vue': 'workspace:^8.0.0-alpha1'
+      '@uifabric-vue/office-ui-fabric-vue': 'workspace:^8.0.1'
       '@uifabric-vue/utilities': 'workspace:^7.32.3'
       '@uifabric/example-data': ^7.1.5
       '@uifabric/merge-styles': ^7.19.1

@@ -161,7 +161,6 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
   }
 
   private onBlur (e: FocusEvent) {
-    console.log(e)
   }
 
   render (h: CreateElement) {

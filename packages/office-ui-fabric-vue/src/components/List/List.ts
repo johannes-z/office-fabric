@@ -126,7 +126,6 @@ export class List extends BaseComponent<IListProps> {
 
   render (h: CreateElement) {
     const { pages, className, css, role } = this
-    console.log(pages)
 
     const $pages = pages.map(page => h('div', {
       key: page.key,

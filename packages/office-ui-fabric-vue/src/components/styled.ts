@@ -1,7 +1,6 @@
 import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import Vue, { VueConstructor, CreateElement, RenderContext, VNode } from 'vue'
+import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 
-import { Component as VueComponent } from 'vue-property-decorator'
 import { Customizations } from '@uifabric-vue/utilities'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {

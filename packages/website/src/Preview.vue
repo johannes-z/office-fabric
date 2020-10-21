@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper">
     <div class="topNav" :style="{ boxShadow: theme.effects.elevation8 }">
-      <DefaultButton @click.native="toggleTheme('light')">Light Theme</DefaultButton>
-      <DefaultButton @click.native="toggleTheme('dark')">Dark Theme</DefaultButton>
+      <DefaultButton @click.prevent.native="toggleTheme('light')">Light Theme</DefaultButton>
+      <DefaultButton @click.prevent.native="toggleTheme('dark')">Dark Theme</DefaultButton>
     </div>
 
     <div class="page">
@@ -10,9 +10,7 @@
         <Nav :groups="groups" />
       </div>
       <div class="content">
-        <div class="">
-          <router-view v-bind="null" />
-        </div>
+        <router-view v-bind="null" />
       </div>
     </div>
   </div>
@@ -20,18 +18,20 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { DefaultButton, IPartialTheme, loadTheme, Nav } from '@uifabric-vue/office-ui-fabric-vue'
-import { DefaultEffects, getTheme } from '@uifabric/styling'
+import { ThemeProvider, ActionButton, DefaultButton, IPartialTheme, loadTheme, Nav, Callout, Spinner } from '@uifabric-vue/office-ui-fabric-vue'
+import { createTheme, DefaultEffects, getTheme } from '@uifabric/styling'
 
 const publicPath = process.env.NODE_ENV === 'production'
   ? '/office-fabric'
   : ''
 
 @Component({
-  components: { DefaultButton, Nav },
+  components: { ActionButton, ThemeProvider, DefaultButton, Nav, Callout, Spinner },
 })
 export default class Preview extends Vue {
+  // @ts-ignore
   theme = getTheme()
+  target = document.body
 
   groups = [
     {
@@ -189,7 +189,7 @@ export default class Preview extends Vue {
         white: '#323130',
       }
     }
-    loadTheme(_theme)
+    this.theme = loadTheme(_theme)
   }
 }
 </script>

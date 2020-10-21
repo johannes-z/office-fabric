@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "@uifabric-vue/ie11-polyfills": "workspace:^0.1.2",
-    "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.0.0-alpha1",
+    "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.0.1",
     "@uifabric/example-data": "^7.1.5",
     "@uifabric/merge-styles": "^7.19.1",
     "@uifabric/set-version": "^7.0.23",

@@ -8,13 +8,13 @@ import BasePage from './pages/BasePage.vue'
 
 import '@uifabric-vue/ie11-polyfills'
 
-import Fabric, { initializeIcons, IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
+import Fabric, { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
 
 initializeIcons()
-Vue.use(Fabric, {} as IPartialTheme)
 
 Vue.use(VueRouter)
 Vue.use(VueHighlightJS)
+Vue.use(Fabric)
 
 Vue.component('BasePage', BasePage)
 

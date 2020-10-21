@@ -1,7 +1,6 @@
 import * as Components from '../components'
 import { IPartialTheme } from '@uifabric/styling'
 import { toKebabCase } from '../utilities'
-import { loadTheme } from './loadTheme'
 
 export type { IPartialTheme } from '@uifabric/styling'
 export interface IOptions {

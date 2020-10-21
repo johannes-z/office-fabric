@@ -16,7 +16,7 @@
     "@fluentui/eslint-plugin": "^0.54.1",
     "@types/fs-extra": "^8.0.1",
     "@types/node": "^10.3.2",
-    "@uifabric-vue/utilities": "workspace:^7.32.3",
+    "@uifabric-vue/utilities": "workspace:^7.32.4",
     "@uifabric/merge-styles": "^7.19.1",
     "@uifabric/styling": "^7.16.9"
   },

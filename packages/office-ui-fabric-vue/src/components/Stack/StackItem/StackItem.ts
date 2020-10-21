@@ -2,8 +2,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CreateElement, RenderContext } from 'vue'
 import { StackItemStyles as baseStyles } from './StackItem.styles'
-import { mergeStyleSets } from '@uifabric/styling'
-import { getTheme } from '../../../plugin/getTheme'
+import { mergeStyleSets, getTheme } from '@uifabric/styling'
 
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../../StatelessComponent'
