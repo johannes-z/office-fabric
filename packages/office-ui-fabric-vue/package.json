@@ -17,8 +17,6 @@
     "vue": "^2.6.12"
   },
   "dependencies": {
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/runtime": "^7.12.1",
     "@fluentui/theme": "^1.5.1",
     "@microsoft/load-themed-styles": "^1.10.116",
     "@uifabric-vue/utilities": "workspace:^7.32.4",

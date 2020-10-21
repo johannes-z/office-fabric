@@ -5,6 +5,7 @@ import json from '@rollup/plugin-json'
 import path from 'path'
 
 import commonjs from '@rollup/plugin-commonjs'
+import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
@@ -44,23 +45,22 @@ export default {
       include: /node_modules/,
       sourceMap: false,
     }),
+    babel({
+      exclude: /node_modules/gi,
+      extensions: ['.js', '.jsx'],
+      babelrc: false,
+      configFile: false,
+      babelHelpers: 'bundled',
+      presets: [
+        ['@babel/preset-env', {
+          loose: true,
+          bugfixes: true,
+          targets: {
+            browsers: 'IE 11'
+          }
+        }],
+      ],
+    }),
     terser(),
-    // babel({
-    //   exclude: /node_modules\/(?!vue-runtime-helpers)/gi,
-    //   extensions: ['.js', '.jsx'],
-    //   babelrc: false,
-    //   configFile: false,
-    //   babelHelpers: 'runtime',
-    //   presets: [
-    //     '@vue/babel-preset-jsx',
-    //     ['@babel/preset-env', {
-    //       loose: true,
-    //       bugfixes: true,
-    //     }],
-    //   ],
-    //   plugins: [
-    //     '@babel/plugin-transform-runtime',
-    //   ],
-    // }),
   ],
 }
