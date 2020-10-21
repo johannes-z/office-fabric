@@ -11,10 +11,7 @@ import '@uifabric-vue/ie11-polyfills'
 import Fabric, { initializeIcons, IOptions, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 
 initializeIcons()
-
-Vue.use(Fabric, {} as IPartialTheme, {
-  useCSSVars: true,
-} as IOptions)
+Vue.use(Fabric, {} as IPartialTheme)
 
 Vue.use(VueRouter)
 Vue.use(VueHighlightJS)

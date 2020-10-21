@@ -1,11 +1,11 @@
 import {
   concatStyleSets,
   ITheme,
-  getTheme,
   HighContrastSelector,
   keyframes,
   PulsingBeaconAnimationStyles,
 } from '../../Styling'
+import { getTheme } from '../../plugin/getTheme'
 import { memoizeFunction } from '../../Utilities'
 import { IActivityItemStyles, IActivityItemProps } from './ActivityItem.types'
 

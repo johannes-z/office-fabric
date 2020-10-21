@@ -1,5 +1,5 @@
 import { Prop, Component } from 'vue-property-decorator'
-import { getTheme } from '@uifabric/styling'
+import { getTheme } from '../plugin/getTheme'
 import Vue from 'vue'
 
 // @ts-ignore

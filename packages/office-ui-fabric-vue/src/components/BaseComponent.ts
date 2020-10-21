@@ -1,7 +1,7 @@
 import { Prop, Component } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
-import { getTheme } from '@uifabric/styling'
+import { getTheme } from '../plugin/getTheme'
 import Vue from 'vue'
 
 // @ts-ignore
