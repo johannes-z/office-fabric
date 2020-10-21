@@ -36,6 +36,8 @@ importers:
       eslint-plugin-vue: ^7.1.0
       typescript: ^4.0.3
       vue-template-compiler: ^2.6.12
+  ../../.nvm/versions/node/v14.13.1/pnpm-global:
+    specifiers: {}
   packages/api-docs:
     dependencies:
       '@microsoft/api-extractor-model': 7.7.1
