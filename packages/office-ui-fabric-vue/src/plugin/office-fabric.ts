@@ -16,6 +16,4 @@ export default function install (Vue: any, theme: IPartialTheme = {}, options: P
       Vue.component(name, Component)
     }
   }
-
-  loadTheme(theme)
 }

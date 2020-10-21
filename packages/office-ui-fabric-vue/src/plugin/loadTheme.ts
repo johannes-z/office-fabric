@@ -10,10 +10,8 @@ export function loadTheme (theme: IPartialTheme): ITheme {
   semanticColors = registerCSSVars('semanticColors', semanticColors)
 
   // update theme
-  baseLoadTheme({
+  return baseLoadTheme({
     palette,
     semanticColors,
   })
-
-  return _theme
 }

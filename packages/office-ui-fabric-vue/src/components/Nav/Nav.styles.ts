@@ -1,4 +1,4 @@
-import { INavStyles } from './Nav.types';
+import { INavStyles } from './Nav.types'
 import {
   AnimationClassNames,
   getFocusStyle,
@@ -6,8 +6,8 @@ import {
   getGlobalClassNames,
   HighContrastSelector,
   FontWeights,
-} from '../../Styling';
-import { IButtonStyles } from '../Button';
+} from '../../Styling'
+import { IButtonStyles } from '../Button'
 
 const GlobalClassNames = {
   root: 'ms-Nav',
@@ -20,7 +20,7 @@ const GlobalClassNames = {
   navItems: 'ms-Nav-navItems',
   group: 'ms-Nav-group',
   groupContent: 'ms-Nav-groupContent',
-};
+}
 
 export const buttonStyles: IButtonStyles = {
   textContainer: {
@@ -31,7 +31,7 @@ export const buttonStyles: IButtonStyles = {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
   },
-};
+}
 
 export const getStyles = (props: any): INavStyles => {
   const {
@@ -49,11 +49,11 @@ export const getStyles = (props: any): INavStyles => {
     leftPadding = 20,
     leftPaddingExpanded = 28,
     rightPadding = 20,
-  } = props;
+  } = props
 
-  const { palette, semanticColors, fonts } = theme;
+  const { palette, semanticColors, fonts } = theme
 
-  const classNames = getGlobalClassNames(GlobalClassNames, theme);
+  const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
   return {
     root: [
@@ -255,5 +255,5 @@ export const getStyles = (props: any): INavStyles => {
         display: 'block',
       },
     ],
-  };
-};
+  }
+}
