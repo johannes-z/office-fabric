@@ -1,5 +1,13 @@
-import { AnimationClassNames, ZIndexes, getFocusStyle, FontWeights, HighContrastSelector, getGlobalClassNames } from '@uifabric/styling'
-import { INavStyles } from './Nav.types'
+import { INavStyles } from './Nav.types';
+import {
+  AnimationClassNames,
+  getFocusStyle,
+  ZIndexes,
+  getGlobalClassNames,
+  HighContrastSelector,
+  FontWeights,
+} from '../../Styling';
+import { IButtonStyles } from '../Button';
 
 const GlobalClassNames = {
   root: 'ms-Nav',
@@ -12,9 +20,9 @@ const GlobalClassNames = {
   navItems: 'ms-Nav-navItems',
   group: 'ms-Nav-group',
   groupContent: 'ms-Nav-groupContent',
-}
+};
 
-export const buttonStyles: any = {
+export const buttonStyles: IButtonStyles = {
   textContainer: {
     overflow: 'hidden',
   },
@@ -23,7 +31,7 @@ export const buttonStyles: any = {
     textOverflow: 'ellipsis',
     overflow: 'hidden',
   },
-}
+};
 
 export const getStyles = (props: any): INavStyles => {
   const {
@@ -41,11 +49,11 @@ export const getStyles = (props: any): INavStyles => {
     leftPadding = 20,
     leftPaddingExpanded = 28,
     rightPadding = 20,
-  } = props
+  } = props;
 
-  const { palette, semanticColors, fonts } = theme
+  const { palette, semanticColors, fonts } = theme;
 
-  const classNames = getGlobalClassNames(GlobalClassNames, theme)
+  const classNames = getGlobalClassNames(GlobalClassNames, theme);
 
   return {
     root: [
@@ -107,10 +115,10 @@ export const getStyles = (props: any): INavStyles => {
         color: semanticColors.bodyText,
         selectors: {
           [HighContrastSelector]: {
-            borderColor: 'transparent',
+            border: 0,
             selectors: {
               ':focus': {
-                borderColor: 'WindowText',
+                border: '1px solid WindowText',
               },
             },
           },
@@ -247,5 +255,5 @@ export const getStyles = (props: any): INavStyles => {
         display: 'block',
       },
     ],
-  }
-}
+  };
+};

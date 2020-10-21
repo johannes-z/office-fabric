@@ -5,7 +5,7 @@
     "tsBuildInfoFile": "./.cache/tsconfig.tsbuildinfo",
     "incremental": true,
     "outDir": "lib",
-    "target": "es5",
+    "target": "ESNext",
     "module": "ESNext",
     "isolatedModules": false,
     "moduleResolution": "Node",

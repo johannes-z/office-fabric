@@ -152,8 +152,8 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
         title: link.title || link.name,
         target: link.target,
         disabled: link.disabled,
+        className: classNames.link
       },
-      class: [classNames.link, isSelected && classNames.selected],
       style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
       nativeOn: {
         click: this.onNavLinkClicked.bind(this, link, linkIndex),
