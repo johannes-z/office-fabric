@@ -2,6 +2,7 @@ import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@ui
 import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 
 import { Customizations } from '@uifabric-vue/utilities'
+import { getTheme } from '@uifabric/styling'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {
   styles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>;
@@ -42,6 +43,7 @@ export function styled<
   return Vue.extend({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
     functional: true,
+    inject: ['__reactiveInject__'],
     render (h: CreateElement, context: RenderContext<any>): VNode {
       const settings = Customizations.getSettings(fields, scope)
       const { styles: customizedStyles, dir, ...rest } = settings
@@ -60,6 +62,9 @@ export function styled<
           ...context.props,
           className: context.props.className || context.data.class,
           styles: _styles,
+          theme: context.injections.__reactiveInject__
+            ? context.injections.__reactiveInject__.theme
+            : getTheme(),
         },
       }, context.children)
     },
