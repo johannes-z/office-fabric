@@ -24,11 +24,15 @@ export class IconButton extends BaseComponent {
       disabled,
       variantClassName: 'ms-Button--icon',
       styles: internalStyles,
+      theme: this.theme,
     }
 
     return h(BaseButton, {
-      props,
-      attrs: this.$attrs,
+      attrs: {
+        ...this.$props,
+        ...props,
+        ...this.$attrs,
+      },
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })

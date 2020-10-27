@@ -30,6 +30,7 @@ export class SearchBoxBase extends BaseComponent {
 
   render (h: CreateElement) {
     const { classNames, disabled, internalValue, placeholder, iconName } = this
+    console.log(internalValue)
 
     const $iconContainer = h('div', { class: classNames.iconContainer }, [
       h(Icon, { class: classNames.icon, props: { iconName } }),
@@ -46,10 +47,10 @@ export class SearchBoxBase extends BaseComponent {
     const $input = h('input', {
       ref: 'input',
       class: classNames.field,
-      attrs: {
-        ...this.$attrs,
+      domProps: {
         disabled,
         value: internalValue,
+        ...this.$attrs,
         'aria-label': placeholder,
         placeholder,
       },
@@ -82,17 +83,17 @@ export class SearchBoxBase extends BaseComponent {
   }
 
   @Watch('value')
-  private onPropValueChanged (newValue: string) {
+  onPropValueChanged (newValue: string) {
     this.internalValue = newValue
   }
 
   @Watch('internalValue')
-  private onValueChanged (value: string) {
+  onValueChanged (value: string) {
     this.$emit('input', value)
     this.$emit('change', value)
   }
 
-  private onKeyDown (ev: KeyboardEvent) {
+  onKeyDown (ev: KeyboardEvent) {
     switch (ev.which) {
       case KeyCodes.escape:
         this.$emit('escape', ev)

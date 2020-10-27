@@ -16,10 +16,14 @@ export class CommandBarButton extends BaseComponent {
     const props: IBaseButtonProps = {
       variantClassName: 'ms-Button--commandBar',
       styles: this.internalStyles,
+      theme: this.theme,
     }
     return h(BaseButton, {
-      props,
-      attrs: this.$attrs,
+      attrs: {
+        ...this.$props,
+        ...props,
+        ...this.$attrs,
+      },
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })

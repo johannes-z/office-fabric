@@ -1,19 +1,21 @@
 <template>
-  <div class="wrapper">
-    <div class="topNav" :style="{ boxShadow: theme.effects.elevation8 }">
-      <DefaultButton @click.prevent.native="toggleTheme('light')">Light Theme</DefaultButton>
-      <DefaultButton @click.prevent.native="toggleTheme('dark')">Dark Theme</DefaultButton>
-    </div>
+  <ThemeProvider :theme="theme">
+    <div class="wrapper">
+      <div class="topNav" :style="{ boxShadow: theme.effects.elevation8 }">
+        <DefaultButton @click.prevent.native="toggleTheme('light')">Light Theme</DefaultButton>
+        <DefaultButton @click.prevent.native="toggleTheme('dark')">Dark Theme</DefaultButton>
+      </div>
 
-    <div class="page">
-      <div class="sidebar">
-        <Nav :groups="groups" />
-      </div>
-      <div class="content">
-        <router-view v-bind="null" />
+      <div class="page">
+        <div class="sidebar">
+          <Nav :groups="groups" />
+        </div>
+        <div class="content">
+          <router-view v-bind="null" />
+        </div>
       </div>
     </div>
-  </div>
+  </ThemeProvider>
 </template>
 
 <script lang="ts">
@@ -29,7 +31,6 @@ const publicPath = process.env.NODE_ENV === 'production'
   components: { ActionButton, ThemeProvider, DefaultButton, Nav, Callout, Spinner },
 })
 export default class Preview extends Vue {
-  // @ts-ignore
   theme = getTheme()
   target = document.body
 

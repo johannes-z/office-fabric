@@ -15,13 +15,13 @@ export class MessageBarButton extends BaseComponent {
 
   render (h: CreateElement) {
     const { internalStyles } = this
-    const props: IBaseButtonProps = {
-      variantClassName: 'ms-Button--icon',
-      styles: internalStyles,
-    }
+
     return h(BaseButton, {
-      props,
-      attrs: this.$attrs,
+      attrs: {
+        ...this.$props,
+        ...this.$attrs,
+        styles: internalStyles,
+      },
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })

@@ -5,10 +5,6 @@ import * as Components from './components'
 import Vue from 'vue'
 import VueCompositionAPI from '@vue/composition-api'
 import { loadTheme } from './plugin/loadTheme'
-import { getTheme } from '@uifabric/styling'
-
-// enables CSS Vars
-loadTheme(getTheme())
 
 Vue.use(VueCompositionAPI)
 
