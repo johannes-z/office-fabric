@@ -69,7 +69,9 @@ export function styled<
           ...context.props,
           className: context.props.className || context.data.class,
           styles: _styles,
-          theme,
+          theme: context.injections.__reactiveInject__
+            ? context.injections.__reactiveInject__.theme
+            : getTheme(),
         },
       }, context.children)
     },

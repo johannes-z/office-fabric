@@ -10,5 +10,5 @@ import Vue from 'vue'
 export default abstract class StatelessComponent<TProps = {}> extends Vue {
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
-  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: any
+  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: ITheme
 }
