@@ -54,8 +54,15 @@ export function styled<
         _styles.__cachedInputs__ = [baseStyles, context.props.styles]
       }
 
+      const theme = context.injections.__reactiveInject__
+        ? context.injections.__reactiveInject__.theme
+        : getTheme()
+
       return h(Component, {
         ...context.data,
+        attrs: {
+          theme,
+        },
         props: {
           ...rest,
           ...additionalProps,

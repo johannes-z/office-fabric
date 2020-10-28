@@ -31,7 +31,6 @@ const publicPath = process.env.NODE_ENV === 'production'
   components: { ActionButton, ThemeProvider, DefaultButton, Nav, Callout, Spinner },
 })
 export default class Preview extends Vue {
-  // @ts-ignore
   theme = getTheme()
   target = document.body
 

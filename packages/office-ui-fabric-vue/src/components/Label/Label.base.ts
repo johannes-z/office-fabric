@@ -1,7 +1,7 @@
 import { Component, Prop } from 'vue-property-decorator'
 import { ILabelProps, ILabelStyleProps, ILabelStyles } from './Label.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement, VNode } from 'vue'
+import { CreateElement, RenderContext, VNode } from 'vue'
 import StatelessComponent from '../StatelessComponent'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>({
@@ -17,7 +17,7 @@ export class LabelBase extends StatelessComponent<ILabelProps> {
   @Prop({ type: Boolean, default: false }) disabled!: boolean
   @Prop({ type: Boolean, default: false }) required!: boolean
 
-  render (h: CreateElement, context: any): VNode {
+  render (h: CreateElement, context: RenderContext): VNode {
     const { as: RootType, theme, styles, className, disabled, required } = context.props
 
     const classNames = getClassNames(styles, {

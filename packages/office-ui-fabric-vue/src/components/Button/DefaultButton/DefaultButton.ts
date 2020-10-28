@@ -19,13 +19,16 @@ export class DefaultButton extends BaseComponent<IButtonProps> {
   render (h: CreateElement) {
     const { primary, internalStyles } = this
     const props: IBaseButtonProps = {
-      ...this.$props,
       variantClassName: primary ? 'ms-Button--primary' : 'ms-Button--default',
       styles: internalStyles,
+      theme: this.theme,
     }
     return h(BaseButton, {
-      props,
-      attrs: this.$attrs,
+      attrs: {
+        ...this.$props,
+        ...props,
+        ...this.$attrs,
+      },
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
