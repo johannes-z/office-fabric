@@ -30,7 +30,6 @@ export class SearchBoxBase extends BaseComponent {
 
   render (h: CreateElement) {
     const { classNames, disabled, internalValue, placeholder, iconName } = this
-    console.log(internalValue)
 
     const $iconContainer = h('div', { class: classNames.iconContainer }, [
       h(Icon, { class: classNames.icon, props: { iconName } }),

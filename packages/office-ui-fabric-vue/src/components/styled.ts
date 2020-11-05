@@ -43,7 +43,6 @@ export function styled<
   return Vue.extend({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
     functional: true,
-    inject: ['__reactiveInject__'],
     render (h: CreateElement, context: RenderContext<any>): VNode {
       const settings = Customizations.getSettings(fields, scope)
       const { styles: customizedStyles, dir, ...rest } = settings
@@ -54,25 +53,22 @@ export function styled<
         _styles.__cachedInputs__ = [baseStyles, context.props.styles]
       }
 
-      const theme = context.injections.__reactiveInject__
-        ? context.injections.__reactiveInject__.theme
-        : getTheme()
+      // const theme = context.injections.__reactiveInject__
+      //   ? context.injections.__reactiveInject__.theme
+      //   : getTheme()
 
       return h(Component, {
         ...context.data,
-        attrs: {
-          theme,
-          ...context.data.attrs,
-        },
+        // attrs: {
+        // theme,
+        //   ...context.data.attrs,
+        // },
         props: {
           ...rest,
           ...additionalProps,
           ...context.props,
           className: context.props.className || context.data.class,
           styles: _styles,
-          theme: context.injections.__reactiveInject__
-            ? context.injections.__reactiveInject__.theme
-            : getTheme(),
         },
       }, context.children)
     },

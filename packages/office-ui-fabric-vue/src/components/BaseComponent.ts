@@ -5,15 +5,13 @@ import Vue from 'vue'
 import { getTheme, ITheme } from '@uifabric/styling'
 
 // @ts-ignore
-@Component({
-  inject: ['__reactiveInject__'],
-})
+@Component
 export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vue {
   $props!: TProps
-  __reactiveInject__?: { theme: ITheme }
 
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
+  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: ITheme
 
   componentRef: HTMLElement | null = null
   css = css
@@ -24,12 +22,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
 
   protected state: TState = {} as TState
   protected props: TProps = {} as TProps
-
-  get theme () {
-    return this.__reactiveInject__
-      ? this.__reactiveInject__.theme
-      : getTheme()
-  }
 
   /**
    * When the component has mounted, update the componentRef.
