@@ -43,7 +43,6 @@ export class CheckboxBase extends BaseComponent {
       on: {
         input: this.onInput,
       },
-
     })
 
     const $icon = h(Icon, {

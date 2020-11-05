@@ -62,6 +62,7 @@ export function styled<
         ...context.data,
         attrs: {
           theme,
+          ...context.data.attrs,
         },
         props: {
           ...rest,
