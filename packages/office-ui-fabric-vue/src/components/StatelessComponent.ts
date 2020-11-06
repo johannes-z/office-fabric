@@ -1,6 +1,9 @@
 import { Prop, Component, InjectReactive } from 'vue-property-decorator'
 import { getTheme, ITheme } from '@uifabric/styling'
 import Vue from 'vue'
+import { loadTheme } from '../plugin/loadTheme'
+
+loadTheme()
 
 // @ts-ignore
 @Component({

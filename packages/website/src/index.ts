@@ -8,9 +8,7 @@ import BasePage from './pages/BasePage.vue'
 
 import '@uifabric-vue/ie11-polyfills'
 
-import Fabric, { initializeIcons, loadTheme } from '@uifabric-vue/office-ui-fabric-vue'
-
-loadTheme()
+import Fabric, { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
 
 initializeIcons()
 

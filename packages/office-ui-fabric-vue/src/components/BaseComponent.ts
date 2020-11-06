@@ -3,6 +3,9 @@ import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
 import Vue from 'vue'
 import { getTheme, ITheme } from '@uifabric/styling'
+import { loadTheme } from '../plugin/loadTheme'
+
+loadTheme()
 
 // @ts-ignore
 @Component
