@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@fluentui/theme": "^1.6.0",
-    "@microsoft/load-themed-styles": "^1.10.125",
+    "@microsoft/load-themed-styles": "^1.10.127",
     "@uifabric-vue/utilities": "workspace:^7.32.4",
     "@uifabric/icons": "^7.5.16",
     "@uifabric/merge-styles": "^7.19.1",
