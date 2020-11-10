@@ -2,7 +2,7 @@ import { Prop, Component, InjectReactive } from 'vue-property-decorator'
 import { IProcessedStyleSet } from '@uifabric/merge-styles'
 import { css, Async, IDisposable, EventGroup } from '@uifabric-vue/utilities'
 import Vue from 'vue'
-import { getTheme, ITheme } from '@uifabric/styling'
+import { getTheme, ITheme, registerOnThemeChangeCallback } from '@uifabric/styling'
 import { loadTheme } from '../plugin/loadTheme'
 
 loadTheme()
@@ -14,7 +14,6 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
 
   @Prop({ type: [String, Array], default: '' }) readonly className!: string
   @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
-  @Prop({ type: Object, default: () => getTheme() }) readonly theme!: ITheme
 
   componentRef: HTMLElement | null = null
   css = css
@@ -25,6 +24,14 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
 
   protected state: TState = {} as TState
   protected props: TProps = {} as TProps
+
+  theme = getTheme()
+
+  created () {
+    registerOnThemeChangeCallback(theme => {
+      this.theme = theme
+    })
+  }
 
   /**
    * When the component has mounted, update the componentRef.

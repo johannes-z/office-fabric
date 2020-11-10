@@ -25,8 +25,8 @@ export function registerCSSVars (key: string, obj: any) {
   }
 
   style.innerHTML = `
-  :root {
-    ${css.join('\n')}
-  }`
+:root {
+  ${css.join('\n  ')}
+}`
   return properties
 }

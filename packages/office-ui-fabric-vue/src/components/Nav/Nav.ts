@@ -117,9 +117,9 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
       }, [
         h(Icon, {
           style: link.isExpanded ? { transform: 'rotate(-180deg)' } : {},
-          attrs: {
+          class: classNames.chevronIcon,
+          props: {
             iconName: 'ChevronDown',
-            class: classNames.chevronIcon,
           },
         }),
       ]),
@@ -152,7 +152,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
         title: link.title || link.name,
         target: link.target,
         disabled: link.disabled,
-        className: classNames.link
+        className: classNames.link,
       },
       style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
       nativeOn: {

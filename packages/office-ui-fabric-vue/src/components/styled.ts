@@ -2,7 +2,7 @@ import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@ui
 import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 
 import { Customizations } from '@uifabric-vue/utilities'
-import { getTheme } from '@uifabric/styling'
+import { getTheme, registerOnThemeChangeCallback } from '@uifabric/styling'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {
   styles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>;
@@ -42,27 +42,44 @@ export function styled<
 
   return Vue.extend({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
-    functional: true,
-    render (h: CreateElement, context: RenderContext<any>): VNode {
+    props: typeof Component === 'function'
+      ? Component.options.props
+      : Component.props,
+    data () {
+      return {
+        internalTheme: getTheme(),
+      }
+    },
+    created () {
+      registerOnThemeChangeCallback(theme => {
+        this.internalTheme = theme
+      })
+    },
+    render (this: any, h: CreateElement): VNode {
       const settings = Customizations.getSettings(fields, scope)
       const { styles: customizedStyles, dir, ...rest } = settings
       const additionalProps = getProps ? getProps(this) : undefined
 
-      if (!_styles || customizedStyles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
-        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles)
-        _styles.__cachedInputs__ = [baseStyles, context.props.styles]
+      if (!_styles || customizedStyles !== _styles.__cachedInputs__[1] || !!this.styles) {
+        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, this.styles)
+        _styles.__cachedInputs__ = [baseStyles, this.styles]
       }
 
       return h(Component, {
-        ...context.data,
+        on: this.$listeners,
+        attrs: this.$attrs,
+        class: this.className || this.$attrs.class || this.$vnode.data.class,
         props: {
           ...rest,
           ...additionalProps,
-          ...context.props,
-          className: context.props.className || context.data.class,
+          ...this.$attrs,
+          ...this.$props,
+          theme: this.internalTheme,
+          className: this.className || this.$attrs.class || this.$vnode.data.class,
           styles: _styles,
         },
-      }, context.children)
+        scopedSlots: this.$scopedSlots,
+      }, this.$slots.default)
     },
   })
 }

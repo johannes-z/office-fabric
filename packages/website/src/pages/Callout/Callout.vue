@@ -27,18 +27,17 @@
                :styles="{ calloutMain: { maxWidth: 300 } }"
                :is-beak-visible="true"
                @dismiss="onDismiss">
-        <div :class="$style.header">
-          <p :class="$style.title">
+        <div :class="[classNames.bodyText, $style.header]">
+          <p :class="[classNames.bodyText, $style.title]">
             All of your favorite people
           </p>
         </div>
-        <div :class="$style.inner">
-          <p :class="$style.subtext">
+        <div :class="[classNames.bodyText, $style.inner]">
+          <p :class="[classNames.bodyText, $style.subtext]">
             Message body is optional. If help documentation is available, consider adding a link to learn more at the bottom.
           </p>
-          <div :class="$style.actions">
-            <FLink :class="$style.link"
-                   href="http://microsoft.com"
+          <div :class="[classNames.bodyText, $style.actions]">
+            <FLink href="http://microsoft.com"
                    target="_blank">
               Go to microsoft
             </FLink>
@@ -54,8 +53,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { DefaultButton, Text, Callout, Link } from '@uifabric-vue/office-ui-fabric-vue'
+import { Vue, Component, Prop, InjectReactive } from 'vue-property-decorator'
+import { DefaultButton, Text, Callout, Link, mergeStyleSets, getTheme, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
 
 @Component({
   components: {
@@ -66,8 +65,19 @@ import { DefaultButton, Text, Callout, Link } from '@uifabric-vue/office-ui-fabr
   },
 })
 export default class CalloutPage extends Vue {
+  @InjectReactive()
+  theme!: IPartialTheme
+
   showCallout: boolean = false
   target: any = null
+
+  get classNames () {
+    return mergeStyleSets({
+      bodyText: {
+        color: this.theme?.semanticColors?.bodyText,
+      },
+    })
+  }
 
   mounted () {
     this.target = (this.$refs.target as Vue).$el
@@ -85,7 +95,6 @@ export default class CalloutPage extends Vue {
   padding-right: 24px;
   padding-bottom: 12px;
   padding-left: 24px;
-  color: var(--fabric-bodyText);
 }
 .title {
   font-size: 20px;
@@ -94,7 +103,6 @@ export default class CalloutPage extends Vue {
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
-  color: var(--fabric-bodyText);
 }
 .inner {
   height: 100%;
@@ -102,7 +110,6 @@ export default class CalloutPage extends Vue {
   padding-right: 24px;
   padding-bottom: 20px;
   padding-left: 24px;
-  color: var(--fabric-bodyText);
 }
 .subtext {
   font-size: 12px;
@@ -111,14 +118,12 @@ export default class CalloutPage extends Vue {
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
-  color: var(--fabric-bodyText);
 }
 .actions {
   position: relative;
   margin-top: 20px;
   width: 100%;
   white-space: nowrap;
-  color: var(--fabric-bodyText);
 }
 .link {
 }
