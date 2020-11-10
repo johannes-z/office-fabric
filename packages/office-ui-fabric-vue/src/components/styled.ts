@@ -42,6 +42,7 @@ export function styled<
 
   return Vue.extend({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
+    inheritAttrs: false,
     props: typeof Component === 'function'
       ? Component.options.props
       : Component.props,
@@ -75,7 +76,7 @@ export function styled<
           ...this.$attrs,
           ...this.$props,
           theme: this.internalTheme,
-          className: this.className || this.$attrs.class || this.$vnode.data.class,
+          // className: this.className || this.$attrs.class,
           styles: _styles,
         },
         scopedSlots: this.$scopedSlots,
