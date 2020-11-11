@@ -42,7 +42,6 @@ export function styled<
 
   return Vue.extend({
     name: `Styled${(Component as any).displayName || (Component as any).name}`,
-    inheritAttrs: false,
     props: typeof Component === 'function'
       ? Component.options.props
       : Component.props,
