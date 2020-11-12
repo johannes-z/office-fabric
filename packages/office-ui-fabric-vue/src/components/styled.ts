@@ -68,14 +68,13 @@ export function styled<
       return h(Component, {
         on: this.$listeners,
         attrs: this.$attrs,
-        class: this.className || this.$attrs.class || this.$vnode.data.class,
         props: {
           ...rest,
           ...additionalProps,
           ...this.$attrs,
           ...this.$props,
           theme: this.internalTheme,
-          // className: this.className || this.$attrs.class,
+          className: this.className || this.$attrs.class || this.$vnode.data.class,
           styles: _styles,
         },
         scopedSlots: this.$scopedSlots,
