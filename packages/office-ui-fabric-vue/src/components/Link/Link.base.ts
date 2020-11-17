@@ -4,6 +4,8 @@ import { CreateElement, RenderContext, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 
+import { getStyles } from './Link.styles'
+
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
 @Component
@@ -14,7 +16,7 @@ export class LinkBase extends StatelessComponent<ILinkProps> {
   render (h: CreateElement, context: RenderContext<ILinkProps>) {
     const { theme, className, styles, href, disabled } = context.props
 
-    const classNames = getClassNames(styles, {
+    const classNames = getClassNames(getStyles, {
       theme: theme!,
       className,
       isButton: !href,

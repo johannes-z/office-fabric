@@ -24,7 +24,6 @@
     "@uifabric/merge-styles": "^7.19.1",
     "@uifabric/set-version": "^7.0.23",
     "@uifabric/styling": "^7.16.17",
-    "@vue/composition-api": "^1.0.0-beta.19",
     "portal-vue": "^2.1.7",
     "resize-observer": "^1.0.0",
     "tslib": "^2.0.3",

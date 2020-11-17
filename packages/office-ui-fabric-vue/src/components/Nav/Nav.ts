@@ -5,7 +5,6 @@ import BaseComponent from '../BaseComponent'
 import { Icon } from '../Icon'
 import { INavLinkGroup, INavLink, INavProps, INavStyles } from './Nav.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { h } from '@vue/composition-api'
 
 const getClassNames: any = classNamesFunction()
 
@@ -47,6 +46,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderGroup (group: INavLinkGroup, groupIndex: number): VNode {
+    const h = this.$createElement
     const { groups, theme } = this
     const classNames: any = getClassNames(this.styles, {
       theme: theme!,
@@ -64,6 +64,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
 
   private renderLinks (links: INavLink[] | undefined, nestingLevel: number): VNode | null {
     if (!links || !links.length) return null
+    const h = this.$createElement
 
     const linkElements: VNode[] = links.map((link: INavLink, linkIndex: number) =>
       this.renderLink(link, linkIndex, nestingLevel),
@@ -79,6 +80,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
+    const h = this.$createElement
     const { groups, theme } = this
     const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
 
@@ -93,6 +95,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderCompositeLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
+    const h = this.$createElement
     const { styles, groups, theme } = this
     const classNames: any = getClassNames(this.styles, {
       theme: theme!,
@@ -132,6 +135,7 @@ export default class Nav extends BaseComponent<INavProps, INavStyles> {
   }
 
   private renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
+    const h = this.$createElement
     const isSelected = link.key === this.internalSelectedKey
     const isLinkWithIcon = link.icon || link.iconProps
 

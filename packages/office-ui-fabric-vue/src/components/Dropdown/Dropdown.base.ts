@@ -10,7 +10,6 @@ import { Checkbox } from '../Checkbox'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
 import { CreateElement } from 'vue'
-import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<IDropdownStyleProps, IDropdownStyles>()
 

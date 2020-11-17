@@ -2,7 +2,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import Icon from '../Icon/Icon'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction(
 
@@ -20,6 +19,7 @@ export class ContextualMenuItemBase extends BaseComponent {
   }
 
   public render () {
+    const h = this.$createElement
     const { item, classNames } = this
 
     return h('button', { class: classNames.root }, [
@@ -58,6 +58,7 @@ export class ContextualMenuItemBase extends BaseComponent {
   };
 
   renderItemIcon (props: any) {
+    const h = this.$createElement
     const { item, hasIcons, classNames } = props
 
     const { iconProps } = item
@@ -77,6 +78,7 @@ export class ContextualMenuItemBase extends BaseComponent {
   }
 
   renderCheckMarkIcon ({ onCheckmarkClick, item, classNames }: any) {
+    const h = this.$createElement
     const isItemChecked = false// getIsChecked(item)
     if (onCheckmarkClick) {
     // Ensures that the item is passed as the first argument to the checkmark click callback.
@@ -96,6 +98,7 @@ export class ContextualMenuItemBase extends BaseComponent {
   }
 
   renderItemName ({ item, classNames }: any) {
+    const h = this.$createElement
     if (item.text || item.name) {
       return h('span', { class: classNames.label }, item.text || item.name)
     }
@@ -103,6 +106,7 @@ export class ContextualMenuItemBase extends BaseComponent {
   }
 
   renderSecondaryText ({ item, classNames }: any) {
+    const h = this.$createElement
     if (item.secondaryText) {
       return h('span', { class: classNames.secondaryText }, item.secondaryText)
     }

@@ -86,7 +86,6 @@ importers:
       '@uifabric/merge-styles': 7.19.1
       '@uifabric/set-version': 7.0.23
       '@uifabric/styling': 7.16.17
-      '@vue/composition-api': 1.0.0-beta.19_vue@2.6.12
       portal-vue: 2.1.7_vue@2.6.12
       resize-observer: 1.0.0
       tslib: 2.0.3
@@ -132,7 +131,6 @@ importers:
       '@vue/cli-plugin-babel': ^4.5.8
       '@vue/cli-plugin-typescript': ^4.5.8
       '@vue/cli-service': ^4.5.8
-      '@vue/composition-api': ^1.0.0-beta.19
       '@vue/eslint-config-standard': ^5.1.2
       '@vue/eslint-config-typescript': ^7.0.0
       portal-vue: ^2.1.7
@@ -3154,15 +3152,6 @@ packages:
       prettier: 1.19.1
     resolution:
       integrity: sha512-lejBLa7xAMsfiZfNp7Kv51zOzifnb29FwdnMLa96z26kXErPFioSf9BMcePVIQ6/Gc6/mC0UrPpxAWIHyae0vw==
-  /@vue/composition-api/1.0.0-beta.19_vue@2.6.12:
-    dependencies:
-      tslib: 2.0.3
-      vue: 2.6.12
-    dev: false
-    peerDependencies:
-      vue: '>= 2.5 < 3'
-    resolution:
-      integrity: sha512-FYl3DofSJAKdLO2Ig18ITelcOAWc1CWwfgMrqh7op38aqR5RfcJ7RA3kiDu38iZB0r86dMxcaOHoszIGKpU98g==
   /@vue/eslint-config-standard/5.1.2_99bff6f4fa291dd58d847a766ced3f5d:
     dependencies:
       '@vue/cli-service': 4.5.8_650b314657d32bbb817049068daff5b8
@@ -7171,6 +7160,7 @@ packages:
     resolution:
       integrity: sha512-4aFq7wvWyMHKgxsH8QQtGpvbASCf+eM3wPRLI6R+MgAnTCZ6STYsRvttLvRWK0Nfif5piF394St3HeJDaljGPA==
   /ie11-custom-properties/4.1.0:
+    dev: false
     resolution:
       integrity: sha512-ep6R2iQvgfDEjd97ifkGKv119/Q+4La1GzKyshMsq2kIUVDlQUt74uc7WtMT4oN2G4d+tcA3QA86aUl7ESjBYw==
   /ieee754/1.1.13:

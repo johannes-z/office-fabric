@@ -27,7 +27,6 @@ export class PersonaBase extends BaseComponent<IPersonaProps> {
   @Prop({ type: String, default: null }) optionalText?: string
 
   @Prop({ type: String, default: undefined }) imageUrl?: string
-  @Prop({ type: String, default: 'online' }) status?: string // online, away, busy
   @Prop({ type: Boolean, default: false }) isOutOfOffice?: boolean
   @Prop({ type: Boolean, default: false }) showSecondaryText?: boolean
 
