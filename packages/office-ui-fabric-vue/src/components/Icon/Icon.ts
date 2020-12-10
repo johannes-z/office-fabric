@@ -29,8 +29,6 @@ export default class Icon extends StatelessComponent<IIconProps> {
     const children = iconContent.children as IconContentChildren
     const { iconClassName } = iconContent
 
-    console.log(children)
-
     const classNames: any = getClassNames(styles, {
       theme,
       className,
