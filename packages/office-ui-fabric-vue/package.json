@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "8.0.9",
+  "version": "8.0.10",
   "main": "./dist/fluent-ui.umd.min.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",

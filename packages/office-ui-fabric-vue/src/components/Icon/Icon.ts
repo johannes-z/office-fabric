@@ -1,5 +1,5 @@
 import { Component, Prop } from 'vue-property-decorator'
-import { CreateElement, RenderContext } from 'vue'
+import { CreateElement, RenderContext, VNode } from 'vue'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import StatelessComponent from '../StatelessComponent'
 
@@ -13,7 +13,7 @@ const getClassNames = classNamesFunction({
   cacheSize: 100,
 })
 
-type IconContentChildren = string | undefined | ((h: CreateElement) => JSX.Element)
+type IconContentChildren = string | undefined | VNode | VNode[] | ((h: CreateElement) => JSX.Element)
 
 @Component
 export default class Icon extends StatelessComponent<IIconProps> {
@@ -28,6 +28,8 @@ export default class Icon extends StatelessComponent<IIconProps> {
     const iconContent = getIconContent(iconName) || {}
     const children = iconContent.children as IconContentChildren
     const { iconClassName } = iconContent
+
+    console.log(children)
 
     const classNames: any = getClassNames(styles, {
       theme,
@@ -46,6 +48,10 @@ export default class Icon extends StatelessComponent<IIconProps> {
         'aria-hidden': 'true',
         'data-icon-name': iconName,
       },
-    }, typeof children === 'function' ? [children(h)] : children)
+    }, typeof children === 'function'
+      ? [children(h)]
+      : (children instanceof Array)
+        ? children
+        : [children])
   }
 }
