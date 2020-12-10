@@ -156,6 +156,12 @@ export default class Preview extends Vue {
             { name: 'Stack WIP', key: 'Stack', href: publicPath + '/#/Stack' },
             { name: 'Text', key: 'Text', href: publicPath + '/#/Text' },
           ],
+        }, {
+          name: 'Other',
+          isExpanded: true,
+          links: [
+            { name: 'File Type Icons', key: 'FileTypeIcons', href: publicPath + '/#/FileTypeIcons' },
+          ],
         }],
       }],
     },

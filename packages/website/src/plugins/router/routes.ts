@@ -27,5 +27,11 @@ routes.push({
   component: () => import('@/pages/BasicList/BasicList.vue'),
   props: {},
 })
+routes.push({
+  name: 'FileTypeIcons',
+  path: '/FileTypeIcons',
+  component: () => import('@/pages/FileTypeIcons/FileTypeIcons.vue'),
+  props: {},
+})
 
 export default routes

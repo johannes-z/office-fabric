@@ -7,8 +7,10 @@ import routes from '@/plugins/router/routes'
 import BasePage from './pages/BasePage.vue'
 
 import Fabric, { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
+import { initializeFileTypeIcons } from '@uifabric-vue/file-type-icons'
 
 initializeIcons()
+initializeFileTypeIcons()
 
 Vue.use(VueRouter)
 // Vue.use(VueHighlightJS)

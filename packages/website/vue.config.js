@@ -18,6 +18,7 @@ module.exports = {
     resolve: {
       alias: {
         '@uifabric/utilities': '@uifabric-vue/utilities',
+        '@fluentui/utilities': '@uifabric-vue/utilities',
       },
     },
   },

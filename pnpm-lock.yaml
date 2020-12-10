@@ -62,14 +62,16 @@ importers:
       tslib: ^2.0.3
   packages/file-type-icons:
     dependencies:
+      '@fluentui/set-version': 8.0.0-beta.0
+      '@fluentui/style-utilities': 8.0.0-beta.0
       '@uifabric/set-version': 7.0.23
-      '@uifabric/styling': 7.16.18
       tslib: 2.0.3
     devDependencies:
       vue: 2.6.12
     specifiers:
+      '@fluentui/set-version': ^8.0.0-beta.0
+      '@fluentui/style-utilities': ^8.0.0-beta.0
       '@uifabric/set-version': ^7.0.23
-      '@uifabric/styling': ^7.16.18
       tslib: ^2.0.3
       vue: ^2.6.12
   packages/ie11-polyfills:
@@ -162,6 +164,7 @@ importers:
   packages/website:
     dependencies:
       '@babel/runtime': 7.12.5
+      '@uifabric-vue/file-type-icons': 'link:../file-type-icons'
       '@uifabric-vue/ie11-polyfills': 'link:../ie11-polyfills'
       '@uifabric-vue/office-ui-fabric-vue': 'link:../office-ui-fabric-vue'
       '@uifabric/example-data': 7.1.5
@@ -197,6 +200,7 @@ importers:
     specifiers:
       '@babel/preset-env': ^7.12.1
       '@babel/runtime': ^7.12.5
+      '@uifabric-vue/file-type-icons': 'workspace:^8.0.0-beta.3'
       '@uifabric-vue/ie11-polyfills': 'workspace:^0.1.3'
       '@uifabric-vue/office-ui-fabric-vue': 'workspace:^8.0.1'
       '@uifabric-vue/utilities': 'workspace:^7.32.3'
@@ -1908,6 +1912,13 @@ packages:
       tslib: 1.14.1
     resolution:
       integrity: sha512-w40gi8fzCpwa7U8cONiuu8rszPStkVOL/weDf5pCbYEb1gdaV7MDPSNkgM6IV0Kz+k017noDgK9Fv4ru1Dwz1g==
+  /@fluentui/dom-utilities/2.0.0-beta.0:
+    dependencies:
+      '@fluentui/set-version': 8.0.0-beta.0
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-hmuKf6ghmWxrh7c3AMo2Hd4burmpt3zvl7GB3jdtu6Lze1GZxz0ePkNlN+kgUpZiYttAdjMgj7J/eaZBJsOJLQ==
   /@fluentui/eslint-plugin/0.54.1:
     dependencies:
       '@typescript-eslint/eslint-plugin': 3.10.1_@typescript-eslint+parser@3.10.1
@@ -1929,6 +1940,37 @@ packages:
       typescript: ^3.5.0
     resolution:
       integrity: sha512-J96FfW+DSsW9UFURVgSbYSQ0TdT7hrpW9tr0/erXRsWY2fBwmi7PSsgnt9tjDVuMyyXHERjoNmfOR10/a+901g==
+  /@fluentui/merge-styles/8.0.0-beta.0:
+    dependencies:
+      '@fluentui/set-version': 8.0.0-beta.0
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-gC9NdlJSQbHv7q0a64YjuFVU7j/pgjE2b7NcI2czWmNASIW3JYPiiCY2FB5G/JqOWK14BcrUKIW5EJQ5ca3MjQ==
+  /@fluentui/merge-styles/8.0.0-beta.3:
+    dependencies:
+      '@fluentui/set-version': 8.0.0-beta.0
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-p5P/Omye1aFzHn3yW9IzFAon1jpWms5jvQIFppUpJV3Kfg5sNIKCBLcX9zzgGfclMZq4iN8LoRjsC4dU2GDMCQ==
+  /@fluentui/set-version/8.0.0-beta.0:
+    dependencies:
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-3fXXLK21wJ/yafCu411+6XxA6dqoxLJWrAIaAgYFfEcuZCQg37wXkiJH6+CvUTuFAn3M8NS1m4xrCsQlDlwo1Q==
+  /@fluentui/style-utilities/8.0.0-beta.0:
+    dependencies:
+      '@fluentui/merge-styles': 8.0.0-beta.0
+      '@fluentui/set-version': 8.0.0-beta.0
+      '@fluentui/theme': 2.0.0-beta.10
+      '@fluentui/utilities': 8.0.0-beta.0
+      '@microsoft/load-themed-styles': 1.10.139
+      tslib: 1.14.1
+    dev: false
+    resolution:
+      integrity: sha512-2RMSlsnIRe6voUXTcwJlburL/Eeq6Z2pL560NMNuulaA/+PeSMjSu2zuFCybZ2TpsvCjVGbX8kOld6IfUwcAqQ==
   /@fluentui/theme/1.6.0:
     dependencies:
       '@uifabric/merge-styles': 7.19.1
@@ -1942,20 +1984,44 @@ packages:
       react-dom: '>=16.8.0 <17.0.0'
     resolution:
       integrity: sha512-X+uJx7+9ChfM0SAq+eDLgL9t65ZA8NAc1Ifrw4eek6cS3c1eY95/tgf1EkX+hOE9+oIuEATujM9THzk+4yd1VQ==
-  /@fluentui/theme/1.7.0:
+  /@fluentui/theme/2.0.0-beta.10:
     dependencies:
-      '@uifabric/merge-styles': 7.19.1
-      '@uifabric/set-version': 7.0.23
-      '@uifabric/utilities': 7.33.2
+      '@fluentui/merge-styles': 8.0.0-beta.3
+      '@fluentui/set-version': 8.0.0-beta.0
+      '@fluentui/utilities': 8.0.0-beta.8
       tslib: 1.14.1
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <17.0.0'
-      '@types/react-dom': '>=16.8.0 <17.0.0'
       react: '>=16.8.0 <17.0.0'
-      react-dom: '>=16.8.0 <17.0.0'
     resolution:
-      integrity: sha512-pzqDZC2bVD6/S45Bnve4wmrXi4cN7XiCr+OhzvgmoQfDkm5vyXsa82/cVtif/zy1OFU96S9zOTtt3e+QQuGUUg==
+      integrity: sha512-h3eb2DaH4mD65DE2yDlvnFqZ43Ai0PtxeTuhUVeeGO9ataDK9g9DZfOMWRgO7Q76QtNPH0Yh4yHj8/An4xyIsg==
+  /@fluentui/utilities/8.0.0-beta.0:
+    dependencies:
+      '@fluentui/dom-utilities': 2.0.0-beta.0
+      '@fluentui/merge-styles': 8.0.0-beta.0
+      '@fluentui/set-version': 8.0.0-beta.0
+      prop-types: 15.7.2
+      tslib: 1.14.1
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <17.0.0'
+      react: '>=16.8.0 <17.0.0'
+    resolution:
+      integrity: sha512-mAloFo6ulQOYE4enF49AUOxBKbDaEBcQrEz2BSHZjPz098Wz7LHq3jBUDrz+7kp2tpokf+CCxEWpL7vTQikmXQ==
+  /@fluentui/utilities/8.0.0-beta.8:
+    dependencies:
+      '@fluentui/dom-utilities': 2.0.0-beta.0
+      '@fluentui/merge-styles': 8.0.0-beta.3
+      '@fluentui/set-version': 8.0.0-beta.0
+      prop-types: 15.7.2
+      tslib: 1.14.1
+    dev: false
+    peerDependencies:
+      '@types/react': '>=16.8.0 <17.0.0'
+      react: '>=16.8.0 <17.0.0'
+    resolution:
+      integrity: sha512-/RpZGoFxCRi/+w3Hb/gDurHofEaziBQYXRpVPXkT5dPMOUHe5dNFxiZx2r7ZF5Xc1rKX3SObda27JWr0pwPZ7g==
   /@hapi/address/2.1.4:
     deprecated: This version has been deprecated and is no longer supported or maintained
     dev: true
@@ -2029,6 +2095,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Uc9+ZhdhrDPG7p3PhBF4ZjeinqECC2zzfE/aDKhUu7oC7XFHH+EhK6SfvMn/JCVVSiWtanaaam4eG3k7lQCmbg==
+  /@microsoft/load-themed-styles/1.10.139:
+    dev: false
+    resolution:
+      integrity: sha512-nqKpS5lfFaJGDATrwT+T2hM4WSMlBDwfh9W7+xgqfOQkV6h8y7uZq8Exro9C276Y3qd7M6jZ3pavSmsWgLk79w==
   /@microsoft/tsdoc/0.12.19:
     resolution:
       integrity: sha512-IpgPxHrNxZiMNUSXqR1l/gePKPkfAmIKoDRP9hp7OwjU29ZR8WCJsOJ8iBKgw0Qk+pFwR+8Y1cy8ImLY6e9m4A==
@@ -2679,17 +2749,6 @@ packages:
       tslib: 1.14.1
     resolution:
       integrity: sha512-9TZP5npZopaQUkb7V418bu2OzqjL+4uov9n59Kh/Ll2Bq9WyWg/kngGUMX793gxjOMy9w2IUEd2LN3odM05OlQ==
-  /@uifabric/styling/7.16.18:
-    dependencies:
-      '@fluentui/theme': 1.7.0
-      '@microsoft/load-themed-styles': 1.10.127
-      '@uifabric/merge-styles': 7.19.1
-      '@uifabric/set-version': 7.0.23
-      '@uifabric/utilities': 7.33.2
-      tslib: 1.14.1
-    dev: false
-    resolution:
-      integrity: sha512-jINFRMWfSIOZ4H29YNBHtwZU4f8JFprnyBX2E0Wq9rjqRzgcmdYbN2yn88gym6aC3houSDcYM0rdfG4ETjRQSA==
   /@uifabric/utilities/7.33.2:
     dependencies:
       '@fluentui/dom-utilities': 1.1.1
@@ -2923,7 +2982,7 @@ packages:
       integrity: sha512-1lg3K2D/harXbN4FvRoA1b0X9947H+G4Ql/43rxJY39OqswfK/d1ck438Fo9M4l1+zhBSUNDmcjn7Q2EH6qWmA==
   /@vue/cli-plugin-router/4.5.8_@vue+cli-service@4.5.8:
     dependencies:
-      '@vue/cli-service': 4.5.8_650b314657d32bbb817049068daff5b8
+      '@vue/cli-service': 4.5.8_080af9c90312c59ad432a8541fbb46b5
       '@vue/cli-shared-utils': 4.5.8
     dev: true
     peerDependencies:
@@ -2933,7 +2992,7 @@ packages:
   /@vue/cli-plugin-typescript/4.5.8_0b458b54e1d3b239b86e8cc7c1f8ff8c:
     dependencies:
       '@types/webpack-env': 1.15.2
-      '@vue/cli-service': 4.5.8_650b314657d32bbb817049068daff5b8
+      '@vue/cli-service': 4.5.8_080af9c90312c59ad432a8541fbb46b5
       '@vue/cli-shared-utils': 4.5.8
       cache-loader: 4.1.0_webpack@4.44.1
       fork-ts-checker-webpack-plugin: 3.1.1
@@ -2958,7 +3017,7 @@ packages:
       integrity: sha512-JSBLG1EBqg2e3o7+wtFu1xzP/jNs6jibVC82Q4wB6n/+VYNsFxUNCrz4GpebHg6AB+UCAyGq2EK/NhcwoNypqA==
   /@vue/cli-plugin-vuex/4.5.8_@vue+cli-service@4.5.8:
     dependencies:
-      '@vue/cli-service': 4.5.8_650b314657d32bbb817049068daff5b8
+      '@vue/cli-service': 4.5.8_080af9c90312c59ad432a8541fbb46b5
     dev: true
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
@@ -3028,7 +3087,7 @@ packages:
       node: '>=8'
     hasBin: true
     optionalDependencies:
-      vue-loader-v16: /vue-loader/16.0.0-rc.1
+      vue-loader-v16: /vue-loader/16.1.1
     peerDependencies:
       '@vue/compiler-sfc': ^3.0.0-beta.14
       less-loader: '*'
@@ -6531,7 +6590,7 @@ packages:
       memfs: 3.2.0
       minimatch: 3.0.4
       schema-utils: 2.7.0
-      semver: 7.3.2
+      semver: 7.3.4
       tapable: 1.1.3
     dev: true
     engines:
@@ -8121,6 +8180,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
+  /lru-cache/6.0.0:
+    dependencies:
+      yallist: 4.0.0
+    dev: true
+    engines:
+      node: '>=10'
+    optional: true
+    resolution:
+      integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   /magic-string/0.25.7:
     dependencies:
       sourcemap-codec: 1.4.8
@@ -10312,6 +10380,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-OrOb32TeeambH6UrhtShmF7CRDqhL6/5XpPNp2DuRH6+9QLw/orhp72j87v8Qa1ScDkvrrBNpZcDejAirJmfXQ==
+  /semver/7.3.4:
+    dependencies:
+      lru-cache: 6.0.0
+    dev: true
+    engines:
+      node: '>=10'
+    hasBin: true
+    optional: true
+    resolution:
+      integrity: sha512-tCfb2WLjqFAtXn4KEdxIhalnRtoKFN7nAwj0B3ZXCbQloV2tq5eDbcTmT68JJD3nRJq24/XgxtQKFIpQdtvmVw==
   /send/0.17.1:
     dependencies:
       debug: 2.6.9
@@ -11660,6 +11738,15 @@ packages:
     optional: true
     resolution:
       integrity: sha512-yR+BS90EOXTNieasf8ce9J3TFCpm2DGqoqdbtiwQ33hon3FyIznLX7sKavAq1VmfBnOeV6It0Htg4aniv8ph1g==
+  /vue-loader/16.1.1:
+    dependencies:
+      chalk: 4.1.0
+      hash-sum: 2.0.0
+      loader-utils: 2.0.0
+    dev: true
+    optional: true
+    resolution:
+      integrity: sha512-wz/+HFg/3SBayHWAlZXARcnDTl3VOChrfW9YnxvAweiuyKX/7IGx1ad/4yJHmwhgWlOVYMAbTiI7GV8G33PfGQ==
   /vue-property-decorator/9.0.2_2dc4252c5371093c9ebcca71536ac4e9:
     dependencies:
       vue: 2.6.12
