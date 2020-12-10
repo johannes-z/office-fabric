@@ -1,5 +1,5 @@
 import Vue, { CreateElement } from 'vue'
-import { registerIcons, IIconOptions } from '@uifabric/styling'
+import { registerIcons, IIconOptions } from '@fluentui/style-utilities'
 import { FileTypeIconMap } from './FileTypeIconMap'
 
 let h: CreateElement

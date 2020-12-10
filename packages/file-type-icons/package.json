@@ -1,13 +1,13 @@
 {
   "name": "@uifabric-vue/file-type-icons",
-  "version": "8.0.0-beta.1",
+  "version": "8.0.0-beta.3",
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",
+  "types": "types/index.d.ts",
   "sideEffects": [
     "lib/version.js"
   ],
-  "typings": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/johannes-z/office-fabric"
@@ -20,8 +20,8 @@
     "vue": "^2.6.12"
   },
   "dependencies": {
-    "@uifabric/set-version": "^7.0.23",
-    "@uifabric/styling": "^7.16.18",
+    "@fluentui/set-version": "^8.0.0-beta.0",
+    "@fluentui/style-utilities": "^8.0.0-beta.0",
     "tslib": "^2.0.3"
   },
   "peerDependencies": {
