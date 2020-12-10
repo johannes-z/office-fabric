@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/file-type-icons",
-  "version": "7.6.9-3",
+  "version": "8.0.0-beta.1",
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@uifabric/set-version": "^7.0.23",
-    "@uifabric/styling": "^7.16.17",
+    "@uifabric/styling": "^7.16.18",
     "tslib": "^2.0.3"
   },
   "peerDependencies": {

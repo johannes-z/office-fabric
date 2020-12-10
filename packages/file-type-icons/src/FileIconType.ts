@@ -1,3 +1,4 @@
+
 /**
  * Enumerates special file type icons that do not map to any file extensions.
  * For example, the 'pptx' icon maps to the extensions 'ppt', 'pptm', 'pptx',
@@ -18,6 +19,7 @@ export enum FileIconType {
   documentsFolder = 10,
   picturesFolder = 11,
   linkedFolder = 12,
+  list = 13,
 }
 
-export type FileIconTypeInput = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+export type FileIconTypeInput = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
