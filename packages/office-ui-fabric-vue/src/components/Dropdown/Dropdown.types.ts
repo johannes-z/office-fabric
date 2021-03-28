@@ -1,4 +1,4 @@
-import { IStyleFunctionOrObject } from '../../Utilities'
+import { IStyleFunctionOrObject } from '../../FabricUtilities'
 import { IStyle, ITheme } from '../../Styling'
 import { ISelectableOption, ISelectableDroppableTextProps } from '../../utilities/selectableOption'
 // import { ResponsiveMode } from '@fluentui/react-internal/lib/utilities/decorators/withResponsiveMode'

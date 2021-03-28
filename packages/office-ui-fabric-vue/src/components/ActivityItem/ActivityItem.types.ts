@@ -1,5 +1,5 @@
 import { IStyle } from '../../Styling'
-import { IPersonaSharedProps } from '../../Persona'
+import { IPersonaSharedProps } from '../Persona'
 
 /**
  * {@docCategory ActivityItem}

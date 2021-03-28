@@ -7,7 +7,7 @@ export * from './components'
 export * from './components/ThemeProvider'
 
 export * from './Styling'
-export * from './Utilities'
+export * from './FabricUtilities'
 
 export * from './utilities/selectableOption'
 export * from './utilities/positioning'

@@ -2,7 +2,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { FacepileButton } from './FacepileButton/FacepileButton'
-import { Persona, PersonaSize } from '../../Persona'
+import { Persona, PersonaSize } from '../Persona'
 import { IFacepileStyleProps, IFacepileStyles, IFacepileProps } from './Facepile.types'
 import { CreateElement } from 'vue'
 

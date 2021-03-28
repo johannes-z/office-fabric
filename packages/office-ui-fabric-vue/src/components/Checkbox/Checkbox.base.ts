@@ -1,6 +1,6 @@
 import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
-import { Label } from '../../Label'
-import { Icon } from '../../Icon'
+import { Label } from '../Label'
+import { Icon } from '../Icon'
 import { ICheckboxStyles } from './Checkbox.types'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction } from '@uifabric-vue/utilities'

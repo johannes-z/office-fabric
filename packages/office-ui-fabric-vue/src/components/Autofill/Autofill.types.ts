@@ -1,5 +1,5 @@
 import { Autofill } from './Autofill'
-import { KeyCodes } from '../../Utilities'
+import { KeyCodes } from '../../FabricUtilities'
 
 /**
  * {@docCategory Autofill}

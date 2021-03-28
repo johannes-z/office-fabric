@@ -7,9 +7,9 @@ import { getStyles } from './Modal.styles'
 import { Popup } from '../Popup'
 import { Overlay, IOverlayProps } from '../Overlay'
 import { Icon } from '../Icon'
-import { DirectionalHint } from '../Callout'
 import { ResponsiveMode } from '../../utilities'
 import { CreateElement } from 'vue'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()
 

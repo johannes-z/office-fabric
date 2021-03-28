@@ -1,14 +1,12 @@
 import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
 import { ITheme } from '@uifabric/styling'
 import { Target, ICalloutContentStyleProps, ICalloutProps } from '../Callout/Callout.types'
-import { DirectionalHint } from '../Callout'
 import { IRectangle } from '@uifabric-vue/utilities'
 import { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames'
 import { IIconProps } from '../Icon'
 import { IKeytipProps } from '../Keytip/Keytip.types'
 import { IButtonStyles } from '../Button/Button.types'
-
-export { DirectionalHint } from '../../common/DirectionalHint'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 /**
  * {@docCategory ContextualMenu}

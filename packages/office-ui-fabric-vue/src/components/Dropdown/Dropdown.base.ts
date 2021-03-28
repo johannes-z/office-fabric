@@ -4,7 +4,7 @@ import { RectangleEdge, ICalloutPositionedInfo } from '../../utilities/positioni
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
-import { Callout, DirectionalHint } from '../Callout'
+import { Callout } from '../Callout'
 import { ActionButton } from '../Button'
 import { Checkbox } from '../Checkbox'
 import { classNamesFunction } from '@uifabric-vue/utilities'

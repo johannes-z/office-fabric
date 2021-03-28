@@ -10,7 +10,7 @@ import {
   FontWeights,
 } from '../../Styling'
 import { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
-import { IsFocusVisibleClassName } from '../../Utilities'
+import { IsFocusVisibleClassName } from '../../FabricUtilities'
 
 const GlobalClassNames = {
   root: 'ms-Breadcrumb',

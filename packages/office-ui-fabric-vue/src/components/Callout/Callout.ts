@@ -24,9 +24,11 @@ export class Callout extends StatelessComponent {
       },
     }, context.children)
 
-    return context.props.doNotLayer ? content : h(Layer, {
-      ...context.data,
-      props: layerProps,
-    }, [content])
+    return context.props.doNotLayer
+      ? content
+      : h(Layer, {
+        ...context.data,
+        props: layerProps,
+      }, [content])
   }
 }

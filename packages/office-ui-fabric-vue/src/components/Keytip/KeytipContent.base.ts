@@ -1,5 +1,5 @@
 import { CreateElement, RenderContext } from 'vue'
-import { classNamesFunction } from '../../Utilities'
+import { classNamesFunction } from '../../FabricUtilities'
 import StatelessComponent from '../StatelessComponent'
 import { IKeytipStyleProps, IKeytipStyles } from './Keytip.types'
 
