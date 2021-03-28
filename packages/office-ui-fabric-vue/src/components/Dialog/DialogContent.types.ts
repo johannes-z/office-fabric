@@ -1,7 +1,7 @@
 import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
 import { ITheme } from '@uifabric/styling'
 import { IButtonProps } from '../Button/Button.types'
-import { ResponsiveMode } from '../../utilities'
+import { ResponsiveMode } from '../../utils'
 
 export { ResponsiveMode } // Exported because the type is an optional prop and not exported otherwise.
 

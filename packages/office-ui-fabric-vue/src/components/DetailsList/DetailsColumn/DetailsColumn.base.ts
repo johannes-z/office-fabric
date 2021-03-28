@@ -1,6 +1,6 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
-import { IDragDropOptions } from '../../../utilities/dragdrop'
+import { IDragDropOptions } from '../../../utils/dragdrop'
 import { classNamesFunction, EventGroup, Async, IDisposable } from '@uifabric-vue/utilities'
 import { DEFAULT_CELL_STYLE_PROPS } from '../DetailsRow/DetailsRow.styles'
 import { Icon, FontIcon } from '../../Icon'

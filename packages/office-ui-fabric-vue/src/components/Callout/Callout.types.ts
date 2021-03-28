@@ -1,7 +1,7 @@
 import { IStyle, ITheme } from '../../Styling'
 import { DirectionalHint } from '../../common/DirectionalHint'
 import { IRectangle, IStyleFunctionOrObject } from '../../Utilities'
-import { ICalloutPositionedInfo, Point } from '../../utilities/positioning'
+import { ICalloutPositionedInfo, Point } from '../../utils/positioning'
 import { ILayerProps } from '../Layer'
 
 export type Target = Element | string | MouseEvent | Point | null;

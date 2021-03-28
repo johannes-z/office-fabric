@@ -1,7 +1,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 
-import { Grid } from '../../utilities/grid'
+import { Grid } from '../../utils/grid'
 
 import { ISwatchColorPickerProps, ISwatchColorPickerStyleProps, ISwatchColorPickerStyles } from './SwatchColorPicker.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'

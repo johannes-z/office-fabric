@@ -4,7 +4,7 @@ import { Label } from '../Label'
 import BaseComponent from '../BaseComponent'
 
 import { IconButton } from '../Button/IconButton/IconButton'
-import { Position } from '../../utilities/positioning'
+import { Position } from '../../utils/positioning'
 import {
   calculatePrecision,
   classNamesFunction,

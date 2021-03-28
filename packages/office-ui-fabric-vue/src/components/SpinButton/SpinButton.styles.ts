@@ -10,7 +10,7 @@ import {
 
 import { ISpinButtonStyles, ISpinButtonStyleProps } from './SpinButton.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'
-import { Position } from '../../utilities/positioning'
+import { Position } from '../../utils/positioning'
 
 const ARROW_BUTTON_WIDTH = 23
 const ARROW_BUTTON_ICON_SIZE = 8

@@ -8,7 +8,7 @@ import { Popup } from '../Popup'
 import { Overlay, IOverlayProps } from '../Overlay'
 import { Icon } from '../Icon'
 import { DirectionalHint } from '../Callout'
-import { ResponsiveMode } from '../../utilities'
+import { ResponsiveMode } from '../../utils'
 import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()

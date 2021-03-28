@@ -7,7 +7,7 @@ import { IButtonClassNames } from '../../Button/BaseButton.classNames'
 
 import { IColorPickerGridCellStyleProps, IColorPickerGridCellStyles } from './ColorPickerGridCell.types'
 import BaseComponent from '../../BaseComponent'
-import { getColorFromString, GridCell } from '../../../utilities'
+import { getColorFromString, GridCell } from '../../../utils'
 import { CreateElement } from 'vue'
 
 const getColorPickerGridCellButtonClassNames = memoizeFunction(

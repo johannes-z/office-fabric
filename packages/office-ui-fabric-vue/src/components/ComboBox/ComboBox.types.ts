@@ -2,7 +2,7 @@ import { IStyle } from '@uifabric/merge-styles'
 import { IButtonStyles } from '../Button/Button.types'
 import { IComboBoxClassNames } from './ComboBox.classNames'
 import { ITheme } from '@uifabric/styling'
-import { ISelectableOption } from '@/utilities'
+import { ISelectableOption } from '../../utils'
 
 /**
  * {@docCategory ComboBox}

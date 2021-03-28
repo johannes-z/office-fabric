@@ -4,7 +4,7 @@ import { ITheme, IStyle } from '@uifabric/styling'
 import DetailsHeaderBase from './DetailsHeader.vue'
 import { IColumn, DetailsListLayoutMode, IColumnReorderOptions, ColumnDragEndLocation } from '../DetailsList.types'
 import { ICellStyleProps, IDetailsItemProps } from '../DetailsRow/DetailsRow.types'
-import { ISelection, SelectionMode } from '../../../utilities/selection/index'
+import { ISelection, SelectionMode } from '../../../utils/selection/index'
 import { IDetailsCheckboxProps } from '../DetailsRowCheck/DetailsRowCheck.types'
 import { IDetailsColumnRenderTooltipProps } from '../DetailsColumn/DetailsColumn.types'
 

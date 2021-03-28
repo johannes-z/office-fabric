@@ -1,4 +1,4 @@
-import { mergeOverflows, ktpTargetFromSequences } from '../../utilities/keytips/KeytipUtils'
+import { mergeOverflows, ktpTargetFromSequences } from '../../utils/keytips/KeytipUtils'
 import { Callout, ICalloutProps } from '../Callout'
 import { DirectionalHint } from '../ContextualMenu'
 import { IKeytipProps } from './Keytip.types'

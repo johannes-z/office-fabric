@@ -2,10 +2,10 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction, getWindow, getDocument, assign, IRectangle } from '@uifabric-vue/utilities'
-import { IPosition, ICalloutPositionedInfo, positionCallout } from '../../utilities/positioning'
+import { IPosition, ICalloutPositionedInfo, positionCallout } from '../../utils/positioning'
 import { getStyles } from './CalloutContent.styles'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import { clickedOutside } from '../../utilities/clickedOutside'
+import { clickedOutside } from '../../utils/clickedOutside'
 import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction()

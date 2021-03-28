@@ -7,7 +7,7 @@ import { DialogContent } from './DialogContent'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDialogContentProps, DialogType } from './DialogContent.types'
 import { ICSSPixelUnitRule, ICSSRule } from '@uifabric/merge-styles/lib/IRawStyleBase'
-import { ResponsiveMode } from '../../utilities'
+import { ResponsiveMode } from '../../utils'
 import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IDialogStyleProps, IDialogStyles>()
