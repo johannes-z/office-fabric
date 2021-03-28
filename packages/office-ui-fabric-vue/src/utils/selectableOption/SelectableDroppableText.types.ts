@@ -1,6 +1,6 @@
 // import { ICalloutProps } from '../../Callout'
 import { IPanelProps } from '../../components/Panel'
-import { ISelectableOption } from '../../utilities/selectableOption/SelectableOption.types'
+import { ISelectableOption } from '../selectableOption/SelectableOption.types'
 
 /**
  * - `TComponent` - Component used for reference properties, such as `componentRef`.

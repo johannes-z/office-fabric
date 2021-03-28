@@ -1,1 +1,1 @@
-export * from './utilities/positioning'
+export * from './utils/positioning'

@@ -13,8 +13,8 @@ export * from './components/ThemeProvider'
 export * from './Styling'
 export * from './Utilities'
 
-export * from './utilities/selectableOption'
-export * from './utilities/positioning'
+export * from './utils/selectableOption'
+export * from './utils/positioning'
 
 export * from './common/DirectionalHint'
 
