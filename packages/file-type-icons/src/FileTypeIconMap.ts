@@ -311,6 +311,7 @@ export const FileTypeIconMap: { [key: string]: { extensions?: string[] } } = {
       'layer',
       'layout',
       'max',
+      'mcworld',
       'mtl',
       'obj',
       'off',
@@ -331,10 +332,11 @@ export const FileTypeIconMap: { [key: string]: { extensions?: string[] } } = {
   },
   multiple: {},
   one: {
-    extensions: ['one'], // this is a format for exported single - file notebook pages
+    // This represents a single Fluid Note, or a partial exported section/page of a notebook.
+    extensions: ['note', 'one'],
   },
   onetoc: {
-    extensions: ['ms-one-stub', 'onetoc', 'onetoc2', 'onepkg'], // this icon represents a complete, logical notebook.
+    extensions: ['ms-one-stub', 'onetoc', 'onetoc2', 'onepkg'], // This represents a complete, logical notebook.
   },
   pbiapp: {},
   pdf: {
@@ -528,6 +530,9 @@ export const FileTypeIconMap: { [key: string]: { extensions?: string[] } } = {
   vstx: {
     extensions: ['vst', 'vstm', 'vstx', 'vsx'],
   },
+  whiteboard: {
+    extensions: ['whiteboard'],
+  },
   xlsx: {
     extensions: ['xlc', 'xls', 'xlsb', 'xlsm', 'xlsx', 'xlw'],
   },
@@ -543,4 +548,4 @@ export const FileTypeIconMap: { [key: string]: { extensions?: string[] } } = {
   zip: {
     extensions: ['zip'],
   },
-};
+}

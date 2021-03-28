@@ -6,7 +6,7 @@ import {
   HighContrastSelector,
   getEdgeChromiumNoHighContrastAdjustSelector,
 } from '../../Styling'
-import { getRTL, memoizeFunction } from '../../Utilities'
+import { getRTL, memoizeFunction } from '../../FabricUtilities'
 
 const GlobalClassNames = {
   root: 'ms-Shimmer-container',

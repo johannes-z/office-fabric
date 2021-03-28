@@ -6,7 +6,7 @@ import {
   keyframes,
   PulsingBeaconAnimationStyles,
 } from '../../Styling'
-import { memoizeFunction } from '../../Utilities'
+import { memoizeFunction } from '../../FabricUtilities'
 import { IActivityItemStyles, IActivityItemProps } from './ActivityItem.types'
 
 const DEFAULT_PERSONA_SIZE = '32px'

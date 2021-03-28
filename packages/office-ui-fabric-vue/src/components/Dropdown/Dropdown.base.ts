@@ -4,13 +4,12 @@ import { RectangleEdge, ICalloutPositionedInfo } from '../../utilities/positioni
 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
-import { Callout, DirectionalHint } from '../Callout'
+import { Callout } from '../Callout'
 import { ActionButton } from '../Button'
 import { Checkbox } from '../Checkbox'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { IDropdownStyleProps, IDropdownStyles } from './Dropdown.types'
 import { CreateElement } from 'vue'
-import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<IDropdownStyleProps, IDropdownStyles>()
 

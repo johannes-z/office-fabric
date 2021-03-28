@@ -1,7 +1,7 @@
 import StatelessComponent from '../../StatelessComponent'
 import { CreateElement, RenderContext } from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
-import { classNamesFunction } from '../../../Utilities'
+import { classNamesFunction } from '../../../FabricUtilities'
 import { IShimmerGapProps, IShimmerGapStyleProps, IShimmerGapStyles } from './ShimmerGap.types'
 
 const getClassNames = classNamesFunction<IShimmerGapStyleProps, IShimmerGapStyles>()

@@ -1,16 +1,18 @@
 <template>
   <!-- <ThemeProvider :theme="theme"> -->
-  <div class="wrapper">
-    <div class="topNav" :style="{ boxShadow: theme.effects.elevation8 }">
+  <div :class="classNames.wrapper" class="wrapper">
+    <div :class="classNames.topNav"
+         class="topNav"
+         :style="{ boxShadow: theme.effects.elevation8 }">
       <DefaultButton @click.prevent.native="toggleTheme('light')">Light Theme</DefaultButton>
       <DefaultButton @click.prevent.native="toggleTheme('dark')">Dark Theme</DefaultButton>
     </div>
 
-    <div class="page">
-      <div class="sidebar">
+    <div :class="classNames.page" class="page">
+      <div :class="classNames.sidebar" class="sidebar">
         <Nav :groups="groups" />
       </div>
-      <div class="content">
+      <div :class="classNames.content" class="content">
         <router-view v-bind="null" />
       </div>
     </div>
@@ -19,9 +21,9 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, ProvideReactive } from 'vue-property-decorator'
 import { ThemeProvider, ActionButton, DefaultButton, IPartialTheme, loadTheme, Nav, Callout, Spinner } from '@uifabric-vue/office-ui-fabric-vue'
-import { createTheme, DefaultEffects, getTheme } from '@uifabric/styling'
+import { createTheme, DefaultEffects, getTheme, mergeStyleSets } from '@uifabric/styling'
 
 const publicPath = process.env.NODE_ENV === 'production'
   ? '/office-fabric'
@@ -31,8 +33,32 @@ const publicPath = process.env.NODE_ENV === 'production'
   components: { ActionButton, ThemeProvider, DefaultButton, Nav, Callout, Spinner },
 })
 export default class Preview extends Vue {
+  @ProvideReactive()
   theme = getTheme()
+
   target = document.body
+
+  get classNames () {
+    return mergeStyleSets({
+      wrapper: {
+        color: this.theme.semanticColors.bodyText,
+      },
+      topNav: {
+        background: this.theme.palette.neutralLighter,
+      },
+      page: {
+        background: this.theme.palette.neutralLighter,
+      },
+      sidebar: {
+        background: this.theme.semanticColors.bodyBackground,
+      },
+      content: {
+        '& .content--inner': {
+          background: this.theme.semanticColors.bodyBackground,
+        },
+      },
+    })
+  }
 
   groups = [
     {
@@ -130,6 +156,12 @@ export default class Preview extends Vue {
             { name: 'Stack WIP', key: 'Stack', href: publicPath + '/#/Stack' },
             { name: 'Text', key: 'Text', href: publicPath + '/#/Text' },
           ],
+        }, {
+          name: 'Other',
+          isExpanded: true,
+          links: [
+            { name: 'File Type Icons', key: 'FileTypeIcons', href: publicPath + '/#/FileTypeIcons' },
+          ],
         }],
       }],
     },
@@ -205,25 +237,21 @@ body {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  color: var(--fabric-bodyText);
 }
 .topNav {
   display: flex;
   padding: 10px;
-  background: var(--fabric-neutralLighter);
   align-items: center;
   justify-content: flex-end;
   z-index: 1;
 }
 .page {
-  background: var(--fabric-neutralLighter);
   display: flex;
   position: relative;
   flex: 1;
   overflow: auto;
 }
 .sidebar {
-  background: var(--fabric-bodyBackground);
   width: 300px;
   margin-right: 10px;
   overflow-y: scroll;
@@ -239,7 +267,6 @@ body {
   overflow: auto;
 }
 .content--inner {
-  background: var(--fabric-bodyBackground);
   padding: 28px;
   margin: 20px 0;
 }

@@ -1,5 +1,5 @@
 import Vue, { CreateElement } from 'vue'
-import { registerIcons, IIconOptions } from '@uifabric/styling'
+import { registerIcons, IIconOptions } from '@fluentui/style-utilities'
 import { FileTypeIconMap } from './FileTypeIconMap'
 
 let h: CreateElement
@@ -12,7 +12,7 @@ const _vue = new Vue({
 const PNG_SUFFIX = '_png'
 const SVG_SUFFIX = '_svg'
 
-const DEFAULT_BASE_URL = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20200921.001/assets/item-types/'
+const DEFAULT_BASE_URL = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20201125.001/assets/item-types/'
 const ICON_SIZES: number[] = [16, 20, 24, 32, 40, 48, 64, 96]
 
 export function initializeFileTypeIcons (baseUrl: string = DEFAULT_BASE_URL, options?: Partial<IIconOptions>): void {

@@ -1,7 +1,7 @@
 import { IContextualMenuItem } from './ContextualMenu.types'
 import { IMenuItemClassNames } from './ContextualMenu.classNames'
 import { IStyle, ITheme } from '../../Styling'
-import { IStyleFunctionOrObject } from '../../Utilities'
+import { IStyleFunctionOrObject } from '../../FabricUtilities'
 import { IButtonStyles } from '../Button'
 
 /**

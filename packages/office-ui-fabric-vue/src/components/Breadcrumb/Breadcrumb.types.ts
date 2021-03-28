@@ -1,9 +1,8 @@
-import { IIconProps } from '../../Icon'
-import { IStyleFunctionOrObject } from '../../Utilities'
+import { IIconProps } from '../Icon'
+import { IStyleFunctionOrObject } from '../../FabricUtilities'
 import { ITheme, IStyle } from '../../Styling'
 // import { IFocusZoneProps } from '../../FocusZone'
-import { ITooltipHostProps } from '../../Tooltip'
-import { IButtonProps } from '../../Button'
+import { ITooltipHostProps } from '../Tooltip'
 
 /**
  * {@docCategory Breadcrumb}

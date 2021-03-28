@@ -7,7 +7,6 @@ import { List } from '../List'
 import { DEFAULT_CELL_STYLE_PROPS } from './DetailsRow/DetailsRow.styles'
 import { IColumn, IDetailsListStyleProps, IDetailsListStyles } from './DetailsList.types'
 import { CreateElement } from 'vue'
-import { h } from '@vue/composition-api'
 
 const getClassNames = classNamesFunction<IDetailsListStyleProps, IDetailsListStyles>()
 
@@ -89,6 +88,7 @@ export class DetailsListBase extends BaseComponent {
   }
 
   private onRenderDetailsHeader () {
+    const h = this.$createElement
     return h(DetailsHeader, { attrs: { columns: this.adjustedColumns } })
   }
 

@@ -11,7 +11,6 @@ import {
   IDetailsColumnStyles,
   IDetailsColumnRenderTooltipProps,
 } from './DetailsColumn.types'
-import { h } from '@vue/composition-api'
 
 const MOUSEDOWN_PRIMARY_BUTTON = 0 // for mouse down event we are using ev.button property, 0 means left button
 
@@ -219,6 +218,7 @@ export class DetailsColumnBase extends BaseComponent {
   }
 
   render () {
+    const h = this.$createElement
     const { classNames, column, columnIndex, columnWidth, IconComponent, isDraggable, parentId } = this
 
     return h('div', {

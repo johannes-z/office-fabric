@@ -1,6 +1,6 @@
 import { IStyle, ITheme } from '../../Styling'
 import { DirectionalHint } from '../../common/DirectionalHint'
-import { IRectangle, IStyleFunctionOrObject } from '../../Utilities'
+import { IRectangle, IStyleFunctionOrObject } from '../../FabricUtilities'
 import { ICalloutPositionedInfo, Point } from '../../utilities/positioning'
 import { ILayerProps } from '../Layer'
 

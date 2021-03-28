@@ -3,8 +3,6 @@ import { getTheme, ITheme } from '@uifabric/styling'
 import Vue from 'vue'
 import { loadTheme } from '../plugin/loadTheme'
 
-loadTheme()
-
 // @ts-ignore
 @Component({
   // @ts-ignore

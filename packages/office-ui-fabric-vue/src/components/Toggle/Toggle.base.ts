@@ -4,36 +4,19 @@ import BaseComponent from '../BaseComponent'
 import { IToggleProps, IToggleStyles, IToggleStyleProps } from './Toggle.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { CreateElement } from 'vue'
+import { ITheme } from '@uifabric/styling'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
-// import { defineComponent, ref, reactive } from '@vue/composition-api'
-// export default defineComponent({
-//   model: {
-//     prop: 'checked',
-//     event: 'input',
-//   },
-//   props: {
-//     disabled: { type: Boolean, default: false },
-//     checked: { type: Boolean, default: false },
-//     defaultChecked: { type: Boolean, default: false },
-//     label: { type: String, default: '' },
-//     inlineLabel: { type: Boolean, default: false },
-//     onText: { type: String, default: null },
-//     offText: { type: String, default: null },
-//   },
-//   setup (props) {
-//     console.log(props)
-
-//     return () => <div>test</div>
-//   },
-// })
-
 @Component
-export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
+export class ToggleBase extends Vue {
   $refs!: {
     toggleButton: HTMLButtonElement
   }
+
+  @Prop({ type: [String, Array], default: '' }) readonly className!: string
+  @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
+  @Prop({ type: Object, default: () => {} }) readonly theme!: ITheme
 
   @Model('input', { type: Boolean, default: false }) checked!: boolean
   @Prop({ type: String, default: '' }) label!: string
@@ -49,6 +32,11 @@ export class ToggleBase extends BaseComponent<IToggleProps, IToggleStyles> {
   @Watch('checked')
   onCheckedChanged (checked: boolean) {
     this.internalChecked = checked
+  }
+
+  protected get uid (): number {
+    // @ts-ignore
+    return this._uid
   }
 
   get classNames () {

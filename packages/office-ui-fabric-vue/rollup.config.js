@@ -56,8 +56,8 @@ export default {
           loose: true,
           bugfixes: true,
           targets: {
-            browsers: 'IE 11'
-          }
+            browsers: 'IE 11',
+          },
         }],
       ],
     }),

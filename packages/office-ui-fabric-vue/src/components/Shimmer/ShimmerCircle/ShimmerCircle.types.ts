@@ -1,5 +1,5 @@
 import { IStyle, ITheme, IRawStyle } from '../../../Styling'
-import { IStyleFunctionOrObject } from '../../../Utilities'
+import { IStyleFunctionOrObject } from '../../../FabricUtilities'
 
 /**
  * {@docCategory Shimmer}
