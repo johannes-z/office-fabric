@@ -2,11 +2,12 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { classNamesFunction, getWindow, getDocument, assign, IRectangle } from '@uifabric-vue/utilities'
-import { IPosition, ICalloutPositionedInfo, positionCallout } from '../../utilities/positioning'
+import { IPosition, ICalloutPositionedInfo, positionCallout, getMaxHeight } from '../../utilities/positioning'
 import { getStyles } from './CalloutContent.styles'
 import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
 import { clickedOutside } from '../../utilities/clickedOutside'
 import { CreateElement } from 'vue'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 const getClassNames = classNamesFunction()
 
@@ -26,10 +27,18 @@ export class CalloutContentBase extends BaseComponent {
   @Prop({ type: Number, default: 0 }) gapSpace!: number
   @Prop({ type: Number, default: undefined }) finalHeight!: number
   @Prop({ type: Number, default: undefined }) calloutMaxWidth!: number
+  @Prop({ type: Number, default: undefined }) calloutMaxHeight!: number
   @Prop({ type: String, default: undefined }) backgroundColor!: string
+  @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: DirectionalHint
+  @Prop({ type: Boolean, default: false }) directionalHintFixed!: boolean
+  @Prop({ type: Boolean, default: false }) overflowYHidden!: boolean
 
   private internalKey = new Date()
   private positions: any = null
+
+  private maxHeight: number = 0
+  private blockResetHeight: boolean = false;
+  private heightOffset: number = 0
 
   positionAttempts = 0;
 
@@ -52,7 +61,7 @@ export class CalloutContentBase extends BaseComponent {
   }
 
   get classNames (): any {
-    const { theme, className, calloutMaxWidth, backgroundColor, finalHeight, positions, styles, calloutWidth, beakWidth } = this
+    const { theme, className, calloutMaxWidth, calloutMaxHeight, backgroundColor, finalHeight, positions, styles, calloutWidth, beakWidth } = this
 
     return getClassNames(styles!, {
       theme: theme!,
@@ -122,6 +131,36 @@ export class CalloutContentBase extends BaseComponent {
     }
   }
 
+  // Max height should remain as synchronous as possible, which is why it is not done using set state.
+  // It needs to be synchronous since it will impact the ultimate position of the callout.
+  private _getMaxHeight (): number | undefined {
+    if (!this.maxHeight) {
+      if (this.directionalHintFixed && this.target) {
+        const beakWidth = this.isBeakVisible ? this.beakWidth : 0
+        const gapSpace = this.gapSpace ? this.gapSpace : 0
+        // Since the callout cannot measure it's border size it must be taken into account here. Otherwise it will
+        // overlap with the target.
+        const totalGap = gapSpace + beakWidth!
+        this._async.requestAnimationFrame(() => {
+          if (this.target) {
+            this.maxHeight = getMaxHeight(
+              this.target,
+              this.directionalHint!,
+              totalGap,
+              this.bounds,
+              this.coverTarget,
+            )
+            this.blockResetHeight = true
+            this.$forceUpdate()
+          }
+        }, this.target as Element)
+      } else {
+        this.maxHeight = this.bounds.height!
+      }
+    }
+    return this.maxHeight!
+  }
+
   private _arePositionsEqual (positions: ICalloutPositionedInfo, newPosition: ICalloutPositionedInfo): boolean {
     return (
       this._comparePositions(positions.elementPosition, newPosition.elementPosition) &&
@@ -149,7 +188,22 @@ export class CalloutContentBase extends BaseComponent {
   }
 
   render (h: CreateElement) {
-    const { classNames, positionCss, isBeakVisible } = this
+    const { classNames, positionCss, calloutMaxHeight, overflowYHidden, isBeakVisible } = this
+
+    const getContentMaxHeight: number | undefined = this._getMaxHeight()
+      ? this._getMaxHeight()! + this.heightOffset!
+      : undefined
+
+    const contentMaxHeight: number | undefined =
+    calloutMaxHeight! && getContentMaxHeight && calloutMaxHeight! < getContentMaxHeight
+      ? calloutMaxHeight!
+      : getContentMaxHeight!
+
+    const overflowStyle = {
+      // ...this.$attrs.style,
+      maxHeight: contentMaxHeight,
+      ...(overflowYHidden && { overflowY: 'hidden' }),
+    }
 
     return h('div', {
       ref: 'hostElement',
@@ -165,7 +219,7 @@ export class CalloutContentBase extends BaseComponent {
           style: (positionCss && positionCss.beakPosition) ? positionCss.beakPosition.elementPosition : null,
         }),
         isBeakVisible && h('div', { class: classNames.beakCurtain }),
-        h('div', { class: classNames.calloutMain }, [
+        h('div', { class: classNames.calloutMain, style: overflowStyle }, [
           this.$slots.default,
         ]),
       ]),

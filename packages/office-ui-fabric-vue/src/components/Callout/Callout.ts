@@ -9,7 +9,7 @@ import { DirectionalHint } from '../../common/DirectionalHint'
 export class Callout extends StatelessComponent {
   @Prop({ type: HTMLElement, required: true }) target!: any
   @Prop({ type: Boolean, default: false }) doNotLayer!: boolean
-  @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: boolean
+  @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: DirectionalHint
 
   render (h: CreateElement, context: any) {
     if (!(context.props.target instanceof Node)) return

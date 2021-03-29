@@ -23,6 +23,7 @@
       </div>
 
       <Callout v-if="showCallout"
+               :directional-hint="DirectionalHint.topCenter"
                :target="target"
                :styles="{ calloutMain: { maxWidth: 300 } }"
                :is-beak-visible="true"
@@ -54,7 +55,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, InjectReactive } from 'vue-property-decorator'
-import { DefaultButton, Text, Callout, Link, mergeStyleSets, getTheme, IPartialTheme } from '@uifabric-vue/office-ui-fabric-vue'
+import { DefaultButton, Text, Callout, Link, mergeStyleSets, getTheme, IPartialTheme, DirectionalHint } from '@uifabric-vue/office-ui-fabric-vue'
 
 @Component({
   components: {
@@ -67,6 +68,8 @@ import { DefaultButton, Text, Callout, Link, mergeStyleSets, getTheme, IPartialT
 export default class CalloutPage extends Vue {
   @InjectReactive()
   theme!: IPartialTheme
+
+  DirectionalHint = DirectionalHint
 
   showCallout: boolean = false
   target: any = null
