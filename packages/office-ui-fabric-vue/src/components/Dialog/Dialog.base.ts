@@ -114,9 +114,11 @@ export class DialogBase extends BaseComponent<IDialogProps, IDialogStyles> {
         showCloseButton: mergedModalProps.isBlocking,
         topButtonsProps: dialogContentProps.topButtonsProps,
         type: dialogContentProps.type,
-        onDismiss: onDismiss || dialogContentProps.onDismiss,
         class: dialogContentProps.className,
         ...dialogContentProps,
+      },
+      on: {
+        dismiss: onDismiss || dialogContentProps.onDismiss,
       },
     }, this.$slots.default)
 
@@ -129,9 +131,11 @@ export class DialogBase extends BaseComponent<IDialogProps, IDialogStyles> {
         isOpen: !hidden,
         class: classNames.root,
         containerClassName: classNames.main,
-        onDismiss: onDismiss || mergedModalProps.onDismiss,
         subtitleAriaId: this._getSubTextId(),
         titleAriaId: this._getTitleTextId(),
+      },
+      on: {
+        dismiss: onDismiss || dialogContentProps.onDismiss,
       },
     }, [
       $dialogContent,

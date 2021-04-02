@@ -56,7 +56,7 @@ export class ModalBase extends BaseComponent<IModalProps, IModalStyles> {
 
   responsiveMode: ResponsiveMode = ResponsiveMode.large
 
-  @Watch('isOpen')
+  @Watch('isOpen', { immediate: true })
   private onIsOpenChanged (newVal) {
     if (newVal) this.isVisible = true
   }
