@@ -9,6 +9,7 @@ const _vue = new Vue({
   },
 })
 
+const PREFIX = 'vue_'
 const PNG_SUFFIX = '_png'
 const SVG_SUFFIX = '_svg'
 
@@ -27,13 +28,13 @@ function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIco
 
   iconTypes.forEach((type: string) => {
     const baseUrlSizeType = baseUrl + size + '/' + type
-    fileTypeIcons[type + size + PNG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + PNG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrlSizeType + '.png',
         alt: '',
       },
     })
-    fileTypeIcons[type + size + SVG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + SVG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrlSizeType + '.svg',
         alt: '',
@@ -46,14 +47,14 @@ function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIco
     // SVGs scale well, so you can generally use the default image.
     // 1.5x is a special case where both SVGs and PNGs need a different image.
 
-    fileTypeIcons[type + size + '_1.5x' + PNG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + '_1.5x' + PNG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrl + size + '_1.5x/' + type + '.png',
         height: '100%',
         width: '100%',
       },
     })
-    fileTypeIcons[type + size + '_1.5x' + SVG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + '_1.5x' + SVG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrl + size + '_1.5x/' + type + '.svg',
         height: '100%',
@@ -61,21 +62,21 @@ function _initializeIcons (baseUrl: string, size: number, options?: Partial<IIco
       },
     })
 
-    fileTypeIcons[type + size + '_2x' + PNG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + '_2x' + PNG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrl + size + '_2x/' + type + '.png',
         height: '100%',
         width: '100%',
       },
     })
-    fileTypeIcons[type + size + '_3x' + PNG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + '_3x' + PNG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrl + size + '_3x/' + type + '.png',
         height: '100%',
         width: '100%',
       },
     })
-    fileTypeIcons[type + size + '_4x' + PNG_SUFFIX] = h('img', {
+    fileTypeIcons[PREFIX + type + size + '_4x' + PNG_SUFFIX] = h('img', {
       attrs: {
         src: baseUrl + size + '_4x/' + type + '.png',
         height: '100%',

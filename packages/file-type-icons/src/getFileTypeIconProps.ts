@@ -3,6 +3,7 @@ import { FileIconType, FileIconTypeInput } from './FileIconType'
 
 let _extensionToIconName: { [key: string]: string }
 
+const PREFIX = 'vue_'
 const GENERIC_FILE = 'genericfile'
 const FOLDER = 'folder'
 const SHARED_FOLDER = 'sharedfolder'
@@ -105,7 +106,7 @@ export function getFileTypeIconProps (options: IFileTypeIconOptions): { iconName
   const size: FileTypeIconSize = options.size || DEFAULT_ICON_SIZE
   const suffix: string = _getFileTypeIconSuffix(size, options.imageFileType)
 
-  return { iconName: iconBaseName + suffix }
+  return { iconName: PREFIX + iconBaseName + suffix }
 }
 
 function _getFileTypeIconNameFromExtension (extension: string): string {
