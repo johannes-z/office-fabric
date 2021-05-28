@@ -9,8 +9,7 @@ export * from './components/ThemeProvider'
 export * from './Styling'
 export * from './FabricUtilities'
 
-export * from './utilities/selectableOption'
-export * from './utilities/positioning'
+export * from './utilities'
 
 export * from './common/DirectionalHint'
 
