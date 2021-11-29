@@ -1,4 +1,3 @@
-import { h } from '@/renderFunction'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { CreateElement } from 'vue'
 import { Component } from 'vue-property-decorator'
@@ -25,11 +24,11 @@ export class DialogFooterBase extends BaseComponent {
     }, [
       h('div', {
         class: this._classNames.actionsRight,
-      }, this._renderChildrenAsActions()),
+      }, this._renderChildrenAsActions(h)),
     ])
   }
 
-  private _renderChildrenAsActions () {
+  private _renderChildrenAsActions (h) {
     return this.$slots.default?.map(child =>
       child ? h('span', { class: this._classNames.action }, [h(VNodes, { props: { vnodes: child } })]) : null,
     )

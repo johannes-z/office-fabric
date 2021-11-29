@@ -7,7 +7,7 @@ import BaseComponent from '../BaseComponent'
 import { Prop } from 'vue-property-decorator'
 import { Point } from '@uifabric-vue/utilities'
 import { CreateElement } from 'vue'
-import { DirectionalHint } from '@/common/DirectionalHint'
+import { DirectionalHint } from '../../common/DirectionalHint'
 
 /**
  * A callout corresponding to another Fabric component to describe a key sequence that will activate that component
