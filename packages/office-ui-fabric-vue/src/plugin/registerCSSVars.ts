@@ -1,8 +1,9 @@
 import { getDocument } from '@uifabric-vue/utilities'
 
 const STYLE_PREFIX = '__fabric__'
+const VAR_PREFIX = 'fabric'
 
-export function registerCSSVars (key: string, obj: any) {
+export function registerCSSVars (key: string, obj: { [key:string]: string }) {
   const document = getDocument()
   if (!document) return obj
 
@@ -20,8 +21,8 @@ export function registerCSSVars (key: string, obj: any) {
 
   for (const key in obj) {
     const value = obj[key]
-    properties[key] = `var(--fabric-${key})`
-    css.push(`--fabric-${key}: ${value};`)
+    properties[key] = `var(--${VAR_PREFIX}-${key})`
+    css.push(`--${VAR_PREFIX}-${key}: ${value};`)
   }
 
   style.innerHTML = `
