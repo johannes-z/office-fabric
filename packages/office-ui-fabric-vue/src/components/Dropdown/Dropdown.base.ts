@@ -22,7 +22,7 @@ export class DropdownBase extends BaseComponent {
   }
 
   @Prop({ type: Array, required: true }) options!: any[]
-  @Prop({ type: Array, default: () => [] }) selectedOptions!: any[]
+  @Prop({ type: Array, default: () => [] }) value!: any[]
 
   @Prop({ type: String, default: '' }) label!: string
   @Prop({ type: String, default: '' }) placeholder!: string
@@ -40,16 +40,10 @@ export class DropdownBase extends BaseComponent {
   isOpen: boolean = false
   calloutRenderEdge: RectangleEdge | undefined = undefined
 
-  created () {
-    this.options.forEach(option => {
-      this.$set(option, 'isItemSelected', false)
-    })
-  }
-
   get classNames (): any {
     const { theme, className, errorMessage, label, required, disabled, panelProps, calloutProps } = this
     const { isOpen, calloutRenderEdge } = this
-    const selectedOptions = this.selectedOptions
+    const selectedOptions = this.value
     return getClassNames(this.styles, {
       theme,
       className,
@@ -78,19 +72,21 @@ export class DropdownBase extends BaseComponent {
   private select (option: any) {
     if (option.disabled) return
 
-    const index = this.selectedOptions.findIndex(o => o.key === option.key)
+    const selectedOptions = [...this.value]
+    const index = selectedOptions.findIndex(o => o.key === option.key)
 
-    if (index > -1) {
-      this.selectedOptions[index].isItemSelected = false
-      this.selectedOptions.splice(index, 1)
+    if (this.multiSelect) {
+      if (index === -1) selectedOptions.push(option)
+      else selectedOptions.splice(index, 1)
     } else {
-      if (!this.multiSelect) {
-        this.selectedOptions.splice(0, this.selectedOptions.length)
+      if (index === -1) {
+        selectedOptions.splice(0, selectedOptions.length)
+        selectedOptions.push(option)
         this.isOpen = false
       }
-      option.isItemSelected = true
-      this.selectedOptions.push(option)
     }
+    console.log(selectedOptions)
+    this.$emit('input', selectedOptions)
   }
 
   private onPositioned (positions: ICalloutPositionedInfo) {
@@ -99,7 +95,8 @@ export class DropdownBase extends BaseComponent {
     }
   }
 
-  private onDismiss () {
+  private onDismiss (e: PointerEvent) {
+    e.stopPropagation()
     this.isOpen = false
   }
 
@@ -189,7 +186,7 @@ export class DropdownBase extends BaseComponent {
   // }
 
   render (h: CreateElement) {
-    const { classNames, label, selectedOptions, multiSelect, multiSelectDelimiter, placeholder, isOpen, dropdownWidth, options, hasErrorMessage, errorMessage, required, disabled } = this
+    const { classNames, label, value, multiSelect, multiSelectDelimiter, placeholder, isOpen, dropdownWidth, options, hasErrorMessage, errorMessage, required, disabled } = this
 
     const OptionComponent = multiSelect ? Checkbox : ActionButton
 
@@ -203,12 +200,14 @@ export class DropdownBase extends BaseComponent {
     const $dropdown = h('div', {
       ref: 'dropdown',
       class: classNames.dropdown,
-      on: { click: () => (this.isOpen = true) },
+      on: {
+        click: () => (this.isOpen = !this.isOpen),
+      },
     }, [
       h('span',
         { class: classNames.title },
-        selectedOptions.length
-          ? selectedOptions.map(i => i.text).join(multiSelectDelimiter)
+        value.length
+          ? value.map(i => i.text).join(multiSelectDelimiter)
           : placeholder,
       ),
       h('span', { class: classNames.caretDownWrapper }, [
@@ -234,31 +233,34 @@ export class DropdownBase extends BaseComponent {
       },
     }, [
       h('div', { class: classNames.dropdownItemsWrapper, attrs: { tabindex: 0 } }, [
-        options.map((option, index) => h(OptionComponent, {
-          key: index,
-          class: option.hidden
-            ? classNames.dropdownItemHidden
-            : option.isItemSelected && option.disabled === true
-              ? classNames.dropdownItemSelectedAndDisabled
-              : option.isItemSelected
-                ? classNames.dropdownItemSelected
-                : option.disabled === true
-                  ? classNames.dropdownItemDisabled
-                  : classNames.dropdownItem,
-          style: multiSelect ? this.multiSelectItemStyles : null,
-          attrs: {
-            disabled: option.disabled,
-            title: option.text,
-            checked: option.isItemSelected,
-            role: option,
-          },
-          nativeOn: {
-            click: () => (!multiSelect && this.select(option)),
-          },
-          on: {
-            input: () => (multiSelect && this.select(option)),
-          },
-        }, option.text)),
+        options.map((option, index) => {
+          const isItemSelected = !!this.value.find(o => o.key === option.key)
+          return h(OptionComponent, {
+            key: index,
+            class: option.hidden
+              ? classNames.dropdownItemHidden
+              : isItemSelected && option.disabled === true
+                ? classNames.dropdownItemSelectedAndDisabled
+                : isItemSelected
+                  ? classNames.dropdownItemSelected
+                  : option.disabled === true
+                    ? classNames.dropdownItemDisabled
+                    : classNames.dropdownItem,
+            style: multiSelect ? this.multiSelectItemStyles : null,
+            attrs: {
+              disabled: option.disabled,
+              title: option.text,
+              checked: isItemSelected,
+              role: option,
+            },
+            nativeOn: {
+              click: () => (!multiSelect && this.select(option)),
+            },
+            on: {
+              input: () => (multiSelect && this.select(option)),
+            },
+          }, option.text)
+        }),
       ]),
     ])
 

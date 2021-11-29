@@ -1,18 +1,18 @@
-import { IDropdownStyles, IDropdownStyleProps } from './Dropdown.types'
-import { IStyleFunction, IsFocusVisibleClassName } from '../../FabricUtilities'
+import { IsFocusVisibleClassName } from '../../FabricUtilities'
 import { RectangleEdge } from '../../utilities/positioning'
 import {
   FontWeights,
   HighContrastSelector,
-  IRawStyle,
-  IStyle,
   getGlobalClassNames,
   normalize,
   HighContrastSelectorWhite,
   getScreenSelector,
   ScreenWidthMinMedium,
-  getEdgeChromiumNoHighContrastAdjustSelector,
+  getHighContrastNoAdjustStyle,
 } from '../../Styling'
+import type { IDropdownStyles, IDropdownStyleProps } from './Dropdown.types'
+import type { IStyleFunction } from '../../FabricUtilities'
+import type { IRawStyle, IStyle } from '../../Styling'
 
 const GlobalClassNames = {
   root: 'ms-Dropdown-container',
@@ -37,7 +37,7 @@ const DROPDOWN_ITEM_HEIGHT = 36
 
 const highContrastAdjustMixin = {
   [`${HighContrastSelector}, ${HighContrastSelectorWhite.replace('@media ', '')}`]: {
-    MsHighContrastAdjust: 'none',
+    ...getHighContrastNoAdjustStyle(),
   },
 }
 
@@ -115,6 +115,10 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
       wordWrap: 'break-word',
       overflowWrap: 'break-word',
       textAlign: 'left',
+
+      '.ms-Button-flexContainer': {
+        width: '100%',
+      },
     },
   ]
 
@@ -313,8 +317,8 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
             border: '1px solid GrayText',
             color: 'GrayText',
             backgroundColor: 'Window',
+            ...getHighContrastNoAdjustStyle(),
           },
-          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
     ],
@@ -336,7 +340,9 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
       { color: palette.neutralSecondary, fontSize: fonts.small.fontSize, pointerEvents: 'none' },
       disabled && {
         color: semanticColors.disabledText,
-        selectors: { [HighContrastSelector]: { color: 'GrayText' }, ...getEdgeChromiumNoHighContrastAdjustSelector() },
+        selectors: {
+          [HighContrastSelector]: { color: 'GrayText', ...getHighContrastNoAdjustStyle() },
+        },
       },
     ],
     errorMessage: { color: semanticColors.errorText, ...theme.fonts.small, paddingTop: 5 },
@@ -390,8 +396,8 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
         selectors: {
           [HighContrastSelector]: {
             color: 'GrayText',
+            ...getHighContrastNoAdjustStyle(),
           },
-          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
     ],
@@ -405,6 +411,13 @@ export const getStyles: IStyleFunction<IDropdownStyleProps, IDropdownStyles> = p
           alignSelf: 'stretch',
           padding: '0 8px',
           width: '100%',
+        },
+        input: {
+          selectors: {
+            [`.${IsFocusVisibleClassName} &:focus + label::before`]: {
+              outlineOffset: '0px',
+            },
+          },
         },
       },
       panel: {
