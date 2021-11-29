@@ -17,7 +17,6 @@ export class DialogFooterBase extends BaseComponent {
       theme: theme!,
       className,
     })
-    console.log(this)
 
     return h('div', {
       class: this._classNames.actions,
