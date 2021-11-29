@@ -59,6 +59,9 @@ export class DetailsListBase extends BaseComponent {
                   compact: compact,
                 },
                 scopedSlots: this.$scopedSlots,
+                on: {
+                  click: (ev) => this.$emit('item-clicked', ev, item),
+                },
               }),
             },
           }),
