@@ -29,11 +29,12 @@ export default {
     json(),
     replace({
       'process.env.NODE_ENV': JSON.stringify('production'),
+      preventAssignment: true,
     }),
     alias({
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: [
-        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
+        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'lib/$1') },
         { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
       ],
     }),
