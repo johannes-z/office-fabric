@@ -60,9 +60,11 @@ export class ToggleBase extends Vue {
       attrs: {
         for: id,
       },
-    }, this.$scopedSlots.label ? [
-      this.$scopedSlots.label({ checked: internalChecked, disabled, label }),
-    ] : label)
+    }, this.$scopedSlots.label
+      ? [
+        this.$scopedSlots.label({ checked: internalChecked, disabled, label }),
+      ]
+      : label)
 
     const $pill = h('button', {
       ref: 'toggleButton',

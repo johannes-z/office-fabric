@@ -48,6 +48,7 @@ export const getStyles = (props: IImageStyleProps): IImageStyles => {
 
   // Cut the mustard using msMaxTouchPoints to detect IE11 which does not support CSS object-fit
   const window: Window | undefined = getWindow()
+  // @ts-ignore
   const supportsObjectFit: boolean = window !== undefined && window.navigator.msMaxTouchPoints === undefined
   const fallbackObjectFitStyles =
     (isContain && isLandscape) || (isCover && !isLandscape)
