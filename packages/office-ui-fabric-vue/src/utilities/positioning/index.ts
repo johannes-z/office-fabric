@@ -1,6 +1,9 @@
-export {
+export type {
   IElementPosition,
   IElementPositionInfo,
+} from './positioning'
+
+export {
   getBoundsFromTargetWindow,
   getMaxHeight,
   getOppositeEdge,

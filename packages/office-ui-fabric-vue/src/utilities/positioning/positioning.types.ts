@@ -1,7 +1,7 @@
 import { DirectionalHint } from '../../common/DirectionalHint'
 import { IRectangle, Point } from '@uifabric-vue/utilities'
 
-export { Point, IPoint } from '@uifabric-vue/utilities'
+export type { Point, IPoint } from '@uifabric-vue/utilities'
 
 export enum RectangleEdge {
   top = 1,
