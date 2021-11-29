@@ -140,6 +140,7 @@ export class AutoScroll {
   private _stopScroll (): void {
     if (this._timeoutId) {
       clearTimeout(this._timeoutId)
+      // @ts-ignore
       delete this._timeoutId
     }
   }

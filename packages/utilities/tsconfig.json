@@ -21,6 +21,7 @@
     "declarationDir": "types",
     "declarationMap": true,
     "sourceMap": true,
+    "rootDir": "./src",
     "baseUrl": ".",
     "types": [
       "node",

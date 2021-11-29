@@ -94,7 +94,7 @@ export function memoizeFunction<T extends (...args: any[]) => RetType, RetType>(
   if (!_initializedStylesheetResets) {
     const stylesheet = Stylesheet.getInstance()
 
-    if (stylesheet && stylesheet.onReset) {
+    if (stylesheet && stylesheet.onReset != null) {
       Stylesheet.getInstance().onReset(resetMemoizations)
     }
     _initializedStylesheetResets = true
