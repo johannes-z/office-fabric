@@ -2,6 +2,7 @@ import { getGlobalClassNames, normalize, HighContrastSelector, AnimationVariable
 import { ISearchBoxStyles } from './SearchBox.types'
 import { IStyle } from '@uifabric/merge-styles'
 import { getRTL } from '@uifabric-vue/utilities'
+import { ISearchBoxStyleProps } from '.'
 
 const GlobalClassNames = {
   root: 'ms-SearchBox',
@@ -11,8 +12,8 @@ const GlobalClassNames = {
   field: 'ms-SearchBox-field',
 }
 
-export function getStyles (props: any): ISearchBoxStyles {
-  const { theme, underlined, disabled, hasFocus, className, hasInput, disableAnimation } = props
+export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
+  const { theme, underlined, disabled, hasFocus, className, hasInput, disableAnimation, showIcon } = props
   const { palette, fonts, semanticColors, effects } = theme
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
@@ -70,6 +71,7 @@ export function getStyles (props: any): ISearchBoxStyles {
           },
           [`:hover .${classNames.icon}`]: {
             opacity: 0,
+            pointerEvents: 'none',
           },
         },
       },
@@ -83,6 +85,18 @@ export function getStyles (props: any): ISearchBoxStyles {
           underlined ? 0 : effects.roundedCorner2,
           underlined ? 'borderBottom' : 'border',
         ),
+      ],
+      showIcon && [
+        {
+          selectors: {
+            [`:hover .${classNames.iconContainer}`]: {
+              width: 32,
+            },
+            [`:hover .${classNames.icon}`]: {
+              opacity: 1,
+            },
+          },
+        },
       ],
       disabled && [
         'is-disabled',
@@ -136,6 +150,10 @@ export function getStyles (props: any): ISearchBoxStyles {
       !disableAnimation && {
         transition: `width ${AnimationVariables.durationValue1}`,
       },
+      showIcon &&
+        hasFocus && {
+        width: 32,
+      },
     ],
     icon: [
       classNames.icon,
@@ -144,9 +162,14 @@ export function getStyles (props: any): ISearchBoxStyles {
       },
       hasFocus && {
         opacity: 0,
+        pointerEvents: 'none',
       },
       !disableAnimation && {
         transition: `opacity ${AnimationVariables.durationValue1} 0s`,
+      },
+      showIcon &&
+        hasFocus && {
+        opacity: 1,
       },
     ],
     clearButton: [
@@ -196,7 +219,7 @@ export function getStyles (props: any): ISearchBoxStyles {
         textOverflow: 'ellipsis',
         // This padding forces the text placement to round up.
         paddingBottom: 0.5,
-        // This removes the IE specific clear button in the input since we implimented our own
+        // This removes the IE specific clear button in the input since we implemented our own
         selectors: {
           '::-ms-clear': {
             display: 'none',

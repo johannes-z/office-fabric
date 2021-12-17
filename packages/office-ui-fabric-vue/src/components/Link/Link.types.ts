@@ -1,9 +1,6 @@
-import { LinkBase } from './Link.base'
-
-import { IStyle, ITheme } from '@uifabric/styling'
-import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
-import { Component } from 'vue'
-// import { IKeytipProps } from '../../Keytip'
+import { IBaseProps } from '@/types'
+import type { IStyle, ITheme } from '@fluentui/style-utilities'
+import type { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 
 /**
  * {@docCategory Link}
@@ -14,40 +11,39 @@ export interface ILink {
 }
 
 /**
+ * Link component props. All built-in props for `<a>` and `<button>` are supported (including
+ * various event handlers) even if not listed below.
  * {@docCategory Link}
  */
-export interface ILinkHTMLAttributes<T> {
-  // Shared
-  type?: string;
+export interface ILinkProps extends IBaseProps {
+  /**
+   * Optional callback to access the ILink interface. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  componentRef?: any// IRefObject<ILink>;
 
-  // Anchor
-  download?: any;
+  /**
+   * URL the link points to. If not provided, the link renders as a button (unless that behavior is
+   * overridden using `as`).
+   */
   href?: string;
-  hrefLang?: string;
-  media?: string;
-  rel?: string;
+
+  /**
+   * Where to open the linked URL. Common values are `_blank` (a new tab or window),
+   * `_self` (the current window/context), `_parent`, and `_top`.
+   */
   target?: string;
 
-  // Button
-  autoFocus?: boolean;
-  disabled?: boolean;
-  form?: string;
-  formAction?: string;
-  formEncType?: string;
-  formMethod?: string;
-  formNoValidate?: boolean;
-  formTarget?: string;
-  name?: string;
-  value?: string | string[] | number;
+  /**
+   * Relationship to the linked URL (can be a space-separated list).
+   * Most common values are `noreferrer` and/or `noopener`.
+   */
+  rel?: string;
 
-  // Any other props for HTMLElements or a React component passed to as=
-  [index: string]: any;
-}
-
-/**
- * {@docCategory Link}
- */
-export interface ILinkProps extends ILinkHTMLAttributes<HTMLAnchorElement | HTMLButtonElement | HTMLElement | LinkBase> {
+  /**
+   * Click handler for the link.
+   */
+  onClick?: (event: MouseEvent) => void;
 
   /**
    * Whether the link is disabled
@@ -65,14 +61,25 @@ export interface ILinkProps extends ILinkHTMLAttributes<HTMLAnchorElement | HTML
   theme?: ITheme;
 
   /**
-   * A component that should be used as the root element of the link returned from the Link component.
+   * A component type or primitive that is rendered as the type of the root element.
    */
-  as?: string | Component;
+  as?: any // React.ElementType;
 
   /**
-   * Optional keytip for this Link
+   * Built-in HTML attribute with different behavior depending on how the link is rendered.
+   * If rendered as `<a>`, hints at the MIME type.
+   * If rendered as `<button>`, override the type of button (`button` is the default).
    */
-  keytipProps?: any;
+  type?: string;
+
+  /**
+   * Whether the link is styled with an underline or not.
+   * Should be used when the link is placed alongside other text content.
+   */
+  underline?: boolean;
+
+  /** Any other props for elements or a React component passed to `as` */
+  // [key: string]: any;
 }
 
 /**
@@ -82,6 +89,7 @@ export interface ILinkStyleProps {
   className?: string;
   isButton?: boolean;
   isDisabled?: boolean;
+  isUnderlined?: boolean;
   theme: ITheme;
 }
 

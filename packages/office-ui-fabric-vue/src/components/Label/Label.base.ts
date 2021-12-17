@@ -1,8 +1,9 @@
-import { Component, Prop } from 'vue-property-decorator'
-import { ILabelProps, ILabelStyleProps, ILabelStyles } from './Label.types'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement, RenderContext, VNode } from 'vue'
-import StatelessComponent from '../StatelessComponent'
+import Vue, { VNode } from 'vue'
+import { ILabelProps } from '..'
+import { ILabelStyleProps, ILabelStyles } from './Label.types'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>({
   // Label is used a lot by other components.
@@ -11,25 +12,33 @@ const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>({
   cacheSize: 100,
 })
 
-@Component
-export class LabelBase extends StatelessComponent<ILabelProps> {
-  @Prop({ type: String, default: 'label' }) as!: string
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Boolean, default: false }) required!: boolean
+export const LabelBase = Vue.extend({
+  name: 'LabelBase',
 
-  render (h: CreateElement, context: RenderContext): VNode {
-    const { as: RootType, theme, styles, className, disabled, required } = context.props
+  functional: true,
+
+  props: {
+    ...withThemeableProps(),
+
+    as: { type: String, default: 'label' },
+    disabled: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+  } as MappedType<ILabelProps>,
+
+  render (h, ctx): VNode {
+    const { as: RootType, theme, className, styles, disabled, required } = ctx.props
 
     const classNames = getClassNames(styles, {
+      theme: theme!,
       className,
       disabled,
       required,
-      theme: theme!,
     })
 
     return h(RootType, {
-      ...context.data,
+      ...ctx.data,
+      on: ctx.listeners,
       class: classNames.root,
-    }, context.children)
-  }
-}
+    }, ctx.children)
+  },
+})

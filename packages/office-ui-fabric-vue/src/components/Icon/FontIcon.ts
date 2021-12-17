@@ -1,15 +1,16 @@
-import { memoizeFunction, css } from '@uifabric-vue/utilities'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { css, memoizeFunction } from '@uifabric-vue/utilities'
 import { getIcon } from '@uifabric/styling'
-import Vue, { RenderContext, VNode, CreateElement } from 'vue'
-import StatelessComponent from '../StatelessComponent'
-import { Component, Prop } from 'vue-property-decorator'
-import { MS_ICON, classNames } from './Icon.styles'
-import { IIconProps } from './Icon.types'
+import Vue, { CreateElement, RenderContext, VNode } from 'vue'
+import { IFontIconProps } from './Icon.types'
+import { classNames, MS_ICON } from './Icon.styles'
 
 export interface IIconContent {
   children?: string;
   iconClassName?: string;
   fontFamily?: string;
+  mergeImageProps?: boolean;
 }
 
 export const getIconContent = memoizeFunction(
@@ -27,16 +28,21 @@ export const getIconContent = memoizeFunction(
       children: code,
       iconClassName: subset.className,
       fontFamily: subset.fontFace && subset.fontFace.fontFamily,
+      mergeImageProps: subset.mergeImageProps,
     }
   },
   undefined,
-  // @ts-ignore
   true,
 )
 
-@Component
-export class FontIcon extends StatelessComponent<IIconProps> {
-  @Prop({ type: String, default: '' }) iconName!: string
+export const FontIcon = Vue.extend({
+  functional: true,
+
+  props: {
+    ...withThemeableProps(),
+
+    iconName: { type: String, default: '' },
+  } as MappedType<IFontIconProps>,
 
   render (h: CreateElement, ctx: RenderContext): VNode {
     const { iconName, className, style = {} } = ctx.props
@@ -44,8 +50,11 @@ export class FontIcon extends StatelessComponent<IIconProps> {
     const { iconClassName, children, fontFamily } = iconContent
 
     return h('i', {
+      attrs: {
+        'data-icon-name': iconName,
+      },
       class: css(MS_ICON, classNames.root, iconClassName, !iconName && classNames.placeholder, className),
       style: { fontFamily, ...style },
     }, children)
-  }
-}
+  },
+})

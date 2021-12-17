@@ -1,10 +1,11 @@
 import { IStyle, ITheme } from '@uifabric/styling'
 import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { IBaseProps } from '@/types'
 
 /**
  * {@docCategory ProgressIndicator}
  */
-export interface IProgressIndicatorProps {
+export interface IProgressIndicatorProps extends IBaseProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
@@ -51,12 +52,6 @@ export interface IProgressIndicatorProps {
    * Text alternative of the progress status, used by screen readers for reading the value of the progress.
    */
   ariaValueText?: string;
-
-  /**
-   * Deprecated at v0.43.0, to be removed at \>= v0.53.0. Use `label` instead.
-   * @deprecated Use `label` instead.
-   */
-  title?: string;
 
   /**
    * Height of the ProgressIndicator

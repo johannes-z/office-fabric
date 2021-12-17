@@ -1,5 +1,6 @@
 import { ITheme, IStyle } from '@uifabric/styling'
 import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { IBaseProps } from '@/types'
 
 /**
  * {@docCategory Label}
@@ -9,7 +10,7 @@ export interface ILabel {}
 /**
  * {@docCategory Label}
  */
-export interface ILabelProps {
+export interface ILabelProps extends IBaseProps {
   /**
    * Render the root element as another type.
    */

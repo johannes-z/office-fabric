@@ -1,57 +1,74 @@
-import { Vue, Component, Prop, Watch, Model } from 'vue-property-decorator'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { classNamesFunction, getId } from '@uifabric-vue/utilities'
+import { IProcessedStyleSet } from '@uifabric/styling'
+import Vue, { CreateElement, VNode } from 'vue'
 import { Label } from '../Label'
-import BaseComponent from '../BaseComponent'
-import { IToggleProps, IToggleStyles, IToggleStyleProps } from './Toggle.types'
-import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement } from 'vue'
-import { ITheme } from '@uifabric/styling'
+import { IToggleProps, IToggleStyleProps, IToggleStyles } from './Toggle.types'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
-@Component
-export class ToggleBase extends Vue {
-  $refs!: {
-    toggleButton: HTMLButtonElement
-  }
+export const ToggleBase = Vue.extend({
+  name: 'ToggleBase',
 
-  @Prop({ type: [String, Array], default: '' }) readonly className!: string
-  @Prop({ type: [Object, Function], default: () => {} }) readonly styles!: any
-  @Prop({ type: Object, default: () => {} }) readonly theme!: ITheme
+  model: {
+    prop: 'checked',
+    event: 'input',
+  },
 
-  @Model('input', { type: Boolean, default: false }) checked!: boolean
-  @Prop({ type: String, default: '' }) label!: string
-  @Prop({ type: Boolean, default: false }) defaultChecked!: boolean
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Boolean, default: false }) inlineLabel!: boolean
+  props: {
+    ...withThemeableProps(),
 
-  @Prop({ type: String, default: null }) onText!: string
-  @Prop({ type: String, default: null }) offText!: string
+    checked: { type: Boolean, default: false },
+    label: { type: String, default: '' },
+    defaultChecked: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    inlineLabel: { type: Boolean, default: false },
+    onText: { type: String, default: null },
+    offText: { type: String, default: null },
+  } as MappedType<IToggleProps>,
 
-  internalChecked: boolean = this.defaultChecked || this.checked
+  data () {
+    return {
+      internalChecked: this.defaultChecked || this.checked,
+    }
+  },
 
-  @Watch('checked')
-  onCheckedChanged (checked: boolean) {
-    this.internalChecked = checked
-  }
+  computed: {
+    classNames (): IProcessedStyleSet<IToggleStyles> {
+      const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
+      return getClassNames(this.styles, {
+        theme: theme!,
+        className: className,
+        disabled: disabled,
+        checked: internalChecked,
+        inlineLabel: inlineLabel,
+        onOffMissing: !onText && !offText,
+      })
+    },
+    uid (): string {
+      return getId()
+    },
+  },
 
-  protected get uid (): number {
-    // @ts-ignore
-    return this._uid
-  }
+  watch: {
+    checked (value) {
+      this.internalChecked = value
+    },
+  },
 
-  get classNames () {
-    const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
-    return getClassNames(this.styles, {
-      theme: theme,
-      className: className,
-      disabled: disabled,
-      checked: internalChecked,
-      inlineLabel: inlineLabel,
-      onOffMissing: !onText && !offText,
-    })
-  }
+  methods: {
+    focus () {
+      (this.$refs.toggleButton as HTMLButtonElement | null)?.focus()
+    },
+    onClick () {
+      if (this.disabled) return
+      this.internalChecked = !this.internalChecked
+      this.$emit('input', this.internalChecked)
+    },
+  },
 
-  render (h: CreateElement) {
+  render (h): VNode {
     const { classNames, internalChecked, disabled, label, onText, offText } = this
     const id = `Toggle${this.uid}`
 
@@ -60,11 +77,11 @@ export class ToggleBase extends Vue {
       attrs: {
         for: id,
       },
-    }, this.$scopedSlots.label
-      ? [
-        this.$scopedSlots.label({ checked: internalChecked, disabled, label }),
-      ]
-      : label)
+    }, [
+      this.$scopedSlots.label
+        ? this.$scopedSlots.label({ checked: internalChecked, disabled, label })
+        : label,
+    ])
 
     const $pill = h('button', {
       ref: 'toggleButton',
@@ -94,15 +111,5 @@ export class ToggleBase extends Vue {
       $label,
       $container,
     ])
-  }
-
-  public focus () {
-    this.$refs.toggleButton.focus()
-  }
-
-  private onClick () {
-    if (this.disabled) return
-    this.internalChecked = !this.internalChecked
-    this.$emit('input', this.internalChecked)
-  }
-}
+  },
+})

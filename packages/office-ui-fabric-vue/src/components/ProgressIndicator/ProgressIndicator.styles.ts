@@ -4,7 +4,7 @@ import {
   noWrap,
   getGlobalClassNames,
   IRawStyle,
-  getEdgeChromiumNoHighContrastAdjustSelector,
+  getHighContrastNoAdjustStyle,
 } from '@uifabric/styling'
 import { getRTL, memoizeFunction } from '@uifabric-vue/utilities'
 import { IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
@@ -110,8 +110,8 @@ export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicat
         selectors: {
           [HighContrastSelector]: {
             backgroundColor: 'highlight',
+            ...getHighContrastNoAdjustStyle(),
           },
-          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
 

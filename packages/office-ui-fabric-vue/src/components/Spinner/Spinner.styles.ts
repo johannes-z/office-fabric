@@ -1,6 +1,8 @@
-import { ISpinnerStyles } from './Spinner.types'
-import { getGlobalClassNames, hiddenContentStyle, HighContrastSelector } from '@uifabric/styling'
+import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { keyframes } from '@uifabric/merge-styles'
+import { getGlobalClassNames, hiddenContentStyle, HighContrastSelector } from '@uifabric/styling'
+import { ISpinnerStyles, ISpinnerStyleProps } from './Spinner.types'
 
 const GlobalClassNames = {
   root: 'ms-Spinner',
@@ -8,16 +10,18 @@ const GlobalClassNames = {
   label: 'ms-Spinner-label',
 }
 
-const spinAnimation: string = keyframes({
-  '0%': {
-    transform: 'rotate(0deg)',
-  },
-  '100%': {
-    transform: 'rotate(360deg)',
-  },
-})
+const spinAnimation = memoizeFunction(() =>
+  keyframes({
+    '0%': {
+      transform: 'rotate(0deg)',
+    },
+    '100%': {
+      transform: 'rotate(360deg)',
+    },
+  }),
+)
 
-export const getStyles = (props: any): ISpinnerStyles => {
+export const getStyles = (props: ISpinnerStyleProps): ISpinnerStyles => {
   const { theme, size, className, labelPosition } = props
 
   const { palette } = theme
@@ -51,13 +55,14 @@ export const getStyles = (props: any): ISpinnerStyles => {
         borderRadius: '50%',
         border: '1.5px solid ' + palette.themeLight,
         borderTopColor: palette.themePrimary,
-        animationName: spinAnimation,
+        animationName: spinAnimation(),
         animationDuration: '1.3s',
         animationIterationCount: 'infinite',
         animationTimingFunction: 'cubic-bezier(.53,.21,.29,.67)',
         selectors: {
           [HighContrastSelector]: {
             borderTopColor: 'Highlight',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },

@@ -1,19 +1,28 @@
-import { Component, Prop } from 'vue-property-decorator'
-import { ITextStyles, ITextProps } from './Text.types'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement, RenderContext } from 'vue'
-import StatelessComponent from '../StatelessComponent'
+import Vue, { VNode } from 'vue'
+import { ITextProps } from '..'
+import { ITextStyles } from './Text.types'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
-@Component
-export default class Text extends StatelessComponent<ITextProps> {
-  @Prop({ type: Boolean, default: false }) nowrap!: boolean
-  @Prop({ type: Boolean, default: false }) block!: boolean
-  @Prop({ type: String, default: 'medium' }) variant!: string
+export default Vue.extend({
+  name: 'TextBase',
 
-  render (h: CreateElement, ctx: RenderContext) {
-    const { theme, styles, block, nowrap, variant } = ctx.props
+  functional: true,
+
+  props: {
+    ...withThemeableProps(),
+
+    as: { type: String, default: 'span' },
+    nowrap: { type: Boolean, default: false },
+    block: { type: Boolean, default: false },
+    variant: { type: String, default: 'medium' },
+  } as MappedType<ITextProps>,
+
+  render (h, ctx): VNode {
+    const { as: RootType, theme, styles, block, nowrap, variant } = ctx.props
     const classNames = getClassNames(styles, {
       theme,
       block,
@@ -21,9 +30,10 @@ export default class Text extends StatelessComponent<ITextProps> {
       variant,
     })
 
-    return h('span', {
+    return h(RootType, {
       ...ctx.data,
+      on: ctx.listeners,
       class: classNames.root,
     }, ctx.children)
-  }
-}
+  },
+})

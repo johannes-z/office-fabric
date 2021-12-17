@@ -1,37 +1,53 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { ILinkProps, ILinkStyles, ILinkStyleProps } from './Link.types'
-import { CreateElement, RenderContext, VNode } from 'vue'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import StatelessComponent from '../StatelessComponent'
-
-import { getStyles } from './Link.styles'
+import Vue, { VNode } from 'vue'
+import { ILinkProps } from '..'
+import { ILinkStyleProps, ILinkStyles } from './Link.types'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
-@Component
-export class LinkBase extends StatelessComponent<ILinkProps> {
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: String, default: '' }) href!: string
+export const LinkBase = Vue.extend({
+  name: 'LinkBase',
 
-  render (h: CreateElement, context: RenderContext<ILinkProps>) {
-    const { theme, className, styles, href, disabled } = context.props
+  functional: true,
 
-    const classNames = getClassNames(getStyles, {
+  props: {
+    ...withThemeableProps(),
+
+    as: { type: String, default: undefined },
+    underline: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    href: { type: String, default: '' },
+    target: { type: String, default: undefined },
+  } as MappedType<ILinkProps>,
+
+  render (h, ctx): VNode {
+    const { as, target, theme, className, styles, href, disabled, underline } = ctx.props
+
+    const classNames = getClassNames(styles, {
       theme: theme!,
       className,
       isButton: !href,
       isDisabled: disabled,
+      isUnderlined: underline,
     })
 
-    const component = href ? 'a' : 'button'
-    return h(component, {
-      ...context.data,
+    const rootType = as || (href ? 'a' : 'button')
+    return h(rootType, {
+      ...ctx.data,
       class: classNames.root,
       attrs: {
-        ...context.data.attrs,
-        ...href && { href },
-        ...!href && { type: 'button' },
+        ...rootType === 'a' && {
+          target,
+          href: disabled ? undefined : href,
+        },
+        ...rootType === 'button' && {
+          type: 'button',
+          disabled,
+        },
+        ...ctx.data.attrs,
       },
-    }, context.children)
-  }
-}
+    }, ctx.children)
+  },
+})

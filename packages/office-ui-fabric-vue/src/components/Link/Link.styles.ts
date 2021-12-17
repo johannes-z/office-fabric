@@ -1,16 +1,12 @@
-import {
-  getEdgeChromiumNoHighContrastAdjustSelector,
-  getGlobalClassNames,
-  HighContrastSelector,
-} from '@uifabric/styling'
-import { ILinkStyleProps, ILinkStyles } from './Link.types'
+import { getGlobalClassNames, HighContrastSelector } from '@fluentui/style-utilities'
+import type { ILinkStyleProps, ILinkStyles } from './Link.types'
 
-const GlobalClassNames = {
+export const GlobalClassNames = {
   root: 'ms-Link',
 }
 
 export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
-  const { className, isButton, isDisabled, theme } = props
+  const { className, isButton, isDisabled, isUnderlined, theme } = props
   const { semanticColors } = theme
 
   // Tokens
@@ -30,7 +26,7 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
         outline: 'none',
         fontSize: 'inherit',
         fontWeight: 'inherit',
-        textDecoration: 'none',
+        textDecoration: isUnderlined ? 'underline' : 'none',
 
         selectors: {
           '.ms-Fabric--isFocusVisible &:focus': {
@@ -68,8 +64,8 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
         selectors: {
           [HighContrastSelector]: {
             color: 'LinkText',
+            forcedColorAdjust: 'none',
           },
-          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
       },
       !isButton && {
@@ -77,6 +73,7 @@ export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
           [HighContrastSelector]: {
             // This is mainly for MessageBar, which sets MsHighContrastAdjust: none by default
             MsHighContrastAdjust: 'auto',
+            forcedColorAdjust: 'auto',
           },
         },
       },

@@ -1,34 +1,42 @@
-import { Component, Prop } from 'vue-property-decorator'
-import { ISeparatorStyles, ISeparatorStyleProps } from './Separator.types'
-import { CreateElement, VNode } from 'vue'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import StatelessComponent from '../StatelessComponent'
+import Vue, { VNode } from 'vue'
+import { ISeparatorProps } from '..'
+import { ISeparatorStyleProps, ISeparatorStyles } from './Separator.types'
 
 const getClassNames = classNamesFunction<ISeparatorStyleProps, ISeparatorStyles>()
 
-@Component
-export class SeparatorBase extends StatelessComponent {
-  @Prop({ type: String, default: 'center' }) alignContent!: string
-  @Prop({ type: Boolean, default: false }) vertical!: boolean
+export const SeparatorBase = Vue.extend({
+  name: 'SeparatorBase',
 
-  render (h: CreateElement, context: any): VNode {
+  functional: true,
+
+  props: {
+    ...withThemeableProps(),
+
+    alignContent: { type: String, default: 'center' },
+    vertical: { type: Boolean, default: false },
+  } as MappedType<ISeparatorProps>,
+
+  render (h, context): VNode {
     const { styles, theme, className, vertical, alignContent } = context.props
 
     const classNames = getClassNames(styles, {
-      theme,
+      theme: theme!,
       className,
       alignContent,
       vertical,
     })
 
-    const $content = h('div', {
-      class: classNames.content,
-      attrs: {
-        role: 'separator',
-        'aria-orientation': vertical ? 'vertical' : 'horizontal',
-      },
-    }, context.children)
-
-    return h('div', { class: classNames.root }, [$content])
-  }
-}
+    return h('div', { class: classNames.root }, [
+      h('div', {
+        class: classNames.content,
+        attrs: {
+          role: 'separator',
+          'aria-orientation': vertical ? 'vertical' : 'horizontal',
+        },
+      }, context.children),
+    ])
+  },
+})

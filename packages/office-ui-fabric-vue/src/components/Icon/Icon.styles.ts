@@ -1,4 +1,4 @@
-import { IIconStyles } from './Icon.types'
+import { IIconStyles, IIconStyleProps } from './Icon.types'
 import { mergeStyleSets } from '@uifabric/merge-styles'
 
 /** Class names used in themeable and non-themeable Icon components */
@@ -22,7 +22,7 @@ export const classNames = mergeStyleSets({
 /** Class name used only in non-themeable Icon components */
 export const MS_ICON = 'ms-Icon'
 
-export const getStyles = (props: any): IIconStyles => {
+export const getStyles = (props: IIconStyleProps): IIconStyles => {
   const { className, iconClassName, isPlaceholder, isImage, styles } = props
 
   return {
@@ -33,7 +33,6 @@ export const getStyles = (props: any): IIconStyles => {
       iconClassName,
       className,
       styles && styles.root,
-      styles && styles.imageContainer,
     ],
   }
 }

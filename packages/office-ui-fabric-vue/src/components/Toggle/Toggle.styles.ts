@@ -1,19 +1,19 @@
-import { IToggleStyles } from './Toggle.types'
-import { HighContrastSelector, FontWeights, getFocusStyle } from '@uifabric/styling/'
+import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
+import { FontWeights, getFocusStyle, HighContrastSelector } from '@uifabric/styling/'
+import { IToggleStyleProps, IToggleStyles } from './Toggle.types'
 
 const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20
 const DEFAULT_THUMB_SIZE = 12
 
-export const getStyles = (props: any): IToggleStyles => {
+export const getStyles = (props: IToggleStyleProps): IToggleStyles => {
   const { theme, className, disabled, checked, inlineLabel, onOffMissing } = props
   const { semanticColors, palette } = theme
 
   // Tokens
   const pillUncheckedBackground = semanticColors.bodyBackground
   const pillCheckedBackground = semanticColors.inputBackgroundChecked
-  // TODO: after updating the semanticColors slots mapping this needs to be semanticColors.inputBackgroundCheckedHovered
-  const pillCheckedHoveredBackground = palette.themeDark
+  const pillCheckedHoveredBackground = semanticColors.inputBackgroundCheckedHovered
   const thumbUncheckedHoveredBackground = palette.neutralDark
   const pillCheckedDisabledBackground = semanticColors.disabledBodySubtext
   const thumbBackground = semanticColors.smallInputBorder
@@ -44,6 +44,7 @@ export const getStyles = (props: any): IToggleStyles => {
 
     label: [
       'ms-Toggle-label',
+      { display: 'inline-block' },
       disabled && {
         color: textDisabledColor,
         selectors: {
@@ -61,13 +62,13 @@ export const getStyles = (props: any): IToggleStyles => {
         order: 1,
         marginLeft: 16,
       },
-      inlineLabel && { wordBreak: 'break-all' },
+      inlineLabel && { wordBreak: 'break-word' },
     ],
 
     container: [
       'ms-Toggle-innerContainer',
       {
-        display: 'inline-flex',
+        display: 'flex',
         position: 'relative',
       },
     ],
@@ -129,7 +130,8 @@ export const getStyles = (props: any): IToggleStyles => {
                 },
               ],
               [HighContrastSelector]: {
-                backgroundColor: 'WindowText',
+                backgroundColor: 'Highlight',
+                ...getHighContrastNoAdjustStyle(),
               },
             },
           },
@@ -168,6 +170,7 @@ export const getStyles = (props: any): IToggleStyles => {
     thumb: [
       'ms-Toggle-thumb',
       {
+        display: 'block',
         width: DEFAULT_THUMB_SIZE,
         height: DEFAULT_THUMB_SIZE,
         borderRadius: '50%',
@@ -175,7 +178,7 @@ export const getStyles = (props: any): IToggleStyles => {
         backgroundColor: thumbBackground,
         /* Border is added to handle high contrast mode for Firefox */
         borderColor: 'transparent',
-        borderWidth: '.28em',
+        borderWidth: DEFAULT_THUMB_SIZE / 2,
         borderStyle: 'solid',
         boxSizing: 'border-box',
       },
@@ -205,7 +208,6 @@ export const getStyles = (props: any): IToggleStyles => {
       ],
     ],
 
-    // @ts-ignore
     text: [
       'ms-Toggle-stateText',
       {

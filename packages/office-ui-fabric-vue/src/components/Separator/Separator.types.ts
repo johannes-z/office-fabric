@@ -1,7 +1,8 @@
+import { IBaseProps } from '@/types'
 import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
 import { ITheme } from '@uifabric/styling'
 
-export interface ISeparatorProps extends HTMLElement {
+export interface ISeparatorProps extends IBaseProps {
   /**
    * Theme (provided through customization.)
    */

@@ -1,40 +1,151 @@
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Icon } from '../Icon'
-import { IconButton } from '../Button'
-import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
-import BaseComponent from '../BaseComponent'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
 import { classNamesFunction, KeyCodes } from '@uifabric-vue/utilities'
-import { CreateElement } from 'vue'
+import Vue, { PropType, VNode } from 'vue'
+import { ISearchBoxStyleProps } from '.'
+import { IconButton } from '../Button'
+import { Icon, IIconProps } from '../Icon'
+import { ISearchBoxProps, ISearchBoxStyles } from './SearchBox.types'
 
-const getClassNames = classNamesFunction<any, ISearchBoxStyles>()
+const getClassNames = classNamesFunction<ISearchBoxStyleProps, ISearchBoxStyles>()
 
-@Component({
-  components: { Icon, IconButton },
-  inheritAttrs: false,
-})
-export class SearchBoxBase extends BaseComponent {
-  $refs!: {
-    input: HTMLInputElement
-  }
+type Refs = {
+  input: HTMLInputElement
+}
+const refs: { [K in keyof Refs]: K } = {
+  input: 'input',
+}
 
-  @Prop({ type: Boolean, default: false }) underlined?: boolean
-  @Prop({ type: String, default: null }) defaultValue?: string
-  @Prop({ type: String, default: 'Search' }) placeholder?: string
-  @Prop({ type: String, default: null }) value!: string
-  @Prop({ type: Boolean, default: false }) disableAnimation?: boolean
-  @Prop({ type: Boolean, default: false }) disabled?: boolean
-  @Prop({ type: String, default: 'Search' }) iconName!: string
+export const SearchBoxBase = Vue.extend({
+  name: 'SearchBoxBase',
 
-  isActive: boolean = false
-  internalValue: string = this.value
+  props: {
+    ...withThemeableProps(),
 
-  render (h: CreateElement) {
-    const { classNames, disabled, internalValue, placeholder, iconName } = this
+    underlined: { type: Boolean, default: false },
+    defaultValue: { type: String, default: null },
+    placeholder: { type: String, default: 'Search' },
+    value: { type: String, default: null },
+    disableAnimation: { type: Boolean, default: false },
+    showIcon: { type: Boolean, default: false },
+
+    iconProps: { type: Object as PropType<IIconProps>, default: () => {} },
+
+    disabled: { type: Boolean, default: false },
+  } as MappedType<ISearchBoxProps>,
+
+  data () {
+    return {
+      hasFocus: false,
+      internalValue: this.value ?? '',
+    }
+  },
+
+  computed: {
+    classNames (): IProcessedStyleSet<ISearchBoxStyles> {
+      const {
+        styles,
+        theme,
+        underlined,
+        disabled,
+        hasFocus,
+        showIcon,
+        className,
+        disableAnimation,
+        internalValue,
+      } = this
+
+      return getClassNames(styles!, {
+        theme: theme!,
+        className,
+        underlined,
+        hasFocus,
+        disabled,
+        hasInput: internalValue.length > 0,
+        disableAnimation,
+        showIcon,
+      })
+    },
+  },
+
+  watch: {
+    value (newValue: string): void {
+      this.internalValue = newValue
+    },
+    internalValue (value: string) {
+      this.$emit('input', value)
+      this.$emit('change', value)
+    },
+  },
+
+  methods: {
+    onKeyDown (ev: KeyboardEvent) {
+      switch (ev.which) {
+        case KeyCodes.escape:
+          this.$emit('escape', ev)
+          if (ev.defaultPrevented) return
+          else this.clearInput()
+          break
+
+        case KeyCodes.enter:
+          this.$emit('search', this.internalValue)
+          return
+
+        default:
+          if (!ev.defaultPrevented) {
+            return
+          }
+      }
+
+      // We only get here if the keypress has been handled,
+      // or preventDefault was called in case of default keyDown handler
+      ev.preventDefault()
+      ev.stopPropagation()
+    },
+
+    submit () {
+      this.$emit('search', this.internalValue)
+    },
+
+    onEscape (e: KeyboardEvent) {
+      this.$emit('escape', e)
+      if (e.defaultPrevented) return
+      this.clearInput()
+    },
+
+    clearInput (e?: MouseEvent) {
+      this.$emit('clear', e)
+      if (e && e.defaultPrevented) return
+      this.internalValue = ''
+      ;(this.$refs as Refs).input.focus()
+    },
+
+    onFocus (e: FocusEvent) {
+      this.$emit('focus', e)
+      if (e.defaultPrevented) return
+      this.hasFocus = true
+    },
+
+    onBlur (e: FocusEvent) {
+      this.$emit('blur', e)
+      if (e.defaultPrevented) return
+      this.hasFocus = false
+    },
+
+    onInput (e: InputEvent) {
+      this.internalValue = (<HTMLInputElement>e.target).value
+    },
+
+  },
+
+  render (h): VNode {
+    const { classNames, disabled, internalValue, placeholder, iconProps } = this
 
     const $iconContainer = h('div', { class: classNames.iconContainer }, [
-      h(Icon, { class: classNames.icon, props: { iconName } }),
+      h(Icon, { class: classNames.icon, props: { iconName: 'Search', ...iconProps } }),
     ])
-    const $clearButton = internalValue && h('div', { class: classNames.clearButton }, [
+    const $clearButton = internalValue.length > 0 && h('div', { class: classNames.clearButton }, [
       h(IconButton, {
         props: {
           styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } },
@@ -44,7 +155,7 @@ export class SearchBoxBase extends BaseComponent {
       }),
     ])
     const $input = h('input', {
-      ref: 'input',
+      ref: refs.input,
       class: classNames.field,
       domProps: {
         disabled,
@@ -66,86 +177,6 @@ export class SearchBoxBase extends BaseComponent {
       $input,
       $clearButton,
     ])
-  }
+  },
 
-  get classNames () {
-    const { theme, underlined, disabled, isActive, className, disableAnimation, internalValue } = this
-    return getClassNames(this.styles, {
-      theme: theme!,
-      className,
-      underlined,
-      hasFocus: isActive,
-      disabled,
-      hasInput: internalValue == null ? false : internalValue.length > 0,
-      disableAnimation,
-    })
-  }
-
-  @Watch('value')
-  onPropValueChanged (newValue: string) {
-    this.internalValue = newValue
-  }
-
-  @Watch('internalValue')
-  onValueChanged (value: string) {
-    this.$emit('input', value)
-    this.$emit('change', value)
-  }
-
-  onKeyDown (ev: KeyboardEvent) {
-    switch (ev.which) {
-      case KeyCodes.escape:
-        this.$emit('escape', ev)
-        if (ev.defaultPrevented) return
-        else this.clearInput()
-        break
-
-      case KeyCodes.enter:
-        this.$emit('search', this.internalValue)
-        return
-
-      default:
-        if (!ev.defaultPrevented) {
-          return
-        }
-    }
-
-    // We only get here if the keypress has been handled,
-    // or preventDefault was called in case of default keyDown handler
-    ev.preventDefault()
-    ev.stopPropagation()
-  }
-
-  submit () {
-    this.$emit('search', this.internalValue)
-  }
-
-  onEscape (e: KeyboardEvent) {
-    this.$emit('escape', e)
-    if (e.defaultPrevented) return
-    this.clearInput()
-  }
-
-  clearInput (e?: MouseEvent) {
-    this.$emit('clear', e)
-    if (e && e.defaultPrevented) return
-    this.internalValue = ''
-    this.$refs.input.focus()
-  }
-
-  private onFocus (e: FocusEvent) {
-    this.$emit('focus', e)
-    if (e.defaultPrevented) return
-    this.isActive = true
-  }
-
-  private onBlur (e: FocusEvent) {
-    this.$emit('blur', e)
-    if (e.defaultPrevented) return
-    this.isActive = false
-  }
-
-  private onInput (e: InputEvent) {
-    this.internalValue = (<HTMLInputElement>e.target).value
-  }
-}
+})

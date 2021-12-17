@@ -1,4 +1,4 @@
-import { ILayerStyles } from './Layer.types'
+import { ILayerStyles, ILayerStyleProps } from './Layer.types'
 import { getGlobalClassNames, ZIndexes } from '@uifabric/styling'
 
 const GlobalClassNames = {
@@ -7,7 +7,7 @@ const GlobalClassNames = {
   content: 'ms-Layer-content',
 }
 
-export const getStyles = (props: any): ILayerStyles => {
+export const getStyles = (props: ILayerStyleProps): ILayerStyles => {
   const { className, isNotHost, theme } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)

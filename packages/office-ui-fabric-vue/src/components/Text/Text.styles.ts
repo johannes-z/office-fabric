@@ -2,7 +2,7 @@ import { ITextStyles } from './Text.types'
 
 export const getStyles: any = (props: any): any => {
   const { theme, as, className, block, nowrap, variant, fontSize } = props
-  const { fonts } = theme
+  const { fonts, semanticColors } = theme
   const variantObject = fonts[variant || 'medium']
 
   return {
@@ -13,7 +13,7 @@ export const getStyles: any = (props: any): any => {
         fontFamily: (variantObject && variantObject.fontFamily) || 'inherit',
         fontSize: fontSize || (variantObject && variantObject.fontSize) || 'inherit',
         fontWeight: (variantObject && variantObject.fontWeight) || 'inherit',
-        color: (variantObject && variantObject.color) || 'inherit',
+        color: variantObject.color || semanticColors.bodyText,
         mozOsxFontSmoothing: variantObject && variantObject.MozOsxFontSmoothing,
         webkitFontSmoothing: variantObject && variantObject.WebkitFontSmoothing,
       },

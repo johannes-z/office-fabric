@@ -1,8 +1,9 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { classNamesFunction, getId } from '@uifabric-vue/utilities'
+import Vue, { VNode } from 'vue'
 import { IProgressIndicatorProps, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
-import BaseComponent from '../BaseComponent'
-import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement } from 'vue'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
@@ -10,55 +11,74 @@ const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgress
 // This prevents animations on reset to 0 scenarios
 const ZERO_THRESHOLD = 0.01
 
-@Component
-export class ProgressIndicatorBase extends BaseComponent<IProgressIndicatorProps, IProgressIndicatorStyles> {
-  @Prop({ type: Boolean, default: false }) progressHidden!: boolean
-  @Prop({ type: Number, default: undefined }) percentComplete!: number
-  @Prop({ type: String, default: null }) label!: string
-  @Prop({ type: String, default: null }) description!: string
+export const ProgressIndicatorBase = Vue.extend({
+  name: 'ProgressIndicatorBase',
 
-  @Prop({ type: Number, default: 2 }) barHeight!: number
+  props: {
+    ...withThemeableProps(),
 
-  get internalPercentComplete () {
-    return typeof this.percentComplete === 'number'
+    progressHidden: { type: Boolean, default: false },
+    percentComplete: { type: Number, default: undefined },
+    label: { type: String, default: null },
+    description: { type: String, default: null },
+    barHeight: { type: Number, default: 2 },
+    ariaValueText: { type: String, default: undefined },
+  } as MappedType<IProgressIndicatorProps>,
+
+  computed: {
+    classNames (): IProcessedStyleSet<IProgressIndicatorStyles> {
+      const { styles, theme, className, percentComplete, barHeight } = this
+      return getClassNames(styles, {
+        theme: theme!,
+        className,
+        barHeight,
+        indeterminate: percentComplete === undefined,
+      })
+    },
+    uid (): string {
+      return getId()
+    },
+  },
+
+  render (h): VNode {
+    const { ariaValueText, classNames, label, progressHidden, description } = this
+
+    const percentComplete = typeof this.percentComplete === 'number'
       ? Math.min(100, Math.max(0, this.percentComplete * 100))
       : undefined
-  }
 
-  get classNames () {
-    const { styles, theme, className, internalPercentComplete, barHeight } = this
-    return getClassNames(styles, {
-      theme: theme!,
-      className,
-      barHeight,
-      indeterminate: internalPercentComplete === undefined,
-    })
-  }
-
-  get progressBarStyles () {
-    const { internalPercentComplete } = this
-    return {
-      width: internalPercentComplete !== undefined ? internalPercentComplete + '%' : undefined,
-      transition: internalPercentComplete !== undefined && internalPercentComplete < ZERO_THRESHOLD ? 'none' : undefined,
+    const progressBarStyles = {
+      width: percentComplete !== undefined ? percentComplete + '%' : undefined,
+      transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
     }
-  }
 
-  render (h: CreateElement) {
-    const { classNames, label, progressHidden, progressBarStyles, description } = this
-    const $label = label && h('div', { class: classNames.itemName }, label)
-
-    const $progress = !progressHidden &&
-    h('div', { class: classNames.itemProgress }, [
-      h('div', { class: classNames.progressTrack }),
-      h('div', { class: classNames.progressBar, style: progressBarStyles }),
-    ])
-
-    const $description = description && h('div', { class: classNames.itemDescription }, description)
+    const ariaValueMin = percentComplete !== undefined ? 0 : undefined
+    const ariaValueMax = percentComplete !== undefined ? 100 : undefined
+    const ariaValueNow = percentComplete !== undefined ? Math.floor(percentComplete!) : undefined
 
     return h('div', { class: classNames.root }, [
-      $label,
-      $progress,
-      $description,
+      (this.$scopedSlots.label || label) &&
+        h('div', { class: classNames.itemName }, this.$scopedSlots.label?.({}) || label),
+
+      !progressHidden && h('div', { class: classNames.itemProgress }, [
+        h('div', { class: classNames.progressTrack }),
+        h('div', {
+          class: classNames.progressBar,
+          style: progressBarStyles,
+          attrs: {
+            role: 'progressbar',
+            'aria-describedby': description ? (this.uid + '-label') : undefined,
+            'aria-labelledby': label ? (this.uid + '-description') : undefined,
+            'aria-valuemin': ariaValueMin,
+            'aria-valuemax': ariaValueMax,
+            'aria-valuenow': ariaValueNow,
+            'aria-valuetext': ariaValueText,
+          },
+        }),
+      ]),
+
+      (this.$scopedSlots.description || description) &&
+        h('div', { class: classNames.itemDescription }, this.$scopedSlots.description?.({}) || description),
     ])
-  }
-}
+  },
+})

@@ -48,6 +48,32 @@ export interface ISpinnerProps {
   labelPosition?: SpinnerLabelPosition;
 }
 
+/**
+ * Possible variations of the spinner circle size.
+ * {@docCategory Spinner}
+ */
+export enum SpinnerSize {
+  /**
+   * 12px Spinner diameter
+   */
+  xSmall = 0,
+
+  /**
+   * 16px Spinner diameter
+   */
+  small = 1,
+
+  /**
+   * 20px Spinner diameter
+   */
+  medium = 2,
+
+  /**
+   * 28px Spinner diameter
+   */
+  large = 3,
+}
+
 export interface ISpinnerStyles {
   /** Styles for the root element. Refers to the wrapper containing both the
    * circle and the label. */

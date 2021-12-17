@@ -1,29 +1,33 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { css } from '@uifabric-vue/utilities'
+import Vue, { VNode } from 'vue'
 import { notifyHostChanged } from './Layer.notification'
-import { ILayerHostProps, ILayerHostStyles } from './LayerHost.types'
-import BaseComponent from '../BaseComponent'
-import { CreateElement } from 'vue'
+import { ILayerHostProps } from './LayerHost.types'
 
-@Component({
-  components: {},
-})
-export class LayerHost extends BaseComponent<ILayerHostProps, ILayerHostStyles> {
-  @Prop({ type: String, default: null }) hostId!: string
+export const LayerHost = Vue.extend({
+  name: 'LayerHost',
 
-  render (h: CreateElement) {
+  props: {
+    ...withThemeableProps(),
+
+    hostId: { type: String, default: null },
+  } as MappedType<ILayerHostProps>,
+
+  mounted (): void {
+    notifyHostChanged(this.hostId!)
+  },
+
+  beforeDestroy (): void {
+    notifyHostChanged(this.hostId!)
+  },
+
+  render (h): VNode {
     return h('div', {
-      class: 'LayerHost',
+      class: css('LayerHost', this.className),
       attrs: {
         id: this.hostId,
       },
     })
-  }
-
-  mounted () {
-    notifyHostChanged(this.hostId!)
-  }
-
-  beforeDestroy () {
-    notifyHostChanged(this.hostId!)
-  }
-}
+  },
+})
