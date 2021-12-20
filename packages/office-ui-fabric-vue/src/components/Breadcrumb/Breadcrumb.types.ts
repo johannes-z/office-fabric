@@ -3,6 +3,7 @@ import { IStyleFunctionOrObject } from '../../FabricUtilities'
 import { ITheme, IStyle } from '../../Styling'
 // import { IFocusZoneProps } from '../../FocusZone'
 import { ITooltipHostProps } from '../Tooltip'
+import { IBaseProps } from '@/types'
 
 /**
  * {@docCategory Breadcrumb}
@@ -26,9 +27,9 @@ export interface IBreadcrumb {
 /**
  * {@docCategory Breadcrumb}
  */
-export interface IBreadcrumbProps {
+export interface IBreadcrumbProps extends IBaseProps {
   /**
-   * Optional callback to access the IBreadcrumb interface. Use this instead of ref for accessing
+   * Optional callback to access the `IBreadcrumb` interface. Use this instead of `ref` for accessing
    * the public methods and properties of the component.
    */
   // componentRef?: IRefObject<IBreadcrumb>;
@@ -52,6 +53,12 @@ export interface IBreadcrumbProps {
    * Render a custom overflow icon in place of the default icon `...`
    */
   // onRenderOverflowIcon?: IRenderFunction<IButtonProps>;
+
+  /**
+   * Custom component for the overflow button.
+   */
+  // overflowButtonAs?: IComponentAs<IButtonProps>;
+
   /**
    * The maximum number of breadcrumbs to display before coalescing.
    * If not specified, all breadcrumbs will be rendered.
@@ -84,7 +91,8 @@ export interface IBreadcrumbProps {
   overflowAriaLabel?: string;
 
   /**
-   * Optional index where overflow items will be collapsed. Defaults to 0.
+   * Optional index where overflow items will be collapsed.
+   * @default 0
    */
   overflowIndex?: number;
 
@@ -107,7 +115,7 @@ export interface IBreadcrumbProps {
  */
 export interface IBreadcrumbItem {
   /**
-   * Text to display to the user for the breadcrumb item.
+   * Text to display in the breadcrumb item.
    */
   text: string;
 
@@ -117,12 +125,13 @@ export interface IBreadcrumbItem {
   key: string;
 
   /**
-   * Callback issued when the breadcrumb item is selected.
+   * Callback for when the breadcrumb item is selected.
    */
   onClick?: (ev?: MouseEvent, item?: IBreadcrumbItem) => void;
 
   /**
-   * Url to navigate to when this breadcrumb item is clicked.
+   * URL to navigate to when this breadcrumb item is clicked.
+   * If provided, the breadcrumb will be rendered as a link.
    */
   href?: string;
 

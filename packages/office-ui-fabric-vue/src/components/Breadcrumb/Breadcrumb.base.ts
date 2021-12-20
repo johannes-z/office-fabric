@@ -1,33 +1,43 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IBreadcrumbProps, IBreadcrumbStyles, IBreadcrumbItem } from './Breadcrumb.types'
-import BaseComponent from '../BaseComponent'
-import { getStyles } from './Breadcrumb.styles'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { Link } from '../Link'
+import Vue, { PropType, VNode } from 'vue'
 import { Icon } from '../Icon'
-import { CreateElement } from 'vue'
+import { Link } from '../Link'
+import { getStyles } from './Breadcrumb.styles'
+import { IBreadcrumbItem, IBreadcrumbProps, IBreadcrumbStyles } from './Breadcrumb.types'
 
 const getClassNames = classNamesFunction<any, IBreadcrumbStyles>()
 
-@Component
-export class BreadcrumbBase extends BaseComponent<IBreadcrumbProps, IBreadcrumbStyles> {
-  @Prop({ type: Array, required: true }) items!: IBreadcrumbItem[]
+export const BreadcrumbBase = Vue.extend({
+  name: 'BreadcrumbBase',
 
-  get classNames () {
-    const { className, theme } = this
-    return getClassNames(getStyles, {
-      theme,
-      className,
-    })
-  }
+  props: {
+    ...withThemeableProps(),
 
-  private onBreadcrumbClicked (event: MouseEvent, item: IBreadcrumbItem) {
-    if (item.onClick) {
-      item.onClick(event, item)
-    }
-  }
+    items: { type: Array as PropType<IBreadcrumbItem[]>, default: () => [] },
+  } as MappedType<IBreadcrumbProps>,
 
-  render (h: CreateElement) {
+  computed: {
+    classNames (): IProcessedStyleSet<IBreadcrumbStyles> {
+      const { className, theme } = this
+      return getClassNames(getStyles, {
+        theme,
+        className,
+      })
+    },
+  },
+
+  methods: {
+    onBreadcrumbClicked (event: MouseEvent, item: IBreadcrumbItem) {
+      if (item.onClick) {
+        item.onClick(event, item)
+      }
+    },
+  },
+
+  render (h): VNode {
     const { classNames, items } = this
     return h('div', { class: classNames.root, attrs: { role: 'navigation' } }, [
       h('ol', { class: classNames.list },
@@ -61,5 +71,5 @@ export class BreadcrumbBase extends BaseComponent<IBreadcrumbProps, IBreadcrumbS
         ],
         ))),
     ])
-  }
-}
+  },
+})

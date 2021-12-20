@@ -4,26 +4,29 @@ import json from '@rollup/plugin-json'
 
 import path from 'path'
 
+import vue from 'rollup-plugin-vue'
+import esbuild from 'rollup-plugin-esbuild'
 import commonjs from '@rollup/plugin-commonjs'
 import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import { terser } from 'rollup-plugin-terser'
 
+import pkg from './package.json'
+
 const packageRoot = path.resolve(__dirname)
 
 export default {
-  input: './lib/index.js',
-  output: {
-    file: 'dist/fluent-ui.umd.min.js',
-    format: 'umd',
-    name: 'FluentUIVue',
-    exports: 'named',
-    sourcemap: false,
-    globals: {
-      vue: 'Vue',
-    },
+  input: './src/index.ts',
+  external: id => {
+    if (Object.keys(pkg.peerDependencies).indexOf(id) > -1) return true
+    if (Object.keys(pkg.dependencies).indexOf(id) > -1) return true
+    return /core-js|@babel|@pnp/.test(id)
   },
-  external: ['vue'],
+  output: {
+    dir: 'lib',
+    format: 'esm',
+    preserveModules: true,
+  },
   preserveSymlinks: true,
   plugins: [
     json(),
@@ -34,8 +37,9 @@ export default {
     alias({
       resolve: ['.js', '.jsx', '.ts', '.tsx', '.vue'],
       entries: [
-        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'lib/$1') },
+        { find: /^@\/(.*)/, replacement: path.resolve(packageRoot, 'src/$1') },
         { find: /@uifabric\/utilities/, replacement: '@uifabric-vue/utilities' },
+        { find: /@fluentui\/utilities/, replacement: '@uifabric-vue/utilities' },
       ],
     }),
     resolve({
@@ -46,22 +50,13 @@ export default {
       include: /node_modules/,
       sourceMap: false,
     }),
-    babel({
-      exclude: /node_modules/gi,
-      extensions: ['.js', '.jsx'],
-      babelrc: false,
-      configFile: false,
-      babelHelpers: 'bundled',
-      presets: [
-        ['@babel/preset-env', {
-          loose: true,
-          bugfixes: true,
-          targets: {
-            browsers: 'IE 11',
-          },
-        }],
-      ],
+    esbuild({
     }),
-    terser(),
+    vue({
+      css: true,
+      template: {
+        isProduction: true,
+      },
+    }),
   ],
 }

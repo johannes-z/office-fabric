@@ -11,6 +11,7 @@ import {
 } from '../../Styling'
 import { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
 import { IsFocusVisibleClassName } from '../../FabricUtilities'
+import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
 
 const GlobalClassNames = {
   root: 'ms-Breadcrumb',
@@ -67,6 +68,7 @@ export const getStyles = (props: IBreadcrumbStyleProps): IBreadcrumbStyles => {
       selectors: {
         [HighContrastSelector]: {
           color: 'Highlight',
+          backgroundColor: 'transparent',
         },
       },
     },
@@ -122,7 +124,13 @@ export const getStyles = (props: IBreadcrumbStyleProps): IBreadcrumbStyles => {
         position: 'relative',
         alignItems: 'center',
         selectors: {
-          '&:last-child .ms-Breadcrumb-itemLink': lastChildItemStyles,
+          '&:last-child .ms-Breadcrumb-itemLink': {
+            ...lastChildItemStyles,
+            [HighContrastSelector]: {
+              MsHighContrastAdjust: 'auto',
+              forcedColorAdjust: 'auto',
+            },
+          },
           '&:last-child .ms-Breadcrumb-item': lastChildItemStyles,
         },
       },
@@ -136,7 +144,7 @@ export const getStyles = (props: IBreadcrumbStyleProps): IBreadcrumbStyles => {
         selectors: {
           [HighContrastSelector]: {
             color: 'WindowText',
-            MsHighContrastAdjust: 'none',
+            ...getHighContrastNoAdjustStyle(),
           },
           [MediumScreenSelector]: {
             fontSize: chevronSmallFontSize,

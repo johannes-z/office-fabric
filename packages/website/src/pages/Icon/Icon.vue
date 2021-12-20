@@ -2,7 +2,7 @@
   <BasePage>
     Icon
 
-    <template #overview>
+    <!-- <template #overview>
       <div v-html="docs.Overview" />
     </template>
 
@@ -12,7 +12,7 @@
 
     <template #donts>
       <div v-html="docs.Donts" />
-    </template>
+    </template> -->
 
     <template #usage>
       <div>
@@ -55,9 +55,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { mergeStyles, mergeStyleSets } from '@uifabric/styling'
 import { Icon, registerIcons } from '@uifabric-vue/office-ui-fabric-vue'
 
-import Dos from './docs/IconDos.md'
-import Donts from './docs/IconDonts.md'
-import Overview from './docs/IconOverview.md'
+// import Dos from './docs/IconDos.md'
+// import Donts from './docs/IconDonts.md'
+// import Overview from './docs/IconOverview.md'
 
 registerIcons({
   icons: {
@@ -166,16 +166,16 @@ export default class IconPage extends Vue {
   iconClass = iconClass
 
   docs = {
-    Dos,
-    Donts,
-    Overview,
+    // Dos,
+    // Donts,
+    // Overview,
   }
 
   classNames = mergeStyleSets({
     deepSkyBlue: [{ color: 'deepskyblue' }, this.iconClass],
     greenYellow: [{ color: 'greenyellow' }, this.iconClass],
     salmon: [{ color: 'salmon' }, this.iconClass],
-  });
+  })
 }
 </script>
 

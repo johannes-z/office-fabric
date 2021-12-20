@@ -1,0 +1,23 @@
+{
+  "name": "@fluentui-vue/vue-hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/index.js",
+  "module": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.4.1",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@vue/composition-api": "^1.4.1",
+    "vue": "^2.6.14"
+  },
+  "dependencies": {
+    "@uifabric-vue/utilities": "workspace:^7.32.4"
+  }
+}

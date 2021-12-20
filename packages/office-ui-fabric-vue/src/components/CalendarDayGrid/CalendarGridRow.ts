@@ -1,70 +1,100 @@
+import { MappedType } from '@/types'
 import { DayOfWeek, DEFAULT_CALENDAR_STRINGS, FirstWeekOfYear, getWeekNumbersInMonth, ICalendarStrings } from '@fluentui/date-time-utilities'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
 import { format } from '@uifabric-vue/utilities'
-import { defineComponent, h, PropType, toRefs } from '@vue/composition-api'
+import Vue, { PropType, VNode } from 'vue'
+import { withCalendarProps } from '../Calendar/useCalendar'
+import { IDayInfo, IWeekCorners } from './CalendarDayGrid.base'
+import { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { CalendarGridDayCell } from './CalendarGridDayCell'
+import { withCalendarDayGridProps, withCalendarGridRowProps } from './useCalendarDayGrid'
 
-export const CalendarGridRow = defineComponent({
+export interface ICalendarGridRowProps extends ICalendarDayGridProps {
+  classNames: IProcessedStyleSet<ICalendarDayGridStyles>;
+  weeks: IDayInfo[][];
+  week: IDayInfo[];
+  weekIndex: number;
+  weekCorners?: IWeekCorners;
+  ariaHidden?: boolean;
+  rowClassName?: string;
+  ariaRole?: string;
+  // navigatedDayRef: React.RefObject<HTMLButtonElement>;
+  activeDescendantId: string;
+  calculateRoundedStyles?(
+    classNames: IProcessedStyleSet<ICalendarDayGridStyles>,
+    above: boolean,
+    below: boolean,
+    left: boolean,
+    right: boolean,
+  ): string;
+  getDayInfosInRangeOfDay?(dayToCompare: IDayInfo): IDayInfo[];
+  getRefsFromDayInfos?(dayInfosInRange: IDayInfo[]): (HTMLElement | null)[];
+}
+
+export const CalendarGridRow = Vue.extend({
   name: 'CalendarGridRow',
 
   props: {
-    showWeekNumbers: { type: Boolean, default: false },
-    weekIndex: { type: Number, required: true },
-    rowClassName: { type: String, default: '' },
-    classNames: { type: Object, default: () => {} },
+    ...withCalendarProps(),
+    ...withCalendarGridRowProps(),
+  } as MappedType<ICalendarGridRowProps>,
 
-    firstDayOfWeek: { type: Number as PropType<DayOfWeek>, default: DayOfWeek.Sunday },
-    firstWeekOfYear: { type: Number as PropType<FirstWeekOfYear>, default: FirstWeekOfYear.FirstDay },
-    navigatedDate: { type: Date, required: true },
-
-    week: { type: Array, required: true },
-    weeks: { type: Array, required: true },
-    strings: { type: Object as PropType<ICalendarStrings>, default: () => DEFAULT_CALENDAR_STRINGS },
-
-    weekCorners: { type: Object, default: undefined },
+  computed: {
+    weekNumbers (): number[] | null {
+      return this.showWeekNumbers
+        ? getWeekNumbersInMonth(this.weeks.length, this.firstDayOfWeek, this.firstWeekOfYear, this.navigatedDate)
+        : null
+    },
+    titleString (): string | undefined {
+      return this.weekNumbers
+        ? this.strings.weekNumberFormatString && format(this.strings.weekNumberFormatString, this.weekNumbers[this.weekIndex])
+        : ''
+    },
   },
 
-  setup (props) {
+  render (h): VNode {
     const {
       classNames,
-      showWeekNumbers,
+      week,
+      weeks,
       weekIndex,
       rowClassName,
-
+      ariaRole,
+      showWeekNumbers,
       firstDayOfWeek,
       firstWeekOfYear,
       navigatedDate,
-
-      week,
-      weeks,
       strings,
       weekCorners,
-    } = toRefs(props)
 
-    const weekNumbers = showWeekNumbers.value
-      ? getWeekNumbersInMonth(weeks.value.length, firstDayOfWeek.value, firstWeekOfYear.value, navigatedDate.value)
-      : null
+      weekNumbers,
+      titleString,
+    } = this
 
-    const titleString = weekNumbers
-      ? strings.value.weekNumberFormatString && format(strings.value.weekNumberFormatString, weekNumbers[weekIndex.value])
-      : ''
-
-    return () => h('tr', { class: rowClassName.value }, [
-      showWeekNumbers.value && weekNumbers && h('th', {
-        class: classNames.value.weekNumberCell,
+    return h('tr', {
+      class: rowClassName,
+      key: weekIndex + '_' + week[0].key,
+      attrs: {
+        role: ariaRole,
+      },
+    }, [
+      showWeekNumbers && weekNumbers && h('th', {
+        class: classNames.weekNumberCell,
+        key: weekIndex,
         attrs: {
           title: titleString,
+          'aria-label': titleString,
           scope: 'row',
         },
       }, [
-        h('span', `${weekNumbers[weekIndex.value]}`),
+        h('span', `${weekNumbers[weekIndex]}`),
       ]),
-      ...week.value.map((day, dayIndex) => h(CalendarGridDayCell, {
+      ...week.map((day: IDayInfo, dayIndex: number) => h(CalendarGridDayCell, {
+        key: day.key,
         props: {
-          weekCorners: weekCorners.value,
+          ...this.$props,
           day,
           dayIndex,
-          weekIndex: weekIndex.value,
-          classNames: classNames.value,
         },
       })),
     ])

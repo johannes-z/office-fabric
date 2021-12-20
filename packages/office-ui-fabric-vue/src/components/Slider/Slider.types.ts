@@ -45,19 +45,19 @@ export interface ISliderProps {
    * The min value of the Slider
    * @defaultvalue 0
    */
-  min?: number;
+  min: number;
 
   /**
    * The max value of the Slider
    * @defaultvalue 10
    */
-  max?: number;
+  max: number;
 
   /**
    * The difference between the two adjacent values of the Slider
    * @defaultvalue 1
    */
-  step?: number;
+  step: number;
 
   /**
    * Whether to show the value on the right of the Slider.

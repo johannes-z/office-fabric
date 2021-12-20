@@ -24,6 +24,12 @@
       <f-progress-indicator indeterminate />
       <f-progress-indicator indeterminate
                             :bar-height="5" />
+
+      <h2>Slots</h2>
+      <f-progress-indicator indeterminate :bar-height="5">
+        <template #label><f-spinner :size="12" /></template>
+        <template #description><f-icon icon-name="CompassNW" /></template>
+      </f-progress-indicator>
     </div>
 
     <div class="content--inner ms-depth-8">

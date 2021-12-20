@@ -37,7 +37,6 @@ export const LabelBase = Vue.extend({
 
     return h(RootType, {
       ...ctx.data,
-      on: ctx.listeners,
       class: classNames.root,
     }, ctx.children)
   },

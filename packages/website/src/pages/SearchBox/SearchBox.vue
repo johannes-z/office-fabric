@@ -30,18 +30,17 @@
       </f-stack>
 
       <h2>SearchBox with custom icon</h2>
-      <f-search-box placeholder="Filter" icon-name="Filter" />
+      <f-search-box placeholder="Filter" :icon-props="{ iconName: 'Filter' }" />
 
       <h2>SearchBox with fixed width and custom event handling</h2>
-      <f-search-box
-        :styles="{ root: { width: 200 } }"
-        placeholder="Search"
-        @clear="onClear"
-        @search="onSearch"
-        @change="onChange"
-        @focus="onFocus"
-        @blur="onBlur"
-        @escape.prevent="onEscape" />
+      <f-search-box :styles="{ root: { width: 200 } }"
+                    placeholder="Search"
+                    @clear="onClear"
+                    @search="onSearch"
+                    @change="onChange"
+                    @focus="onFocus"
+                    @blur="onBlur"
+                    @escape.prevent="onEscape" />
     </div>
 
     <div class="content--inner ms-depth-8">

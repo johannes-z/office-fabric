@@ -14,9 +14,11 @@
       <h2>Default Link</h2>
       <div>
         <p>
-          When a link has an href, <f-link href="http://dev.office.com/fabric/components/link">it renders as an anchor tag.</f-link> Without an
-          href, <f-link>the link is rendered as a button</f-link>. You can also use the disabled attribute to create a
-          <f-link disabled href="http://dev.office.com/fabric/components/link">
+          When a link has an href, <f-link href="http://dev.office.com/fabric/components/link" underline>it renders as an anchor tag.</f-link> Without an
+          href, <f-link underline>the link is rendered as a button</f-link>. You can also use the disabled attribute to create a
+          <f-link disabled
+                  underline
+                  href="http://dev.office.com/fabric/components/link">
             disabled link.
           </f-link>
         </p>

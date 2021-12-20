@@ -1,5 +1,8 @@
 import Vue, { CreateElement } from 'vue'
+import VueCompositionAPI from '@vue/composition-api'
+
 import VueRouter from 'vue-router'
+
 // import VueHighlightJS from 'vue-highlightjs'
 
 import Preview from './Preview.vue'
@@ -8,6 +11,7 @@ import BasePage from './pages/BasePage.vue'
 
 import Fabric, { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
 import { initializeFileTypeIcons } from '@uifabric-vue/file-type-icons'
+Vue.use(VueCompositionAPI)
 
 initializeIcons()
 initializeFileTypeIcons()

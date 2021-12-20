@@ -1,6 +1,6 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
-import Icon from '../Icon/Icon'
+import { Icon } from '../Icon'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 
 const getClassNames = classNamesFunction(
@@ -41,7 +41,7 @@ export class ContextualMenuItemBase extends BaseComponent {
     //   //   openSubMenu(item, submenuTarget)
     //   // }
     // }
-  };
+  }
 
   public dismissSubMenu (): void {
     // const { item, dismissSubMenu } = this

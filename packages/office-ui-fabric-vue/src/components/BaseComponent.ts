@@ -15,9 +15,9 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
   componentRef: HTMLElement | null = null
   css = css
 
-  private __async: Async | null = null;
-  private __events: EventGroup | null = null;
-  private __disposables: IDisposable[] | null = null;
+  private __async: Async | null = null
+  private __events: EventGroup | null = null
+  private __disposables: IDisposable[] | null = null
 
   protected state: TState = {} as TState
   protected props: TProps = {} as TProps
@@ -58,7 +58,7 @@ export default abstract class BaseComponent<TProps = {}, TState = {}> extends Vu
     return this._uid
   }
 
-  protected get classNames (): IProcessedStyleSet<any> {
+  protected get classNames (): any {
     return {} as any
   }
 

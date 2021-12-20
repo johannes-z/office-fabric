@@ -8,6 +8,7 @@ import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 import { CalendarGridRow } from './CalendarGridRow'
 import { ICalendarDayGridProps } from '..'
 import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { withCalendarDayGridProps } from './useCalendarDayGrid'
 
 const getClassNames = classNamesFunction<ICalendarDayGridStyleProps, ICalendarDayGridStyles>()
 
@@ -218,17 +219,12 @@ export default defineComponent({
   props: {
     ...withThemeableProps(),
 
-    selectedDate: { type: Date, default: undefined },
-    navigatedDate: { type: Date, default: undefined },
+    ...withCalendarDayGridProps(),
 
-    dateRangeType: { type: Number as PropType<DateRangeType>, default: DateRangeType.Day },
     showWeekNumbers: { type: Boolean, default: false },
     lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: undefined },
     animateBackwards: { type: Boolean, default: false },
-
-    firstDayOfWeek: { type: Number as PropType<DayOfWeek>, default: DayOfWeek.Sunday },
-    firstWeekOfYear: { type: Number as PropType<FirstWeekOfYear>, default: FirstWeekOfYear.FirstDay },
 
     minDate: { type: Date, default: undefined },
     maxDate: { type: Date, default: undefined },
@@ -275,12 +271,14 @@ export default defineComponent({
         h('tbody', [
           h(CalendarMonthHeaderRow, {
             props: {
+              ...props,
               classNames: classNames.value,
               weeks,
             },
           }),
           h(CalendarGridRow, {
             props: {
+              ...props,
               ...partialWeekProps.value,
               week: weeks[0],
               weekIndex: -1,
@@ -289,6 +287,7 @@ export default defineComponent({
           }),
           ...weeks.slice(1, weeks.length - 1).map((week, weekIndex: number) => h(CalendarGridRow, {
             props: {
+              ...props,
               ...partialWeekProps.value,
               week,
               weekIndex,
@@ -297,6 +296,7 @@ export default defineComponent({
           })),
           h(CalendarGridRow, {
             props: {
+              ...props,
               ...partialWeekProps.value,
               week: weeks[weeks.length - 1],
               weekIndex: -2,

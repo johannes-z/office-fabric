@@ -5,3 +5,4 @@ packages:
   - 'packages/office-ui-fabric-vue'
   - 'packages/api-docs'
   - 'packages/website'
+  - 'packages/vue-hooks'

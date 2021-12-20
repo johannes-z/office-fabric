@@ -8,6 +8,7 @@
     "target": "ES5",
     "module": "ESNext",
     "isolatedModules": false,
+    "strictNullChecks": true,
     "moduleResolution": "Node",
     "strict": true,
     "resolveJsonModule": true,

@@ -33,9 +33,6 @@ import VNodes from '../../VNodes'
   },
 })
 export default class FileTypeIcons extends Vue {
-  iconProps = getFileTypeIconProps({
-    extension: 'docx',
-    size: 16,
-  })
+  iconProps = getFileTypeIconProps({ extension: 'docx', size: 16 })
 }
 </script>

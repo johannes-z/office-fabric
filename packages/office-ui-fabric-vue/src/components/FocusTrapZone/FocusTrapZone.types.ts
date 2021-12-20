@@ -1,3 +1,5 @@
+import { IBaseProps } from '@/types'
+
 /**
  * {@docCategory FocusTrapZone}
  */
@@ -12,7 +14,13 @@ export interface IFocusTrapZone {
 /**
  * {@docCategory FocusTrapZone}
  */
-export interface IFocusTrapZoneProps {
+export interface IFocusTrapZoneProps extends IBaseProps {
+  /**
+   * Optional callback to access the IFocusTrapZone interface. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<IFocusTrapZone>;
+
   /**
    * Whether to disable the FocusTrapZone's focus trapping behavior.
    * @defaultvalue false
@@ -50,10 +58,10 @@ export interface IFocusTrapZoneProps {
   forceFocusInsideTrap?: boolean;
 
   /**
-   * Class name (not actual selector) for first focusable item. Do not append a dot.
-   * Only applies if `focusPreviouslyFocusedInnerElement` is false.
+   * Either a full query selector for the first focusable element, or a function to select the focusable element
+   * within the area directly.
    */
-  firstFocusableSelector?: string | (() => string);
+  firstFocusableTarget?: string | ((element: HTMLElement) => HTMLElement | null);
 
   /**
    * Do not put focus onto the first element inside the focus trap zone.
@@ -69,4 +77,11 @@ export interface IFocusTrapZoneProps {
    * @defaultvalue false
    */
   focusPreviouslyFocusedInnerElement?: boolean;
+
+  /**
+   * Puts aria-hidden=true on all non-ancestors of the current element, for screen readers.
+   * This is an experimental feature that will be graduated to default behavior after testing.
+   * This flag will be removed with the next major release.
+   */
+  enableAriaHiddenSiblings?: boolean;
 }

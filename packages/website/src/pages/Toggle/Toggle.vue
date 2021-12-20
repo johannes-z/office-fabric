@@ -42,7 +42,7 @@
 
       <div>Controlled</div>
       <f-toggle v-model="toggleState" label="Test" /> {{ toggleState }}
-      <f-toggle label="Test">
+      <f-toggle v-model="toggleState" label="Test">
         <template #label="{ checked, disabled, label }">
           <div>label: {{ label }}, checked: {{ checked }}, disabled: {{ disabled }}</div>
         </template>

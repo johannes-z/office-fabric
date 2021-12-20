@@ -50,13 +50,12 @@
       <f-text-field label="With auto adjusting height"
                     multiline
                     auto-adjust-height />
-      <f-text-field
-        label="Switches from single to multiline if more than 50 characters are
+      <f-text-field label="Switches from single to multiline if more than 50 characters are
     entered"
-        auto-adjust-height
-        :multiline="multiline"
-        :value="multilineValue"
-        @input="onInput" />
+                    auto-adjust-height
+                    :multiline="multiline"
+                    :value="multilineValue"
+                    @input="onInput" />
       <f-text-field label="With error message"
                     error-message="Error message"
                     multiline
@@ -83,8 +82,6 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 
-var faker = require('faker')
-
 @Component({
   components: {
   },
@@ -94,7 +91,7 @@ export default class TextFieldPage extends Vue {
   value2: string = ''
   multilineValue: string = ''
   multiline: boolean = false
-  lorem: string = faker.lorem.paragraphs()
+  lorem: string = 'Lorem ipsum'
 
   onInput (value: string) {
     this.multiline = value.length > 50

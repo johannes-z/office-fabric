@@ -40,7 +40,6 @@ export * from './Label'
 export * from './Layer'
 export * from './Link'
 
-export * from './Panel'
 export * from './ProgressIndicator'
 export * from './Rating'
 export * from './SearchBox'
@@ -52,3 +51,5 @@ export * from './TextField'
 export * from './Toggle'
 export * from './Persona'
 export * from './Shimmer'
+
+export * from './Calendar'

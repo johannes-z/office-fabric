@@ -15,6 +15,7 @@
       <h2>Text</h2>
       <Stack :tokens="tokens.sectionStack">
         <Stack :tokens="tokens.headingStack">
+          <OText variant="large" block />
           <OText variant="large" block>
             Wrap (Default)
           </OText>

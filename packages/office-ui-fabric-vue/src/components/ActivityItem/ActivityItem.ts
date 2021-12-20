@@ -7,9 +7,7 @@ import { PersonaCoin } from '../Persona/PersonaCoin'
 import { PersonaSize } from '../Persona/Persona.types'
 import { CreateElement } from 'vue'
 
-@Component({
-  components: { PersonaCoin },
-})
+@Component
 export class ActivityItem extends BaseComponent<IActivityItemProps> {
   @Prop({ type: Array, default: () => [] }) activityPersonas!: any[]
   @Prop({ type: Boolean, default: false }) animateBeaconSignal!: boolean
@@ -36,7 +34,7 @@ export class ActivityItem extends BaseComponent<IActivityItemProps> {
       .filter((person, index) => index < personaLimit)
   }
 
-  get classNames (): any {
+  get classNames () {
     const { styles, theme, className, activityPersonas, animateBeaconSignal, beaconColorOne, beaconColorTwo, isCompact } = this
 
     return getClassNames(

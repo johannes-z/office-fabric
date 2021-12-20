@@ -9,7 +9,6 @@ import { CreateElement } from 'vue'
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
 @Component({
-  components: { Label },
   inheritAttrs: false,
 })
 export class TextFieldBase extends BaseComponent<ITextFieldProps> {
@@ -128,9 +127,9 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
         ref: 'textElement',
         class: classNames.field,
         attrs: {
+          ...this.$attrs,
           id: this.$attrs.id || id,
           value: internalValue,
-          ...this.$attrs,
           disabled: disabled,
           readonly: readonly,
           required: required,

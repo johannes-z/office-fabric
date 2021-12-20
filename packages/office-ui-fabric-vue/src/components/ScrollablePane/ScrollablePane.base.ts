@@ -272,6 +272,7 @@ export class ScrollablePaneBase extends BaseComponent {
             if (stickyContent) {
               return stickyChildrenElements.indexOf(stickyContent) > -1
             }
+            return false
           })
 
         // Get first element that has a distance from top that is further than our sticky that is being added

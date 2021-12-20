@@ -64,7 +64,7 @@ export interface ICalendarDayGridProps extends IDayGridOptions {
    * @param date - The date that is navigated to
    * @param focusOnNavigatedDay - Whether to set the focus to the navigated date.
    */
-  onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => void;
+  onNavigateDate?: (date: Date, focusOnNavigatedDay: boolean) => void;
 
   /**
    * Callback issued when calendar day is closed

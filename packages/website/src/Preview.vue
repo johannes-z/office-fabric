@@ -34,7 +34,7 @@ const publicPath = process.env.NODE_ENV === 'production'
 })
 export default class Preview extends Vue {
   @ProvideReactive()
-  theme = getTheme()
+    theme = getTheme()
 
   target = document.body
 
@@ -94,6 +94,7 @@ export default class Preview extends Vue {
           name: 'Galleries & Pickers',
           isExpanded: true,
           links: [
+            { name: 'Calendar', key: 'Calendar', href: publicPath + '/#/Calendar' },
             { name: 'SwatchColorPicker WIP', key: 'SwatchColorPicker', href: publicPath + '/#/SwatchColorPicker' },
           ],
         }, {
@@ -253,11 +254,12 @@ body {
 }
 .sidebar {
   width: 300px;
+  min-width: 300px;
   margin-right: 10px;
   overflow-y: scroll;
 
   & > nav {
-    flex: 1;
+    flex: 1 0;
   }
 }
 .content {
@@ -265,6 +267,7 @@ body {
   padding-left: 40px;
   padding-right: 40px;
   overflow: auto;
+  min-width: 400px;
 }
 .content--inner {
   padding: 28px;

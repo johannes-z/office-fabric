@@ -2,7 +2,7 @@
   <BasePage>
     Icon
 
-    <template #overview>
+    <!-- <template #overview>
       <div v-html="docs.Overview" />
     </template>
 
@@ -12,7 +12,7 @@
 
     <template #donts>
       <div v-html="docs.Donts" />
-    </template>
+    </template> -->
 
     <template #usage>
       <h2>Default Spinner</h2>
@@ -73,9 +73,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Stack, IStackProps, IStackTokens } from '@uifabric-vue/office-ui-fabric-vue'
 
-import Dos from './docs/SpinnerDos.md'
-import Donts from './docs/SpinnerDonts.md'
-import Overview from './docs/SpinnerOverview.md'
+// import Dos from './docs/SpinnerDos.md'
+// import Donts from './docs/SpinnerDonts.md'
+// import Overview from './docs/SpinnerOverview.md'
 
 @Component({
   components: {
@@ -83,12 +83,12 @@ import Overview from './docs/SpinnerOverview.md'
   },
 })
 export default class SpinnerPage extends Vue {
-  rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' };
+  rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' }
 
   docs = {
-    Dos,
-    Donts,
-    Overview,
+    // Dos,
+    // Donts,
+    // Overview,
   }
 
   tokens = {
@@ -98,12 +98,12 @@ export default class SpinnerPage extends Vue {
     spinnerStack: {
       childrenGap: 20,
     },
-  };
+  }
 
   stackTokens: IStackTokens = {
     childrenGap: 20,
     maxWidth: 250,
-  };
+  }
 }
 </script>
 

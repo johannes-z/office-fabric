@@ -1,4 +1,4 @@
-import { ResizeObserver } from 'resize-observer'
+import { ResizeObserver } from '@juggle/resize-observer'
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { classNamesFunction, KeyCodes, Async, css } from '@uifabric-vue/utilities'
 import { getStyles, getOptionStyles } from './ComboBox.styles'
@@ -124,8 +124,8 @@ export class ComboBoxBase extends BaseComponent<IComboBoxProps, IComboBoxState> 
       /** Update `comboBoxMenuWidth` with 60 fps. */
       this.comboBoxMenuWidth = this.$refs.comboBoxWrapper.clientWidth + 2
     }, 1 / 60)
-    const observer = new ResizeObserver(cb)
-    // observer.observe(this.$refs.comboBoxWrapper)
+    // const observer = new ResizeObserver(cb)
+    // observer.observe(document.body)
   }
 
   get hasErrorMessage () {

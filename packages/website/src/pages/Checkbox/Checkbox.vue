@@ -39,10 +39,9 @@
       <Stack :tokens="stackTokens">
         <Checkbox label="Indeterminate checkbox (uncontrolled)" default-indeterminate />
 
-        <Checkbox
-          label="Indeterminate checkbox which defaults to true when clicked (uncontrolled)"
-          default-indeterminate
-          default-checked />
+        <Checkbox label="Indeterminate checkbox which defaults to true when clicked (uncontrolled)"
+                  default-indeterminate
+                  default-checked />
 
         <Checkbox label="Disabled indeterminate checkbox"
                   disabled
@@ -65,6 +64,11 @@
 
         <DefaultButton @click.native="selectAll">Select All</DefaultButton>
         <DefaultButton @click.native="deselectAll">Deselect All</DefaultButton>
+      </Stack>
+
+      <h3>Custom Icons</h3>
+      <Stack :tokens="stackTokens">
+        <Checkbox :checkmark-icon-props="{ iconName: 'Sunny' }">Sunny icon</Checkbox>
       </Stack>
     </div>
 

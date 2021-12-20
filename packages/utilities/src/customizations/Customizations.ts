@@ -1,4 +1,3 @@
-
 import { GlobalSettings } from '../GlobalSettings'
 
 // tslint:disable-next-line:no-any

@@ -21,7 +21,7 @@ const GlobalClassNames = {
 }
 
 export const getStyles = (props: any): ISliderStyles => {
-  const { className, titleLabelClassName, theme, vertical, disabled, showTransitions, showValue } = props
+  const { className, titleLabelClassName, theme, vertical, disabled, showTransitions, showValue, ranged } = props
   const { semanticColors } = theme
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
@@ -89,7 +89,7 @@ export const getStyles = (props: any): ISliderStyles => {
   return {
     root: [
       classNames.root,
-      // theme.fonts.medium,
+      theme.fonts.medium,
       {
         userSelect: 'none',
       },
@@ -124,7 +124,7 @@ export const getStyles = (props: any): ISliderStyles => {
     ],
     slideBox: [
       classNames.slideBox,
-      getFocusStyle(theme),
+      !ranged && getFocusStyle(theme),
       {
         background: 'transparent',
         border: 'none',
@@ -141,6 +141,9 @@ export const getStyles = (props: any): ISliderStyles => {
           [`:hover .${classNames.thumb}`]: slideBoxActiveThumbStyles,
           [`:active .${classNames.zeroTick}`]: slideBoxActiveZeroTickStyles,
           [`:hover .${classNames.zeroTick}`]: slideBoxActiveZeroTickStyles,
+          [HighContrastSelector]: {
+            forcedColorAdjust: 'none',
+          },
         },
       },
       vertical
@@ -159,6 +162,7 @@ export const getStyles = (props: any): ISliderStyles => {
     ],
     thumb: [
       classNames.thumb,
+      ranged && getFocusStyle(theme, { inset: -4 }),
       {
         borderWidth: 2,
         borderStyle: 'solid',
@@ -179,7 +183,7 @@ export const getStyles = (props: any): ISliderStyles => {
         }
         : {
           top: -6,
-          transform: getRTL() ? 'translateX(50%)' : 'translateX(-50%)',
+          transform: getRTL(theme) ? 'translateX(50%)' : 'translateX(-50%)',
         },
       showTransitions && {
         transition: `left ${AnimationVariables.durationValue3} ${AnimationVariables.easeFunction1}`,
@@ -293,7 +297,7 @@ export const getStyles = (props: any): ISliderStyles => {
         ? {
           width: '16px',
           height: '1px',
-          transform: getRTL() ? 'translateX(6px)' : 'translateX(-6px)',
+          transform: getRTL(theme) ? 'translateX(6px)' : 'translateX(-6px)',
         }
         : {
           width: '1px',

@@ -32,7 +32,7 @@ export class SliderBase extends BaseComponent<ISliderProps> {
   private internalValue?: number = this.value || this.defaultValue || this.min
   private renderedValue?: number = this.value || this.defaultValue || this.min
 
-  private onKeyDownTimer = -1;
+  private onKeyDownTimer = -1
 
   get classNames () {
     const { className, disabled, vertical, renderedValue, internalValue, showValue, theme } = this
@@ -252,9 +252,11 @@ export class SliderBase extends BaseComponent<ISliderProps> {
     ])
     const $valueLabel = h(Label, {
       class: classNames.valueLabel,
-    }, this.$scopedSlots.value ? [
-      this.$scopedSlots.value({ value: internalValue }),
-    ] : `${internalValue}`)
+    }, this.$scopedSlots.value
+      ? [
+        this.$scopedSlots.value({ value: internalValue }),
+      ]
+      : `${internalValue}`)
 
     const $container = h('div', { class: classNames.container }, [
       h('div', {

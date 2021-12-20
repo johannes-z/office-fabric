@@ -20,6 +20,7 @@ export const StackItemStyles: any = (props, theme, tokens): any => {
       classNames.root,
       {
         margin: tokens.margin,
+        padding: tokens.padding,
         height: verticalFill ? '100%' : 'auto',
         width: 'auto',
       },
