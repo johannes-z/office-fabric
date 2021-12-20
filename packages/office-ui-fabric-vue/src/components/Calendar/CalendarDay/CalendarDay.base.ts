@@ -1,98 +1,123 @@
 import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
 import { withThemeableProps } from '@/useThemeable'
-import { DateRangeType, DEFAULT_CALENDAR_STRINGS, DEFAULT_DATE_FORMATTING, IDateFormatting } from '@fluentui/date-time-utilities'
-import { classNamesFunction } from '@uifabric-vue/utilities'
-import { computed, defineComponent, h, PropType, toRefs } from '@vue/composition-api'
+import { DateRangeType, DayOfWeek, DEFAULT_CALENDAR_STRINGS, DEFAULT_DATE_FORMATTING, FirstWeekOfYear, IDateFormatting } from '@fluentui/date-time-utilities'
+import { classNamesFunction, format, getId } from '@uifabric-vue/utilities'
 import { AnimationDirection, ICalendarNavigationIcons, ICalendarStrings } from '..'
-import { ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
+import { ICalendarDayProps, ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
 
-import { useId } from '@fluentui-vue/vue-hooks'
 import { defaultCalendarNavigationIcons } from '../defaults'
+import Vue, { PropType, VNode } from 'vue'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { MappedType } from '@/types'
+import { withCalendarProps } from '../useCalendar'
+import { withCalendarDayGridProps } from '@/components/CalendarDayGrid/useCalendarDayGrid'
 
 const getClassNames = classNamesFunction<ICalendarDayStyleProps, ICalendarDayStyles>()
 
-export const CalendarDayBase = defineComponent({
+export const CalendarDayBase = Vue.extend({
+  name: 'CalendarDayBase',
+
   props: {
     ...withThemeableProps(),
+    ...withCalendarProps(),
+    ...withCalendarDayGridProps(),
 
-    showWeekNumbers: { type: Boolean, default: false },
-    showSixWeeksByDefault: { type: Boolean, default: false },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: undefined },
-
-    strings: { type: Object as PropType<ICalendarStrings>, default: () => DEFAULT_CALENDAR_STRINGS },
-
-    navigatedDate: { type: Date, required: true },
-    minDate: { type: Date, default: undefined },
-    maxDate: { type: Date, default: undefined },
-    restrictedDates: { type: Array as PropType<Date[]>, default: undefined },
-
-    dateTimeFormatter: { type: Object as PropType<IDateFormatting>, default: () => DEFAULT_DATE_FORMATTING },
-
-    dateRangeType: { type: Number as PropType<DateRangeType>, default: DateRangeType.Day },
-
+    // onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => void;
+    // onDismiss?: () => void;
     navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
+    // onHeaderSelect?: () => void;
+    showSixWeeksByDefault: { type: Boolean, default: false },
+  } as MappedType<ICalendarDayProps>,
+
+  computed: {
+    classNames (): IProcessedStyleSet<ICalendarDayStyles> {
+      return getClassNames(this.styles, {
+        theme: this.theme!,
+        className: this.className,
+        headerIsClickable: false, // !!onHeaderSelect,
+        showWeekNumbers: this.showWeekNumbers,
+        animationDirection: this.animationDirection,
+      })
+    },
+    monthAndYearId (): string {
+      return getId()
+    },
+    monthAndYear (): string {
+      const { dateTimeFormatter, navigatedDate, strings } = this
+      return dateTimeFormatter.formatMonthYear(navigatedDate, strings)
+    },
+    headerAriaLabel (): string {
+      const { strings, monthAndYear } = this
+      return strings.yearPickerHeaderAriaLabel
+        ? format(strings.yearPickerHeaderAriaLabel, monthAndYear)
+        : monthAndYear
+    },
   },
 
-  setup (props, ctx) {
+  render (h): VNode {
     const {
       strings,
       navigatedDate,
       dateTimeFormatter,
       styles,
-      theme,
-      className,
       // onHeaderSelect,
       showSixWeeksByDefault,
       minDate,
       maxDate,
       restrictedDates,
       // onNavigateDate,
-      showWeekNumbers,
       dateRangeType,
-      animationDirection,
-      navigationIcons,
-    } = toRefs(props)
-    const monthAndYearId = useId()
+      selectedDate,
+      monthAndYear,
+      headerAriaLabel,
 
-    const classNames = computed(() => getClassNames(styles.value, {
-      theme: theme.value,
-      className: className.value,
-      headerIsClickable: false, // !!onHeaderSelect.value,
-      showWeekNumbers: showWeekNumbers.value,
-      animationDirection: animationDirection.value,
-    }))
+      classNames,
+      monthAndYearId,
+    } = this
+
     const onHeaderSelect = true
 
-    const monthAndYear = dateTimeFormatter.value.formatMonthYear(navigatedDate.value, strings.value)
     const HeaderButtonComponentType = onHeaderSelect ? 'button' : 'div'
 
-    // const leftNavigationIcon = navigationIcons.value.leftNavigation
-    // const rightNavigationIcon = navigationIcons.value.rightNavigation
-    // const closeNavigationIcon = navigationIcons.value.closeIcon
+    // const leftNavigationIcon = navigationIcons.leftNavigation
+    // const rightNavigationIcon = navigationIcons.rightNavigation
+    // const closeNavigationIcon = navigationIcons.closeIcon
 
-    return () => h('div', { class: classNames.value.root }, [
-      h('div', { class: classNames.value.header }, [
+    return h('div', { class: classNames.root }, [
+      h('div', { class: classNames.header }, [
         h(HeaderButtonComponentType, {
-          class: classNames.value.monthAndYear,
+          class: classNames.monthAndYear,
+          key: monthAndYear,
           attrs: {
+            'aria-live': 'polite',
+            'aria-atomic': 'true',
+            'aria-label': onHeaderSelect ? headerAriaLabel : undefined,
+            'data-is-focusable': !!onHeaderSelect,
+            tabIndex: onHeaderSelect ? 0 : -1, // prevent focus if there's no action for the button,
             type: 'button',
+            // 'onKeyDown': onButtonKeyDown(onHeaderSelect),
+            // onClick: onHeaderSelect,
           },
         }, [
           h('span', { attrs: { id: monthAndYearId } }, monthAndYear),
         ]),
+        // TODO CalendarDayNavigationButtons
       ]),
       h(CalendarDayGrid, {
         props: {
-          strings: strings.value,
-          navigatedDate: navigatedDate.value,
-          weeksToShow: showSixWeeksByDefault.value ? 6 : undefined,
-          dateTimeFormatter: dateTimeFormatter.value,
-          minDate: minDate.value,
-          maxDate: maxDate.value,
-          restrictedDates: restrictedDates.value,
-          // onNavigateDate: onNavigateDate.value,
+          ...this.$props,
+          styles: styles,
+          selectedDate: selectedDate,
+          strings: strings,
+          navigatedDate: navigatedDate,
+          weeksToShow: showSixWeeksByDefault ? 6 : undefined,
+          dateTimeFormatter: dateTimeFormatter,
+          minDate: minDate,
+          maxDate: maxDate,
+          restrictedDates: restrictedDates,
+          // onNavigateDate: onNavigateDate,
           labelledBy: monthAndYearId,
-          dateRangeType: dateRangeType.value,
+          dateRangeType: dateRangeType,
         },
       }),
     ])

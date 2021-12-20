@@ -61,6 +61,7 @@ export const getStyles = (props: ICalendarPickerStyleProps): ICalendarPickerStyl
         padding: '0 4px 0 10px',
         border: 'none',
         overflow: 'visible', // explicitly specify for IE11
+        color: palette.neutralPrimary,
       },
       hasHeaderClickCallback && {
         selectors: {
