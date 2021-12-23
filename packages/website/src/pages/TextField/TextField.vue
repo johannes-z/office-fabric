@@ -71,6 +71,26 @@
                       required
                       underlined />
       </f-stack>
+
+      <h2>Slots</h2>
+
+      <f-text-field>
+        <template #onRenderLabel="props">
+          onRenderLabel
+        </template>
+        <template #onRenderDescription="props">
+          onRenderDescription
+        </template>
+        <template #onRenderInput="props">
+          onRenderInput
+        </template>
+        <template #onRenderPrefix="props">
+          onRenderPrefix
+        </template>
+        <template #onRenderSuffix="props">
+          onRenderSuffix
+        </template>
+      </f-text-field>
     </div>
 
     <div class="content--inner ms-depth-8">
