@@ -1,17 +1,14 @@
+import { getFocusStyle } from '@fluentui/style-utilities'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { getHighContrastNoAdjustStyle } from '@uifabric/styling'
 import {
   AnimationClassNames,
   getGlobalClassNames,
-  getInputFocusStyle,
-  HighContrastSelector,
-  IStyle,
+  getInputFocusStyle, getPlaceholderStyles, HighContrastSelector, IconFontSizes, IStyle,
   normalize,
-  getPlaceholderStyles,
-  IconFontSizes,
-  getEdgeChromiumNoHighContrastAdjustSelector,
 } from '../../Styling'
-import { ILabelStyles, ILabelStyleProps } from '../Label'
+import { ILabelStyleProps, ILabelStyles } from '../Label'
 import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
-import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 
 const globalClassNames = {
   root: 'ms-TextField',
@@ -22,6 +19,7 @@ const globalClassNames = {
   prefix: 'ms-TextField-prefix',
   suffix: 'ms-TextField-suffix',
   wrapper: 'ms-TextField-wrapper',
+  revealButton: 'ms-TextField-reveal',
 
   multiline: 'ms-TextField--multiline',
   borderless: 'ms-TextField--borderless',
@@ -79,6 +77,7 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
     hasErrorMessage,
     inputClassName,
     autoAdjustHeight,
+    hasRevealButton,
   } = props
 
   const { semanticColors, effects, fonts } = theme
@@ -105,7 +104,6 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
 
   // placeholder style constants
   const placeholderStyles: IStyle = [
-    fonts.medium,
     {
       color: semanticColors.inputPlaceholderText,
       opacity: 1,
@@ -156,8 +154,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
           selectors: {
             [HighContrastSelector]: {
               borderColor: 'GrayText',
+              ...getHighContrastNoAdjustStyle(),
             },
-            ...getEdgeChromiumNoHighContrastAdjustSelector(),
           },
         },
         !disabled && {
@@ -167,8 +165,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
               selectors: {
                 [HighContrastSelector]: {
                   borderBottomColor: 'Highlight',
+                  ...getHighContrastNoAdjustStyle(),
                 },
-                ...getEdgeChromiumNoHighContrastAdjustSelector(),
               },
             },
           },
@@ -213,8 +211,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
             selectors: {
               [HighContrastSelector]: {
                 borderColor: 'Highlight',
+                ...getHighContrastNoAdjustStyle(),
               },
-              ...getEdgeChromiumNoHighContrastAdjustSelector(),
             },
           },
         },
@@ -231,8 +229,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         selectors: {
           [HighContrastSelector]: {
             borderColor: 'GrayText',
+            ...getHighContrastNoAdjustStyle(),
           },
-          ...getEdgeChromiumNoHighContrastAdjustSelector(),
         },
 
         cursor: 'default',
@@ -336,7 +334,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         autoAdjustHeight && {
         overflow: 'hidden',
       },
-      hasIcon && {
+      hasIcon &&
+        !hasRevealButton && {
         paddingRight: 24,
       },
       multiline &&
@@ -413,6 +412,51 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
     ],
     prefix: [classNames.prefix, fieldPrefixSuffix],
     suffix: [classNames.suffix, fieldPrefixSuffix],
+    revealButton: [
+      classNames.revealButton,
+      'ms-Button',
+      'ms-Button--icon',
+      getFocusStyle(theme, { inset: 1 }),
+      {
+        height: 30,
+        width: 32,
+        border: 'none',
+        padding: '0px 4px',
+        backgroundColor: 'transparent',
+        color: semanticColors.link,
+        selectors: {
+          ':hover': {
+            outline: 0,
+            color: semanticColors.primaryButtonBackgroundHovered,
+            backgroundColor: semanticColors.buttonBackgroundHovered,
+            selectors: {
+              [HighContrastSelector]: {
+                borderColor: 'Highlight',
+                color: 'Highlight',
+              },
+            },
+          },
+          ':focus': { outline: 0 },
+        },
+      },
+      hasIcon && {
+        marginRight: 28,
+      },
+    ],
+    revealSpan: {
+      display: 'flex',
+      height: '100%',
+      alignItems: 'center',
+    },
+    revealIcon: {
+      margin: '0px 4px',
+      pointerEvents: 'none',
+      bottom: 6,
+      right: 8,
+      top: 'auto',
+      fontSize: IconFontSizes.medium,
+      lineHeight: 18,
+    },
     subComponentStyles: {
       label: getLabelStyles(props),
     },

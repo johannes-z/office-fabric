@@ -1,126 +1,157 @@
-import { Vue, Component, Prop, Model, Watch } from 'vue-property-decorator'
-import { Label, ILabelStyles, ILabelStyleProps } from '../Label'
-import { ITextFieldProps, ITextFieldStyles, ITextFieldStyleProps } from './TextField.types'
-import BaseComponent from '../BaseComponent'
-import { classNamesFunction } from '@uifabric-vue/utilities'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { classNamesFunction, getId } from '@uifabric-vue/utilities'
 import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
-import { CreateElement } from 'vue'
+import Vue, { CreateElement, VNode } from 'vue'
+import { ITextFieldProps } from '.'
+import { ILabelStyleProps, ILabelStyles, Label } from '../Label'
+import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
-@Component({
-  inheritAttrs: false,
-})
-export class TextFieldBase extends BaseComponent<ITextFieldProps> {
-  $refs!: {
-    textElement: HTMLTextAreaElement | HTMLInputElement
-  }
+const COMPONENT_NAME = 'TextField'
 
-  @Prop({ type: Boolean, default: false }) multiline!: boolean
-  @Prop({ type: Boolean, default: null }) resizable!: boolean
-  @Prop({ type: Boolean, default: null }) autoAdjustHeight!: boolean
+export const TextFieldBase = Vue.extend({
+  name: 'TextFieldBase',
 
-  @Prop({ type: Boolean, default: false }) borderless!: boolean
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Boolean, default: false }) underlined!: boolean
-  @Prop({ type: Boolean, default: false }) readonly!: boolean
-  @Prop({ type: Boolean, default: false }) required!: boolean
-  @Prop({ type: String, default: null }) label!: string
-  @Prop({ type: String, default: '' }) value!: string
-  @Prop({ type: String, default: null }) errorMessage!: string
-  @Prop({ type: String, default: null }) placeholder!: string
-  @Prop({ type: String, default: null }) description!: string
+  props: {
+    ...withThemeableProps(),
 
-  isFocused: boolean = false
-  internalValue: string = this.value
+    multiline: { type: Boolean, default: false },
+    resizable: { type: Boolean, default: null },
+    autoAdjustHeight: { type: Boolean, default: null },
 
-  get classNames () {
-    const {
-      theme, className, disabled, isFocused: focused, required, multiline, label, borderless, underlined,
-      resizable, autoAdjustHeight,
-    } = this
-    return getClassNames(this.styles, {
-      theme,
-      className,
-      disabled,
-      focused,
-      required,
-      multiline,
-      hasLabel: !!label,
-      borderless,
-      underlined,
-      hasIcon: false,
-      resizable: resizable !== false,
-      hasErrorMessage: !!this.errorMessage,
-      inputClassName: '',
-      autoAdjustHeight,
-    })
-  }
+    borderless: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    underlined: { type: Boolean, default: false },
+    focused: { type: Boolean, default: false },
+    readonly: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+    label: { type: String, default: null },
+    value: { type: String, default: '' },
+    errorMessage: { type: String, default: null },
+    placeholder: { type: String, default: null },
+    description: { type: String, default: null },
+  } as MappedType<ITextFieldProps>,
+
+  data () {
+    return {
+      isFocused: false,
+      internalValue: this.value || '',
+    }
+  },
+
+  computed: {
+    classNames (): IProcessedStyleSet<ITextFieldStyles> {
+      return getClassNames(this.styles, {
+        theme: this.theme,
+        className: this.className,
+        disabled: this.disabled,
+        focused: this.focused,
+        required: this.required,
+        multiline: this.multiline,
+        hasLabel: !!this.label,
+        borderless: this.borderless,
+        underlined: this.underlined,
+        hasIcon: false,
+        resizable: this.resizable !== false,
+        hasErrorMessage: !!this.errorMessage,
+        inputClassName: '',
+        autoAdjustHeight: this.autoAdjustHeight,
+      })
+    },
+    descriptionId () {
+      return getId(COMPONENT_NAME + 'Description')
+    },
+    fallbackId () {
+      return getId(COMPONENT_NAME)
+    },
+    labelId () {
+      return getId(COMPONENT_NAME + 'Label')
+    },
+  },
+
+  watch: {
+    value (newValue: string): void {
+      this.internalValue = newValue
+    },
+    async multiline (newValue: boolean, oldValue: boolean) {
+      const textElement = this.$refs.textElement as HTMLTextAreaElement
+      const start = textElement.selectionStart || 0
+      const end = textElement.selectionEnd || 0
+      if ((newValue !== oldValue) && this.isFocused) {
+        await this.$nextTick()
+        ;(this.$refs.textElement as HTMLTextAreaElement).focus()
+        ;(this.$refs.textElement as HTMLTextAreaElement).setSelectionRange(start, end)
+      }
+    },
+  },
 
   mounted () {
     this.adjustInputHeight()
-  }
+  },
 
   updated () {
     this.adjustInputHeight()
-  }
+  },
 
-  @Watch('value')
-  private onPropValueChanged (newValue: string) {
-    this.internalValue = newValue
-  }
+  methods: {
+    adjustInputHeight (): void {
+      if (this.$refs.textElement && this.autoAdjustHeight && this.multiline) {
+        const textField = this.$refs.textElement as HTMLTextAreaElement
+        textField.style.height = ''
+        textField.style.height = textField.scrollHeight + 'px'
+      }
+    },
+    async onFocus () {
+      this.isFocused = true
+      ;(this.$refs.textElement as HTMLTextAreaElement).setSelectionRange(this.internalValue.length, this.internalValue.length)
+    },
+    onInput (ev: InputEvent, value: string) {
+      this.internalValue = value
+      this.$emit('input', value)
+      this.$emit('change', ev, value)
+    },
+  },
 
-  @Watch('multiline')
-  private async onMultilineChanged (newValue: boolean, oldValue: boolean) {
-    const textElement = this.$refs.textElement
-    const start = textElement.selectionStart || 0
-    const end = textElement.selectionEnd || 0
-    if ((newValue !== oldValue) && this.isFocused) {
-      await this.$nextTick()
-      this.$refs.textElement.focus()
-      this.$refs.textElement.setSelectionRange(start, end)
-    }
-  }
-
-  private adjustInputHeight (): void {
-    if (this.$refs.textElement && this.autoAdjustHeight && this.multiline) {
-      const textField = this.$refs.textElement
-      textField.style.height = ''
-      textField.style.height = textField.scrollHeight + 'px'
-    }
-  }
-
-  private async onFocus () {
-    this.isFocused = true
-    this.$refs.textElement.setSelectionRange(this.internalValue.length, this.internalValue.length)
-  }
-
-  private onInput (ev: InputEvent, value: string) {
-    this.internalValue = value
-    this.$emit('input', value)
-    this.$emit('change', ev, value)
-  }
-
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const { classNames, required, label, errorMessage, disabled, multiline, internalValue, readonly, placeholder, resizable } = this
 
     const Component = multiline ? 'textarea' : 'input'
 
-    const labelStyles = classNames.subComponentStyles
-      ? (classNames.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
-      : undefined
+    const id = this.$attrs.id || this.fallbackId
 
-    const id = `TextField${this.uid}`
+    const onRenderLabel = (props: ITextFieldProps) => {
+      const { label, disabled, required } = props
 
-    const $label = label && h(Label, {
-      attrs: {
-        for: id,
-        required: required,
-      },
-      props: {
-        styles: labelStyles,
-      },
-    }, label)
+      const labelStyles = classNames.subComponentStyles
+        ? (classNames.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
+        : undefined
+
+      if (!label) return null
+
+      return h(Label, {
+        attrs: {
+          id: this.labelId,
+          for: id,
+        },
+        props: {
+          styles: labelStyles,
+          disabled: disabled,
+          required: required,
+        },
+      }, label)
+    }
+
+    const onRenderDescription = (props: ITextFieldProps) => {
+      if (!this.description) return null
+      return h('span', {
+        class: classNames.description,
+      }, this.description)
+    }
+
+    const $label = (this.$scopedSlots.onRenderLabel ?? onRenderLabel)(this.$props)
 
     const $fieldGroup = h('div', { class: classNames.fieldGroup }, [
       h(Component, {
@@ -160,7 +191,10 @@ export class TextFieldBase extends BaseComponent<ITextFieldProps> {
         $label,
         $fieldGroup,
       ]),
-      $errorMessage,
+      h('span', { attrs: { id: this.descriptionId } }, [
+        (this.$scopedSlots.onRenderDescription ?? onRenderDescription)(this.$props),
+        $errorMessage,
+      ]),
     ])
-  }
-}
+  },
+})

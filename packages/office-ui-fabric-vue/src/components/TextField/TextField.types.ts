@@ -1,6 +1,7 @@
 import { IIconProps } from '../Icon'
 import { ITheme } from '@uifabric/styling'
 import { IStyleFunctionOrObject, IStyleSet, IStyle } from '@uifabric/merge-styles'
+import { IBaseProps } from '@/types'
 
 /**
  * {@docCategory TextField}
@@ -43,7 +44,23 @@ export interface ITextField {
  * TextField component props.
  * {@docCategory TextField}
  */
-export interface ITextFieldProps {
+export interface ITextFieldProps extends IBaseProps {
+  focused?: boolean
+  required?: boolean
+  readonly?: boolean
+  placeholder?: string
+  /**
+   * Optional callback to access the ITextField component. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<ITextField>;
+
+  /**
+   * Optional callback to access the root DOM element.
+   * @deprecated Temporary solution which will be replaced with ref once TextField is converted to a function component.
+   */
+  // elementRef?: React.Ref<HTMLDivElement>;
+
   /**
    * Whether or not the text field is a multiline text field.
    * @defaultvalue false
@@ -84,7 +101,7 @@ export interface ITextFieldProps {
    * If you don't call defaultRender, ensure that you give your custom-rendered label an id and that
    * you set the textfield's aria-labelledby prop to that id.
    */
-  onRenderLabel?: any;
+  // onRenderLabel?: IRenderFunction<ITextFieldProps>;
 
   /**
    * Description displayed below the text field to provide additional details about what text to enter.
@@ -94,7 +111,15 @@ export interface ITextFieldProps {
   /**
    * Custom renderer for the description.
    */
-  onRenderDescription?: any;
+  // onRenderDescription?: IRenderFunction<ITextFieldProps>;
+
+  /**
+   * Custom renderer for the actual single-line input field (not used if `multiline` is true).
+   * This receives the processed props which would usually be passed to the `<input>` element
+   * and allows manually modifying them or rendering as a different element. (Use with care,
+   * since changes here could easily break the component.)
+   */
+  // onRenderInput?: IRenderFunction<React.InputHTMLAttributes<HTMLInputElement> & React.RefAttributes<HTMLInputElement>>;
 
   /**
    * Prefix displayed before the text field contents. This is not included in the value.
@@ -111,12 +136,12 @@ export interface ITextFieldProps {
   /**
    * Custom render function for prefix.
    */
-  onRenderPrefix?: any;
+  // onRenderPrefix?: IRenderFunction<ITextFieldProps>;
 
   /**
    * Custom render function for suffix.
    */
-  onRenderSuffix?: any;
+  // onRenderSuffix?: IRenderFunction<ITextFieldProps>;
 
   /**
    * Props for an optional icon, displayed in the far right end of the text field.
@@ -148,18 +173,24 @@ export interface ITextFieldProps {
   readOnly?: boolean;
 
   /**
+   * If true, the text field is invalid. Will be auto-determined by errorMessage unless set.
+   * @defaultvalue false
+   */
+  invalid?: boolean;
+
+  /**
    * Static error message displayed below the text field. Use `onGetErrorMessage` to dynamically
    * change the error message displayed (if any) based on the current value. `errorMessage` and
    * `onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence).
    */
-  errorMessage?: string | JSX.Element;
+  errorMessage?: string;
 
   /**
    * Callback for when the input value changes.
    * This is called on both `input` and `change` events.
    * (In a later version, this will probably only be called for the `change` event.)
    */
-  onChange?: (event: any, newValue?: string) => void;
+  onChange?: (event: Event, newValue?: string) => void;
 
   /**
    * Function called after validation completes.
@@ -233,7 +264,6 @@ export interface ITextFieldProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  // eslint-disable-next-line no-use-before-define
   styles?: IStyleFunctionOrObject<ITextFieldStyleProps, ITextFieldStyles>;
 
   /**
@@ -246,35 +276,18 @@ export interface ITextFieldProps {
   autoComplete?: string;
 
   /**
-   * Only used by MaskedTextField:
-   * The masking string that defines the mask's behavior.
-   * A backslash will escape any character.
-   * Special format characters are:
-   * '9': [0-9]
-   * 'a': [a-zA-Z]
-   * '*': [a-zA-Z0-9]
-   *
-   * @example `Phone Number: (999) 999-9999`
+   * Whether to show the reveal password button for input type `'password'`. This will be ignored
+   * if the `type` prop is not set to `'password'`, or if the browser is known to have a built-in
+   * reveal button for password inputs (Edge, IE).
    */
-  mask?: string;
+  canRevealPassword?: boolean;
 
   /**
-   * Only used by MaskedTextField:
-   * The character to show in place of unfilled characters of the mask.
-   * @defaultvalue '_'
+   * If `canRevealPassword` is true, aria label for the reveal password button (example: "Show
+   * password"). Note that this will NOT be used in browsers known to have a built-in reveal
+   * password button for password inputs (Edge, IE).
    */
-  maskChar?: string;
-
-  /**
-   * Only used by MaskedTextField:
-   * An object defining the format characters and corresponding regexp values.
-   * Default format characters: \{
-   *  '9': /[0-9]/,
-   *  'a': /[a-zA-Z]/,
-   *  '*': /[a-zA-Z0-9]/
-   * \}
-   */
-  maskFormat?: { [key: string]: RegExp };
+  revealPasswordAriaLabel?: string;
 }
 
 /**
@@ -297,8 +310,7 @@ export interface ITextFieldSubComponentStyles {
 /**
  * {@docCategory TextField}
  */
-// @ts-ignore
-export interface ITextFieldStyles extends IStyleSet<ITextFieldStyles> {
+export interface ITextFieldStyles {
   /**
    * Style for root element.
    */
@@ -336,6 +348,7 @@ export interface ITextFieldStyles extends IStyleSet<ITextFieldStyles> {
 
   /**
    * Style for TextField wrapper element.
+   * Mainly useful for overriding border styles for underlined fields.
    */
   wrapper: IStyle;
 
@@ -348,4 +361,69 @@ export interface ITextFieldStyles extends IStyleSet<ITextFieldStyles> {
    * Styling for subcomponents.
    */
   subComponentStyles: ITextFieldSubComponentStyles;
+
+  /**
+   * Styling for reveal password button
+   */
+  revealButton: IStyle;
+
+  /**
+   * Styling for reveal password span
+   */
+  revealSpan: IStyle;
+
+  /**
+   * Styling for reveal password icon
+   */
+  revealIcon: IStyle;
+}
+
+/**
+ * {@docCategory TextField}
+ */
+export interface IMaskedTextField extends ITextField {
+  /**
+   * The value of all filled format characters, or undefined if not all format characters are filled.
+   */
+  value: string | undefined;
+}
+
+/**
+ * MaskedTextField component props.
+ * {@docCategory TextField}
+ */
+export interface IMaskedTextFieldProps extends ITextFieldProps {
+  /**
+   * Optional callback to access the IMaskedTextField interface. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<IMaskedTextField>;
+
+  /**
+   * The masking string that defines the mask's behavior.
+   * A backslash will escape any character.
+   * Special format characters are:
+   * '9': [0-9]
+   * 'a': [a-zA-Z]
+   * '*': [a-zA-Z0-9]
+   *
+   * @example `Phone Number: (999) 999-9999`
+   */
+  mask?: string;
+
+  /**
+   * The character to show in place of unfilled characters of the mask.
+   * @defaultvalue '_'
+   */
+  maskChar?: string;
+
+  /**
+   * An object defining the format characters and corresponding regexp values.
+   * Default format characters: \{
+   *  '9': /[0-9]/,
+   *  'a': /[a-zA-Z]/,
+   *  '*': /[a-zA-Z0-9]/
+   * \}
+   */
+  maskFormat?: { [key: string]: RegExp };
 }
