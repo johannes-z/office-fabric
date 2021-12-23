@@ -4,9 +4,6 @@ import Fabric from './plugin/office-fabric'
 import * as Components from './components'
 
 import Vue from 'vue'
-import VueCompositionAPI from '@vue/composition-api'
-
-Vue.use(VueCompositionAPI)
 
 export * from './components'
 export * from './components/ThemeProvider'

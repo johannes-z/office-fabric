@@ -11,7 +11,6 @@ import { IRawStyle } from '@uifabric/styling'
 import { ShimmerCircle } from '../ShimmerCircle/ShimmerCircle'
 import { ShimmerGap } from '../ShimmerGap/ShimmerGap'
 import { IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles } from './ShimmerElementsGroup.types'
-import { h } from '../../../renderFunction'
 
 const getClassNames = classNamesFunction<IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles>()
 
@@ -41,12 +40,13 @@ export default class ShimmerElementsGroupBase extends StatelessComponent {
       class: classNames.root,
       style: { width },
     }, [
-      getRenderedElements(shimmerElements, backgroundColor, rowHeight),
+      getRenderedElements(h, shimmerElements, backgroundColor, rowHeight),
     ])
   }
 }
 
 function getRenderedElements (
+  h: CreateElement,
   shimmerElements?: IShimmerElement[],
   backgroundColor?: string,
   rowHeight?: number,
