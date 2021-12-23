@@ -1,13 +1,14 @@
+import { MappedType } from '@/types'
 import { withThemeableProps } from '@/useThemeable'
-import { compareDates, DateRangeType, DayOfWeek, DAYS_IN_WEEK, FirstWeekOfYear, getDateRangeArray, getDayGrid, IDay } from '@fluentui/date-time-utilities'
+import { compareDates, DateRangeType, DayOfWeek, DAYS_IN_WEEK, getBoundedDateRange, getDateRangeArray, getDayGrid, IDay, isRestrictedDate } from '@fluentui/date-time-utilities'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
 import { classNamesFunction, getRTL } from '@uifabric-vue/utilities'
-import { computed, defineComponent, h, PropType, toRefs, watch } from '@vue/composition-api'
+import Vue, { VNode } from 'vue'
+import { ICalendarDayGridProps } from '..'
 import { AnimationDirection } from '../Calendar/Calendar.types'
 import { ICalendarDayGridStyleProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
-import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 import { CalendarGridRow } from './CalendarGridRow'
-import { ICalendarDayGridProps } from '..'
-import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 import { withCalendarDayGridProps } from './useCalendarDayGrid'
 
 const getClassNames = classNamesFunction<ICalendarDayGridStyleProps, ICalendarDayGridStyles>()
@@ -213,7 +214,7 @@ function useWeekCornerStyles (props: ICalendarDayGridProps) {
   return [getWeekCornerStyles, calculateRoundedStyles] as const
 }
 
-export default defineComponent({
+export const CalendarDayGridBase = Vue.extend({
   name: 'CalendarDayGridBase',
 
   props: {
@@ -223,84 +224,113 @@ export default defineComponent({
 
     showWeekNumbers: { type: Boolean, default: false },
     lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: undefined },
-    animateBackwards: { type: Boolean, default: false },
+    animationDirection: { type: Number as () => AnimationDirection, default: undefined },
 
     minDate: { type: Date, default: undefined },
     maxDate: { type: Date, default: undefined },
 
     weeksToShow: { type: Number, default: undefined },
+  } as MappedType<ICalendarDayGridProps>,
+
+  data () {
+    return {
+      // TODO useAnimateBackwards
+      animateBackwards: false,
+    }
   },
 
-  setup (props, { emit }) {
+  computed: {
+    classNames (): IProcessedStyleSet<ICalendarDayGridStyles> {
+      return getClassNames(this.styles, {
+        theme: this.theme!,
+        className: this.className,
+        dateRangeType: this.dateRangeType,
+        showWeekNumbers: this.showWeekNumbers,
+        lightenDaysOutsideNavigatedMonth: this.lightenDaysOutsideNavigatedMonth === undefined
+          ? true
+          : this.lightenDaysOutsideNavigatedMonth,
+        animationDirection: this.animationDirection,
+        animateBackwards: this.animateBackwards,
+      })
+    },
+    weeks (): IDayInfo[][] {
+      return useWeeks(this.$props as ICalendarDayGridProps, this.onSelectDate)
+    },
+    weekCornerStyles (): any {
+      return useWeekCornerStyles(this.$props as ICalendarDayGridProps)
+    },
+    weekCorners (): any {
+      const [getWeekCornerStyles] = this.weekCornerStyles
+      return getWeekCornerStyles(this.classNames, this.weeks!)
+    },
+    partialWeekProps (): any {
+      return {
+        weeks: this.weeks,
+        classNames: this.classNames,
+        weekCorners: this.weekCorners,
+      }
+    },
+  },
+
+  methods: {
+    onSelectDate (selectedDate: Date): void {
+      const { dateRangeType, firstDayOfWeek, minDate, maxDate, workWeekDays, daysToSelectInDayView, restrictedDates } = this.$props
+      const restrictedDatesOptions = { minDate, maxDate, restrictedDates }
+
+      let dateRange = getDateRangeArray(selectedDate, dateRangeType, firstDayOfWeek, workWeekDays, daysToSelectInDayView)
+      dateRange = getBoundedDateRange(dateRange, minDate, maxDate)
+
+      dateRange = dateRange.filter((d: Date) => {
+        return !isRestrictedDate(d, restrictedDatesOptions)
+      })
+
+      this.$emit('onSelectDate', selectedDate, dateRange)
+      this.$emit('onNavigateDate', selectedDate, true)
+    },
+  },
+
+  render (h): VNode {
     const {
-      styles,
-      theme,
-      className,
-      dateRangeType,
-      showWeekNumbers,
-      lightenDaysOutsideNavigatedMonth,
-      animationDirection,
-      animateBackwards,
-    } = toRefs(props)
-
-    const classNames = computed(() => getClassNames(styles.value, {
-      theme: theme.value,
-      className: className.value,
-      dateRangeType: dateRangeType.value,
-      showWeekNumbers: showWeekNumbers.value,
-      lightenDaysOutsideNavigatedMonth: lightenDaysOutsideNavigatedMonth.value === undefined ? true : lightenDaysOutsideNavigatedMonth.value,
-      animationDirection: animationDirection.value,
-      animateBackwards: animateBackwards.value,
-    }))
-
-    const weeks = useWeeks(props, (date) => emit('select', date))
-
-    const [getWeekCornerStyles, calculateRoundedStyles] = useWeekCornerStyles(props)
-    // When the month is highlighted get the corner dates so that styles can be added to them
-    const weekCorners: IWeekCorners = getWeekCornerStyles(classNames.value, weeks!)
-
-    const partialWeekProps = computed(() => ({
+      classNames,
       weeks,
-      classNames: classNames.value,
-      weekCorners,
-    }))
+      partialWeekProps,
+    } = this
 
-    return () => h('div', { class: classNames.value.wrapper }, [
-      h('table', { class: classNames.value.table }, [
+    return h('div', { class: classNames.wrapper }, [
+      h('table', { class: classNames.table }, [
         h('tbody', [
           h(CalendarMonthHeaderRow, {
             props: {
-              ...props,
-              classNames: classNames.value,
+              ...this.$props,
+              classNames: classNames,
               weeks,
             },
           }),
           h(CalendarGridRow, {
             props: {
-              ...props,
-              ...partialWeekProps.value,
+              ...this.$props,
+              ...partialWeekProps,
               week: weeks[0],
               weekIndex: -1,
-              rowClassName: classNames.value.firstTransitionWeek,
+              rowClassName: classNames.firstTransitionWeek,
             },
           }),
           ...weeks.slice(1, weeks.length - 1).map((week, weekIndex: number) => h(CalendarGridRow, {
             props: {
-              ...props,
-              ...partialWeekProps.value,
+              ...this.$props,
+              ...partialWeekProps,
               week,
               weekIndex,
-              rowClassName: classNames.value.weekRow,
+              rowClassName: classNames.weekRow,
             },
           })),
           h(CalendarGridRow, {
             props: {
-              ...props,
-              ...partialWeekProps.value,
+              ...this.$props,
+              ...partialWeekProps,
               week: weeks[weeks.length - 1],
               weekIndex: -2,
-              rowClassName: classNames.value.lastTransitionWeek,
+              rowClassName: classNames.lastTransitionWeek,
             },
           }),
         ]),

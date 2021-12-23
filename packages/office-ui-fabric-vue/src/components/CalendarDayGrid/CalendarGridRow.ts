@@ -1,13 +1,13 @@
 import { MappedType } from '@/types'
-import { DayOfWeek, DEFAULT_CALENDAR_STRINGS, FirstWeekOfYear, getWeekNumbersInMonth, ICalendarStrings } from '@fluentui/date-time-utilities'
+import { getWeekNumbersInMonth } from '@fluentui/date-time-utilities'
 import { IProcessedStyleSet } from '@fluentui/style-utilities'
 import { format } from '@uifabric-vue/utilities'
-import Vue, { PropType, VNode } from 'vue'
+import Vue, { VNode } from 'vue'
 import { withCalendarProps } from '../Calendar/useCalendar'
 import { IDayInfo, IWeekCorners } from './CalendarDayGrid.base'
 import { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { CalendarGridDayCell } from './CalendarGridDayCell'
-import { withCalendarDayGridProps, withCalendarGridRowProps } from './useCalendarDayGrid'
+import { withCalendarGridRowProps } from './useCalendarDayGrid'
 
 export interface ICalendarGridRowProps extends ICalendarDayGridProps {
   classNames: IProcessedStyleSet<ICalendarDayGridStyles>;
@@ -18,7 +18,6 @@ export interface ICalendarGridRowProps extends ICalendarDayGridProps {
   ariaHidden?: boolean;
   rowClassName?: string;
   ariaRole?: string;
-  // navigatedDayRef: React.RefObject<HTMLButtonElement>;
   activeDescendantId: string;
   calculateRoundedStyles?(
     classNames: IProcessedStyleSet<ICalendarDayGridStyles>,
@@ -34,25 +33,14 @@ export interface ICalendarGridRowProps extends ICalendarDayGridProps {
 export const CalendarGridRow = Vue.extend({
   name: 'CalendarGridRow',
 
+  functional: true,
+
   props: {
     ...withCalendarProps(),
     ...withCalendarGridRowProps(),
   } as MappedType<ICalendarGridRowProps>,
 
-  computed: {
-    weekNumbers (): number[] | null {
-      return this.showWeekNumbers
-        ? getWeekNumbersInMonth(this.weeks.length, this.firstDayOfWeek, this.firstWeekOfYear, this.navigatedDate)
-        : null
-    },
-    titleString (): string | undefined {
-      return this.weekNumbers
-        ? this.strings.weekNumberFormatString && format(this.strings.weekNumberFormatString, this.weekNumbers[this.weekIndex])
-        : ''
-    },
-  },
-
-  render (h): VNode {
+  render (h, ctx): VNode {
     const {
       classNames,
       week,
@@ -65,22 +53,26 @@ export const CalendarGridRow = Vue.extend({
       firstWeekOfYear,
       navigatedDate,
       strings,
-      weekCorners,
+    } = ctx.props
 
-      weekNumbers,
-      titleString,
-    } = this
+    const weekNumbers = showWeekNumbers
+      ? getWeekNumbersInMonth(weeks.length, firstDayOfWeek, firstWeekOfYear, navigatedDate)
+      : null
+
+    const titleString = weekNumbers
+      ? strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex])
+      : ''
 
     return h('tr', {
-      class: rowClassName,
       key: weekIndex + '_' + week[0].key,
+      class: rowClassName,
       attrs: {
         role: ariaRole,
       },
     }, [
       showWeekNumbers && weekNumbers && h('th', {
-        class: classNames.weekNumberCell,
         key: weekIndex,
+        class: classNames.weekNumberCell,
         attrs: {
           title: titleString,
           'aria-label': titleString,
@@ -91,8 +83,9 @@ export const CalendarGridRow = Vue.extend({
       ]),
       ...week.map((day: IDayInfo, dayIndex: number) => h(CalendarGridDayCell, {
         key: day.key,
+        ...ctx.data,
         props: {
-          ...this.$props,
+          ...ctx.props,
           day,
           dayIndex,
         },

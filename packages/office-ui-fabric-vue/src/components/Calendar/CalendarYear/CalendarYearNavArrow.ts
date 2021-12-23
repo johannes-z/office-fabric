@@ -1,14 +1,11 @@
-import { withThemeableProps } from '@/useThemeable'
-import Vue, { PropType, VNode } from 'vue'
-import { AnimationDirection } from '../Calendar.types'
-import { withCalendarProps } from '../useCalendar'
-import { classNamesFunction, css, getRTL } from '@uifabric-vue/utilities'
-import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
+import { Icon } from '@/components'
 import { MappedType } from '@/types'
-import { withCalendarYearProps, withCalendarYearRangeProps } from './useCalendarYear'
+import { classNamesFunction, css, getRTL, KeyCodes } from '@uifabric-vue/utilities'
+import Vue, { PropType, VNode } from 'vue'
 import { ICalendarNavigationIcons } from '..'
 import { defaultCalendarNavigationIcons } from '../defaults'
-import { Icon } from '@/components'
+import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
+import { withCalendarYearProps, withCalendarYearRangeProps } from './useCalendarYear'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
 
@@ -22,7 +19,6 @@ interface ICalendarYearNavArrowProps extends ICalendarYearHeaderProps {
 }
 
 const CELL_COUNT = 12
-const CELLS_PER_ROW = 4
 
 export const CalendarYearNavArrow = Vue.extend({
   name: 'CalendarYearNavArrow',
@@ -63,6 +59,17 @@ export const CalendarYearNavArrow = Vue.extend({
       ? minYear !== undefined && fromYear < minYear
       : maxYear !== undefined && fromYear + CELL_COUNT > maxYear
 
+    const onNavigate = () => {
+      direction === CalendarYearNavDirection.Previous
+        ? (ctx.listeners.onSelectPrev as () => void | undefined)?.()
+        : (ctx.listeners.onSelectNext as () => void | undefined)?.()
+    }
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (ev.which === KeyCodes.enter) {
+        onNavigate()
+      }
+    }
+
     const isLeftNavigation = getRTL()
       ? direction === CalendarYearNavDirection.Next
       : direction === CalendarYearNavDirection.Previous
@@ -77,12 +84,17 @@ export const CalendarYearNavArrow = Vue.extend({
         disabled: disabled,
       },
       on: {
-        ...!disabled && ctx.listeners.click && { click: ctx.listeners.click },
+        ...!disabled && {
+          click: onNavigate,
+          keydown: onKeyDown,
+        },
       },
     }, [
       h(Icon, {
         props: {
-          iconName: isLeftNavigation ? navigationIcons!.leftNavigation : navigationIcons!.rightNavigation,
+          iconName: isLeftNavigation
+            ? navigationIcons!.leftNavigation
+            : navigationIcons!.rightNavigation,
         },
       }),
     ])

@@ -1,12 +1,9 @@
-import { withThemeableProps } from '@/useThemeable'
-import Vue, { PropType, VNode } from 'vue'
-import { AnimationDirection } from '../Calendar.types'
-import { withCalendarProps } from '../useCalendar'
-import { classNamesFunction } from '@uifabric-vue/utilities'
-import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
 import { MappedType } from '@/types'
-import { withCalendarYearProps, withCalendarYearRangeProps } from './useCalendarYear'
+import { classNamesFunction } from '@uifabric-vue/utilities'
+import Vue, { VNode } from 'vue'
+import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
 import { CalendarYearNavArrow, CalendarYearNavDirection } from './CalendarYearNavArrow'
+import { withCalendarYearProps, withCalendarYearRangeProps } from './useCalendarYear'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
 
@@ -28,21 +25,9 @@ export const CalendarYearNav = Vue.extend({
       className: className,
     })
 
-    return h('div', {
-      class: classNames.navigationButtonsContainer,
-    }, [
-      h(CalendarYearNavArrow, {
-        props: { ...ctx.props, direction: CalendarYearNavDirection.Previous },
-        on: {
-          click: () => console.log('click', CalendarYearNavDirection.Previous),
-        },
-      }),
-      h(CalendarYearNavArrow, {
-        props: { ...ctx.props, direction: CalendarYearNavDirection.Next },
-        on: {
-          click: () => console.log('click', CalendarYearNavDirection.Next),
-        },
-      }),
+    return h('div', { class: classNames.navigationButtonsContainer }, [
+      h(CalendarYearNavArrow, { ...ctx.data, props: { ...ctx.props, direction: CalendarYearNavDirection.Previous } }),
+      h(CalendarYearNavArrow, { ...ctx.data, props: { ...ctx.props, direction: CalendarYearNavDirection.Next } }),
     ])
   },
 })

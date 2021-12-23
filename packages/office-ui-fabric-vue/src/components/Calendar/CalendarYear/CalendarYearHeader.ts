@@ -8,6 +8,7 @@ import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles 
 
 import { CalendarYearTitle } from './CalendarYearTitle'
 import { CalendarYearNav } from './CalendarYearNav'
+import { withCalendarYearRangeProps } from './useCalendarYear'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
 
@@ -18,10 +19,9 @@ export const CalendarYearHeader = Vue.extend({
 
   props: {
     ...withThemeableProps(),
+    ...withCalendarYearRangeProps(),
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: undefined },
-    fromYear: { type: Number, required: true },
-    toYear: { type: Number, required: true },
   } as MappedType<ICalendarYearHeaderProps>,
 
   render (h, ctx): VNode {
@@ -30,15 +30,14 @@ export const CalendarYearHeader = Vue.extend({
     const classNames = getClassNames(styles, {
       theme: theme!,
       className: className,
-      hasHeaderClickCallback: false, //! !props.onHeaderSelect,
+      hasHeaderClickCallback: !!ctx.listeners.onHeaderSelect,
       animateBackwards: animateBackwards,
       animationDirection: animationDirection,
     })
-    return h('div', {
-      class: classNames.headerContainer,
-    }, [
-      ctx.scopedSlots.title?.(ctx.props) || h(CalendarYearTitle, { props: ctx.props }),
-      h(CalendarYearNav, { props: ctx.props }),
+
+    return h('div', { class: classNames.headerContainer }, [
+      ctx.scopedSlots.onRenderTitle?.(ctx.props) ?? h(CalendarYearTitle, { ...ctx.data }),
+      h(CalendarYearNav, { ...ctx.data }),
     ])
   },
 })

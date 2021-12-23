@@ -1,6 +1,6 @@
 import { MappedType } from '@/types'
-import { compareDates } from '@fluentui/date-time-utilities'
-import { css, KeyCodes } from '@uifabric-vue/utilities'
+import { addDays, addWeeks, compareDates, findAvailableDate, IAvailableDateOptions } from '@fluentui/date-time-utilities'
+import { css, getRTLSafeKeyCode, KeyCodes } from '@uifabric-vue/utilities'
 import Vue, { PropType, VNode } from 'vue'
 import { withCalendarProps } from '../Calendar/useCalendar'
 import { IDayInfo } from './CalendarDayGrid.base'
@@ -50,10 +50,76 @@ export const CalendarGridDayCell = Vue.extend({
   },
 
   methods: {
+    navigateMonthEdge (ev: KeyboardEvent, date: Date): void {
+      const {
+        restrictedDates,
+        minDate,
+        maxDate,
+        weeks,
+      } = this
+      let targetDate: Date | undefined
+      let direction = 1 // by default search forward
+
+      if (ev.which === KeyCodes.up) {
+        targetDate = addWeeks(date, -1)
+        direction = -1
+      } else if (ev.which === KeyCodes.down) {
+        targetDate = addWeeks(date, 1)
+      } else if (ev.which === getRTLSafeKeyCode(KeyCodes.left)) {
+        targetDate = addDays(date, -1)
+        direction = -1
+      } else if (ev.which === getRTLSafeKeyCode(KeyCodes.right)) {
+        targetDate = addDays(date, 1)
+      }
+
+      if (!targetDate) {
+        // if we couldn't find a target date at all, do nothing
+        return
+      }
+
+      const findAvailableDateOptions: IAvailableDateOptions = {
+        initialDate: date,
+        targetDate,
+        direction,
+        restrictedDates,
+        minDate,
+        maxDate,
+      }
+
+      // target date is restricted, search in whatever direction until finding the next possible date,
+      // stopping at boundaries
+      let nextDate = findAvailableDate(findAvailableDateOptions)
+
+      if (!nextDate) {
+      // if no dates available in initial direction, try going backwards
+        findAvailableDateOptions.direction = -direction
+        nextDate = findAvailableDate(findAvailableDateOptions)
+      }
+
+      // if the nextDate is still inside the same focusZone area, let the focusZone handle setting the focus so we
+      // don't jump the view unnecessarily
+      const isInCurrentView =
+      weeks &&
+      nextDate &&
+      weeks.slice(1, weeks.length - 1).some((week: IDayInfo[]) => {
+        return week.some((dayToCompare: IDayInfo) => {
+          return compareDates(dayToCompare.originalDate, nextDate!)
+        })
+      })
+      if (isInCurrentView) {
+        return
+      }
+
+      // else, fire navigation on the date to change the view to show it
+      if (nextDate) {
+        this.$emit('onNavigateDate', nextDate, true)
+        ev.preventDefault()
+      }
+    },
     onMouseOverDay (ev: MouseEvent): void {
       this.isHovering = true
     },
-    onMouseOutDay  (ev: MouseEvent): void {
+    onMouseOutDay (ev: MouseEvent): void {
       this.isHovering = false
       this.isPressing = false
     },
@@ -63,13 +129,11 @@ export const CalendarGridDayCell = Vue.extend({
     onMouseUpDay (ev: MouseEvent): void {
       this.isPressing = false
     },
-    onDayKeyDown (ev: KeyboardEvent): void {
+    onDayKeyDown (ev: KeyboardEvent, day: IDayInfo): void {
       if (ev.which === KeyCodes.enter) {
-        // onSelectDate?.(day.originalDate);
-        console.log('onSelectDate')
+        this.$emit('onSelectDate', day.originalDate)
       } else {
-        // navigateMonthEdge(ev, day.originalDate);
-        console.log('navigateMonthEdge')
+        this.navigateMonthEdge(ev, day.originalDate)
       }
     },
   },
@@ -117,7 +181,7 @@ export const CalendarGridDayCell = Vue.extend({
           mouseout: this.onMouseOutDay,
           mousedown: this.onMouseDownDay,
           mouseup: this.onMouseUpDay,
-          keyDown: this.onDayKeyDown,
+          keydown: (e: KeyboardEvent) => this.onDayKeyDown(e, day),
         },
       },
     }, [

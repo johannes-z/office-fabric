@@ -1,16 +1,16 @@
 import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
-import { withThemeableProps } from '@/useThemeable'
-import { DateRangeType, DayOfWeek, DEFAULT_CALENDAR_STRINGS, DEFAULT_DATE_FORMATTING, FirstWeekOfYear, IDateFormatting } from '@fluentui/date-time-utilities'
-import { classNamesFunction, format, getId } from '@uifabric-vue/utilities'
-import { AnimationDirection, ICalendarNavigationIcons, ICalendarStrings } from '..'
-import { ICalendarDayProps, ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
-
-import { defaultCalendarNavigationIcons } from '../defaults'
-import Vue, { PropType, VNode } from 'vue'
-import { IProcessedStyleSet } from '@fluentui/style-utilities'
-import { MappedType } from '@/types'
-import { withCalendarProps } from '../useCalendar'
 import { withCalendarDayGridProps } from '@/components/CalendarDayGrid/useCalendarDayGrid'
+import { MappedType } from '@/types'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@fluentui/style-utilities'
+import { classNamesFunction, format, getId } from '@uifabric-vue/utilities'
+import Vue, { VNode } from 'vue'
+import { ICalendarNavigationIcons } from '../Calendar.types'
+import { defaultCalendarNavigationIcons } from '../defaults'
+import { onButtonKeyDown } from '../helpers'
+import { withCalendarProps } from '../useCalendar'
+import { ICalendarDayProps, ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
+import { CalendarDayNavigationButtons } from './CalendarDayNavigationButtons'
 
 const getClassNames = classNamesFunction<ICalendarDayStyleProps, ICalendarDayStyles>()
 
@@ -22,10 +22,7 @@ export const CalendarDayBase = Vue.extend({
     ...withCalendarProps(),
     ...withCalendarDayGridProps(),
 
-    // onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => void;
-    // onDismiss?: () => void;
-    navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
-    // onHeaderSelect?: () => void;
+    navigationIcons: { type: Object as () => ICalendarNavigationIcons, default: () => defaultCalendarNavigationIcons },
     showSixWeeksByDefault: { type: Boolean, default: false },
   } as MappedType<ICalendarDayProps>,
 
@@ -34,7 +31,7 @@ export const CalendarDayBase = Vue.extend({
       return getClassNames(this.styles, {
         theme: this.theme!,
         className: this.className,
-        headerIsClickable: false, // !!onHeaderSelect,
+        headerIsClickable: !!this.$listeners.onHeaderSelect, // !!onHeaderSelect,
         showWeekNumbers: this.showWeekNumbers,
         animationDirection: this.animationDirection,
       })
@@ -54,18 +51,22 @@ export const CalendarDayBase = Vue.extend({
     },
   },
 
+  methods: {
+    onHeaderSelect (): void {
+      this.$emit('onHeaderSelect')
+    },
+  },
+
   render (h): VNode {
     const {
       strings,
       navigatedDate,
       dateTimeFormatter,
       styles,
-      // onHeaderSelect,
       showSixWeeksByDefault,
       minDate,
       maxDate,
       restrictedDates,
-      // onNavigateDate,
       dateRangeType,
       selectedDate,
       monthAndYear,
@@ -75,13 +76,7 @@ export const CalendarDayBase = Vue.extend({
       monthAndYearId,
     } = this
 
-    const onHeaderSelect = true
-
-    const HeaderButtonComponentType = onHeaderSelect ? 'button' : 'div'
-
-    // const leftNavigationIcon = navigationIcons.leftNavigation
-    // const rightNavigationIcon = navigationIcons.rightNavigation
-    // const closeNavigationIcon = navigationIcons.closeIcon
+    const HeaderButtonComponentType = this.$listeners.onHeaderSelect ? 'button' : 'div'
 
     return h('div', { class: classNames.root }, [
       h('div', { class: classNames.header }, [
@@ -91,17 +86,22 @@ export const CalendarDayBase = Vue.extend({
           attrs: {
             'aria-live': 'polite',
             'aria-atomic': 'true',
-            'aria-label': onHeaderSelect ? headerAriaLabel : undefined,
-            'data-is-focusable': !!onHeaderSelect,
-            tabIndex: onHeaderSelect ? 0 : -1, // prevent focus if there's no action for the button,
+            'aria-label': this.$listeners.onHeaderSelect ? headerAriaLabel : undefined,
+            'data-is-focusable': !!this.$listeners.onHeaderSelect,
+            tabIndex: this.$listeners.onHeaderSelect ? 0 : -1, // prevent focus if there's no action for the button,
             type: 'button',
-            // 'onKeyDown': onButtonKeyDown(onHeaderSelect),
-            // onClick: onHeaderSelect,
+          },
+          on: {
+            click: this.onHeaderSelect,
+            keydown: onButtonKeyDown(this.onHeaderSelect),
           },
         }, [
           h('span', { attrs: { id: monthAndYearId } }, monthAndYear),
         ]),
-        // TODO CalendarDayNavigationButtons
+        h(CalendarDayNavigationButtons, {
+          props: { ...this.$props, classNames },
+          on: this.$listeners,
+        }),
       ]),
       h(CalendarDayGrid, {
         props: {
@@ -115,10 +115,10 @@ export const CalendarDayBase = Vue.extend({
           minDate: minDate,
           maxDate: maxDate,
           restrictedDates: restrictedDates,
-          // onNavigateDate: onNavigateDate,
           labelledBy: monthAndYearId,
           dateRangeType: dateRangeType,
         },
+        on: this.$listeners,
       }),
     ])
   },

@@ -1,7 +1,11 @@
-import { MappedType } from '@/types'
 import { withThemeableProps } from '@/useThemeable'
 import { withCalendarProps } from '../useCalendar'
-import { ICalendarYearProps } from './CalendarYear.types'
+import { ICalendarYearStrings } from './CalendarYear.types'
+
+const DefaultCalendarYearStrings: ICalendarYearStrings = {
+  prevRangeAriaLabel: undefined,
+  nextRangeAriaLabel: undefined,
+}
 
 export const withCalendarYearProps = () => ({
   ...withThemeableProps(),
@@ -13,7 +17,11 @@ export const withCalendarYearProps = () => ({
   minYear: { type: Number, default: undefined },
   maxYear: { type: Number, default: undefined },
 
-} as MappedType<ICalendarYearProps>)
+  selectedYear: { type: Number, default: undefined },
+  navigatedYear: { type: Number, default: undefined },
+
+  strings: { type: Object as () => ICalendarYearStrings, default: () => DefaultCalendarYearStrings },
+})
 
 export const withCalendarYearRangeProps = () => ({
   fromYear: { type: Number, required: true },

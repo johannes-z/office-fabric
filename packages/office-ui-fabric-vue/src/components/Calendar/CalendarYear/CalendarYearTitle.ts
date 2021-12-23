@@ -1,10 +1,10 @@
+import { MappedType } from '@/types'
 import { withThemeableProps } from '@/useThemeable'
+import { classNamesFunction, format, KeyCodes } from '@uifabric-vue/utilities'
 import Vue, { PropType, VNode } from 'vue'
 import { AnimationDirection } from '../Calendar.types'
 import { withCalendarProps } from '../useCalendar'
-import { classNamesFunction } from '@uifabric-vue/utilities'
 import { ICalendarYearHeaderProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
-import { MappedType } from '@/types'
 import { withCalendarYearProps, withCalendarYearRangeProps } from './useCalendarYear'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
@@ -37,30 +37,59 @@ export const CalendarYearTitle = Vue.extend({
       animationDirection,
     } = ctx.props
 
+    const onHeaderSelect = () => {
+      (ctx.listeners.onHeaderSelect as Function | undefined)?.(true)
+    }
+
+    const onHeaderKeyDown = (ev: KeyboardEvent) => {
+      if (ev.which === KeyCodes.enter || ev.which === KeyCodes.space) {
+        onHeaderSelect()
+      }
+    }
+
+    const onRenderYear = (value: number) => {
+      return ctx.scopedSlots.default?.({ year: value }) ?? `${value}`
+    }
+
     const classNames = getClassNames(styles, {
       theme: theme!,
       className: className,
-      hasHeaderClickCallback: false, //! !props.onHeaderSelect,
+      hasHeaderClickCallback: !!ctx.listeners.onHeaderSelect,
       animateBackwards: animateBackwards,
       animationDirection: animationDirection,
     })
 
-    console.log(ctx.listeners)
-    if (ctx.listeners.select) {
+    if (ctx.listeners.onHeaderSelect) {
+      const rangeAriaLabel = strings!.rangeAriaLabel
+      const headerAriaLabelFormatString = strings!.headerAriaLabelFormatString
+      const currentDateRange = rangeAriaLabel
+        ? typeof rangeAriaLabel === 'string'
+          ? rangeAriaLabel
+          : rangeAriaLabel(ctx.props)
+        : undefined
+
+      const ariaLabel = headerAriaLabelFormatString
+        ? format(headerAriaLabelFormatString, currentDateRange)
+        : currentDateRange
+
       return h('button', {
         class: classNames.currentItemButton,
         attrs: {
-          // 'aria-label': ariaLabel,
+          'aria-label': ariaLabel,
           role: 'button',
           type: 'button',
           'aria-atomic': true,
           'aria-live': 'polite',
         },
-      }, ctx.scopedSlots.default?.({ year: fromYear }) ?? `${fromYear}`)
+        on: {
+          click: onHeaderSelect,
+          keydown: onHeaderKeyDown,
+        },
+      }, [onRenderYear(fromYear), ' - ', onRenderYear(toYear)])
     }
 
     return h('div', {
       class: classNames.current,
-    }, ctx.scopedSlots.default?.({ year: fromYear }) ?? `${fromYear}`)
+    }, [onRenderYear(fromYear), ' - ', onRenderYear(toYear)])
   },
 })
