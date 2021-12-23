@@ -1,4 +1,4 @@
-import { ISliderStyles } from './Slider.types'
+import { ISliderStyles, ISliderStyleProps } from './Slider.types'
 import { HighContrastSelector, getGlobalClassNames, getFocusStyle, AnimationVariables } from '@uifabric/styling'
 import { getRTL } from '@uifabric-vue/utilities'
 
@@ -20,7 +20,7 @@ const GlobalClassNames = {
   zeroTick: 'ms-Slider-zeroTick',
 }
 
-export const getStyles = (props: any): ISliderStyles => {
+export const getStyles = (props: ISliderStyleProps): ISliderStyles => {
   const { className, titleLabelClassName, theme, vertical, disabled, showTransitions, showValue, ranged } = props
   const { semanticColors } = theme
   const classNames = getGlobalClassNames(GlobalClassNames, theme)

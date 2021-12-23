@@ -1,3 +1,4 @@
+import { IBaseProps } from '@/types'
 import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
 import { ITheme } from '@uifabric/styling'
 
@@ -8,12 +9,20 @@ export interface ISlider {
   value: number | undefined;
 
   focus: () => void;
+
+  range?: [number, number];
 }
 
 /**
  * {@docCategory Slider}
  */
-export interface ISliderProps {
+export interface ISliderProps extends IBaseProps {
+  /**
+   * Optional callback to access the ISlider interface. Use this instead of ref for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<ISlider>;
+
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
@@ -42,22 +51,34 @@ export interface ISliderProps {
   value?: number;
 
   /**
+   * The initial lower value of the Slider is ranged is true. Use this if you intend for the Slider to be an
+   * uncontrolled component. This value is mutually exclusive to lowerValue. Use one or the other.
+   */
+  defaultLowerValue?: number;
+
+  /**
+   * The initial lower value of the Slider is ranged is true. Use this if you intend to pass in a new value as a
+   * result of onChange events. This value is mutually exclusive to defaultLowerValue. Use one or the other.
+   */
+  lowerValue?: number;
+
+  /**
    * The min value of the Slider
    * @defaultvalue 0
    */
-  min: number;
+  min?: number;
 
   /**
    * The max value of the Slider
    * @defaultvalue 10
    */
-  max: number;
+  max?: number;
 
   /**
    * The difference between the two adjacent values of the Slider
    * @defaultvalue 1
    */
-  step: number;
+  step?: number;
 
   /**
    * Whether to show the value on the right of the Slider.
@@ -66,14 +87,24 @@ export interface ISliderProps {
   showValue?: boolean;
 
   /**
-   * Callback when the value has been changed
+   * Callback when the value has been changed. This will be called on every individual step;
+   * to only be notified after changes have stopped, use `onChanged` instead.
+   * If `ranged` is true, `value` is the upper value, and `range` contains the lower and upper bounds of the range.
    */
-  onChange?: (value: number) => void;
+  onChange?: (
+    value: number,
+    range?: [number, number],
+    event?: any,
+  ) => void;
 
   /**
-   * Callback on mouse up or touch end
+   * Callback on mouse up, touch end, or after key presses have stopped.
+   * To be notified on every individual step, use `onChange` instead.
+   * @param event - Type is `React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent | React.KeyboardEvent`
+   * (may be corrected in a future major version)
    */
-  onChanged?: (event: MouseEvent | TouchEvent | KeyboardEvent, value: number) => void;
+  // TODO: fix event type if we release another major version
+  onChanged?: (event: any, value: number, range?: [number, number]) => void;
 
   /**
    * A description of the Slider for the benefit of screen readers.
@@ -81,44 +112,53 @@ export interface ISliderProps {
   ariaLabel?: string;
 
   /**
+   * If `ranged` is true, display two thumbs that allow the lower and upper bounds of a range to be selected.
+   * The lower bound is defined by `lowerValue`, and the upper bound is defined by `value`.
+   */
+  ranged?: boolean;
+
+  /**
    * A text description of the Slider number value for the benefit of screen readers.
    * This should be used when the Slider number value is not accurately represented by a number.
    */
   ariaValueText?: (value: number) => string;
+
   /**
-   * Optional flag to render the slider vertically. Defaults to rendering horizontal.
+   * Whether to render the slider vertically.
+   * @default `false` (render horizontally)
    */
   vertical?: boolean;
 
   /**
-   * Optional flag to render the Slider as disabled.
+   * Whether to render the Slider as disabled.
    * @defaultvalue false
    */
   disabled?: boolean;
 
   /**
-   * Optional flag to decide that thumb will snap to closest value while moving the slider
+   * Whether to decide that thumb will snap to closest value while moving the slider
    * @defaultvalue false
    */
   snapToStep?: boolean;
 
   /**
-   * Optional className to attach to the slider root element.
+   * Class name to attach to the slider root element.
    */
   className?: string;
 
   /**
-   * Optional mixin for additional props on the thumb button within the slider.
+   * Additional props for the actual `role="slider"` (slider box) element.
+   * (Note that this element is not actually a button in the current implementation.)
    */
   buttonProps?: any;
 
   /**
-   * Optional function to format the slider value.
+   * Custom formatter for the slider value.
    */
   valueFormat?: (value: number) => string;
 
   /**
-   * Optional flag to attach the origin of slider to zero. Helpful when the range include negatives.
+   * Whether to attach the origin of slider to zero. Helpful when the range include negatives.
    * @defaultvalue false
    */
   originFromZero?: boolean;
@@ -128,7 +168,7 @@ export interface ISliderProps {
  * {@docCategory Slider}
  */
 export type ISliderStyleProps = Required<Pick<ISliderProps, 'theme'>> &
-Pick<ISliderProps, 'className' | 'disabled' | 'vertical'> & {
+Pick<ISliderProps, 'className' | 'disabled' | 'vertical' | 'ranged'> & {
   showTransitions?: boolean;
   showValue?: boolean;
   titleLabelClassName?: string;
