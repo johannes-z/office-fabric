@@ -13,9 +13,13 @@
       <h2>Usage</h2>
       <h2>Calendar</h2>
       <div>Selected date: {{ selectedDate ? selectedDate.toLocaleString() : 'Not set' }}</div>
-      <Calendar show-go-to-today
-                :value="selectedDate"
-                @select-date="selectedDate = $event" />
+      <Calendar v-model="selectedDate"
+                show-go-to-today />
+
+      <Calendar v-model="selectedDate"
+                show-month-picker-as-overlay
+                highlight-selected-month
+                :show-go-to-today="false" />
     </div>
 
     <div class="content--inner ms-depth-8">
