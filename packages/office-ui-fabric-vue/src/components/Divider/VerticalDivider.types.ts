@@ -1,11 +1,12 @@
 import { ITheme } from '@uifabric/styling'
 import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
+import { IBaseProps } from '@/types'
 
 /**
  * {@docCategory VerticalDivider}
  * Props for the Vertical Divider
  */
-export interface IVerticalDividerProps {
+export interface IVerticalDividerProps extends IBaseProps {
   /**
    * The theme that should be used to render the vertical divider.
    */
@@ -24,7 +25,7 @@ export interface IVerticalDividerProps {
  * {@docCategory VerticalDivider}
  * Props that will get passed to the styling function to style the Vertical Divider
  */
-export type IVerticalDividerPropsStyles = IVerticalDividerProps
+export type IVerticalDividerPropsStyles = Pick<IVerticalDividerProps, 'theme' | 'className'>;
 
 /**
  * {@docCategory VerticalDivider}
@@ -39,4 +40,21 @@ export interface IVerticalDividerStyles {
    * Styling for the divider.
    */
   divider: IStyle;
+}
+
+/**
+ * Deprecated class names, previously used to provide customizations.
+ * {@docCategory VerticalDivider}
+ * @deprecated Use IVerticalDividerStyles instead.
+ */
+export interface IVerticalDividerClassNames {
+  /**
+   * Styling for the div that wraps the actual divider
+   */
+  wrapper: string;
+
+  /**
+   * Styling for the divider.
+   */
+  divider: string;
 }
