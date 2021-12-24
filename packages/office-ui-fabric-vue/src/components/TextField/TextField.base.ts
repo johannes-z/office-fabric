@@ -15,6 +15,8 @@ const COMPONENT_NAME = 'TextField'
 export const TextFieldBase = Vue.extend({
   name: 'TextFieldBase',
 
+  inheritAttrs: false,
+
   props: {
     ...withThemeableProps(),
 
