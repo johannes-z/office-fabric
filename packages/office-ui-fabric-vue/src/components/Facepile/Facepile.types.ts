@@ -10,33 +10,46 @@ import { IKeytipProps } from '../Keytip/Keytip.types'
 export interface IFacepile {}
 
 /**
- * {@docCategory Facepile}
- */
+  * {@docCategory Facepile}
+  */
 export interface IFacepileProps {
   /**
-   * Call to provide customized styling that will layer on top of the variant rules.
-   */
+    * Optional callback to access the IFacepile interface. Use this instead of ref for accessing
+    * the public methods and properties of the component.
+    */
+  // componentRef?: IRefObject<IFacepile>;
+
+  /**
+    * Whether the default tooltip (the persona name) is shown using the `title` prop.
+    * Set this to false if you'd like to display a custom tooltip, for example using a custom renderer and TooltipHost
+    * @defaultvalue true
+    */
+  showTooltip?: boolean;
+
+  /**
+    * Call to provide customized styling that will layer on top of the variant rules.
+    */
   styles?: IStyleFunctionOrObject<IFacepileStyleProps, IFacepileStyles>;
 
   /**
-   * Theme provided by High-Order Component.
-   */
+    * Theme provided by High-Order Component.
+    */
   theme?: ITheme;
 
   /**
-   * Additional css class to apply to the Facepile
-   * @defaultvalue undefined
-   */
+    * Additional css class to apply to the Facepile
+    * @defaultvalue undefined
+    */
   className?: string;
 
   /**
-   * Array of IPersonaProps that define each Persona.
-   */
+    * Array of IPersonaProps that define each Persona.
+    */
   personas: IFacepilePersona[];
 
   /**
-   * Personas to place in the overflow
-   */
+    * Personas to place in the overflow
+    */
   overflowPersonas?: IFacepilePersona[];
 
   /** Maximum number of personas to show */
@@ -49,8 +62,8 @@ export interface IFacepileProps {
   ariaDescription?: string;
 
   /**
-   * Defines the aria label that the screen readers use when focus goes on a list of personas.
-   */
+    * Defines the aria label that the screen readers use when focus goes on a list of personas.
+    */
   ariaLabel?: string;
 
   /** Show add person button */
@@ -60,9 +73,9 @@ export interface IFacepileProps {
   addButtonProps?: IButtonProps;
 
   /**
-   * Deprecated at v0.70, use `overflowButtonProps` instead.
-   * @deprecated Use `overflowButtonProps` instead.
-   */
+    * Deprecated at v0.70, use `overflowButtonProps` instead.
+    * @deprecated Use `overflowButtonProps` instead.
+    */
   chevronButtonProps?: IButtonProps;
 
   /** Properties for the overflow icon */
@@ -72,79 +85,79 @@ export interface IFacepileProps {
   overflowButtonType?: OverflowButtonType;
 
   /** Optional custom renderer for the persona, gets called when there is one persona in personas array */
-  onRenderPersona?: any;
+  // onRenderPersona?: IRenderFunction<IFacepilePersona>;
 
   /** Optional custom renderer for the persona coins, gets called when there are multiple persona in personas array */
-  onRenderPersonaCoin?: any;
+  // onRenderPersonaCoin?: IRenderFunction<IFacepilePersona>;
 
   /** Method to access properties on the underlying Persona control */
   getPersonaProps?: (persona: IFacepilePersona) => IPersonaSharedProps;
 }
 
 /**
- * {@docCategory Facepile}
- */
+  * {@docCategory Facepile}
+  */
 export interface IFacepilePersona {
   /**
-   * Name of the person.
-   */
+    * Name of the person.
+    */
   personaName?: string;
 
   /**
-   * Url to the image to use, should be a square aspect ratio and big enough to fit in the image area.
-   */
+    * Url to the image to use, should be a square aspect ratio and big enough to fit in the image area.
+    */
   imageUrl?: string;
 
   /**
-   * The user's initials to display in the image area when there is no image.
-   * @defaultvalue [Derived from personaName]
-   */
+    * The user's initials to display in the image area when there is no image.
+    * @defaultvalue Derived from `personaName`
+    */
   imageInitials?: string;
 
   /**
-   * Whether initials are calculated for phone numbers and number sequences.
-   * Example: Set property to true to get initials for project names consisting of numbers only.
-   * @defaultvalue false
-   */
+    * Whether initials are calculated for phone numbers and number sequences.
+    * Example: Set property to true to get initials for project names consisting of numbers only.
+    * @defaultvalue false
+    */
   allowPhoneInitials?: boolean;
 
   /**
-   * The background color when the user's initials are displayed.
-   * @defaultvalue [Derived from personaName]
-   */
+    * The background color when the user's initials are displayed.
+    * @defaultvalue Derived from `personaName`
+    */
   initialsColor?: PersonaInitialsColor;
 
   /**
-   * If provided, persona will be rendered with cursor:pointer and the handler will be
-   * called on click.
-   */
+    * If provided, persona will be rendered with cursor:pointer and the handler will be
+    * called on click.
+    */
   onClick?: (ev?: MouseEvent, persona?: IFacepilePersona) => void;
 
   /**
-   * If provided, the handler will be called on mouse move.
-   */
+    * If provided, the handler will be called on mouse move.
+    */
   onMouseMove?: (ev?: MouseEvent, persona?: IFacepilePersona) => void;
 
   /**
-   * If provided, the handler will be called when mouse moves out of the component.
-   */
+    * If provided, the handler will be called when mouse moves out of the component.
+    */
   onMouseOut?: (ev?: MouseEvent, persona?: IFacepilePersona) => void;
 
   /**
-   * Extra data - not used directly but can be handy for passing additional data to custom event
-   * handlers.
-   */
+    * Extra data - not used directly but can be handy for passing additional data to custom event
+    * handlers.
+    */
   data?: any;
 
   /**
-   * Optional keytip for this button that is only added when 'onClick' is defined for the persona
-   */
+    * Optional keytip for this button that is only added when 'onClick' is defined for the persona
+    */
   keytipProps?: IKeytipProps;
 }
 
 /**
- * {@docCategory Facepile}
- */
+  * {@docCategory Facepile}
+  */
 export enum OverflowButtonType {
   /** No overflow */
   none = 0,
@@ -157,32 +170,32 @@ export enum OverflowButtonType {
 }
 
 /**
- * {@docCategory Facepile}
- */
+  * {@docCategory Facepile}
+  */
 export interface IFacepileStyleProps {
   /**
-   * Theme provided by High-Order Component.
-   */
+    * Theme provided by High-Order Component.
+    */
   theme: ITheme;
 
   /**
-   * Accept custom classNames
-   */
+    * Accept custom classNames
+    */
   className?: string;
 
   /**
-   * Pixel value for spacing around button. Number value set in pixels
-   */
+    * Pixel value for spacing around button. Number value set in pixels
+    */
   spacingAroundItemButton?: number;
 }
 
 /**
- * {@docCategory Facepile}
- */
+  * {@docCategory Facepile}
+  */
 export interface IFacepileStyles {
   /**
-   * Style for the root element.
-   */
+    * Style for the root element.
+    */
   root: IStyle;
   addButton: IStyle;
   descriptiveOverflowButton: IStyle;

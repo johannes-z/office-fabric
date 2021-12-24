@@ -1,5 +1,6 @@
-import { hiddenContentStyle, getFocusStyle, getGlobalClassNames } from '@uifabric/styling'
+import { hiddenContentStyle, getFocusStyle, getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
 import { IStyle } from '@uifabric/merge-styles'
+import { IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
 
 const GlobalClassNames = {
   root: 'ms-Facepile',
@@ -12,7 +13,7 @@ const GlobalClassNames = {
   overflowButton: 'ms-Facepile-overflowButton ms-Facepile-itemButton',
 }
 
-export const getStyles = (props: any): any => {
+export const styles = (props: IFacepileStyleProps): IFacepileStyles => {
   const { className, theme, spacingAroundItemButton = 2 } = props
 
   const { palette, fonts } = theme
@@ -126,6 +127,11 @@ export const getStyles = (props: any): any => {
     overflowInitialsIcon: [
       {
         color: palette.neutralPrimary,
+        selectors: {
+          [HighContrastSelector]: {
+            color: 'WindowText',
+          },
+        },
       },
     ],
 
