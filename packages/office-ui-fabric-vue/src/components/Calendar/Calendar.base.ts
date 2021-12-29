@@ -41,7 +41,7 @@ export default Vue.extend({
     showMonthPickerAsOverlay: { type: Boolean, default: false },
 
     isDayPickerVisible: { type: Boolean, default: true },
-    isMonthPickerVisible: { type: Boolean, default: false },
+    isMonthPickerVisible: { type: Boolean, default: true },
   } as MappedType<ICalendarProps>,
 
   data () {
@@ -49,7 +49,7 @@ export default Vue.extend({
       selectedDate: this.today,
       navigatedMonth: new Date(),
       navigatedDay: new Date(),
-      isMonthPickerVisibleInternal: this.isMonthPickerVisible,
+      isMonthPickerVisibleInternal: getShowMonthPickerAsOverlay(this.$props) ? undefined : this.isMonthPickerVisible,
       isDayPickerVisibleInternal: this.isDayPickerVisible,
     }
   },
@@ -122,6 +122,9 @@ export default Vue.extend({
       this.navigatedDay = this.today!
     },
     onHeaderSelect (): void {
+      this.toggleDayMonthPickerVisibility()
+    },
+    toggleDayMonthPickerVisibility (): void {
       this.isMonthPickerVisibleInternal = !this.isMonthPickerVisibleInternal
       this.isDayPickerVisibleInternal = !this.isDayPickerVisibleInternal
     },
@@ -189,6 +192,7 @@ export default Vue.extend({
               maxDate: this.maxDate,
             },
             on: {
+              onHeaderSelect: this.onHeaderSelect,
               onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => {
                 this.navigatedMonth = date
                 this.navigatedDay = date
