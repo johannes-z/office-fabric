@@ -83,9 +83,6 @@ export default Vue.extend({
     focusOnNextUpdate () {
       // focus
     },
-    selectMonthCallback (newMonth: number): (() => void) {
-      return () => this.onSelectMonth(newMonth)
-    },
     onSelectMonth (newMonth: number): void {
       this.$emit('onHeaderSelect')
       this.$emit('onNavigateDate', setMonth(this.navigatedDate, newMonth), true)
@@ -282,8 +279,8 @@ export default Vue.extend({
           const isSelectedMonth = selectedDate.getMonth() === monthIndex
           const isSelectedYear = selectedDate.getFullYear() === navigatedDate.getFullYear()
           const isInBounds =
-                (this.minDate ? compareDatePart(this.minDate, getMonthEnd(indexedMonth)) < 1 : true) &&
-                (this.maxDate ? compareDatePart(getMonthStart(indexedMonth), this.maxDate) < 1 : true)
+            (this.minDate ? compareDatePart(this.minDate, getMonthEnd(indexedMonth)) < 1 : true) &&
+            (this.maxDate ? compareDatePart(getMonthStart(indexedMonth), this.maxDate) < 1 : true)
 
           return h('button', {
             key: monthIndex,
@@ -303,8 +300,8 @@ export default Vue.extend({
             },
             on: {
               ...isInBounds && {
-                click: this.selectMonthCallback(monthIndex),
-                keydown: onButtonKeyDown(this.selectMonthCallback(monthIndex)),
+                click: () => this.onSelectMonth(monthIndex),
+                keydown: onButtonKeyDown(() => this.onSelectMonth(monthIndex)),
               },
             },
           }, month)
