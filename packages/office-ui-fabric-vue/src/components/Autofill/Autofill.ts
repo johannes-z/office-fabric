@@ -16,6 +16,8 @@ const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'
 
 export const Autofill = Vue.extend({
+  name: 'Autofill',
+
   props: {
     defaultVisibleValue: { type: String, default: '' },
     suggestedDisplayValue: { type: String, default: '' },
@@ -23,6 +25,7 @@ export const Autofill = Vue.extend({
     enableAutofillOnKeyPress: { type: Array, default: () => [KeyCodes.down, KeyCodes.up] as KeyCodes[] },
 
     value: { type: String, default: undefined },
+    disabled: { type: Boolean, default: false },
   },
 
   data () {
@@ -252,6 +255,7 @@ export const Autofill = Vue.extend({
         autoComplete: 'off',
         'aria-autocomplete': 'both',
         'data-lpignore': true,
+        disabled: this.disabled,
         ...this.$attrs,
       },
       domProps: {
