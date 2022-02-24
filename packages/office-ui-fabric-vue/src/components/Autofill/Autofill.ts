@@ -1,76 +1,222 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import { isIE11, KeyCodes } from '@uifabric-vue/utilities'
-import BaseComponent from '../BaseComponent'
-import { IAutofillProps } from './Autofill.types'
-import { CreateElement } from 'vue'
+import Vue, { CreateElement, VNode } from 'vue'
+
+export interface IAutofillState {
+  inputValue: string;
+  isComposing: boolean;
+}
+
+interface ICursorLocation {
+  start: number;
+  end: number;
+  dir: 'forward' | 'backward' | 'none' | undefined;
+}
 
 const SELECTION_FORWARD = 'forward'
 const SELECTION_BACKWARD = 'backward'
 
-@Component
-export class Autofill extends BaseComponent<IAutofillProps> {
-  $refs!: {
-    inputElement: HTMLInputElement
-  }
+export const Autofill = Vue.extend({
+  props: {
+    defaultVisibleValue: { type: String, default: '' },
+    suggestedDisplayValue: { type: String, default: '' },
+    preventValueSelection: { type: Boolean, default: false },
+    enableAutofillOnKeyPress: { type: Array, default: () => [KeyCodes.down, KeyCodes.up] as KeyCodes[] },
 
-  @Prop({ type: String, default: '' }) defaultVisibleValue!: string
-  @Prop({ type: String, default: '' }) suggestedDisplayValue!: string
-  @Prop({ type: Boolean, default: false }) preventValueSelection!: boolean
+    value: { type: String, default: undefined },
+  },
 
-  @Prop({ type: Array, default: () => [KeyCodes.down, KeyCodes.up] as KeyCodes[] }) enableAutofillOnKeyPress!: KeyCodes[]
-  @Prop({ type: Function, default: null }) onInputChange!: (value: string, composing: boolean) => string
-  @Prop({ type: Function, default: null }) onInputValueChange!: (newValue?: string, composing?: boolean) => void
+  data () {
+    return {
+      inputValue: this.defaultVisibleValue || '',
 
-  private autoFillEnabled: boolean = false
-  private isComposing: boolean = false
-  private internalValue: string = this.defaultVisibleValue || ''
-  private displayValue: string = this.defaultVisibleValue || ''
+      autoFillEnabled: true,
+      isComposing: false,
 
-  public get cursorLocation (): number | null {
-    if (this.$refs.inputElement) {
-      const inputElement = this.$refs.inputElement
-      if (inputElement.selectionDirection !== SELECTION_FORWARD) {
-        return inputElement.selectionEnd
-      } else {
-        return inputElement.selectionStart
-      }
-    } else {
-      return -1
+      timeout: -1,
     }
-  }
+  },
 
-  public get value (): string {
-    return this.internalValue
-  }
+  computed: {
+    cursorLocation (): number | null {
+      if (this.$refs.input) {
+        const inputElement = this.$refs.input as HTMLInputElement
+        if (inputElement.selectionDirection !== SELECTION_FORWARD) {
+          return inputElement.selectionEnd
+        } else {
+          return inputElement.selectionStart
+        }
+      } else {
+        return -1
+      }
+    },
+    cursor (): ICursorLocation | null {
+      const inputElement = this.$refs.input as HTMLInputElement
 
-  public get isValueSelected (): boolean {
-    return Boolean(this.$refs.inputElement && this.$refs.inputElement.selectionStart !== this.$refs.inputElement.selectionEnd)
-  }
+      if (inputElement && inputElement.selectionStart !== this.internalValue.length) {
+        return {
+          start: inputElement.selectionStart ?? inputElement.value.length,
+          end: inputElement.selectionEnd ?? inputElement.value.length,
+          dir: (inputElement.selectionDirection as 'forward') || 'backward' || 'none',
+        }
+      }
+      return null
+    },
+    isValueSelected (): boolean {
+      const inputElement = this.$refs.input as HTMLInputElement | undefined
+      return Boolean(inputElement && inputElement.selectionStart !== inputElement.selectionEnd)
+    },
+    internalValue (): string {
+      return this.controlledValue || this.inputValue || ''
+    },
+    displayValue (): string {
+      if (this.autoFillEnabled) {
+        return getDisplayValue(this.internalValue, this.suggestedDisplayValue)
+      }
 
-  public get selectionStart (): number | null {
-    return this.$refs.inputElement ? this.$refs.inputElement.selectionStart : -1
-  }
+      return this.internalValue
+    },
+    controlledValue (): string | undefined {
+      const value = this.value
+      if (value === undefined || typeof value === 'string') {
+        return value
+      }
+      return undefined
+    },
+  },
 
-  public get selectionEnd (): number | null {
-    return this.$refs.inputElement ? this.$refs.inputElement.selectionEnd : -1
-  }
+  watch: {
+    internalValue (value) {
+      const inputElement = this.$refs.input as HTMLInputElement
+      let differenceIndex = 0
+      const { suggestedDisplayValue } = this
 
-  public focus () {
-    this.$refs.inputElement && this.$refs.inputElement.focus()
-  }
+      if (
+        this.autoFillEnabled &&
+        value &&
+        suggestedDisplayValue &&
+        doesTextStartWith(suggestedDisplayValue, value)
+      ) {
+        const shouldSelectFullRange = false
 
-  public clear () {
-    this.autoFillEnabled = true
-    this.updateValue('', false)
-    this.$refs.inputElement && this.$refs.inputElement.setSelectionRange(0, 0)
-  }
+        if (shouldSelectFullRange && inputElement) {
+          this.$nextTick(() => {
+            inputElement.setSelectionRange(0, suggestedDisplayValue.length, SELECTION_BACKWARD)
+          })
+        } else {
+          while (
+            differenceIndex < value.length &&
+            value[differenceIndex].toLocaleLowerCase() === suggestedDisplayValue[differenceIndex].toLocaleLowerCase()
+          ) {
+            differenceIndex++
+          }
+          if (differenceIndex > 0 && inputElement) {
+            this.$nextTick(() => {
+              inputElement.setSelectionRange(
+                differenceIndex,
+                suggestedDisplayValue.length,
+                SELECTION_BACKWARD,
+              )
+            })
+          }
+        }
+      } else if (inputElement) {
+        if (this.cursor !== null && !this.autoFillEnabled && !this.isComposing) {
+          this.$nextTick(() => {
+            inputElement.setSelectionRange(this.cursor!.start, this.cursor!.end, this.cursor!.dir)
+          })
+        }
+      }
+    },
+  },
 
-  private onKeyDown (ev: any) {
-    this.$emit('keydown', ev)
+  beforeDestroy () {
+    clearTimeout(this.timeout)
+  },
 
-    // If the event is actively being composed, then don't alert autofill.
-    // Right now typing does not have isComposing, once that has been fixed any should be removed.
-    if (!(ev as any).isComposing) {
+  methods: {
+    focus (): void {
+      const inputElement = this.$refs.input as HTMLInputElement
+      inputElement && inputElement.focus()
+    },
+    clear (): void {
+      const inputElement = this.$refs.input as HTMLInputElement
+      this.autoFillEnabled = false
+      this.updateValue('', false)
+      inputElement && inputElement.setSelectionRange(0, 0)
+    },
+    getCurrentInputValue (ev?: Event): string {
+      const inputElement = this.$refs.input as HTMLInputElement
+      if (ev && ev.target && (ev.target as HTMLInputElement).value) {
+        return (ev.target as HTMLInputElement).value
+      } else if (inputElement && inputElement.value) {
+        return inputElement.value
+      } else {
+        return ''
+      }
+    },
+    onCompositionStart () {
+      this.isComposing = true
+      this.autoFillEnabled = false
+    },
+    onCompositionUpdate () {
+      if (isIE11()) {
+        this.updateValue(this.getCurrentInputValue(), true)
+      }
+    },
+    onCompositionEnd () {
+      const inputValue = this.getCurrentInputValue()
+      this.tryEnableAutofill(inputValue, this.internalValue, false, true)
+      this.isComposing = false
+
+      this.timeout = window.setTimeout(() => {
+        this.updateValue(this.getCurrentInputValue(), false)
+      }, 0)
+    },
+    updateValue (newValue: string, composing: boolean) {
+      if (!newValue && newValue === this.internalValue) {
+        return
+      }
+
+      this.inputValue = newValue
+
+      this.$emit('input', newValue, composing)
+
+      // const { onInputChange, onInputValueChange } = this;
+      // if (onInputChange) {
+      //   newValue = onInputChange?.(newValue, composing) || '';
+      // }
+
+      // this.setState({ inputValue: newValue }, () => onInputValueChange?.(newValue, composing));
+    },
+    tryEnableAutofill (newValue: string, oldValue: string, isComposing?: boolean, isComposed?: boolean): void {
+      const inputElement = this.$refs.input as HTMLInputElement
+      if (
+        !isComposing &&
+        newValue &&
+        inputElement &&
+        inputElement.selectionStart === newValue.length &&
+        !this.autoFillEnabled &&
+        (newValue.length > oldValue.length || isComposed)
+      ) {
+        this.autoFillEnabled = true
+      }
+    },
+    onInput (ev) {
+      const value: string = this.getCurrentInputValue(ev)
+
+      if (!this.isComposing) {
+        this.tryEnableAutofill(value, this.internalValue, ev.isComposing)
+      }
+
+      // If it is not IE11 and currently composing, update the value
+      if (!(isIE11() && this.isComposing)) {
+        const nativeEventComposing = ev.isComposing
+        const isComposing = nativeEventComposing === undefined ? this.isComposing : nativeEventComposing
+        this.updateValue(value, isComposing)
+      }
+    },
+    onKeyDown (ev: KeyboardEvent) {
+      if (ev.isComposing) return
       switch (ev.which) {
         case KeyCodes.backspace:
           this.autoFillEnabled = false
@@ -78,7 +224,7 @@ export class Autofill extends BaseComponent<IAutofillProps> {
         case KeyCodes.left:
         case KeyCodes.right:
           if (this.autoFillEnabled) {
-            this.internalValue = this.displayValue!
+            this.inputValue = this.suggestedDisplayValue || ''
             this.autoFillEnabled = false
           }
           break
@@ -90,107 +236,51 @@ export class Autofill extends BaseComponent<IAutofillProps> {
           }
           break
       }
-    }
-  };
+    },
+    onClick () {
+      if (this.internalValue && this.internalValue !== '' && this.autoFillEnabled) {
+        this.autoFillEnabled = false
+      }
+    },
+  },
 
-  private onInputChanged (ev: any) {
-    const value: string = this.getCurrentInputValue(ev)
-
-    if (!this.isComposing) {
-      this.tryEnableAutofill(value, this.value, ev.isComposing)
-    }
-
-    // If it is not IE11 and currently composing, update the value
-    if (!(isIE11() && this.isComposing)) {
-      const nativeEventComposing = ev.composed
-      const isComposing = nativeEventComposing === undefined ? this.isComposing : nativeEventComposing
-      this.updateValue(value, isComposing)
-    }
-  };
-
-  private getCurrentInputValue (ev?: Event): string {
-    if (ev && ev.target && (ev.target as any).value) {
-      return (ev.target as any).value
-    } else if (this.$refs.inputElement && this.$refs.inputElement.value) {
-      return this.$refs.inputElement.value
-    } else {
-      return ''
-    }
-  }
-
-  /**
-   * Updates the current input value as well as getting a new display value.
-   * @param newValue - The new value from the input
-   */
-  private updateValue (newValue: string, composing: boolean) {
-    // Only proceed if the value is nonempty and is different from the old value
-    // This is to work around the fact that, in IE 11, inputs with a placeholder fire an onInput event on focus
-    if (!newValue && newValue === this.value) {
-      return
-    }
-    this.internalValue = this.onInputChange ? this.onInputChange(newValue, composing) : newValue
-    this.displayValue = this.getDisplayValue(this.value, this.suggestedDisplayValue)
-  }
-
-  private getDisplayValue (inputValue: string, suggestedDisplayValue?: string): string {
-    let displayValue = inputValue
-    if (
-      suggestedDisplayValue &&
-      inputValue &&
-      this.doesTextStartWith(suggestedDisplayValue, displayValue) &&
-      this.autoFillEnabled
-    ) {
-      displayValue = suggestedDisplayValue
-    }
-    return displayValue
-  }
-
-  private doesTextStartWith (text: string, startWith: string): boolean {
-    if (!text || !startWith) {
-      return false
-    }
-    return text.toLocaleLowerCase().indexOf(startWith.toLocaleLowerCase()) === 0
-  }
-
-  /**
-   * Attempts to enable autofill. Whether or not autofill is enabled depends on the input value,
-   * whether or not any text is selected, and only if the new input value is longer than the old input value.
-   * Autofill should never be set to true if the value is composing. Once compositionEnd is called, then
-   * it should be completed.
-   * See https://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent for more information on composition.
-   * @param newValue - new input value
-   * @param oldValue - old input value
-   * @param isComposing - if true then the text is actively being composed and it has not completed.
-   * @param isComposed - if the text is a composed text value.
-   */
-  private tryEnableAutofill (newValue: string, oldValue: string, isComposing?: boolean, isComposed?: boolean): void {
-    if (
-      !isComposing &&
-      newValue &&
-      this.$refs.inputElement &&
-      this.$refs.inputElement.selectionStart === newValue.length &&
-      !this.autoFillEnabled &&
-      (newValue.length > oldValue.length || isComposed)
-    ) {
-      this.autoFillEnabled = true
-    }
-  }
-
-  render (h: CreateElement) {
-    const { displayValue } = this
-
+  render (h: CreateElement): VNode {
     return h('input', {
-      ref: 'inputElement',
+      ref: 'input',
       attrs: {
         autoCapitalize: 'off',
         autoComplete: 'off',
         'aria-autocomplete': 'both',
-        value: displayValue,
+        'data-lpignore': true,
+        ...this.$attrs,
+      },
+      domProps: {
+        value: this.displayValue,
       },
       on: {
-        change: this.onInputChanged,
-        click: ev => this.$emit('click', ev),
+        compositionstart: this.onCompositionStart,
+        compositionupdate: this.onCompositionUpdate,
+        compositionend: this.onCompositionEnd,
+        input: this.onInput,
+        keydown: this.onKeyDown,
+        click: this.onClick,
       },
     })
+  },
+})
+
+function getDisplayValue (inputValue: string, suggestedDisplayValue?: string): string {
+  let displayValue = inputValue
+  if (suggestedDisplayValue && inputValue && doesTextStartWith(suggestedDisplayValue, displayValue)) {
+    displayValue = suggestedDisplayValue
   }
+  return displayValue
+}
+
+function doesTextStartWith (text: string, startWith: string): boolean {
+  if (!text || !startWith) {
+    return false
+  }
+
+  return text.toLocaleLowerCase().indexOf(startWith.toLocaleLowerCase()) === 0
 }
