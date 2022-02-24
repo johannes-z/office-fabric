@@ -161,7 +161,7 @@ export const TextFieldBase = Vue.extend({
         class: classNames.field,
         attrs: {
           ...this.$attrs,
-          id: this.$attrs.id || id,
+          id: id,
           value: internalValue,
           disabled: disabled,
           readonly: readonly,
