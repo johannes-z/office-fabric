@@ -1,13 +1,11 @@
 
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../BaseComponent'
-import { classNamesFunction, getWindow, getDocument, assign, IRectangle } from '@uifabric-vue/utilities'
-import { IPosition, ICalloutPositionedInfo, positionCallout, getMaxHeight } from '../../utilities/positioning'
-import { getStyles } from './CalloutContent.styles'
-import { concatStyleSetsWithProps } from '@uifabric/merge-styles'
-import { clickedOutside } from '../../utilities/clickedOutside'
+import { classNamesFunction, IRectangle } from '@uifabric-vue/utilities'
 import { CreateElement } from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 import { DirectionalHint } from '../../common/DirectionalHint'
+import { clickedOutside } from '../../utilities/clickedOutside'
+import { getMaxHeight, ICalloutPositionedInfo, IPosition, positionCallout } from '../../utilities/positioning'
+import BaseComponent from '../BaseComponent'
 
 const getClassNames = classNamesFunction()
 
@@ -37,10 +35,10 @@ export class CalloutContentBase extends BaseComponent {
   private positions: any = null
 
   private maxHeight: number = 0
-  private blockResetHeight: boolean = false;
+  private blockResetHeight: boolean = false
   private heightOffset: number = 0
 
-  positionAttempts = 0;
+  positionAttempts = 0
 
   created () {
     window.addEventListener('click', this.onGlobalClick, true)

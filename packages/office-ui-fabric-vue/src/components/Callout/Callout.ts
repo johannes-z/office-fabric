@@ -1,17 +1,22 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CreateElement } from 'vue'
+import { withThemeableProps } from '@/useThemeable'
+import { CreateElement, VNode } from 'vue'
+import { Vue } from 'vue-property-decorator'
+import { DirectionalHint } from '../../common/DirectionalHint'
 import { Layer } from '../Layer'
 import { CalloutContent } from './CalloutContent'
-import StatelessComponent from '../StatelessComponent'
-import { DirectionalHint } from '../../common/DirectionalHint'
 
-@Component
-export class Callout extends StatelessComponent {
-  @Prop({ type: HTMLElement, required: true }) target!: any
-  @Prop({ type: Boolean, default: false }) doNotLayer!: boolean
-  @Prop({ type: Number, default: DirectionalHint.bottomAutoEdge }) directionalHint!: DirectionalHint
+export const Callout = Vue.extend({
+  functional: true,
 
-  render (h: CreateElement, context: any) {
+  props: {
+    ...withThemeableProps(),
+    target: { type: HTMLElement, required: true },
+    doNotLayer: { type: Boolean, default: false },
+    directionalHint: { type: Number, default: DirectionalHint.bottomAutoEdge },
+  },
+
+  // @ts-ignore
+  render (h: CreateElement, context: any): VNode | undefined {
     if (!(context.props.target instanceof Node)) return
 
     const { layerProps, ...rest } = context.props
@@ -20,6 +25,7 @@ export class Callout extends StatelessComponent {
       ...context.data,
       props: {
         ...rest,
+        ...context.data.props,
         ...context.data.attrs,
       },
     }, context.children)
@@ -30,5 +36,5 @@ export class Callout extends StatelessComponent {
         ...context.data,
         props: layerProps,
       }, [content])
-  }
-}
+  },
+})
