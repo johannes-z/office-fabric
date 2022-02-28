@@ -1,6 +1,7 @@
-import { AnimationClassNames, getGlobalClassNames, IStyle } from '../../Styling'
-import { IImageStyleProps, IImageStyles } from './Image.types'
-import { getWindow } from '../../FabricUtilities'
+import { AnimationClassNames, getGlobalClassNames } from '@uifabric/styling'
+import type { IStyle } from '@uifabric/styling'
+import type { IImageStyleProps, IImageStyles } from './Image.types'
+import { getWindow } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-Image',
@@ -96,7 +97,7 @@ export const getStyles = (props: IImageStyleProps): IImageStyles => {
           objectFit: 'contain',
         },
         !supportsObjectFit && fallbackObjectFitStyles,
-        ImageFitStyles,
+        !supportsObjectFit && ImageFitStyles,
       ],
       isCover && [
         classNames.imageCover,
@@ -106,7 +107,7 @@ export const getStyles = (props: IImageStyleProps): IImageStyles => {
           objectFit: 'cover',
         },
         !supportsObjectFit && fallbackObjectFitStyles,
-        ImageFitStyles,
+        !supportsObjectFit && ImageFitStyles,
       ],
       isCenterContain && [
         classNames.imageCenterContain,

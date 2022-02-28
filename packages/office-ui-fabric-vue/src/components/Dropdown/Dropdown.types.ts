@@ -1,5 +1,5 @@
-import { IStyleFunctionOrObject } from '../../FabricUtilities'
-import { IStyle, ITheme } from '../../Styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { IStyle, ITheme } from '@uifabric/styling'
 import { ISelectableOption, ISelectableDroppableTextProps } from '../../utilities/selectableOption'
 // import { ResponsiveMode } from '@fluentui/react-internal/lib/utilities/decorators/withResponsiveMode'
 import { IKeytipProps } from '../Keytip'

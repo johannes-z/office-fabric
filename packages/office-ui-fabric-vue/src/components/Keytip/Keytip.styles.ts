@@ -1,7 +1,7 @@
 import { IKeytipStyleProps, IKeytipStyles } from './Keytip.types'
 import { ICalloutContentStyleProps, ICalloutContentStyles } from '../../components/Callout'
-import { IStyleFunction, Point } from '../../FabricUtilities'
-import { mergeStyleSets, HighContrastSelector } from '../../Styling'
+import { IStyleFunction, Point } from '@uifabric-vue/utilities'
+import { mergeStyleSets, HighContrastSelector } from '@uifabric/styling'
 
 export const getStyles = (props: IKeytipStyleProps): IKeytipStyles => {
   const { theme, disabled, visible } = props

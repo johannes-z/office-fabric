@@ -8,9 +8,9 @@ import {
   getScreenSelector,
   getGlobalClassNames,
   FontWeights,
-} from '../../Styling'
+} from '@uifabric/styling'
 import { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
-import { IsFocusVisibleClassName } from '../../FabricUtilities'
+import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
 
 const GlobalClassNames = {

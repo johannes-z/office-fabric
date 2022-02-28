@@ -1,4 +1,4 @@
-import { IsFocusVisibleClassName } from '../../FabricUtilities'
+import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
 import { RectangleEdge } from '../../utilities/positioning'
 import {
   FontWeights,
@@ -9,10 +9,10 @@ import {
   getScreenSelector,
   ScreenWidthMinMedium,
   getHighContrastNoAdjustStyle,
-} from '../../Styling'
+} from '@uifabric/styling'
 import type { IDropdownStyles, IDropdownStyleProps } from './Dropdown.types'
-import type { IStyleFunction } from '../../FabricUtilities'
-import type { IRawStyle, IStyle } from '../../Styling'
+import type { IStyleFunction } from '@uifabric-vue/utilities'
+import type { IRawStyle, IStyle } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-Dropdown-container',

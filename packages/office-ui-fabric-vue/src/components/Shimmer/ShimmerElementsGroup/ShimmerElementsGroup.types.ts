@@ -1,5 +1,5 @@
-import { IStyle, ITheme } from '../../../Styling'
-import { IStyleFunctionOrObject } from '../../../FabricUtilities'
+import { IStyle, ITheme } from '@uifabric/styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 import { IShimmerElement } from '../Shimmer.types'
 
 /**

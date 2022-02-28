@@ -1,6 +1,6 @@
 import { ICalloutProps } from '../../components/Callout'
-import { IStyle, ITheme } from '../../Styling'
-import { IStyleFunctionOrObject, Point } from '../../FabricUtilities'
+import { IStyle, ITheme } from '@uifabric/styling'
+import { IStyleFunctionOrObject, Point } from '@uifabric-vue/utilities'
 
 /**
  * {@docCategory Keytips}

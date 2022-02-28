@@ -1,5 +1,5 @@
 import { IShimmerElementsGroupStyleProps, IShimmerElementsGroupStyles } from './ShimmerElementsGroup.types'
-import { getGlobalClassNames } from '../../../Styling'
+import { getGlobalClassNames } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-ShimmerElementsGroup-root',

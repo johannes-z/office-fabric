@@ -1,4 +1,4 @@
-import { IStyle } from '../../Styling'
+import { IStyle } from '@uifabric/styling'
 import { IPersonaSharedProps } from '../Persona'
 
 /**

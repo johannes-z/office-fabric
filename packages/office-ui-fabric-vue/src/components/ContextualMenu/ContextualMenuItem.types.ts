@@ -1,7 +1,7 @@
 import { IContextualMenuItem } from './ContextualMenu.types'
 import { IMenuItemClassNames } from './ContextualMenu.classNames'
-import { IStyle, ITheme } from '../../Styling'
-import { IStyleFunctionOrObject } from '../../FabricUtilities'
+import { IStyle, ITheme } from '@uifabric/styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 import { IButtonStyles } from '../Button'
 
 /**

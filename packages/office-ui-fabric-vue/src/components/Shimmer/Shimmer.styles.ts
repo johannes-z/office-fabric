@@ -5,8 +5,8 @@ import {
   hiddenContentStyle,
   HighContrastSelector,
   getEdgeChromiumNoHighContrastAdjustSelector,
-} from '../../Styling'
-import { getRTL, memoizeFunction } from '../../FabricUtilities'
+} from '@uifabric/styling'
+import { getRTL, memoizeFunction } from '@uifabric-vue/utilities'
 
 const GlobalClassNames = {
   root: 'ms-Shimmer-container',

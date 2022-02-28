@@ -1,5 +1,5 @@
-import { mergeStyles } from '../../Styling'
-import { memoizeFunction } from '../../FabricUtilities'
+import { mergeStyles } from '@uifabric/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IActivityItemStyles } from './ActivityItem.types'
 import { IPersonaProps } from '../Persona'
 

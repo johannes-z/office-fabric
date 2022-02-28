@@ -1,5 +1,5 @@
-import { IStyle, IRawStyle, ITheme } from '../../../Styling'
-import { IStyleFunctionOrObject } from '../../../FabricUtilities'
+import { IStyle, IRawStyle, ITheme } from '@uifabric/styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
 
 /**
  * {@docCategory Shimmer}

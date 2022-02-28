@@ -6,7 +6,7 @@ import {
   getGlobalClassNames,
   HighContrastSelector,
   FontWeights,
-} from '../../Styling'
+} from '@uifabric/styling'
 import { IButtonStyles } from '../Button'
 
 const GlobalClassNames = {

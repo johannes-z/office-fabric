@@ -5,8 +5,8 @@ import {
   HighContrastSelector,
   keyframes,
   PulsingBeaconAnimationStyles,
-} from '../../Styling'
-import { memoizeFunction } from '../../FabricUtilities'
+} from '@uifabric/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
 import { IActivityItemStyles, IActivityItemProps } from './ActivityItem.types'
 
 const DEFAULT_PERSONA_SIZE = '32px'

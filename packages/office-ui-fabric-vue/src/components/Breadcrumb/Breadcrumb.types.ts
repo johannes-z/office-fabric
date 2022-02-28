@@ -1,6 +1,6 @@
 import { IIconProps } from '../Icon'
-import { IStyleFunctionOrObject } from '../../FabricUtilities'
-import { ITheme, IStyle } from '../../Styling'
+import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import { ITheme, IStyle } from '@uifabric/styling'
 // import { IFocusZoneProps } from '../../FocusZone'
 import { ITooltipHostProps } from '../Tooltip'
 import { IBaseProps } from '@/types'

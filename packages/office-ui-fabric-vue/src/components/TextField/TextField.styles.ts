@@ -1,12 +1,12 @@
 import { getFocusStyle } from '@fluentui/style-utilities'
 import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
-import { getHighContrastNoAdjustStyle } from '@uifabric/styling'
 import {
+  getHighContrastNoAdjustStyle,
   AnimationClassNames,
   getGlobalClassNames,
   getInputFocusStyle, getPlaceholderStyles, HighContrastSelector, IconFontSizes, IStyle,
   normalize,
-} from '../../Styling'
+} from '@uifabric/styling'
 import { ILabelStyleProps, ILabelStyles } from '../Label'
 import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
 

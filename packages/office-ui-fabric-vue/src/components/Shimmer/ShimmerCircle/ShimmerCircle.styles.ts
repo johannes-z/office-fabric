@@ -1,5 +1,5 @@
 import { IShimmerCircleStyleProps, IShimmerCircleStyles } from './ShimmerCircle.types'
-import { getGlobalClassNames, HighContrastSelector, IRawStyle } from '../../../Styling'
+import { getGlobalClassNames, HighContrastSelector, IRawStyle } from '@uifabric/styling'
 
 const GlobalClassNames = {
   root: 'ms-ShimmerCircle-root',

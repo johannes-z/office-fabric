@@ -1,8 +1,7 @@
-import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
+import type { IStyle } from '@fluentui/style-utilities'
+import { getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui/style-utilities'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
-import { IStyle } from '@uifabric/merge-styles'
-import { getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
-import { ICheckboxStyles, ICheckboxStyleProps } from './Checkbox.types'
+import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
 
 const GlobalClassNames = {
   root: 'ms-Checkbox',

@@ -83,21 +83,20 @@ export const CheckboxBase = Vue.extend({
     const { classNames, title, label, checkmarkIconProps } = this
     const id = getId('Checkbox')
 
-    const $input = h('input', {
-      class: classNames.input,
-      attrs: {
-        id: id,
-        ...this.$attrs,
-        disabled: this.disabled,
-        type: 'checkbox',
-      },
-      on: {
-        input: this.onInput,
-      },
-    })
-
     return h('div', { class: classNames.root }, [
-      $input,
+      h('input', {
+        class: classNames.input,
+        attrs: {
+          id: id,
+          ...this.$attrs,
+          disabled: this.disabled,
+          type: 'checkbox',
+        },
+        on: {
+          input: this.onInput,
+        },
+      }),
+
       h(Label, {
         class: classNames.label,
         attrs: { for: id },
