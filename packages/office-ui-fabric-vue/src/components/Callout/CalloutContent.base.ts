@@ -16,7 +16,7 @@ export class CalloutContentBase extends BaseComponent {
     calloutElement: HTMLDivElement
   }
 
-  @Prop({ type: HTMLElement, required: true }) target!: HTMLElement
+  @Prop({ type: [HTMLElement, Object], required: true }) target!: HTMLElement | Vue
   @Prop({ type: Number, default: null }) calloutWidth!: number
   @Prop({ type: Number, default: 16 }) beakWidth!: number
   @Prop({ type: Number, default: 8 }) minPagePadding!: number
@@ -31,7 +31,6 @@ export class CalloutContentBase extends BaseComponent {
   @Prop({ type: Boolean, default: false }) directionalHintFixed!: boolean
   @Prop({ type: Boolean, default: false }) overflowYHidden!: boolean
 
-  private internalKey = new Date()
   private positions: any = null
 
   private maxHeight: number = 0
@@ -51,7 +50,7 @@ export class CalloutContentBase extends BaseComponent {
   }
 
   updated () {
-    this.internalKey = new Date()
+    this.updatePosition()
   }
 
   mounted () {
@@ -79,14 +78,14 @@ export class CalloutContentBase extends BaseComponent {
 
   private get positionCss () {
     if (!this.positions) return null
-    const positionCss = this.positions
+    // TODO remove JSON parse/stringify deep clone hack
+    const positionCss = JSON.parse(JSON.stringify(this.positions))
     for (const key in positionCss.elementPosition) {
       positionCss.elementPosition[key] = `${positionCss.elementPosition[key]}px`
     }
     for (const key in positionCss.beakPosition.elementPosition) {
       positionCss.beakPosition.elementPosition[key] = `${positionCss.beakPosition.elementPosition[key]}px`
     }
-    if (this.calloutMaxHeight) positionCss.maxHeight = `${this.calloutMaxHeight}px`
     return positionCss
   }
 
@@ -95,7 +94,7 @@ export class CalloutContentBase extends BaseComponent {
 
     const currentProps: any = { ...this.$props }
     currentProps!.bounds = this.bounds
-    currentProps!.target = this.target!
+    currentProps!.target = (this.target instanceof HTMLElement ? this.target : this.target.$el)!
     const newPositions = positionCallout(currentProps, this.$refs.hostElement, this.$refs.calloutElement, this.positions)
 
     if (
@@ -143,7 +142,7 @@ export class CalloutContentBase extends BaseComponent {
         this._async.requestAnimationFrame(() => {
           if (this.target) {
             this.maxHeight = getMaxHeight(
-              this.target,
+              this.target instanceof HTMLElement ? this.target : this.target.$el,
               this.directionalHint!,
               totalGap,
               this.bounds,
@@ -152,7 +151,7 @@ export class CalloutContentBase extends BaseComponent {
             this.blockResetHeight = true
             this.$forceUpdate()
           }
-        }, this.target as Element)
+        }, (this.target instanceof HTMLElement ? this.target : this.target.$el) as Element)
       } else {
         this.maxHeight = this.bounds.height!
       }

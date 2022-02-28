@@ -10,15 +10,13 @@ export const Callout = Vue.extend({
 
   props: {
     ...withThemeableProps(),
-    target: { type: HTMLElement, required: true },
+    target: { type: [HTMLElement, Object], required: true },
     doNotLayer: { type: Boolean, default: false },
     directionalHint: { type: Number, default: DirectionalHint.bottomAutoEdge },
   },
 
   // @ts-ignore
   render (h: CreateElement, context: any): VNode | undefined {
-    if (!(context.props.target instanceof Node)) return
-
     const { layerProps, ...rest } = context.props
 
     const content = h(CalloutContent, {
