@@ -1,4 +1,4 @@
-import './version'
+// import './version'
 
 import Fabric from './plugin/office-fabric'
 import * as Components from './components'

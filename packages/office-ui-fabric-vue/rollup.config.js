@@ -16,16 +16,20 @@ import pkg from './package.json'
 const packageRoot = path.resolve(__dirname)
 
 export default {
-  input: './src/index.ts',
+  input: './lib/index.js',
   external: id => {
-    if (Object.keys(pkg.peerDependencies).indexOf(id) > -1) return true
-    if (Object.keys(pkg.dependencies).indexOf(id) > -1) return true
-    return /core-js|@babel|@pnp/.test(id)
+    // if (Object.keys(pkg.peerDependencies).indexOf(id) > -1) return true
+    // if (Object.keys(pkg.dependencies).indexOf(id) > -1) return true
+    if (id === 'vue') return true
+    return /core-js|@babel/.test(id)
   },
   output: {
-    dir: 'lib',
-    format: 'esm',
-    preserveModules: true,
+    file: pkg.main,
+    name: 'FluentUI',
+    format: 'umd',
+    globals: {
+      vue: 'Vue',
+    },
   },
   preserveSymlinks: true,
   plugins: [
@@ -51,6 +55,8 @@ export default {
       sourceMap: false,
     }),
     esbuild({
+      target: 'es6',
+      minify: true,
     }),
     vue({
       css: true,

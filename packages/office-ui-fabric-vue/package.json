@@ -1,6 +1,6 @@
 {
   "name": "@uifabric-vue/office-ui-fabric-vue",
-  "version": "8.2.2",
+  "version": "8.3.0",
   "main": "./dist/fluent-ui.umd.min.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
@@ -25,6 +25,8 @@
   "dependencies": {
     "@fluentui-vue/vue-hooks": "workspace:^1.0.0",
     "@fluentui/date-time-utilities": "^8.2.3",
+    "@fluentui/merge-styles": "^8.3.0",
+    "@fluentui/set-version": "^8.1.5",
     "@fluentui/style-utilities": "^8.5.1",
     "@fluentui/theme": "^1.7.4",
     "@juggle/resize-observer": "^3.3.1",

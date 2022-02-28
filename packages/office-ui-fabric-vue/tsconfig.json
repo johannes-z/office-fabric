@@ -2,8 +2,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "noImplicitAny": false,
-    "tsBuildInfoFile": "./.cache/tsconfig.tsbuildinfo",
-    "incremental": true,
     "outDir": "lib",
     "target": "ES5",
     "module": "ESNext",
@@ -41,7 +39,6 @@
     ]
   },
   "include": [
-    "node_modules/vue-tsx-support/enable-check.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx"
   ]

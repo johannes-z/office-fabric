@@ -88,20 +88,22 @@ importers:
 
   packages/office-ui-fabric-vue:
     specifiers:
-      '@babel/preset-env': ^7.16.11
+      '@babel/preset-env': ^7.16.5
       '@fluentui-vue/vue-hooks': workspace:^1.0.0
-      '@fluentui/date-time-utilities': ^8.3.0
-      '@fluentui/style-utilities': ^8.5.7
+      '@fluentui/date-time-utilities': ^8.2.3
+      '@fluentui/merge-styles': ^8.3.0
+      '@fluentui/set-version': ^8.1.5
+      '@fluentui/style-utilities': ^8.5.1
       '@fluentui/theme': ^1.7.4
       '@juggle/resize-observer': ^3.3.1
-      '@microsoft/api-extractor': ^7.19.4
-      '@microsoft/load-themed-styles': ^1.10.247
-      '@rollup/plugin-alias': ^3.1.9
-      '@rollup/plugin-babel': ^5.3.1
-      '@rollup/plugin-commonjs': ^21.0.2
+      '@microsoft/api-extractor': ^7.19.2
+      '@microsoft/load-themed-styles': ^1.10.240
+      '@rollup/plugin-alias': ^3.1.8
+      '@rollup/plugin-babel': ^5.3.0
+      '@rollup/plugin-commonjs': ^21.0.1
       '@rollup/plugin-json': ^4.1.0
-      '@rollup/plugin-node-resolve': ^13.1.3
-      '@rollup/plugin-replace': ^3.1.0
+      '@rollup/plugin-node-resolve': ^13.1.1
+      '@rollup/plugin-replace': ^3.0.0
       '@uifabric-vue/utilities': workspace:^7.32.4
       '@uifabric/icons': ^7.6.2
       '@uifabric/merge-styles': ^7.19.2
@@ -110,22 +112,22 @@ importers:
       '@vue/cli-plugin-babel': ^4.5.15
       '@vue/cli-plugin-typescript': ^4.5.15
       '@vue/cli-service': ^4.5.15
-      '@vue/composition-api': ^1.4.6
+      '@vue/composition-api': ^1.4.2
       '@vue/eslint-config-standard': ^6.1.0
       '@vue/eslint-config-typescript': ^9.1.0
       portal-vue: ^2.1.7
-      rollup: ^2.68.0
-      rollup-plugin-esbuild: ^4.8.2
+      rollup: ^2.62.0
+      rollup-plugin-esbuild: ^4.7.2
       rollup-plugin-terser: ^7.0.2
       rollup-plugin-vue: ^5.1.9
-      sass: ^1.49.8
-      sass-loader: ^10.2.1
-      tsc-alias: ^1.6.2
+      sass: ^1.45.1
+      sass-loader: ^10.2.0
+      tsc-alias: ^1.5.0
       tslib: ^2.3.1
-      typescript: ^4.5.5
-      vite: ^2.8.4
-      vite-plugin-dts: ^0.9.9
-      vite-plugin-vue2: ^1.9.3
+      typescript: ^4.5.4
+      vite: ^2.7.6
+      vite-plugin-dts: ^0.9.6
+      vite-plugin-vue2: ^1.9.0
       vue: ^2.6.14
       vue-class-component: ^7.2.6
       vue-property-decorator: ^9.1.2
@@ -133,6 +135,8 @@ importers:
     dependencies:
       '@fluentui-vue/vue-hooks': link:../vue-hooks
       '@fluentui/date-time-utilities': 8.3.0
+      '@fluentui/merge-styles': 8.3.0
+      '@fluentui/set-version': 8.1.5
       '@fluentui/style-utilities': 8.5.7
       '@fluentui/theme': 1.7.4
       '@juggle/resize-observer': 3.3.1
@@ -3522,7 +3526,7 @@ packages:
         optional: true
     dependencies:
       '@types/webpack-env': 1.16.3
-      '@vue/cli-service': 4.5.15_b5a51c319fc86e3ddd07c500910d97f3
+      '@vue/cli-service': 4.5.15_55441c3e89bff427527b47282b49d2a9
       '@vue/cli-shared-utils': 4.5.15
       cache-loader: 4.1.0_webpack@4.46.0
       fork-ts-checker-webpack-plugin: 3.1.1
@@ -3545,7 +3549,7 @@ packages:
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0-0
     dependencies:
-      '@vue/cli-service': 4.5.15_b5a51c319fc86e3ddd07c500910d97f3
+      '@vue/cli-service': 4.5.15_55441c3e89bff427527b47282b49d2a9
     dev: true
 
   /@vue/cli-service/4.5.15_55441c3e89bff427527b47282b49d2a9:
@@ -3806,7 +3810,7 @@ packages:
       '@vue/cli-service':
         optional: true
     dependencies:
-      '@vue/cli-service': 4.5.15_b5a51c319fc86e3ddd07c500910d97f3
+      '@vue/cli-service': 4.5.15_55441c3e89bff427527b47282b49d2a9
       eslint: 8.9.0
       eslint-config-standard: 16.0.3_2dae9da07848968bcc0999a5e5956768
       eslint-import-resolver-node: 0.3.6

@@ -1,4 +1,4 @@
-import { getDividerClassNames } from '../Divider/VerticalDivider.classNames'
+// import { getDividerClassNames } from '../Divider/VerticalDivider.classNames'
 import { getMenuItemStyles } from './ContextualMenu.cnstyles'
 import { ITheme, mergeStyleSets, getGlobalClassNames, getScreenSelector, ScreenWidthMaxMedium } from '@uifabric/styling'
 import { memoizeFunction, IsFocusVisibleClassName } from '@uifabric-vue/utilities'
@@ -41,22 +41,22 @@ const MediumScreenSelector = getScreenSelector(0, ScreenWidthMaxMedium)
 export const getSplitButtonVerticalDividerClassNames = memoizeFunction(
   // tslint:disable:deprecation
   (theme: ITheme): any => {
-    return mergeStyleSets(getDividerClassNames(theme), {
-      // tslint:enable:deprecation
-      wrapper: {
-        position: 'absolute',
-        right: 28, // width of the splitMenu based on the padding plus icon fontSize
-        selectors: {
-          [MediumScreenSelector]: {
-            right: 32, // fontSize of the icon increased from 12px to 16px
-          },
-        },
-      },
-      divider: {
-        height: 16,
-        width: 1,
-      },
-    })
+    // return mergeStyleSets(getDividerClassNames(theme), {
+    //   // tslint:enable:deprecation
+    //   wrapper: {
+    //     position: 'absolute',
+    //     right: 28, // width of the splitMenu based on the padding plus icon fontSize
+    //     selectors: {
+    //       [MediumScreenSelector]: {
+    //         right: 32, // fontSize of the icon increased from 12px to 16px
+    //       },
+    //     },
+    //   },
+    //   divider: {
+    //     height: 16,
+    //     width: 1,
+    //   },
+    // })
   },
 )
 
