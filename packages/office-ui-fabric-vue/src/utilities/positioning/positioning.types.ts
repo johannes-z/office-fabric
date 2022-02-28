@@ -1,7 +1,5 @@
 import { DirectionalHint } from '../../common/DirectionalHint'
-import { IRectangle, Point } from '@uifabric-vue/utilities'
-
-export type { Point, IPoint } from '@uifabric-vue/utilities'
+import type { IRectangle, Point } from '@uifabric-vue/utilities'
 
 export enum RectangleEdge {
   top = 1,
@@ -94,6 +92,7 @@ export interface ICalloutPositionedInfo extends IPositionedData {
 
 export interface ICalloutBeakPositionedInfo extends IPositionedData {
   closestEdge: RectangleEdge;
+  hideBeak?: boolean;
 }
 
 /**
@@ -123,3 +122,5 @@ export interface IRelativePositions {
   directionalClassName: string;
   submenuDirection: DirectionalHint;
 }
+
+export type { Point, IPoint } from '@uifabric-vue/utilities'
