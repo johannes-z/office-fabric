@@ -1,7 +1,10 @@
-import { Customizations } from '@uifabric-vue/utilities'
-import { concatStyleSetsWithProps, IStyleFunctionOrObject, IStyleSet } from '@uifabric/merge-styles'
+import { IStyleFunctionOrObject, IStyleSet, concatStyleSetsWithProps } from '@uifabric/merge-styles'
+import Vue, { CreateElement, RenderContext, VNode } from 'vue'
+
+import { Customizations, useCustomizationSettings } from '@uifabric-vue/utilities'
 import { getTheme, registerOnThemeChangeCallback } from '@uifabric/styling'
-import Vue, { CreateElement, VNode } from 'vue'
+
+import { ref } from './ref'
 
 export interface IPropsWithStyles<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> {
   styles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>;
@@ -23,6 +26,11 @@ export interface ICustomizableProps {
 
 const DefaultFields = ['theme', 'styles']
 
+const theme = ref(getTheme())
+registerOnThemeChangeCallback(value => {
+  theme.value = value
+})
+
 export function styled<
   TComponentProps extends IPropsWithStyles<TStyleProps, TStyleSet>,
   TStyleProps,
@@ -41,52 +49,34 @@ export function styled<
   let _styles: any
 
   return Vue.extend({
-    name: `Styled${Component?.extendOptions?.name || Component.displayName || Component.name}`,
+    name: `Styled${Component?.prototype?.constructor?.extendOptions?.name || Component.displayName || Component.name}`,
 
-    inheritAttrs: false,
+    functional: true,
 
-    model: Component?.options?.model,
+    model: Component?.prototype?.constructor?.options?.model,
 
-    props: typeof Component === 'function'
-      ? Component.options.props
-      : Component.props,
-
-    data () {
-      return {
-        $theme: getTheme(),
-      }
-    },
-
-    created () {
-      registerOnThemeChangeCallback(theme => {
-        this.$data.$theme = theme
-      })
-    },
-
-    render (this: any, h: CreateElement): VNode {
+    render (h: CreateElement, context: RenderContext<TComponentProps>): VNode {
       const settings = Customizations.getSettings(fields, scope)
       const { styles: customizedStyles, dir, ...rest } = settings
       const additionalProps = getProps ? getProps(this) : undefined
 
-      if (!_styles || customizedStyles !== _styles.__cachedInputs__[1] || !!this.styles) {
-        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, this.styles)
-        _styles.__cachedInputs__ = [baseStyles, this.styles]
+      if (!_styles || customizedStyles !== _styles.__cachedInputs__[1] || !!context.props.styles) {
+        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, context.props.styles)
+        _styles.__cachedInputs__ = [baseStyles, context.props.styles]
       }
 
       return h(Component, {
-        on: this.$listeners,
-        attrs: this.$attrs,
+        ...context.data,
         props: {
           ...rest,
           ...additionalProps,
-          ...this.$attrs,
-          ...this.$props,
-          theme: this.$data.$theme,
-          className: this.className || this.$attrs.class || this.$vnode.data.class,
+          ...context.props,
+          className: context.props.className || context.data.class,
           styles: _styles,
+          theme: theme.value,
         },
-        scopedSlots: this.$scopedSlots,
-      }, this.$slots.default)
+        scopedSlots: context.scopedSlots,
+      }, context.children)
     },
   })
 }
