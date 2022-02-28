@@ -87,7 +87,7 @@ export const LayerBase = Vue.extend({
 
     return h(MountingPortal, {
       props: {
-        mountTo: hostId || 'body',
+        mountTo: hostId ? `#${hostId}` : 'body',
         append: true,
       },
     }, [
