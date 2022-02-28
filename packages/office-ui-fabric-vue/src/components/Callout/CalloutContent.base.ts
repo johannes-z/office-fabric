@@ -86,6 +86,7 @@ export class CalloutContentBase extends BaseComponent {
     for (const key in positionCss.beakPosition.elementPosition) {
       positionCss.beakPosition.elementPosition[key] = `${positionCss.beakPosition.elementPosition[key]}px`
     }
+    if (this.calloutMaxHeight) positionCss.maxHeight = `${this.calloutMaxHeight}px`
     return positionCss
   }
 
