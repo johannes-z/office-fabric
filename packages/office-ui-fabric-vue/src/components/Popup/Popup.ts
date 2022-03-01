@@ -1,144 +1,77 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { getDocument, getWindow, on, Async, doesElementContainFocus, KeyCodes } from '@uifabric-vue/utilities'
-import BaseComponent from '../BaseComponent'
-import { CreateElement, VNode } from 'vue'
-import { IPopupProps } from './Popup.types'
+import { withThemeableProps } from '@/useThemeable'
+import { KeyCodes, modalize } from '@uifabric-vue/utilities'
+import { CreateElement, RenderContext, VNode } from 'vue'
+import { Vue } from 'vue-property-decorator'
 
-@Component({
-  components: {},
-})
-export class Popup extends BaseComponent<IPopupProps> {
-  $refs!: {
-    current: HTMLDivElement
+function useScrollbar (style, root?: HTMLDivElement) {
+  if (style && style.overflowY) {
+    return false
   }
 
-  @Prop({ type: Boolean, default: true }) shouldRestoreFocus!: boolean
-  @Prop({ type: Function, default: null }) onDismiss!: (ev: KeyboardEvent) => any
+  let needsVerticalScrollBar = false
+  if (root && root.firstElementChild) {
+    const rootHeight = root.clientHeight
+    const firstChildHeight = root.firstElementChild.clientHeight
 
-  private _originalFocusedElement!: HTMLElement;
-  private needsVerticalScrollBar = false;
-  private _containsFocus = false;
-
-  created () {
-    this._originalFocusedElement = getDocument()!.activeElement as HTMLElement
-  }
-
-  mounted () {
-    if (this.$refs.current) {
-      this._disposables.push(
-        // @ts-ignore
-        on(this.$refs.current, 'focus', this._onFocus, true),
-        // @ts-ignore
-        on(this.$refs.current, 'blur', this._onBlur, true),
-      )
-      const currentWindow = getWindow(this.$refs.current)
-      if (currentWindow) {
-        // @ts-ignore
-        this._disposables.push(on(currentWindow, 'keydown', this._onKeyDown as any))
-      }
-      if (doesElementContainFocus(this.$refs.current)) {
-        this._containsFocus = true
-      }
-    }
-
-    this._updateScrollBarAsync()
-  }
-
-  public updated () {
-    this._updateScrollBarAsync()
-    this._async.dispose()
-  }
-
-  public beforeDestroy (): void {
-    if (
-      this.shouldRestoreFocus &&
-      this._originalFocusedElement &&
-      this._containsFocus &&
-      (this._originalFocusedElement as any) !== window
-    ) {
-      // This slight delay is required so that we can unwind the stack, let react try to mess with focus, and then
-      // apply the correct focus. Without the setTimeout, we end up focusing the correct thing, and then React wants
-      // to reset the focus back to the thing it thinks should have been focused.
-      if (this._originalFocusedElement) {
-        this._originalFocusedElement.focus()
-      }
+    if (rootHeight > 0 && firstChildHeight > rootHeight) {
+      needsVerticalScrollBar = firstChildHeight - rootHeight > 1
     }
   }
-
-  public render (h: CreateElement, context: any): VNode {
-    const { className } = this
-
-    return h(
-      'div',
-      {
-        ref: 'current',
-        class: className,
-        style: { overflowY: this.needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none' },
-        on: {
-          keydown: this._onKeyDown,
-        },
-      },
-      this.$slots.default,
-    )
-  }
-
-  private _onKeyDown (ev: KeyboardEvent): void {
-    switch (ev.which) {
-      case KeyCodes.escape:
-        if (this.onDismiss) {
-          this.onDismiss(ev)
-
-          ev.preventDefault()
-          ev.stopPropagation()
-        }
-
-        break
-    }
-  };
-
-  private _updateScrollBarAsync (): void {
-    this._async.requestAnimationFrame(() => {
-      this._getScrollBar()
-    })
-  }
-
-  private _getScrollBar (): void {
-    // If overflowY is overriden, don't waste time calculating whether the scrollbar is necessary.
-    // TODO remove ts-ignore and fix `this.style`
-    // @ts-ignore
-    if (this.style && this.style.overflowY) {
-      return
-    }
-
-    let needsVerticalScrollBar = false
-    if (this.$refs.current && this.$refs.current.firstElementChild) {
-      // ClientHeight returns the client height of an element rounded to an
-      // integer. On some browsers at different zoom levels this rounding
-      // can generate different results for the root container and child even
-      // though they are the same height. This causes us to show a scroll bar
-      // when not needed. Ideally we would use BoundingClientRect().height
-      // instead however seems that the API is 90% slower than using ClientHeight.
-      // Therefore instead we will calculate the difference between heights and
-      // allow for a 1px difference to still be considered ok and not show the
-      // scroll bar.
-      const rootHeight = this.$refs.current.clientHeight
-      const firstChildHeight = this.$refs.current.firstElementChild.clientHeight
-      if (rootHeight > 0 && firstChildHeight > rootHeight) {
-        needsVerticalScrollBar = firstChildHeight - rootHeight > 1
-      }
-    }
-    if (this.needsVerticalScrollBar !== needsVerticalScrollBar) {
-      this.needsVerticalScrollBar = needsVerticalScrollBar
-    }
-  }
-
-  private _onFocus (): void {
-    this._containsFocus = true
-  };
-
-  private _onBlur (ev: FocusEvent): void {
-    if (this.$refs.current && this.$refs.current.contains(ev.relatedTarget as HTMLElement)) {
-      this._containsFocus = false
-    }
-  };
+  return needsVerticalScrollBar
 }
+
+function useHideSiblingNodes (props, root?: HTMLDivElement) {
+  const shouldHideSiblings = String(props['aria-modal']).toLowerCase() === 'true' && props.enableAriaHiddenSiblings
+
+  if (!(shouldHideSiblings && root)) {
+    return
+  }
+
+  const unmodalize = modalize(root)
+  return unmodalize
+}
+
+export const Popup = Vue.extend({
+  functional: true,
+
+  props: {
+    ...withThemeableProps(),
+    role: { type: String, default: undefined },
+    ariaLabel: { type: String, default: undefined },
+    ariaLabelledBy: { type: String, default: undefined },
+    ariaDescribedBy: { type: String, default: undefined },
+    propStyle: { type: Object, default: () => {} },
+    forwardRef: { type: HTMLDivElement, default: undefined },
+  },
+
+  render (h: CreateElement, context: RenderContext): VNode {
+    const { role, ariaLabel, ariaLabelledBy, ariaDescribedBy, propStyle, forwardRef } = context.props
+
+    useHideSiblingNodes(context.props, forwardRef)
+    // TODO useRestoreFocus
+
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (ev.which === KeyCodes.escape) {
+        (context.listeners.dismiss as Function)?.(ev)
+      }
+    }
+    // TODO useOnEvent
+
+    const needsVerticalScrollBar = useScrollbar(propStyle, forwardRef)
+
+    return h('div', {
+      ...context.data,
+      ref: context.data.ref,
+      style: { overflowY: needsVerticalScrollBar ? 'scroll' : undefined, outline: 'none', ...propStyle },
+      attrs: {
+        role,
+        ariaLabel,
+        ariaLabelledBy,
+        ariaDescribedBy,
+      },
+      on: {
+        keydown: onKeyDown,
+      },
+    }, context.children)
+  },
+})
