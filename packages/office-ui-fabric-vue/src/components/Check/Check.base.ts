@@ -1,26 +1,29 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import StatelessComponent from '../StatelessComponent'
-import { CreateElement, RenderContext } from 'vue'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { ICheckStyleProps, ICheckStyles } from './Check.types'
+import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 import { FontIcon, Icon } from '../Icon'
+import { ICheckStyleProps, ICheckStyles } from './Check.types'
 
 const getClassNames = classNamesFunction<ICheckStyleProps, ICheckStyles>()
 
-@Component
-export class CheckBase extends StatelessComponent {
-  @Prop({ type: Boolean, default: false }) checked!: boolean
-  @Prop({ type: Boolean, default: true }) useFastIcons!: boolean
+export const CheckBase = Vue.extend({
+  name: 'CheckBase',
 
-  render (h: CreateElement, ctx: RenderContext) {
+  props: {
+    ...withThemeableProps(),
+    checked: { type: Boolean, default: false },
+    useFastIcons: { type: Boolean, default: true },
+  },
+
+  render (h: CreateElement, ctx: RenderContext): VNode {
     const { checked, className, theme, styles, useFastIcons } = ctx.props
 
-    const classNames = getClassNames(styles!, { theme: theme!, className, checked })
+    const classNames = getClassNames(styles!, { theme, className, checked })
     const IconComponent = useFastIcons ? FontIcon : Icon
 
     return h('div', { class: classNames.root }, [
       h(IconComponent, { class: classNames.circle, props: { iconName: 'CircleRating' } }),
       h(IconComponent, { class: classNames.check, props: { iconName: 'StatusCircleCheckmark' } }),
     ])
-  }
-}
+  },
+})

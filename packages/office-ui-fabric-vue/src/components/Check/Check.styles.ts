@@ -1,5 +1,6 @@
-// import { ICheckStyleProps, ICheckStyles } from './Check.types'
-import { HighContrastSelector, IStyle, getGlobalClassNames, IconFontSizes } from '@uifabric/styling'
+import { HighContrastSelector, getGlobalClassNames, IconFontSizes, getHighContrastNoAdjustStyle } from '@uifabric/styling'
+import type { ICheckStyleProps, ICheckStyles } from './Check.types'
+import type { IStyle } from '@uifabric/styling'
 import { getRTL } from '@uifabric-vue/utilities'
 
 export const CheckGlobalClassNames = {
@@ -10,8 +11,7 @@ export const CheckGlobalClassNames = {
   checkHost: 'ms-Check-checkHost',
 }
 
-export const getStyles = (props: any): any => {
-  // tslint:disable-next-line:deprecation
+export const getStyles = (props: ICheckStyleProps): ICheckStyles => {
   const { height = props.checkBoxHeight || '18px', checked, className, theme } = props
 
   const { palette, semanticColors, fonts } = theme
@@ -27,6 +27,10 @@ export const getStyles = (props: any): any => {
     width: height,
     height: height,
     textAlign: 'center',
+    // inline-flex prevents the check from shifting with custom line height styles
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     verticalAlign: 'middle',
   }
 
@@ -109,6 +113,7 @@ export const getStyles = (props: any): any => {
         color: palette.neutralSecondary,
         fontSize: IconFontSizes.medium,
         left: isRTL ? '-0.5px' : '.5px', // for centering the check icon inside the circle.
+        top: '-1px', // the check is slightly lower than center compared to the circle.
 
         selectors: {
           ':hover': {
@@ -116,7 +121,7 @@ export const getStyles = (props: any): any => {
           },
 
           [HighContrastSelector]: {
-            MsHighContrastAdjust: 'none',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },
