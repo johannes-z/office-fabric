@@ -1,5 +1,6 @@
-import { HighContrastSelector, IRawStyle, focusClear, getGlobalClassNames } from '../../Styling'
-import { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
+import { HighContrastSelector, focusClear, getGlobalClassNames, ZIndexes } from '@uifabric/styling'
+import type { IRawStyle } from '@uifabric/styling'
+import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
 
 function getBeakStyle (beakWidth?: number): IRawStyle {
   return {
@@ -17,7 +18,17 @@ const GlobalClassNames = {
 }
 
 export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyles => {
-  const { theme, className, overflowYHidden, calloutWidth, beakWidth, backgroundColor, calloutMaxWidth } = props
+  const {
+    theme,
+    className,
+    overflowYHidden,
+    calloutWidth,
+    beakWidth,
+    backgroundColor,
+    calloutMaxWidth,
+    calloutMinWidth,
+    doNotLayer,
+  } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
@@ -35,6 +46,8 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
       theme.fonts.medium,
       {
         position: 'absolute',
+        display: 'flex',
+        zIndex: doNotLayer ? ZIndexes.Layer : undefined,
         boxSizing: 'border-box',
         borderRadius: effects.roundedCorner2,
         boxShadow: effects.elevation16,
@@ -50,6 +63,7 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
       className,
       !!calloutWidth && { width: calloutWidth },
       !!calloutMaxWidth && { maxWidth: calloutMaxWidth },
+      !!calloutMinWidth && { minWidth: calloutMinWidth },
     ],
     beak: [
       classNames.beak,
@@ -85,6 +99,7 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
         overflowX: 'hidden',
         overflowY: 'auto',
         position: 'relative',
+        width: '100%',
         borderRadius: effects.roundedCorner2,
       },
       overflowYHidden && {

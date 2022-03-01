@@ -15,9 +15,8 @@ export const Callout = Vue.extend({
     directionalHint: { type: Number, default: DirectionalHint.bottomAutoEdge },
   },
 
-  // @ts-ignore
-  render (h: CreateElement, context: any): VNode | undefined {
-    const { layerProps, ...rest } = context.props
+  render (h: CreateElement, context: any): VNode {
+    const { layerProps, doNotLayer, ...rest } = context.props
 
     const content = h(CalloutContent, {
       ...context.data,
@@ -28,7 +27,7 @@ export const Callout = Vue.extend({
       },
     }, context.children)
 
-    return context.props.doNotLayer
+    return doNotLayer
       ? content
       : h(Layer, {
         ...context.data,

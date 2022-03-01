@@ -1,8 +1,8 @@
-import { IStyle, ITheme } from '../../Styling'
-import { DirectionalHint } from '../../common/DirectionalHint'
-import { IRectangle, IStyleFunctionOrObject } from '../../FabricUtilities'
-import { ICalloutPositionedInfo, Point } from '../../utilities/positioning'
+import { IRectangle, IStyleFunctionOrObject, Point } from '@uifabric-vue/utilities'
 import { ILayerProps } from '../Layer'
+import { DirectionalHint } from '../../common/DirectionalHint'
+import type { IStyle, ITheme } from '@uifabric/styling'
+import { ICalloutPositionedInfo } from '@/utilities'
 
 export type Target = Element | string | MouseEvent | Point | null;
 
@@ -12,8 +12,8 @@ export type Target = Element | string | MouseEvent | Point | null;
 export interface ICalloutProps {
   /**
    * The target that the Callout should try to position itself based on.
-   * It can be either an Element a querySelector string of a valid Element
-   * or a MouseEvent. If MouseEvent is given then the origin point of the event will be used.
+   * It can be an element, a query selector string of a valid element,
+   * or a `MouseEvent`. If a `MouseEvent` is given, the origin point of the event will be used.
    */
   target?: any;
 
@@ -32,7 +32,7 @@ export interface ICalloutProps {
   directionalHintForRTL?: DirectionalHint;
 
   /**
-   * The gap between the Callout and the target
+   * The gap between the Callout and the target, specified as number of pixels
    * @defaultvalue 0
    */
   gapSpace?: number;
@@ -50,10 +50,16 @@ export interface ICalloutProps {
   calloutWidth?: number;
 
   /**
-   * Custom width for callout including borders. If value is 0, no width is applied.
+   * Maximum width for callout including borders. If value is 0, no width is applied.
    * @defaultvalue 0
    */
   calloutMaxWidth?: number;
+
+  /**
+   * Minimum width for callout including borders. If value is 0, no width is applied.
+   * @defaultvalue 0
+   */
+  calloutMinWidth?: number;
 
   /**
    * The background color of the Callout in hex format ie. #ffffff.
@@ -62,7 +68,7 @@ export interface ICalloutProps {
   backgroundColor?: string;
 
   /**
-   * The bounding rectangle (or callback that returns a rectangle) for which  the contextual menu can appear in.
+   * The bounding rectangle the callout can appear in (or callback that returns a rectangle).
    */
   bounds?: IRectangle | ((target?: any, targetWindow?: Window) => IRectangle | undefined);
 
@@ -73,7 +79,7 @@ export interface ICalloutProps {
   minPagePadding?: number;
 
   /**
-   * If true then the beak is visible. If false it will not be shown.
+   * Whether the beak is visible.
    * @defaultvalue true
    */
   isBeakVisible?: boolean;
@@ -106,34 +112,34 @@ export interface ICalloutProps {
   dismissOnTargetClick?: boolean;
 
   /**
-   * If true then the callout will dismiss when the window gets focus
+   * If defined, then takes priority over `preventDismissOnLostFocus`, `preventDismissOnResize`,
+   * and `preventDismissOnScroll`.
+   * If it returns true, the callout will not dismiss for this event.
+   * If not defined or returns false, the callout can dismiss for this event.
+   */
+  preventDismissOnEvent?: (ev: Event) => boolean;
+
+  /**
+   * If true, callout will dismiss when the window gets focus.
    * @defaultvalue false
    */
   shouldDismissOnWindowFocus?: boolean;
 
   /**
-   * If defined, then takes priority over preventDismissOnLostFocus, preventDismissOnResize,
-   * and preventDismissOnScroll.
-   * If it returns true, then callout will not dismiss for this event.
-   * If not defined or returns false, callout can dismiss for this event.
-   */
-  preventDismissOnEvent?: (ev: Event) => boolean;
-
-  /**
-   * If true the position returned will have the menu element cover the target.
-   * If false then it will position next to the target;
+   * If true, the callout element will be positioned to cover the target.
+   * If false, it will position next to the target.
    * @defaultvalue false
    */
   coverTarget?: boolean;
 
   /**
    * If true the positioning logic will prefer to flip edges rather than to nudge the rectangle to fit within bounds,
-   * thus making sure the element aligns perfectly with target's alignment edge
+   * thus making sure the element aligns perfectly with target's alignment edge.
    */
   alignTargetEdge?: boolean;
 
   /**
-   * Aria role assigned to the callout (Eg. dialog, alertdialog).
+   * Aria role assigned to the callout (e.g. `dialog`, `alertdialog`).
    */
   role?: string;
 
@@ -143,12 +149,12 @@ export interface ICalloutProps {
   ariaLabel?: string;
 
   /**
-   *  Defines the element id referencing the element containing label text for callout.
+   * ID of the element which contains label text for the callout.
    */
   ariaLabelledBy?: string;
 
   /**
-   * Defines the element id referencing the element containing the description for the callout.
+   * ID of the element which contains the description for the callout.
    */
   ariaDescribedBy?: string;
 
@@ -172,14 +178,14 @@ export interface ICalloutProps {
   onLayerMounted?: () => void;
 
   /**
-   * Optional props to pass to the Layer component hosting the panel.
+   * Optional props to pass to the Layer component hosting the callout.
    */
   layerProps?: ILayerProps;
 
   /**
    * Optional callback that is called once the callout has been correctly positioned.
    * @param positions - Gives the user information about how the callout is positioned such as the
-   * final edge of the target that it positioned against, the beak position, and the beaks relationship to the
+   * final edge of the target that it positioned against, the beak position, and the beak's relationship to the
    * edges of the callout.
    */
   onPositioned?: (positions?: ICalloutPositionedInfo) => void;
@@ -187,10 +193,10 @@ export interface ICalloutProps {
   /**
    * Callback when the Callout tries to close.
    */
-  onDismiss?: (ev?: any) => void;
+  onDismiss?: (ev?: Event) => void;
 
   /**
-   * If true do not render on a new layer. If false render on a new layer.
+   * If true, do not render on a new layer. If false, render on a new layer.
    */
   doNotLayer?: boolean;
 
@@ -208,23 +214,20 @@ export interface ICalloutProps {
   finalHeight?: number;
 
   /**
-   * Manually set OverflowYHidden style prop to true on calloutMain element
-   * A variety of callout load animations will need this to hide the scollbar that can appear
+   * Manually set `overflowYHidden` style prop to true on `calloutMain` element.
+   * A variety of callout load animations will need this to hide the scollbar that can appear.
    */
   hideOverflow?: boolean;
 
   /**
-   * If true then the callout will attempt to focus the first focusable element that it contains.
-   * If it doesn't find an element, no focus will be set and the method will return false.
-   * This means that it's the contents responsibility to either set focus or have
-   * focusable items.
-   * @returns True if focus was set, false if it was not.
+   * If true, then the callout will attempt to focus the first focusable element that it contains.
+   * If it doesn't find a focusable element, no focus will be set.
    */
   setInitialFocus?: boolean;
 
   /**
-   * Set max height of callout
-   * When not set the callout will expand with contents up to the bottom of the screen
+   * Set max height of callout.
+   * When not set, the callout will expand with contents up to the bottom of the screen.
    */
   calloutMaxHeight?: number;
 
@@ -253,34 +256,27 @@ export interface ICalloutProps {
   hidden?: boolean;
 
   /**
-   * If true, the component will be updated even when hidden=true.
-   * Note that this would consume resources to update even though
-   * nothing is being shown to the user.
+   * If true, the component will be updated even when `hidden` is true.
+   * Note that this would consume resources to update even though nothing is being shown to the user.
    * This might be helpful though if your updates are small and you want the
-   * callout to be revealed fast to the user when hidden is set to false.
+   * callout to be revealed quickly to the user when `hidden` is set to false.
    */
   shouldUpdateWhenHidden?: boolean;
 
   /**
-   * If true, when this component is unmounted, focus will be restored to the element that had focus when the component
-   * first mounted.
+   * If specified, determines whether the underlying {@link Popup} component should try to restore
+   * focus when it is dismissed.  When set to false, the Popup won't try to restore focus to
+   * the last focused element.
    * @defaultvalue true
-   * @deprecated use onRestoreFocus callback instead
+   * @deprecated use `onRestoreFocus` instead
    */
   shouldRestoreFocus?: boolean;
 
   /**
-   * Called when the component is unmounting, and focus needs to be restored.
-   * Argument passed down contains two variables, the element that the underlying
-   * popup believes focus should go to * and whether or not the popup currently
-   * contains focus. If this is provided, focus will not be restored automatically,
-   * you'll need to call originalElement.focus()
+   * Called when the component is unmounting, and focus needs to be restored. If this is provided,
+   * focus will not be restored automatically, and you'll need to call `params.originalElement.focus()`.
    */
-  onRestoreFocus?: (options: {
-    originalElement?: HTMLElement | Window;
-    containsFocus: boolean;
-    documentContainsFocus: boolean;
-  }) => void;
+  onRestoreFocus?: (params: any) => void;
 }
 
 /**
@@ -288,7 +284,7 @@ export interface ICalloutProps {
  */
 export interface ICalloutContentStyleProps {
   /**
-   * Theme to apply to the calloutContent.
+   * Theme to apply to the callout content.
    */
   theme: ITheme;
 
@@ -308,8 +304,7 @@ export interface ICalloutContentStyleProps {
   positions?: ICalloutPositionedInfo;
 
   /**
-   * Whether or not to clip content of the callout,
-   * if it overflows vertically.
+   * Whether or not to clip content of the callout, if it overflows vertically.
    */
   overflowYHidden?: boolean;
 
@@ -327,6 +322,16 @@ export interface ICalloutContentStyleProps {
    * Max width for callout including borders.
    */
   calloutMaxWidth?: number;
+
+  /**
+   * Min width for callout including borders.
+   */
+  calloutMinWidth?: number;
+
+  /**
+   * If true, a z-index should be set on the root element (since the Callout will not be rendered on a new layer).
+   */
+  doNotLayer?: boolean;
 }
 
 /**
@@ -358,3 +363,5 @@ export interface ICalloutContentStyles {
    */
   calloutMain: IStyle;
 }
+
+// export type { Target }
