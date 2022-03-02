@@ -1,7 +1,5 @@
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './DefaultButton.styles'
-import BaseComponent from '../../BaseComponent'
-import { IButtonProps } from '../Button.types'
 import Vue, { CreateElement, VNode } from 'vue'
 import { IButtonStyles } from '@/components'
 import { withThemeableProps } from '@/useThemeable'
@@ -16,7 +14,7 @@ export const DefaultButton = Vue.extend({
 
   computed: {
     internalStyles (): IButtonStyles {
-      const { primary = false, theme } = this
+      const { primary, theme } = this
       return getStyles(theme, this.styles, primary)
     },
   },
