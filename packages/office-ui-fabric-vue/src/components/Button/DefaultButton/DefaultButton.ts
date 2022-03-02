@@ -9,16 +9,16 @@ import { withThemeableProps } from '@/useThemeable'
 export const DefaultButton = Vue.extend({
   props: {
     ...withThemeableProps(),
-    text:{ type: String, default: '' },
-    primary:{ type: Boolean, default: false },
-    disabled:{ type: Boolean, default: false },
+    text: { type: String, default: '' },
+    primary: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
   },
 
   computed: {
     internalStyles (): IButtonStyles {
       const { primary = false, theme } = this
       return getStyles(theme, this.styles, primary)
-    }
+    },
   },
 
   render (h: CreateElement): VNode {
@@ -37,5 +37,5 @@ export const DefaultButton = Vue.extend({
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
-  }
+  },
 })

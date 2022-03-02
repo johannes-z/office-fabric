@@ -6,13 +6,13 @@ import { getStyles } from './MessageBarButton.styles'
 
 export const MessageBarButton = Vue.extend({
   props: {
-    ...withThemeableProps()
+    ...withThemeableProps(),
   },
 
   computed: {
     internalStyles (): IButtonStyles {
       return getStyles(this.theme, this.styles)
-    }
+    },
   },
 
   render (h: CreateElement): VNode {
@@ -27,5 +27,5 @@ export const MessageBarButton = Vue.extend({
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
-  }
+  },
 })

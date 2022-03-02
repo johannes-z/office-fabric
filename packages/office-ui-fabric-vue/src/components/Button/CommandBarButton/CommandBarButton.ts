@@ -5,15 +5,15 @@ import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './CommandBarButton.styles'
 
 export const CommandBarButton = Vue.extend({
-  props:{
+  props: {
     ...withThemeableProps(),
   },
 
   computed: {
     internalStyles (): IButtonStyles {
-     const { theme, styles } = this
-     return getStyles(theme, styles)
-   }
+      const { theme, styles } = this
+      return getStyles(theme, styles)
+    },
   },
 
   render (h: CreateElement): VNode {
@@ -31,5 +31,5 @@ export const CommandBarButton = Vue.extend({
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
-  }
+  },
 })

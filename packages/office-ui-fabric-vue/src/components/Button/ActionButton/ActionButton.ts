@@ -19,7 +19,7 @@ export const ActionButton = Vue.extend({
     internalStyles (): IButtonStyles {
       const { theme, styles } = this
       return getStyles(theme, styles)
-    }
+    },
   },
 
   render (h: CreateElement): VNode {
@@ -34,5 +34,5 @@ export const ActionButton = Vue.extend({
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
-  }
+  },
 })

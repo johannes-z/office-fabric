@@ -1,15 +1,15 @@
-import { concatStyleSets, HighContrastSelector } from '@uifabric/styling';
-import { memoizeFunction } from '@uifabric-vue/utilities';
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles';
-import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles';
-import type { IButtonStyles } from '../Button.types';
-import type { ITheme } from '@uifabric/styling';
+import { concatStyleSets, HighContrastSelector } from '@uifabric/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
+import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles'
+import type { IButtonStyles } from '../Button.types'
+import type { ITheme } from '@uifabric/styling'
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme);
-    const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme);
-    const { palette, semanticColors } = theme;
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
+    const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme)
+    const { palette, semanticColors } = theme
     const iconButtonStyles: IButtonStyles = {
       root: {
         padding: '0 4px',
@@ -58,8 +58,8 @@ export const getStyles = memoizeFunction(
       rootDisabled: {
         color: palette.neutralTertiaryAlt,
       },
-    };
+    }
 
-    return concatStyleSets(baseButtonStyles, iconButtonStyles, splitButtonStyles, customStyles)!;
+    return concatStyleSets(baseButtonStyles, iconButtonStyles, splitButtonStyles, customStyles)!
   },
-);
+)

@@ -1,6 +1,6 @@
-import { ActionButton } from '../ActionButton/ActionButton';
+import { ActionButton } from '../ActionButton/ActionButton'
 
 /**
  * {@docCategory Button}
  */
-export const CommandButton = ActionButton;
+export const CommandButton = ActionButton

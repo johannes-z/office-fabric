@@ -8,14 +8,14 @@ import { IButtonStyles } from '..'
 export const CompoundButton = new Vue({
   props: {
     ...withThemeableProps(),
-    primary: { type: Boolean, default: false }
+    primary: { type: Boolean, default: false },
   },
 
   computed: {
     internalStyles (): IButtonStyles {
       const { primary = false, theme, styles } = this
       return getStyles(theme, styles, primary)
-    }
+    },
   },
 
   render (h: CreateElement): VNode {
@@ -36,5 +36,5 @@ export const CompoundButton = new Vue({
       on: this.$listeners,
       scopedSlots: this.$scopedSlots,
     })
-  }
+  },
 })

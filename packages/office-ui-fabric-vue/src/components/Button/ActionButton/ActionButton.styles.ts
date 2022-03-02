@@ -1,15 +1,15 @@
-import { concatStyleSets, HighContrastSelector } from '@uifabric/styling';
-import { memoizeFunction } from '@uifabric-vue/utilities';
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles';
-import type { IButtonStyles } from '../Button.types';
-import type { ITheme } from '@uifabric/styling';
+import { concatStyleSets, HighContrastSelector } from '@uifabric/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
+import type { IButtonStyles } from '../Button.types'
+import type { ITheme } from '@uifabric/styling'
 
-const DEFAULT_BUTTON_HEIGHT = '40px';
-const DEFAULT_PADDING = '0 4px';
+const DEFAULT_BUTTON_HEIGHT = '40px'
+const DEFAULT_PADDING = '0 4px'
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme);
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
     const actionButtonStyles: IButtonStyles = {
       root: {
         padding: DEFAULT_PADDING,
@@ -87,8 +87,8 @@ export const getStyles = memoizeFunction(
       textContainer: {
         flexGrow: 0,
       },
-    };
+    }
 
-    return concatStyleSets(baseButtonStyles, actionButtonStyles, customStyles)!;
+    return concatStyleSets(baseButtonStyles, actionButtonStyles, customStyles)!
   },
-);
+)

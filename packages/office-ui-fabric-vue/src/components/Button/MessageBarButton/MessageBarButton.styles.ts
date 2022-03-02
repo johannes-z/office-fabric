@@ -1,7 +1,7 @@
-import { concatStyleSets, getFocusStyle } from '@uifabric/styling';
-import { memoizeFunction } from '@uifabric-vue/utilities';
-import type { IButtonStyles } from '../Button.types';
-import type { ITheme } from '@uifabric/styling';
+import { concatStyleSets, getFocusStyle } from '@uifabric/styling'
+import { memoizeFunction } from '@uifabric-vue/utilities'
+import type { IButtonStyles } from '../Button.types'
+import type { ITheme } from '@uifabric/styling'
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles =>
@@ -23,4 +23,4 @@ export const getStyles = memoizeFunction(
       },
       customStyles,
     ),
-);
+)
