@@ -1,11 +1,11 @@
-import { concatStyleSets, IStyle } from '@uifabric/merge-styles'
-import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric/styling'
-import { IButtonStyles } from '../Button.types'
+import { HighContrastSelector, concatStyleSets, getFocusStyle, getHighContrastNoAdjustStyle } from '@uifabric/styling'
 import { memoizeFunction } from '@uifabric-vue/utilities'
+import type { IButtonStyles } from '../Button.types'
+import type { ITheme, IStyle } from '@uifabric/styling'
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {
-    const { effects, palette } = theme
+    const { effects, palette, semanticColors } = theme
 
     const buttonHighContrastFocus = {
       left: -2,
@@ -41,14 +41,22 @@ export const getStyles = memoizeFunction(
 
               selectors: {
                 [HighContrastSelector]: {
-                  color: 'Window',
-                  backgroundColor: 'WindowText',
-                  MsHighContrastAdjust: 'none',
+                  color: 'WindowText',
+                  backgroundColor: 'Window',
+                  border: '1px solid WindowText',
+                  borderRightWidth: '0',
+                  ...getHighContrastNoAdjustStyle(),
                 },
               },
             },
             '.ms-Button--primary + .ms-Button': {
               border: 'none',
+              selectors: {
+                [HighContrastSelector]: {
+                  border: '1px solid WindowText',
+                  borderLeftWidth: '0',
+                },
+              },
             },
           },
         },
@@ -64,6 +72,7 @@ export const getStyles = memoizeFunction(
             },
           },
           '.ms-Button.is-disabled': {
+            color: semanticColors.buttonTextDisabled,
             selectors: {
               [HighContrastSelector]: {
                 color: 'GrayText',
@@ -81,7 +90,7 @@ export const getStyles = memoizeFunction(
               [HighContrastSelector]: {
                 color: 'Window',
                 backgroundColor: 'WindowText',
-                MsHighContrastAdjust: 'none',
+                ...getHighContrastNoAdjustStyle(),
               },
             },
           },
@@ -94,7 +103,7 @@ export const getStyles = memoizeFunction(
               [HighContrastSelector]: {
                 color: 'Window',
                 backgroundColor: 'WindowText',
-                MsHighContrastAdjust: 'none',
+                ...getHighContrastNoAdjustStyle(),
               },
             },
           },
@@ -124,6 +133,11 @@ export const getStyles = memoizeFunction(
         marginTop: 0,
         marginRight: 0,
         marginBottom: 0,
+        [HighContrastSelector]: {
+          '.ms-Button-menuIcon': {
+            color: 'WindowText',
+          },
+        },
       },
       splitButtonDivider: {
         ...splitButtonDividerBaseStyles,
@@ -158,9 +172,16 @@ export const getStyles = memoizeFunction(
               },
             },
           },
+          '.ms-Button-menuIcon': {
+            selectors: {
+              [HighContrastSelector]: {
+                color: 'GrayText',
+              },
+            },
+          },
           [HighContrastSelector]: {
-            border: '1px solid GrayText',
             color: 'GrayText',
+            border: '1px solid GrayText',
             backgroundColor: 'Window',
           },
         },
@@ -182,8 +203,12 @@ export const getStyles = memoizeFunction(
             color: 'GrayText',
             borderColor: 'GrayText',
             backgroundColor: 'Window',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
+      },
+      splitButtonMenuFocused: {
+        ...getFocusStyle(theme, { highContrastStyle: buttonHighContrastFocus, inset: 2 }),
       },
     }
 

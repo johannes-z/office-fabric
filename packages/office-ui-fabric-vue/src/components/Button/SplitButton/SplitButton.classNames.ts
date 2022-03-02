@@ -1,6 +1,6 @@
-import { mergeStyles } from '@uifabric/merge-styles'
 import { memoizeFunction } from '@uifabric-vue/utilities'
-import { IButtonStyles } from '../Button.types'
+import { mergeStyles } from '@uifabric/styling'
+import type { IButtonStyles } from '../Button.types'
 
 export interface ISplitButtonClassNames {
   root?: string;
@@ -9,14 +9,29 @@ export interface ISplitButtonClassNames {
   flexContainer?: string;
   divider?: string;
 }
-export const getClassNames = memoizeFunction(
-  (styles: IButtonStyles, disabled: boolean, expanded: boolean, checked: boolean, primaryDisabled?: boolean): ISplitButtonClassNames => {
+
+export const getSplitButtonClassNames = memoizeFunction(
+  (
+    styles: IButtonStyles,
+    disabled: boolean,
+    expanded: boolean,
+    checked: boolean,
+    primaryDisabled?: boolean,
+  ): ISplitButtonClassNames => {
     return {
       root: mergeStyles(
         styles.splitButtonMenuButton,
         expanded && [styles.splitButtonMenuButtonExpanded],
         disabled && [styles.splitButtonMenuButtonDisabled],
         checked && !disabled && [styles.splitButtonMenuButtonChecked],
+        primaryDisabled &&
+          !disabled && [
+          {
+            selectors: {
+              ':focus': styles.splitButtonMenuFocused,
+            },
+          },
+        ],
       ),
 
       splitButtonContainer: mergeStyles(
@@ -50,7 +65,10 @@ export const getClassNames = memoizeFunction(
 
       flexContainer: mergeStyles(styles.splitButtonFlexContainer),
 
-      divider: mergeStyles(styles.splitButtonDivider, (primaryDisabled || disabled) && styles.splitButtonDividerDisabled),
+      divider: mergeStyles(
+        styles.splitButtonDivider,
+        (primaryDisabled || disabled) && styles.splitButtonDividerDisabled,
+      ),
     }
   },
 )
