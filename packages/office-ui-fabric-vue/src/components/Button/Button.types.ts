@@ -1,10 +1,12 @@
-import { ITheme, IStyle } from '@uifabric/styling'
-import { IIconProps } from '../Icon'
-import { IButtonClassNames } from './BaseButton.classNames'
-import { ISplitButtonClassNames } from './SplitButton/SplitButton.classNames'
+// import { BaseButton } from './BaseButton';
+// import { Button } from './Button';
 import { KeyCodes } from '@uifabric-vue/utilities'
-import { IKeytipProps } from '../Keytip/Keytip.types'
-import { IContextualMenuProps } from '../ContextualMenu'
+import type { IButtonClassNames } from './BaseButton.classNames'
+import type { ISplitButtonClassNames } from './SplitButton/SplitButton.classNames'
+import type { IContextualMenuProps } from '../ContextualMenu'
+import type { IIconProps } from '../Icon'
+import type { IStyle, ITheme } from '@uifabric/styling'
+import type { IKeytipProps } from '../Keytip'
 
 /**
  * {@docCategory Button}
@@ -25,10 +27,12 @@ export interface IButton {
    * Params are optional overrides to the ones defined in `menuProps` to apply to just this instance of
    * opening the menu.
    *
-   * @param shouldFocusOnContainer - override to the ContextualMenu shouldFocusOnContainer prop.
-   * BaseButton implementation defaults to 'undefined'.
-   * @param shouldFocusOnMount - override to the ContextualMenu shouldFocusOnMount prop. BaseButton implementation
-   * defaults to `true`.
+   * @param shouldFocusOnContainer - override to the ContextualMenu `shouldFocusOnContainer` prop.
+   * BaseButton implementation defaults to `undefined`.
+   * Avoid using `shouldFocusOnContainer` as it breaks the default focus behaviour when using
+   * assistive technologies.
+   * @param shouldFocusOnMount - override to the ContextualMenu `shouldFocusOnMount` prop.
+   * BaseButton implementation defaults to `true`.
    */
   openMenu: (shouldFocusOnContainer?: boolean, shouldFocusOnMount?: boolean) => void;
 }
@@ -36,8 +40,19 @@ export interface IButton {
 /**
  * {@docCategory Button}
  */
-// tslint:disable:deprecation
 export interface IButtonProps {
+  /**
+   * Optional callback to access the `IButton` interface. Use this instead of `ref` for accessing
+   * the public methods and properties of the component.
+   */
+  // componentRef?: IRefObject<IButton>;
+
+  /**
+   * Optional callback to access the root DOM element.
+   * @deprecated Temporary solution which will be replaced with ref in the V8 release.
+   */
+  // elementRef?: React.Ref<HTMLElement>;
+
   /**
    * If provided, this component will be rendered as an anchor.
    * @defaultvalue ElementType.anchor
@@ -45,13 +60,13 @@ export interface IButtonProps {
   href?: string;
 
   /**
-   * Changes the visual presentation of the button to be emphasized (if defined)
+   * Changes the visual presentation of the button to be emphasized.
    * @defaultvalue false
    */
   primary?: boolean;
 
   /**
-   * Unique id to identify the item. Typically a duplicate of key value.
+   * Unique ID to identify the item. Typically a duplicate of key value.
    */
   uniqueId?: string | number;
 
@@ -66,7 +81,7 @@ export interface IButtonProps {
   allowDisabledFocus?: boolean;
 
   /**
-   * If set to true and if this is a splitButton (split == true) then the primary action of a split button is disabled.
+   * If set to true and this is a split button (`split` is true), the split button's primary action is disabled.
    */
   primaryDisabled?: boolean;
 
@@ -81,7 +96,7 @@ export interface IButtonProps {
   theme?: ITheme;
 
   /**
-   * Whether the button is checked
+   * Whether the button is checked. Should be used with the `toggle` attribute when creating a standalone on/off button.
    */
   checked?: boolean;
 
@@ -109,7 +124,7 @@ export interface IButtonProps {
   ariaDescription?: string;
 
   /**
-   * If provided and is true it adds an 'aria-hidden' attribute instructing screen readers to ignore the element.
+   * If true, add an `aria-hidden` attribute instructing screen readers to ignore the element.
    */
   ariaHidden?: boolean;
 
@@ -125,20 +140,20 @@ export interface IButtonProps {
   iconProps?: IIconProps;
 
   /**
-   * Props for button menu. Providing this will default to showing the menu icon. See menuIconProps for overriding
-   * how the default icon looks. Providing this in addition of onClick and setting the split property to true will
-   * render a SplitButton.
+   * Props for button menu. Providing this will default to showing the menu icon. See `menuIconProps` for overriding
+   * how the default icon looks. Providing this in addition to `onClick` and setting the `split` property to `true`
+   * will render a SplitButton.
    */
   menuProps?: IContextualMenuProps;
 
   /**
-   * Callback that runs after Button's contextualmenu was closed (removed from the DOM)
+   * Callback that runs after Button's contextual menu was closed (removed from the DOM)
    */
   onAfterMenuDismiss?: () => void;
 
   /**
-   * If set to true, and if menuProps and onClick are provided, the button will render as a SplitButton.
-   * @defaultvalue false
+   * If set to true, and if `menuProps` and `onClick` are provided, the button will render as a SplitButton.
+   * @default false
    */
   split?: boolean;
 
@@ -155,37 +170,43 @@ export interface IButtonProps {
   /**
    * Optional callback when menu is clicked.
    */
-  onMenuClick?: (ev?: MouseEvent | KeyboardEvent, button?: IButtonProps) => void;
+  onMenuClick?: (ev?: any, button?: IButtonProps) => void;
 
   /**
    * Custom render function for the icon
    */
-  onRenderIcon?: any;
+  // onRenderIcon?: IRenderFunction<IButtonProps>;
 
   /**
    * Custom render function for the label text.
    */
-  onRenderText?: any;
+  // onRenderText?: IRenderFunction<IButtonProps>;
 
   /**
-   * Custom render function for the desciption text.
+   * Custom render function for the description text.
    */
-  onRenderDescription?: any;
+  // onRenderDescription?: IRenderFunction<IButtonProps>;
 
   /**
    * Custom render function for the aria description element.
    */
-  onRenderAriaDescription?: any;
+  // onRenderAriaDescription?: IRenderFunction<IButtonProps>;
 
   /**
    * Custom render function for rendering the button children.
    */
-  onRenderChildren?: any;
+  // onRenderChildren?: IRenderFunction<IButtonProps>;
 
   /**
    * Custom render function for button menu icon
    */
-  onRenderMenuIcon?: any;
+  // onRenderMenuIcon?: IRenderFunction<IButtonProps>;
+
+  /**
+   * @deprecated Deprecated at v6.3.2, to be removed at \>= v7.0.0.
+   * Use `menuAs` instead.
+   */
+  // onRenderMenu?: IRenderFunction<IContextualMenuProps>;
 
   /**
    * Render a custom menu in place of the normal one.
@@ -194,19 +215,38 @@ export interface IButtonProps {
 
   /**
    * Description of the action this button takes.
-   * Only used for compound buttons
+   * Only used for compound buttons.
    */
   secondaryText?: string;
 
   /**
-   * Any custom data the developer wishes to associate with the menu item.
+   * @defaultvalue ButtonType.default
+   * @deprecated Deprecated at v1.2.3, to be removed at \>= v2.0.0.
+   * Use specific button component instead.
+   */
+
+  buttonType?: ButtonType;
+
+  /**
+   * @deprecated Deprecated at v0.56.2, to be removed at \>= v1.0.0.
+   * Use native props on the Button itself instead.
+   * They will be mixed into the button/anchor element rendered by the component.
+   */
+  rootProps?: any;
+
+  /**
+   * @deprecated No longer used. Use `checked` if setting state.
+   */
+  toggled?: boolean;
+
+  /**
+   * Any custom data the developer wishes to associate with the button.
    */
   data?: any;
 
   /**
    * Method to provide the classnames to style a button.
-   * The default value for this prop is the getClassnames func
-   * defined in BaseButton.classnames.
+   * The default value for this prop is the `getClassnames` func defined in `BaseButton.classnames.ts`.
    * @defaultvalue getBaseButtonClassNames
    */
   getClassNames?: (
@@ -225,8 +265,7 @@ export interface IButtonProps {
 
   /**
    * Method to provide the classnames to style a button.
-   * The default value for this prop is the getClassnames func
-   * defined in BaseButton.classnames.
+   * The default value for this prop is the `getClassnames` func defined in `BaseButton.classnames.ts`.
    * @defaultvalue getBaseSplitButtonClassNames
    */
   getSplitButtonClassNames?: (
@@ -238,8 +277,8 @@ export interface IButtonProps {
 
   /**
    * Provides a custom KeyCode that can be used to open the button menu.
-   * The default KeyCode is the down arrow.
-   * A value of null can be provided to disable the key codes for opening the button menu.
+   * A value of `null` can be provided to disable opening the button menu with a key press.
+   * @default KeyCodes.down
    */
   menuTriggerKeyCode?: KeyCodes | null;
 
@@ -252,26 +291,26 @@ export interface IButtonProps {
    * Menu will not be created or destroyed when opened or closed, instead it
    * will be hidden. This will improve perf of the menu opening but could potentially
    * impact overall perf by having more elements in the dom. Should only be used
-   * when perf is important.
+   * when menu perf is important.
+   *
    * Note: This may increase the amount of time it takes for the button itself to mount.
    */
   persistMenu?: boolean;
 
   /**
-   * If true, the persisted menu is rendered hidden when the button
-   * initially mounts. Non-persisted menus will
-   * not be in the component tree unless they are being shown
+   * If true, the persisted menu is rendered hidden when the button initially mounts.
+   * Non-persisted menus will not be in the component tree unless they are being shown.
    *
    * Note: This increases the time the button will take to mount, but
    * can improve perceived menu open perf. when the user opens the menu.
    *
-   * @defaultvalue undefined, equivalent to false
+   * @defaultvalue `undefined`, equivalent to false
    *
    * @deprecated There is known bug in Edge when this prop is true where scrollbars
    * overlap with the content when a menu is first rendered hidden.
-   * See: https://github.com/microsoft/fluentui/issues/9034
    * Please do not start using this. If you are already using this,
-   * please make sure that you are doing so only in non-Edge browsers
+   * please make sure that you are doing so only in non-Edge browsers.
+   * See: https://github.com/microsoft/fluentui/issues/9034
    */
   renderPersistedMenuHiddenOnMount?: boolean;
 
@@ -283,8 +322,7 @@ export interface IButtonProps {
   splitButtonMenuProps?: IButtonProps;
 
   /**
-   * Style for the description text if applicable (for compound buttons.)
-   * Deprecated, use `secondaryText` instead.
+   * Style for the description text if applicable (for compound buttons).
    * @deprecated Use `secondaryText` instead.
    */
   description?: IStyle;
@@ -305,9 +343,9 @@ export interface IButtonProps {
  * {@docCategory Button}
  */
 export enum ElementType {
-  /** <button> element. */
+  /** `button` element. */
   button = 0,
-  /** <a> element. */
+  /** `a` element. */
   anchor = 1,
 }
 
@@ -489,12 +527,12 @@ export interface IButtonStyles {
   menuIconChecked?: IStyle;
 
   /**
-   * Style for the description text if applicable (for compound buttons.)
+   * Style for the description text if applicable (for compound buttons).
    */
   description?: IStyle;
 
   /**
-   * Style for the description text if applicable (for compound buttons.)
+   * Style for the description text if applicable (for compound buttons).
    */
   secondaryText?: IStyle;
 
@@ -599,4 +637,9 @@ export interface IButtonStyles {
    * Style override for the SplitButton FlexContainer.
    */
   splitButtonFlexContainer?: IStyle;
+
+  /**
+   * Style override for the SplitButton when only primaryButton is in a disabled state
+   */
+  splitButtonMenuFocused?: IStyle;
 }

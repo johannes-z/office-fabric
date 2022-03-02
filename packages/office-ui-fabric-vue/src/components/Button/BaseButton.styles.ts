@@ -1,8 +1,7 @@
-
-import { IButtonStyles } from './Button.types'
 import { memoizeFunction } from '@uifabric-vue/utilities'
-import { HighContrastSelector, ITheme, getFocusStyle, hiddenContentStyle } from '@uifabric/styling'
-import { IRawStyle } from '@uifabric/merge-styles'
+import { HighContrastSelector, getFocusStyle, hiddenContentStyle } from '@uifabric/styling'
+import type { IButtonStyles } from './Button.types'
+import type { ITheme, IRawStyle } from '@uifabric/styling'
 
 const noOutline: IRawStyle = {
   outline: 0,
@@ -15,7 +14,6 @@ const iconStyle = (fontSize?: string | number): IRawStyle => {
     height: '16px',
     lineHeight: '16px',
     textAlign: 'center',
-    verticalAlign: 'middle',
     flexShrink: 0,
   }
 }
@@ -37,7 +35,6 @@ export const getStyles = memoizeFunction(
       top: -2,
       bottom: -2,
       right: -2,
-      border: 'none',
       outlineColor: 'ButtonText',
     }
 
@@ -53,7 +50,6 @@ export const getStyles = memoizeFunction(
           textDecoration: 'none',
           textAlign: 'center',
           cursor: 'pointer',
-          verticalAlign: 'top',
           padding: '0 16px',
           borderRadius: effects.roundedCorner2,
 
@@ -75,24 +71,29 @@ export const getStyles = memoizeFunction(
           borderColor: disabledBackground,
           color: disabledText,
           cursor: 'default',
-          pointerEvents: 'none',
           selectors: {
             ':hover': noOutline,
             ':focus': noOutline,
-            [HighContrastSelector]: {
-              color: 'grayText',
-              borderColor: 'grayText',
-            },
           },
         },
       ],
 
       iconDisabled: {
         color: disabledText,
+        selectors: {
+          [HighContrastSelector]: {
+            color: 'GrayText',
+          },
+        },
       },
 
       menuIconDisabled: {
         color: disabledText,
+        selectors: {
+          [HighContrastSelector]: {
+            color: 'GrayText',
+          },
+        },
       },
 
       flexContainer: {

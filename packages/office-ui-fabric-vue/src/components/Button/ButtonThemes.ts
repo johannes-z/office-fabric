@@ -1,7 +1,7 @@
-import { ITheme, HighContrastSelector } from '@uifabric/styling'
+import { HighContrastSelector, getHighContrastNoAdjustStyle } from '@uifabric/styling'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
-import { IRawStyle } from '@uifabric/merge-styles'
-import { IButtonStyles } from './Button.types'
+import type { IButtonStyles } from './Button.types'
+import type { ITheme, IRawStyle } from '@uifabric/styling'
 
 const splitButtonDividerBaseStyles = (): IRawStyle => {
   return {
@@ -13,15 +13,17 @@ const splitButtonDividerBaseStyles = (): IRawStyle => {
   }
 }
 
-export function standardStyles (theme: ITheme): any {
+export function standardStyles (theme: ITheme): IButtonStyles {
   const { semanticColors: s, palette: p } = theme
 
   const buttonBackground = s.buttonBackground
   const buttonBackgroundPressed = s.buttonBackgroundPressed
   const buttonBackgroundHovered = s.buttonBackgroundHovered
+  const buttonBackgroundDisabled = s.buttonBackgroundDisabled
 
   const buttonText = s.buttonText
   const buttonTextHovered = s.buttonTextHovered
+  const buttonTextDisabled = s.buttonTextDisabled
   const buttonTextChecked = s.buttonTextChecked
   const buttonTextCheckedHovered = s.buttonTextCheckedHovered
 
@@ -63,6 +65,8 @@ export function standardStyles (theme: ITheme): any {
     },
 
     rootDisabled: {
+      color: buttonTextDisabled,
+      backgroundColor: buttonBackgroundDisabled,
       selectors: {
         [HighContrastSelector]: {
           color: 'GrayText',
@@ -153,18 +157,19 @@ export function primaryStyles (theme: ITheme): IButtonStyles {
   return {
     root: {
       backgroundColor: s.primaryButtonBackground,
-      color: s.primaryButtonText,
       border: `1px solid ${s.primaryButtonBackground}`,
+      color: s.primaryButtonText,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
           backgroundColor: 'WindowText',
-          MsHighContrastAdjust: 'none',
+          borderColor: 'WindowText',
+          ...getHighContrastNoAdjustStyle(),
         },
         [`.${IsFocusVisibleClassName} &:focus`]: {
           selectors: {
             ':after': {
-              border: 'none',
+              border: `none`,
               outlineColor: p.white,
             },
           },
@@ -174,23 +179,27 @@ export function primaryStyles (theme: ITheme): IButtonStyles {
 
     rootHovered: {
       backgroundColor: s.primaryButtonBackgroundHovered,
+      border: `1px solid ${s.primaryButtonBackgroundHovered}`,
       color: s.primaryButtonTextHovered,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
           backgroundColor: 'Highlight',
+          borderColor: 'Highlight',
         },
       },
     },
 
     rootPressed: {
       backgroundColor: s.primaryButtonBackgroundPressed,
+      border: `1px solid ${s.primaryButtonBackgroundPressed}`,
       color: s.primaryButtonTextPressed,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
           backgroundColor: 'WindowText',
-          MsHighContrastAdjust: 'none',
+          borderColor: 'WindowText',
+          ...getHighContrastNoAdjustStyle(),
         },
       },
     },
@@ -211,6 +220,8 @@ export function primaryStyles (theme: ITheme): IButtonStyles {
     },
 
     rootDisabled: {
+      color: s.primaryButtonTextDisabled,
+      backgroundColor: s.primaryButtonBackgroundDisabled,
       selectors: {
         [HighContrastSelector]: {
           color: 'GrayText',
