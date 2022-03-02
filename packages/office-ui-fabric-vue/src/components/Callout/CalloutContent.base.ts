@@ -27,13 +27,6 @@ const getClassNames = classNamesFunction<ICalloutContentStyleProps, ICalloutCont
   disableCaching: true, // disabling caching because stylesProp.position mutates often
 })
 
-const watchContent = (vnodes: VNode[], cb: () => void) => {
-  vnodes.forEach(vnode => {
-    vnode.componentInstance?.$on('hook:updated', cb)
-    if (vnode.children) watchContent(vnode.children, cb)
-  })
-}
-
 export const CalloutContentBase = Vue.extend({
   name: 'CalloutContentBase',
 
@@ -170,7 +163,8 @@ export const CalloutContentBase = Vue.extend({
   mounted () {
     this.updatePosition()
     if (this.repositionOnChildrenUpdated) {
-      watchContent(this.$slots.default, this.updatePosition)
+      const observer = new MutationObserver(() => this.updatePosition())
+      observer.observe(this.$refs.calloutMain, { attributes: true, childList: true, subtree: true })
     }
   },
 
