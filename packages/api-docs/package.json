@@ -21,7 +21,7 @@
     "@uifabric/styling": "^7.20.0"
   },
   "dependencies": {
-    "@microsoft/api-extractor-model": "7.15.1",
+    "@microsoft/api-extractor-model": "7.15.3",
     "@microsoft/tsdoc": "0.13.2",
     "fs-extra": "^9.1.0",
     "tslib": "^2.3.1"

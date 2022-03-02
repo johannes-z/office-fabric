@@ -9,8 +9,8 @@
     "ghpages": "yarn workspace api-docs build && cd ./packages/api-docs/dist && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/johannes-z/office-fabric master:gh-pages"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.12.1",
-    "@typescript-eslint/parser": "^5.12.1",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-plugin-router": "^4.5.15",
@@ -18,13 +18,13 @@
     "@vue/cli-service": "^4.5.15",
     "@vue/eslint-config-standard": "^6.1.0",
     "@vue/eslint-config-typescript": "^9.1.0",
-    "eslint": "^8.9.0",
+    "eslint": "^8.10.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-vue": "^8.5.0",
-    "typescript": "^4.5.5",
+    "typescript": "^4.6.2",
     "vue-eslint-parser": "^8.3.0",
     "vue-template-compiler": "^2.6.14"
   }
