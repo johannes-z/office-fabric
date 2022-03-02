@@ -68,7 +68,7 @@ export const ToggleBase = Vue.extend({
     },
   },
 
-  render (h): VNode {
+  render (h: CreateElement): VNode {
     const { classNames, internalChecked, disabled, label, onText, offText } = this
     const id = `Toggle${this.uid}`
 

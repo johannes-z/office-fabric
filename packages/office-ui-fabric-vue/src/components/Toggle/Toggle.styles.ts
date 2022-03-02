@@ -1,6 +1,10 @@
-import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
-import { FontWeights, getFocusStyle, HighContrastSelector } from '@uifabric/styling/'
-import { IToggleStyleProps, IToggleStyles } from './Toggle.types'
+import {
+  HighContrastSelector,
+  getFocusStyle,
+  FontWeights,
+  getHighContrastNoAdjustStyle,
+} from '@fluentui/style-utilities'
+import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
 
 const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20
