@@ -1,19 +1,24 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import BaseComponent from '../../BaseComponent'
 import { getStyles } from './CompoundButton.styles'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
-import { CreateElement } from 'vue'
+import Vue, { CreateElement, VNode } from 'vue'
+import { withThemeableProps } from '@/useThemeable'
+import { IButtonStyles } from '..'
 
-@Component
-export class CompoundButton extends BaseComponent {
-  @Prop({ type: Boolean, default: false }) primary!: boolean
+export const CompoundButton = new Vue({
+  props: {
+    ...withThemeableProps(),
+    primary: { type: Boolean, default: false }
+  },
 
-  get internalStyles () {
-    const { primary = false, theme, styles } = this
-    return getStyles(theme, styles, primary)
-  }
+  computed: {
+    internalStyles (): IButtonStyles {
+      const { primary = false, theme, styles } = this
+      return getStyles(theme, styles, primary)
+    }
+  },
 
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const { primary, internalStyles } = this
 
     const props: IBaseButtonProps = {
@@ -32,4 +37,4 @@ export class CompoundButton extends BaseComponent {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})

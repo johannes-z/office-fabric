@@ -1,17 +1,17 @@
-import { concatStyleSets } from '@uifabric/merge-styles'
-import { primaryStyles, standardStyles } from '../ButtonThemes'
-import { HighContrastSelector, FontWeights, ITheme } from '@uifabric/styling'
-import { IButtonStyles } from '../Button.types'
-import { memoizeFunction } from '@uifabric-vue/utilities'
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles'
+import { concatStyleSets, FontWeights, HighContrastSelector, getHighContrastNoAdjustStyle } from '@uifabric/styling';
+import { memoizeFunction } from '@uifabric-vue/utilities';
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles';
+import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles';
+import { primaryStyles, standardStyles } from '../ButtonThemes';
+import type { IButtonStyles } from '../Button.types';
+import type { ITheme } from '@uifabric/styling';
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles, primary?: boolean): IButtonStyles => {
-    const { fonts, palette } = theme
+    const { fonts, palette } = theme;
 
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
-    const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme)
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme);
+    const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme);
     const compoundButtonStyles: IButtonStyles = {
       root: {
         maxWidth: '280px',
@@ -51,7 +51,7 @@ export const getStyles = memoizeFunction(
           lineHeight: '100%',
         },
       ],
-    }
+    };
 
     const standardCompoundTheme: IButtonStyles = {
       description: {
@@ -73,7 +73,7 @@ export const getStyles = memoizeFunction(
       descriptionDisabled: {
         color: 'inherit',
       },
-    }
+    };
 
     const primaryCompoundTheme: IButtonStyles = {
       description: {
@@ -82,7 +82,7 @@ export const getStyles = memoizeFunction(
           [HighContrastSelector]: {
             backgroundColor: 'WindowText',
             color: 'Window',
-            MsHighContrastAdjust: 'none',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },
@@ -104,7 +104,7 @@ export const getStyles = memoizeFunction(
           [HighContrastSelector]: {
             color: 'Window',
             backgroundColor: 'WindowText',
-            MsHighContrastAdjust: 'none',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },
@@ -116,7 +116,7 @@ export const getStyles = memoizeFunction(
           [HighContrastSelector]: {
             color: 'Window',
             backgroundColor: 'WindowText',
-            MsHighContrastAdjust: 'none',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },
@@ -129,9 +129,8 @@ export const getStyles = memoizeFunction(
           },
         },
       },
-    }
+    };
 
-    // @ts-ignore
     return concatStyleSets(
       baseButtonStyles,
       compoundButtonStyles,
@@ -139,6 +138,6 @@ export const getStyles = memoizeFunction(
       primary ? primaryCompoundTheme : standardCompoundTheme,
       splitButtonStyles,
       customStyles,
-    )!
+    )!;
   },
-)
+);
