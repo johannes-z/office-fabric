@@ -1,14 +1,15 @@
-import { IButtonStyles } from '../Button.types'
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-import { memoizeFunction } from '@uifabric-vue/utilities'
-import { ITheme, HighContrastSelector, concatStyleSets } from '@uifabric/styling'
+import { concatStyleSets, HighContrastSelector } from '@uifabric/styling';
+import { memoizeFunction } from '@uifabric-vue/utilities';
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles';
+import type { IButtonStyles } from '../Button.types';
+import type { ITheme } from '@uifabric/styling';
 
-const DEFAULT_BUTTON_HEIGHT = '40px'
-const DEFAULT_PADDING = '0 4px'
+const DEFAULT_BUTTON_HEIGHT = '40px';
+const DEFAULT_PADDING = '0 4px';
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme);
     const actionButtonStyles: IButtonStyles = {
       root: {
         padding: DEFAULT_PADDING,
@@ -16,13 +17,17 @@ export const getStyles = memoizeFunction(
         color: theme.palette.neutralPrimary,
         backgroundColor: 'transparent',
         border: '1px solid transparent',
+        selectors: {
+          [HighContrastSelector]: {
+            borderColor: 'Window',
+          },
+        },
       },
 
       rootHovered: {
         color: theme.palette.themePrimary,
         selectors: {
           [HighContrastSelector]: {
-            borderColor: 'Highlight',
             color: 'Highlight',
           },
         },
@@ -48,6 +53,11 @@ export const getStyles = memoizeFunction(
         color: theme.palette.neutralTertiary,
         backgroundColor: 'transparent',
         borderColor: 'transparent',
+        selectors: {
+          [HighContrastSelector]: {
+            color: 'GrayText',
+          },
+        },
       },
 
       rootChecked: {
@@ -77,8 +87,8 @@ export const getStyles = memoizeFunction(
       textContainer: {
         flexGrow: 0,
       },
-    }
+    };
 
-    return concatStyleSets(baseButtonStyles, actionButtonStyles, customStyles)!
+    return concatStyleSets(baseButtonStyles, actionButtonStyles, customStyles)!;
   },
-)
+);

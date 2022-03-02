@@ -3,20 +3,26 @@ import { BaseButton } from '../BaseButton'
 import BaseComponent from '../../BaseComponent'
 import { getStyles } from './ActionButton.styles'
 import { IButtonProps } from '../Button.types'
-import { CreateElement } from 'vue'
+import { CreateElement, VNode } from 'vue'
+import { IButtonStyles } from '@/components'
+import { withThemeableProps } from '@/useThemeable'
 
-@Component
-export class ActionButton extends BaseComponent<IButtonProps> {
-  @Prop({ type: String, default: '' }) href!: string
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Object, default: null }) iconProps!: any
+export const ActionButton = Vue.extend({
+  props: {
+    ...withThemeableProps(),
+    href: { type: String, default: '' },
+    disabled: { type: Boolean, default: false },
+    iconProps: { type: Object, default: null },
+  },
 
-  get internalStyles () {
-    const { theme, styles } = this
-    return getStyles(theme, styles)
-  }
+  computed: {
+    internalStyles (): IButtonStyles {
+      const { theme, styles } = this
+      return getStyles(theme, styles)
+    }
+  },
 
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const props = {
       ...this.$props,
       variantClassName: 'ms-Button--action ms-Button--command',
@@ -29,4 +35,4 @@ export class ActionButton extends BaseComponent<IButtonProps> {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})
