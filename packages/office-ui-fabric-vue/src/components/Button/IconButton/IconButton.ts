@@ -3,21 +3,25 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getStyles } from './IconButton.styles'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import BaseComponent from '../../BaseComponent'
-import { CreateElement } from 'vue'
+import { CreateElement, VNode } from 'vue'
+import { IButtonStyles } from '@/components'
+import { withThemeableProps } from '@/useThemeable'
 
-@Component({
-  inheritAttrs: false,
-})
-export class IconButton extends BaseComponent {
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Object, default: () => {} }) iconProps!: any
+export const IconButton = Vue.extend({
+  props: {
+    ...withThemeableProps(),
+    disabled: { type: Boolean, default: false },
+    iconProps: { type: Object, default: () => {} },
+  },
 
-  get internalStyles () {
-    const { theme, styles } = this
-    return getStyles(theme, styles)
-  }
+  computed: {
+    internalStyles (): IButtonStyles {
+      const { theme, styles } = this
+      return getStyles(theme, styles)
+    }
+  },
 
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const { iconProps, disabled, internalStyles } = this
     const props: IBaseButtonProps = {
       iconProps,
@@ -37,4 +41,4 @@ export class IconButton extends BaseComponent {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})
