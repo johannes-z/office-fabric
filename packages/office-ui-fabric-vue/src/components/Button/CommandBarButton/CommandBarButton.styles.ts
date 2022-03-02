@@ -1,17 +1,17 @@
-import { concatStyleSets } from '@uifabric/merge-styles'
-import { ButtonGlobalClassNames } from '../BaseButton.classNames'
-import { HighContrastSelector, getFocusStyle, ITheme } from '@uifabric/styling'
-import { IButtonStyles } from '../Button.types'
-import { memoizeFunction } from '@uifabric-vue/utilities'
-
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
+import { concatStyleSets, getFocusStyle, HighContrastSelector, getHighContrastNoAdjustStyle } from '@uifabric/styling';
+import { memoizeFunction } from '@uifabric-vue/utilities';
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles';
+import { getStyles as getSplitButtonStyles } from '../SplitButton/SplitButton.styles';
+import { ButtonGlobalClassNames } from '../BaseButton.classNames';
+import type { IButtonStyles } from '../Button.types';
+import type { ITheme } from '@uifabric/styling';
 
 export const getStyles = memoizeFunction(
   (theme: ITheme, customStyles?: IButtonStyles, focusInset?: string, focusColor?: string): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
-    const baseSplitButtonStyles: IButtonStyles = {}// getSplitButtonStyles(theme)
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme);
+    const baseSplitButtonStyles: IButtonStyles = getSplitButtonStyles(theme);
 
-    const { palette: p, semanticColors } = theme
+    const { palette: p, semanticColors } = theme;
 
     const commandButtonHighContrastFocus = {
       left: 4,
@@ -19,11 +19,15 @@ export const getStyles = memoizeFunction(
       bottom: 4,
       right: 4,
       border: 'none',
-    }
+    };
 
     const commandButtonStyles: IButtonStyles = {
       root: [
-        getFocusStyle(theme, { inset: 2, highContrastStyle: commandButtonHighContrastFocus, borderColor: 'transparent' }),
+        getFocusStyle(theme, {
+          inset: 2,
+          highContrastStyle: commandButtonHighContrastFocus,
+          borderColor: 'transparent',
+        }),
         theme.fonts.medium,
         {
           minWidth: '40px',
@@ -116,6 +120,17 @@ export const getStyles = memoizeFunction(
         selectors: {
           [`.${ButtonGlobalClassNames.msButtonIcon}`]: {
             color: semanticColors.disabledBodySubtext,
+            selectors: {
+              [HighContrastSelector]: {
+                color: 'GrayText',
+                ...getHighContrastNoAdjustStyle(),
+              },
+            },
+          },
+          [HighContrastSelector]: {
+            color: 'GrayText',
+            backgroundColor: 'Window',
+            ...getHighContrastNoAdjustStyle(),
           },
         },
       },
@@ -126,6 +141,14 @@ export const getStyles = memoizeFunction(
         selectors: {
           [HighContrastSelector]: {
             border: 'none',
+          },
+        },
+      },
+
+      splitButtonDividerDisabled: {
+        selectors: {
+          [HighContrastSelector]: {
+            backgroundColor: 'Window',
           },
         },
       },
@@ -166,6 +189,14 @@ export const getStyles = memoizeFunction(
 
       splitButtonMenuButtonDisabled: {
         backgroundColor: p.white,
+        selectors: {
+          [HighContrastSelector]: {
+            color: 'GrayText',
+            border: 'none',
+            backgroundColor: 'Window',
+            ...getHighContrastNoAdjustStyle(),
+          },
+        },
       },
 
       splitButtonMenuButtonChecked: {
@@ -206,9 +237,12 @@ export const getStyles = memoizeFunction(
 
       menuIcon: {
         color: p.neutralSecondary,
+        [HighContrastSelector]: {
+          color: 'GrayText',
+        },
       },
-    }
+    };
 
-    return concatStyleSets(baseButtonStyles, baseSplitButtonStyles, commandButtonStyles, customStyles)!
+    return concatStyleSets(baseButtonStyles, baseSplitButtonStyles, commandButtonStyles, customStyles)!;
   },
-)
+);

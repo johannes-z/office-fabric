@@ -1,18 +1,22 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Icon } from '../../Icon'
-import BaseComponent from '../../BaseComponent'
+import { IButtonStyles } from '@/components'
+import { withThemeableProps } from '@/useThemeable'
+import Vue, { CreateElement, VNode } from 'vue'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './CommandBarButton.styles'
-import { CreateElement } from 'vue'
 
-@Component
-export class CommandBarButton extends BaseComponent {
-  get internalStyles () {
-    const { theme, styles } = this
-    return getStyles(theme, styles)
-  }
+export const CommandBarButton = Vue.extend({
+  props:{
+    ...withThemeableProps(),
+  },
 
-  render (h: CreateElement) {
+  computed: {
+    internalStyles (): IButtonStyles {
+     const { theme, styles } = this
+     return getStyles(theme, styles)
+   }
+  },
+
+  render (h: CreateElement): VNode {
     const props: IBaseButtonProps = {
       variantClassName: 'ms-Button--commandBar',
       styles: this.internalStyles,
@@ -28,4 +32,4 @@ export class CommandBarButton extends BaseComponent {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})
