@@ -1,22 +1,24 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { getStyles } from './MessageBarButton.styles'
-import BaseComponent from '../../BaseComponent'
+import { IButtonStyles } from '@/components'
+import { withThemeableProps } from '@/useThemeable'
+import Vue, { CreateElement, VNode } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
-import { IBaseButtonProps, BaseButton } from '../BaseButton'
-import { CreateElement } from 'vue'
+import { getStyles } from './MessageBarButton.styles'
 
-@Component({
-  components: { DefaultButton },
-})
-export class MessageBarButton extends BaseComponent {
-  get internalStyles () {
-    return getStyles(this.theme, this.styles)
-  }
+export const MessageBarButton = Vue.extend({
+  props: {
+    ...withThemeableProps()
+  },
 
-  render (h: CreateElement) {
+  computed: {
+    internalStyles (): IButtonStyles {
+      return getStyles(this.theme, this.styles)
+    }
+  },
+
+  render (h: CreateElement): VNode {
     const { internalStyles } = this
 
-    return h(BaseButton, {
+    return h(DefaultButton, {
       attrs: {
         ...this.$props,
         ...this.$attrs,
@@ -26,4 +28,4 @@ export class MessageBarButton extends BaseComponent {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})

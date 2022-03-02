@@ -1,29 +1,26 @@
-import { IButtonStyles } from '../Button.types'
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-import { memoizeFunction } from '@uifabric-vue/utilities'
-import { ITheme, getFocusStyle } from '@uifabric/styling'
-import { concatStyleSets } from '@uifabric/merge-styles'
+import { concatStyleSets, getFocusStyle } from '@uifabric/styling';
+import { memoizeFunction } from '@uifabric-vue/utilities';
+import type { IButtonStyles } from '../Button.types';
+import type { ITheme } from '@uifabric/styling';
 
 export const getStyles = memoizeFunction(
-  (theme: ITheme, customStyles?: IButtonStyles, focusInset?: string, focusColor?: string): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
-    const messageBarButtonStyles: IButtonStyles = {
-      root: [
-        getFocusStyle(theme, {
-          inset: 1,
-          highContrastStyle: {
-            outlineOffset: '-4px',
-            outlineColor: 'ActiveBorder',
+  (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles =>
+    concatStyleSets(
+      {
+        root: [
+          getFocusStyle(theme, {
+            inset: 1,
+            highContrastStyle: {
+              outlineOffset: '-4px',
+              outline: '1px solid Window',
+            },
+            borderColor: 'transparent',
+          }),
+          {
+            height: 24,
           },
-          borderColor: 'transparent',
-        }),
-        {
-          height: 24,
-          borderColor: theme.palette.neutralTertiaryAlt,
-        },
-      ],
-    }
-
-    return concatStyleSets(baseButtonStyles, messageBarButtonStyles, customStyles)!
-  },
-)
+        ],
+      },
+      customStyles,
+    ),
+);
