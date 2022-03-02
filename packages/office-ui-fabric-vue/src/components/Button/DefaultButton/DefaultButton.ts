@@ -1,22 +1,27 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import { BaseButton, IBaseButtonProps } from '../BaseButton'
 import { getStyles } from './DefaultButton.styles'
 import BaseComponent from '../../BaseComponent'
 import { IButtonProps } from '../Button.types'
-import { CreateElement } from 'vue'
+import Vue, { CreateElement, VNode } from 'vue'
+import { IButtonStyles } from '@/components'
+import { withThemeableProps } from '@/useThemeable'
 
-@Component
-export class DefaultButton extends BaseComponent<IButtonProps> {
-  @Prop({ type: String, default: '' }) text!: string
-  @Prop({ type: Boolean, default: false }) primary!: boolean
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
+export const DefaultButton = Vue.extend({
+  props: {
+    ...withThemeableProps(),
+    text:{ type: String, default: '' },
+    primary:{ type: Boolean, default: false },
+    disabled:{ type: Boolean, default: false },
+  },
 
-  get internalStyles () {
-    const { primary = false, theme } = this
-    return getStyles(theme, this.styles, primary)
-  }
+  computed: {
+    internalStyles (): IButtonStyles {
+      const { primary = false, theme } = this
+      return getStyles(theme, this.styles, primary)
+    }
+  },
 
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const { primary, internalStyles } = this
     const props: IBaseButtonProps = {
       variantClassName: primary ? 'ms-Button--primary' : 'ms-Button--default',
@@ -33,4 +38,4 @@ export class DefaultButton extends BaseComponent<IButtonProps> {
       scopedSlots: this.$scopedSlots,
     })
   }
-}
+})
