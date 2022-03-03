@@ -121,7 +121,10 @@ export const BaseButton = Vue.extend({
       class: classNames.root,
       attrs: { href },
       on: {
-        click: ev => this.$emit('click', ev),
+        click: ev => {
+          if (this.disabled) return
+          this.$emit('click', ev)
+        },
       },
     }, [
       h('span', { class: classNames.flexContainer }, [
