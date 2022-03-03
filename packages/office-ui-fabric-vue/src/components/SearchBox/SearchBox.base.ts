@@ -20,6 +20,8 @@ const refs: { [K in keyof Refs]: K } = {
 export const SearchBoxBase = Vue.extend({
   name: 'SearchBoxBase',
 
+  inheritAttrs: false,
+
   props: {
     ...withThemeableProps(),
 
@@ -142,40 +144,38 @@ export const SearchBoxBase = Vue.extend({
   render (h): VNode {
     const { classNames, disabled, internalValue, placeholder, iconProps } = this
 
-    const $iconContainer = h('div', { class: classNames.iconContainer }, [
-      h(Icon, { class: classNames.icon, props: { iconName: 'Search', ...iconProps } }),
-    ])
-    const $clearButton = internalValue.length > 0 && h('div', { class: classNames.clearButton }, [
-      h(IconButton, {
-        props: {
-          styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } },
-          iconProps: { iconName: 'Clear' },
-        },
-        on: { click: this.clearInput },
-      }),
-    ])
-    const $input = h('input', {
-      ref: refs.input,
-      class: classNames.field,
-      domProps: {
-        disabled,
-        value: internalValue,
-        ...this.$attrs,
-        'aria-label': placeholder,
-        placeholder,
-      },
-      on: {
-        input: this.onInput,
-        focus: this.onFocus,
-        blur: this.onBlur,
-        keydown: this.onKeyDown,
-      },
-    })
-
     return h('div', { class: classNames.root }, [
-      $iconContainer,
-      $input,
-      $clearButton,
+      h('div', { class: classNames.iconContainer }, [
+        h(Icon, { class: classNames.icon, props: { iconName: 'Search', ...iconProps } }),
+      ]),
+
+      h('input', {
+        ref: refs.input,
+        class: classNames.field,
+        domProps: {
+          disabled,
+          value: internalValue,
+          ...this.$attrs,
+          'aria-label': placeholder,
+          placeholder,
+        },
+        on: {
+          input: this.onInput,
+          focus: this.onFocus,
+          blur: this.onBlur,
+          keydown: this.onKeyDown,
+        },
+      }),
+
+      internalValue && h('div', { class: classNames.clearButton }, [
+        h(IconButton, {
+          props: {
+            styles: { root: { height: 'auto' }, icon: { fontSize: '12px' } },
+            iconProps: { iconName: 'Clear' },
+          },
+          on: { click: this.clearInput },
+        }),
+      ]),
     ])
   },
 
