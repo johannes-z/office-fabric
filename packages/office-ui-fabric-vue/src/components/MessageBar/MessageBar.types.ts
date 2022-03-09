@@ -1,4 +1,5 @@
 import { ITheme, IStyle } from '@uifabric/styling'
+import { IButtonProps } from '../Button'
 import { IIconProps } from '../Icon'
 
 /**
@@ -85,6 +86,11 @@ export interface IMessageBarProps {
    * If unset, default will be the icon set by messageBarType.
    */
   messageBarIconProps?: IIconProps;
+
+  /**
+   *  Button props that can be applied to the expand button of the MessageBar.
+   */
+  expandButtonProps?: IButtonProps;
 }
 
 /**

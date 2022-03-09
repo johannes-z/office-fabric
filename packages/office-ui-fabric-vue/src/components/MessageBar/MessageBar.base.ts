@@ -1,10 +1,11 @@
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import BaseComponent from '../BaseComponent'
 import { IMessageBarStyles, MessageBarType } from './MessageBar.types'
 import { classNamesFunction } from '@uifabric-vue/utilities'
 import { Icon } from '../Icon'
-import { IconButton } from '../Button'
-import { CreateElement } from 'vue'
+import { IButtonProps, IconButton } from '../Button'
+import Vue, { CreateElement, VNode } from 'vue'
+import { withThemeableProps } from '@/useThemeable'
+import { IProcessedStyleSet } from '@uifabric/merge-styles'
 
 const getClassNames = classNamesFunction<any, IMessageBarStyles>()
 
@@ -17,50 +18,58 @@ const ICON_MAP = {
   [MessageBarType.success]: 'Completed',
 }
 
-@Component({
-  components: { Icon, IconButton },
-})
-export class MessageBarBase extends BaseComponent {
-  @Prop({ type: Number, default: MessageBarType.info }) messageBarType!: number
-  @Prop({ type: Boolean, default: true }) isMultiline!: boolean
-  @Prop({ type: Boolean, default: false }) actions!: boolean
-  @Prop({ type: Boolean, default: false }) truncated!: boolean
-  @Prop({ type: Boolean, default: true }) expandSingleLine!: boolean
+export const MessageBarBase = Vue.extend({
+  props: {
+    ...withThemeableProps(),
 
-  state = {
-    expandSingleLine: this.expandSingleLine,
-  }
+    messageBarType: { type: Number, default: MessageBarType.info },
+    isMultiline: { type: Boolean, default: true },
+    actions: { type: Boolean, default: false },
+    truncated: { type: Boolean, default: false },
+    expandSingleLine: { type: Boolean, default: true },
+    expandButtonProps: { type: Object as () => IButtonProps, default: () => {} },
+  },
 
-  get classNames () {
-    const { theme, className, messageBarType, actions, truncated, isMultiline } = this
-    const { expandSingleLine } = this.state
+  data () {
+    return {
+      internalExpandSingleLine: this.expandSingleLine,
+    }
+  },
 
-    return getClassNames(this.styles, {
-      theme,
-      messageBarType: messageBarType || MessageBarType.info,
-      onDismiss: this.$listeners.dismiss !== undefined,
-      actions: actions !== undefined,
-      truncated: truncated,
-      isMultiline: isMultiline,
-      expandSingleLine: expandSingleLine,
-      className,
-    })
-  }
+  computed: {
+    classNames (): IProcessedStyleSet<IMessageBarStyles> {
+      const { theme, className, messageBarType, actions, truncated, isMultiline } = this
 
-  @Watch('expandSingleLine')
-  private onExpandSingleLine (value: boolean) {
-    this.state.expandSingleLine = value
-  }
+      return getClassNames(this.styles, {
+        theme,
+        messageBarType: messageBarType || MessageBarType.info,
+        onDismiss: this.$listeners.dismiss !== undefined,
+        actions: actions !== undefined,
+        truncated: truncated,
+        isMultiline: isMultiline,
+        expandSingleLine: this.internalExpandSingleLine,
+        className,
+      })
+    },
+  },
 
-  private onClick () {
-    this.state.expandSingleLine = !this.state.expandSingleLine
-  }
+  watch: {
+    expandSingleLine (value: boolean) {
+      this.internalExpandSingleLine = value
+    },
+  },
 
-  render (h: CreateElement) {
-    const { theme, classNames, messageBarType, actions, truncated, isMultiline } = this
+  methods: {
+    onClick () {
+      this.internalExpandSingleLine = !this.internalExpandSingleLine
+    },
+  },
+
+  render (h: CreateElement): VNode {
+    const { theme, classNames, messageBarType, actions, truncated, isMultiline, expandButtonProps } = this
 
     const $iconSpan = h('div', { class: classNames.iconContainer }, [
-      h('Icon', {
+      h(Icon, {
         class: classNames.icon,
         attrs: { iconName: ICON_MAP[messageBarType] },
       }),
@@ -74,7 +83,10 @@ export class MessageBarBase extends BaseComponent {
       h(IconButton, {
         class: classNames.expand,
         attrs: {
-          iconProps: { iconName: this.state.expandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown' },
+          iconProps: { iconName: this.internalExpandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown' },
+        },
+        props: {
+          ...expandButtonProps,
         },
         nativeOn: {
           click: this.onClick,
@@ -121,5 +133,5 @@ export class MessageBarBase extends BaseComponent {
         $multiLine,
       ]),
     ])
-  }
-}
+  },
+})
