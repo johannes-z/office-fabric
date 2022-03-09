@@ -1,21 +1,18 @@
-import { ITextStyles } from './Text.types'
+import { ITextProps, ITextStyles } from './Text.types'
 
-export const getStyles: any = (props: any): any => {
-  const { theme, as, className, block, nowrap, variant, fontSize } = props
-  const { fonts, semanticColors } = theme
+export const getStyles: any = (props: ITextProps): ITextStyles => {
+  const { as, className, block, nowrap, variant, theme } = props
+  const { fonts, semanticColors } = theme!
   const variantObject = fonts[variant || 'medium']
 
   return {
     root: [
-      theme.fonts.medium,
+      variantObject,
       {
-        display: (block || nowrap) ? (as === 'td' ? 'table-cell' : 'block') : 'inline',
-        fontFamily: (variantObject && variantObject.fontFamily) || 'inherit',
-        fontSize: fontSize || (variantObject && variantObject.fontSize) || 'inherit',
-        fontWeight: (variantObject && variantObject.fontWeight) || 'inherit',
         color: variantObject.color || semanticColors.bodyText,
-        mozOsxFontSmoothing: variantObject && variantObject.MozOsxFontSmoothing,
-        webkitFontSmoothing: variantObject && variantObject.WebkitFontSmoothing,
+        display: block ? (as === 'td' ? 'table-cell' : 'block') : 'inline',
+        mozOsxFontSmoothing: variantObject.MozOsxFontSmoothing,
+        webkitFontSmoothing: variantObject.WebkitFontSmoothing,
       },
       nowrap && {
         whiteSpace: 'nowrap',

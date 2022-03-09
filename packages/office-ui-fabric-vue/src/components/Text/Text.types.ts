@@ -12,6 +12,8 @@ export interface ITextProps {
    */
   styles?: IStyleFunctionOrObject<any, ITextStyles>;
 
+  className?: string;
+
   /**
    * Optionally render the component as another component type or primitive.
    */
