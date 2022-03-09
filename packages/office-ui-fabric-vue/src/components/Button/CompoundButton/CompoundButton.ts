@@ -5,7 +5,7 @@ import Vue, { CreateElement, VNode } from 'vue'
 import { withThemeableProps } from '@/useThemeable'
 import { IButtonStyles } from '..'
 
-export const CompoundButton = new Vue({
+export const CompoundButton = Vue.extend({
   props: {
     ...withThemeableProps(),
     primary: { type: Boolean, default: false },
