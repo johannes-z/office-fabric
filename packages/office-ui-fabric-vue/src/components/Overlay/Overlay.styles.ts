@@ -1,5 +1,5 @@
-import { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 import { getGlobalClassNames, HighContrastSelector } from '@uifabric/styling'
+import type { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 
 const GlobalClassNames = {
   root: 'ms-Overlay',

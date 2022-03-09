@@ -1,27 +1,31 @@
 
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { IOverlayProps, IOverlayStyles, IOverlayStyleProps } from './Overlay.types'
-import BaseComponent from '../BaseComponent'
+import { withThemeableProps } from '@/useThemeable'
 import { classNamesFunction } from '@uifabric-vue/utilities'
-import { CreateElement } from 'vue'
+import { IProcessedStyleSet } from '@uifabric/merge-styles'
+import Vue, { CreateElement, VNode } from 'vue'
+import { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 
 const getClassNames = classNamesFunction<IOverlayStyleProps, IOverlayStyles>()
 
-@Component
-export class OverlayBase extends BaseComponent<IOverlayProps, IOverlayStyles> {
-  @Prop({ type: Boolean, default: false }) dark!: boolean
+export const OverlayBase = Vue.extend({
+  props: {
+    ...withThemeableProps(),
+    dark: { type: Boolean, default: false },
+  },
 
-  get classNames () {
-    const { theme, className, dark: isDark } = this
-    return getClassNames(this.styles, {
-      theme,
-      className,
-      isDark,
-    })
-  }
+  computed: {
+    classNames (): IProcessedStyleSet<IOverlayStyles> {
+      const { theme, className, dark: isDark } = this
+      return getClassNames(this.styles, {
+        theme,
+        className,
+        isDark,
+      })
+    },
+  },
 
-  render (h: CreateElement) {
+  render (h: CreateElement): VNode {
     const { classNames } = this
     return h('div', { class: classNames.root }, this.$slots.default)
-  }
-}
+  },
+})
