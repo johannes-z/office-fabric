@@ -11,7 +11,7 @@
     "@babel/runtime": "^7.17.2",
     "@uifabric-vue/file-type-icons": "workspace:^8.1.1",
     "@uifabric-vue/ie11-polyfills": "workspace:^0.1.3",
-    "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.2.2",
+    "@uifabric-vue/office-ui-fabric-vue": "workspace:^8.5.3",
     "@uifabric-vue/utilities": "workspace:^7.32.4",
     "@uifabric/example-data": "^7.1.6",
     "@uifabric/merge-styles": "^7.19.2",
@@ -39,7 +39,7 @@
     "typescript": "^4.6.2",
     "vite": "^2.8.6",
     "vite-plugin-dts": "^0.9.9",
-    "vite-plugin-md": "^0.11.8",
+    "vite-plugin-md": "^0.11.9",
     "vite-plugin-vue2": "^1.9.3",
     "vue-template-compiler": "^2.6.14"
   }
