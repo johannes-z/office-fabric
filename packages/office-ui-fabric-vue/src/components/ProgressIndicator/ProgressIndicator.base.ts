@@ -23,6 +23,7 @@ export const ProgressIndicatorBase = Vue.extend({
     description: { type: String, default: null },
     barHeight: { type: Number, default: 2 },
     ariaValueText: { type: String, default: undefined },
+    ariaLabel: { type: String, default: undefined },
   } as MappedType<IProgressIndicatorProps>,
 
   computed: {
@@ -41,7 +42,7 @@ export const ProgressIndicatorBase = Vue.extend({
   },
 
   render (h): VNode {
-    const { ariaValueText, classNames, label, progressHidden, description } = this
+    const { ariaValueText, ariaLabel, classNames, label, progressHidden, description } = this
 
     const percentComplete = typeof this.percentComplete === 'number'
       ? Math.min(100, Math.max(0, this.percentComplete * 100))
@@ -68,6 +69,7 @@ export const ProgressIndicatorBase = Vue.extend({
           attrs: {
             role: 'progressbar',
             'aria-describedby': description ? (this.uid + '-label') : undefined,
+            'aria-label': ariaLabel,
             'aria-labelledby': label ? (this.uid + '-description') : undefined,
             'aria-valuemin': ariaValueMin,
             'aria-valuemax': ariaValueMax,

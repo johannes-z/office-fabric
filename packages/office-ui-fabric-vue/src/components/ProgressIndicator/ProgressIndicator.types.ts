@@ -1,11 +1,11 @@
-import { IStyle, ITheme } from '@uifabric/styling'
-import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
-import { IBaseProps } from '@/types'
+import { IStyle } from '@fluentui/style-utilities'
+import { IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import { ITheme } from '@uifabric/styling'
 
 /**
  * {@docCategory ProgressIndicator}
  */
-export interface IProgressIndicatorProps extends IBaseProps {
+export interface IProgressIndicatorProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
@@ -23,12 +23,18 @@ export interface IProgressIndicatorProps extends IBaseProps {
   className?: string;
 
   /**
-   * Label to display above the control.
+   * Label to display above the control. May be a string or React virtual elements.
    */
   label?: string;
 
   /**
-   * Text describing or supplementing the operation.
+   * Add screen-reader-only label text to the progressbar.
+   * Prefer `label`, and use this only when other text or visual context provides a visible label
+   */
+  ariaLabel?: string;
+
+  /**
+   * Text describing or supplementing the operation. May be a string or React virtual elements.
    */
   description?: string;
 
