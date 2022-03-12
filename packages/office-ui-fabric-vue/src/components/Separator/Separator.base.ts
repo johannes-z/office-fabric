@@ -29,7 +29,10 @@ export const SeparatorBase = Vue.extend({
       vertical,
     })
 
-    return h('div', { class: classNames.root }, [
+    return h('div', {
+      ...context.data,
+      class: classNames.root,
+    }, [
       h('div', {
         class: classNames.content,
         attrs: {
