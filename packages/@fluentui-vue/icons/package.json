@@ -1,0 +1,32 @@
+{
+  "name": "@fluentui-vue/icons",
+  "version": "1.0.0",
+  "description": "",
+  "files": ["dist"],
+  "main": "./dist/icons.umd.js",
+  "module": "./dist/icons.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/icons.es.js",
+      "require": "./dist/icons.umd.js"
+    }
+  },
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "vite": "^2.9.9",
+    "vue": "^2.6.14"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fluentui-vue/common": "workspace:^1.0.0",
+    "@fluentui/merge-styles": "^8.5.2"
+  }
+}
