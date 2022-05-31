@@ -1,7 +1,7 @@
 import { useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import Vue, { CreateElement, VNode } from 'vue'
-import type { SlotProps } from '../../utils/types'
+import { asSlotProps } from '../../utils/types'
 import type { ISeparatorProps, ISeparatorStyleProps, ISeparatorStyles } from './Separator.types'
 
 const getClassNames = classNamesFunction<ISeparatorStyleProps, ISeparatorStyles>()
@@ -31,7 +31,7 @@ export const SeparatorBase = Vue.extend({
       vertical,
     })
 
-    const slotProps: SlotProps<ISeparatorStyles> = {
+    const slotProps = asSlotProps<ISeparatorStyles>({
       root: {
         ...ctx.data,
         class: classNames.root,
@@ -43,7 +43,7 @@ export const SeparatorBase = Vue.extend({
           'aria-orientation': vertical ? 'vertical' : 'horizontal',
         },
       },
-    }
+    })
 
     return h('div', slotProps.root, [
       h('div', slotProps.content, ctx.children),
