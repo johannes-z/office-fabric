@@ -6,3 +6,12 @@ packages:
   - 'packages/api-docs'
   - 'packages/website'
   - 'packages/vue-hooks'
+  
+  - 'packages/@fluentui-vue/common'
+  - 'packages/@fluentui-vue/file-type-icons'
+  - 'packages/@fluentui-vue/icons'
+  - 'packages/@fluentui-vue/next'
+  - 'packages/@fluentui-vue/theme'
+  - 'packages/@fluentui-vue/utilities'
+
+  - 'packages/@fluentui-vue/website'
