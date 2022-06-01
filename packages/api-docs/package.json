@@ -15,15 +15,15 @@
   "devDependencies": {
     "@fluentui/eslint-plugin": "^0.54.2",
     "@types/fs-extra": "^9.0.13",
-    "@types/node": "^14.18.12",
+    "@types/node": "^14.18.18",
     "@uifabric-vue/utilities": "workspace:^7.32.4",
     "@uifabric/merge-styles": "^7.19.2",
-    "@uifabric/styling": "^7.20.0"
+    "@uifabric/styling": "^7.20.2"
   },
   "dependencies": {
-    "@microsoft/api-extractor-model": "7.15.3",
-    "@microsoft/tsdoc": "0.13.2",
+    "@microsoft/api-extractor-model": "7.17.3",
+    "@microsoft/tsdoc": "0.14.1",
     "fs-extra": "^9.1.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.4.0"
   }
 }
