@@ -16,6 +16,10 @@ module.exports = {
   },
 
   rules: {
+    'vue/one-component-per-file': 0,
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
+
     indent: 0,
     '@typescript-eslint/indent': [
       'error',
@@ -26,6 +30,8 @@ module.exports = {
     'no-unused-vars': 0,
     'vue/no-unused-vars': 1,
     '@typescript-eslint/no-unused-vars': [1, { args: 'none' }],
+
+    'import/no-duplicates': ['error', { considerQueryString: true }],
 
     // false positives
     'vue/valid-v-slot': 0,
