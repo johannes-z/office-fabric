@@ -1,0 +1,17 @@
+{
+  "name": "@fluentui-vue/theme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fluentui-vue/utilities": "workspace:^1.0.0",
+    "@fluentui/merge-styles": "^8.5.2"
+  }
+}
