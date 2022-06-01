@@ -23,23 +23,33 @@ export const SliderBase = Vue.extend({
     min: { type: Number, default: 0 },
     max: { type: Number, default: 10 },
     step: { type: Number, default: 1 },
+
     value: { type: Number, default: null },
     defaultValue: { type: Number, default: null },
-    showValue: { type: Boolean, default: false },
+
+    lowerValue: { type: Number, default: null },
+    defaultLowerValue: { type: Number, default: null },
+
+    showValue: { type: Boolean, default: true },
     originFromZero: { type: Boolean, default: false },
-  } as MappedType<ISliderProps>,
+    ranged: { type: Boolean, default: false },
+
+    valueFormat: { type: Function, default: undefined },
+  },
 
   data () {
     return {
       internalValue: this.value || this.defaultValue || this.min,
+      internalLowerValue: this.lowerValue || this.defaultLowerValue || this.min,
       renderedValue: this.value || this.defaultValue || this.min,
       onKeyDownTimer: -1,
+      isAdjustingLowerValue: false,
     }
   },
 
   computed: {
     classNames (): IProcessedStyleSet<ISliderStyles> {
-      const { className, disabled, vertical, renderedValue, internalValue, showValue, theme } = this
+      const { className, disabled, vertical, renderedValue, internalValue, showValue, theme, ranged } = this
       return getClassNames(this.styles, {
         className,
         disabled,
@@ -47,6 +57,7 @@ export const SliderBase = Vue.extend({
         showTransitions: renderedValue === internalValue,
         showValue,
         theme: theme!,
+        ranged,
       })
     },
     thumbOffsetPercent (): number {
@@ -215,6 +226,12 @@ export const SliderBase = Vue.extend({
       this.onKeyDownTimer = setTimeout(() => {
       }, ONKEYDOWN_TIMEOUT_DURATION)
     },
+
+    onThumbFocus (event: FocusEvent): void {
+      console.log(event)
+      if (this.disabled) return
+      this.isAdjustingLowerValue = event.target === this.$refs.lowerValueThumbRef
+    },
   },
 
   render (h): VNode {
@@ -228,20 +245,43 @@ export const SliderBase = Vue.extend({
       lengthString,
       internalValue,
       label,
+      ranged,
     } = this
+
+    const $lowerValueLabel = ranged && this.showValue
+      ? h(Label, {
+        class: classNames.valueLabel,
+        props: {
+          disabled: disabled,
+        },
+      }, this.valueFormat ? this.valueFormat(this.internalLowerValue) : this.internalLowerValue)
+      : undefined
 
     const $sliderLine = h('div', {
       ref: 'sliderLine',
       class: classNames.line,
     }, [
+      ranged && h('span', {
+        ref: 'lowerValueThumbRef',
+        class: classNames.thumb,
+        style: { [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` },
+        on: {
+          focus: this.onThumbFocus,
+        },
+      }),
+      h('span', {
+        ref: 'thumbRef',
+        class: classNames.thumb,
+        style: { [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` },
+        on: {
+          focus: this.onThumbFocus,
+        },
+      }),
       originFromZero && h('span', {
         class: classNames.zeroTick,
         style: { [vertical ? 'bottom' : 'left']: `${zeroOffsetPercent}%` },
       }),
-      h('span', {
-        class: classNames.thumb,
-        style: { [vertical ? 'bottom' : 'left']: `${thumbOffsetPercent}%` },
-      }),
+
       originFromZero && h('span', {
         class: css(classNames.lineContainer, classNames.inactiveSection),
         style: { [lengthString]: `${Math.min(thumbOffsetPercent, zeroOffsetPercent)}%` },
@@ -270,6 +310,7 @@ export const SliderBase = Vue.extend({
     return h('div', { class: classNames.root }, [
       h(Label, { class: classNames.titleLabel }, label),
       h('div', { class: classNames.container }, [
+        $lowerValueLabel,
         h('div', {
           class: classNames.slideBox,
           attrs: {

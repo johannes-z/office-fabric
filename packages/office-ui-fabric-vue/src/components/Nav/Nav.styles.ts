@@ -1,4 +1,4 @@
-import { INavStyles } from './Nav.types'
+import { INavStyleProps, INavStyles } from './Nav.types'
 import {
   AnimationClassNames,
   getFocusStyle,
@@ -33,7 +33,7 @@ export const buttonStyles: IButtonStyles = {
   },
 }
 
-export const getStyles = (props: any): INavStyles => {
+export const getStyles = (props: INavStyleProps): INavStyles => {
   const {
     className,
     theme,
@@ -218,6 +218,9 @@ export const getStyles = (props: any): INavStyles => {
         position: 'absolute',
         left: '8px',
         height: navHeight,
+        // inline-flex prevents the chevron from shifting with custom line height styles
+        display: 'inline-flex',
+        alignItems: 'center',
         lineHeight: `${navHeight}px`,
         fontSize: fonts.small.fontSize,
         transition: 'transform .1s linear',

@@ -35,7 +35,7 @@ export const SearchBoxBase = Vue.extend({
     iconProps: { type: Object as PropType<IIconProps>, default: () => {} },
 
     disabled: { type: Boolean, default: false },
-  } as MappedType<ISearchBoxProps>,
+  },
 
   data () {
     return {

@@ -37,4 +37,26 @@ export default defineConfig({
       port: '8082',
     },
   },
+  test: {
+    isolate: false,
+  },
+  build: {
+    cssCodeSplit: false,
+    assetsInlineLimit: 0,
+    lib: {
+      entry: path.resolve(__dirname, 'src/index.ts'),
+      name: '@fluentui-vue/components',
+      formats: ['es', 'umd'],
+    },
+    rollupOptions: {
+      external: [
+        'vue',
+      ],
+      output: {
+        globals: {
+          vue: 'Vue',
+        },
+      },
+    },
+  },
 })

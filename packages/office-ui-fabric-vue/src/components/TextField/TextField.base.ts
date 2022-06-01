@@ -153,7 +153,7 @@ export const TextFieldBase = Vue.extend({
       }, this.description)
     }
 
-    const $label = (this.$scopedSlots.onRenderLabel ?? onRenderLabel)(this.$props)
+    const $label = (this.$scopedSlots.label ?? onRenderLabel)(this.$props)
 
     const $fieldGroup = h('div', { class: classNames.fieldGroup }, [
       h(Component, {
@@ -194,7 +194,7 @@ export const TextFieldBase = Vue.extend({
         $fieldGroup,
       ]),
       h('span', { attrs: { id: this.descriptionId } }, [
-        (this.$scopedSlots.onRenderDescription ?? onRenderDescription)(this.$props),
+        (this.$scopedSlots.description ?? onRenderDescription)(this.$props),
         $errorMessage,
       ]),
     ])

@@ -2,6 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "noImplicitAny": false,
+    "tsBuildInfoFile": "./.cache/tsconfig.tsbuildinfo",
+    "incremental": true,
     "outDir": "lib",
     "target": "ES5",
     "module": "ESNext",
@@ -29,6 +31,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@uifabric/styling": [
+        "@uifabric-vue/styling"
       ]
     },
     "lib": [

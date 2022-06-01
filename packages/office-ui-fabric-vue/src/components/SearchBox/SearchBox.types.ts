@@ -1,37 +1,7 @@
-import { IBaseProps } from '@/types'
 import { ITheme } from '@fluentui/style-utilities'
 import { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
-import { IButtonProps, IIconProps } from '..'
-
-/**
- * {@docCategory SearchBox}
- */
-export interface ISearchBoxEvents {
-  /**
-   * Callback function for when the typed input for the SearchBox has changed.
-   */
-  input?: (newValue: string) => void;
-
-  /**
-   * Callback function for when the typed input for the SearchBox has changed.
-   */
-  change?: (newValue: string) => void;
-
-  /**
-   * Callback executed when the user presses enter in the search box.
-   */
-  search?: (newValue: string) => void;
-
-  /**
-   * Callback executed when the user clears the search box by either clicking 'X' or hitting escape.
-   */
-  clear?: (ev?: MouseEvent) => void;
-
-  /**
-   * Callback executed when the user presses escape in the search box.
-   */
-  escape?: (ev?: KeyboardEvent) => void;
-}
+import { IButtonProps } from '../Button'
+import { IIconProps } from '../Icon'
 
 /**
  * {@docCategory SearchBox}
@@ -51,7 +21,7 @@ export interface ISearchBox {
 /**
  * {@docCategory SearchBox}
  */
-export interface ISearchBoxProps extends IBaseProps {
+export interface ISearchBoxProps {
   /**
    * Optional callback to access the ISearchBox interface. Use this instead of ref for accessing
    * the public methods and properties of the component.
@@ -62,6 +32,36 @@ export interface ISearchBoxProps extends IBaseProps {
    * Placeholder for the search box.
    */
   placeholder?: string;
+
+  /**
+   * @deprecated Use `placeholder` instead.
+   */
+  labelText?: string;
+
+  /**
+   * Callback function for when the typed input for the SearchBox has changed.
+   */
+  onChange?: (event?: Event, newValue?: string) => void;
+
+  /**
+   * Callback executed when the user presses enter in the search box.
+   */
+  onSearch?: (newValue: any) => void;
+
+  /**
+   * Callback executed when the user clears the search box by either clicking 'X' or hitting escape.
+   */
+  onClear?: (ev?: any) => void;
+
+  /**
+   * Callback executed when the user presses escape in the search box.
+   */
+  onEscape?: (ev?: any) => void;
+
+  /**
+   * @deprecated Use `onChange` instead. Deprecated at v0.52.2.
+   */
+  onChanged?: (newValue: any) => void;
 
   /**
    * The value of the text in the SearchBox.
@@ -125,12 +125,6 @@ export interface ISearchBoxProps extends IBaseProps {
    * @defaultvalue false
    */
   showIcon?: boolean;
-
-  /**
-   * Whether or not the SearchBox is disabled.
-   * @defaultvalue false
-   */
-  disabled?: boolean
 }
 
 /**

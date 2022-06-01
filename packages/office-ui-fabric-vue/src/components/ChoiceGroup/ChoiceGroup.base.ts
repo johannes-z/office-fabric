@@ -1,4 +1,3 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
 import { ChoiceGroupOption } from './ChoiceGroupOption'
 import BaseComponent from '../BaseComponent'
 
@@ -6,66 +5,86 @@ import { classNamesFunction } from '@uifabric-vue/utilities'
 
 import { Label } from '../Label'
 import { IChoiceGroupStyleProps, IChoiceGroupStyles, IChoiceGroupProps, IChoiceGroupOption } from './ChoiceGroup.types'
-import { CreateElement } from 'vue'
+import Vue, { CreateElement, VNode } from 'vue'
+import { IProcessedStyleSet } from '@uifabric/merge-styles'
+import { withThemeableProps } from '@/useThemeable'
 
 const getClassNames = classNamesFunction<IChoiceGroupStyleProps, IChoiceGroupStyles>()
 
-@Component({
+export const ChoiceGroupBase = Vue.extend({
+  name: 'ChoiceGroupBase',
+
   components: { ChoiceGroupOption, Label },
-})
-export class ChoiceGroupBase extends BaseComponent<IChoiceGroupProps> {
-  @Prop({ type: String, default: null }) label!: string
-  @Prop({ type: Array, default: () => [] }) options!: any[]
-  @Prop({ type: Array, default: () => [] }) value!: any[]
-  @Prop({ type: Boolean, default: false }) disabled!: boolean
-  @Prop({ type: Boolean, default: false }) required!: boolean
 
-  selectedOption: any = {}
+  props: {
+    ...withThemeableProps(),
 
-  get classNames () {
-    const { styles, theme, className } = this
+    label: { type: String, default: null },
+    options: { type: Array as () => IChoiceGroupOption[], default: () => [] },
+    value: { type: Array, default: () => [] },
+    disabled: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+  },
 
-    return getClassNames(styles, {
-      theme, className, optionsContainIconOrImage: false,
-    })
-  }
+  data () {
+    return {
+      selectedOption: {} as IChoiceGroupOption,
+    }
+  },
 
-  private onClick (ev: MouseEvent, option: IChoiceGroupOption) {
-    ev.preventDefault()
-    if (option.disabled) return
-    this.selectedOption = option
-  }
+  computed: {
+    classNames (): IProcessedStyleSet<IChoiceGroupStyles> {
+      const { styles, theme, className } = this
 
-  render (h: CreateElement) {
+      return getClassNames(styles, {
+        theme, className, optionsContainIconOrImage: false,
+      })
+    },
+  },
+
+  methods: {
+    onClick (ev: MouseEvent, option: IChoiceGroupOption) {
+      ev.preventDefault()
+      if (option.disabled) return
+      this.selectedOption = option
+    },
+  },
+
+  render (h: CreateElement): VNode {
     const { classNames, label, required, disabled, selectedOption, options } = this
 
-    const $label = label && h(Label, {
-      class: classNames.label,
-      attrs: {
-        required,
-        disabled,
-      },
-    }, label)
-
-    const $flexContainer = h('div', {
-      class: classNames.flexContainer,
-    }, options.map(option => h(ChoiceGroupOption, {
-      key: option.key,
-      attrs: {
-        id: option.key,
-      },
-      props: {
-        ...option,
-        checked: selectedOption.key === option.key,
-      },
-      nativeOn: {
-        click: ev => this.onClick(ev, option),
-      },
-    }, option.text)))
-
     return h('div', { class: classNames.root }, [
-      $label,
-      $flexContainer,
+      h('div', {
+        attrs: {
+          role: 'radiogroup',
+        },
+      }, [
+        label && h(Label, {
+          class: classNames.label,
+          attrs: {
+            required,
+            disabled,
+          },
+        }, label),
+
+        h('div', {
+          class: classNames.flexContainer,
+        }, options.map(option => h(ChoiceGroupOption, {
+          scopedSlots: this.$scopedSlots,
+          key: option.key,
+          attrs: {
+            id: option.key,
+          },
+          props: {
+            ...option,
+            checked: selectedOption.key === option.key,
+            required,
+          },
+          nativeOn: {
+            click: ev => this.onClick(ev, option),
+          },
+        }, option.text))),
+      ]),
     ])
-  }
-}
+  },
+})

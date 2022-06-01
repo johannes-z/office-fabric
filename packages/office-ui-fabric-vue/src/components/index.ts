@@ -1,3 +1,5 @@
+import { ThemeProvider } from './ThemeProvider'
+
 export { default as VNodes } from './VNodes'
 
 export * from './Autofill'
@@ -53,3 +55,7 @@ export * from './Persona'
 export * from './Shimmer'
 
 export * from './Calendar'
+
+// export * from './pickers'
+
+export * from './ThemeProvider'

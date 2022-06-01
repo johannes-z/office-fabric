@@ -306,7 +306,7 @@ export class ResizeGroupBase extends BaseComponent {
   }
 
   private nextResizeGroupStateProvider = getNextResizeGroupStateProvider()
-  private hasRenderedContent = false;
+  private hasRenderedContent = false
   dataToMeasure = {}
   measureContainer? = false
   renderedData = {}
@@ -314,7 +314,7 @@ export class ResizeGroupBase extends BaseComponent {
 
   @Prop() data!: any
   @Prop({ type: Number, default: ResizeGroupDirection.horizontal }) direction!: any
-  @Prop({ type: Function, default: null }) dataDidRender?: (renderedData: any) => void;
+  @Prop({ type: Function, default: null }) dataDidRender?: (renderedData: any) => void
 
   created () {
     const state = this.nextResizeGroupStateProvider.getInitialResizeGroupState(this.data)

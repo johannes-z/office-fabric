@@ -23,7 +23,7 @@ export interface IChoiceGroup {
  */
 export interface IChoiceGroupProps {
   /**
-   * Optional callback to access the IChoiceGroup interface. Use this instead of ref for accessing
+   * Optional callback to access the `IChoiceGroup` interface. Use this instead of `ref` for accessing
    * the public methods and properties of the component.
    */
   // componentRef?: IRefObject<IChoiceGroup>;
@@ -49,7 +49,7 @@ export interface IChoiceGroupProps {
   /**
    * A callback for receiving a notification when the choice has been changed.
    */
-  // onChange?: (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption) => void;
+  onChange?: (ev?: Event, option?: IChoiceGroupOption) => void;
 
   /**
    * Descriptive label for the choice group.
@@ -79,7 +79,7 @@ export interface IChoiceGroupOption {
   /**
    * A required key to uniquely identify the option.
    */
-  key?: string;
+  key: string;
 
   /**
    * The text string for the option.
@@ -89,12 +89,12 @@ export interface IChoiceGroupOption {
   /**
    * Used to customize option rendering.
    */
-  // onRenderField?: IRenderFunction<IChoiceGroupOption>;
+  // onRenderField?: IRenderFunction<IChoiceGroupOptionProps>;
 
   /**
    * Used to customize label rendering.
    */
-  // onRenderLabel?: IRenderFunction<IChoiceGroupOption>;
+  // onRenderLabel?: IRenderFunction<IChoiceGroupOptionProps>;
 
   /**
    * Props for an icon to display with this option.
@@ -108,7 +108,7 @@ export interface IChoiceGroupOption {
 
   /**
    * Alt text if the option is an image.
-   * @default '' (empty string)
+   * @default `''` (empty string)
    */
   imageAlt?: string;
 
@@ -127,17 +127,6 @@ export interface IChoiceGroupOption {
    * Whether or not the option is disabled.
    */
   disabled?: boolean;
-
-  /**
-   * Whether or not the option is checked.
-   * @deprecated Do not track checked state in the options themselves. Instead, either pass
-   * `defaultSelectedKey` to the `ChoiceGroup` and allow it to track selection state internally
-   * (uncontrolled), or pass `selectedKey` and `onChange` to the `ChoiceGroup` to track/update
-   * the selection state manually (controlled).
-   */
-  // This should move from IChoiceGroupOption to IChoiceGroupOptionProps, so that the ChoiceGroup
-  // can still set the option as checked for rendering purposes
-  checked?: boolean;
 
   /**
    * ID used on the option's input element.

@@ -1,6 +1,5 @@
 import {
   HighContrastSelector,
-  IRawStyle,
   ScreenWidthMaxMedium,
   ScreenWidthMaxSmall,
   ScreenWidthMinMedium,
@@ -8,10 +7,11 @@ import {
   getScreenSelector,
   getGlobalClassNames,
   FontWeights,
+  getHighContrastNoAdjustStyle,
 } from '@uifabric/styling'
-import { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
 import { IsFocusVisibleClassName } from '@uifabric-vue/utilities'
-import { getHighContrastNoAdjustStyle } from '@fluentui/style-utilities'
+import type { IRawStyle } from '@uifabric/styling'
+import type { IBreadcrumbStyleProps, IBreadcrumbStyles } from './Breadcrumb.types'
 
 const GlobalClassNames = {
   root: 'ms-Breadcrumb',

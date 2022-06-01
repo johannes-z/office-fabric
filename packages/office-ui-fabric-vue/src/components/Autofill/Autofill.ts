@@ -1,4 +1,5 @@
 import { isIE11, KeyCodes } from '@uifabric-vue/utilities'
+import type { IAutofill, IAutofillProps } from './Autofill.types'
 import Vue, { CreateElement, VNode } from 'vue'
 
 export interface IAutofillState {

@@ -94,7 +94,7 @@ export const CalloutContentBase = Vue.extend({
     },
     overflowStyle (): any {
       return {
-        maxHeight: this.calloutMaxHeight || '100%',
+        maxHeight: this.calloutMaxHeight ? `${this.calloutMaxHeight}px` : '100%',
         ...this.style,
         ...(this.overflowYHidden && { overflowY: 'hidden' }),
       }
@@ -158,16 +158,16 @@ export const CalloutContentBase = Vue.extend({
 
   mounted () {
     this.updatePosition()
-    if (this.repositionOnChildrenUpdated && this.$refs.calloutMain) {
-      let currentHeight = this.$refs.calloutMain.clientHeight
-      const observer = new MutationObserver(() => {
-        if (this.$refs.calloutMain.clientHeight === currentHeight) return
+    // if (this.repositionOnChildrenUpdated && this.$refs.calloutMain) {
+    //   let currentHeight = this.$refs.calloutMain.clientHeight
+    //   const observer = new MutationObserver(() => {
+    //     if (this.$refs.calloutMain.clientHeight === currentHeight) return
 
-        currentHeight = this.$refs.calloutMain.clientHeight
-        this.updatePosition()
-      })
-      observer.observe(this.$refs.calloutMain, { attributes: true, childList: true, subtree: true })
-    }
+    //     currentHeight = this.$refs.calloutMain.clientHeight
+    //     this.updatePosition()
+    //   })
+    //   observer.observe(this.$refs.calloutMain, { attributes: true, childList: true, subtree: true })
+    // }
   },
 
   methods: {

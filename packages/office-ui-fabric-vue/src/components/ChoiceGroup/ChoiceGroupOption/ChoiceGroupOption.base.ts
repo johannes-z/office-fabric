@@ -1,13 +1,10 @@
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import BaseComponent from '../../BaseComponent'
-
 import { classNamesFunction } from '@uifabric-vue/utilities'
-
+import { CreateElement } from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import BaseComponent from '../../BaseComponent'
 import { Icon } from '../../Icon'
 import { Image } from '../../Image'
-import { Label } from '../../Label'
-import { IChoiceGroupOptionStyles, IChoiceGroupOptionStyleProps, IChoiceGroupOptionProps } from './ChoiceGroupOption.types'
-import { CreateElement } from 'vue'
+import { IChoiceGroupOptionProps, IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles } from './ChoiceGroupOption.types'
 
 const getClassNames = classNamesFunction<IChoiceGroupOptionStyleProps, IChoiceGroupOptionStyles>()
 

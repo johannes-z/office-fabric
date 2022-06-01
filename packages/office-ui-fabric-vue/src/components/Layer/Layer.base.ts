@@ -27,11 +27,11 @@ export const LayerBase = Vue.extend({
 
   computed: {
     classNames (): IProcessedStyleSet<ILayerStyles> {
-      const { className, theme, styles } = this
+      const { className, theme, styles, hostId } = this
       return getClassNames(styles, {
         theme: theme!,
         className,
-        isNotHost: !this.hostId,
+        isNotHost: !hostId,
       })
     },
   },
@@ -51,6 +51,13 @@ export const LayerBase = Vue.extend({
   },
 
   methods: {
+    // removeLayerElement (): void {
+    //   const elem = this.$refs.layerRef as HTMLElement
+
+    //   if (elem && elem.parentNode) {
+    //     elem.parentNode.removeChild(elem)
+    //   }
+    // },
     createElement (): void {
       const doc = this.$el.ownerDocument
       const host = this.getHost()
@@ -62,6 +69,7 @@ export const LayerBase = Vue.extend({
 
       this.hasTarget = true
     },
+
     getHost (): Node | undefined {
       const doc = this.$el.ownerDocument
       if (!doc) {
@@ -85,15 +93,19 @@ export const LayerBase = Vue.extend({
 
     const { classNames, hostId } = this
 
-    return h(MountingPortal, {
-      props: {
-        mountTo: hostId ? `#${hostId}` : 'body',
-        append: true,
-      },
+    return h('span', {
+      class: 'ms-layer',
     }, [
-      h('div', { class: classNames.root }, [
-        h('div', { class: classNames.content }, [
-          this.$scopedSlots.default?.({}),
+      h(MountingPortal, {
+        props: {
+          mountTo: hostId ? `#${hostId}` : 'body',
+          append: true,
+        },
+      }, [
+        h('div', { class: classNames.root }, [
+          h('div', { class: classNames.content }, [
+            this.$scopedSlots.default?.({}),
+          ]),
         ]),
       ]),
     ])

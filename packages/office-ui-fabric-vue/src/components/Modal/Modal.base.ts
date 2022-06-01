@@ -23,23 +23,23 @@ export class ModalBase extends BaseComponent<IModalProps, IModalStyles> {
     scrollableContent: HTMLDivElement
   }
 
-  @Prop({ type: Boolean, default: false }) isOpen!: boolean;
-  @Prop({ type: Boolean, default: true }) isDarkOverlay!: boolean;
-  @Prop({ type: Function, default: null }) onDismissed!: () => any;
-  @Prop({ type: Object, default: null }) layerProps!: ILayerProps;
-  @Prop({ type: Object, default: null }) overlay!: IOverlayProps;
-  @Prop({ type: Boolean, default: false }) isBlocking!: boolean;
-  @Prop({ type: Boolean, default: false }) isModeless!: boolean;
-  @Prop({ type: String, default: '' }) className!: string;
-  @Prop({ type: String, default: '' }) containerClassName!: string;
-  @Prop({ type: String, default: '' }) scrollableContentClassName!: string;
-  @Prop({ type: String, default: '' }) titleAriaId!: string;
-  @Prop({ type: String, default: '' }) subtitleAriaId!: string;
-  @Prop({ type: Boolean, default: false }) topOffsetFixed!: boolean;
-  @Prop({ type: Object, default: null }) dragOptions!: IDragOptions;
-  @Prop({ type: Boolean, default: false }) allowTouchBodyScroll!: boolean;
+  @Prop({ type: Boolean, default: false }) isOpen!: boolean
+  @Prop({ type: Boolean, default: true }) isDarkOverlay!: boolean
+  @Prop({ type: Function, default: null }) onDismissed!: () => any
+  @Prop({ type: Object, default: null }) layerProps!: ILayerProps
+  @Prop({ type: Object, default: null }) overlay!: IOverlayProps
+  @Prop({ type: Boolean, default: false }) isBlocking!: boolean
+  @Prop({ type: Boolean, default: false }) isModeless!: boolean
+  @Prop({ type: String, default: '' }) className!: string
+  @Prop({ type: String, default: '' }) containerClassName!: string
+  @Prop({ type: String, default: '' }) scrollableContentClassName!: string
+  @Prop({ type: String, default: '' }) titleAriaId!: string
+  @Prop({ type: String, default: '' }) subtitleAriaId!: string
+  @Prop({ type: Boolean, default: false }) topOffsetFixed!: boolean
+  @Prop({ type: Object, default: null }) dragOptions!: IDragOptions
+  @Prop({ type: Boolean, default: false }) allowTouchBodyScroll!: boolean
 
-  @Prop({ type: Boolean, default: false }) ignoreExternalFocusing!: boolean;
+  @Prop({ type: Boolean, default: false }) ignoreExternalFocusing!: boolean
 
   internalIsOpen: boolean = false
   isVisible: boolean = false

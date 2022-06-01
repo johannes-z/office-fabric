@@ -1,9 +1,9 @@
-import { IIconProps } from '../Icon'
-import { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
-import { ITheme, IStyle } from '@uifabric/styling'
-// import { IFocusZoneProps } from '../../FocusZone'
-import { ITooltipHostProps } from '../Tooltip'
-import { IBaseProps } from '@/types'
+import type { IIconProps } from '../Icon'
+import type { IStyleFunctionOrObject } from '@uifabric-vue/utilities'
+import type { ITheme, IStyle } from '@uifabric/styling'
+// import type { IFocusZoneProps } from '../FocusZone'
+import type { ITooltipHostProps } from '../Tooltip'
+import type { IButtonProps } from '../Button'
 
 /**
  * {@docCategory Breadcrumb}
@@ -27,7 +27,7 @@ export interface IBreadcrumb {
 /**
  * {@docCategory Breadcrumb}
  */
-export interface IBreadcrumbProps extends IBaseProps {
+export interface IBreadcrumbProps {
   /**
    * Optional callback to access the `IBreadcrumb` interface. Use this instead of `ref` for accessing
    * the public methods and properties of the component.
@@ -47,17 +47,17 @@ export interface IBreadcrumbProps extends IBaseProps {
   /**
    * Render a custom divider in place of the default chevron `>`
    */
-  // dividerAs?: IComponentAs<IDividerAsProps>;
+  dividerAs?: any
 
   /**
    * Render a custom overflow icon in place of the default icon `...`
    */
-  // onRenderOverflowIcon?: IRenderFunction<IButtonProps>;
+  onRenderOverflowIcon?: any
 
   /**
    * Custom component for the overflow button.
    */
-  // overflowButtonAs?: IComponentAs<IButtonProps>;
+  overflowButtonAs?: any
 
   /**
    * The maximum number of breadcrumbs to display before coalescing.
@@ -65,8 +65,13 @@ export interface IBreadcrumbProps extends IBaseProps {
    */
   maxDisplayedItems?: number;
 
-  /** Custom render function for each breadcrumb item. */
-  // onRenderItem?: IRenderFunction<IBreadcrumbItem>;
+  /** Custom render function to render each crumb. Default renders as a link. */
+  onRenderItem?: any
+
+  /**
+   * Custom render function to render the content within a crumb. Default renders the text.
+   */
+  onRenderItemContent?: any
 
   /**
    * Method that determines how to reduce the length of the breadcrumb.
@@ -102,7 +107,7 @@ export interface IBreadcrumbProps extends IBaseProps {
   /**
    * Extra props for the root FocusZone.
    */
-  // focusZoneProps?: IFocusZoneProps;
+  focusZoneProps?: any;
 
   /**
    * Extra props for the TooltipHost which wraps each breadcrumb item.
@@ -140,6 +145,16 @@ export interface IBreadcrumbItem {
    * If true, `aria-current="page"` will be applied to this breadcrumb item.
    */
   isCurrentItem?: boolean;
+
+  /**
+   * A function to render the outer content of the crumb (the link).
+   */
+  onRender?: any
+
+  /**
+   * A function to render the inner content of the crumb (the text inside the link).
+   */
+  onRenderContent?: any
 
   /**
    * Optional prop to render the item as a heading of your choice.
