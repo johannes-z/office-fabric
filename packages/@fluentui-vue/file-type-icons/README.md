@@ -16,15 +16,12 @@ initializeFileTypeIcons('https://my.cdn.com/path/to/icons/');
 
 ## Usage in code
 
-### Template
-```html
+```vue
 <template>
   <FluentIcon v-bind="iconProps" />
 </template>
-```
 
-### Script
-```ts
+<script lang="ts">
 import Vue from 'vue'
 import { Icon } from '@fluentui-vue/components';
 import { getFileTypeIconProps } from '@fluentui-vue/file-type-icons';
@@ -40,6 +37,7 @@ export default Vue.extend({
     }
   }
 })
+</script>
 ```
 
 > # @fluentui/react-file-type-icons
