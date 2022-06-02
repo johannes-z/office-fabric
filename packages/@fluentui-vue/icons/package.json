@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Fluent UI Vue icons.",
   "main": "lib/index.js",
   "module": "lib/index.js",
