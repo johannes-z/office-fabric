@@ -1,6 +1,5 @@
 import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 import { classNames, MS_ICON } from './Icon.styles'
-// import { classNames, MS_ICON } from './Icon.styles'
 import { getIcon } from '@fluentui-vue/icons'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 
