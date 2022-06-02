@@ -1,3 +1,4 @@
+import { getCssVarName } from './getCssVarName'
 import { Palette } from './Palette'
 
 export namespace SemanticColors {
@@ -82,25 +83,25 @@ export namespace SemanticColors {
   export const buttonBackgroundChecked = Palette.neutralTertiaryAlt
   export const menuDivider = Palette.neutralTertiaryAlt
   export const cardShadowHovered = `0 0 1px ${Palette.neutralTertiary}`
-  export const primaryButtonBorder = 'var(--primaryButtonBorder, transparent)'
-  export const errorText = 'var(--errorText, #a4262c)'
-  export const messageText = 'var(--messageText, #323130)'
-  export const messageLink = 'var(--messageLink, #005A9E)'
-  export const messageLinkHovered = 'var(--messageLinkHovered, #004578)'
-  export const infoIcon = 'var(--infoIcon, #605e5c)'
-  export const errorIcon = 'var(--errorIcon, #A80000)'
-  export const blockingIcon = 'var(--blockingIcon, #FDE7E9)'
-  export const warningIcon = 'var(--warningIcon, #797775)'
-  export const severeWarningIcon = 'var(--severeWarningIcon, #D83B01)'
-  export const successIcon = 'var(--successIcon, #107C10)'
-  export const infoBackground = 'var(--infoBackground, #f3f2f1)'
-  export const errorBackground = 'var(--errorBackground, #FDE7E9)'
-  export const blockingBackground = 'var(--blockingBackground, #FDE7E9)'
-  export const warningBackground = 'var(--warningBackground, #FFF4CE)'
-  export const severeWarningBackground = 'var(--severeWarningBackground, #FED9CC)'
-  export const successBackground = 'var(--successBackground, #DFF6DD)'
-  export const warningHighlight = 'var(--warningHighlight, #ffb900)'
-  export const successText = 'var(--successText, #107C10)'
+  export const primaryButtonBorder = getCssVarName('primaryButtonBorder', ' transparent')
+  export const errorText = getCssVarName('errorText', '#a4262c')
+  export const messageText = getCssVarName('messageText', '#323130')
+  export const messageLink = getCssVarName('messageLink', '#005A9E')
+  export const messageLinkHovered = getCssVarName('messageLinkHovered', '#004578')
+  export const infoIcon = getCssVarName('infoIcon', '#605e5c')
+  export const errorIcon = getCssVarName('errorIcon', '#A80000')
+  export const blockingIcon = getCssVarName('blockingIcon', '#FDE7E9')
+  export const warningIcon = getCssVarName('warningIcon', '#797775')
+  export const severeWarningIcon = getCssVarName('severeWarningIcon', '#D83B01')
+  export const successIcon = getCssVarName('successIcon', '#107C10')
+  export const infoBackground = getCssVarName('infoBackground', '#f3f2f1')
+  export const errorBackground = getCssVarName('errorBackground', '#FDE7E9')
+  export const blockingBackground = getCssVarName('blockingBackground', '#FDE7E9')
+  export const warningBackground = getCssVarName('warningBackground', '#FFF4CE')
+  export const severeWarningBackground = getCssVarName('severeWarningBackground', '#FED9CC')
+  export const successBackground = getCssVarName('successBackground', '#DFF6DD')
+  export const warningHighlight = getCssVarName('warningHighlight', '#ffb900')
+  export const successText = getCssVarName('successText', '#107C10')
   export const listTextColor = Palette.neutralPrimary
-  export const warningText = 'var(--warningText, #323130)'
+  export const warningText = getCssVarName('warningText', '#323130')
 }
