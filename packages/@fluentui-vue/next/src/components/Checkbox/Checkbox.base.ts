@@ -1,5 +1,4 @@
-import { getId } from '@/utilities'
-import { classNamesFunction } from '@fluentui-vue/utilities'
+import { getId, classNamesFunction } from '@fluentui-vue/utilities'
 import { IProcessedStyleSet } from '@fluentui/merge-styles'
 import Vue, { CreateElement, VNode, VueConstructor } from 'vue'
 import { Icon } from '../Icon'

@@ -1,5 +1,6 @@
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { IStyle } from '@fluentui/merge-styles'
+import { ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
 
 const COMMAND_BAR_HEIGHT = 44
 

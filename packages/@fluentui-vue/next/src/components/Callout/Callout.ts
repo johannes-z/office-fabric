@@ -1,11 +1,11 @@
-import { DirectionalHint } from '@/common/DirectionalHint'
+import { DirectionalHint } from '@fluentui-vue/utilities'
 import Vue from 'vue'
 import { Layer } from '../Layer'
 import { asSlotProps } from '../../utils/types'
 import { CalloutContent } from './CalloutContent'
 
 export const Callout = Vue.extend({
-  name: 'Callout',
+  name: 'CalloutBase',
 
   functional: true,
 

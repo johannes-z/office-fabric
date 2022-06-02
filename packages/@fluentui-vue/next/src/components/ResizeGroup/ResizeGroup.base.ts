@@ -1,7 +1,7 @@
 import Vue, { PropType, VNode } from 'vue'
 import { asSlotProps, useStylingProps } from '@/utils'
 import { ResizeGroupDirection } from './ResizeGroup.types'
-import { debounce } from '@/utilities'
+import { debounce } from '@fluentui-vue/utilities'
 
 const RESIZE_DELAY = 16
 

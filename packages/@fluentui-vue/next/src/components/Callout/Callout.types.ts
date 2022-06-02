@@ -1,6 +1,5 @@
-import { DirectionalHint } from '@/common/DirectionalHint'
+import { DirectionalHint, IRectangle } from '@fluentui-vue/utilities'
 import { ITheme } from '@fluentui-vue/theme'
-import { IRectangle } from '@fluentui-vue/utilities'
 import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
 /**

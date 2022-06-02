@@ -1,6 +1,5 @@
-import { getId } from '@/utilities'
+import { getId, classNamesFunction } from '@fluentui-vue/utilities'
 import { asSlotProps, useStylingProps } from '@/utils'
-import { classNamesFunction } from '@fluentui-vue/utilities'
 import { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import Vue, { CreateElement, VNode } from 'vue'
 import { Label } from '../Label'
