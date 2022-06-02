@@ -1,17 +1,14 @@
 {
   "name": "@fluentui-vue/icons",
   "version": "1.0.0",
-  "description": "",
-  "files": ["dist"],
-  "main": "./dist/icons.umd.js",
-  "module": "./dist/icons.es.js",
-  "exports": {
-    ".": {
-      "import": "./dist/icons.es.js",
-      "require": "./dist/icons.umd.js"
-    }
-  },
+  "description": "Fluent UI Vue icons.",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "types": "types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
   "scripts": {
     "build": "tsc"
   },
