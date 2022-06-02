@@ -6,13 +6,13 @@ import {
   ScreenWidthMaxMedium,
   hiddenContentStyle,
 } from '@/style-utilities'
-import { memoizeFunction } from '@fluentui-vue/common'
 import type { ITheme } from '@fluentui-vue/theme'
 import type { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types'
 import type { IContextualMenuItemStyles, IContextualMenuItemStyleProps } from './ContextualMenuItem.types'
 import type { IContextualMenuSubComponentStyles } from './ContextualMenu.types'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { IsFocusVisibleClassName } from '@/style-utilities/focus'
+import { memoizeFunction } from '@/utilities'
 
 /**
  * @deprecated Deprecated in favor of mergeStyles API.

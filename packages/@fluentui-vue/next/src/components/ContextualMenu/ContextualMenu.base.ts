@@ -1,5 +1,5 @@
+import { getId } from '@/utilities'
 import { asSlotProps, useStylingProps } from '@/utils'
-import { getId } from '@fluentui-vue/common'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import Vue, { CreateElement, VNode } from 'vue'
