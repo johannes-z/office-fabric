@@ -26,7 +26,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fluentui-vue/common": "workspace:^1.0.0",
     "@fluentui/merge-styles": "^8.5.2"
   }
 }
