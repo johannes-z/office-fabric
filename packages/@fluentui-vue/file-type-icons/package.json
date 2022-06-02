@@ -5,8 +5,9 @@
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "types/index.d.ts",
-  "sideEffects": [
-    "lib/version.js"
+  "files": [
+    "lib",
+    "types"
   ],
   "repository": {
     "type": "git",
