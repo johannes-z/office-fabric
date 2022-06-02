@@ -12,7 +12,7 @@ import type { IContextualMenuItemStyles, IContextualMenuItemStyleProps } from '.
 import type { IContextualMenuSubComponentStyles } from './ContextualMenu.types'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { IsFocusVisibleClassName } from '@/style-utilities/focus'
-import { memoizeFunction } from '@/utilities'
+import { memoizeFunction } from '@fluentui-vue/utilities'
 
 /**
  * @deprecated Deprecated in favor of mergeStyles API.
