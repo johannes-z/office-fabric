@@ -1,3 +1,4 @@
+import { ITheme } from '@fluentui-vue/theme'
 import { IStyle } from '@fluentui/merge-styles'
 
 /**
