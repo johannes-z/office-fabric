@@ -18,7 +18,7 @@ import { initializeIcons as i15 } from './fabric-icons-15'
 import { initializeIcons as i16 } from './fabric-icons-16'
 import { initializeIcons as i17 } from './fabric-icons-17'
 
-import { IIconOptions } from '@fluentui/style-utilities'
+import { IIconOptions } from '../utils/icons'
 import { registerIconAliases } from './iconAliases'
 
 const DEFAULT_BASE_URL = 'https://spoppe-b.azureedge.net/files/fabric-cdn-prod_20210407.001/assets/icons/'
