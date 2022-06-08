@@ -4,7 +4,7 @@ import { getIcon } from '@fluentui-vue/icons'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 
 export interface IIconContent {
-  children?: string;
+  children?: string | Function | any[];
   iconClassName?: string;
   fontFamily?: string;
   mergeImageProps?: boolean;
@@ -58,6 +58,10 @@ export const FontIcon = Vue.extend({
         className,
       ],
       style: { fontFamily, ...style },
-    }, children)
+    }, typeof children === 'function'
+      ? [children(h)]
+      : (children instanceof Array)
+        ? children
+        : [children])
   },
 })
