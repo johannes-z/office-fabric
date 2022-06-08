@@ -1,4 +1,5 @@
 import { HighContrastSelector } from '@/style-utilities/styles'
+import { ITheme } from '@fluentui-vue/theme'
 import { IRawStyle } from '@fluentui/merge-styles'
 import { IsFocusVisibleClassName } from './focus'
 import { IGetFocusStylesOptions } from './IGetFocusStyles'
