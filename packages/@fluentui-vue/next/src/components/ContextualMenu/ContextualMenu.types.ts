@@ -1,25 +1,14 @@
-import * as React from 'react';
-import { DirectionalHint } from '../../common/DirectionalHint';
-import type { IFocusZoneProps } from '../../FocusZone';
-import type { IIconProps } from '../../Icon';
-import type { ICalloutProps, ICalloutContentStyleProps } from '../../Callout';
-import type { ITheme, IStyle } from '../../Styling';
-import type { IButtonStyles } from '../../Button';
-import type { IRefObject, IBaseProps, IRectangle, IRenderFunction, IStyleFunctionOrObject } from '../../Utilities';
-import type { IWithResponsiveModeState } from '../../ResponsiveMode';
-import type { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames';
-import type { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types';
-import type {
-  IContextualMenuItemProps,
-  IContextualMenuRenderItem,
-  IContextualMenuItemStyleProps,
-  IContextualMenuItemRenderFunctions,
-} from './ContextualMenuItem.types';
-import type { IKeytipProps } from '../../Keytip';
-import type { Target } from '@fluentui/react-hooks';
-import type { IPopupRestoreFocusParams } from '../../Popup';
+import { ITheme } from '@fluentui-vue/theme'
+import { DirectionalHint, IRectangle } from '@fluentui-vue/utilities'
+import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import { ICalloutContentStyleProps, ICalloutProps } from '../Callout/Callout.types'
+import { IVerticalDividerClassNames } from '../Divider'
+import { IIconProps } from '../Icon'
+import { IPopupRestoreFocusParams } from '../Popup'
+import { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames'
+import { IContextualMenuItemProps, IContextualMenuItemRenderFunctions, IContextualMenuItemStyleProps } from './ContextualMenuItem.types'
 
-export { DirectionalHint } from '../../common/DirectionalHint';
+export { DirectionalHint } from '@fluentui-vue/utilities'
 
 /**
  * {@docCategory ContextualMenu}
@@ -39,17 +28,7 @@ export interface IContextualMenu {}
 /**
  * {@docCategory ContextualMenu}
  */
-export interface IContextualMenuProps
-  extends IBaseProps<IContextualMenu>,
-    React.RefAttributes<HTMLDivElement>,
-    // eslint-disable-next-line deprecation/deprecation
-    IWithResponsiveModeState {
-  /**
-   * Optional callback to access the IContextualMenu interface. Use this instead of ref for accessing
-   * the public methods and properties of the component.
-   */
-  componentRef?: IRefObject<IContextualMenu>;
-
+export interface IContextualMenuProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
@@ -158,7 +137,7 @@ export interface IContextualMenuProps
    * Callback when the ContextualMenu tries to close. If `dismissAll` is true then all
    * submenus will be dismissed.
    */
-  onDismiss?: (ev?: Event | React.MouseEvent | React.KeyboardEvent, dismissAll?: boolean) => void;
+  onDismiss?: (ev?: Event | MouseEvent | KeyboardEvent, dismissAll?: boolean) => void;
 
   /**
    * Click handler which is invoked if `onClick` is not passed for individual contextual
@@ -166,7 +145,7 @@ export interface IContextualMenuProps
    * Returning true will dismiss the menu even if `ev.preventDefault()` was called.
    */
   onItemClick?: (
-    ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    ev?: MouseEvent | KeyboardEvent,
     item?: IContextualMenuItem,
   ) => boolean | void;
 
@@ -223,7 +202,6 @@ export interface IContextualMenuProps
    * Method to provide the classnames to style the contextual menu.
    * @deprecated Use `styles` instead to leverage mergeStyles API.
    */
-  // eslint-disable-next-line deprecation/deprecation
   getMenuClassNames?: (theme: ITheme, className?: string) => IContextualMenuClassNames;
 
   /** Custom render function for a submenu. */
@@ -250,8 +228,8 @@ export interface IContextualMenuProps
    * @defaultvalue ContextualMenuItem
    */
   contextualMenuItemAs?:
-    | React.ComponentClass<IContextualMenuItemProps>
-    | React.FunctionComponent<IContextualMenuItemProps>;
+  | React.ComponentClass<IContextualMenuItemProps>
+  | React.FunctionComponent<IContextualMenuItemProps>;
 
   /**
    * Props to pass down to the FocusZone.
@@ -325,12 +303,6 @@ export interface IContextualMenuListProps {
  * {@docCategory ContextualMenu}
  */
 export interface IContextualMenuItem {
-  /**
-   * Optional callback to access the IContextualMenuRenderItem interface.
-   * This will get passed down to ContextualMenuItem.
-   */
-  componentRef?: IRefObject<IContextualMenuRenderItem>;
-
   /**
    * Unique id to identify the item
    */
@@ -414,7 +386,7 @@ export interface IContextualMenuItem {
    * was called (does not apply for button or CommandBar sub-menu items).
    */
   onClick?: (
-    ev?: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+    ev?: MouseEvent | KeyboardEvent,
     item?: IContextualMenuItem,
   ) => boolean | void;
 
@@ -459,8 +431,7 @@ export interface IContextualMenuItem {
     iconClassName?: string,
     subMenuClassName?: string,
     primaryDisabled?: boolean,
-  ) => // eslint-disable-next-line deprecation/deprecation
-  IMenuItemClassNames;
+  ) => IMenuItemClassNames;
 
   /**
    * Optional IContextualMenuItemProps overrides to customize behaviors such as item styling via `styles`.
@@ -472,7 +443,6 @@ export interface IContextualMenuItem {
    * Default value is the `getSplitButtonVerticalDividerClassNames` func defined in `ContextualMenu.classnames.ts`.
    * @defaultvalue getSplitButtonVerticalDividerClassNames
    */
-  // eslint-disable-next-line deprecation/deprecation
   getSplitButtonVerticalDividerClassNames?: (theme: ITheme) => IVerticalDividerClassNames;
 
   /**
@@ -531,7 +501,7 @@ export interface IContextualMenuItem {
    * be used to interrupt native on click events as well. The click event should still handle
    * the commands. This should only be used in special cases when react and non-react are mixed.
    */
-  onMouseDown?: (item: IContextualMenuItem, event: React.MouseEvent<HTMLElement>) => void;
+  onMouseDown?: (item: IContextualMenuItem, event: MouseEvent) => void;
 
   /**
    * Optional override for the menu button's role.
@@ -594,7 +564,7 @@ export interface IContextualMenuItem {
 /**
  * {@docCategory ContextualMenu}
  */
-export interface IContextualMenuSection extends React.ClassAttributes<any> {
+export interface IContextualMenuSection {
   /**
    * The items to include inside the section.
    */
