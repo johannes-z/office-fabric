@@ -14,15 +14,18 @@ export const OverlayBase = Vue.extend({
   props: {
     ...useStylingProps(),
     dark: { type: Boolean, default: false },
+    isDarkThemed: { type: Boolean, default: false },
+    // TODO use allowTouchBodyScroll
+    allowTouchBodyScroll: { type: Boolean, default: false },
   },
 
   render (h: CreateElement, ctx): VNode {
-    const { theme, styles, className, dark: isDark } = ctx.props
+    const { theme, styles, className, dark, isDarkThemed } = ctx.props
 
     const classNames = getClassNames(styles, {
       theme,
       className,
-      isDark,
+      isDark: dark || isDarkThemed,
     })
 
     const slotProps = asSlotProps({

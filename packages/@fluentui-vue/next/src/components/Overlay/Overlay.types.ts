@@ -30,9 +30,7 @@ export interface IOverlayProps {
    * Whether to use the dark-themed overlay.
    * @defaultvalue false
    */
-  dark?: boolean;
-
-  onClick?: () => void;
+  isDarkThemed?: boolean;
 
   /**
    * Allow body scroll on touch devices. Changing after mounting has no effect.
