@@ -53,8 +53,6 @@ export interface IIconRecords {
   [key: string]: IIconRecord | {};
 }
 
-const ICON_SETTING_NAME = 'icons'
-
 const _iconSettings: IIconRecords = {
   __options: {
     disableWarnings: false,
