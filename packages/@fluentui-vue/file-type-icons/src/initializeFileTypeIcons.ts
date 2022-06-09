@@ -1,4 +1,4 @@
-import { IIconOptions, registerIcons } from '@fluentui-vue/icons'
+import { IIconOptions, registerIcons } from '@fluentui-vue/style-utilities'
 import Vue, { CreateElement } from 'vue'
 import { FileTypeIconMap } from './FileTypeIconMap'
 
