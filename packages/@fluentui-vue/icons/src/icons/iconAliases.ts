@@ -1,4 +1,4 @@
-import { registerIconAlias } from '../utils/icons'
+import { registerIconAlias } from '@fluentui-vue/style-utilities'
 
 export const registerIconAliases = () => {
   registerIconAlias('trash', 'delete')

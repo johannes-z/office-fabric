@@ -4,7 +4,7 @@ import {
   IIconOptions,
   IIconSubset,
   registerIcons,
-} from '../utils/icons'
+} from '@fluentui-vue/style-utilities'
 
 export function initializeIcons (
   baseUrl: string = '',

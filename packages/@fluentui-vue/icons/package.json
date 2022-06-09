@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/icons",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Fluent UI Vue icons.",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -15,14 +15,14 @@
   "peerDependencies": {
     "vue": "^2.6.14"
   },
+  "dependencies": {
+    "@fluentui-vue/style-utilities": "workspace:^1.0.0"
+  },
   "devDependencies": {
     "vite": "^2.9.10",
     "vue": "^2.6.14"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@fluentui/merge-styles": "^8.5.2"
-  }
+  "license": "ISC"
 }
