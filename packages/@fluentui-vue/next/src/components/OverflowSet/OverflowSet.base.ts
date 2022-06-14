@@ -32,7 +32,6 @@ export const OverflowSetBase = Vue.extend({
 
     const slotProps = asSlotProps({
       root: {
-        ref: ctx.data.ref,
         class: classNames.root,
         attrs: {
           role: role || 'group',
@@ -40,8 +39,6 @@ export const OverflowSetBase = Vue.extend({
         },
       },
       item: {
-        ref: ctx.data.ref ? `${ctx.data.ref}Items` : undefined,
-        refInFor: true,
         class: classNames.item,
         attrs: {
           role: 'none',
@@ -49,7 +46,6 @@ export const OverflowSetBase = Vue.extend({
       },
       overflowButton: {
         ...ctx.data,
-        ref: undefined,
         class: classNames.overflowButton,
       },
     })

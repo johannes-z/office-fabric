@@ -22,7 +22,7 @@ export const OverflowButton = Vue.extend({
     const slotProps = asSlotProps({
       root: {
         ...ctx.data,
-        class: className,
+        class: className ?? ctx.data.class,
       },
     })
 
