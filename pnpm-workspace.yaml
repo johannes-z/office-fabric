@@ -13,5 +13,6 @@ packages:
   - 'packages/@fluentui-vue/next'
   - 'packages/@fluentui-vue/theme'
   - 'packages/@fluentui-vue/utilities'
+  - 'packages/@fluentui-vue/style-utilities'
 
   - 'packages/@fluentui-vue/website'
