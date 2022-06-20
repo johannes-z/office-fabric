@@ -44,12 +44,18 @@ Vue & {
   props: {
     ...useStylingProps(),
 
-    items: { type: Array, default: () => [] },
-    overflowItems: { type: Array, default: () => [] },
-    farItems: { type: Array, default: () => [] },
+    items: { type: Array as () => any[], default: () => [] },
+    overflowItems: { type: Array as () => any[], default: () => [] },
+    farItems: { type: Array as () => any[], default: () => [] },
 
     shiftOnReduce: { type: Boolean, default: false },
     overflowButtonProps: { type: Object, default: () => ({}) },
+  },
+
+  data () {
+    return {
+      dataToRender: null,
+    }
   },
 
   computed: {
@@ -60,7 +66,7 @@ Vue & {
       })
     },
 
-    commandBarData (): any {
+    commandBarData (): ICommandBarData {
       const {
         items,
         overflowItems,
@@ -71,6 +77,7 @@ Vue & {
         overflowItems: [...overflowItems!],
         minimumOverflowItems: [...overflowItems!].length, // for tracking
         farItems,
+        cacheKey: '',
       }
     },
 
@@ -78,7 +85,6 @@ Vue & {
       const {
         classNames,
         onRenderItem,
-        commandBarData: data,
       } = this
 
       return ({
@@ -96,7 +102,15 @@ Vue & {
             overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
           },
           scopedSlots: {
-            item: ({ item }) => onRenderItem(item),
+            item: ({ item }) => {
+              if (item.key in this.$scopedSlots) {
+                return this.$scopedSlots[item.key]!({
+                  item,
+                  render: onRenderItem,
+                })
+              }
+              return onRenderItem(item)
+            },
             overflow: (overflowItems) => {
               const { overflowButtonProps = {} } = this
 
@@ -136,6 +150,16 @@ Vue & {
     },
   },
 
+  watch: {
+    commandBarData: {
+      deep: true,
+      immediate: true,
+      handler (val) {
+        this.dataToRender = val
+      },
+    },
+  },
+
   methods: {
     onReduceData (data: any): any | undefined {
       const { shiftOnReduce } = this
@@ -150,9 +174,9 @@ Vue & {
         overflowItems = [movedItem, ...overflowItems]
         primaryItems = shiftOnReduce ? primaryItems.slice(1) : primaryItems.slice(0, -1)
 
-        const newData = { ...data, primaryItems, overflowItems }
+        this.dataToRender = Object.assign({}, this.dataToRender, { ...data, primaryItems, overflowItems })
 
-        return newData
+        return true
       }
 
       return undefined
@@ -171,9 +195,9 @@ Vue & {
         // if shiftOnReduce, movedItem goes first, otherwise, last.
         primaryItems = shiftOnReduce ? [movedItem, ...primaryItems] : [...primaryItems, movedItem]
 
-        const newData = { ...data, primaryItems, overflowItems }
+        this.dataToRender = Object.assign({}, this.dataToRender, { ...data, primaryItems, overflowItems })
 
-        return newData
+        return true
       }
 
       return undefined
@@ -199,14 +223,13 @@ Vue & {
   },
 
   render (h: CreateElement): VNode {
-    const data = this.commandBarData
+    const data = this.dataToRender
 
     return h(ResizeGroup, {
       props: {
         data: data,
         onReduceData: this.onReduceData,
         onGrowData: this.onGrowData,
-        getItemRefs: () => this.$refs.overflowItems,
       },
       scopedSlots: {
         default: data => [
