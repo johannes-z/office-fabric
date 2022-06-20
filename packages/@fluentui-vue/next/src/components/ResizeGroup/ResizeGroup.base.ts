@@ -25,26 +25,12 @@ export const ResizeGroupBase = Vue.extend({
 
   data (): any {
     return {
-      dataToMeasure: this.data,
-      renderedData: null,
-
-      dataNeedsMeasuring: true,
-      containerDimension: 0,
+      resizeObserver: null,
     }
   },
 
-  computed: {
-    hasRenderedContent (): boolean {
-      return !!this.renderedData
-    },
-    isInitialMeasure (): boolean {
-      return !this.hasRenderedContent && this.dataNeedsMeasuring
-    },
-    refToMeasure (): HTMLDivElement {
-      return !this.hasRenderedContent
-        ? this.$refs.initialHiddenDiv
-        : this.$refs.updateHiddenDiv
-    },
+  beforeDestroy () {
+    this.resizeObserver.disconnect()
   },
 
   async mounted (): Promise<void> {
@@ -52,29 +38,10 @@ export const ResizeGroupBase = Vue.extend({
     this.remeasure()
 
     // #region ResizeObserver
-    const resizeObserver = new ResizeObserver(
+    this.resizeObserver = new ResizeObserver(
       () => debounce(window.requestAnimationFrame(this.remeasure), RESIZE_DELAY, false),
     )
-    resizeObserver.observe(this.$refs.initialHiddenDiv)
-    // #endregion
-
-    // #region IntersectionObserver
-    const itemRefs = this.getItemRefs?.() ?? []
-    if (!itemRefs) return
-    itemRefs.forEach(itemRef => {
-      const observer = new IntersectionObserver(
-        ([{ isIntersecting }]) => {
-          if (isIntersecting) return
-          observer.disconnect()
-          window.requestAnimationFrame(this.remeasure)
-        },
-        {
-          root: this.$refs.root,
-          threshold: 1,
-        },
-      )
-      observer.observe(itemRef)
-    })
+    this.resizeObserver.observe(this.$refs.initialHiddenDiv)
     // #endregion
   },
 
@@ -83,12 +50,12 @@ export const ResizeGroupBase = Vue.extend({
       if (!container) return 0
       const measuredBoundingRect = container.getBoundingClientRect()
       return this.direction === ResizeGroupDirection.vertical
-        ? measuredBoundingRect.height
-        : measuredBoundingRect.width
+        ? Math.round(measuredBoundingRect.height)
+        : Math.round(measuredBoundingRect.width)
     },
 
     getElementToMeasureDimension (): number {
-      return this.measureContainer(this.refToMeasure)
+      return this.$refs.root.scrollWidth // this.measureContainer(this.refToMeasure)
     },
 
     updateContainerDimension () {
@@ -96,38 +63,29 @@ export const ResizeGroupBase = Vue.extend({
     },
 
     async remeasure () {
-      this.dataNeedsMeasuring = true
       await this.$nextTick()
       this.updateContainerDimension()
       await this.growUntilOverflow()
-      this.dataNeedsMeasuring = false
     },
 
     async shrinkUntilFit () {
       let measuredDimension = this.getElementToMeasureDimension()
       while (measuredDimension > this.containerDimension) {
-        const nextMeasuredData = this.onReduceData(this.dataToMeasure)
+        const result = this.onReduceData(this.data)
 
-        if (nextMeasuredData === undefined) {
-          break
-        }
-        this.dataToMeasure = nextMeasuredData
+        if (!result) break
 
         await this.$nextTick()
         measuredDimension = this.getElementToMeasureDimension()
       }
-      this.renderedData = this.dataToMeasure
     },
 
     async growUntilOverflow () {
       let measuredDimension = this.getElementToMeasureDimension()
-      while (measuredDimension < this.containerDimension) {
-        const nextMeasuredData = this.onGrowData(this.dataToMeasure)
+      while (measuredDimension <= this.containerDimension) {
+        const result = this.onGrowData(this.data)
 
-        if (nextMeasuredData === undefined) {
-          break
-        }
-        this.dataToMeasure = nextMeasuredData
+        if (!result) break
 
         await this.$nextTick()
         measuredDimension = this.getElementToMeasureDimension()
@@ -159,14 +117,8 @@ export const ResizeGroupBase = Vue.extend({
 
     return h('div', slotProps.root, [
       h('div', slotProps.parent, [
-        h('div', slotProps.hidden, [
-          this.dataNeedsMeasuring && !this.isInitialMeasure && onRenderData(this.dataToMeasure),
-        ]),
-
         h('div', slotProps.content, [
-          this.isInitialMeasure
-            ? onRenderData(this.dataToMeasure)
-            : this.renderedData && onRenderData(this.renderedData),
+          onRenderData(this.data),
         ]),
       ]),
     ])
