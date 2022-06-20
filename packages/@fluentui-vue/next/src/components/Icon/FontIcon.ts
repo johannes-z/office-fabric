@@ -1,6 +1,6 @@
 import Vue, { CreateElement, RenderContext, VNode } from 'vue'
 import { classNames, MS_ICON } from './Icon.styles'
-import { getIcon } from '@fluentui-vue/icons'
+import { getIcon } from '@fluentui-vue/style-utilities'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 
 export interface IIconContent {
@@ -38,7 +38,8 @@ export const FontIcon = Vue.extend({
   props: {
     // ...withThemeableProps(),
 
-    iconName: { type: String, default: '' },
+    iconName: { type: String, default: undefined },
+    className: { type: String, default: undefined },
   },
 
   render (h: CreateElement, ctx: RenderContext): VNode {
