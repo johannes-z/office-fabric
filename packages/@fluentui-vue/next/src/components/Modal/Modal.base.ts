@@ -114,9 +114,11 @@ export const ModalBase = Vue.extend({
         },
         overlay: {
           attrs: {
+            ...overlay,
+          },
+          props: {
             dark: isDarkOverlay,
             allowTouchBodyScroll: this.allowTouchBodyScroll,
-            ...overlay,
           },
           on: {
             ...!isBlocking ? { click: onDismiss } : {},
