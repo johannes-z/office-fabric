@@ -1,4 +1,4 @@
-import { getTheme } from '@/style-utilities/getTheme'
+import { getTheme } from '@fluentui-vue/style-utilities'
 
 export function useStylingProps () {
   return {
