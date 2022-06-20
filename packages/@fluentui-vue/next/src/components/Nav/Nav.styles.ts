@@ -1,6 +1,6 @@
-import { AnimationClassNames, getGlobalClassNames, HighContrastSelector } from '@/style-utilities'
-import { getFocusStyle } from '@/style-utilities/getFocusStyle'
-import { ZIndexes } from '@/style-utilities/zIndexes'
+import { AnimationClassNames, getGlobalClassNames, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { getFocusStyle } from '@fluentui-vue/style-utilities'
+import { ZIndexes } from '@fluentui-vue/style-utilities'
 import { FontWeights } from '@fluentui-vue/theme'
 import { INavStyleProps, INavStyles } from './Nav.types'
 

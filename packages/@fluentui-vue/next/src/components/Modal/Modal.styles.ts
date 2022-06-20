@@ -1,4 +1,4 @@
-import { AnimationVariables, getGlobalClassNames, ZIndexes } from '@/style-utilities'
+import { AnimationVariables, getGlobalClassNames, ZIndexes } from '@fluentui-vue/style-utilities'
 import { IModalStyles } from './Modal.types'
 
 export const animationDuration = AnimationVariables.durationValue2

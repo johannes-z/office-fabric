@@ -1,5 +1,5 @@
-import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@/style-utilities/styles'
-import { IsFocusVisibleClassName } from '@/style-utilities/focus'
+import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
 import { SemanticColors, Palette } from '@fluentui-vue/theme'
 import { IRawStyle } from '@fluentui/merge-styles'
 

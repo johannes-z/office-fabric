@@ -1,4 +1,4 @@
-import { noWrap, getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@/style-utilities'
+import { noWrap, getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
 import { getRTL, memoizeFunction } from '@fluentui-vue/utilities'
 import { keyframes } from '@fluentui/merge-styles'
 import type { IRawStyle } from '@fluentui/merge-styles'

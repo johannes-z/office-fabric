@@ -36,7 +36,6 @@ export const LayerBase = Vue.extend({
       })
     },
     slotProps (): SlotProps<any> {
-      console.log(this.hostId)
       return {
         root: {
           class: this.classNames.root,
@@ -76,8 +75,6 @@ export const LayerBase = Vue.extend({
         this.hasTarget = false
         return
       }
-
-      console.log({ host })
 
       this.hasTarget = true
     },

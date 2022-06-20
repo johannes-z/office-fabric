@@ -1,5 +1,5 @@
 import { DirectionalHint, getBoundsFromTargetWindow, getMaxHeight, ICalloutPositionedInfo, IPosition, positionCallout, RectangleEdge, IRectangle, classNamesFunction } from '@fluentui-vue/utilities'
-import { AnimationClassNames } from '@/style-utilities/classNames'
+import { AnimationClassNames } from '@fluentui-vue/style-utilities'
 import { elementContains } from '@fluentui/dom-utilities'
 import { IProcessedStyleSet, IStyle } from '@fluentui/merge-styles'
 import Vue, { VNode } from 'vue'

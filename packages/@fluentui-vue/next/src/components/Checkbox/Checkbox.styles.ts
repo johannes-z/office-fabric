@@ -1,5 +1,5 @@
-import { IsFocusVisibleClassName } from '@/style-utilities/focus'
-import { getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@/style-utilities/styles'
+import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
+import { getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
 import type{ IStyle } from '@fluentui/merge-styles'
 import type{ ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
 

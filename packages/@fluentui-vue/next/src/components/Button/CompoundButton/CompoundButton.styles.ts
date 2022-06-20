@@ -1,4 +1,4 @@
-import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@/style-utilities/styles'
+import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { DefaultFontStyles, FontWeights, Palette } from '@fluentui-vue/theme'
 import { concatStyleSets } from '@fluentui/merge-styles'

@@ -1,4 +1,4 @@
-import { getFocusStyle } from '@/style-utilities'
+import { getFocusStyle } from '@fluentui-vue/style-utilities'
 import { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'

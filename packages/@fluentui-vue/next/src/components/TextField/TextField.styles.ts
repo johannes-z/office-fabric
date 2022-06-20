@@ -1,4 +1,4 @@
-import { AnimationClassNames, getFocusStyle, getGlobalClassNames, getHighContrastNoAdjustStyle, getInputFocusStyle, getPlaceholderStyles, HighContrastSelector, IconFontSizes, normalize } from '@/style-utilities'
+import { AnimationClassNames, getFocusStyle, getGlobalClassNames, getHighContrastNoAdjustStyle, getInputFocusStyle, getPlaceholderStyles, HighContrastSelector, IconFontSizes, normalize } from '@fluentui-vue/style-utilities'
 import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
 import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'

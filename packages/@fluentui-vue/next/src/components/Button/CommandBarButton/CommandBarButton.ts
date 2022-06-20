@@ -20,6 +20,10 @@ export const CommandBarButton = Vue.extend({
     const slotProps = asSlotProps({
       root: {
         ...ctx.data,
+        attrs: {
+          ...ctx.data.attrs,
+          ...ctx.data.props,
+        },
         props: {
           ...ctx.props,
           ...ctx.data.props,

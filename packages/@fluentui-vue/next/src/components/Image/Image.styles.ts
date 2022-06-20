@@ -1,4 +1,4 @@
-import { AnimationClassNames, getGlobalClassNames } from '@/style-utilities'
+import { AnimationClassNames, getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import { getWindow } from '@fluentui-vue/utilities'
 import type { IStyle } from '@fluentui/merge-styles'
 import type { IImageStyleProps, IImageStyles } from './Image.types'

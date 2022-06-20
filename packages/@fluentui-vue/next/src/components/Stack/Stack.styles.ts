@@ -1,6 +1,6 @@
 import { parseGap, parsePadding } from './StackUtils'
 import type { IStackComponent, IStackStyles, IStackStylesReturnType } from './Stack.types'
-import { getGlobalClassNames } from '@/style-utilities'
+import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
 
 const nameMap: { [key: string]: string } = {
   start: 'flex-start',

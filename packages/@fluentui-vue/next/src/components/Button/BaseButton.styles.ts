@@ -1,8 +1,8 @@
-import { getFocusStyle } from '@/style-utilities/getFocusStyle'
+import { getFocusStyle } from '@fluentui-vue/style-utilities'
 import { SemanticColors, DefaultEffects, DefaultFontStyles } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { IRawStyle } from '@fluentui/merge-styles'
-import { hiddenContentStyle, HighContrastSelector } from '@/style-utilities/styles'
+import { hiddenContentStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
 
 const noOutline: IRawStyle = {
   outline: 0,

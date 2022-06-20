@@ -5,7 +5,7 @@ import {
   ScreenWidthMaxMedium,
   IconFontSizes,
   getHighContrastNoAdjustStyle,
-} from '@/style-utilities'
+} from '@fluentui-vue/style-utilities'
 import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'

@@ -1,5 +1,5 @@
-import { FontWeights, getHighContrastNoAdjustStyle, HighContrastSelector } from '@/style-utilities/styles'
-import { getFocusStyle } from '@/style-utilities/getFocusStyle'
+import { FontWeights, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { getFocusStyle } from '@fluentui-vue/style-utilities'
 import { IToggleStyleProps, IToggleStyles } from './Toggle.types'
 
 const DEFAULT_PILL_WIDTH = 40

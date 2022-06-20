@@ -1,4 +1,4 @@
-import { hiddenContentStyle } from '@/style-utilities/styles'
+import { hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import type { IStyleFunction } from '@fluentui/merge-styles'
 import type { IAnnouncedStyleProps, IAnnouncedStyles } from './Announced.types'
 

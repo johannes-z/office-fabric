@@ -1,4 +1,4 @@
-import { getGlobalClassNames, HighContrastSelector } from '@/style-utilities'
+import { getGlobalClassNames, HighContrastSelector } from '@fluentui-vue/style-utilities'
 import type { ILinkStyleProps, ILinkStyles } from './Link.types'
 
 export const GlobalClassNames = {

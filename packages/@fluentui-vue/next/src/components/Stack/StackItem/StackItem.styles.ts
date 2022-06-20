@@ -1,4 +1,4 @@
-import { getGlobalClassNames } from '@/style-utilities'
+import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import type { IStackItemComponent, IStackItemStyles, IStackItemStylesReturnType } from './StackItem.types'
 
 const GlobalClassNames = {

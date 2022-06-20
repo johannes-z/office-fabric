@@ -2,7 +2,7 @@ import { Palette } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-import { HighContrastSelector } from '@/style-utilities/styles'
+import { HighContrastSelector } from '@fluentui-vue/style-utilities'
 
 const DEFAULT_BUTTON_HEIGHT = '40px'
 const DEFAULT_PADDING = '0 4px'

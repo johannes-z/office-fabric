@@ -1,4 +1,4 @@
-import { getHighContrastNoAdjustStyle, hiddenContentStyle, HighContrastSelector } from '@/style-utilities/styles'
+import { getHighContrastNoAdjustStyle, hiddenContentStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
 import { DefaultFontStyles, Palette } from '@fluentui-vue/theme'
 import { keyframes } from '@fluentui/merge-styles'
 import { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'

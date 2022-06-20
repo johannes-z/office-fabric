@@ -1,5 +1,5 @@
-import { getGlobalClassNames } from '@/style-utilities/styles'
-import { ZIndexes } from '@/style-utilities/zIndexes'
+import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import { ZIndexes } from '@fluentui-vue/style-utilities'
 import { ILayerStyleProps, ILayerStyles } from './Layer.types'
 
 const GlobalClassNames = {

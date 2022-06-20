@@ -1,4 +1,4 @@
-import { FontWeights, getGlobalClassNames } from '@/style-utilities'
+import { FontWeights, getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import { CONTEXTUAL_MENU_ITEM_HEIGHT } from './ContextualMenu.cnstyles'
 import type { IContextualMenuStyleProps, IContextualMenuStyles } from './ContextualMenu.types'
 

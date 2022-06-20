@@ -1,4 +1,4 @@
-import { getFocusStyle, getGlobalClassNames, getScreenSelector, HighContrastSelector, ScreenWidthMaxSmall } from '@/style-utilities'
+import { getFocusStyle, getGlobalClassNames, getScreenSelector, HighContrastSelector, ScreenWidthMaxSmall } from '@fluentui-vue/style-utilities'
 import { IconFontSizes, ISemanticColors } from '@fluentui-vue/theme'
 import { IStyle } from '@fluentui/merge-styles'
 import { IMessageBarStyleProps, IMessageBarStyles, MessageBarType } from './MessageBar.types'

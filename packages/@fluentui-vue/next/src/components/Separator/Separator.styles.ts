@@ -1,4 +1,4 @@
-import { HighContrastSelector } from '@/style-utilities'
+import { HighContrastSelector } from '@fluentui-vue/style-utilities'
 import type { ISeparatorStyleProps, ISeparatorStyles } from './Separator.types'
 
 export const getStyles = (props: ISeparatorStyleProps): ISeparatorStyles => {

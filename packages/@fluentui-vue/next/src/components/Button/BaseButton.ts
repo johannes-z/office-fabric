@@ -32,6 +32,20 @@ export const BaseButton = Vue.extend({
     }
   },
 
+  created () {
+    window.addEventListener('resize', this.hideMenu)
+  },
+
+  beforeDestroy () {
+    window.removeEventListener('resize', this.hideMenu)
+  },
+
+  methods: {
+    hideMenu () {
+      this.showMenu = false
+    },
+  },
+
   render (h): VNode {
     const {
       styles,

@@ -1,4 +1,4 @@
-import { HighContrastSelector, focusClear, getGlobalClassNames, ZIndexes } from '@/style-utilities'
+import { HighContrastSelector, focusClear, getGlobalClassNames, ZIndexes } from '@fluentui-vue/style-utilities'
 import type { IRawStyle } from '@fluentui/merge-styles'
 import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
 
