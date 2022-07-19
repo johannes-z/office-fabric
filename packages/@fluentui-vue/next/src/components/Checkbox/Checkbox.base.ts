@@ -119,6 +119,12 @@ Vue & {
     },
   },
 
+  watch: {
+    checked (value) {
+      this.internalValue = value
+    },
+  },
+
   methods: {
     onInput () {
       if (this.disabled) return
