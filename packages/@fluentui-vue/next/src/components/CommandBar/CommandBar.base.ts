@@ -77,7 +77,11 @@ Vue & {
         overflowItems: [...overflowItems!],
         minimumOverflowItems: [...overflowItems!].length, // for tracking
         farItems,
-        cacheKey: '',
+        cacheKey: this.computeCacheKey({
+          primaryItems: [...items],
+          overflow: overflowItems && overflowItems.length > 0,
+          farItems,
+        }),
       }
     },
 
@@ -161,9 +165,27 @@ Vue & {
   },
 
   methods: {
+    computeCacheKey (data: {
+      primaryItems?: ICommandBarItemProps[];
+      overflow?: boolean;
+      farItems?: ICommandBarItemProps[];
+    }): string {
+      const { primaryItems, overflow, farItems } = data
+      const returnKey = (acc: string, current: ICommandBarItemProps): string => {
+        const { cacheKey = current.key } = current
+        return acc + cacheKey
+      }
+
+      const primaryKey = primaryItems && primaryItems.reduce(returnKey, '')
+      const overflowKey = overflow ? 'overflow' : ''
+      const farKey = farItems && farItems.reduce(returnKey, '')
+
+      return [primaryKey, overflowKey, farKey].join('')
+    },
     onReduceData (data: any): any | undefined {
       const { shiftOnReduce } = this
-      let { primaryItems, overflowItems } = data
+      let { primaryItems, overflowItems, cacheKey } = data
+      const { farItems } = data
 
       // Use first item if shiftOnReduce, otherwise use last item
       const movedItem = primaryItems[shiftOnReduce ? 0 : primaryItems.length - 1]
@@ -174,9 +196,11 @@ Vue & {
         overflowItems = [movedItem, ...overflowItems]
         primaryItems = shiftOnReduce ? primaryItems.slice(1) : primaryItems.slice(0, -1)
 
-        this.dataToRender = Object.assign({}, this.dataToRender, { ...data, primaryItems, overflowItems })
+        const newData = { ...data, primaryItems, overflowItems }
+        cacheKey = this.computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
 
-        return true
+        newData.cacheKey = cacheKey
+        return newData
       }
 
       return undefined
@@ -184,7 +208,8 @@ Vue & {
     onGrowData (data: any): any | undefined {
       const { shiftOnReduce } = this
       const { minimumOverflowItems } = data
-      let { primaryItems, overflowItems } = data
+      let { primaryItems, overflowItems, cacheKey } = data
+      const { farItems } = data
       const movedItem = overflowItems[0]
 
       // Make sure that moved item exists and is not one of the original overflow items
@@ -195,9 +220,11 @@ Vue & {
         // if shiftOnReduce, movedItem goes first, otherwise, last.
         primaryItems = shiftOnReduce ? [movedItem, ...primaryItems] : [...primaryItems, movedItem]
 
-        this.dataToRender = Object.assign({}, this.dataToRender, { ...data, primaryItems, overflowItems })
+        const newData = { ...data, primaryItems, overflowItems }
+        cacheKey = this.computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
 
-        return true
+        newData.cacheKey = cacheKey
+        return newData
       }
 
       return undefined
