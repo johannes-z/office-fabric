@@ -21,8 +21,6 @@ export const ContextualMenuButton = Vue.extend({
       classNames,
     } = ctx.props
 
-    console.log(ctx.data)
-
     const slotProps = asSlotProps({
       root: {
         ...ctx.data,

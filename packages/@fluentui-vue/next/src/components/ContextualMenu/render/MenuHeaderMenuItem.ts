@@ -54,7 +54,7 @@ export const MenuHeaderMenuItem = Vue.extend({
         on: {
           click (e) {
             // TODO hasCheckmarks
-            console.log(e)
+            // console.log(e)
           },
         },
       },
