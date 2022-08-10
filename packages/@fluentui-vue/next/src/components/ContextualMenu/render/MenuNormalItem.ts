@@ -71,6 +71,7 @@ export const MenuNormalItem = Vue.extend({
     //   );
     // }
     return h(ContextualMenuButton, {
+      ...ctx.data,
       props: commonProps,
     })
 

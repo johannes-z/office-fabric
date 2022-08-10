@@ -122,6 +122,7 @@ export const MenuItem = Vue.extend({
       case ContextualMenuItemType.Section:
         return [
           h(MenuSectionItem, {
+            ...ctx.data,
             props: {
               item,
               itemClassNames,
@@ -145,6 +146,7 @@ export const MenuItem = Vue.extend({
           },
         })
         return h(MenuListItem, {
+          ...ctx.data,
           key: item.key || index,
           props: {
             classNames: itemClassNames,

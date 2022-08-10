@@ -21,6 +21,7 @@ export const MenuListItem = Vue.extend({
 
     const slotProps = asSlotProps({
       root: {
+        ...ctx.data,
         class: classNames.item,
         attrs: {
           title,

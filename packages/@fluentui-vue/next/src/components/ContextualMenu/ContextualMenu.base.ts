@@ -133,6 +133,9 @@ export const ContextualMenuBase = Vue.extend({
             },
             menuClassNames: classNames,
           },
+          on: {
+            click: () => this.$emit('itemClick'),
+          },
         }),
       ]),
     ])

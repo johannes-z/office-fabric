@@ -30,6 +30,7 @@ export const ContextualMenuAnchor = Vue.extend({
         },
       },
       item: {
+        ...ctx.data,
         props: ctx.props,
       },
     })

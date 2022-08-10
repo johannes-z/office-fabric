@@ -40,6 +40,7 @@ export const MenuList = Vue.extend({
     let indexCorrection = 0
     return h('ul', slotProps.list, items.map((item: any, index) => {
       const menuItem = h(MenuItem, {
+        ...ctx.data,
         props: {
           theme,
           styles,

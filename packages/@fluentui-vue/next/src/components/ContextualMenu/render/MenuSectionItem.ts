@@ -112,6 +112,7 @@ export const MenuSectionItem = Vue.extend({
           headerItem && h(MenuListItem, slotProps.headerItem, [headerItem]),
           ...sectionProps.items.map((contextualMenuItem, itemsIndex) =>
             h(MenuItem, {
+              ...ctx.data,
               props: {
                 item: contextualMenuItem,
                 classNames: menuClassNames,
