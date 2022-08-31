@@ -91,6 +91,7 @@ export const BaseButton = Vue.extend({
         class: classNames.root,
         on: {
           click: (ev) => {
+            if (disabled) return
             this.showMenu = !this.showMenu
             this.$emit('click', ev)
           },
