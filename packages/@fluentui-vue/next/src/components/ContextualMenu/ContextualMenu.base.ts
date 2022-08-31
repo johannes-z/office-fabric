@@ -134,7 +134,20 @@ export const ContextualMenuBase = Vue.extend({
             menuClassNames: classNames,
           },
           on: {
-            click: () => this.$emit('itemClick'),
+            click: (ev: PointerEvent, item) => {
+              if (item.disabled) return
+
+              this.$emit('itemClick', ev)
+
+              let shouldDismiss = false
+              if (item.onClick) {
+                shouldDismiss = !!item.onClick(ev, item)
+              }
+
+              if (shouldDismiss || !ev.defaultPrevented) {
+                this.$emit('dismiss')
+              }
+            },
           },
         }),
       ]),
