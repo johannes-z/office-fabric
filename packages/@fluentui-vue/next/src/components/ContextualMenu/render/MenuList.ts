@@ -52,6 +52,11 @@ export const MenuList = Vue.extend({
           hasIcons,
           classNames: menuClassNames,
         },
+        on: {
+          click: (e) => {
+            ctx.listeners.click?.(e, item)
+          },
+        },
       })
       if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
         const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1

@@ -30,9 +30,9 @@ export const ContextualMenuItemBase = Vue.extend({
         ...ctx.data,
         class: classNames.linkContent,
         on: {
-          ...item.onClick
-            ? { click: item.onClick }
-            : {},
+          // ...item.onClick
+          //   ? { click: item.onClick }
+          //   : {},
         },
       },
       icon: {
