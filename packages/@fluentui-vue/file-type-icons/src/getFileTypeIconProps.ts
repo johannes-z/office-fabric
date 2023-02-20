@@ -1,5 +1,6 @@
 import { FileTypeIconMap } from './FileTypeIconMap'
-import { FileIconType, FileIconTypeInput } from './FileIconType'
+import type { FileIconTypeInput } from './FileIconType'
+import { FileIconType } from './FileIconType'
 
 let _extensionToIconName: { [key: string]: string }
 
@@ -19,8 +20,8 @@ const PICTURES_FOLDER = 'picturesfolder'
 const LINKED_FOLDER = 'linkedfolder'
 
 export const DEFAULT_ICON_SIZE: FileTypeIconSize = 16
-export type FileTypeIconSize = 16 | 20 | 24 | 32 | 40 | 48 | 64 | 96;
-export type ImageFileType = 'svg' | 'png';
+export type FileTypeIconSize = 16 | 20 | 24 | 32 | 40 | 48 | 64 | 96
+export type ImageFileType = 'svg' | 'png'
 
 export interface IFileTypeIconOptions {
   /**
@@ -28,22 +29,22 @@ export interface IFileTypeIconOptions {
    * For file type icons that are not associated with a file
    * extension, such as folder, use the type property.
    */
-  extension?: string;
+  extension?: string
   /**
    * The type of file type icon you need. Use this property for
    * file type icons that are not associated with a file extension,
    * such as folder.
    */
-  type?: FileIconTypeInput;
+  type?: FileIconTypeInput
   /**
    * The size of the icon in pixels. Defaults to 16.
    */
-  size?: FileTypeIconSize;
+  size?: FileTypeIconSize
   /**
    * The type of image file to use. Can be svg or png.
    * Defaults to svg.
    */
-  imageFileType?: ImageFileType;
+  imageFileType?: ImageFileType
 }
 
 /**
@@ -54,13 +55,14 @@ export interface IFileTypeIconOptions {
  *
  * @param options
  */
-export function getFileTypeIconProps (options: IFileTypeIconOptions): { iconName: string } {
+export function getFileTypeIconProps(options: IFileTypeIconOptions): { iconName: string } {
   // First, obtain the base name of the icon using the extension or type.
   let iconBaseName: string = GENERIC_FILE
 
   if (options.extension) {
     iconBaseName = _getFileTypeIconNameFromExtension(options.extension)
-  } else if (options.type) {
+  }
+  else if (options.type) {
     switch (options.type) {
       case FileIconType.docset:
         iconBaseName = DOCSET_FOLDER
@@ -109,7 +111,7 @@ export function getFileTypeIconProps (options: IFileTypeIconOptions): { iconName
   return { iconName: PREFIX + iconBaseName + suffix }
 }
 
-function _getFileTypeIconNameFromExtension (extension: string): string {
+function _getFileTypeIconNameFromExtension(extension: string): string {
   if (!_extensionToIconName) {
     _extensionToIconName = {}
 
@@ -118,9 +120,8 @@ function _getFileTypeIconNameFromExtension (extension: string): string {
         const extensions = FileTypeIconMap[iconName].extensions
 
         if (extensions) {
-          for (let i = 0; i < extensions.length; i++) {
+          for (let i = 0; i < extensions.length; i++)
             _extensionToIconName[extensions[i]] = iconName
-          }
         }
       }
     }
@@ -132,7 +133,7 @@ function _getFileTypeIconNameFromExtension (extension: string): string {
   return _extensionToIconName[extension] || GENERIC_FILE
 }
 
-function _getFileTypeIconSuffix (size: FileTypeIconSize, imageFileType: ImageFileType = 'svg'): string {
+function _getFileTypeIconSuffix(size: FileTypeIconSize, imageFileType: ImageFileType = 'svg'): string {
   const devicePixelRatio: number = window.devicePixelRatio
   let devicePixelRatioSuffix = '' // Default is 1x
 
@@ -140,22 +141,25 @@ function _getFileTypeIconSuffix (size: FileTypeIconSize, imageFileType: ImageFil
   // 1.5x is a special case where SVGs need a different image.
   if (imageFileType === 'svg' && devicePixelRatio > 1 && devicePixelRatio <= 1.5) {
     // Currently missing 1.5x SVGs at size 20, snap to 1x for now
-    if (size !== 20) {
+    if (size !== 20)
       devicePixelRatioSuffix = '_1.5x'
-    }
-  } else if (imageFileType === 'png') {
+  }
+  else if (imageFileType === 'png') {
     // To look good, PNGs should use a different image for higher device pixel ratios
     if (devicePixelRatio > 1 && devicePixelRatio <= 1.5) {
       // Currently missing 1.5x icons for size 20, snap to 2x for now
       devicePixelRatioSuffix = size === 20 ? '_2x' : '_1.5x'
-    } else if (devicePixelRatio > 1.5 && devicePixelRatio <= 2) {
+    }
+    else if (devicePixelRatio > 1.5 && devicePixelRatio <= 2) {
       devicePixelRatioSuffix = '_2x'
-    } else if (devicePixelRatio > 2 && devicePixelRatio <= 3) {
+    }
+    else if (devicePixelRatio > 2 && devicePixelRatio <= 3) {
       devicePixelRatioSuffix = '_3x'
-    } else if (devicePixelRatio > 3) {
+    }
+    else if (devicePixelRatio > 3) {
       devicePixelRatioSuffix = '_4x'
     }
   }
 
-  return size + devicePixelRatioSuffix + '_' + imageFileType
+  return `${size + devicePixelRatioSuffix}_${imageFileType}`
 }
