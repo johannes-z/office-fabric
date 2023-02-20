@@ -18,12 +18,12 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "vue": "^2.7.8"
+    "vue": "^2.7.14"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:^1.0.2"
+    "@fluentui-vue/style-utilities": "workspace:^1.1.0"
   },
   "peerDependencies": {
-    "vue": "^2.7.8"
+    "vue": "^2.7.14"
   }
 }
