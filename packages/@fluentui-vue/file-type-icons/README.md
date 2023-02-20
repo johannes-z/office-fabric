@@ -5,26 +5,22 @@ See the original README for usage. You have to update `@fluentui/react-file-type
 
 ## Getting Started
 ```tsx
-import { initializeFileTypeIcons } from '@fluentui-vue/file-type-icons';
+import { initializeFileTypeIcons } from '@fluentui-vue/file-type-icons'
 
 // Register icons and pull the fonts from the default SharePoint cdn.
-initializeFileTypeIcons();
+initializeFileTypeIcons()
 
 // ...or, register icons and pull the fonts from your own cdn:
-initializeFileTypeIcons('https://my.cdn.com/path/to/icons/');
+initializeFileTypeIcons('https://my.cdn.com/path/to/icons/')
 ```
 
 ## Usage in code
 
 ```vue
-<template>
-  <FluentIcon v-bind="iconProps" />
-</template>
-
 <script lang="ts">
 import Vue from 'vue'
-import { Icon } from '@fluentui-vue/components';
-import { getFileTypeIconProps } from '@fluentui-vue/file-type-icons';
+import { Icon } from '@fluentui-vue/components'
+import { getFileTypeIconProps } from '@fluentui-vue/file-type-icons'
 
 export default Vue.extend({
   components: {
@@ -32,12 +28,16 @@ export default Vue.extend({
   },
 
   computed: {
-    iconProps () {
+    iconProps() {
       return getFileTypeIconProps({ extension: 'docx', size: 16 })
     }
   }
 })
 </script>
+
+<template>
+  <FluentIcon v-bind="iconProps" />
+</template>
 ```
 
 > # @fluentui/react-file-type-icons
@@ -52,13 +52,13 @@ export default Vue.extend({
 > If you are using Fluent UI React components, you can make all file type icons available by calling the `initializeFileTypeIcons` function from the `@fluentui/react-file-type-icons` package:
 > 
 > ```tsx
-> import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+> import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons'
 > 
 > // Register icons and pull the fonts from the default SharePoint cdn.
-> initializeFileTypeIcons();
+> initializeFileTypeIcons()
 > 
 > // ...or, register icons and pull the fonts from your own cdn:
-> initializeFileTypeIcons('https://my.cdn.com/path/to/icons/');
+> initializeFileTypeIcons('https://my.cdn.com/path/to/icons/')
 > ```
 > 
 > **NOTE:** Do not use the `item-types-fluent` icon set that was previously uploaded to the Fabric CDN; it is deprecated.
@@ -68,10 +68,10 @@ export default Vue.extend({
 > If you are using Fluent UI React, you can use the `Icon` component and pass in the corresponding icon properties to render a given icon.
 > 
 > ```tsx
-> import { Icon } from '@fluentui/react/lib/Icon';
-> import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
+> import { Icon } from '@fluentui/react/lib/Icon'
+> import { getFileTypeIconProps } from '@fluentui/react-file-type-icons'
 > 
-> <Icon {...getFileTypeIconProps({ extension: 'docx', size: 16 })} />;
+> <Icon {...getFileTypeIconProps({ extension: 'docx', size: 16 })} />
 > ```
 > 
 > ## Notes

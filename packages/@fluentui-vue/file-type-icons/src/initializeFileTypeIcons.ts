@@ -1,6 +1,6 @@
 import type { IIconOptions } from '@fluentui-vue/style-utilities'
 import { registerIcons } from '@fluentui-vue/style-utilities'
-import { h, isVue2 } from 'vue-demi'
+import { h } from 'vue'
 import { FileTypeIconMap } from './FileTypeIconMap'
 
 const PREFIX = 'vue_'
@@ -20,22 +20,16 @@ function _initializeIcons(baseUrl: string, size: number, options?: Partial<IIcon
   const iconTypes: string[] = Object.keys(FileTypeIconMap)
   const fileTypeIcons: { [key: string]: any } = {}
 
-  const getAttrs = (props: object) => {
-    if (isVue2)
-      return { attrs: props }
-    return props
-  }
-
   iconTypes.forEach((type: string) => {
     const baseUrlSizeType = `${baseUrl + size}/${type}`
-    fileTypeIcons[PREFIX + type + size + PNG_SUFFIX] = h('img', getAttrs({
+    fileTypeIcons[PREFIX + type + size + PNG_SUFFIX] = () => h('img', {
       src: `${baseUrlSizeType}.png`,
       alt: '',
-    }))
-    fileTypeIcons[PREFIX + type + size + SVG_SUFFIX] = h('img', getAttrs({
+    })
+    fileTypeIcons[PREFIX + type + size + SVG_SUFFIX] = () => h('img', {
       src: `${baseUrlSizeType}.svg`,
       alt: '',
-    }))
+    })
 
     // For high resolution screens, register additional versions
     // Apply height=100% and width=100% to force image to fit into containing element
@@ -43,32 +37,32 @@ function _initializeIcons(baseUrl: string, size: number, options?: Partial<IIcon
     // SVGs scale well, so you can generally use the default image.
     // 1.5x is a special case where both SVGs and PNGs need a different image.
 
-    fileTypeIcons[`${PREFIX + type + size}_1.5x${PNG_SUFFIX}`] = h('img', getAttrs({
+    fileTypeIcons[`${PREFIX + type + size}_1.5x${PNG_SUFFIX}`] = () => h('img', {
       src: `${baseUrl + size}_1.5x/${type}.png`,
       height: '100%',
       width: '100%',
-    }))
-    fileTypeIcons[`${PREFIX + type + size}_1.5x${SVG_SUFFIX}`] = h('img', getAttrs({
+    })
+    fileTypeIcons[`${PREFIX + type + size}_1.5x${SVG_SUFFIX}`] = () => h('img', {
       src: `${baseUrl + size}_1.5x/${type}.svg`,
       height: '100%',
       width: '100%',
-    }))
+    })
 
-    fileTypeIcons[`${PREFIX + type + size}_2x${PNG_SUFFIX}`] = h('img', getAttrs({
+    fileTypeIcons[`${PREFIX + type + size}_2x${PNG_SUFFIX}`] = () => h('img', {
       src: `${baseUrl + size}_2x/${type}.png`,
       height: '100%',
       width: '100%',
-    }))
-    fileTypeIcons[`${PREFIX + type + size}_3x${PNG_SUFFIX}`] = h('img', getAttrs({
+    })
+    fileTypeIcons[`${PREFIX + type + size}_3x${PNG_SUFFIX}`] = () => h('img', {
       src: `${baseUrl + size}_3x/${type}.png`,
       height: '100%',
       width: '100%',
-    }))
-    fileTypeIcons[`${PREFIX + type + size}_4x${PNG_SUFFIX}`] = h('img', getAttrs({
+    })
+    fileTypeIcons[`${PREFIX + type + size}_4x${PNG_SUFFIX}`] = () => h('img', {
       src: `${baseUrl + size}_4x/${type}.png`,
       height: '100%',
       width: '100%',
-    }))
+    })
   })
 
   registerIcons(

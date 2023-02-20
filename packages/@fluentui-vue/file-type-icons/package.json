@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/file-type-icons",
-  "version": "2.0.0-0",
+  "version": "2.0.0",
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -18,17 +18,10 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:^1.1.0",
-    "vue-demi": "latest"
+    "@fluentui-vue/style-utilities": "workspace:^1.1.0"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0-rc.1",
-    "vue": "^2.0.0 || >=3.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@vue/composition-api": {
-      "optional": true
-    }
+    "vue": "^3.0.0"
   },
   "devDependencies": {
     "vue": "^3.2.47"
