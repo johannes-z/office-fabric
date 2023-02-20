@@ -1,13 +1,15 @@
 // Your use of the content in the files referenced here is subject to the terms of the license at https://aka.ms/fluentui-assets-license
 
-import {
+import type {
   IIconOptions,
   IIconSubset,
+} from '@fluentui-vue/style-utilities'
+import {
   registerIcons,
 } from '@fluentui-vue/style-utilities'
 
-export function initializeIcons (
-  baseUrl: string = '',
+export function initializeIcons(
+  baseUrl = '',
   options?: IIconOptions,
 ): void {
   const subset: IIconSubset = {
@@ -19,7 +21,7 @@ export function initializeIcons (
       speak: 'none',
     },
     fontFace: {
-      fontFamily: `"FabricMDL2Icons-10"`,
+      fontFamily: '"FabricMDL2Icons-10"',
       src: `url('${baseUrl}fabric-icons-10-c4ded8e4.woff') format('woff')`,
     },
     icons: {
