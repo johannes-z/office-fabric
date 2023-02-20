@@ -2,7 +2,7 @@ import { Stylesheet } from '@fluentui/merge-styles'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import type { ITheme } from '../interfaces/index'
 
-export type GlobalClassNames<IStyles> = Record<keyof IStyles, string>;
+export type GlobalClassNames<IStyles> = Record<keyof IStyles, string>
 
 /**
  * Internal memoized function which simply takes in the class map and the
@@ -34,7 +34,7 @@ const _getGlobalClassNames = memoizeFunction(
  * @param theme - The theme to check the flag on
  * @param disableGlobalClassNames - Optional. Explicitly opt in/out of disabling global classnames. Defaults to false.
  */
-export function getGlobalClassNames<T> (
+export function getGlobalClassNames<T>(
   classNames: GlobalClassNames<T>,
   theme: ITheme,
   disableGlobalClassNames?: boolean,

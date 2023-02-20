@@ -1,6 +1,6 @@
 import { mergeStyles } from '@fluentui/merge-styles'
-import { getIcon } from './icons'
 import type { IStyle } from '@fluentui/merge-styles'
+import { getIcon } from './icons'
 
 const defaultIconStyles: IStyle = {
   display: 'inline-block',
@@ -12,7 +12,7 @@ const defaultIconStyles: IStyle = {
  *
  * @public
  */
-export function getIconClassName (name: string): string {
+export function getIconClassName(name: string): string {
   let className = ''
   const icon = getIcon(name)
 

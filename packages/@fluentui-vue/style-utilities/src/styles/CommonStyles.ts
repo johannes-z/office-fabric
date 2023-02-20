@@ -1,18 +1,16 @@
 import type { IRawStyle } from '@fluentui/merge-styles'
 
-export const HighContrastSelector =
-  '@media screen and (-ms-high-contrast: active), @media screen and (forced-colors: active)'
-export const HighContrastSelectorWhite =
-  // eslint-disable-next-line @fluentui/max-len
-  '@media screen and (-ms-high-contrast: black-on-white), @media screen and (forced-colors: active) and (prefers-color-scheme: light)'
-export const HighContrastSelectorBlack =
-  // eslint-disable-next-line @fluentui/max-len
-  '@media screen and (-ms-high-contrast: white-on-black), @media screen and (forced-colors: active) and (prefers-color-scheme: dark)'
+export const HighContrastSelector
+  = '@media screen and (-ms-high-contrast: active), @media screen and (forced-colors: active)'
+export const HighContrastSelectorWhite
+  = '@media screen and (-ms-high-contrast: black-on-white), @media screen and (forced-colors: active) and (prefers-color-scheme: light)'
+export const HighContrastSelectorBlack
+  = '@media screen and (-ms-high-contrast: white-on-black), @media screen and (forced-colors: active) and (prefers-color-scheme: dark)'
 /**
  * @deprecated Use `HighContrastSelector`
  */
-export const EdgeChromiumHighContrastSelector =
-  '@media screen and (-ms-high-contrast: active), @media screen and (forced-colors: active)'
+export const EdgeChromiumHighContrastSelector
+  = '@media screen and (-ms-high-contrast: active), @media screen and (forced-colors: active)'
 
 export const ScreenWidthMinSmall = 320
 export const ScreenWidthMinMedium = 480
@@ -28,7 +26,7 @@ export const ScreenWidthMaxXXLarge = ScreenWidthMinXXXLarge - 1
 
 export const ScreenWidthMinUhfMobile = 768
 
-export function getScreenSelector (min: number | undefined, max: number | undefined): string {
+export function getScreenSelector(min: number | undefined, max: number | undefined): string {
   const minSelector = typeof min === 'number' ? ` and (min-width: ${min}px)` : ''
   const maxSelector = typeof max === 'number' ? ` and (max-width: ${max}px)` : ''
   return `@media only screen${minSelector}${maxSelector}`
@@ -37,7 +35,7 @@ export function getScreenSelector (min: number | undefined, max: number | undefi
 /**
  * The style which turns off high contrast adjustment in browsers.
  */
-export function getHighContrastNoAdjustStyle (): IRawStyle {
+export function getHighContrastNoAdjustStyle(): IRawStyle {
   return {
     forcedColorAdjust: 'none',
     MsHighContrastAdjust: 'none',
@@ -48,10 +46,8 @@ export function getHighContrastNoAdjustStyle (): IRawStyle {
  * The style which turns off high contrast adjustment in (only) Edge Chromium browser.
  *  @deprecated Use `getHighContrastNoAdjustStyle`
  */
-// eslint-disable-next-line deprecation/deprecation
-export function getEdgeChromiumNoHighContrastAdjustSelector (): { [EdgeChromiumHighContrastSelector]: IRawStyle } {
+export function getEdgeChromiumNoHighContrastAdjustSelector(): { [EdgeChromiumHighContrastSelector]: IRawStyle } {
   return {
-    // eslint-disable-next-line deprecation/deprecation
     [EdgeChromiumHighContrastSelector]: {
       forcedColorAdjust: 'none',
       MsHighContrastAdjust: 'none',

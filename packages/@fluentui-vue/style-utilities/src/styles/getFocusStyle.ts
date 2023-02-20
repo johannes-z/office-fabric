@@ -1,8 +1,8 @@
-import { HighContrastSelector } from './CommonStyles'
 import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
-import { ZIndexes } from './zIndexes'
 import type { IRawStyle } from '@fluentui/merge-styles'
 import type { IGetFocusStylesOptions, ITheme } from '../interfaces/index'
+import { ZIndexes } from './zIndexes'
+import { HighContrastSelector } from './CommonStyles'
 
 /**
  * Generates a focus style which can be used to define an :after focus border.
@@ -11,7 +11,7 @@ import type { IGetFocusStylesOptions, ITheme } from '../interfaces/index'
  * @param options - Options to customize the focus border.
  * @returns The style object.
  */
-export function getFocusStyle(theme: ITheme, options?: IGetFocusStylesOptions): IRawStyle;
+export function getFocusStyle(theme: ITheme, options?: IGetFocusStylesOptions): IRawStyle
 /**
  * Generates a focus style which can be used to define an :after focus border.
  *
@@ -34,8 +34,8 @@ export function getFocusStyle(
   borderColor?: string,
   outlineColor?: string,
   isFocusedOnly?: boolean,
-): IRawStyle;
-export function getFocusStyle (
+): IRawStyle
+export function getFocusStyle(
   theme: ITheme,
   insetOrOptions?: number | IGetFocusStylesOptions,
   position?: 'relative' | 'absolute',
@@ -53,12 +53,13 @@ export function getFocusStyle (
       outlineColor,
       isFocusedOnly,
     })
-  } else {
+  }
+  else {
     return _getFocusStyleInternal(theme, insetOrOptions)
   }
 }
 
-function _getFocusStyleInternal (theme: ITheme, options: IGetFocusStylesOptions = {}): IRawStyle {
+function _getFocusStyleInternal(theme: ITheme, options: IGetFocusStylesOptions = {}): IRawStyle {
   const {
     inset = 0,
     width = 1,
@@ -105,7 +106,7 @@ function _getFocusStyleInternal (theme: ITheme, options: IGetFocusStylesOptions 
 /**
  * Generates style to clear browser specific focus styles.
  */
-export function focusClear (): IRawStyle {
+export function focusClear(): IRawStyle {
   return {
     selectors: {
       '&::-moz-focus-inner': {
@@ -129,7 +130,7 @@ export function focusClear (): IRawStyle {
  * @param color - Color of the outline (default `theme.palette.neutralSecondary`)
  * @returns The style object.
  */
-export function getFocusOutlineStyle (theme: ITheme, inset: number = 0, width: number = 1, color?: string): IRawStyle {
+export function getFocusOutlineStyle(theme: ITheme, inset = 0, width = 1, color?: string): IRawStyle {
   return {
     selectors: {
       [`:global(${IsFocusVisibleClassName}) &:focus`]: {
@@ -154,7 +155,7 @@ export const getInputFocusStyle = (
   borderColor: string,
   borderRadius: string | number,
   borderType: 'border' | 'borderBottom' = 'border',
-  borderPosition: number = -1,
+  borderPosition = -1,
 ): IRawStyle => {
   const isBorderBottom = borderType === 'borderBottom'
 
@@ -163,7 +164,7 @@ export const getInputFocusStyle = (
     selectors: {
       ':after': {
         pointerEvents: 'none',
-        content: "''",
+        content: '\'\'',
         position: 'absolute',
         left: isBorderBottom ? 0 : borderPosition,
         top: borderPosition,
