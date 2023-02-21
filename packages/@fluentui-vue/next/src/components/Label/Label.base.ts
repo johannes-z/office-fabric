@@ -5,34 +5,30 @@ import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 
-export const LabelBase = defineComponent({
-  name: 'LabelBase',
+export const LabelBase = (props, { attrs, slots }) => {
+  const { styles, theme, className, as: RootType = 'label', disabled, required } = props
 
-  props: {
-    ...useStylingProps(),
+  const classNames = getClassNames(styles, {
+    theme,
+    className,
+    disabled,
+    required,
+  })
 
-    as: { type: String, default: 'label' },
-    disabled: { type: Boolean, default: false },
-    required: { type: Boolean, default: false },
-  },
+  const slotProps = asSlotProps<ILabelStyles>({
+    root: {
+      ...attrs,
+      class: classNames.root,
+    },
+  })
 
-  setup(props, { attrs, slots }) {
-    const { styles, theme, className, as: RootType, disabled, required } = props
+  return h(RootType, slotProps.root, slots)
+}
 
-    const classNames = getClassNames(styles, {
-      theme,
-      className,
-      disabled,
-      required,
-    })
+LabelBase.props = Object.keys({
+  ...useStylingProps(),
 
-    const slotProps = asSlotProps<ILabelStyles>({
-      root: {
-        ...attrs,
-        class: classNames.root,
-      },
-    })
-
-    return () => h(RootType, slotProps.root, slots)
-  },
+  as: { type: String, default: 'label' },
+  disabled: { type: Boolean, default: false },
+  required: { type: Boolean, default: false },
 })

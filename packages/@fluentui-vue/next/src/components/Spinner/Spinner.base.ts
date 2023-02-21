@@ -1,48 +1,36 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { defineComponent, h, toRefs } from 'vue'
+import { h } from 'vue'
 import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ISpinnerStyleProps, ISpinnerStyles>()
 
-export const SpinnerBase = defineComponent({
+export const SpinnerBase = (props, { attrs, slots }) => {
+  const { styles, className, size = 20, label, labelPosition = 'bottom' } = props
 
-  props: {
-    ...useStylingProps(),
+  const classNames = getClassNames(styles, {
+    className,
+    labelPosition,
+    size: Number(size),
+  })
 
-    label: { type: String, default: null },
-    labelPosition: {
-      type: String as () => ISpinnerStyleProps['labelPosition'],
-      default: 'bottom' as const,
+  const slotProps = asSlotProps<ISpinnerStyles>({
+    root: {
+      ...attrs,
+      class: classNames.root,
     },
-    size: { type: [Number, String], default: 20 },
-  },
+    circle: {
+      class: classNames.circle,
+    },
+    label: {
+      class: classNames.label,
+    },
+  })
 
-  setup(props, { attrs, slots }) {
-    const { styles, className, size, label, labelPosition } = toRefs(props)
+  return h('div', slotProps.root, [
+    h('div', slotProps.circle),
+    h('div', slotProps.label, slots.default ? slots : label),
+  ])
+}
 
-    const classNames = getClassNames(styles.value, {
-      className: className.value,
-      labelPosition: labelPosition.value,
-      size: isNaN(+size.value) ? 20 : Number(size.value),
-    })
-
-    const slotProps = asSlotProps<ISpinnerStyles>({
-      root: {
-        ...attrs,
-        class: classNames.root,
-      },
-      circle: {
-        class: classNames.circle,
-      },
-      label: {
-        class: classNames.label,
-      },
-    })
-
-    return () => h('div', slotProps.root, [
-      h('div', slotProps.circle),
-      h('div', slotProps.label, slots.default ? slots : label.value),
-    ])
-  },
-})
+SpinnerBase.props = ['styles', 'theme', 'className', 'label', 'labelPosition', 'size']

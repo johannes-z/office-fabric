@@ -1,4 +1,4 @@
-import Vue, { CreateElement, RenderContext, VNode, defineComponent, h } from 'vue'
+import Vue, { CreateElement, RenderContext, VNode, h } from 'vue'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { getTheme } from '@fluentui-vue/style-utilities'
@@ -7,41 +7,39 @@ import { useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction()
 
-export const Stack = defineComponent({
-  props: {
-    ...useStylingProps(),
+export const Stack = (props, { attrs, slots }) => {
+  const { theme = getTheme(), tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = props
 
-    verticalFill: { type: String, default: '' },
-    horizontal: { type: Boolean, default: false },
-    reversed: { type: Boolean, default: false },
-    childrenGap: { type: Number, default: 0 },
-    grow: { type: Boolean, default: false },
-    wrap: { type: Boolean, default: false },
-    horizontalAlign: { type: String, default: '' },
-    verticalAlign: { type: String, default: '' },
-    disableShrink: { type: Boolean, default: false },
+  const classNames: any = getClassNames(mergeStyleSets(styles({
+    className,
+    verticalFill,
+    horizontal,
+    reversed,
+    grow,
+    wrap,
+    horizontalAlign,
+    verticalAlign,
+    disableShrink,
+  }, theme, tokens), props.styles))
 
-    tokens: { type: Object, default: () => {} },
-  },
+  return h('div', {
+    ...attrs,
+    class: classNames.root,
+  }, slots)
+}
 
-  setup(props, { attrs, slots }) {
-    const { theme = getTheme(), tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = props
+Stack.props = Object.keys({
+  ...useStylingProps(),
 
-    const classNames: any = getClassNames(mergeStyleSets(styles({
-      className,
-      verticalFill,
-      horizontal,
-      reversed,
-      grow,
-      wrap,
-      horizontalAlign,
-      verticalAlign,
-      disableShrink,
-    }, theme, tokens), props.styles))
+  verticalFill: { type: String, default: '' },
+  horizontal: { type: Boolean, default: false },
+  reversed: { type: Boolean, default: false },
+  childrenGap: { type: Number, default: 0 },
+  grow: { type: Boolean, default: false },
+  wrap: { type: Boolean, default: false },
+  horizontalAlign: { type: String, default: '' },
+  verticalAlign: { type: String, default: '' },
+  disableShrink: { type: Boolean, default: false },
 
-    return () => h('div', {
-      ...attrs,
-      class: classNames.root,
-    }, slots)
-  },
+  tokens: { type: Object, default: () => {} },
 })

@@ -2,6 +2,7 @@
 import { registerIcons } from '@fluentui-vue/style-utilities'
 import { mergeStyleSets, mergeStyles } from '@fluentui/merge-styles'
 import { FontIcon, Icon } from '../components'
+import DocumentCard from './components/DocumentCard.vue'
 
 const iconClass = mergeStyles({
   fontSize: 50,
@@ -96,24 +97,24 @@ const yammerClassName = mergeStyles(iconClass, {
 <template>
   <h1>Icon</h1>
 
-  <h2>Icon</h2>
-  <FontIcon icon-name="CompassNW" :class="iconClass" />
-  <FontIcon icon-name="Dictionary" :class-name="iconClass" />
-  <FontIcon icon-name="TrainSolid" :class-name="iconClass" />
+  <DocumentCard>
+    <h2>Icon</h2>
+    <FontIcon icon-name="CompassNW" :class="iconClass" />
+    <FontIcon icon-name="Dictionary" :class-name="iconClass" />
+    <FontIcon icon-name="TrainSolid" :class-name="iconClass" />
 
-  <h2>
-    Icon with custom color
-  </h2>
-  <FontIcon aria-label="Compass" icon-name="CompassNW" :class-name="classNames.deepSkyBlue" />
-  <FontIcon aria-label="Dictionary" icon-name="Dictionary" :class-name="classNames.greenYellow" />
-  <FontIcon aria-label="Train" icon-name="TrainSolid" :class-name="classNames.salmon" />
+    <h2>Icon with custom color</h2>
+    <FontIcon aria-label="Compass" icon-name="CompassNW" :class-name="classNames.deepSkyBlue" />
+    <FontIcon aria-label="Dictionary" icon-name="Dictionary" :class-name="classNames.greenYellow" />
+    <FontIcon aria-label="Train" icon-name="TrainSolid" :class-name="classNames.salmon" />
 
-  <h2>Icon using custom svg</h2>
-  <FontIcon aria-label="OneDrive logo" icon-name="onedrive-svg" :class-name="iconClass" />
-  <FontIcon
-    aria-label="Yammer logo"
-    icon-name="yammer-svg"
-    :class-name="yammerClassName"
-  />
-  <BorderBlindsIcon color3="pink" />
+    <h2>Icon using custom svg</h2>
+    <FontIcon aria-label="OneDrive logo" icon-name="onedrive-svg" :class-name="iconClass" />
+    <FontIcon
+      aria-label="Yammer logo"
+      icon-name="yammer-svg"
+      :class-name="yammerClassName"
+    />
+    <BorderBlindsIcon color3="pink" />
+  </DocumentCard>
 </template>
