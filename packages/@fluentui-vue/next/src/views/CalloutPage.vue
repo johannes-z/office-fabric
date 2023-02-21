@@ -11,6 +11,7 @@ const descriptionId = 'callout-description'
 const isCalloutVisible = ref(false)
 const toggle = () => {
   isCalloutVisible.value = !isCalloutVisible.value
+  console.log(isCalloutVisible.value)
 }
 
 const styles = mergeStyleSets({

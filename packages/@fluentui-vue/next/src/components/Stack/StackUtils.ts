@@ -1,11 +1,11 @@
-import { ITheme } from '@fluentui-vue/theme'
+import type { ITheme } from '@fluentui-vue/theme'
 import type { IStackProps } from './Stack.types'
 
 // Helper function that converts a themed spacing key (if given) to the corresponding themed spacing value.
 const _getThemedSpacing = (space: string, theme: ITheme): string => {
-  if (theme.spacing.hasOwnProperty(space)) {
+  if (theme.spacing.hasOwnProperty(space))
     return theme.spacing[space as keyof typeof theme.spacing]
-  }
+
   return space
 }
 
@@ -99,16 +99,14 @@ export const parseGap = (
  * Returns a CSS-style padding.
  */
 export const parsePadding = (padding: number | string | undefined, theme: ITheme): number | string | undefined => {
-  if (padding === undefined || typeof padding === 'number' || padding === '') {
+  if (padding === undefined || typeof padding === 'number' || padding === '')
     return padding
-  }
 
   const paddingValues = padding.split(' ')
-  if (paddingValues.length < 2) {
+  if (paddingValues.length < 2)
     return _getThemedSpacing(padding, theme)
-  }
 
   return paddingValues.reduce((padding1: string, padding2: string) => {
-    return _getThemedSpacing(padding1, theme) + ' ' + _getThemedSpacing(padding2, theme)
+    return `${_getThemedSpacing(padding1, theme)} ${_getThemedSpacing(padding2, theme)}`
   })
 }

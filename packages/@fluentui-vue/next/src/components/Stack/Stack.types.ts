@@ -11,12 +11,12 @@ export type Alignment =
   | 'space-around'
   | 'space-evenly'
   | 'baseline'
-  | 'stretch';
+  | 'stretch'
 
 /**
  * {@docCategory Stack}
  */
-export type IStackComponent = any;
+export type IStackComponent = any
 
 // The following two types are redundant with IStackComponent but are needed until TS function return widening issue
 // is resolved: https://github.com/Microsoft/TypeScript/issues/241
@@ -25,17 +25,17 @@ export type IStackComponent = any;
 /**
  * {@docCategory Stack}
  */
-export type IStackTokenReturnType = ReturnType<Extract<IStackComponent['tokens'], Function>>;
+export type IStackTokenReturnType = ReturnType<Extract<IStackComponent['tokens'], Function>>
 
 /**
  * {@docCategory Stack}
  */
-export type IStackStylesReturnType = ReturnType<Extract<IStackComponent['styles'], Function>>;
+export type IStackStylesReturnType = ReturnType<Extract<IStackComponent['styles'], Function>>
 
 /**
  * {@docCategory Stack}
  */
-export type IStackSlot = any;
+export type IStackSlot = any
 
 /**
  * {@docCategory Stack}
@@ -51,24 +51,24 @@ export interface IStackProps {
    * Defines whether to render Stack children horizontally.
    * @defaultvalue false
    */
-  horizontal?: boolean;
+  horizontal?: boolean
 
   /**
    * Defines whether to render Stack children in the opposite direction (bottom-to-top if it's a vertical Stack and
    * right-to-left if it's a horizontal Stack).
    * @defaultvalue false
    */
-  reversed?: boolean;
+  reversed?: boolean
 
   /**
    * Defines how to align Stack children horizontally (along the x-axis).
    */
-  horizontalAlign?: Alignment;
+  horizontalAlign?: Alignment
 
   /**
    * Defines how to align Stack children vertically (along the y-axis).
    */
-  verticalAlign?: Alignment;
+  verticalAlign?: Alignment
 
   /**
    * Defines whether the Stack should take up 100% of the height of its parent.
@@ -76,18 +76,18 @@ export interface IStackProps {
    * Stacks are rendered as block elements and grow horizontally to the container already.
    * @defaultvalue false
    */
-  verticalFill?: boolean;
+  verticalFill?: boolean
 
   /**
    * Defines whether Stack children should not shrink to fit the available space.
    * @defaultvalue false
    */
-  disableShrink?: boolean;
+  disableShrink?: boolean
 
   /**
    * Defines how much to grow the Stack in proportion to its siblings.
    */
-  grow?: boolean | number | 'inherit' | 'initial' | 'unset';
+  grow?: boolean | number | 'inherit' | 'initial' | 'unset'
 
   /**
    * Defines the spacing between Stack children.
@@ -95,32 +95,32 @@ export interface IStackProps {
    * If 'column gap' is omitted, it's set to the same value as 'row gap'.
    * @deprecated Use `tokens.childrenGap` instead.
    */
-  gap?: number | string;
+  gap?: number | string
 
   /**
    * Defines the maximum width that the Stack can take.
    * @deprecated Use `tokens.maxWidth` instead.
    */
-  maxWidth?: number | string;
+  maxWidth?: number | string
 
   /**
    * Defines the maximum height that the Stack can take.
    * @deprecated Use `tokens.maxHeight` instead.
    */
-  maxHeight?: number | string;
+  maxHeight?: number | string
 
   /**
    * Defines the inner padding of the Stack.
    * @deprecated Use `tokens.padding` instead.
    */
-  padding?: number | string;
+  padding?: number | string
 
   /**
    * Defines whether Stack children should wrap onto multiple rows or columns when they are about to overflow
    * the size of the Stack.
    * @defaultvalue false
    */
-  wrap?: boolean;
+  wrap?: boolean
 }
 
 /**
@@ -132,25 +132,25 @@ export interface IStackTokens {
    * The property is specified as a value for 'row gap', followed optionally by a value for 'column gap'.
    * If 'column gap' is omitted, it's set to the same value as 'row gap'.
    */
-  childrenGap?: number | string;
+  childrenGap?: number | string
 
   /**
    * Defines a maximum height for the Stack.
    */
-  maxHeight?: number | string;
+  maxHeight?: number | string
 
   /**
    * Defines a maximum width for the Stack.
    */
-  maxWidth?: number | string;
+  maxWidth?: number | string
 
   /**
    * Defines the padding to be applied to the Stack contents relative to its border.
    */
-  padding?: number | string;
+  padding?: number | string
 }
 
 /**
  * {@docCategory Stack}
  */
-export type IStackStyles = any;
+export type IStackStyles = any

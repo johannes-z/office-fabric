@@ -32,15 +32,15 @@ export const StackItemStyles: IStackItemComponent['styles'] = (props, theme, tok
       (disableShrink || (!grow && !shrink)) && {
         flexShrink: 0,
       },
-      shrink &&
-        !disableShrink && {
+      shrink
+        && !disableShrink && {
         flexShrink: 1,
       },
       align && {
         alignSelf: alignMap[align] || align,
       },
       order && {
-        order: order,
+        order,
       },
       className,
     ],

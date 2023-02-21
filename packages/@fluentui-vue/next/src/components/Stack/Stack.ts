@@ -1,14 +1,13 @@
-import Vue, { VNode, CreateElement, RenderContext } from 'vue'
-import { styles } from './Stack.styles'
-import { useStylingProps } from '@/utils/'
+import Vue, { CreateElement, RenderContext, VNode, defineComponent, h } from 'vue'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
+import { getTheme } from '@fluentui-vue/style-utilities'
+import { styles } from './Stack.styles'
+import { useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction()
 
-export const Stack = Vue.extend({
-  functional: true,
-
+export const Stack = defineComponent({
   props: {
     ...useStylingProps(),
 
@@ -25,8 +24,8 @@ export const Stack = Vue.extend({
     tokens: { type: Object, default: () => {} },
   },
 
-  render (h: CreateElement, ctx: RenderContext): VNode {
-    const { theme, tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = ctx.props
+  setup(props, { attrs, slots }) {
+    const { theme = getTheme(), tokens, verticalFill, horizontal, reversed, grow, wrap, horizontalAlign, verticalAlign, disableShrink, className } = props
 
     const classNames: any = getClassNames(mergeStyleSets(styles({
       className,
@@ -38,11 +37,11 @@ export const Stack = Vue.extend({
       horizontalAlign,
       verticalAlign,
       disableShrink,
-    }, theme, tokens), ctx.props.styles))
+    }, theme, tokens), props.styles))
 
-    return h('div', {
-      ...ctx.data,
+    return () => h('div', {
+      ...attrs,
       class: classNames.root,
-    }, ctx.children)
+    }, slots)
   },
 })

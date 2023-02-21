@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Link, Text } from '../components'
+import DocumentCard from './components/DocumentCard.vue'
 
 function handleClickOnLink(ev: MouseEvent) {
   window.alert('clicked on Link component which is rendered as html button')
@@ -9,7 +10,7 @@ function handleClickOnLink(ev: MouseEvent) {
 <template>
   <h1>Link</h1>
 
-  <div>
+  <DocumentCard>
     <Text>
       When a link has an href,
       <Link href="https://developer.microsoft.com/en-us/fluentui#/controls/web/link" underline>
@@ -29,5 +30,5 @@ function handleClickOnLink(ev: MouseEvent) {
       are inline-block or in the case of imgs, block. However, it is possible to create a linked image button by
       making a button with an unstyled variant and adding the img content and href source to that.
     </Text>
-  </div>
+  </DocumentCard>
 </template>

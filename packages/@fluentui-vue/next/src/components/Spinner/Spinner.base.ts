@@ -1,36 +1,48 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { h } from 'vue'
+import { defineComponent, h, toRefs } from 'vue'
 import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
-import { asSlotProps } from '@/utils'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ISpinnerStyleProps, ISpinnerStyles>()
 
-export const SpinnerBase = (props, { attrs, slots }) => {
-  const { styles, className, size = 20, label, labelPosition = 'bottom' } = props
+export const SpinnerBase = defineComponent({
 
-  const classNames = getClassNames(styles, {
-    className,
-    labelPosition,
-    size: Number(size),
-  })
+  props: {
+    ...useStylingProps(),
 
-  const slotProps = asSlotProps<ISpinnerStyles>({
-    root: {
-      ...attrs,
-      class: classNames.root,
+    label: { type: String, default: null },
+    labelPosition: {
+      type: String as () => ISpinnerStyleProps['labelPosition'],
+      default: 'bottom' as const,
     },
-    circle: {
-      class: classNames.circle,
-    },
-    label: {
-      class: classNames.label,
-    },
-  })
+    size: { type: [Number, String], default: 20 },
+  },
 
-  return h('div', slotProps.root, [
-    h('div', slotProps.circle),
-    h('div', slotProps.label, slots.default ? slots : label),
-  ])
-}
+  setup(props, { attrs, slots }) {
+    const { styles, className, size, label, labelPosition } = toRefs(props)
 
-SpinnerBase.props = ['styles', 'theme', 'className', 'label', 'labelPosition', 'size']
+    const classNames = getClassNames(styles.value, {
+      className: className.value,
+      labelPosition: labelPosition.value,
+      size: isNaN(+size.value) ? 20 : Number(size.value),
+    })
+
+    const slotProps = asSlotProps<ISpinnerStyles>({
+      root: {
+        ...attrs,
+        class: classNames.root,
+      },
+      circle: {
+        class: classNames.circle,
+      },
+      label: {
+        class: classNames.label,
+      },
+    })
+
+    return () => h('div', slotProps.root, [
+      h('div', slotProps.circle),
+      h('div', slotProps.label, slots.default ? slots : label.value),
+    ])
+  },
+})

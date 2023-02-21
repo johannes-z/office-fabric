@@ -1,18 +1,15 @@
-import { asSlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
-import Vue from 'vue'
+import { defineComponent, h, toRefs } from 'vue'
+import { getTheme } from '@fluentui-vue/style-utilities'
 import { StackItemStyles as baseStyles } from './StackItem.styles'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction({
   disableCaching: true,
 })
 
-export const StackItem = Vue.extend({
-  name: 'StackItem',
-
-  functional: true,
-
+export const StackItem = defineComponent({
   props: {
     ...useStylingProps(),
 
@@ -21,7 +18,7 @@ export const StackItem = Vue.extend({
     disableShrink: { type: Boolean, default: undefined },
     align: {
       type: String,
-      validator: v => ['auto', 'stretch', 'baseline', 'start', 'center', 'end'].indexOf(v) > -1,
+      validator: (v: string) => ['auto', 'stretch', 'baseline', 'start', 'center', 'end'].includes(v),
       default: undefined,
     },
     verticalFill: { type: Boolean, default: undefined },
@@ -29,27 +26,27 @@ export const StackItem = Vue.extend({
     order: { type: [Number, String], default: null },
   },
 
-  render (h, ctx) {
-    const { theme, className, styles, grow, shrink, disableShrink, align, verticalFill, order, basis } = ctx.props
+  setup(props, { attrs, slots }) {
+    const { theme, className, styles, grow, shrink, disableShrink, align, verticalFill, order, basis } = toRefs(props)
 
     const classNames: any = getClassNames(mergeStyleSets(baseStyles({
-      grow,
-      shrink,
-      disableShrink,
-      align,
-      verticalFill,
-      order,
-      className,
-      basis,
-    }, theme, {}), styles))
+      grow: grow.value,
+      shrink: shrink.value,
+      disableShrink: disableShrink.value,
+      align: align.value,
+      verticalFill: verticalFill.value,
+      order: order.value,
+      className: className.value,
+      basis: basis.value,
+    }, theme.value, {}), styles.value))
 
     const slotProps = asSlotProps({
       root: {
-        ...ctx.data,
+        ...attrs,
         class: classNames.root,
       },
     })
 
-    return h('div', slotProps.root, ctx.children)
+    return () => h('div', slotProps.root, slots)
   },
 })
