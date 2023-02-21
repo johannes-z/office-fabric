@@ -1,4 +1,4 @@
-import { FontWeights, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { FontWeights, HighContrastSelector, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import type { ILabelStyleProps, ILabelStyles } from './Label.types'
 
 export const getStyles = (props: ILabelStyleProps): ILabelStyles => {
@@ -38,7 +38,7 @@ export const getStyles = (props: ILabelStyleProps): ILabelStyles => {
       required && {
         selectors: {
           '::after': {
-            content: `' *'`,
+            content: '\' *\'',
             color: labelRequiredStarColor,
             paddingRight: 12,
           },
