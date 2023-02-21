@@ -3,6 +3,7 @@ import { defineComponent, h } from 'vue'
 // import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
 import { Icon } from '../Icon'
 import { FontIcon } from '../Icon/FontIcon'
+import { ContextualMenu } from '../ContextualMenu'
 import { getBaseButtonClassNames } from './Button.classNames'
 import { useBaseButtonProps } from './useBaseButton'
 import { asSlotProps, useStylingProps } from '@/utils'
@@ -88,13 +89,13 @@ export const BaseButton = defineComponent({
         ref: 'root',
         href,
         class: classNames.root,
-        // onClick: (ev) => {
-        //   if (disabled)
-        //     return
-        //   console.log('BaseButton > click')
-        //   this.showMenu = !this.showMenu
-        //   this.$emit('click', ev)
-        // },
+        onClick: (ev) => {
+          if (disabled)
+            return
+          console.log('BaseButton > click')
+          this.showMenu = !this.showMenu
+          this.$emit('click', ev)
+        },
       },
       flexContainer: {
         class: classNames.flexContainer,
@@ -141,16 +142,12 @@ export const BaseButton = defineComponent({
 
     const getMenuProps = (menuProps) => {
       return {
-        props: {
-          // directionalHint: DirectionalHint.bottomLeftEdge,
-          ...menuProps,
-          className: menuProps.className,
-          target: this.$refs.root,
-        },
-        on: {
-          dismiss: (ev) => {
-            this.showMenu = false
-          },
+        // directionalHint: DirectionalHint.bottomLeftEdge,
+        ...menuProps,
+        className: menuProps.className,
+        target: this.$refs.root,
+        onDismiss: (ev) => {
+          this.showMenu = false
         },
       }
     }
@@ -158,15 +155,13 @@ export const BaseButton = defineComponent({
     const onRenderMenuIcon = (): VNode | null => {
       return h(FontIcon, {
         class: classNames.menuIcon,
-        props: {
-          iconName: 'ChevronDown',
-          ...menuIconProps,
-        },
+        iconName: 'ChevronDown',
+        ...menuIconProps,
       })
     }
 
     const onRenderMenu = (menuProps): VNode | null => {
-      // return h(ContextualMenu, menuProps)
+      return h(ContextualMenu, menuProps)
     }
 
     const hasContent = this.$slots.default || text
@@ -178,8 +173,8 @@ export const BaseButton = defineComponent({
           h('span', slotProps.label, this.$slots.default?.({}) || text),
           secondaryText && h('span', slotProps.description, secondaryText),
         ]),
-        // (menuProps || menuIconProps) && onRenderMenuIcon(),
-        // menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
+        (menuProps || menuIconProps) && onRenderMenuIcon(),
+        menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
       ]),
     ])
   },

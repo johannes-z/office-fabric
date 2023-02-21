@@ -1,15 +1,17 @@
-import { getId, classNamesFunction } from '@fluentui-vue/utilities'
-import { asSlotProps, useStylingProps } from '@/utils'
-import { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import { classNamesFunction, getId } from '@fluentui-vue/utilities'
+import type { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { VNode } from 'vue'
+import Vue, { CreateElement, defineComponent, h } from 'vue'
 import { Callout } from '../Callout'
-import { ICalloutContentStyleProps, ICalloutContentStyles } from '../Callout/Callout.types'
-import { ContextualMenuItemType, DirectionalHint, IContextualMenuStyleProps, IContextualMenuStyles } from './ContextualMenu.types'
+import type { ICalloutContentStyleProps, ICalloutContentStyles } from '../Callout/Callout.types'
+import type { IContextualMenuStyleProps, IContextualMenuStyles } from './ContextualMenu.types'
+import { ContextualMenuItemType, DirectionalHint } from './ContextualMenu.types'
 import { MenuList } from './render/MenuList'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>()
 
-export const ContextualMenuBase = Vue.extend({
+export const ContextualMenuBase = defineComponent({
   name: 'ContextualMenuBase',
 
   props: {
@@ -27,15 +29,15 @@ export const ContextualMenuBase = Vue.extend({
   },
 
   computed: {
-    classNames (): IProcessedStyleSet<IContextualMenuStyles> {
+    classNames(): IProcessedStyleSet<IContextualMenuStyles> {
       const { styles, theme, className } = this
 
       return getClassNames(styles, {
         theme: theme!,
-        className: className,
+        className,
       })
     },
-    totalItemCount (): number {
+    totalItemCount(): number {
       let totalItemCount = 0
       for (const item of this.items) {
         if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
@@ -45,21 +47,23 @@ export const ContextualMenuBase = Vue.extend({
       }
       return totalItemCount
     },
-    hasCheckmarks (): boolean {
-      return this.items.some(item => {
-        if (item.canCheck) return true
+    hasCheckmarks(): boolean {
+      return this.items.some((item) => {
+        if (item.canCheck)
+          return true
         return false
       })
     },
-    hasIcons (): boolean {
-      return this.items.some(item => {
-        if (item.iconProps) return true
+    hasIcons(): boolean {
+      return this.items.some((item) => {
+        if (item.iconProps)
+          return true
         return false
       })
     },
   },
 
-  render (h: CreateElement, ctx): VNode | any {
+  render(): VNode | any {
     const {
       styles,
       classNames,
@@ -77,7 +81,8 @@ export const ContextualMenuBase = Vue.extend({
 
     const menuId = getId('ContextualMenu')
 
-    if (!items || items.length === 0) return
+    if (!items || items.length === 0)
+      return
 
     const calloutStyles = classNames.subComponentStyles
       ? (classNames.subComponentStyles.callout as IStyleFunctionOrObject<
@@ -89,19 +94,15 @@ export const ContextualMenuBase = Vue.extend({
     const slotProps = asSlotProps({
       root: {
         // class: classNames.root,
-        props: {
-          classNames: classNames.root,
-          styles: calloutStyles,
-          target,
-          hidden,
-          isBeakVisible: isBeakVisible === true,
-          gapSpace: 0,
-          beakWidth: 16,
-          directionalHint: this.directionalHint,
-        },
-        on: {
-          dismiss: () => this.$emit('dismiss'),
-        },
+        classNames: classNames.root,
+        styles: calloutStyles,
+        target,
+        hidden,
+        isBeakVisible: isBeakVisible === true,
+        gapSpace: 0,
+        beakWidth: 16,
+        directionalHint: this.directionalHint,
+        onDismiss: () => this.$emit('dismiss'),
       },
       container: {
         class: classNames.container,
@@ -114,40 +115,36 @@ export const ContextualMenuBase = Vue.extend({
       },
     })
 
-    if (hidden) return
+    if (hidden)
+      return
 
     return h(Callout, slotProps.root, [
       h('div', slotProps.container, [
         title && h('div', slotProps.title, title),
         items && h(MenuList, {
-          props: {
-            theme,
-            styles,
-            menuListProps: {
-              ariaLabel,
-              items,
-              totalItemCount,
-              hasCheckmarks,
-              hasIcons,
-              defaultMenuItemRenderer: null,
-            },
-            menuClassNames: classNames,
+          theme,
+          styles,
+          menuListProps: {
+            ariaLabel,
+            items,
+            totalItemCount,
+            hasCheckmarks,
+            hasIcons,
+            defaultMenuItemRenderer: null,
           },
-          on: {
-            click: (ev: PointerEvent, item) => {
-              if (item.disabled) return
+          menuClassNames: classNames,
+          onClick: (ev: PointerEvent, item) => {
+            if (item?.disabled)
+              return
 
-              this.$emit('itemClick', ev)
+            this.$emit('itemClick', ev)
 
-              let shouldDismiss = false
-              if (item.onClick) {
-                shouldDismiss = !!item.onClick(ev, item)
-              }
+            let shouldDismiss = false
+            if (item?.onClick)
+              shouldDismiss = !!item.onClick(ev, item)
 
-              if (shouldDismiss || !ev.defaultPrevented) {
-                this.$emit('dismiss')
-              }
-            },
+            if (shouldDismiss || !ev.defaultPrevented)
+              this.$emit('dismiss')
           },
         }),
       ]),

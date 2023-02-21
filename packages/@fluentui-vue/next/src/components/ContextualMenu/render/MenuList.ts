@@ -1,69 +1,58 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
-import { ContextualMenuItemType, IContextualMenuListProps, IContextualMenuStyles } from '../ContextualMenu.types'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import Vue, { CreateElement, VNode, h } from 'vue'
+import type { IContextualMenuListProps, IContextualMenuStyles } from '../ContextualMenu.types'
+import { ContextualMenuItemType } from '../ContextualMenu.types'
 import { MenuItem } from './MenuItem'
+import { asSlotProps, useStylingProps } from '@/utils'
 
-export const MenuList = Vue.extend({
-  functional: true,
+export const MenuList = (props, { attrs }) => {
+  const {
+    theme,
+    styles,
+    menuListProps,
+    menuClassNames,
+  } = props
 
-  props: {
-    ...useStylingProps(),
-    menuListProps: {
-      type: Object as () => IContextualMenuListProps,
-      required: true,
+  const { items, totalItemCount, hasCheckmarks, hasIcons } = menuListProps
+
+  const slotProps = asSlotProps({
+    list: {
+      class: menuClassNames.list,
+      attrs: {
+        role: 'presentation',
+      },
     },
-    menuClassNames: {
-      type: Object as () => IProcessedStyleSet<IContextualMenuStyles>,
-      required: true,
-    },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const {
+  })
+  let indexCorrection = 0
+  return h('ul', slotProps.list, items.map((item: any, index) => {
+    const menuItem = h(MenuItem, {
+      ...attrs,
       theme,
       styles,
-      menuListProps,
-      menuClassNames,
-    } = ctx.props
-
-    const { items, totalItemCount, hasCheckmarks, hasIcons } = menuListProps
-
-    const slotProps = asSlotProps({
-      list: {
-        class: menuClassNames.list,
-        attrs: {
-          role: 'presentation',
-        },
-      },
+      item,
+      index,
+      indexCorrection,
+      totalItemCount,
+      hasCheckmarks,
+      hasIcons,
+      classNames: menuClassNames,
     })
-    let indexCorrection = 0
-    return h('ul', slotProps.list, items.map((item: any, index) => {
-      const menuItem = h(MenuItem, {
-        ...ctx.data,
-        props: {
-          theme,
-          styles,
-          item,
-          index,
-          indexCorrection,
-          totalItemCount,
-          hasCheckmarks,
-          hasIcons,
-          classNames: menuClassNames,
-        },
-        on: {
-          click: (e) => {
-            ctx.listeners.click?.(e, item)
-          },
-        },
-      })
-      if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
-        const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1
-        indexCorrection += indexIncrease
-      }
+    if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
+      const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1
+      indexCorrection += indexIncrease
+    }
 
-      return menuItem
-    }))
+    return menuItem
+  }))
+}
+MenuList.props = Object.keys({
+  ...useStylingProps(),
+  menuListProps: {
+    type: Object as () => IContextualMenuListProps,
+    required: true,
+  },
+  menuClassNames: {
+    type: Object as () => IProcessedStyleSet<IContextualMenuStyles>,
+    required: true,
   },
 })

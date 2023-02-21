@@ -13,16 +13,15 @@ export const ContextualMenuItemBase = (props, { attrs, slots }) => {
   const slotProps = asSlotProps({
     linkContent: {
       ...attrs,
+      ...props,
       class: classNames.linkContent,
-      on: {
-        // ...item.onClick
-        //   ? { click: item.onClick }
-        //   : {},
-      },
+      ...item.onClick
+        ? { onClick: item.onClick }
+        : {},
     },
     icon: {
       class: classNames.icon,
-      props: iconProps,
+      ...iconProps,
     },
     text: {
       class: classNames.label,
@@ -38,6 +37,4 @@ export const ContextualMenuItemBase = (props, { attrs, slots }) => {
     slots.secondaryText?.({ item, classNames }) || h('span', slotProps.secondaryText, item.secondaryText),
   ])
 }
-ContextualMenuItemBase.props = [...StylingPropKeys, 'item',
-  'hasIcons',
-  'classNames']
+ContextualMenuItemBase.props = [...StylingPropKeys, 'item', 'hasIcons', 'classNames']

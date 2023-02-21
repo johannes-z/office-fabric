@@ -1,5 +1,32 @@
 <script setup lang="ts">
-import { ActionButton, CompoundButton, DefaultButton, IconButton } from '../components'
+import type { IIconProps } from '../components'
+import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton } from '../components'
+import type { IContextualMenuProps } from '@/components/ContextualMenu'
+import type { IStackStyles } from '@/components/Stack'
+
+const menuProps: IContextualMenuProps = {
+  items: [
+    {
+      key: 'emailMessage',
+      text: 'Email message',
+      iconProps: { iconName: 'Mail' },
+      onClick: () => {
+        console.log('Mail')
+      },
+    },
+    {
+      key: 'calendarEvent',
+      text: 'Calendar event',
+      iconProps: { iconName: 'Calendar' },
+      onClick: () => {
+        console.log('Calendar')
+      },
+    },
+  ],
+}
+const addIcon: IIconProps = { iconName: 'Add' }
+const mailIcon: IIconProps = { iconName: 'Mail' }
+const stackStyles: Partial<IStackStyles> = { root: { height: 44 } }
 </script>
 
 <template>
@@ -58,4 +85,14 @@ import { ActionButton, CompoundButton, DefaultButton, IconButton } from '../comp
   <ActionButton checked :icon-props="{ iconName: 'AddFriend' }" allow-disabled-focus>
     Create account
   </ActionButton>
+
+  <h2>Command Bar Button</h2>
+  <div style="display: flex; height: 44px;">
+    <CommandBarButton
+      :icon-props="addIcon"
+      text="New item"
+      :menu-props="menuProps"
+    />
+    <CommandBarButton :icon-props="mailIcon" text="Send mail" />
+  </div>
 </template>

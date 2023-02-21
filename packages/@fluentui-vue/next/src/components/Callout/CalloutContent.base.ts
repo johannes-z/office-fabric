@@ -182,11 +182,9 @@ export const CalloutContentBase = defineComponent({
           ariaLabel: this.ariaLabel,
           ariaLabelledBy: this.ariaLabelledBy,
 
-          propStyle: this.overflowStyle,
-          forwardRef: this.$refs.calloutMain,
-          on: {
-            dismiss: (ev: Event) => this.$emit('dismiss', ev),
-          },
+          // propStyle: this.overflowStyle,
+          // forwardRef: this.$refs.calloutMain,
+          onDismiss: (ev: Event) => this.$emit('dismiss', ev),
         },
       })
     },

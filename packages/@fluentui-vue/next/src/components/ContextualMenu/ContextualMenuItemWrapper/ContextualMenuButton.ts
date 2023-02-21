@@ -1,42 +1,35 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { VNode } from 'vue'
+import Vue, { VNode, h } from 'vue'
 import { IMenuItemClassNames } from '../ContextualMenu.classNames'
 import { IContextualMenuItem } from '../ContextualMenu.types'
 import { ContextualMenuItem } from '../ContextualMenuItem'
+import { StylingPropKeys, asSlotProps, useStylingProps } from '@/utils'
 
-export const ContextualMenuButton = Vue.extend({
-  functional: true,
+export const ContextualMenuButton = (props, { attrs, slots }) => {
+  const {
+    item,
+    classNames,
+  } = props
 
-  props: {
-    ...useStylingProps(),
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: classNames.root,
+      href: item.href,
+      target: item.target,
+    },
+    item: {
+      ...props,
+    },
+  })
 
-    item: { type: Object as () => IContextualMenuItem, required: true },
-    hasIcons: { type: Boolean, default: undefined },
-    classNames: { type: Object as () => IMenuItemClassNames, required: true },
-  },
+  return h('button', slotProps.root, [
+    h(ContextualMenuItem, slotProps.item),
+  ])
+}
 
-  render (h, ctx): VNode {
-    const {
-      item,
-      classNames,
-    } = ctx.props
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: classNames.root,
-        attrs: {
-          href: item.href,
-          target: item.target,
-        },
-      },
-      item: {
-        props: ctx.props,
-      },
-    })
-
-    return h('button', slotProps.root, [
-      h(ContextualMenuItem, slotProps.item),
-    ])
-  },
-})
+ContextualMenuButton.props = [
+  ...StylingPropKeys,
+  'item',
+  'hasIcons',
+  'classNames',
+]

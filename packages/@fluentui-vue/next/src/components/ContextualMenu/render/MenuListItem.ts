@@ -10,14 +10,13 @@ export const MenuListItem = (props, { attrs, slots }) => {
   const slotProps = asSlotProps({
     root: {
       ...attrs,
+      ...props,
       class: classNames.item,
-      attrs: {
-        title,
-        role: 'presentation',
-      },
+      title,
+      role: 'presentation',
     },
   })
 
   return h('li', slotProps.root, slots)
 }
-MenuListItem.props = [StylingPropKeys, 'classNames', 'title']
+MenuListItem.props = [...StylingPropKeys, 'classNames', 'title']
