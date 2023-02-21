@@ -53,12 +53,12 @@ export function setRTL (isRTL: boolean, persistSetting: boolean = false): void {
 /**
  * Returns the given key, but flips right/left arrows if necessary.
  */
-export function getRTLSafeKeyCode (key: number, theme: { rtl?: boolean } = {}): number {
+export function getRTLSafeKeyCode (key: string, theme: { rtl?: boolean } = {}): string {
   if (getRTL(theme)) {
-    if (key === KeyCodes.left) {
-      key = KeyCodes.right
-    } else if (key === KeyCodes.right) {
-      key = KeyCodes.left
+    if (key === 'left') {
+      key = 'right'
+    } else if (key === 'right') {
+      key = 'left'
     }
   }
 
