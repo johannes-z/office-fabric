@@ -1,9 +1,0 @@
-
-.editorconfig
-.eslintrc*
-.gitignore
-.vscode
-
-node_modules
-tmp
-tsconfig.json

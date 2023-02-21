@@ -1,18 +1,8 @@
 packages:
-  - 'packages/ie11-polyfills'
-  - 'packages/utilities'
-  - 'packages/file-type-icons'
-  - 'packages/office-ui-fabric-vue'
-  - 'packages/api-docs'
-  - 'packages/website'
-  - 'packages/vue-hooks'
-  
-  - 'packages/@fluentui-vue/common'
   - 'packages/@fluentui-vue/file-type-icons'
   - 'packages/@fluentui-vue/icons'
   - 'packages/@fluentui-vue/next'
   - 'packages/@fluentui-vue/theme'
   - 'packages/@fluentui-vue/utilities'
   - 'packages/@fluentui-vue/style-utilities'
-
-  - 'packages/@fluentui-vue/website'
+  - 'packages/@fluentui-vue/vue-hooks'
