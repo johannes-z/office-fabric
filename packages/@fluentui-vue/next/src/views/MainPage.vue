@@ -10,6 +10,7 @@ import SpinnerPage from './SpinnerPage.vue'
 import TextFieldPage from './TextFieldPage.vue'
 
 import CalloutPage from './CalloutPage.vue'
+import TogglePage from './TogglePage.vue'
 </script>
 
 <template>
@@ -31,6 +32,7 @@ import CalloutPage from './CalloutPage.vue'
     <LinkPage />
     <SearchBoxPage />
     <TextFieldPage />
+    <TogglePage />
 
     <IconPage />
 

@@ -1,19 +1,13 @@
-import { getId, classNamesFunction } from '@fluentui-vue/utilities'
-import { SlotProps, useStylingProps } from '@/utils'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import { classNamesFunction, getId } from '@fluentui-vue/utilities'
+import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
-import { IToggleStyleProps, IToggleStyles } from './Toggle.types'
+import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
+import { useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
-export const ToggleBase = Vue.extend({
+export const ToggleBase = defineComponent({
   name: 'ToggleBase',
-
-  model: {
-    prop: 'checked',
-    event: 'input',
-  },
 
   props: {
     ...useStylingProps(),
@@ -22,85 +16,89 @@ export const ToggleBase = Vue.extend({
 
     label: { type: String, default: '' },
     inlineLabel: { type: Boolean, default: false },
-    checked: { type: Boolean, default: false },
+    modelValue: { type: Boolean, default: false },
     defaultChecked: { type: Boolean, default: false },
     onText: { type: String, default: null },
     offText: { type: String, default: null },
   },
 
-  data () {
-    return {
-      internalChecked: this.defaultChecked || this.checked,
-    }
-  },
+  setup(props, { emit, slots }) {
+    const {
+      label,
+      modelValue,
+      defaultChecked,
+      onText,
+      offText,
+      styles,
+      theme,
+      className,
+      disabled,
+      inlineLabel,
+    } = toRefs(props)
 
-  computed: {
-    id (): string {
-      return getId('Toggle')
-    },
-    onOffMissing (): boolean {
-      return !this.onText && !this.offText
-    },
-    classNames (): IProcessedStyleSet<IToggleStyles> {
-      const { theme, className, disabled, internalChecked, inlineLabel, onText, offText } = this
-      return getClassNames(this.styles, {
-        theme: theme!,
-        className: className,
-        disabled: disabled,
-        checked: internalChecked,
-        inlineLabel: inlineLabel,
-        onOffMissing: !onText && !offText,
+    const checked = ref(defaultChecked.value || modelValue.value)
+
+    watch(modelValue, (value) => {
+      checked.value = value
+    })
+
+    const id = getId('Toggle')
+    const onOffMissing = computed(() => !onText.value && !offText.value)
+    const classNames = computed(() => {
+      return getClassNames(styles.value, {
+        theme: theme.value!,
+        className: className.value,
+        disabled: disabled.value,
+        checked: checked.value,
+        inlineLabel: inlineLabel.value,
+        onOffMissing: onOffMissing.value,
       })
-    },
-    slotProps (): SlotProps<IToggleStyles> {
-      const { id, disabled } = this
+    })
+
+    const slotProps = computed(() => {
       return {
         root: {
-          class: this.classNames.root,
+          class: classNames.value.root,
         },
         label: {
-          class: this.classNames.label,
-          attrs: {
-            for: id,
-          },
+          class: classNames.value.label,
+          for: id,
         },
         container: {
-          class: this.classNames.container,
+          class: classNames.value.container,
         },
         pill: {
-          class: this.classNames.pill,
-          attrs: { id },
-          on: {
-            click: () => {
-              if (disabled) return
-              this.internalChecked = !this.internalChecked
-              this.$emit('input', this.internalChecked)
-            },
+          class: classNames.value.pill,
+          id,
+          onClick: () => {
+            if (disabled.value)
+              return
+            checked.value = !checked.value
+            emit('update:modelValue', checked.value)
           },
         },
         thumb: {
-          class: this.classNames.thumb,
+          class: classNames.value.thumb,
         },
         text: {
-          class: this.classNames.text,
-          attrs: {
-            for: id,
-          },
+          class: classNames.value.text,
+          for: id,
         },
       }
-    },
-  },
+    })
 
-  render (h: CreateElement): VNode {
-    const { slotProps, label, checked, disabled, onText, offText } = this
-
-    return h('div', slotProps.root, [
-      h(Label, slotProps.label, this.$scopedSlots.label?.({ checked, disabled, label }) ?? label),
-      h('div', slotProps.container, [
-        h('button', slotProps.pill, [
-          h('div', slotProps.thumb),
+    return () => h('div', slotProps.value.root, [
+      h(Label, slotProps.value.label, {
+        default: () => slots.label?.({ checked: checked.value, disabled: disabled.value, label: label.value }) ?? label.value,
+      }),
+      h('div', slotProps.value.container, [
+        h('button', slotProps.value.pill, [
+          h('div', slotProps.value.thumb),
         ]),
-        ((checked && onText) || (!checked && offText)) && h(Label, slotProps.text, checked ? onText : offText),
+        ((checked.value && onText.value) || (!checked.value && offText.value))
+        && h(Label, slotProps.value.text, {
+          default: () => checked.value ? onText.value : offText.value,
+        }),
       ]),
     ])
   },

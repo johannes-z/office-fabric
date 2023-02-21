@@ -1,6 +1,5 @@
-import { FontWeights, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
-import { getFocusStyle } from '@fluentui-vue/style-utilities'
-import { IToggleStyleProps, IToggleStyles } from './Toggle.types'
+import { FontWeights, HighContrastSelector, getFocusStyle, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
+import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
 
 const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20
@@ -53,12 +52,12 @@ export const getStyles = (props: IToggleStyleProps): IToggleStyles => {
           },
         },
       },
-      inlineLabel &&
-        !onOffMissing && {
+      inlineLabel
+        && !onOffMissing && {
         marginRight: 16,
       },
-      onOffMissing &&
-        inlineLabel && {
+      onOffMissing
+        && inlineLabel && {
         order: 1,
         marginLeft: 16,
       },
@@ -183,8 +182,8 @@ export const getStyles = (props: IToggleStyleProps): IToggleStyles => {
         borderStyle: 'solid',
         boxSizing: 'border-box',
       },
-      !disabled &&
-        checked && [
+      !disabled
+        && checked && [
         {
           backgroundColor: thumbCheckedBackground,
           selectors: {

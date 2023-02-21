@@ -3,8 +3,9 @@ export * from './Button'
 export * from './Checkbox'
 export * from './Label'
 export * from './Link'
-export * from './TextField'
 export * from './SearchBox'
+export * from './TextField'
+export * from './Toggle'
 
 export * from './Callout'
 
@@ -29,6 +30,5 @@ export * from './ProgressIndicator'
 // export * from './Separator'
 export * from './Spinner'
 // export * from './Stack'
-// export * from './Toggle'
 
 export * from './Text'

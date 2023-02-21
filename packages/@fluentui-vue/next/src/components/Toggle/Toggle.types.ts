@@ -1,5 +1,5 @@
-import { ITheme } from '@fluentui-vue/theme'
-import { IStyle } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle } from '@fluentui/merge-styles'
 
 /**
  * Properties required to build the styles for the Toggle component.
@@ -9,32 +9,32 @@ export interface IToggleStyleProps {
   /**
    * Theme values.
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Root element class name.
    */
-  className?: string;
+  className?: string
 
   /**
    * Component is disabled.
    */
-  disabled?: boolean;
+  disabled?: boolean
 
   /**
    * Component is checked.
    */
-  checked?: boolean;
+  checked?: boolean
 
   /**
    * Whether label should be positioned inline with the toggle.
    */
-  inlineLabel?: boolean;
+  inlineLabel?: boolean
 
   /**
    * Whether the user did not specify a on/off text. Influencing only when inlineLabel is used.
    */
-  onOffMissing?: boolean;
+  onOffMissing?: boolean
 }
 
 /**
@@ -43,30 +43,30 @@ export interface IToggleStyleProps {
  */
 export interface IToggleStyles {
   /** Root element. */
-  root: IStyle;
+  root: IStyle
 
   /**
    * Label element above the toggle.
    */
-  label: IStyle;
+  label: IStyle
 
   /**
    * Container for the toggle pill and the text next to it.
    */
-  container: IStyle;
+  container: IStyle
 
   /**
    * Pill, rendered as a button.
    */
-  pill: IStyle;
+  pill: IStyle
 
   /**
    * Thumb inside of the pill.
    */
-  thumb: IStyle;
+  thumb: IStyle
 
   /**
    * Text next to the pill.
    */
-  text: IStyle;
+  text: IStyle
 }
