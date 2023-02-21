@@ -55,37 +55,35 @@ export const ToggleBase = defineComponent({
       })
     })
 
-    const slotProps = computed(() => {
-      return {
-        root: {
-          class: classNames.value.root,
+    const slotProps = computed(() => ({
+      root: {
+        class: classNames.value.root,
+      },
+      label: {
+        class: classNames.value.label,
+        for: id,
+      },
+      container: {
+        class: classNames.value.container,
+      },
+      pill: {
+        class: classNames.value.pill,
+        id,
+        onClick: () => {
+          if (disabled.value)
+            return
+          checked.value = !checked.value
+          emit('update:modelValue', checked.value)
         },
-        label: {
-          class: classNames.value.label,
-          for: id,
-        },
-        container: {
-          class: classNames.value.container,
-        },
-        pill: {
-          class: classNames.value.pill,
-          id,
-          onClick: () => {
-            if (disabled.value)
-              return
-            checked.value = !checked.value
-            emit('update:modelValue', checked.value)
-          },
-        },
-        thumb: {
-          class: classNames.value.thumb,
-        },
-        text: {
-          class: classNames.value.text,
-          for: id,
-        },
-      }
-    })
+      },
+      thumb: {
+        class: classNames.value.thumb,
+      },
+      text: {
+        class: classNames.value.text,
+        for: id,
+      },
+    }))
 
     return () => h('div', slotProps.value.root, [
       h(Label, slotProps.value.label, {

@@ -12,6 +12,8 @@ import TextFieldPage from './TextFieldPage.vue'
 import CalloutPage from './CalloutPage.vue'
 import TogglePage from './TogglePage.vue'
 import StackPage from './StackPage.vue'
+import ImagePage from './ImagePage.vue'
+import SeparatorPage from './SeparatorPage.vue'
 </script>
 
 <template>
@@ -35,11 +37,12 @@ import StackPage from './StackPage.vue'
     <TextFieldPage />
     <TogglePage />
 
-    <IconPage />
-
     <ProgressIndicatorPage />
     <SpinnerPage />
 
+    <IconPage />
+    <ImagePage />
+    <SeparatorPage />
     <StackPage />
   </div>
 </template>
