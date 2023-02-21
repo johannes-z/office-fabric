@@ -15,6 +15,10 @@ export interface ILink {
  * {@docCategory Link}
  */
 export interface ILinkProps {
+  theme?: ITheme
+
+  className?: string
+
   /**
    * Optional callback to access the ILink interface. Use this instead of ref for accessing
    * the public methods and properties of the component.

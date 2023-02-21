@@ -1,19 +1,15 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
-import type { ILinkStyleProps, ILinkStyles } from './Link.types'
+import type { ILinkProps, ILinkStyleProps, ILinkStyles } from './Link.types'
 import { StylingPropKeys, asSlotProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
-export const LinkBase = (props, { attrs, slots }) => {
-  console.log({
-    props,
-    attrs,
-  })
+export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
   const { styles, theme, as, target, className, href, disabled, underline } = props
 
   const classNames = getClassNames(styles, {
-    theme,
+    theme: theme!,
     className,
     isButton: !href,
     isDisabled: disabled,
