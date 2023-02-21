@@ -11,3 +11,11 @@ export const useBaseButtonProps = () => ({
 
   href: { type: String, default: undefined },
 })
+
+export const BaseButtonPropKeys = [
+  'variantClassName',
+  'checked',
+  'disabled',
+  'text',
+  'href',
+]

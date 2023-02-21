@@ -2,14 +2,14 @@ import { memoizeFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 
 export interface IButtonClassNames {
-  root?: string;
-  flexContainer?: string;
-  textContainer?: string;
-  icon?: string;
-  label?: string;
-  menuIcon?: string;
-  description?: string;
-  screenReaderText?: string;
+  root?: string
+  flexContainer?: string
+  textContainer?: string
+  icon?: string
+  label?: string
+  menuIcon?: string
+  description?: string
+  screenReaderText?: string
 }
 
 export const ButtonGlobalClassNames = {
@@ -61,9 +61,9 @@ export const getBaseButtonClassNames = memoizeFunction(
         ],
         hasMenu && [ButtonGlobalClassNames.msButtonHasMenu, styles.rootHasMenu],
         disabled && ['is-disabled', styles.rootDisabled],
-        !disabled &&
-          !isExpanded &&
-          !checked && {
+        !disabled
+          && !isExpanded
+          && !checked && {
           selectors: {
             ':hover': styles.rootHovered,
             [`:hover .${classNames.msButtonLabel}`]: styles.labelHovered,
@@ -78,8 +78,8 @@ export const getBaseButtonClassNames = memoizeFunction(
           },
         },
         disabled && checked && [styles.rootCheckedDisabled],
-        !disabled &&
-          checked && {
+        !disabled
+          && checked && {
           selectors: {
             ':hover': styles.rootCheckedHovered,
             ':active': styles.rootCheckedPressed,
@@ -104,9 +104,9 @@ export const getBaseButtonClassNames = memoizeFunction(
         styles.menuIcon,
         checked && styles.menuIconChecked,
         disabled && !isSplit && styles.menuIconDisabled,
-        !disabled &&
-          !isExpanded &&
-          !checked && {
+        !disabled
+          && !isExpanded
+          && !checked && {
           selectors: {
             ':hover': styles.menuIconHovered,
             ':active': styles.menuIconPressed,

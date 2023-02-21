@@ -1,41 +1,27 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode } from 'vue'
-import { asSlotProps, useStylingProps } from '@/utils'
-import { ITextStyles } from './Text.types'
+import { h } from 'vue'
+import type { ITextStyles } from './Text.types'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
-export const TextBase = Vue.extend({
-  name: 'TextBase',
+export const TextBase = (props, { attrs, slots }) => {
+  const { styles, theme, as: RootType = 'span', block, nowrap, variant = 'medium' } = props
 
-  functional: true,
+  const classNames = getClassNames(styles, {
+    theme,
+    block,
+    nowrap,
+    variant,
+  })
 
-  props: {
-    ...useStylingProps(),
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: classNames.root,
+    },
+  })
 
-    as: { type: String, default: 'span' },
-    nowrap: { type: Boolean, default: false },
-    block: { type: Boolean, default: false },
-    variant: { type: String, default: 'medium' },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const { styles, theme, as: RootType, block, nowrap, variant } = ctx.props
-
-    const classNames = getClassNames(styles, {
-      theme,
-      block,
-      nowrap,
-      variant,
-    })
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: classNames.root,
-      },
-    })
-
-    return h(RootType, slotProps.root, ctx.children)
-  },
-})
+  return h(RootType, slotProps.root, slots)
+}
+TextBase.props = [...StylingPropKeys, 'as', 'nowrap', 'block', 'variant']

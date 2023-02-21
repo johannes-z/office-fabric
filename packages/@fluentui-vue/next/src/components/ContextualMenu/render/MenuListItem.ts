@@ -1,35 +1,23 @@
-import { asSlotProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
-import { IMenuItemClassNames } from '../ContextualMenu.classNames'
+import { h } from 'vue'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const MenuListItem = Vue.extend({
-  functional: true,
+export const MenuListItem = (props, { attrs, slots }) => {
+  const {
+    classNames,
+    title,
+  } = props
 
-  props: {
-    classNames: {
-      type: Object as () => IMenuItemClassNames,
-      required: true,
-    },
-    title: { type: String, default: undefined },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const {
-      classNames,
-      title,
-    } = ctx.props
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: classNames.item,
-        attrs: {
-          title,
-          role: 'presentation',
-        },
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: classNames.item,
+      attrs: {
+        title,
+        role: 'presentation',
       },
-    })
+    },
+  })
 
-    return h('li', slotProps.root, ctx.children)
-  },
-})
+  return h('li', slotProps.root, slots)
+}
+MenuListItem.props = [StylingPropKeys, 'classNames', 'title']

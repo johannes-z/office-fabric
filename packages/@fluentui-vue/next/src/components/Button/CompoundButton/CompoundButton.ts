@@ -1,37 +1,20 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
+import { h } from 'vue'
 import { BaseButton } from '../BaseButton'
-import { useBaseButtonProps } from '../useBaseButton'
+import { BaseButtonPropKeys } from '../useBaseButton'
 import { getStyles } from './CompoundButton.styles'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const CompoundButton = Vue.extend({
-  name: 'CompoundButton',
+export const CompoundButton = (props, { attrs, slots }) => {
+  const { primary, styles } = props
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      ...props,
+      variantClassName: primary != null ? 'ms-Button--compoundPrimary' : 'ms-Button--compound',
+      styles: getStyles(styles, primary != null),
+    },
+  })
 
-  functional: true,
-
-  props: {
-    ...useStylingProps(),
-    ...useBaseButtonProps(),
-    primary: { type: Boolean, default: false },
-  },
-
-  render (h: CreateElement, ctx) {
-    const { primary, styles } = ctx.props
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        attrs: {
-          ...ctx.props,
-          ...ctx.data.attrs,
-        },
-        props: {
-          ...ctx.props,
-          variantClassName: primary ? 'ms-Button--compoundPrimary' : 'ms-Button--compound',
-          styles: getStyles(styles, primary),
-        },
-      },
-    })
-
-    return h(BaseButton, slotProps.root, ctx.children)
-  },
-})
+  return h(BaseButton, slotProps.root, slots)
+}
+CompoundButton.props = [...StylingPropKeys, ...BaseButtonPropKeys, 'primary']

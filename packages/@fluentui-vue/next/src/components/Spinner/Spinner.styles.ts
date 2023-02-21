@@ -1,7 +1,7 @@
-import { getHighContrastNoAdjustStyle, hiddenContentStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getHighContrastNoAdjustStyle, hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import { DefaultFontStyles, Palette } from '@fluentui-vue/theme'
 import { keyframes } from '@fluentui/merge-styles'
-import { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
+import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
 
 const GlobalClassNames = {
   root: 'ms-Spinner',
@@ -48,7 +48,7 @@ export const getStyles = (props: ISpinnerStyleProps): ISpinnerStyles => {
       {
         boxSizing: 'border-box',
         borderRadius: '50%',
-        border: '1.5px solid ' + Palette.themeLight,
+        border: `1.5px solid ${Palette.themeLight}`,
         borderTopColor: Palette.themePrimary,
         animationName: spinAnimation,
         animationDuration: '1.3s',

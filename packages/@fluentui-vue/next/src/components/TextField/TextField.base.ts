@@ -1,16 +1,17 @@
-import { getId, classNamesFunction } from '@fluentui-vue/utilities'
-import { asSlotProps, useStylingProps } from '@/utils'
-import { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import { classNamesFunction, getId } from '@fluentui-vue/utilities'
+import type { IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { Ref } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
-import { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
-import { ITextFieldProps, ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
+import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
+import type { ITextFieldProps, ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
 const COMPONENT_NAME = 'TextField'
 
-export const TextFieldBase = Vue.extend({
+export const TextFieldBase = defineComponent({
   name: 'TextFieldBase',
 
   inheritAttrs: false,
@@ -30,185 +31,182 @@ export const TextFieldBase = Vue.extend({
     required: { type: Boolean, default: false },
     label: { type: String, default: null },
     value: { type: String, default: '' },
+    defaultValue: { type: String, default: '' },
     errorMessage: { type: String, default: null },
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
   },
 
-  data () {
-    return {
-      isFocused: false,
-      internalValue: this.value || '',
-    }
-  },
+  setup(props, { attrs, slots, emit }) {
+    const {
+      value,
+      styles,
+      theme,
+      className,
+      disabled,
+      focused,
+      required,
+      multiline,
+      label,
+      borderless,
+      underlined,
+      resizable,
+      errorMessage,
+      autoAdjustHeight,
+      readonly,
+      placeholder,
+      description,
+      defaultValue,
+    } = toRefs(props)
 
-  computed: {
-    classNames (): IProcessedStyleSet<ITextFieldStyles> {
-      return getClassNames(this.styles, {
-        theme: this.theme,
-        className: this.className,
-        disabled: this.disabled,
-        focused: this.focused,
-        required: this.required,
-        multiline: this.multiline,
-        hasLabel: !!this.label,
-        borderless: this.borderless,
-        underlined: this.underlined,
-        hasIcon: false,
-        resizable: this.resizable !== false,
-        hasErrorMessage: !!this.errorMessage,
-        inputClassName: '',
-        autoAdjustHeight: this.autoAdjustHeight,
-      })
-    },
-    descriptionId () {
-      return getId(COMPONENT_NAME + 'Description')
-    },
-    fallbackId () {
-      return getId(COMPONENT_NAME)
-    },
-    labelId () {
-      return getId(COMPONENT_NAME + 'Label')
-    },
-  },
+    const isFocused = ref(false)
+    const internalValue = ref(value.value || defaultValue.value || '')
 
-  watch: {
-    value (newValue: string): void {
-      this.internalValue = newValue
-    },
-    async multiline (newValue: boolean, oldValue: boolean) {
-      const textElement = this.$refs.textElement as HTMLTextAreaElement
-      const start = textElement.selectionStart || 0
-      const end = textElement.selectionEnd || 0
-      if ((newValue !== oldValue) && this.isFocused) {
-        await this.$nextTick()
-        ;(this.$refs.textElement as HTMLTextAreaElement).focus()
-        ;(this.$refs.textElement as HTMLTextAreaElement).setSelectionRange(start, end)
-      }
-    },
-  },
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value,
+      disabled: disabled.value,
+      focused: focused.value,
+      required: required.value,
+      multiline: multiline.value,
+      hasLabel: !!label.value,
+      borderless: borderless.value,
+      underlined: underlined.value,
+      hasIcon: false,
+      resizable: resizable.value !== false,
+      hasErrorMessage: !!errorMessage.value,
+      inputClassName: '',
+      autoAdjustHeight: autoAdjustHeight.value,
+    }))
 
-  mounted () {
-    this.adjustInputHeight()
-  },
+    const descriptionId = getId(`${COMPONENT_NAME}Description`)
+    const fallbackId = getId(COMPONENT_NAME)
+    const labelId = getId(`${COMPONENT_NAME}Label`)
 
-  updated () {
-    this.adjustInputHeight()
-  },
+    const textElementRef = ref() as Ref<HTMLTextAreaElement>
 
-  methods: {
-    adjustInputHeight (): void {
-      if (this.$refs.textElement && this.autoAdjustHeight && this.multiline) {
-        const textField = this.$refs.textElement as HTMLTextAreaElement
-        textField.style.height = ''
-        textField.style.height = textField.scrollHeight + 'px'
-      }
-    },
-    async onFocus () {
-      this.isFocused = true
-      ;(this.$refs.textElement as HTMLTextAreaElement).setSelectionRange(this.internalValue.length, this.internalValue.length)
-    },
-    onInput (ev: InputEvent, value: string) {
-      this.internalValue = value
-      this.$emit('input', value)
-      this.$emit('change', ev, value)
-    },
-  },
-
-  render (h: CreateElement): VNode {
-    const { classNames, required, label, errorMessage, disabled, multiline, internalValue, readonly, placeholder, resizable } = this
-
-    const Component = multiline ? 'textarea' : 'input'
-
-    const id = this.$attrs.id || this.fallbackId
-
-    const slotProps = asSlotProps({
-      root: {
-        class: classNames.root,
-      },
-      wrapper: {
-        class: classNames.wrapper,
-      },
-      description: {
-        class: classNames.description,
-      },
-      fieldGroup: {
-        class: classNames.fieldGroup,
-      },
-      field: {
-        ref: 'textElement',
-        class: classNames.field,
-        attrs: {
-          ...this.$attrs,
-          id: id,
-          value: internalValue,
-          disabled: disabled,
-          readonly: readonly,
-          required: required,
-          placeholder: placeholder,
-          rows: +this.$attrs.rows || 1,
-          type: 'text',
-          autocomplete: 'off',
-        },
-        style: { resize: (resizable === false) && 'none' },
-        on: {
-          focus: this.onFocus,
-          blur: () => (this.isFocused = false),
-          input: ev => this.onInput(ev, ev.target.value),
-        },
-      },
+    watch(value, (value: string) => {
+      internalValue.value = value
     })
 
-    const onRenderLabel = (props: ITextFieldProps) => {
-      const { label, disabled, required } = props
+    watch(multiline, async (newValue: boolean, oldValue: boolean) => {
+      const textElement = textElementRef.value
+      const start = textElement.selectionStart || 0
+      const end = textElement.selectionEnd || 0
+      if ((newValue !== oldValue) && isFocused.value) {
+        await nextTick()
+        ;(textElementRef.value).focus()
+        ;(textElementRef.value).setSelectionRange(start, end)
+      }
+    })
 
-      const labelStyles = classNames.subComponentStyles
-        ? (classNames.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
+    const adjustInputHeight = (): void => {
+      if (textElementRef.value && autoAdjustHeight.value && multiline.value) {
+        const textField = textElementRef.value
+        textField.style.height = ''
+        textField.style.height = `${textField.scrollHeight}px`
+      }
+    }
+    const onFocus = async () => {
+      isFocused.value = true
+      ;(textElementRef.value).setSelectionRange(internalValue.value.length, internalValue.value.length)
+    }
+    const onInput = (ev: InputEvent, value: string) => {
+      adjustInputHeight()
+      emit('input', internalValue.value)
+      emit('change', ev, internalValue.value)
+    }
+
+    onMounted(adjustInputHeight)
+
+    const Component = multiline.value ? 'textarea' : 'input'
+
+    const id = attrs.id || fallbackId
+
+    const slotProps = computed(() => asSlotProps({
+      root: {
+        class: classNames.value.root,
+      },
+      wrapper: {
+        class: classNames.value.wrapper,
+      },
+      description: {
+        class: classNames.value.description,
+      },
+      fieldGroup: {
+        class: classNames.value.fieldGroup,
+      },
+      field: {
+        class: classNames.value.field,
+        ...attrs,
+        ref: textElementRef,
+        id,
+        value: internalValue.value,
+        disabled: disabled.value,
+        readonly: readonly.value,
+        required: required.value,
+        placeholder: placeholder.value,
+        rows: +attrs.rows || 1,
+        type: 'text',
+        autocomplete: 'off',
+        style: { resize: (resizable.value === false) && 'none' },
+        onFocus,
+        onBlur: () => (isFocused.value = false),
+        onInput: ev => onInput(ev, ev.target.value),
+      },
+    }))
+
+    const onRenderLabel = (props: ITextFieldProps) => {
+      const { label, disabled, required } = toRefs(props)
+
+      const labelStyles = classNames.value.subComponentStyles
+        ? (classNames.value.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
         : undefined
 
-      if (!label) return null
+      if (!label.value)
+        return null
 
       return h(Label, {
-        attrs: {
-          id: this.labelId,
-          for: id,
-        },
-        props: {
-          styles: labelStyles,
-          disabled: disabled,
-          required: required,
-        },
-      }, label)
+        id: labelId,
+        for: id,
+        styles: labelStyles,
+        disabled: disabled.value,
+        required: required.value,
+      }, {
+        default: () => label.value,
+      })
     }
 
     const onRenderDescription = (props: ITextFieldProps) => {
-      if (!this.description) return null
-      return h('span', slotProps.description, this.description)
+      if (!description.value)
+        return null
+      return h('span', slotProps.value.description, description.value)
     }
 
-    const $label = (this.$scopedSlots.label ?? onRenderLabel)(this.$props)
+    const $label = () => (slots.label ?? onRenderLabel)(props)
 
-    const $fieldGroup = h('div', slotProps.fieldGroup, [
-      h(Component, slotProps.field, internalValue),
+    const $fieldGroup = () => h('div', slotProps.value.fieldGroup, [
+      h(Component, slotProps.value.field, internalValue.value),
     ])
 
-    const $errorMessage = errorMessage && h('div', slotProps.description, [
-      h('div', { attrs: { role: 'alert' } }, [
-        h('p', { class: classNames.errorMessage }, [
-          h('span', errorMessage),
+    const $errorMessage = () => errorMessage.value && h('div', slotProps.value.description, [
+      h('div', { role: 'alert' }, [
+        h('p', { class: classNames.value.errorMessage }, [
+          h('span', errorMessage.value),
         ]),
       ]),
     ])
 
-    return h('div', slotProps.root, [
-      h('div', slotProps.wrapper, [
-        $label,
-        $fieldGroup,
+    return () => h('div', slotProps.value.root, [
+      h('div', slotProps.value.wrapper, [
+        $label(),
+        $fieldGroup(),
       ]),
-      h('span', { attrs: { id: this.descriptionId } }, [
-        (this.$scopedSlots.description ?? onRenderDescription)(this.$props),
-        $errorMessage,
+      h('span', { id: descriptionId }, [
+        (slots.description ?? onRenderDescription)(props),
+        $errorMessage(),
       ]),
     ])
   },
+
 })

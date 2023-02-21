@@ -1,7 +1,8 @@
-import Vue, { VNode } from 'vue'
+import type { VNode } from 'vue'
+import { defineComponent } from 'vue'
 import { notifyHostChanged, registerLayerHost, unregisterLayerHost } from './Layer.notification'
 
-export const LayerHost = Vue.extend({
+export const LayerHost = defineComponent({
   name: 'LayerHost',
 
   props: {
@@ -10,23 +11,23 @@ export const LayerHost = Vue.extend({
     hostId: { type: String, default: null },
   },
 
-  mounted (): void {
+  mounted(): void {
     registerLayerHost(this.hostId!, this)
     notifyHostChanged(this.hostId!)
   },
 
-  beforeDestroy (): void {
+  beforeUnmount(): void {
     unregisterLayerHost(this.hostId!, this)
     notifyHostChanged(this.hostId!)
   },
 
   methods: {
-    notifyLayersChanged () {
+    notifyLayersChanged() {
       // Nothing, since the default implementation of Layer Host does not need to react to layer changes.
     },
   },
 
-  render (h): VNode {
+  render(h): VNode {
     return h('div', {
       ref: 'layerHostRef',
       class: 'LayerHost',

@@ -1,5 +1,5 @@
-import { IIconStyles, IIconStyleProps } from './Icon.types'
-import { mergeStyleSets } from '@uifabric/merge-styles'
+import { mergeStyleSets } from '@fluentui/merge-styles'
+import type { IIconStyleProps, IIconStyles } from './Icon.types'
 
 /** Class names used in themeable and non-themeable Icon components */
 export const classNames = mergeStyleSets({

@@ -1,13 +1,13 @@
-import Vue, { CreateElement, RenderContext, VNode } from 'vue'
-import { classNames, MS_ICON } from './Icon.styles'
 import { getIcon } from '@fluentui-vue/style-utilities'
 import { memoizeFunction } from '@fluentui-vue/utilities'
+import { h } from 'vue'
+import { MS_ICON, classNames } from './Icon.styles'
 
 export interface IIconContent {
-  children?: string | Function | any[];
-  iconClassName?: string;
-  fontFamily?: string;
-  mergeImageProps?: boolean;
+  children?: string | Function | any[]
+  iconClassName?: string
+  fontFamily?: string
+  mergeImageProps?: boolean
 }
 
 export const getIconContent = memoizeFunction(
@@ -17,9 +17,8 @@ export const getIconContent = memoizeFunction(
       code: undefined,
     }
 
-    if (!code) {
+    if (!code)
       return null
-    }
 
     return {
       children: code,
@@ -32,37 +31,27 @@ export const getIconContent = memoizeFunction(
   true,
 )
 
-export const FontIcon = Vue.extend({
-  functional: true,
+export const FontIcon = (props, { attrs }) => {
+  const { iconName, className = attrs.class, style = attrs.style || {} } = props
+  const iconContent = getIconContent(iconName) || {}
+  const { iconClassName, children, fontFamily } = iconContent
 
-  props: {
-    // ...withThemeableProps(),
-
-    iconName: { type: String, default: undefined },
-    className: { type: String, default: undefined },
-  },
-
-  render (h: CreateElement, ctx: RenderContext): VNode {
-    const { iconName, className = ctx.data.class, style = {} } = ctx.props
-    const iconContent = getIconContent(iconName) || {}
-    const { iconClassName, children, fontFamily } = iconContent
-
-    return h('i', {
-      attrs: {
-        'data-icon-name': iconName,
-      },
-      class: [
-        MS_ICON,
-        classNames.root,
-        iconClassName,
-        !iconName && classNames.placeholder,
-        className,
-      ],
-      style: { fontFamily, ...style },
-    }, typeof children === 'function'
-      ? [children(h)]
-      : (children instanceof Array)
+  return h('i', {
+    ...attrs,
+    'data-icon-name': iconName,
+    'class': [
+      MS_ICON,
+      classNames.root,
+      iconClassName,
+      !iconName && classNames.placeholder,
+      className,
+    ],
+    'style': { fontFamily, ...style },
+  }, typeof children === 'function'
+    ? [children(h)]
+    : (Array.isArray(children))
         ? children
         : [children])
-  },
-})
+}
+
+FontIcon.props = ['iconName', 'className']

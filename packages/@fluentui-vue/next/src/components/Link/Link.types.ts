@@ -1,12 +1,12 @@
-import { ITheme } from '@fluentui-vue/theme'
-import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
 /**
  * {@docCategory Link}
  */
 export interface ILink {
   /** Sets focus to the link. */
-  focus(): void;
+  focus(): void
 }
 
 /**
@@ -25,34 +25,34 @@ export interface ILinkProps {
    * URL the link points to. If not provided, the link renders as a button (unless that behavior is
    * overridden using `as`).
    */
-  href?: string;
+  href?: string
 
   /**
    * Where to open the linked URL. Common values are `_blank` (a new tab or window),
    * `_self` (the current window/context), `_parent`, and `_top`.
    */
-  target?: string;
+  target?: string
 
   /**
    * Relationship to the linked URL (can be a space-separated list).
    * Most common values are `noreferrer` and/or `noopener`.
    */
-  rel?: string;
+  rel?: string
 
   /**
    * Click handler for the link.
    */
-  onClick?: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent) => void
 
   /**
    * Whether the link is disabled
    */
-  disabled?: boolean;
+  disabled?: boolean
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  styles?: IStyleFunctionOrObject<ILinkStyleProps, ILinkStyles>;
+  styles?: IStyleFunctionOrObject<ILinkStyleProps, ILinkStyles>
 
   /**
    * A component type or primitive that is rendered as the type of the root element.
@@ -64,13 +64,13 @@ export interface ILinkProps {
    * If rendered as `<a>`, hints at the MIME type.
    * If rendered as `<button>`, override the type of button (`button` is the default).
    */
-  type?: string;
+  type?: string
 
   /**
    * Whether the link is styled with an underline or not.
    * Should be used when the link is placed alongside other text content.
    */
-  underline?: boolean;
+  underline?: boolean
 
   /** Any other props for elements or a React component passed to `as` */
   // [key: string]: any;
@@ -80,16 +80,16 @@ export interface ILinkProps {
  * {@docCategory Link}
  */
 export interface ILinkStyleProps {
-  className?: string;
-  isButton?: boolean;
-  isDisabled?: boolean;
-  isUnderlined?: boolean;
-  theme: ITheme;
+  className?: string
+  isButton?: boolean
+  isDisabled?: boolean
+  isUnderlined?: boolean
+  theme: ITheme
 }
 
 /**
  * {@docCategory Link}
  */
 export interface ILinkStyles {
-  root: IStyle;
+  root: IStyle
 }

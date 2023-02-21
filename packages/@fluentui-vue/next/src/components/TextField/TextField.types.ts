@@ -1,28 +1,28 @@
-import { ITheme } from '@fluentui-vue/theme'
-import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import { IIconProps } from '../Icon'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { IIconProps } from '../Icon'
 
 /**
  * {@docCategory TextField}
  */
 export interface ITextField {
   /** Gets the current value of the input. */
-  value: string | undefined;
+  value: string | undefined
 
   /** Sets focus to the input. */
-  focus: () => void;
+  focus: () => void
 
   /** Blurs the input */
-  blur: () => void;
+  blur: () => void
 
   /** Select the value of the text field. */
-  select: () => void;
+  select: () => void
 
   /** Sets the selection start of the text field to a specified value. */
-  setSelectionStart: (value: number) => void;
+  setSelectionStart: (value: number) => void
 
   /** Sets the selection end of the text field to a specified value. */
-  setSelectionEnd: (value: number) => void;
+  setSelectionEnd: (value: number) => void
 
   /**
    * Sets the start and end positions of a selection in a text field.
@@ -30,13 +30,13 @@ export interface ITextField {
    * @param start - Index of the start of the selection.
    * @param end - Index of the end of the selection.
    */
-  setSelectionRange: (start: number, end: number) => void;
+  setSelectionRange: (start: number, end: number) => void
 
   /** Gets the selection start of the text field. Returns -1 if there is no selection. */
-  selectionStart: number | null;
+  selectionStart: number | null
 
   /** Gets the selection end of the text field. Returns -1 if there is no selection. */
-  selectionEnd: number | null;
+  selectionEnd: number | null
 }
 
 /**
@@ -64,36 +64,36 @@ export interface ITextFieldProps {
    * Whether or not the text field is a multiline text field.
    * @defaultvalue false
    */
-  multiline?: boolean;
+  multiline?: boolean
 
   /**
    * For multiline text fields, whether or not the field is resizable.
    * @defaultvalue true
    */
-  resizable?: boolean;
+  resizable?: boolean
 
   /**
    * For multiline text fields, whether or not to auto adjust text field height.
    * @defaultvalue false
    */
-  autoAdjustHeight?: boolean;
+  autoAdjustHeight?: boolean
 
   /**
    * Whether or not the text field is underlined.
    * @defaultvalue false
    */
-  underlined?: boolean;
+  underlined?: boolean
 
   /**
    * Whether or not the text field is borderless.
    * @defaultvalue false
    */
-  borderless?: boolean;
+  borderless?: boolean
 
   /**
    * Label displayed above the text field (and read by screen readers).
    */
-  label?: string;
+  label?: string
 
   /**
    * Custom renderer for the label.
@@ -105,7 +105,7 @@ export interface ITextFieldProps {
   /**
    * Description displayed below the text field to provide additional details about what text to enter.
    */
-  description?: string;
+  description?: string
 
   /**
    * Custom renderer for the description.
@@ -124,13 +124,13 @@ export interface ITextFieldProps {
    * Prefix displayed before the text field contents. This is not included in the value.
    * Ensure a descriptive label is present to assist screen readers, as the value does not include the prefix.
    */
-  prefix?: string;
+  prefix?: string
 
   /**
    * Suffix displayed after the text field contents. This is not included in the value.
    * Ensure a descriptive label is present to assist screen readers, as the value does not include the suffix.
    */
-  suffix?: string;
+  suffix?: string
 
   /**
    * Custom render function for prefix.
@@ -145,56 +145,56 @@ export interface ITextFieldProps {
   /**
    * Props for an optional icon, displayed in the far right end of the text field.
    */
-  iconProps?: IIconProps;
+  iconProps?: IIconProps
 
   /**
    * Default value of the text field. Only provide this if the text field is an uncontrolled component;
    * otherwise, use the `value` property.
    */
-  defaultValue?: string;
+  defaultValue?: string
 
   /**
    * Current value of the text field. Only provide this if the text field is a controlled component where you
    * are maintaining its current state; otherwise, use the `defaultValue` property.
    */
-  value?: string;
+  value?: string
 
   /**
    * Disabled state of the text field.
    * @defaultvalue false
    */
-  disabled?: boolean;
+  disabled?: boolean
 
   /**
    * If true, the text field is readonly.
    * @defaultvalue false
    */
-  readOnly?: boolean;
+  readOnly?: boolean
 
   /**
    * If true, the text field is invalid. Will be auto-determined by errorMessage unless set.
    * @defaultvalue false
    */
-  invalid?: boolean;
+  invalid?: boolean
 
   /**
    * Static error message displayed below the text field. Use `onGetErrorMessage` to dynamically
    * change the error message displayed (if any) based on the current value. `errorMessage` and
    * `onGetErrorMessage` are mutually exclusive (`errorMessage` takes precedence).
    */
-  errorMessage?: string;
+  errorMessage?: string
 
   /**
    * Callback for when the input value changes.
    * This is called on both `input` and `change` events.
    * (In a later version, this will probably only be called for the `change` event.)
    */
-  onChange?: (event: Event, newValue?: string) => void;
+  onChange?: (event: Event, newValue?: string) => void
 
   /**
    * Function called after validation completes.
    */
-  onNotifyValidationResult?: (errorMessage: string | JSX.Element, value: string | undefined) => void;
+  onNotifyValidationResult?: (errorMessage: string | JSX.Element, value: string | undefined) => void
 
   /**
    * Function used to determine whether the input value is valid and get an error message if not.
@@ -209,29 +209,29 @@ export interface ITextFieldProps {
    * - The resolved value is displayed as the error message.
    * - If rejected, the value is thrown away.
    */
-  onGetErrorMessage?: (value: string) => string | JSX.Element | PromiseLike<string | JSX.Element> | undefined;
+  onGetErrorMessage?: (value: string) => string | JSX.Element | PromiseLike<string | JSX.Element> | undefined
 
   /**
    * Text field will start to validate after users stop typing for `deferredValidationTime` milliseconds.
    * Updates to this prop will not be respected.
    * @defaultvalue 200
    */
-  deferredValidationTime?: number;
+  deferredValidationTime?: number
 
   /**
    * Optional class name that is added to the container of the component.
    */
-  className?: string;
+  className?: string
 
   /**
    * Optional class name that is added specifically to the input/textarea element.
    */
-  inputClassName?: string;
+  inputClassName?: string
 
   /**
    * Aria label for the text field.
    */
-  ariaLabel?: string;
+  ariaLabel?: string
 
   /**
    * Run validation when focus moves into the input, and **do not** validate on change.
@@ -239,7 +239,7 @@ export interface ITextFieldProps {
    * (Unless this prop and/or `validateOnFocusOut` is set to true, validation will run on every change.)
    * @defaultvalue false
    */
-  validateOnFocusIn?: boolean;
+  validateOnFocusIn?: boolean
 
   /**
    * Run validation when focus moves out of the input, and **do not** validate on change.
@@ -247,23 +247,23 @@ export interface ITextFieldProps {
    * (Unless this prop and/or `validateOnFocusIn` is set to true, validation will run on every change.)
    * @defaultvalue false
    */
-  validateOnFocusOut?: boolean;
+  validateOnFocusOut?: boolean
 
   /**
    * Whether validation should run when the input is initially rendered.
    * @defaultvalue true
    */
-  validateOnLoad?: boolean;
+  validateOnLoad?: boolean
 
   /**
    * Theme (provided through customization).
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  styles?: IStyleFunctionOrObject<ITextFieldStyleProps, ITextFieldStyles>;
+  styles?: IStyleFunctionOrObject<ITextFieldStyleProps, ITextFieldStyles>
 
   /**
    * Whether the input field should have autocomplete enabled.
@@ -272,21 +272,21 @@ export interface ITextFieldProps {
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#Values
    * https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill
    */
-  autoComplete?: string;
+  autoComplete?: string
 
   /**
    * Whether to show the reveal password button for input type `'password'`. This will be ignored
    * if the `type` prop is not set to `'password'`, or if the browser is known to have a built-in
    * reveal button for password inputs (Edge, IE).
    */
-  canRevealPassword?: boolean;
+  canRevealPassword?: boolean
 
   /**
    * If `canRevealPassword` is true, aria label for the reveal password button (example: "Show
    * password"). Note that this will NOT be used in browsers known to have a built-in reveal
    * password button for password inputs (Edge, IE).
    */
-  revealPasswordAriaLabel?: string;
+  revealPasswordAriaLabel?: string
 }
 
 /**
@@ -303,7 +303,7 @@ export interface ITextFieldSubComponentStyles {
    */
   // TODO: this should be the interface once we're on TS 2.9.2 but otherwise causes errors in 2.8.4
   // label: IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>;
-  label: IStyleFunctionOrObject<any, any>;
+  label: IStyleFunctionOrObject<any, any>
 }
 
 /**
@@ -313,68 +313,68 @@ export interface ITextFieldStyles {
   /**
    * Style for root element.
    */
-  root: IStyle;
+  root: IStyle
 
   /**
    * Style for field group encompassing entry area (prefix, field, icon and suffix).
    */
-  fieldGroup: IStyle;
+  fieldGroup: IStyle
 
   /**
    * Style for prefix element.
    */
-  prefix: IStyle;
+  prefix: IStyle
 
   /**
    * Style for suffix element.
    */
-  suffix: IStyle;
+  suffix: IStyle
 
   /**
    * Style for main field entry element.
    */
-  field: IStyle;
+  field: IStyle
 
   /**
    * Style for icon prop element.
    */
-  icon: IStyle;
+  icon: IStyle
 
   /**
    * Style for description element.
    */
-  description: IStyle;
+  description: IStyle
 
   /**
    * Style for TextField wrapper element.
    * Mainly useful for overriding border styles for underlined fields.
    */
-  wrapper: IStyle;
+  wrapper: IStyle
 
   /**
    * Style for error message element.
    */
-  errorMessage: IStyle;
+  errorMessage: IStyle
 
   /**
    * Styling for subcomponents.
    */
-  subComponentStyles: ITextFieldSubComponentStyles;
+  subComponentStyles: ITextFieldSubComponentStyles
 
   /**
    * Styling for reveal password button
    */
-  revealButton: IStyle;
+  revealButton: IStyle
 
   /**
    * Styling for reveal password span
    */
-  revealSpan: IStyle;
+  revealSpan: IStyle
 
   /**
    * Styling for reveal password icon
    */
-  revealIcon: IStyle;
+  revealIcon: IStyle
 }
 
 /**
@@ -384,7 +384,7 @@ export interface IMaskedTextField extends ITextField {
   /**
    * The value of all filled format characters, or undefined if not all format characters are filled.
    */
-  value: string | undefined;
+  value: string | undefined
 }
 
 /**
@@ -408,13 +408,13 @@ export interface IMaskedTextFieldProps extends ITextFieldProps {
    *
    * @example `Phone Number: (999) 999-9999`
    */
-  mask?: string;
+  mask?: string
 
   /**
    * The character to show in place of unfilled characters of the mask.
    * @defaultvalue '_'
    */
-  maskChar?: string;
+  maskChar?: string
 
   /**
    * An object defining the format characters and corresponding regexp values.
@@ -424,5 +424,5 @@ export interface IMaskedTextFieldProps extends ITextFieldProps {
    *  '*': /[a-zA-Z0-9]/
    * \}
    */
-  maskFormat?: { [key: string]: RegExp };
+  maskFormat?: { [key: string]: RegExp }
 }

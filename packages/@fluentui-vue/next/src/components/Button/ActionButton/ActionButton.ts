@@ -1,34 +1,17 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
+import { h } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { getStyles } from './ActionButton.styles'
+import { asSlotProps } from '@/utils'
 
-export const ActionButton = Vue.extend({
-  name: 'ActionButton',
+export const ActionButton = (props, { attrs, slots }) => {
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      ...props,
+      variantClassName: 'ms-Button--action ms-Button--comand',
+      styles: getStyles(props.styles),
+    },
+  })
 
-  functional: true,
-
-  props: {
-    ...useStylingProps(),
-
-    checked: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    iconProps: { type: Object, default: () => {} },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        props: {
-          ...ctx.data.attrs,
-          ...ctx.props,
-          variantClassName: 'ms-Button--action ms-Button--comand',
-          styles: getStyles(ctx.props.styles),
-        },
-      },
-    })
-
-    return h(BaseButton, slotProps.root, ctx.children)
-  },
-})
+  return h(BaseButton, slotProps.root, slots)
+}

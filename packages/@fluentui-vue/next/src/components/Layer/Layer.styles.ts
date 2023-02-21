@@ -1,6 +1,5 @@
-import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
-import { ZIndexes } from '@fluentui-vue/style-utilities'
-import { ILayerStyleProps, ILayerStyles } from './Layer.types'
+import { ZIndexes, getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import type { ILayerStyleProps, ILayerStyles } from './Layer.types'
 
 const GlobalClassNames = {
   root: 'ms-Layer',

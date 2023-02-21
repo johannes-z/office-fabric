@@ -1,8 +1,8 @@
 import { Palette, SemanticColors } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 import { HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 
 export const getStyles = memoizeFunction(
   (customStyles?: IButtonStyles): IButtonStyles => {

@@ -1,4 +1,4 @@
-import { noWrap, getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getGlobalClassNames, getHighContrastNoAdjustStyle, noWrap } from '@fluentui-vue/style-utilities'
 import { getRTL, memoizeFunction } from '@fluentui-vue/utilities'
 import { keyframes } from '@fluentui/merge-styles'
 import type { IRawStyle } from '@fluentui/merge-styles'
@@ -112,21 +112,21 @@ export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicat
 
       indeterminate
         ? ({
-          position: 'absolute',
-          minWidth: '33%',
-          background:
-              `linear-gradient(to right, ${progressTrackColor} 0%, ` +
-              `${palette.themePrimary} 50%, ${progressTrackColor} 100%)`,
-          animation: `${isRTL ? IndeterminateProgressRTL() : IndeterminateProgress()} 3s infinite`,
-          selectors: {
-            [HighContrastSelector]: {
-              background: `highlight`,
+            position: 'absolute',
+            minWidth: '33%',
+            background:
+              `linear-gradient(to right, ${progressTrackColor} 0%, `
+              + `${palette.themePrimary} 50%, ${progressTrackColor} 100%)`,
+            animation: `${isRTL ? IndeterminateProgressRTL() : IndeterminateProgress()} 3s infinite`,
+            selectors: {
+              [HighContrastSelector]: {
+                background: 'highlight',
+              },
             },
-          },
-        } as IRawStyle)
+          } as IRawStyle)
         : ({
-          transition: 'width .15s linear',
-        } as IRawStyle),
+            transition: 'width .15s linear',
+          } as IRawStyle),
       classNames.progressBar,
     ],
   }

@@ -1,51 +1,36 @@
-import { asSlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode } from 'vue'
+import { h } from 'vue'
 import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
+import { asSlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ISpinnerStyleProps, ISpinnerStyles>()
 
-export const SpinnerBase = Vue.extend({
-  name: 'SpinnerBase',
+export const SpinnerBase = (props, { attrs, slots }) => {
+  const { styles, className, size = 20, label, labelPosition = 'bottom' } = props
 
-  functional: true,
+  const classNames = getClassNames(styles, {
+    className,
+    labelPosition,
+    size: Number(size),
+  })
 
-  props: {
-    ...useStylingProps(),
-
-    label: { type: String, default: null },
-    labelPosition: {
-      type: String as () => ISpinnerStyleProps['labelPosition'],
-      default: 'bottom' as const,
+  const slotProps = asSlotProps<ISpinnerStyles>({
+    root: {
+      ...attrs,
+      class: classNames.root,
     },
-    size: { type: Number, default: 20 },
-  },
+    circle: {
+      class: classNames.circle,
+    },
+    label: {
+      class: classNames.label,
+    },
+  })
 
-  render (h: CreateElement, ctx): VNode {
-    const { styles, className, size, label, labelPosition } = ctx.props
+  return h('div', slotProps.root, [
+    h('div', slotProps.circle),
+    h('div', slotProps.label, slots.default ? slots : label),
+  ])
+}
 
-    const classNames = getClassNames(styles, {
-      className,
-      labelPosition,
-      size,
-    })
-
-    const slotProps = asSlotProps<ISpinnerStyles>({
-      root: {
-        ...ctx.data,
-        class: classNames.root,
-      },
-      circle: {
-        class: classNames.circle,
-      },
-      label: {
-        class: classNames.label,
-      },
-    })
-
-    return h('div', slotProps.root, [
-      h('div', slotProps.circle),
-      h('div', slotProps.label, ctx.children || label),
-    ])
-  },
-})
+SpinnerBase.props = ['styles', 'theme', 'className', 'label', 'labelPosition', 'size']

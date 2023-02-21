@@ -1,6 +1,6 @@
-import { ITheme } from '@fluentui-vue/theme'
+import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { concatStyleSets } from '@uifabric/merge-styles'
+import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../../Button/BaseButton.styles'
 
 export const getStyles = memoizeFunction(

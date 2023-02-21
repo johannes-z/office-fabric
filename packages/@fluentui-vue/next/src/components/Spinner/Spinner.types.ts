@@ -1,25 +1,25 @@
-import { IStyle } from '@fluentui/merge-styles'
+import type { IStyle } from '@fluentui/merge-styles'
 
 /**
  * Possible locations of the label in regards to the spinner
  * @defaultvalue bottom
  * {@docCategory Spinner}
  */
-export type SpinnerLabelPosition = 'top' | 'right' | 'bottom' | 'left';
+export type SpinnerLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 
 export interface ISpinnerStyles {
   /** Styles for the root element. Refers to the wrapper containing both the
    * circle and the label. */
-  root?: IStyle;
+  root?: IStyle
 
   /** Styles for the spinner circle animation. */
-  circle?: IStyle;
+  circle?: IStyle
 
   /** Styles for the label accompanying the circle. */
-  label?: IStyle;
+  label?: IStyle
 
   /** Styles for the hidden helper element to aid with screen readers. */
-  screenReaderText?: IStyle;
+  screenReaderText?: IStyle
 }
 
 /**
@@ -29,11 +29,37 @@ export interface ISpinnerStyles {
  */
 export interface ISpinnerStyleProps {
   /** Size of the spinner animation. */
-  size?: number;
+  size?: number
 
   /** CSS class name for the component attached to the root stylable area. */
-  className?: string | string[];
+  className?: string | string[]
 
   /** Position of the label in regards to the spinner animation. */
-  labelPosition?: SpinnerLabelPosition;
+  labelPosition?: SpinnerLabelPosition
+}
+
+/**
+ * Possible variations of the spinner circle size.
+ * {@docCategory Spinner}
+ */
+export enum SpinnerSize {
+  /**
+   * 12px Spinner diameter
+   */
+  xSmall = 0,
+
+  /**
+   * 16px Spinner diameter
+   */
+  small = 1,
+
+  /**
+   * 20px Spinner diameter
+   */
+  medium = 2,
+
+  /**
+   * 28px Spinner diameter
+   */
+  large = 3,
 }

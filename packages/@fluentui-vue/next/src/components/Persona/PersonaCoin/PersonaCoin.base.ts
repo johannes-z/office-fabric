@@ -1,16 +1,18 @@
-import { getInitials, useStylingProps } from '@/utils'
 import { classNamesFunction, getRTL, memoizeFunction } from '@fluentui-vue/utilities'
-import { mergeStyles } from '@uifabric/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import { mergeStyles } from '@fluentui/merge-styles'
+import type { CreateElement, VNode } from 'vue'
+import Vue from 'vue'
 import { Icon } from '../../Icon'
 import { Image, ImageFit } from '../../Image'
-import {
+import type {
   IPersonaCoinStyleProps,
-  IPersonaCoinStyles, PersonaInitialsColor, PersonaPresence as PersonaPresenceEnum, PersonaSize,
+  IPersonaCoinStyles, PersonaInitialsColor,
 } from '../Persona.types'
+import { PersonaPresence as PersonaPresenceEnum, PersonaSize } from '../Persona.types'
 import { sizeToPixels } from '../PersonaConsts'
 import { getPersonaInitialsColor } from '../PersonaInitialsColor'
 import { PersonaPresence } from '../PersonaPresence'
+import { getInitials, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IPersonaCoinStyleProps, IPersonaCoinStyles>({
   // There can be many PersonaCoin rendered with different sizes.
@@ -54,7 +56,7 @@ export const PersonaCoinBase = Vue.extend({
     initialsColor: {},
   },
 
-  data () {
+  data() {
     return {
       mergeStyles,
       getPersonaInitialsColor,
@@ -64,19 +66,19 @@ export const PersonaCoinBase = Vue.extend({
   },
 
   computed: {
-    initials () {
+    initials() {
       const { imageInitials, allowPhoneInitials, showUnknownPersonaCoin } = this
       const isRTL = getRTL(this.theme)
 
       return imageInitials || getInitials(this.text, isRTL, allowPhoneInitials)
     },
 
-    dimension () {
+    dimension() {
       const { coinSize, size } = this
       return coinSize || sizeToPixels[size]
     },
 
-    personaPresenceProps () {
+    personaPresenceProps() {
       const { coinSize, theme, isOutOfOffice, presence, presenceTitle, size } = this
       return {
         coinSize,
@@ -88,16 +90,16 @@ export const PersonaCoinBase = Vue.extend({
       }
     },
 
-    shouldRenderInitials () {
+    shouldRenderInitials() {
       return !this.imageUrl
     },
 
-    coinSizeStyle () {
+    coinSizeStyle() {
       const { coinSize } = this
       return coinSize ? { width: coinSize, height: coinSize } : undefined
     },
 
-    classNames () {
+    classNames() {
       const { styles, theme, className, coinProps, size, coinSize, showUnknownPersonaCoin } = this
       return getClassNames(styles, {
         theme: theme!,
@@ -109,7 +111,7 @@ export const PersonaCoinBase = Vue.extend({
     },
   },
 
-  render (h: CreateElement): VNode {
+  render(h: CreateElement): VNode {
     const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
 
     return h('div', {

@@ -1,28 +1,28 @@
 import type { IFontStyles, ITheme } from '@fluentui-vue/theme'
-import type { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
 export interface ITextProps {
   /**
    * Theme provided by HOC.
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Styles for the text.
    */
-  styles?: IStyleFunctionOrObject<any, ITextStyles>;
+  styles?: IStyleFunctionOrObject<any, ITextStyles>
 
-  className?: string;
+  className?: string
 
   /**
    * Optionally render the component as another component type or primitive.
    */
-  as?: string;
+  as?: string
 
   /**
    * Optional font type for Text.
    */
-  variant?: keyof IFontStyles;
+  variant?: keyof IFontStyles
 
   /**
    * Whether the text is displayed as a block element.
@@ -30,7 +30,7 @@ export interface ITextProps {
    * Note that in order for ellipsis on overflow to work properly,
    * `block` and `nowrap` should be set to true.
    */
-  block?: boolean;
+  block?: boolean
 
   /**
    * Whether the text is not wrapped.
@@ -38,7 +38,7 @@ export interface ITextProps {
    * Note that in order for ellipsis on overflow to work properly,
    * `block` and `nowrap` should be set to true.
    */
-  nowrap?: boolean;
+  nowrap?: boolean
 }
 
 export interface ITextStyles {

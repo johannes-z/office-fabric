@@ -1,22 +1,17 @@
-import { getId, classNamesFunction } from '@fluentui-vue/utilities'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, VueConstructor } from 'vue'
-import { Icon } from '../Icon'
+import { classNamesFunction, getId } from '@fluentui-vue/utilities'
+import type { PropType } from 'vue'
+import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
-import { SlotProps, useStylingProps } from '@/utils/'
-import { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
+import { Icon } from '../Icon'
+import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
+import { useStylingProps } from '@/utils/'
+import type { SlotProps } from '@/utils/'
 
-export type CheckboxLabelPosition = 'top' | 'right' | 'bottom' | 'left';
+export type CheckboxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 
 const getClassNames = classNamesFunction<ICheckboxStyleProps, ICheckboxStyles>()
 
-export const CheckboxBase = (Vue as VueConstructor<
-Vue & {
-  $refs: {
-    input: HTMLInputElement
-  };
-}
->).extend({
+export const CheckboxBase = defineComponent({
   name: 'CheckboxBase',
 
   model: {
@@ -25,7 +20,7 @@ Vue & {
   },
 
   props: {
-    ...useStylingProps(),
+    ...useStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
 
     checked: { type: Boolean, default: false },
     defaultChecked: { type: Boolean, default: false },
@@ -36,120 +31,97 @@ Vue & {
     label: { type: String, default: null },
     title: { type: String, default: null },
     boxSide: {
-      type: String as () => 'start' | 'end',
+      type: String as PropType<'start' | 'end'>,
       default: 'start',
-      validator: v => ['start', 'end'].indexOf(v) > -1,
+      validator: (v: string) => ['start', 'end'].includes(v),
     },
     inputProps: { type: Object as () => any, default: undefined },
 
     checkmarkIconProps: { type: Object as () => any, default: undefined },
   },
 
-  data () {
-    return {
-      internalValue: this.checked || this.defaultChecked,
-      isIndeterminate: this.indeterminate || this.defaultIndeterminate,
+  setup(props, { attrs, emit, slots }) {
+    const {
+      checked, defaultChecked, indeterminate, defaultIndeterminate,
+      theme, styles, className, disabled, boxSide,
+      checkmarkIconProps,
+      title,
+      inputProps,
+      label,
+    } = toRefs(props)
+
+    const id = computed(() => getId('Checkbox'))
+
+    const internalValue = ref(checked.value || defaultChecked.value)
+    const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
+
+    watch(checked, (value) => {
+      internalValue.value = value
+    })
+
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value,
+      disabled: disabled.value,
+      indeterminate: isIndeterminate.value,
+      checked: isIndeterminate.value ? false : internalValue.value,
+      reversed: boxSide.value !== 'start',
+      isUsingCustomLabelRender: true,
+    }))
+
+    const onInput = () => {
+      if (disabled.value)
+        return
+
+      if (isIndeterminate.value) {
+        internalValue.value = defaultChecked.value
+        isIndeterminate.value = false
+      }
+      else {
+        internalValue.value = !internalValue.value
+      }
+      emit('input', internalValue.value)
     }
-  },
 
-  computed: {
-    id (): string {
-      return getId('Checkbox')
-    },
-    classNames (): IProcessedStyleSet<ICheckboxStyles> {
-      const { theme, className, disabled, isIndeterminate, internalValue, boxSide } = this
-      return getClassNames(this.styles, {
-        theme,
-        className,
-        disabled,
-        indeterminate: isIndeterminate,
-        checked: isIndeterminate ? false : internalValue,
-        reversed: boxSide !== 'start',
-        isUsingCustomLabelRender: true,
-      })
-    },
-    slotProps (): SlotProps<ICheckboxStyles> {
-      const {
-        classNames,
-        id,
-        checkmarkIconProps,
-        title,
-        disabled,
-        inputProps,
-      } = this
+    const slotProps = computed<SlotProps<ICheckboxStyles>>(() => ({
+      root: {
+        class: classNames.value.root,
+      },
+      input: {
+        class: classNames.value.input,
+        id: id.value,
+        ...attrs,
+        ...inputProps.value,
+        disabled: disabled.value,
+        type: 'checkbox',
+        onInput,
+      },
+      label: {
+        class: classNames.value.label,
+        for: id.value,
+      },
+      checkbox: {
+        class: classNames.value.checkbox,
+      },
+      checkmark: {
+        class: classNames.value.checkmark,
+        iconName: 'CheckMark',
+        ...checkmarkIconProps.value,
+      },
+      text: {
+        class: classNames.value.text,
+        title: title.value,
+      },
+    }))
 
-      return {
-        root: {
-          class: classNames.root,
-        },
-        input: {
-          class: classNames.input,
-          attrs: {
-            id,
-            ...this.$attrs,
-            ...inputProps,
-            disabled: disabled,
-            type: 'checkbox',
-          },
-          on: {
-            input: this.onInput,
-          },
-        },
-        label: {
-          class: classNames.label,
-          attrs: { for: id },
-        },
-        checkbox: {
-          class: classNames.checkbox,
-        },
-        checkmark: {
-          class: classNames.checkmark,
-          props: {
-            iconName: 'CheckMark',
-            ...checkmarkIconProps,
-          },
-        },
-        text: {
-          class: classNames.text,
-          attrs: {
-            title: title,
-          },
-        },
-      }
-    },
-  },
+    return () => h('div', slotProps.value.root, [
+      h('input', slotProps.value.input),
 
-  watch: {
-    checked (value) {
-      this.internalValue = value
-    },
-  },
-
-  methods: {
-    onInput () {
-      if (this.disabled) return
-
-      if (this.isIndeterminate) {
-        this.internalValue = this.defaultChecked
-        this.isIndeterminate = false
-      } else {
-        this.internalValue = !this.internalValue
-      }
-      this.$emit('input', this.internalValue)
-    },
-  },
-
-  render (h: CreateElement): VNode {
-    const { slotProps, label } = this
-
-    return h('div', slotProps.root, [
-      h('input', slotProps.input),
-
-      h(Label, slotProps.label, [
-        h('div', slotProps.checkbox, [
-          h(Icon, slotProps.checkmark),
+      h(Label, slotProps.value.label, () => [
+        h('div', slotProps.value.checkbox, [
+          h(Icon, slotProps.value.checkmark),
         ]),
-        (this.$slots.default || label) && h('span', slotProps.text, this.$slots.default || label),
+        (slots.default || label.value) && h('span', slotProps.value.text, slots.default ? slots : label.value),
       ]),
     ])
   },

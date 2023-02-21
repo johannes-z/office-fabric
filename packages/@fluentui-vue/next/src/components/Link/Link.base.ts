@@ -1,56 +1,43 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode } from 'vue'
-import { asSlotProps, useStylingProps } from '@/utils/'
-import { ILinkStyleProps, ILinkStyles } from './Link.types'
+import { h } from 'vue'
+import type { ILinkStyleProps, ILinkStyles } from './Link.types'
+import { StylingPropKeys, asSlotProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
-export const LinkBase = Vue.extend({
-  name: 'LinkBase',
+export const LinkBase = (props, { attrs, slots }) => {
+  console.log({
+    props,
+    attrs,
+  })
+  const { styles, theme, as, target, className, href, disabled, underline } = props
 
-  functional: true,
+  const classNames = getClassNames(styles, {
+    theme,
+    className,
+    isButton: !href,
+    isDisabled: disabled,
+    isUnderlined: underline,
+  })
 
-  props: {
-    ...useStylingProps(),
+  const rootType = as || (href ? 'a' : 'button')
 
-    as: { type: String, default: undefined },
-    underline: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
-    href: { type: String, default: '' },
-    target: { type: String, default: undefined },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const { styles, theme, as, target, className, href, disabled, underline } = ctx.props
-
-    const classNames = getClassNames(styles, {
-      theme,
-      className,
-      isButton: !href,
-      isDisabled: disabled,
-      isUnderlined: underline,
-    })
-
-    const rootType = as || (href ? 'a' : 'button')
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: classNames.root,
-        attrs: {
-          ...rootType === 'a' && {
-            target,
-            href: disabled ? undefined : href,
-          },
-          ...rootType === 'button' && {
-            type: 'button',
-            disabled,
-          },
-          ...ctx.data.attrs,
-        },
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: classNames.root,
+      ...rootType === 'a' && {
+        target,
+        href: disabled ? undefined : href,
       },
-    })
+      ...rootType === 'button' && {
+        type: 'button',
+        disabled,
+      },
+    },
+  })
 
-    return h(rootType, slotProps.root, ctx.children)
-  },
-})
+  return h(rootType, slotProps.root, slots)
+}
+
+LinkBase.props = [...StylingPropKeys, 'as', 'underline', 'disabled', 'href', 'target']

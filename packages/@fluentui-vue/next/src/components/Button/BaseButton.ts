@@ -1,12 +1,13 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { VNode } from 'vue'
-import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
+import type { VNode } from 'vue'
+import { defineComponent, h } from 'vue'
+// import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
 import { Icon } from '../Icon'
 import { FontIcon } from '../Icon/FontIcon'
 import { getBaseButtonClassNames } from './Button.classNames'
 import { useBaseButtonProps } from './useBaseButton'
+import { asSlotProps, useStylingProps } from '@/utils'
 
-export const BaseButton = Vue.extend({
+export const BaseButton = defineComponent({
   name: 'BaseButton',
 
   props: {
@@ -26,27 +27,27 @@ export const BaseButton = Vue.extend({
     menuProps: { type: Object, default: undefined },
   },
 
-  data () {
+  data() {
     return {
       showMenu: false,
     }
   },
 
-  created () {
+  created() {
     window.addEventListener('resize', this.hideMenu)
   },
 
-  beforeDestroy () {
+  beforeUnmount() {
     window.removeEventListener('resize', this.hideMenu)
   },
 
   methods: {
-    hideMenu () {
+    hideMenu() {
       this.showMenu = false
     },
   },
 
-  render (h): VNode {
+  render(): VNode {
     const {
       styles,
       className,
@@ -85,17 +86,15 @@ export const BaseButton = Vue.extend({
     const slotProps = asSlotProps({
       root: {
         ref: 'root',
-        attrs: {
-          href,
-        },
+        href,
         class: classNames.root,
-        on: {
-          click: (ev) => {
-            if (disabled) return
-            this.showMenu = !this.showMenu
-            this.$emit('click', ev)
-          },
-        },
+        // onClick: (ev) => {
+        //   if (disabled)
+        //     return
+        //   console.log('BaseButton > click')
+        //   this.showMenu = !this.showMenu
+        //   this.$emit('click', ev)
+        // },
       },
       flexContainer: {
         class: classNames.flexContainer,
@@ -129,7 +128,7 @@ export const BaseButton = Vue.extend({
         if (iconProps.iconName) {
           return h(FontIcon, {
             class: [classNames.icon, className].filter(e => e).join(''),
-            props: rest,
+            ...rest,
           })
         }
       // TODO not implemented
@@ -143,7 +142,7 @@ export const BaseButton = Vue.extend({
     const getMenuProps = (menuProps) => {
       return {
         props: {
-          directionalHint: DirectionalHint.bottomLeftEdge,
+          // directionalHint: DirectionalHint.bottomLeftEdge,
           ...menuProps,
           className: menuProps.className,
           target: this.$refs.root,
@@ -167,20 +166,20 @@ export const BaseButton = Vue.extend({
     }
 
     const onRenderMenu = (menuProps): VNode | null => {
-      return h(ContextualMenu, menuProps)
+      // return h(ContextualMenu, menuProps)
     }
 
-    const hasContent = this.$scopedSlots.default || text
+    const hasContent = this.$slots.default || text
 
     return h(tag, slotProps.root, [
       h('span', slotProps.flexContainer, [
         renderIcon(),
         hasContent && h('span', slotProps.textContainer, [
-          h('span', slotProps.label, this.$scopedSlots.default?.({}) || text),
+          h('span', slotProps.label, this.$slots.default?.({}) || text),
           secondaryText && h('span', slotProps.description, secondaryText),
         ]),
-        (menuProps || menuIconProps) && onRenderMenuIcon(),
-        menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
+        // (menuProps || menuIconProps) && onRenderMenuIcon(),
+        // menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
       ]),
     ])
   },

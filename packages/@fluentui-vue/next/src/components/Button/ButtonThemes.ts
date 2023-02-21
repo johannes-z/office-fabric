@@ -1,7 +1,7 @@
-import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
-import { SemanticColors, Palette } from '@fluentui-vue/theme'
-import { IRawStyle } from '@fluentui/merge-styles'
+import { Palette, SemanticColors } from '@fluentui-vue/theme'
+import type { IRawStyle } from '@fluentui/merge-styles'
 
 const splitButtonDividerBaseStyles = (): IRawStyle => {
   return {
@@ -13,7 +13,7 @@ const splitButtonDividerBaseStyles = (): IRawStyle => {
   }
 }
 
-export function standardStyles (): IButtonStyles {
+export function standardStyles(): IButtonStyles {
   const buttonBackground = SemanticColors.buttonBackground
   const buttonBackgroundPressed = SemanticColors.buttonBackgroundPressed
   const buttonBackgroundHovered = SemanticColors.buttonBackgroundHovered
@@ -149,7 +149,7 @@ export function standardStyles (): IButtonStyles {
   }
 }
 
-export function primaryStyles (): IButtonStyles {
+export function primaryStyles(): IButtonStyles {
   return {
     root: {
       backgroundColor: SemanticColors.primaryButtonBackground,
@@ -165,7 +165,7 @@ export function primaryStyles (): IButtonStyles {
         [`.${IsFocusVisibleClassName} &:focus`]: {
           selectors: {
             ':after': {
-              border: `none`,
+              border: 'none',
               outlineColor: Palette.white,
             },
           },

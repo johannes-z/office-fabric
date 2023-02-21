@@ -1,32 +1,19 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
+import { h } from 'vue'
 import { BaseButton } from '../BaseButton'
-import { useBaseButtonProps } from '../useBaseButton'
+import { BaseButtonPropKeys } from '../useBaseButton'
 import { getStyles } from './IconButton.styles'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const IconButton = Vue.extend({
-  name: 'IconButton',
+export const IconButton = (props, { attrs, slots }) => {
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      ...props,
+      variantClassName: 'ms-Button--icon',
+      styles: getStyles(props.styles),
+    },
+  })
 
-  functional: true,
-
-  props: {
-    ...useStylingProps(),
-    ...useBaseButtonProps(),
-    iconProps: { type: Object, default: () => {} },
-  },
-
-  render (h: CreateElement, ctx): VNode {
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        props: {
-          ...ctx.props,
-          variantClassName: 'ms-Button--icon',
-          styles: getStyles(ctx.props.styles),
-        },
-      },
-    })
-
-    return h(BaseButton, slotProps.root, ctx.children)
-  },
-})
+  return h(BaseButton, slotProps.root, slots)
+}
+IconButton.props = [...StylingPropKeys, ...BaseButtonPropKeys, 'iconProps']

@@ -1,6 +1,6 @@
-import { ImageLoadState } from '../Image'
-import { IStyleFunctionOrObject, IStyle } from '@uifabric/merge-styles'
-import { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { ImageLoadState } from '../Image'
 
 /**
  * {@docCategory Persona}
@@ -14,163 +14,163 @@ export interface IPersonaSharedProps {
   /**
    * Primary text to display, usually the name of the person.
    */
-  text?: string;
+  text?: string
 
   /**
    * Decides the size of the control.
    * @defaultvalue PersonaSize.size48
    */
-  size?: PersonaSize;
+  size?: PersonaSize
 
   /**
    * Optional custom renderer for the coin
    * @deprecated Use `onRenderPersonaCoin` for custom rendering instead
    */
-  onRenderCoin?: any;
+  onRenderCoin?: any
 
   /**
    * Optional custom renderer for the coin
    */
-  onRenderPersonaCoin?: any;
+  onRenderPersonaCoin?: any
 
   /**
    * If true, adds the css class 'is-fadeIn' to the image.
    */
-  imageShouldFadeIn?: boolean;
+  imageShouldFadeIn?: boolean
 
   /**
    * If true, the image starts as visible and is hidden on error. Otherwise, the image is hidden until
    * it is successfully loaded. This disables imageShouldFadeIn.
    * @defaultvalue false
    */
-  imageShouldStartVisible?: boolean;
+  imageShouldStartVisible?: boolean
 
   /**
    * Url to the image to use, should be a square aspect ratio and big enough to fit in the image area.
    */
-  imageUrl?: string;
+  imageUrl?: string
 
   /**
    * Alt text for the image to use. Defaults to an empty string.
    */
-  imageAlt?: string;
+  imageAlt?: string
 
   /**
    * The user's initials to display in the image area when there is no image.
    * @defaultvalue [Derived from text]
    */
-  imageInitials?: string;
+  imageInitials?: string
 
   /**
    * Whether initials are calculated for phone numbers and number sequences.
    * Example: Set property to true to get initials for project names consisting of numbers only.
    * @defaultvalue false
    */
-  allowPhoneInitials?: boolean;
+  allowPhoneInitials?: boolean
 
   /**
    * Optional custom renderer for the initials
    */
-  onRenderInitials?: any;
+  onRenderInitials?: any
 
   /**
    * Optional callback for when loading state of the photo changes
    */
-  onPhotoLoadingStateChange?: (newImageLoadState: ImageLoadState) => void;
+  onPhotoLoadingStateChange?: (newImageLoadState: ImageLoadState) => void
 
   /**
    * The background color when the user's initials are displayed.
    * @defaultvalue [Derived from text]
    */
-  initialsColor?: PersonaInitialsColor | string;
+  initialsColor?: PersonaInitialsColor | string
 
   /** The colors to be used for the presence-icon and it's background */
   presenceColors?: {
-    available: string;
-    away: string;
-    busy: string;
-    dnd: string;
-    offline: string;
-    oof: string;
-    background: string;
-  };
+    available: string
+    away: string
+    busy: string
+    dnd: string
+    offline: string
+    oof: string
+    background: string
+  }
 
   /**
    * Presence of the person to display - will not display presence if undefined.
    * @defaultvalue PersonaPresence.none
    */
-  presence?: PersonaPresence;
+  presence?: PersonaPresence
 
   /**
    * Presence title to be shown as a tooltip on hover over the presence icon.
    */
-  presenceTitle?: string;
+  presenceTitle?: string
 
   /**
    * This flag can be used to signal the persona is out of office.
    * This will change the way the presence icon looks for statuses that support dual-presence.
    */
-  isOutOfOffice?: boolean;
+  isOutOfOffice?: boolean
 
   /**
    * Secondary text to display, usually the role of the user.
    */
-  secondaryText?: string;
+  secondaryText?: string
 
   /**
    * Tertiary text to display, usually the status of the user.
    * The tertiary text will only be shown when using size72 or size100.
    */
-  tertiaryText?: string;
+  tertiaryText?: string
 
   /**
    * Optional text to display, usually a custom message set. The optional text will only be shown when using size100.
    */
-  optionalText?: string;
+  optionalText?: string
 
   /**
    * Whether to not render persona details, and just render the persona image/initials.
    */
-  hidePersonaDetails?: boolean;
+  hidePersonaDetails?: boolean
 
   /*
    * If true, show the secondary text line regardless of the size of the persona
    */
-  showSecondaryText?: boolean;
+  showSecondaryText?: boolean
 
   /**
    * If true, show the special coin for unknown persona.
    * It has '?' in place of initials, with static font and background colors
    */
-  showUnknownPersonaCoin?: boolean;
+  showUnknownPersonaCoin?: boolean
 
   /**
    * If true renders the initials while the image is loading.
    * This only applies when an imageUrl is provided.
    * @defaultvalue false
    */
-  showInitialsUntilImageLoads?: boolean;
+  showInitialsUntilImageLoads?: boolean
 
   /**
    * Optional custom persona coin size in pixel.
    */
-  coinSize?: number;
+  coinSize?: number
 
   /**
    * Optional HTML element props for Persona coin.
    */
-  coinProps?: IPersonaCoinProps;
+  coinProps?: IPersonaCoinProps
 
   /**
    * Theme provided by High-Order Component.
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Primary text to display, usually the name of the person.
    * @deprecated Use `text` instead.
    */
-  primaryText?: string;
+  primaryText?: string
 }
 
 /**
@@ -180,32 +180,32 @@ export interface IPersonaProps extends IPersonaSharedProps {
   /**
    * Additional CSS class(es) to apply to the Persona
    */
-  className?: string;
+  className?: string
 
   /**
    * Call to provide customized styling that will layer on top of variant rules
    */
-  styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
+  styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>
 
   /**
    * Optional custom renderer for the primary text.
    */
-  onRenderPrimaryText?: any;
+  onRenderPrimaryText?: any
 
   /**
    * Optional custom renderer for the secondary text.
    */
-  onRenderSecondaryText?: any;
+  onRenderSecondaryText?: any
 
   /**
    * Optional custom renderer for the tertiary text.
    */
-  onRenderTertiaryText?: any;
+  onRenderTertiaryText?: any
 
   /**
    * Optional custom renderer for the optional text.
    */
-  onRenderOptionalText?: any;
+  onRenderOptionalText?: any
 }
 
 /**
@@ -215,47 +215,47 @@ export interface IPersonaStyleProps {
   /**
    * Theme provided by High-Order Component.
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Custom class name.
    */
-  className?: string;
+  className?: string
 
   /**
    * Optional custom persona coin size in pixel.
    */
-  coinSize?: number;
+  coinSize?: number
 
   /**
    * Decides the size of the control.
    * @defaultvalue PersonaSize.size48
    */
-  size?: PersonaSize;
+  size?: PersonaSize
 
   /**
    * Presence of the person to display - will not display presence if undefined.
    * @defaultvalue PersonaPresence.none
    */
-  presence?: PersonaPresence;
+  presence?: PersonaPresence
 
   /*
    * If true, show the secondary text line regardless of the size of the persona
    */
-  showSecondaryText?: boolean;
+  showSecondaryText?: boolean
 }
 
 /**
  * {@docCategory Persona}
  */
 export interface IPersonaStyles {
-  root: IStyle;
-  details: IStyle;
-  primaryText: IStyle;
-  secondaryText: IStyle;
-  tertiaryText: IStyle;
-  optionalText: IStyle;
-  textContent: IStyle;
+  root: IStyle
+  details: IStyle
+  primaryText: IStyle
+  secondaryText: IStyle
+  tertiaryText: IStyle
+  optionalText: IStyle
+  textContent: IStyle
 }
 
 /**
@@ -265,13 +265,13 @@ export interface IPersonaCoinProps extends IPersonaSharedProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules
    */
-  styles?: IStyleFunctionOrObject<IPersonaCoinStyleProps, IPersonaCoinStyles>;
+  styles?: IStyleFunctionOrObject<IPersonaCoinStyleProps, IPersonaCoinStyles>
 
   /**
    * Additional css class to apply to the PersonaCoin
    * @defaultvalue undefined
    */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -281,39 +281,39 @@ export interface IPersonaCoinStyleProps {
   /**
    * Theme provided by High-Order Component.
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Custom class name.
    */
-  className?: string;
+  className?: string
 
   /**
    * Decides the size of the control.
    * @defaultvalue PersonaSize.size48
    */
-  size?: PersonaSize;
+  size?: PersonaSize
 
   /**
    * Optional custom persona coin size in pixel.
    */
-  coinSize?: number;
+  coinSize?: number
 
   /**
    * Decides whether to display coin for unknown persona
    */
-  showUnknownPersonaCoin?: boolean;
+  showUnknownPersonaCoin?: boolean
 }
 
 /**
  * {@docCategory Persona}
  */
 export interface IPersonaCoinStyles {
-  coin: IStyle;
-  imageArea: IStyle;
-  image: IStyle;
-  initials: IStyle;
-  size10WithoutPresenceIcon: IStyle;
+  coin: IStyle
+  imageArea: IStyle
+  image: IStyle
+  initials: IStyle
+  size10WithoutPresenceIcon: IStyle
 }
 
 /**
@@ -323,7 +323,7 @@ export interface IPersonaPresenceProps extends IPersonaSharedProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules
    */
-  styles?: IStyleFunctionOrObject<IPersonaPresenceStyleProps, IPersonaPresenceStyles>;
+  styles?: IStyleFunctionOrObject<IPersonaPresenceStyleProps, IPersonaPresenceStyles>
 }
 
 /**
@@ -331,14 +331,14 @@ export interface IPersonaPresenceProps extends IPersonaSharedProps {
  */
 export type IPersonaPresenceStyleProps = Required<Pick<IPersonaSharedProps, 'theme'>> &
 Pick<IPersonaSharedProps, 'presence' | 'isOutOfOffice' | 'size' | 'presenceColors'> &
-Pick<IPersonaProps, 'className'>;
+Pick<IPersonaProps, 'className'>
 
 /**
  * {@docCategory Persona}
  */
 export interface IPersonaPresenceStyles {
-  presence: IStyle;
-  presenceIcon: IStyle;
+  presence: IStyle
+  presenceIcon: IStyle
 }
 
 /**

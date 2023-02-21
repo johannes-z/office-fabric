@@ -1,8 +1,7 @@
-import { getFocusStyle } from '@fluentui-vue/style-utilities'
-import { SemanticColors, DefaultEffects, DefaultFontStyles } from '@fluentui-vue/theme'
+import { HighContrastSelector, getFocusStyle, hiddenContentStyle } from '@fluentui-vue/style-utilities'
+import { DefaultEffects, DefaultFontStyles, SemanticColors } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { IRawStyle } from '@fluentui/merge-styles'
-import { hiddenContentStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import type { IRawStyle } from '@fluentui/merge-styles'
 
 const noOutline: IRawStyle = {
   outline: 0,
@@ -10,7 +9,7 @@ const noOutline: IRawStyle = {
 
 const iconStyle = (fontSize?: string | number): IRawStyle => {
   return {
-    fontSize: fontSize,
+    fontSize,
     margin: '0 4px',
     height: '16px',
     lineHeight: '16px',
@@ -43,7 +42,7 @@ export const getStyles = memoizeFunction(
         DefaultFontStyles.medium,
         {
           boxSizing: 'border-box',
-          border: '1px solid ' + border,
+          border: `1px solid ${border}`,
           userSelect: 'none',
           display: 'inline-block',
           textDecoration: 'none',

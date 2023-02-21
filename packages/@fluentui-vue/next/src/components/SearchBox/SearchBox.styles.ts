@@ -1,9 +1,7 @@
-import { getGlobalClassNames, getPlaceholderStyles, HighContrastSelector } from '@fluentui-vue/style-utilities'
-import { normalize } from '@fluentui-vue/style-utilities'
-import { getInputFocusStyle } from '@fluentui-vue/style-utilities'
-import { AnimationVariables, DefaultEffects, Palette, SemanticColors } from '@fluentui-vue/theme'
+import { HighContrastSelector, getGlobalClassNames, getInputFocusStyle, getPlaceholderStyles, normalize } from '@fluentui-vue/style-utilities'
+import { AnimationVariables } from '@fluentui-vue/theme'
 import { getRTL } from '@fluentui-vue/utilities'
-import { IStyle } from '@fluentui/merge-styles'
+import type { IStyle } from '@fluentui/merge-styles'
 
 const GlobalClassNames = {
   root: 'ms-SearchBox',
@@ -13,7 +11,7 @@ const GlobalClassNames = {
   field: 'ms-SearchBox-field',
 }
 
-export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
+export function getStyles(props: ISearchBoxStyleProps): ISearchBoxStyles {
   const { theme, underlined, disabled, hasFocus, className, hasInput, disableAnimation, showIcon } = props
   const { palette, fonts, semanticColors, effects } = theme
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
@@ -64,8 +62,8 @@ export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
           },
         },
       },
-      !hasFocus &&
-        hasInput && {
+      !hasFocus
+        && hasInput && {
         selectors: {
           [`:hover .${classNames.iconContainer}`]: {
             width: 4,
@@ -122,8 +120,8 @@ export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
           padding: '1px 0 1px 8px',
         },
       ],
-      underlined &&
-        disabled && {
+      underlined
+        && disabled && {
         backgroundColor: 'transparent',
       },
       hasInput && 'can-clear',
@@ -151,8 +149,8 @@ export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
       !disableAnimation && {
         transition: `width ${AnimationVariables.durationValue1}`,
       },
-      showIcon &&
-        hasFocus && {
+      showIcon
+        && hasFocus && {
         width: 32,
       },
     ],
@@ -168,8 +166,8 @@ export function getStyles (props: ISearchBoxStyleProps): ISearchBoxStyles {
       !disableAnimation && {
         transition: `opacity ${AnimationVariables.durationValue1} 0s`,
       },
-      showIcon &&
-        hasFocus && {
+      showIcon
+        && hasFocus && {
         opacity: 1,
       },
     ],

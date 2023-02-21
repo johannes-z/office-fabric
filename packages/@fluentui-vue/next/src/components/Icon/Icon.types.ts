@@ -1,5 +1,5 @@
 import type { ITheme } from '@fluentui-vue/theme'
-import type { IStyle, IStyleFunctionOrObject } from '@uifabric/merge-styles'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import type { IImageProps } from '../Image'
 
 export interface IIconProps {
@@ -7,42 +7,42 @@ export interface IIconProps {
    * The name of the icon to use from the icon font.
    * If string is empty, a placeholder icon will be rendered the same width as an icon.
    */
-  iconName?: string;
+  iconName?: string
 
   /**
    * If rendering an image icon, these props will be passed to the Image component.
    */
-  imageProps?: IImageProps;
+  imageProps?: IImageProps
 
   /**
    * If rendering an image icon, this component will be rendered in the event that loading the image fails.
    */
-  imageErrorAs?: any;
+  imageErrorAs?: any
 
   /**
    * Gets the styles for an Icon.
    */
-  styles?: IStyleFunctionOrObject<IIconStyleProps, IIconStyles>;
-  theme?: ITheme;
+  styles?: IStyleFunctionOrObject<IIconStyleProps, IIconStyles>
+  theme?: ITheme
 }
 
 /**
  * {@docCategory Icon}
  */
 export interface IIconStyleProps {
-  className?: string;
-  iconClassName?: string;
-  isPlaceholder: boolean;
-  isImage: boolean;
-  styles?: Partial<IIconStyles>;
-  theme?: ITheme;
+  className?: string
+  iconClassName?: string
+  isPlaceholder: boolean
+  isImage: boolean
+  styles?: Partial<IIconStyles>
+  theme?: ITheme
 }
 
 /**
  * {@docCategory Icon}
  */
 export interface IIconStyles {
-  root?: IStyle;
+  root?: IStyle
 }
 
 /**
@@ -54,12 +54,12 @@ export interface IFontIconProps {
    * The name of the icon to use from the icon font.
    * If string is empty, a placeholder icon will be rendered the same width as an icon.
    */
-  iconName?: string;
+  iconName?: string
 
   /**
    * Custom class to style the icon.
    */
-  className?: string;
+  className?: string
 }
 
 /**
@@ -71,10 +71,10 @@ export interface IImageIconProps {
   /**
    * Props passed to the Image component.
    */
-  imageProps: IImageProps;
+  imageProps: IImageProps
 
   /**
    * Custom class to style the icon.
    */
-  className?: string;
+  className?: string
 }

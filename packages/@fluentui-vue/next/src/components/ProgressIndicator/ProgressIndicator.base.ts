@@ -1,22 +1,20 @@
-import { asSlotProps, useStylingProps } from '@/utils/'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, RenderContext, VNode } from 'vue'
-import { IProgressIndicatorSlots, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
+import { computed, defineComponent, h, watch } from 'vue'
+import type { IProgressIndicatorSlots, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
+import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
 const ZERO_THRESHOLD = 0.01
 
-export const ProgressIndicatorBase = Vue.extend({
+export const ProgressIndicatorBase = defineComponent({
   name: 'ProgressIndicatorBase',
-
-  functional: true,
 
   props: {
     ...useStylingProps(),
 
     progressHidden: { type: Boolean, default: false },
-    percentComplete: { type: Number, default: undefined },
+    percentComplete: { type: [Number, String], default: undefined },
     label: { type: String, default: null },
     description: { type: String, default: null },
     barHeight: { type: Number, default: 2 },
@@ -24,32 +22,35 @@ export const ProgressIndicatorBase = Vue.extend({
     ariaLabel: { type: String, default: undefined },
   },
 
-  render (h: CreateElement, ctx: RenderContext & { scopedSlots: IProgressIndicatorSlots }): VNode {
-    const { styles, className, theme, ariaValueText, ariaLabel, barHeight, label, progressHidden, description } = ctx.props
+  setup(props, { attrs, emit, slots }) {
+    const { styles, className, theme, ariaValueText, ariaLabel, barHeight, label, progressHidden, description } = props
 
-    const percentComplete = typeof ctx.props.percentComplete === 'number'
-      ? Math.min(100, Math.max(0, ctx.props.percentComplete * 100))
-      : undefined
+    const percentComplete = computed(() => {
+      const _percentComplete = +props.percentComplete
+      return (typeof _percentComplete === 'number' && !isNaN(_percentComplete))
+        ? Math.min(100, Math.max(0, props.percentComplete * 100))
+        : undefined
+    })
 
     const classNames = getClassNames(styles, {
       theme: theme!,
       className,
       barHeight,
-      indeterminate: percentComplete === undefined,
+      indeterminate: percentComplete.value === undefined,
     })
 
-    const progressBarStyles = {
-      width: percentComplete !== undefined ? percentComplete + '%' : undefined,
-      transition: percentComplete !== undefined && percentComplete < ZERO_THRESHOLD ? 'none' : undefined,
-    }
+    const progressBarStyles = computed(() => ({
+      width: percentComplete.value !== undefined ? `${percentComplete.value}%` : undefined,
+      transition: percentComplete.value !== undefined && percentComplete.value < ZERO_THRESHOLD ? 'none' : undefined,
+    }))
 
-    const ariaValueMin = percentComplete !== undefined ? 0 : undefined
-    const ariaValueMax = percentComplete !== undefined ? 100 : undefined
-    const ariaValueNow = percentComplete !== undefined ? Math.floor(percentComplete!) : undefined
+    const ariaValueMin = percentComplete.value !== undefined ? 0 : undefined
+    const ariaValueMax = percentComplete.value !== undefined ? 100 : undefined
+    const ariaValueNow = percentComplete.value !== undefined ? Math.floor(percentComplete.value!) : undefined
 
-    const slotProps = asSlotProps({
+    const slotProps = computed(() => asSlotProps({
       root: {
-        ...ctx.data,
+        ...attrs,
         class: classNames.root,
       },
       label: {
@@ -65,47 +66,46 @@ export const ProgressIndicatorBase = Vue.extend({
         ],
       },
       progressBar: {
-        class: classNames.progressBar,
-        style: [
+        'class': classNames.progressBar,
+        'style': [
           {
             height: `${barHeight}px`,
-            ...progressBarStyles,
+            ...progressBarStyles.value,
           },
         ],
-        attrs: {
-          role: 'progressbar',
-          'aria-describedby': description ? (0 + '-label') : undefined,
-          'aria-label': ariaLabel,
-          'aria-labelledby': label ? (0 + '-description') : undefined,
-          'aria-valuemin': ariaValueMin,
-          'aria-valuemax': ariaValueMax,
-          'aria-valuenow': ariaValueNow,
-          'aria-valuetext': ariaValueText,
-        },
+        'role': 'progressbar',
+        'aria-describedby': description ? (`${0}-label`) : undefined,
+        'aria-label': ariaLabel,
+        'aria-labelledby': label ? (`${0}-description`) : undefined,
+        'aria-valuemin': ariaValueMin,
+        'aria-valuemax': ariaValueMax,
+        'aria-valuenow': ariaValueNow,
+        'aria-valuetext': ariaValueText,
       },
       itemDescription: {
         class: classNames.itemDescription,
       },
-    })
+    }))
 
-    const _onRenderProgress = () => h('div', slotProps.itemProgress, [
-      h('div', slotProps.progressTrack),
-      h('div', slotProps.progressBar),
+    const _onRenderProgress = () => h('div', slotProps.value.itemProgress, [
+      h('div', slotProps.value.progressTrack),
+      h('div', slotProps.value.progressBar),
     ])
-    const onRenderProgress = ctx.scopedSlots.progress || _onRenderProgress
+    const onRenderProgress = slots.progress || _onRenderProgress
 
-    return h('div', slotProps.root, [
-      (ctx.scopedSlots.label || label) &&
-        h('div', slotProps.label, ctx.scopedSlots.label?.() || label),
+    return () => h('div', slotProps.value.root, [
+      (slots.label || label)
+        && h('div', slotProps.value.label, slots.label?.() || label),
 
       !progressHidden && onRenderProgress({
-        ...ctx.props,
-        percentComplete,
+        ...props,
+        percentComplete: percentComplete.value,
         defaultRender: _onRenderProgress,
       }),
 
-      (ctx.scopedSlots.description || description) &&
-        h('div', slotProps.itemDescription, ctx.scopedSlots.description?.() || description),
+      (slots.description || description)
+        && h('div', slotProps.value.itemDescription, slots.description?.() || description),
     ])
   },
+
 })

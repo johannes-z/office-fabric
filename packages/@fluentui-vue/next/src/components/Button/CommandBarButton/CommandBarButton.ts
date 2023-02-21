@@ -1,38 +1,21 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
+import { h } from 'vue'
 import { BaseButton } from '../BaseButton'
-import { useBaseButtonProps } from '../useBaseButton'
+import { BaseButtonPropKeys } from '../useBaseButton'
 import { getStyles } from './CommandBarButton.styles'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const CommandBarButton = Vue.extend({
-  name: 'CommandBarButton',
+export const CommandBarButton = (props, { attrs, slots }) => {
+  const { styles } = props
 
-  functional: true,
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      ...props,
+      variantClassName: 'ms-Button--commandBar',
+      styles: getStyles(styles),
+    },
+  })
 
-  props: {
-    ...useStylingProps(),
-    ...useBaseButtonProps(),
-  },
-
-  render (h: CreateElement, ctx) {
-    const { styles } = ctx.props
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        attrs: {
-          ...ctx.data.attrs,
-          ...ctx.data.props,
-        },
-        props: {
-          ...ctx.props,
-          ...ctx.data.props,
-          variantClassName: 'ms-Button--commandBar',
-          styles: getStyles(styles),
-        },
-      },
-    })
-
-    return h(BaseButton, slotProps.root, ctx.children)
-  },
-})
+  return h(BaseButton, slotProps.root, slots)
+}
+CommandBarButton.props = [...StylingPropKeys, ...BaseButtonPropKeys]

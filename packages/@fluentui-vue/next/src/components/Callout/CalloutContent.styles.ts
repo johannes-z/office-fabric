@@ -1,8 +1,8 @@
-import { HighContrastSelector, focusClear, getGlobalClassNames, ZIndexes } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, ZIndexes, focusClear, getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import type { IRawStyle } from '@fluentui/merge-styles'
 import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
 
-function getBeakStyle (beakWidth?: number): IRawStyle {
+function getBeakStyle(beakWidth?: number): IRawStyle {
   return {
     height: beakWidth,
     width: beakWidth,
@@ -77,7 +77,7 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
       },
       getBeakStyle(beakWidth),
       backgroundColor && {
-        backgroundColor: backgroundColor,
+        backgroundColor,
       },
     ],
     beakCurtain: [
@@ -106,7 +106,7 @@ export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyl
         overflowY: 'hidden',
       },
       backgroundColor && {
-        backgroundColor: backgroundColor,
+        backgroundColor,
       },
     ],
   }

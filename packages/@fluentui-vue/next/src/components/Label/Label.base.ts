@@ -1,14 +1,12 @@
-import { asSlotProps, useStylingProps } from '@/utils/'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode } from 'vue'
-import { ILabelStyleProps, ILabelStyles } from './Label.types'
+import { defineComponent, h } from 'vue'
+import type { ILabelStyleProps, ILabelStyles } from './Label.types'
+import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 
-export const LabelBase = Vue.extend({
+export const LabelBase = defineComponent({
   name: 'LabelBase',
-
-  functional: true,
 
   props: {
     ...useStylingProps(),
@@ -18,8 +16,8 @@ export const LabelBase = Vue.extend({
     required: { type: Boolean, default: false },
   },
 
-  render (h: CreateElement, ctx): VNode {
-    const { styles, theme, className, as: RootType, disabled, required } = ctx.props
+  setup(props, { attrs, slots }) {
+    const { styles, theme, className, as: RootType, disabled, required } = props
 
     const classNames = getClassNames(styles, {
       theme,
@@ -30,11 +28,11 @@ export const LabelBase = Vue.extend({
 
     const slotProps = asSlotProps<ILabelStyles>({
       root: {
-        ...ctx.data,
+        ...attrs,
         class: classNames.root,
       },
     })
 
-    return h(RootType, slotProps.root, ctx.children)
+    return () => h(RootType, slotProps.root, slots)
   },
 })

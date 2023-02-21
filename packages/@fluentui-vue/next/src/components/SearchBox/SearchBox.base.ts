@@ -1,25 +1,19 @@
-import { SlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, VueConstructor } from 'vue'
+import type { Ref } from 'vue'
+import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { IconButton } from '../Button'
 import { Icon } from '../Icon'
-import { IIconProps } from '../Icon/Icon.types'
+import type { IIconProps } from '../Icon/Icon.types'
+import { useStylingProps } from '@/utils'
 
-export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left';
+export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 const iconButtonStyles = { root: { height: 'auto' }, icon: { fontSize: '12px' } }
 const iconButtonProps: IIconProps = { iconName: 'Clear' }
 const defaultClearButtonProps: IButtonProps = { ariaLabel: 'Clear text' }
 
 const getClassNames = classNamesFunction<ISearchBoxStyleProps, ISearchBoxStyles>()
 
-export const SearchBoxBase = (Vue as VueConstructor<
-Vue & {
-  $refs: {
-    input: HTMLInputElement
-  };
-}
->).extend({
+export const SearchBoxBase = defineComponent({
   name: 'SearchBoxBase',
 
   props: {
@@ -37,175 +31,149 @@ Vue & {
     disabled: { type: Boolean, default: false },
   },
 
-  data () {
-    return {
-      hasFocus: false,
-      internalValue: this.value ?? '',
+  setup(props, { attrs, slots, emit }) {
+    const {
+      styles,
+      theme,
+      className,
+      underlined,
+      disabled,
+      disableAnimation,
+      showIcon,
+      value,
+      iconProps,
+      placeholder,
+    } = toRefs(props)
+
+    const hasFocus = ref(false)
+    const internalValue = ref(value.value ?? '')
+
+    const classNames = computed(() => getClassNames(styles.value!, {
+      theme: theme.value,
+      className: className.value,
+      underlined: underlined.value,
+      hasFocus: hasFocus.value,
+      disabled: disabled.value,
+      hasInput: value.value.length > 0,
+      disableAnimation: disableAnimation.value,
+      showIcon: showIcon.value,
+    }))
+
+    const hasInput = computed(() => internalValue.value.length > 0)
+
+    const slotProps = computed(() => ({
+      root: {
+        class: classNames.value.root,
+      },
+      iconContainer: {
+        'class': classNames.value.iconContainer,
+        'aria-hidden': true,
+      },
+      icon: {
+        'class': classNames.value.icon,
+        'iconName': 'Search',
+        ...iconProps.value,
+        'aria-hidden': true,
+      },
+      field: {
+        'ref': inputRef,
+        'class': classNames.value.field,
+        'disabled': disabled.value,
+        'value': internalValue.value,
+        'aria-label': placeholder.value,
+        'placeholder': placeholder.value,
+        'role': 'searchbox',
+        ...attrs,
+        'onInput': onInput,
+        'onFocus': onFocus,
+        'onBlur': onBlur,
+        'onKeydown': onKeyDown,
+      },
+      clearButton: {
+        class: classNames.value.clearButton,
+      },
+      iconButton: {
+        styles: iconButtonStyles,
+        iconProps: iconButtonProps,
+        ...defaultClearButtonProps,
+        onClick: clearInput,
+      },
+    }))
+
+    const onEscape = (e: KeyboardEvent) => {
+      emit('escape', e)
+      if (e.defaultPrevented)
+        return
+      clearInput()
     }
-  },
-
-  computed: {
-    classNames (): IProcessedStyleSet<ISearchBoxStyles> {
-      const { styles, theme, className, underlined, hasFocus, disabled, value, disableAnimation, showIcon } = this
-      const classNames = getClassNames(styles!, {
-        theme,
-        className,
-        underlined,
-        hasFocus,
-        disabled,
-        hasInput: value.length > 0,
-        disableAnimation,
-        showIcon,
-      })
-      return classNames
-    },
-    hasInput (): boolean {
-      return this.internalValue.length > 0
-    },
-    slotProps (): SlotProps<any> {
-      const {
-        classNames,
-        disabled,
-        iconProps,
-        internalValue,
-        placeholder,
-      } = this
-      return {
-        root: {
-          class: classNames.root,
-        },
-        iconContainer: {
-          class: classNames.iconContainer,
-          attrs: {
-            'aria-hidden': true,
-          },
-        },
-        icon: {
-          class: classNames.icon,
-          props: {
-            iconName: 'Search',
-            ...iconProps,
-          },
-          attrs: {
-            'aria-hidden': true,
-          },
-        },
-        field: {
-          ref: 'input',
-          class: classNames.field,
-          domProps: {
-            disabled,
-            value: internalValue,
-            'aria-label': placeholder,
-            placeholder,
-          },
-          attrs: {
-            role: 'searchbox',
-            ...this.$attrs,
-          },
-          on: {
-            input: this.onInput,
-            focus: this.onFocus,
-            blur: this.onBlur,
-            keydown: this.onKeyDown,
-          },
-        },
-        clearButton: {
-          class: classNames.clearButton,
-        },
-        iconButton: {
-          props: {
-            styles: iconButtonStyles,
-            iconProps: iconButtonProps,
-            ...defaultClearButtonProps,
-          },
-          on: { click: this.clearInput },
-        },
-      }
-    },
-  },
-
-  watch: {
-    value (newValue: string): void {
-      this.internalValue = newValue
-    },
-    internalValue (value: string) {
-      this.$emit('input', value)
-      this.$emit('change', value)
-    },
-  },
-
-  methods: {
-    onKeyDown (ev: KeyboardEvent) {
+    const onInput = (e: InputEvent) => {
+      internalValue.value = (<HTMLInputElement>e.target).value
+    }
+    const onFocus = (e: FocusEvent) => {
+      emit('focus', e)
+      if (e.defaultPrevented)
+        return
+      hasFocus.value = true
+    }
+    const onBlur = (e: FocusEvent) => {
+      emit('blur', e)
+      if (e.defaultPrevented)
+        return
+      hasFocus.value = false
+    }
+    const onKeyDown = (ev: KeyboardEvent) => {
       switch (ev.key) {
         case 'Escape':
-          this.$emit('escape', ev)
-          if (ev.defaultPrevented) return
-          else this.clearInput()
+          emit('escape', ev)
+          if (ev.defaultPrevented)
+            return
+          else clearInput()
           break
 
         case 'Enter':
-          this.$emit('search', this.internalValue)
+          emit('search', internalValue.value)
           return
 
         default:
-          if (!ev.defaultPrevented) {
+          if (!ev.defaultPrevented)
             return
-          }
       }
 
       // We only get here if the keypress has been handled,
       // or preventDefault was called in case of default keyDown handler
       ev.preventDefault()
       ev.stopPropagation()
-    },
+    }
+    const clearInput = (e?: MouseEvent) => {
+      emit('clear', e)
+      if (e && e.defaultPrevented)
+        return
+      internalValue.value = ''
+      inputRef.value.focus()
+    }
 
-    submit () {
-      this.$emit('search', this.internalValue)
-    },
+    const submit = () => {
+      emit('search', internalValue.value)
+    }
 
-    onEscape (e: KeyboardEvent) {
-      this.$emit('escape', e)
-      if (e.defaultPrevented) return
-      this.clearInput()
-    },
+    watch(value, (value) => {
+      internalValue.value = value
+    })
+    watch(internalValue, (value) => {
+      emit('input', value)
+      emit('change', value)
+    })
 
-    clearInput (e?: MouseEvent) {
-      this.$emit('clear', e)
-      if (e && e.defaultPrevented) return
-      this.internalValue = ''
-      this.$refs.input.focus()
-    },
-
-    onFocus (e: FocusEvent) {
-      this.$emit('focus', e)
-      if (e.defaultPrevented) return
-      this.hasFocus = true
-    },
-
-    onBlur (e: FocusEvent) {
-      this.$emit('blur', e)
-      if (e.defaultPrevented) return
-      this.hasFocus = false
-    },
-
-    onInput (e: InputEvent) {
-      this.internalValue = (<HTMLInputElement>e.target).value
-    },
-  },
-
-  render (h: CreateElement): VNode {
-    const slotProps = this.slotProps
-
-    return h('div', slotProps.root, [
-      h('div', slotProps.iconContainer, [
-        h(Icon, slotProps.icon),
+    const inputRef = ref() as Ref<HTMLInputElement>
+    return () => h('div', slotProps.value.root, [
+      h('div', slotProps.value.iconContainer, [
+        h(Icon, slotProps.value.icon),
       ]),
 
-      h('input', slotProps.field),
+      h('input', slotProps.value.field),
 
-      this.hasInput && h('div', slotProps.clearButton, [
-        h(IconButton, slotProps.iconButton),
+      hasInput.value && h('div', slotProps.value.clearButton, [
+        h(IconButton, slotProps.value.iconButton),
       ]),
     ])
   },

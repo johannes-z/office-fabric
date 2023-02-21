@@ -1,11 +1,14 @@
-import { DirectionalHint, getBoundsFromTargetWindow, getMaxHeight, ICalloutPositionedInfo, IPosition, positionCallout, RectangleEdge, IRectangle, classNamesFunction } from '@fluentui-vue/utilities'
+import type { ICalloutPositionedInfo, IPosition, IRectangle } from '@fluentui-vue/utilities'
+import { DirectionalHint, RectangleEdge, classNamesFunction, getBoundsFromTargetWindow, getMaxHeight, positionCallout } from '@fluentui-vue/utilities'
 import { AnimationClassNames } from '@fluentui-vue/style-utilities'
 import { elementContains } from '@fluentui/dom-utilities'
-import { IProcessedStyleSet, IStyle } from '@fluentui/merge-styles'
-import Vue, { VNode } from 'vue'
+import type { IProcessedStyleSet, IStyle } from '@fluentui/merge-styles'
+import type { VNode } from 'vue'
+import Vue, { defineComponent, h } from 'vue'
 import { Popup } from '../Popup'
-import { asSlotProps, SlotProps, useStylingProps } from '@/utils'
-import { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
+import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
+import type { SlotProps } from '@/utils'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const ANIMATIONS: { [key: number]: string | undefined } = {
   [RectangleEdge.top]: AnimationClassNames.slideUpIn10,
@@ -26,7 +29,7 @@ const getClassNames = classNamesFunction<ICalloutContentStyleProps, ICalloutCont
   disableCaching: true, // disabling caching because stylesProp.position mutates often
 })
 
-export const CalloutContentBase = Vue.extend({
+export const CalloutContentBase = defineComponent({
   name: 'CalloutContent',
 
   props: {
@@ -58,7 +61,7 @@ export const CalloutContentBase = Vue.extend({
     repositionOnChildrenUpdated: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       positions: undefined as unknown as ICalloutPositionedInfo,
       maxHeight: 0,
@@ -69,40 +72,43 @@ export const CalloutContentBase = Vue.extend({
   },
 
   computed: {
-    targetRef (): HTMLElement {
+    targetRef(): HTMLElement {
+      if (typeof this.target === 'string')
+        return document.querySelector(this.target) as HTMLElement
       return this.target instanceof HTMLElement
         ? this.target
         : this.target.$el as HTMLElement
     },
-    beakVisible (): boolean {
+    beakVisible(): boolean {
       return this.isBeakVisible && !!this.targetRef
     },
-    overflowStyle (): IStyle {
+    overflowStyle(): IStyle {
       return {
         maxHeight: this.calloutMaxHeight ? `${this.calloutMaxHeight}px` : '100%',
         ...this.style,
         ...(this.overflowYHidden && { overflowY: 'hidden' }),
       }
     },
-    visibilityStyle (): any {
+    visibilityStyle(): any {
       return this.hidden ? { visibility: 'hidden' } : undefined
     },
-    actualBeakWidth (): number {
+    actualBeakWidth(): number {
       return Math.sqrt(this.beakWidth * this.beakWidth * 2)
     },
-    positionCss (): any {
-      if (!this.positions) return null
+    positionCss(): any {
+      if (!this.positions)
+        return null
       // TODO remove JSON parse/stringify deep clone hack
       const positionCss = JSON.parse(JSON.stringify(this.positions))
-      for (const key in positionCss.elementPosition) {
+      for (const key in positionCss.elementPosition)
         positionCss.elementPosition[key] = `${positionCss.elementPosition[key]}px`
-      }
-      for (const key in positionCss.beakPosition.elementPosition) {
+
+      for (const key in positionCss.beakPosition.elementPosition)
         positionCss.beakPosition.elementPosition[key] = `${positionCss.beakPosition.elementPosition[key]}px`
-      }
+
       return positionCss
     },
-    bounds (): IRectangle {
+    bounds(): IRectangle {
       const currentBounds = getBoundsFromTargetWindow(this.targetRef, window)
       return {
         top: currentBounds.top + this.minPagePadding,
@@ -113,7 +119,7 @@ export const CalloutContentBase = Vue.extend({
         height: currentBounds.height - this.minPagePadding * 2,
       }
     },
-    beakPosition (): any {
+    beakPosition(): any {
       const beakPositionStyle = {
         ...this.positionCss?.beakPosition?.elementPosition,
         display: this.positions?.beakPosition?.hideBeak ? 'none' : undefined,
@@ -126,16 +132,16 @@ export const CalloutContentBase = Vue.extend({
 
       return beakPositionStyle
     },
-    positionsExists (): boolean {
+    positionsExists(): boolean {
       return !!this.positions
     },
-    classNames (): IProcessedStyleSet<ICalloutContentStyles> {
+    classNames(): IProcessedStyleSet<ICalloutContentStyles> {
       const { styles, theme, className, calloutWidth, calloutMaxWidth, calloutMinWidth, doNotLayer, backgroundColor, beakWidth, positions, overflowYHidden } = this.$props
 
       const classNames = getClassNames(styles!, {
         theme: theme!,
         className,
-        overflowYHidden: overflowYHidden,
+        overflowYHidden,
         calloutWidth,
         beakWidth,
         backgroundColor,
@@ -145,7 +151,7 @@ export const CalloutContentBase = Vue.extend({
       })
       return classNames
     },
-    slotProps (): SlotProps<ICalloutContentStyles> {
+    slotProps(): SlotProps<ICalloutContentStyles> {
       const { classNames, positionCss, positions, hidden } = this
       const visibilityStyle = hidden ? { visibility: 'hidden' } : undefined
       return asSlotProps({
@@ -158,9 +164,7 @@ export const CalloutContentBase = Vue.extend({
           ref: 'calloutElement',
           class: [classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge!]],
           style: positions ? positionCss.elementPosition : OFF_SCREEN_STYLE,
-          attrs: {
-            tabIndex: -1,
-          },
+          tabIndex: -1,
         },
         beak: {
           class: classNames.beak,
@@ -172,16 +176,14 @@ export const CalloutContentBase = Vue.extend({
         calloutMain: {
           ref: 'calloutMain',
           class: classNames.calloutMain,
-          props: {
-            role: this.role,
-            ariaRoledescription: this.ariaRoledescription,
-            ariaDescribedBy: this.ariaDescribedBy,
-            ariaLabel: this.ariaLabel,
-            ariaLabelledBy: this.ariaLabelledBy,
+          role: this.role,
+          ariaRoledescription: this.ariaRoledescription,
+          ariaDescribedBy: this.ariaDescribedBy,
+          ariaLabel: this.ariaLabel,
+          ariaLabelledBy: this.ariaLabelledBy,
 
-            propStyle: this.overflowStyle,
-            forwardRef: this.$refs.calloutMain,
-          },
+          propStyle: this.overflowStyle,
+          forwardRef: this.$refs.calloutMain,
           on: {
             dismiss: (ev: Event) => this.$emit('dismiss', ev),
           },
@@ -190,23 +192,24 @@ export const CalloutContentBase = Vue.extend({
     },
   },
 
-  created () {
+  created() {
     window.addEventListener('click', this.dismissOnClickOrScroll, true)
     window.addEventListener('scroll', this.dismissOnScroll, true)
   },
 
-  beforeDestroy () {
+  beforeUnmount() {
     window.removeEventListener('click', this.dismissOnClickOrScroll, true)
     window.removeEventListener('scroll', this.dismissOnScroll, true)
   },
 
-  mounted () {
+  mounted() {
     this.updatePosition()
     if (this.repositionOnChildrenUpdated && this.$refs.calloutMain) {
       const calloutMain = this.$refs.calloutMain as HTMLDivElement
       let currentHeight = calloutMain.clientHeight
       const observer = new MutationObserver(() => {
-        if (calloutMain.clientHeight === currentHeight) return
+        if (calloutMain.clientHeight === currentHeight)
+          return
 
         currentHeight = calloutMain.clientHeight
         this.updatePosition()
@@ -216,7 +219,7 @@ export const CalloutContentBase = Vue.extend({
   },
 
   methods: {
-    updatePosition (): void {
+    updatePosition(): void {
       const positions = this.positions
 
       const currentProps: any = { ...this.$props }
@@ -225,49 +228,46 @@ export const CalloutContentBase = Vue.extend({
       const newPositions = positionCallout(currentProps, this.$refs.rootRef, this.$refs.calloutElement, this.positions)
 
       if (
-        (!positions && newPositions) ||
-          (positions && newPositions && !arePositionsEqual(positions, newPositions) && this.positionAttempts < 5)
+        (!positions && newPositions)
+          || (positions && newPositions && !arePositionsEqual(positions, newPositions) && this.positionAttempts < 5)
       ) {
         this.positionAttempts++
         this.positions = newPositions
-      } else if (this.positionAttempts > 0) {
+      }
+      else if (this.positionAttempts > 0) {
         this.positionAttempts = 0
         this.$emit('positioned', this.positions)
       }
     },
-    dismissOnScroll  (ev: Event) {
-      if (this.positionsExists && !this.preventDismissOnScroll) {
+    dismissOnScroll(ev: Event) {
+      if (this.positionsExists && !this.preventDismissOnScroll)
         this.dismissOnClickOrScroll(ev)
-      }
     },
-    dismissOnResize (ev: Event) {
-      if (!this.preventDismissOnResize && !(this.preventDismissOnEvent && this.preventDismissOnEvent(ev))) {
+    dismissOnResize(ev: Event) {
+      if (!this.preventDismissOnResize && !(this.preventDismissOnEvent && this.preventDismissOnEvent(ev)))
         this.$emit('dismiss', ev)
-      }
     },
-    dismissOnLostFocus (ev: Event) {
-      if (!this.preventDismissOnLostFocus) {
+    dismissOnLostFocus(ev: Event) {
+      if (!this.preventDismissOnLostFocus)
         this.dismissOnClickOrScroll(ev)
-      }
     },
-    dismissOnClickOrScroll (ev: Event): void {
+    dismissOnClickOrScroll(ev: Event): void {
       const eventPaths = ev.composedPath ? ev.composedPath() : []
       const target = eventPaths.length > 0 ? (eventPaths[0] as HTMLElement) : (ev.target as HTMLElement)
       const isEventTargetOutsideCallout = this.$refs.rootRef && !elementContains(this.$refs.rootRef, target)
 
       if (
-        (!this.targetRef && isEventTargetOutsideCallout) ||
-        (
-          isEventTargetOutsideCallout &&
-            (!this.targetRef ||
-            (target !== this.targetRef && !elementContains(this.targetRef, target))))
-      ) {
+        (!this.targetRef && isEventTargetOutsideCallout)
+        || (
+          isEventTargetOutsideCallout
+            && (!this.targetRef
+            || (target !== this.targetRef && !elementContains(this.targetRef, target))))
+      )
         this.$emit('dismiss', ev)
-      }
     },
     // Max height should remain as synchronous as possible, which is why it is not done using set state.
     // It needs to be synchronous since it will impact the ultimate position of the callout.
-    getMaxHeight (): number | undefined {
+    getMaxHeight(): number | undefined {
       if (!this.maxHeight) {
         if (this.directionalHintFixed && this.targetRef) {
           const beakWidth = this.isBeakVisible ? this.beakWidth : 0
@@ -288,7 +288,8 @@ export const CalloutContentBase = Vue.extend({
               this.$forceUpdate()
             }
           })
-        } else {
+        }
+        else {
           this.maxHeight = this.bounds.height!
         }
       }
@@ -296,7 +297,7 @@ export const CalloutContentBase = Vue.extend({
     },
   },
 
-  render (h): VNode {
+  render(): VNode {
     return h('div', this.slotProps.container, [
       h('div', this.slotProps.root, [
         this.beakVisible && h('div', this.slotProps.beak),
@@ -314,13 +315,13 @@ export const CalloutContentBase = Vue.extend({
  * @param prevElementPositions
  * @param newElementPosition
  */
-function arePositionsEqual (
+function arePositionsEqual(
   prevElementPositions: ICalloutPositionedInfo,
   newElementPosition: ICalloutPositionedInfo,
 ): boolean {
   return (
-    comparePositions(prevElementPositions.elementPosition, newElementPosition.elementPosition) &&
-    comparePositions(prevElementPositions.beakPosition.elementPosition, newElementPosition.beakPosition.elementPosition)
+    comparePositions(prevElementPositions.elementPosition, newElementPosition.elementPosition)
+    && comparePositions(prevElementPositions.beakPosition.elementPosition, newElementPosition.beakPosition.elementPosition)
   )
 }
 
@@ -330,16 +331,16 @@ function arePositionsEqual (
  * @param prevElementPositions
  * @param newElementPositions
  */
-function comparePositions (prevElementPositions: IPosition, newElementPositions: IPosition): boolean {
+function comparePositions(prevElementPositions: IPosition, newElementPositions: IPosition): boolean {
   for (const key in newElementPositions) {
     if (Object.prototype.hasOwnProperty.call(newElementPositions, key)) {
       const oldPositionEdge = prevElementPositions[key]
       const newPositionEdge = newElementPositions[key]
       if (oldPositionEdge !== undefined && newPositionEdge !== undefined) {
-        if (oldPositionEdge.toFixed(2) !== newPositionEdge.toFixed(2)) {
+        if (oldPositionEdge.toFixed(2) !== newPositionEdge.toFixed(2))
           return false
-        }
-      } else {
+      }
+      else {
         return false
       }
     }

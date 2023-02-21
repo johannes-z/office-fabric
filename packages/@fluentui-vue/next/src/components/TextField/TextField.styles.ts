@@ -1,7 +1,7 @@
-import { AnimationClassNames, getFocusStyle, getGlobalClassNames, getHighContrastNoAdjustStyle, getInputFocusStyle, getPlaceholderStyles, HighContrastSelector, IconFontSizes, normalize } from '@fluentui-vue/style-utilities'
-import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
-import { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
+import { AnimationClassNames, HighContrastSelector, IconFontSizes, getFocusStyle, getGlobalClassNames, getHighContrastNoAdjustStyle, getInputFocusStyle, getPlaceholderStyles, normalize } from '@fluentui-vue/style-utilities'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
+import type { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
 
 const globalClassNames = {
   root: 'ms-TextField',
@@ -24,14 +24,14 @@ const globalClassNames = {
   active: 'is-active',
 }
 
-function getLabelStyles (props: ITextFieldStyleProps): IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> {
+function getLabelStyles(props: ITextFieldStyleProps): IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles> {
   const { underlined, disabled, focused, theme } = props
   const { palette, fonts } = theme
 
   return () => ({
     root: [
-      underlined &&
-        disabled && {
+      underlined
+        && disabled && {
         color: palette.neutralTertiary,
       },
       underlined && {
@@ -42,8 +42,8 @@ function getLabelStyles (props: ITextFieldStyleProps): IStyleFunctionOrObject<IL
         lineHeight: '22px',
         height: 32,
       },
-      underlined &&
-        focused && {
+      underlined
+        && focused && {
         selectors: {
           [HighContrastSelector]: {
             height: 31, // -1px to prevent jumpiness in HC with the increased border-width to 2px
@@ -54,7 +54,7 @@ function getLabelStyles (props: ITextFieldStyleProps): IStyleFunctionOrObject<IL
   })
 }
 
-export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
+export function getStyles(props: ITextFieldStyleProps): ITextFieldStyles {
   const {
     theme,
     className,
@@ -196,8 +196,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         display: 'flex',
       },
 
-      !focused &&
-        !disabled && {
+      !focused
+        && !disabled && {
         selectors: {
           ':hover': {
             borderColor: semanticColors.inputBorderHovered,
@@ -211,9 +211,9 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         },
       },
 
-      focused &&
-        !underlined &&
-        getInputFocusStyle(
+      focused
+        && !underlined
+        && getInputFocusStyle(
           !hasErrorMessage ? semanticColors.inputFocusBorderAlt : semanticColors.errorText,
           effects.roundedCorner2,
         ),
@@ -231,8 +231,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
       borderless && {
         border: 'none',
       },
-      borderless &&
-        focused && {
+      borderless
+        && focused && {
         border: 'none',
         selectors: {
           ':after': {
@@ -245,13 +245,13 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         border: 'none',
         textAlign: 'left',
       },
-      underlined &&
-        disabled && {
+      underlined
+        && disabled && {
         backgroundColor: 'transparent',
       },
 
-      hasErrorMessage &&
-        !underlined && {
+      hasErrorMessage
+        && !underlined && {
         borderColor: semanticColors.errorText,
         selectors: {
           '&:hover': {
@@ -259,11 +259,11 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
           },
         },
       },
-      !hasLabel &&
-        required && {
+      !hasLabel
+        && required && {
         selectors: {
           ':before': {
-            content: `'*'`,
+            content: '\'*\'',
             color: semanticColors.errorText,
             position: 'absolute',
             top: -5,
@@ -307,8 +307,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         },
       },
       getPlaceholderStyles(placeholderStyles),
-      multiline &&
-        !resizable && [
+      multiline
+        && !resizable && [
         classNames.unresizable,
         {
           resize: 'none',
@@ -323,16 +323,16 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
         overflow: 'auto',
         width: '100%',
       },
-      multiline &&
-        autoAdjustHeight && {
+      multiline
+        && autoAdjustHeight && {
         overflow: 'hidden',
       },
-      hasIcon &&
-        !hasRevealButton && {
+      hasIcon
+        && !hasRevealButton && {
         paddingRight: 24,
       },
-      multiline &&
-        hasIcon && {
+      multiline
+        && hasIcon && {
         paddingRight: 40,
       },
       disabled && [
@@ -346,8 +346,8 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
       underlined && {
         textAlign: 'left',
       },
-      focused &&
-        !borderless && {
+      focused
+        && !borderless && {
         selectors: {
           [HighContrastSelector]: {
             paddingLeft: 11,
@@ -355,9 +355,9 @@ export function getStyles (props: ITextFieldStyleProps): ITextFieldStyles {
           },
         },
       },
-      focused &&
-        multiline &&
-        !borderless && {
+      focused
+        && multiline
+        && !borderless && {
         selectors: {
           [HighContrastSelector]: {
             paddingTop: 4, // take into consideration the 2px increased border-width (not when borderless).
