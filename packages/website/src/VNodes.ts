@@ -1,4 +1,4 @@
-import { CreateElement, RenderContext } from 'vue'
+import { CreateElement, RenderContext } from 'vue-demi'
 
 /**
  * Helper Component to render Vue-VNodes, e.g. generated from render functions.

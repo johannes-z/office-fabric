@@ -1,0 +1,31 @@
+{
+  "Implementation": [
+    {
+      "name": "as",
+      "type": "string",
+      "default": "label",
+      "description": "Render the root element as another type."
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "default": "false",
+      "description": "Renders the label as disabled."
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the associated form field is required or not."
+    },
+    {
+      "name": "styles",
+      "description": "Styles for the label."
+    },
+    {
+      "name": "theme",
+      "type": "ITheme",
+      "description": "Theme provided by the HOC."
+    }
+  ]
+}

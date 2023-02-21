@@ -1,5 +1,5 @@
 declare module '*.vue' {
-  import Vue from 'vue'
+  import Vue from 'vue-demi'
   export default Vue
 }
 
@@ -13,8 +13,4 @@ declare global {
     };
     style?: IRawStyle;
   }
-}
-declare module '*.md' {
-  const content: string
-  export default content
 }

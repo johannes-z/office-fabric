@@ -75,20 +75,20 @@
       <h2>Slots</h2>
 
       <f-text-field>
-        <template #onRenderLabel="props">
-          onRenderLabel
+        <template #label="props">
+          label
         </template>
-        <template #onRenderDescription="props">
-          onRenderDescription
+        <template #description="props">
+          description
         </template>
-        <template #onRenderInput="props">
-          onRenderInput
+        <template #input="props">
+          input
         </template>
-        <template #onRenderPrefix="props">
-          onRenderPrefix
+        <template #prefix="props">
+          prefix
         </template>
-        <template #onRenderSuffix="props">
-          onRenderSuffix
+        <template #suffix="props">
+          suffix
         </template>
       </f-text-field>
     </div>

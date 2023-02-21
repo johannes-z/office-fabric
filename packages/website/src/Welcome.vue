@@ -76,20 +76,19 @@ Vue.use(Fabric, {} as IPartialTheme, {
 
       This will generate the following css:
 
-      <pre v-highlightjs><code class="css">
-:root {
-    --fabric-bodyBackground: #fff;
-    --fabric-bodyBackgroundHovered: #f3f2f1;
-    --fabric-bodyBackgroundChecked: #edebe9;
-    --fabric-bodyStandoutBackground: #faf9f8;
-    --fabric-bodyFrameBackground: #fff;
-    /* ... */
-}
-      </code></pre>
+      <CodeHighlight language="css">
+        :root {
+        --fabric-bodyBackground: #fff;
+        --fabric-bodyBackgroundHovered: #f3f2f1;
+        --fabric-bodyBackgroundChecked: #edebe9;
+        --fabric-bodyStandoutBackground: #faf9f8;
+        --fabric-bodyFrameBackground: #fff;
+        /* ... */
+        }
+      </CodeHighlight>
 
-      You can also check out the <a
-        href="https://github.com/johannes-z/office-fabric/tree/master/packages/api-docs"
-        target="_blank">api-docs</a>
+      You can also check out the <a href="https://github.com/johannes-z/office-fabric/tree/master/packages/api-docs"
+                                    target="_blank">api-docs</a>
       package to see an extensive usage of Office UI Fabric Vue.
     </div>
   </div>

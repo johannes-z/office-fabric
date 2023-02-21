@@ -18,7 +18,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { DefaultPalette } from '@uifabric/styling'
 import { Stack, StackItem, IStackTokens } from '@uifabric-vue/office-ui-fabric-vue'
-import { CreateElement } from 'vue'
+import { CreateElement } from 'vue-demi'
 
 @Component({
   components: { Stack, StackItem },

@@ -9,12 +9,12 @@ import { ref as useRef } from '@vue/composition-api'
  *  without conditioning the hook call
  * @returns The ID
  */
-export function useId (prefix?: string, providedId?: string): string {
+export function useId(prefix?: string, providedId?: string): string {
   // getId should only be called once since it updates the global constant for the next ID value.
   // (While an extra update isn't likely to cause problems in practice, it's better to avoid it.)
   const ref = useRef<string | undefined>(providedId)
-  if (!ref.value) {
+  if (!ref.value)
     ref.value = getId(prefix)
-  }
+
   return ref.value
 }

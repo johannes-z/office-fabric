@@ -96,6 +96,8 @@ export default class Preview extends Vue {
           links: [
             { name: 'Calendar', key: 'Calendar', href: publicPath + '/#/Calendar' },
             { name: 'SwatchColorPicker WIP', key: 'SwatchColorPicker', href: publicPath + '/#/SwatchColorPicker' },
+
+            { name: 'Tag Picker', key: 'TagPicker', href: publicPath + '/#/TagPicker' },
           ],
         }, {
           name: 'Items & Lists',

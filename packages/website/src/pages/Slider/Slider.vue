@@ -68,6 +68,14 @@
                   vertical
                   origin-from-zero />
       </div>
+
+      <h2>Ranged Sliders</h2>
+      <f-slider label="Basic"
+                :min="0"
+                :max="10"
+                :value="3"
+                ranged
+                show-value />
     </div>
 
     <div class="content--inner ms-depth-8">

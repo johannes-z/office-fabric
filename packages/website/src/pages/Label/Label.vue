@@ -21,9 +21,7 @@
       <TextField id="label-test-1" type="text" />
     </div>
 
-    <div class="content--inner ms-depth-8">
-      <h2>Implementation</h2>
-    </div>
+    <div class="content--inner ms-depth-8" />
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 import * as path from 'path'
 import { defineConfig } from 'vite'
 import { createVuePlugin } from 'vite-plugin-vue2'
+import Markdown from 'vite-plugin-md'
 
 import pkg from './package.json'
 
@@ -10,11 +11,19 @@ export default defineConfig({
   },
   plugins: [
     createVuePlugin({
+      include: [/\.vue$/, /\.md$/],
       jsx: true,
       vueTemplateOptions: {
         compilerOptions: {
           whitespace: 'condense',
         },
+      },
+    }),
+    Markdown({
+      markdownItOptions: {
+        html: false,
+        linkify: false,
+        typographer: false,
       },
     }),
   ],

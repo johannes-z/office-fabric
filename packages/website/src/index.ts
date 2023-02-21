@@ -1,9 +1,7 @@
-import Vue, { CreateElement } from 'vue'
+import Vue, { CreateElement } from 'vue-demi'
 import VueCompositionAPI from '@vue/composition-api'
 
 import VueRouter from 'vue-router'
-
-// import VueHighlightJS from 'vue-highlightjs'
 
 import Preview from './Preview.vue'
 import routes from '@/plugins/router/routes'
@@ -11,13 +9,13 @@ import BasePage from './pages/BasePage.vue'
 
 import Fabric, { initializeIcons } from '@uifabric-vue/office-ui-fabric-vue'
 import { initializeFileTypeIcons } from '@uifabric-vue/file-type-icons'
+
 Vue.use(VueCompositionAPI)
 
 initializeIcons()
 initializeFileTypeIcons()
 
 Vue.use(VueRouter)
-// Vue.use(VueHighlightJS)
 Vue.use(Fabric)
 
 Vue.component('BasePage', BasePage)

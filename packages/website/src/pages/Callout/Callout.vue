@@ -19,12 +19,14 @@
       <h2>Default Callout</h2>
 
       <div style="padding: 20px;">
-        <DefaultButton ref="target" @click.native="showCallout = true">Target</DefaultButton>
+        <DefaultButton ref="target" @click.stop="showCallout = !showCallout">
+          {{ showCallout ? 'Hide' : 'Show' }} callout
+        </DefaultButton>
       </div>
 
       <Callout v-if="showCallout"
-               :directional-hint="DirectionalHint.topCenter"
-               :target="target"
+               :directional-hint="DirectionalHint.rightCenter"
+               :target="$refs.target"
                :styles="{ calloutMain: { maxWidth: 300 } }"
                :is-beak-visible="true"
                @dismiss="onDismiss">
@@ -45,6 +47,38 @@
           </div>
         </div>
       </Callout>
+
+      <h2>Callout with deferred content</h2>
+
+      <div style="padding: 20px;">
+        <DefaultButton ref="target2" @click.stop="showCallout2 = !showCallout2">
+          {{ showCallout2 ? 'Hide' : 'Show' }} callout
+        </DefaultButton>
+      </div>
+
+      <Callout v-if="showCallout2"
+               :directional-hint="DirectionalHint.rightCenter"
+               :target="$refs.target2"
+               :styles="{ calloutMain: { maxWidth: 300 } }"
+               :is-beak-visible="true"
+               @dismiss="onDismiss">
+        <div :class="[classNames.bodyText, $style.header]">
+          <p :class="[classNames.bodyText, $style.title]">
+            All of your favorite people
+          </p>
+        </div>
+        <div v-if="showContent" :class="[classNames.bodyText, $style.inner]">
+          <p :class="[classNames.bodyText, $style.subtext]">
+            Message body is optional. If help documentation is available, consider adding a link to learn more at the bottom.
+          </p>
+          <div :class="[classNames.bodyText, $style.actions]">
+            <FLink href="http://microsoft.com"
+                   target="_blank">
+              Go to microsoft
+            </FLink>
+          </div>
+        </div>
+      </Callout>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -54,42 +88,57 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, InjectReactive } from 'vue-property-decorator'
 import { DefaultButton, Text, Callout, Link, mergeStyleSets, getTheme, IPartialTheme, DirectionalHint } from '@uifabric-vue/office-ui-fabric-vue'
+import Vue from 'vue-demi'
 
-@Component({
+export default Vue.extend({
+  name: 'CalloutPage',
+
   components: {
     DefaultButton,
     Text,
     Callout,
     FLink: Link,
   },
+
+  data () {
+    return {
+      DirectionalHint: DirectionalHint,
+
+      showContent: false,
+      showCallout: false,
+      showCallout2: false,
+    }
+  },
+
+  computed: {
+    classNames () {
+      return mergeStyleSets({
+        bodyText: {
+          color: this.theme?.semanticColors?.bodyText,
+        },
+      })
+    },
+  },
+
+  watch: {
+    showCallout2 (value) {
+      if (value) {
+        setTimeout(() => {
+          this.showContent = true
+        }, 2000)
+      }
+    },
+  },
+
+  methods: {
+    onDismiss () {
+      this.showCallout = false
+      this.showCallout2 = false
+      this.showContent = false
+    },
+  },
 })
-export default class CalloutPage extends Vue {
-  @InjectReactive()
-  theme!: IPartialTheme
-
-  DirectionalHint = DirectionalHint
-
-  showCallout: boolean = false
-  target: any = null
-
-  get classNames () {
-    return mergeStyleSets({
-      bodyText: {
-        color: this.theme?.semanticColors?.bodyText,
-      },
-    })
-  }
-
-  mounted () {
-    this.target = (this.$refs.target as Vue).$el
-  }
-
-  onDismiss () {
-    this.showCallout = false
-  }
-}
 </script>
 
 <style lang="scss" module>
@@ -108,7 +157,6 @@ export default class CalloutPage extends Vue {
   margin-left: 0px;
 }
 .inner {
-  height: 100%;
   padding-top: 0px;
   padding-right: 24px;
   padding-bottom: 20px;

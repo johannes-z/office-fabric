@@ -120,6 +120,11 @@
                         disabled>
         Checked & Disabled
       </f-default-button>
+
+      <h2>Split Button</h2>
+      <f-split-button>
+        Test
+      </f-split-button>
     </div>
 
     <div class="content--inner ms-depth-8">
@@ -148,7 +153,7 @@ export default class ButtonPage extends Vue {
         iconProps: { iconName: 'Calendar' },
       },
     ],
-  };
+  }
 }
 </script>
 
