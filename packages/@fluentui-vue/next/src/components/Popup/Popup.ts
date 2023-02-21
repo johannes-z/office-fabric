@@ -1,53 +1,59 @@
-import Vue, { h } from 'vue'
+import Vue, { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs } from 'vue'
 import { asSlotProps } from '../../utils/types'
-import { StylingPropKeys } from '@/utils'
+import { StylingPropKeys, useStylingProps } from '@/utils'
 
-export const Popup = (props, { attrs, listeners, slots }) => {
-  const {
-    role,
-    ariaLabel,
-    ariaLabelledBy,
-    ariaDescribedBy,
-  } = props
-  const needsVerticalScrollBar = false
+export const Popup = defineComponent({
+  name: 'Popup',
 
-  const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key !== 'Escape')
-      return
-    // ;(ctx.listeners.dismiss as Function | null)?.(e)
+  props: {
+    ...useStylingProps(),
 
-    e.preventDefault()
-    e.stopPropagation()
-  }
+    role: { type: String, default: undefined },
+    ariaLabel: { type: String, default: undefined },
+    ariaLabelledBy: { type: String, default: undefined },
+    ariaDescribedBy: { type: String, default: undefined },
+  },
 
-  // TODO memory leak?
-  window.addEventListener('keydown', onKeyDown)
-
-  const slotProps = asSlotProps({
-    root: {
-      'class': props.className,
-      ...attrs,
+  setup(props, { attrs, slots }) {
+    const {
       role,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-describedby': ariaDescribedBy,
-      'style': {
-        overflowY: needsVerticalScrollBar ? 'scroll' : undefined,
-        outline: 'none',
-        ...attrs.style,
-      },
-      'on': {
-        keydown: onKeyDown,
-      },
-    },
-  })
+      ariaLabel,
+      ariaLabelledBy,
+      ariaDescribedBy,
+    } = toRefs(props)
 
-  return h('div', slotProps.root, slots)
-}
-Popup.props = [...StylingPropKeys,
-  'className',
-  'role',
-  'ariaLabel',
-  'ariaLabelledBy',
-  'ariaDescribedBy',
-]
+    const needsVerticalScrollBar = ref(false)
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      console.log('onKeyDown')
+      if (e.key !== 'Escape')
+        return
+      // ;(ctx.listeners.dismiss as Function | null)?.(e)
+
+      e.preventDefault()
+      e.stopPropagation()
+    }
+
+    onMounted(() => window.addEventListener('keydown', onKeyDown))
+    onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown))
+
+    const slotProps = computed(() => asSlotProps({
+      root: {
+        'class': props.className,
+        ...attrs,
+        role,
+        'aria-label': ariaLabel,
+        'aria-labelledby': ariaLabelledBy,
+        'aria-describedby': ariaDescribedBy,
+        'style': {
+          overflowY: needsVerticalScrollBar.value ? 'scroll' : undefined,
+          outline: 'none',
+          // ...attrs.style,
+        },
+        onKeyDown,
+      },
+    }))
+
+    return () => h('div', slotProps.value.root, slots)
+  },
+})
