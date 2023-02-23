@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router'
+import { Nav } from '../components'
+
 import ButtonPage from './ButtonPage.vue'
 import CheckboxPage from './CheckboxPage.vue'
 import IconPage from './IconPage.vue'
@@ -14,20 +17,92 @@ import TogglePage from './TogglePage.vue'
 import StackPage from './StackPage.vue'
 import ImagePage from './ImagePage.vue'
 import SeparatorPage from './SeparatorPage.vue'
+import CommandBarPage from './CommandBarPage.vue'
+import ContextualMenuPage from './ContextualMenuPage.vue'
+import DialogPage from './DialogPage.vue'
+
+const navLinkGroups: INavLinkGroup[] = [
+  {
+    links: [
+      {
+        name: 'Toggle',
+        url: '/#/Toggle',
+        key: 'Toggle',
+      },
+      {
+        name: 'Home',
+        url: 'http://example.com',
+        expandAriaLabel: 'Expand Home section',
+        links: [
+          {
+            name: 'Activity',
+            url: 'http://msn.com',
+            key: 'key1',
+            target: '_blank',
+          },
+          {
+            name: 'MSN',
+            url: 'http://msn.com',
+            disabled: true,
+            key: 'key2',
+            target: '_blank',
+          },
+        ],
+        isExpanded: true,
+      },
+      {
+        name: 'Documents',
+        url: 'http://example.com',
+        key: 'key3',
+        isExpanded: true,
+        target: '_blank',
+      },
+      {
+        name: 'Pages',
+        url: 'http://msn.com',
+        key: 'key4',
+        target: '_blank',
+      },
+      {
+        name: 'Notebook',
+        url: 'http://msn.com',
+        key: 'key5',
+        disabled: true,
+      },
+      {
+        name: 'Communication and Media',
+        url: 'http://msn.com',
+        key: 'key6',
+        target: '_blank',
+      },
+      {
+        name: 'News',
+        url: 'http://cnn.com',
+        icon: 'News',
+        key: 'key7',
+        target: '_blank',
+      },
+    ],
+  },
+]
 </script>
 
 <template>
+  <Nav :groups="navLinkGroups" />
+
+  <RouterView />
+
   <div>
-    <h2>Callout</h2>
-    <h2>Modal</h2>
-    <h2>CommandBarButton</h2>
-    <h2>CommandBar</h2>
+    <!-- <h2>Modal</h2>
     <h2>Persona</h2>
     <h2>PersonaPresence</h2>
     <h2>PersonaSize</h2>
-    <h2>ContextualMenu</h2>
     <h2>Dialog</h2>
+    <ContextualMenuPage />
+    <CommandBarPage />
+
     <CalloutPage />
+    <DialogPage />
 
     <ButtonPage />
     <CheckboxPage />
@@ -43,6 +118,6 @@ import SeparatorPage from './SeparatorPage.vue'
     <IconPage />
     <ImagePage />
     <SeparatorPage />
-    <StackPage />
+    <StackPage /> -->
   </div>
 </template>
