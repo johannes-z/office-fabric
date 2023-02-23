@@ -17,7 +17,7 @@ function handleClickOnLink(ev: MouseEvent) {
         it renders as an anchor tag.
       </Link>
       Without an href,
-      <Link on-click="{handleClickOnLink}" underline>
+      <Link @click="handleClickOnLink" underline>
         the link is rendered as a button
       </Link>
       . You can also use the disabled attribute to create a

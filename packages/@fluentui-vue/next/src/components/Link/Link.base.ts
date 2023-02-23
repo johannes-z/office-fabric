@@ -9,13 +9,14 @@ export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
   const { styles, theme, as, target, className, href, disabled, underline } = props
 
   const isDisabled = disabled != null && disabled !== false
+  const isUnderlined = underline != null && underline !== false
 
   const classNames = getClassNames(styles, {
     theme: theme!,
     className,
     isButton: !href,
     isDisabled: isDisabled,
-    isUnderlined: underline,
+    isUnderlined: isUnderlined,
   })
 
   const rootType = as || (href ? 'a' : 'button')
@@ -30,7 +31,7 @@ export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
       },
       ...rootType === 'button' && {
         type: 'button',
-        isDisabled,
+        disabled: isDisabled,
       },
     },
   })

@@ -15,7 +15,7 @@ export * from './Nav'
 // Surfaces
 export * from './Callout'
 export * from './Dialog'
-// export * from './Modal'
+export * from './Modal'
 
 // // export * from './ActivityItem'
 // // export * from './Facepile'

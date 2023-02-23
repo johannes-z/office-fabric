@@ -109,6 +109,11 @@ export const nav = [
           name: 'Dialog',
           component: () => import('../views/DialogPage.vue'),
         }),
+        defineRoute({
+          path: '/Modal',
+          name: 'Modal',
+          component: () => import('../views/ModalPage.vue'),
+        }),
       ],
       isExpanded: true,
     },
