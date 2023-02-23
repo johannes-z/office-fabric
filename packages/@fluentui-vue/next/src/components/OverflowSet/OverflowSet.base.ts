@@ -1,70 +1,61 @@
-import { useStylingProps, asSlotProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { VNode } from 'vue'
+import Vue, { VNode, h } from 'vue'
 import { OverflowButton } from './OverflowButton'
-import { IOverflowSetStyleProps, IOverflowSetStyles } from './OverflowSet.types'
+import type { IOverflowSetStyleProps, IOverflowSetStyles } from './OverflowSet.types'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IOverflowSetStyleProps, IOverflowSetStyles>()
 
-export const OverflowSetBase = Vue.extend({
-  name: 'OverflowSetBase',
+export const OverflowSetBase = (props, { attrs, slots }) => {
+  const { styles, className, vertical } = props
+  const { items, overflowItems, overflowSide = 'end', role = 'group' } = props
+  const classNames = getClassNames(styles, {
+    className,
+    vertical,
+  })
 
-  functional: true,
+  const slotProps = asSlotProps({
+    root: {
+      'class': classNames.root,
+      'role': role || 'group',
+      'aria-orientation': role === 'menubar' ? (vertical === true ? 'vertical' : 'horizontal') : undefined,
+    },
+    item: {
+      class: classNames.item,
+      role: 'none',
+    },
+    overflowButton: {
+      ...attrs,
+      ...props,
+      class: classNames.overflowButton,
+    },
+  })
 
-  props: {
-    ...useStylingProps(),
+  const showOverflow = !!overflowItems && overflowItems.length > 0
 
-    vertical: { type: Boolean, default: false },
-    overflowSide: { type: String, default: 'end', validator: e => ['start', 'end'].indexOf(e) > -1 },
-    role: { type: String, default: 'group' },
-
-    items: { type: Array as () => any[], default: () => [] },
-    overflowItems: { type: Array as () => any[], default: () => [] },
-  },
-
-  render (h, ctx): VNode {
-    const { styles, className, vertical } = ctx.props
-    const { items, overflowItems, overflowSide, role } = ctx.props
-    const classNames = getClassNames(styles, {
-      className,
-      vertical,
-    })
-
-    const slotProps = asSlotProps({
-      root: {
-        class: classNames.root,
-        attrs: {
-          role: role || 'group',
-          'aria-orientation': role === 'menubar' ? (vertical === true ? 'vertical' : 'horizontal') : undefined,
-        },
+  return h('div', slotProps.root, [
+    // overflowbutton
+    overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+    items && items.map((item, index) => h('div', {
+      ...slotProps.item,
+      on: {
+        ...item.onClick
+          ? { click: item.onClick }
+          : {},
       },
-      item: {
-        class: classNames.item,
-        attrs: {
-          role: 'none',
-        },
-      },
-      overflowButton: {
-        ...ctx.data,
-        class: classNames.overflowButton,
-      },
-    })
+    }, slots.item?.({ item, index }))),
+    overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+    // overflowbutton
+  ])
+}
 
-    const showOverflow = !!overflowItems && overflowItems.length > 0
+OverflowSetBase.props = Object.keys({
+  ...useStylingProps(),
 
-    return h('div', slotProps.root, [
-      // overflowbutton
-      overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton),
-      items && items.map((item, index) => h('div', {
-        ...slotProps.item,
-        on: {
-          ...item.onClick
-            ? { click: item.onClick }
-            : {},
-        },
-      }, ctx.scopedSlots.item?.({ item, index }))),
-      overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton),
-      // overflowbutton
-    ])
-  },
+  vertical: { type: Boolean, default: false },
+  overflowSide: { type: String, default: 'end', validator: e => ['start', 'end'].includes(e) },
+  role: { type: String, default: 'group' },
+
+  items: { type: Array as () => any[], default: () => [] },
+  overflowItems: { type: Array as () => any[], default: () => [] },
 })

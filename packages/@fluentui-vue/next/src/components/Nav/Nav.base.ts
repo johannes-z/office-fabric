@@ -1,8 +1,10 @@
-import Vue, { CreateElement, VNode } from 'vue'
+import type { CreateElement, VNode } from 'vue'
+import Vue, { defineComponent, h } from 'vue'
+import { classNamesFunction } from '@fluentui-vue/utilities'
 import { ActionButton } from '../Button'
 import { Icon } from '../Icon'
-import { INavLinkGroup, INavLink, INavProps, INavStyles, INavStyleProps } from './Nav.types'
-import { classNamesFunction } from '@fluentui-vue/utilities'
+import type { INavLink, INavLinkGroup, INavStyleProps, INavStyles } from './Nav.types'
+import { INavProps } from './Nav.types'
 import { useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<INavStyleProps, INavStyles>()
@@ -13,12 +15,12 @@ const INDENTATION_SIZE = 14
 // The number of pixels of left margin
 const BASE_INDENT = 3
 
-export function isRelativeUrl (url: string): boolean {
+export function isRelativeUrl(url: string): boolean {
   // A URL is relative if it has no protocol.
   return !!url && !/^[a-z0-9+-.]:\/\//i.test(url)
 }
 
-export const NavBase = Vue.extend({
+export const NavBase = defineComponent({
   name: 'NavBase',
 
   components: {
@@ -34,7 +36,7 @@ export const NavBase = Vue.extend({
     isOnTop: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       isGroupCollapsed: {},
       internalSelectedKey: '',
@@ -42,8 +44,7 @@ export const NavBase = Vue.extend({
   },
 
   methods: {
-    renderGroup (group: INavLinkGroup, groupIndex: number): VNode {
-      const h = this.$createElement
+    renderGroup(group: INavLinkGroup, groupIndex: number): VNode {
       const { groups, theme } = this
       const classNames: any = getClassNames(this.styles, {
         theme: theme!,
@@ -59,9 +60,9 @@ export const NavBase = Vue.extend({
       ])
     },
 
-    renderLinks (links: INavLink[] | undefined, nestingLevel: number): VNode | null {
-      if (!links || !links.length) return null
-      const h = this.$createElement
+    renderLinks(links: INavLink[] | undefined, nestingLevel: number): VNode | null {
+      if (!links || !links.length)
+        return null
 
       const linkElements: VNode[] = links.map((link: INavLink, linkIndex: number) =>
         this.renderLink(link, linkIndex, nestingLevel),
@@ -72,27 +73,25 @@ export const NavBase = Vue.extend({
 
       return h('ul', {
         class: classNames.navItems,
-        attrs: { role: 'list' },
+        role: 'list',
       }, linkElements)
     },
 
-    renderLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const h = this.$createElement
+    renderLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
       const { groups, theme } = this
       const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
 
       return h('li', {
         key: linkIndex,
         class: classNames.navItem,
-        attrs: { role: 'listItem' },
+        role: 'listItem',
       }, [
         this.renderCompositeLink(link, linkIndex, nestingLevel),
         link.isExpanded && this.renderLinks(link.links, ++nestingLevel),
       ])
     },
 
-    renderCompositeLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const h = this.$createElement
+    renderCompositeLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
       const { styles, groups, theme } = this
       const classNames: any = getClassNames(styles, {
         theme: theme!,
@@ -108,31 +107,26 @@ export const NavBase = Vue.extend({
         key: linkIndex,
         class: classNames.compositeLink,
       }, [
-        (link.links && link.links.length > 0) &&
-        h('button', {
+        (link.links && link.links.length > 0)
+        && h('button', {
           class: classNames.chevronButton,
-          on: {
-            click: this.onLinkExpandClicked.bind(this, link),
-          },
+          onClick: this.onLinkExpandClicked.bind(this, link),
         }, [
           h(Icon, {
             style: link.isExpanded ? { transform: 'rotate(-180deg)' } : {},
             class: classNames.chevronIcon,
-            props: {
-              iconName: 'ChevronDown',
-            },
+            iconName: 'ChevronDown',
           }),
         ]),
         this.renderNavLink(link, linkIndex, nestingLevel),
       ])
     },
 
-    onLinkExpandClicked (link: INavLink): void {
+    onLinkExpandClicked(link: INavLink): void {
       link.isExpanded = !link.isExpanded
     },
 
-    renderNavLink (link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const h = this.$createElement
+    renderNavLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
       const isSelected = link.key === this.internalSelectedKey
       const isLinkWithIcon = link.icon || link.iconProps
 
@@ -140,7 +134,7 @@ export const NavBase = Vue.extend({
 
       const classNames: any = getClassNames(this.styles, {
         theme: theme!,
-        isSelected: isSelected,
+        isSelected,
         isDisabled: link.disabled,
         isButtonEntry: link.onClick && !link.forceAnchor,
         leftPadding: INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24),
@@ -148,66 +142,65 @@ export const NavBase = Vue.extend({
       })
 
       return h(ActionButton, {
-        attrs: {
-          href: link.href || (link.forceAnchor ? '#' : undefined),
-          title: link.title || link.name,
-          target: link.target,
-          disabled: link.disabled,
-          className: classNames.link,
-        },
+        href: link.url || (link.forceAnchor ? '#' : undefined),
+        title: link.title || link.name,
+        target: link.target,
+        disabled: link.disabled,
+        className: classNames.link,
         style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
-        on: {
-          click: this.onNavLinkClicked.bind(this, link),
-        },
+        onClick: this.onNavLinkClicked.bind(this, link),
       }, link.name)
     },
 
-    onNavLinkClicked (link: INavLink, ev: MouseEvent): void {
-      if (link.onClick) link.onClick(ev, link)
+    onNavLinkClicked(link: INavLink, ev: MouseEvent): void {
+      if (link.onClick)
+        link.onClick(ev, link)
 
-      if (!link.url && link.links && link.links.length > 0) {
+      if (!link.url && link.links && link.links.length > 0)
         link.isExpanded = !link.isExpanded
-      }
+
       this.internalSelectedKey = link.key!
     },
 
-    preventBounce (link: INavLink, ev: Event): void {
-      if (!link.href && link.forceAnchor) ev.preventDefault()
+    preventBounce(link: INavLink, ev: Event): void {
+      if (!link.href && link.forceAnchor)
+        ev.preventDefault()
     },
 
-    isGroupExpanded (group: INavLinkGroup): boolean {
-      if (group.name && Object.prototype.hasOwnProperty.call(this.isGroupCollapsed, group.name)) {
+    isGroupExpanded(group: INavLinkGroup): boolean {
+      if (group.name && Object.prototype.hasOwnProperty.call(this.isGroupCollapsed, group.name))
         return !this.isGroupCollapsed[group.name]
-      }
-      if (group.collapseByDefault !== undefined) {
+
+      if (group.collapseByDefault !== undefined)
         return !group.collapseByDefault
-      }
+
       return true
     },
 
-    toggleCollapsed (group: INavLinkGroup): void {
+    toggleCollapsed(group: INavLinkGroup): void {
       if (group.name) {
         const newGroupCollapsed = {
           ...this.isGroupCollapsed,
           [group.name]: this.isGroupExpanded(group),
         }
-        this.$set(this, 'isGroupCollapsed', newGroupCollapsed)
+        this.isGroupCollapsed = newGroupCollapsed
+        // this.$set(this, 'isGroupCollapsed', newGroupCollapsed)
       }
     },
   },
 
-  render (h: CreateElement): any {
+  render(): any {
     const { theme, className, isOnTop, groups } = this
-    if (!groups) {
+    if (!groups)
       return ''
-    }
+
     const groupElements = this.groups.map(this.renderGroup)
 
     const classNames: any = getClassNames(this.styles, { theme: theme!, className, isOnTop, groups })
 
     return h('nav', {
       class: classNames.root,
-      attrs: { role: 'navigation' },
+      role: 'navigation',
     }, groupElements)
   },
 

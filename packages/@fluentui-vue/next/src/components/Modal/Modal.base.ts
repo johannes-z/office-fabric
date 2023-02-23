@@ -1,12 +1,14 @@
-import { asSlotProps, ResponsiveMode, SlotProps, useStylingProps } from '@/utils'
-import { classNamesFunction, DirectionalHint } from '@fluentui-vue/utilities'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import { DirectionalHint, classNamesFunction } from '@fluentui-vue/utilities'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import Vue, { CreateElement, VNode, defineComponent, h } from 'vue'
 import { Icon } from '../Icon'
-import { ILayerProps, ILayerStyles, Layer } from '../Layer'
+import type { ILayerProps } from '../Layer'
+import { ILayerStyles, Layer } from '../Layer'
 import { Overlay } from '../Overlay'
 import { Popup } from '../Popup'
-import { IDragOptions, IModalStyleProps, IModalStyles } from './Modal.types'
+import type { IDragOptions, IModalStyleProps, IModalStyles } from './Modal.types'
+import { ResponsiveMode, asSlotProps, useStylingProps } from '@/utils'
+import type { SlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()
 
@@ -14,7 +16,7 @@ const DefaultLayerProps: ILayerProps = {
   eventBubblingEnabled: false,
 }
 
-export const ModalBase = Vue.extend({
+export const ModalBase = defineComponent({
   name: 'ModalBase',
 
   props: {
@@ -38,7 +40,7 @@ export const ModalBase = Vue.extend({
     ignoreExternalFocusing: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       internalIsOpen: false,
       isVisible: false,
@@ -56,7 +58,7 @@ export const ModalBase = Vue.extend({
   },
 
   computed: {
-    classNames (): IProcessedStyleSet<IModalStyles> {
+    classNames(): IProcessedStyleSet<IModalStyles> {
       const {
         theme,
         styles,
@@ -91,7 +93,7 @@ export const ModalBase = Vue.extend({
       })
     },
 
-    slotProps (): SlotProps<any> {
+    slotProps(): SlotProps<any> {
       const {
         classNames,
         isDarkOverlay,
@@ -113,61 +115,45 @@ export const ModalBase = Vue.extend({
           class: classNames.main,
         },
         overlay: {
-          attrs: {
-            ...overlay,
-          },
-          props: {
-            dark: isDarkOverlay,
-            allowTouchBodyScroll: this.allowTouchBodyScroll,
-          },
-          on: {
-            ...!isBlocking ? { click: onDismiss } : {},
-          },
+          ...overlay,
+          dark: isDarkOverlay,
+          allowTouchBodyScroll: this.allowTouchBodyScroll,
+          onClick: !isBlocking && onDismiss,
         },
         scrollableContent: {
-          ref: 'scrollableContent',
-          class: classNames.scrollableContent,
-          attrs: {
-            'data-is-scrollable': true,
-          },
+          'ref': 'scrollableContent',
+          'class': classNames.scrollableContent,
+          'data-is-scrollable': true,
         },
         popup: {
-          attrs: {
-            role: isModeless || !isBlocking ? 'dialog' : 'alertdialog',
-            ariaModal: !isModeless,
-            ariaLabelledBy: titleAriaId,
-            ariaDescribedBy: subtitleAriaId,
-            shouldRestoreFocus: !ignoreExternalFocusing,
-          },
-          on: {
-            dismiss: onDismiss,
-          },
+          role: isModeless || !isBlocking ? 'dialog' : 'alertdialog',
+          ariaModal: !isModeless,
+          ariaLabelledBy: titleAriaId,
+          ariaDescribedBy: subtitleAriaId,
+          shouldRestoreFocus: !ignoreExternalFocusing,
+          onDismiss,
         },
         menu: {
-          attrs: {
-            items: [
-              { key: 'move', text: dragOptions && dragOptions.moveMenuItemText, onClick: this.onEnterKeyboardMoveMode },
-              { key: 'close', text: dragOptions && dragOptions.closeMenuItemText, onClick: this.onModalClose },
-            ],
-            alignTargetEdge: true,
-            coverTarget: true,
-            directionalHint: DirectionalHint.topLeftEdge,
-            directionalHintFixed: true,
-            shouldFocusOnMount: true,
-            target: this.$refs.scrollableContent,
-          },
-          on: {
-            dismiss: this.onModalContextMenuClose,
-          },
+          items: [
+            { key: 'move', text: dragOptions && dragOptions.moveMenuItemText, onClick: this.onEnterKeyboardMoveMode },
+            { key: 'close', text: dragOptions && dragOptions.closeMenuItemText, onClick: this.onModalClose },
+          ],
+          alignTargetEdge: true,
+          coverTarget: true,
+          directionalHint: DirectionalHint.topLeftEdge,
+          directionalHintFixed: true,
+          shouldFocusOnMount: true,
+          target: this.$refs.scrollableContent,
+          onDismiss: this.onModalContextMenuClose,
         },
         keyboardMoveIcon: {
           class: classNames.keyboardMoveIcon,
-          attrs: { iconName: 'move' },
+          iconName: 'move',
         },
       })
     },
 
-    mergedLayerProps (): any {
+    mergedLayerProps(): any {
       const {
         classNames,
         isModeless,
@@ -186,25 +172,26 @@ export const ModalBase = Vue.extend({
   watch: {
     isOpen: {
       immediate: true,
-      handler (value): void {
-        if (value) this.isVisible = true
+      handler(value): void {
+        if (value)
+          this.isVisible = true
       },
     },
   },
 
   methods: {
-    onModalContextMenuClose (): void {
+    onModalContextMenuClose(): void {
       this.isModalMenuOpen = false
     },
 
-    onModalClose (): void {
+    onModalClose(): void {
       this.isModalMenuOpen = false
       this.isInKeyboardMoveMode = false
       this.internalIsOpen = false
       // TODO
     },
 
-    onEnterKeyboardMoveMode (): void {
+    onEnterKeyboardMoveMode(): void {
       this.lastSetX = this.x
       this.lastSetY = this.y
       this.isInKeyboardMoveMode = true
@@ -213,13 +200,13 @@ export const ModalBase = Vue.extend({
       // this._events.on(window, 'keydown', this._onKeyDown, true /* useCapture */);
     },
 
-    onDismiss (ev: Event): void {
+    onDismiss(ev: Event): void {
       this.$emit('dismiss', ev)
     },
   },
 
   // eslint-disable-next-line vue/require-render-return
-  render (h: CreateElement): any {
+  render(): any {
     const {
       dragOptions,
       isInKeyboardMoveMode,
@@ -230,24 +217,25 @@ export const ModalBase = Vue.extend({
       mergedLayerProps,
     } = this
 
-    if (!isOpen) return
+    if (!isOpen)
+      return
 
     const modalContent = h('div', this.slotProps.main, [
       dragOptions && isInKeyboardMoveMode && h('div', {
         class: classNames.keyboardMoveIconContainer,
       }, [
         dragOptions.keyboardMoveIconProps
-          ? h(Icon, { attrs: dragOptions.keyboardMoveIconProps })
+          ? h(Icon, dragOptions.keyboardMoveIconProps)
           : h(Icon, this.slotProps.keyboardMoveIcon),
       ]),
       h('div', this.slotProps.scrollableContent, [
         dragOptions && this.isModalMenuOpen && h(dragOptions.menu, this.slotProps.menu),
-        this.$slots.default,
+        this.$slots.default({}),
       ]),
     ])
 
     if (responsiveMode! >= ResponsiveMode.small) {
-      return h(Layer, { attrs: mergedLayerProps }, [
+      return h(Layer, mergedLayerProps, [
         h(Popup, this.slotProps.popup, [
           h('div', this.slotProps.root, [
             !isModeless && h(Overlay, this.slotProps.overlay),

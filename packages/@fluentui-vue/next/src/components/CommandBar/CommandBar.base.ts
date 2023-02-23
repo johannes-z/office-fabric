@@ -1,11 +1,12 @@
-import { asSlotProps, useStylingProps } from '@/utils/'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode, VueConstructor } from 'vue'
+import type { VNode } from 'vue'
+import Vue, { CreateElement, VueConstructor, defineComponent, h } from 'vue'
 import { CommandBarButton } from '../Button'
 import { OverflowSet } from '../OverflowSet'
 import { ResizeGroup } from '../ResizeGroup'
 import { getCommandButtonStyles } from './CommandBar.styles'
 import type { ICommandBarItemProps, ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
+import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ICommandBarStyleProps, ICommandBarStyles>()
 
@@ -13,32 +14,26 @@ export interface ICommandBarData {
   /**
    * Items being rendered in the primary region
    */
-  primaryItems: ICommandBarItemProps[];
+  primaryItems: ICommandBarItemProps[]
   /**
    * Items being rendered in the overflow
    */
-  overflowItems: ICommandBarItemProps[];
+  overflowItems: ICommandBarItemProps[]
   /**
    * Items being rendered on the far side
    */
-  farItems: ICommandBarItemProps[] | undefined;
+  farItems: ICommandBarItemProps[] | undefined
   /**
    * Length of original overflowItems to ensure that they are not moved into primary region on resize
    */
-  minimumOverflowItems: number;
+  minimumOverflowItems: number
   /**
    * Unique string used to cache the width of the command bar
    */
-  cacheKey: string;
+  cacheKey: string
 }
 
-export const CommandBarBase = (Vue as VueConstructor<
-Vue & {
-  $refs: {
-    input: HTMLInputElement
-  };
-}
->).extend({
+export const CommandBarBase = defineComponent({
   name: 'CommandBarBase',
 
   props: {
@@ -52,21 +47,21 @@ Vue & {
     overflowButtonProps: { type: Object, default: () => ({}) },
   },
 
-  data () {
+  data() {
     return {
       dataToRender: null,
     }
   },
 
   computed: {
-    classNames (): any {
+    classNames(): any {
       const { styles, theme } = this
       return getClassNames(styles, {
         theme,
       })
     },
 
-    commandBarData (): ICommandBarData {
+    commandBarData(): ICommandBarData {
       const {
         items,
         overflowItems,
@@ -84,91 +79,23 @@ Vue & {
         }),
       }
     },
-
-    slotProps (): any {
-      const {
-        classNames,
-        onRenderItem,
-      } = this
-
-      return ({
-        root: {
-          class: classNames.root,
-        },
-        primarySet: (h, data) => ({
-          ref: 'overflow',
-          class: classNames.primarySet,
-          props: {
-            items: data.primaryItems.map(i => ({
-              ...i,
-              text: !i.iconOnly ? i.text : undefined,
-            })),
-            overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
-          },
-          scopedSlots: {
-            item: ({ item }) => {
-              if (item.key in this.$scopedSlots) {
-                return this.$scopedSlots[item.key]!({
-                  item,
-                  render: onRenderItem,
-                })
-              }
-              return onRenderItem(item)
-            },
-            overflow: (overflowItems) => {
-              const { overflowButtonProps = {} } = this
-
-              const combinedOverflowItems: any[] = [
-                ...(overflowButtonProps.menuProps ? overflowButtonProps.menuProps.items : []),
-                ...overflowItems,
-              ]
-
-              return h(CommandBarButton, {
-                attrs: {
-                  role: 'menuitem',
-                },
-                props: {
-                  ...overflowButtonProps,
-                  styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.styles },
-                  className: ['ms-CommandBar-overflowButton', overflowButtonProps.className].join(' '),
-                  menuProps: { ...overflowButtonProps.menuProps, items: combinedOverflowItems },
-                  menuIconProps: { iconName: 'More', ...overflowButtonProps.menuIconProps },
-                },
-              })
-            },
-          },
-        }),
-        secondarySet: (data) => ({
-          class: classNames.secondarySet,
-          props: {
-            items: data.farItems.map(i => ({
-              ...i,
-              text: !i.iconOnly ? i.text : undefined,
-            })),
-          },
-          scopedSlots: {
-            item: ({ item }) => onRenderItem(item),
-          },
-        }),
-      })
-    },
   },
 
   watch: {
     commandBarData: {
       deep: true,
       immediate: true,
-      handler (val) {
+      handler(val) {
         this.dataToRender = val
       },
     },
   },
 
   methods: {
-    computeCacheKey (data: {
-      primaryItems?: ICommandBarItemProps[];
-      overflow?: boolean;
-      farItems?: ICommandBarItemProps[];
+    computeCacheKey(data: {
+      primaryItems?: ICommandBarItemProps[]
+      overflow?: boolean
+      farItems?: ICommandBarItemProps[]
     }): string {
       const { primaryItems, overflow, farItems } = data
       const returnKey = (acc: string, current: ICommandBarItemProps): string => {
@@ -182,7 +109,7 @@ Vue & {
 
       return [primaryKey, overflowKey, farKey].join('')
     },
-    onReduceData (data: any): any | undefined {
+    onReduceData(data: any): any | undefined {
       const { shiftOnReduce } = this
       let { primaryItems, overflowItems, cacheKey } = data
       const { farItems } = data
@@ -205,7 +132,7 @@ Vue & {
 
       return undefined
     },
-    onGrowData (data: any): any | undefined {
+    onGrowData(data: any): any | undefined {
       const { shiftOnReduce } = this
       const { minimumOverflowItems } = data
       let { primaryItems, overflowItems, cacheKey } = data
@@ -230,9 +157,7 @@ Vue & {
       return undefined
     },
 
-    onRenderItem (item: any): VNode {
-      const h = this.$createElement
-
+    onRenderItem(item: any): VNode {
       const commandButtonProps: ICommandBarItemProps = {
         allowDisabledFocus: true,
         role: 'menuitem',
@@ -244,28 +169,75 @@ Vue & {
 
       return h(CommandBarButton, {
         class: ['ms-CommandBarItem-link', item.className],
-        props: commandButtonProps,
+        ...commandButtonProps,
       }, item.text)
     },
   },
 
-  render (h: CreateElement): VNode {
+  render(): VNode {
+    const {
+      classNames,
+      onRenderItem,
+    } = this
     const data = this.dataToRender
 
     return h(ResizeGroup, {
-      props: {
-        data: data,
-        onReduceData: this.onReduceData,
-        onGrowData: this.onGrowData,
-      },
-      scopedSlots: {
-        default: data => [
-          h('div', this.slotProps.root, [
-            h(OverflowSet, this.slotProps.primarySet(h, data)),
-            h(OverflowSet, this.slotProps.secondarySet(data)),
-          ]),
-        ],
-      },
+      data,
+      onReduceData: this.onReduceData,
+      onGrowData: this.onGrowData,
+    }, {
+      default: data => [
+        h('div', {
+          class: classNames.root,
+        }, [
+          h(OverflowSet, {
+            ref: 'overflow',
+            class: classNames.primarySet,
+            items: data.primaryItems.map(i => ({
+              ...i,
+              text: !i.iconOnly ? i.text : undefined,
+            })),
+            overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
+          }, {
+            item: ({ item }) => {
+              if (item.key in this.$slots) {
+                return this.$slots[item.key]!({
+                  item,
+                  render: onRenderItem,
+                })
+              }
+              return onRenderItem(item)
+            },
+            overflow: (overflowItems) => {
+              console.log(overflowItems)
+              const { overflowButtonProps = {} } = this
+
+              const combinedOverflowItems: any[] = [
+                ...(overflowButtonProps.menuProps ? overflowButtonProps.menuProps.items : []),
+                ...overflowItems,
+              ]
+
+              return h(CommandBarButton, {
+                role: 'menuitem',
+                ...overflowButtonProps,
+                styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.styles },
+                className: ['ms-CommandBar-overflowButton', overflowButtonProps.className].join(' '),
+                menuProps: { ...overflowButtonProps.menuProps, items: combinedOverflowItems },
+                menuIconProps: { iconName: 'More', ...overflowButtonProps.menuIconProps },
+              })
+            },
+          }),
+          h(OverflowSet, {
+            class: classNames.secondarySet,
+            items: data.farItems.map(i => ({
+              ...i,
+              text: !i.iconOnly ? i.text : undefined,
+            })),
+          }, {
+            item: ({ item }) => onRenderItem(item),
+          }),
+        ]),
+      ],
     })
   },
 })

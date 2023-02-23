@@ -1,31 +1,28 @@
-
-import Vue, { VNode } from 'vue'
+import { h } from 'vue'
 import { asSlotProps, useStylingProps } from '@/utils'
-import type { IOverflowSetItemProps, IOverflowSetProps } from './OverflowSet.types'
 
-export const OverflowButton = Vue.extend({
-  name: 'OverflowButton',
+export const OverflowButton = (props, { attrs, slots }) => {
+  const { className, overflowItems = [] } = props
 
-  functional: true,
+  const modifiedOverflowItems = overflowItems
 
-  props: {
-    ...useStylingProps(),
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: className ?? attrs.class,
+    },
+  })
 
-    overflowItems: { type: Array as () => any[], default: () => [] },
-  },
+  console.log({
+    overflowItems,
+    modifiedOverflowItems,
+  })
 
-  render (h, ctx): VNode {
-    const { className, overflowItems } = ctx.props
+  return h('div', slotProps.root, slots.overflow?.(modifiedOverflowItems))
+}
 
-    const modifiedOverflowItems = overflowItems
+OverflowButton.props = Object.keys({
+  ...useStylingProps(),
 
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: className ?? ctx.data.class,
-      },
-    })
-
-    return h('div', slotProps.root, ctx.scopedSlots.overflow?.(modifiedOverflowItems))
-  },
+  overflowItems: { type: Array as () => any[], default: () => [] },
 })

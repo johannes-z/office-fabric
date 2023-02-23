@@ -89,13 +89,13 @@ export const BaseButton = defineComponent({
         ref: 'root',
         href,
         class: classNames.root,
-        // onClick: (ev) => {
-        //   if (disabled)
-        //     return
-        //   console.log('BaseButton > click')
-        //   this.showMenu = !this.showMenu
-        //   this.$emit('click', ev)
-        // },
+        onClick: (ev) => {
+          if (disabled)
+            return
+          console.log('BaseButton > click')
+          this.showMenu = !this.showMenu
+          // this.$emit('click', ev)
+        },
       },
       flexContainer: {
         class: classNames.flexContainer,

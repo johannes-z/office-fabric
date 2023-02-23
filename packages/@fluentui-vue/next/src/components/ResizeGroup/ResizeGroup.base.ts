@@ -1,7 +1,9 @@
-import Vue, { PropType, VNode } from 'vue'
-import { asSlotProps, useStylingProps } from '@/utils'
-import { IResizeGroupProps, ResizeGroupDirection } from './ResizeGroup.types'
 import { debounce } from '@fluentui-vue/utilities'
+import type { VNode } from 'vue'
+import { defineComponent, h } from 'vue'
+import type { IResizeGroupProps } from './ResizeGroup.types'
+import { ResizeGroupDirection } from './ResizeGroup.types'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 const RESIZE_DELAY = 16
 
@@ -9,18 +11,18 @@ export interface IResizeGroupState {
   /**
    * Final data used to render proper sized component
    */
-  renderedData?: any;
+  renderedData?: any
 
   /**
    * Data to render in a hidden div for measurement
    */
-  dataToMeasure?: any;
+  dataToMeasure?: any
 
   /**
    * Set to true when the content container might have new dimensions and should
    * be remeasured.
    */
-  measureContainer?: boolean;
+  measureContainer?: boolean
 
   /**
    * Are we resizing to accommodate having more or less available space?
@@ -29,7 +31,7 @@ export interface IResizeGroupState {
    * The 'shrink' direction is when the contents don't fit in the container and we need
    * to find a transformation of the data that makes everything fit.
    */
-  resizeDirection?: 'grow' | 'shrink';
+  resizeDirection?: 'grow' | 'shrink'
 }
 
 /**
@@ -45,9 +47,8 @@ export const getMeasurementCache = () => {
      * Returns undefined otherwise.
      */
     getCachedMeasurement: (data: any): number | undefined => {
-      if (data && data.cacheKey && measurementsCache.hasOwnProperty(data.cacheKey)) {
+      if (data && data.cacheKey && measurementsCache.hasOwnProperty(data.cacheKey))
         return measurementsCache[data.cacheKey]
-      }
 
       return undefined
     },
@@ -56,9 +57,8 @@ export const getMeasurementCache = () => {
      * If the data has a cacheKey, store that measurement in the measurementsCache.
      */
     addMeasurementToCache: (data: any, measurement: number): void => {
-      if (data.cacheKey) {
+      if (data.cacheKey)
         measurementsCache[data.cacheKey] = measurement
-      }
     },
   }
 }
@@ -77,11 +77,10 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
    * @param getElementToMeasureDimension - A function that returns the measurement of the rendered data.
    * Only called when the measurement is not in the cache.
    */
-  function _getMeasuredDimension (measuredData: any, getElementToMeasureDimension: () => number): number {
+  function _getMeasuredDimension(measuredData: any, getElementToMeasureDimension: () => number): number {
     const cachedDimension = _measurementCache.getCachedMeasurement(measuredData)
-    if (cachedDimension !== undefined) {
+    if (cachedDimension !== undefined)
       return cachedDimension
-    }
 
     const measuredDimension = getElementToMeasureDimension()
     _measurementCache.addMeasurementToCache(measuredData, measuredDimension)
@@ -96,7 +95,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
    * @param getElementToMeasureDimension - A function that returns the measurement of the rendered data.
    * Only called when the measurement is not in the cache.
    */
-  function _shrinkContentsUntilTheyFit (
+  function _shrinkContentsUntilTheyFit(
     data: any,
     onReduceData: (prevData: any) => any,
     getElementToMeasureDimension: () => number,
@@ -146,7 +145,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
    * @param getElementToMeasureDimension - A function that returns the measurement of the rendered data.
    * Only called when the measurement is not in the cache.
    */
-  function _growDataUntilItDoesNotFit (
+  function _growDataUntilItDoesNotFit(
     data: any,
     onGrowData: (prevData: any) => any,
     getElementToMeasureDimension: () => number,
@@ -195,7 +194,7 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
    * @param renderedData - The data that was rendered prior to the container size changing.
    * @param onGrowData - Set to true if the Resize group has an onGrowData function.
    */
-  function _updateContainerDimension (
+  function _updateContainerDimension(
     newDimension: number,
     fullDimensionData: any,
     renderedData: any,
@@ -208,13 +207,15 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
           resizeDirection: 'grow',
           dataToMeasure: onGrowData(renderedData),
         }
-      } else {
+      }
+      else {
         nextState = {
           resizeDirection: 'shrink',
           dataToMeasure: fullDimensionData,
         }
       }
-    } else {
+    }
+    else {
       nextState = {
         resizeDirection: 'shrink',
         dataToMeasure: renderedData,
@@ -224,16 +225,15 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
     return { ...nextState, measureContainer: false }
   }
 
-  function getNextState (
+  function getNextState(
     props: IResizeGroupProps,
     currentState: IResizeGroupState,
     getElementToMeasureDimension: () => number,
     newContainerDimension?: number,
   ): IResizeGroupState | undefined {
     // If there is no new container width/height or data to measure, there is no need for a new state update
-    if (newContainerDimension === undefined && currentState.dataToMeasure === undefined) {
+    if (newContainerDimension === undefined && currentState.dataToMeasure === undefined)
       return undefined
-    }
 
     if (newContainerDimension) {
       // If we know the last container size and we rendered data at that width/height, we can do an optimized render
@@ -264,7 +264,8 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
             props.onReduceData,
           ),
         }
-      } else {
+      }
+      else {
         nextState = {
           ...nextState,
           ..._shrinkContentsUntilTheyFit(currentState.dataToMeasure, props.onReduceData, getElementToMeasureDimension),
@@ -276,15 +277,14 @@ export const getNextResizeGroupStateProvider = (measurementCache = getMeasuremen
   }
 
   /** Function that determines if we need to render content for measurement based on the measurement cache contents. */
-  function shouldRenderDataForMeasurement (dataToMeasure: any | undefined): boolean {
-    if (!dataToMeasure || _measurementCache.getCachedMeasurement(dataToMeasure) !== undefined) {
+  function shouldRenderDataForMeasurement(dataToMeasure: any | undefined): boolean {
+    if (!dataToMeasure || _measurementCache.getCachedMeasurement(dataToMeasure) !== undefined)
       return false
-    }
 
     return true
   }
 
-  function getInitialResizeGroupState (data: any): IResizeGroupState {
+  function getInitialResizeGroupState(data: any): IResizeGroupState {
     return {
       dataToMeasure: { ...data },
       resizeDirection: 'grow',
@@ -305,7 +305,7 @@ const hiddenParentStyles = { position: 'relative' }
 
 const nextResizeGroupStateProvider = getNextResizeGroupStateProvider()
 
-export const ResizeGroupBase = Vue.extend({
+export const ResizeGroupBase = defineComponent({
   name: 'ResizeGroupBase',
 
   props: {
@@ -319,7 +319,7 @@ export const ResizeGroupBase = Vue.extend({
     getItemRefs: { type: Function, default: null },
   },
 
-  data (): any {
+  data(): any {
     return {
       resizeObserver: null,
       hasRenderedContent: false,
@@ -330,37 +330,38 @@ export const ResizeGroupBase = Vue.extend({
   },
 
   computed: {
-    isInitialMeasure (): boolean {
+    isInitialMeasure(): boolean {
       return !this.hasRenderedContent && this.dataNeedsMeasuring
     },
   },
 
   watch: {
-    data: {
-      handler (value) {
+    'data': {
+      handler(value) {
         this.state = Object.assign({}, nextResizeGroupStateProvider.getInitialResizeGroupState(this.data))
       },
       deep: true,
       immediate: true,
     },
-    'state.dataToMeasure' (value) {
+    'state.dataToMeasure': function (value) {
       this.dataNeedsMeasuring = nextResizeGroupStateProvider.shouldRenderDataForMeasurement(value)
     },
-    'state.renderedData' (value) {
+    'state.renderedData': function (value) {
       // if (value) this.hasRenderedContent = true
       this.hasRenderedContent = !!value
     },
-    'state' (value) {
-      if (!value.dataToMeasure) return
+    'state': function (value) {
+      if (!value.dataToMeasure)
+        return
       this.afterComponentRendered(this.direction)
     },
   },
 
-  beforeDestroy () {
-    this.resizeObserver.disconnect()
+  beforeUnmount() {
+    this.resizeObserver?.disconnect()
   },
 
-  async mounted (): Promise<void> {
+  async mounted(): Promise<void> {
     this.afterComponentRendered(this.direction)
     this.resizeObserver = new ResizeObserver(
       () => debounce(window.requestAnimationFrame(this.onResize), RESIZE_DELAY, false),
@@ -369,14 +370,15 @@ export const ResizeGroupBase = Vue.extend({
   },
 
   methods: {
-    onResize (): void {
-      if (this.$refs.root) this.measureContainer = true
+    onResize(): void {
+      if (this.$refs.root)
+        this.measureContainer = true
       this.afterComponentRendered(this.direction)
     },
-    remeasure (): void {
+    remeasure(): void {
       this.onResize()
     },
-    afterComponentRendered (direction?: ResizeGroupDirection) :void {
+    afterComponentRendered(direction?: ResizeGroupDirection): void {
       window.requestAnimationFrame(async () => {
         let containerDimension
         if (this.measureContainer && this.$refs.root) {
@@ -392,9 +394,9 @@ export const ResizeGroupBase = Vue.extend({
             const refToMeasure = !this.hasRenderedContent
               ? this.$refs.initialHiddenDiv
               : this.$refs.updateHiddenDiv
-            if (!refToMeasure) {
+            if (!refToMeasure)
               return 0
-            }
+
             return direction && direction === ResizeGroupDirection.vertical
               ? refToMeasure.scrollHeight
               : refToMeasure.scrollWidth
@@ -402,14 +404,13 @@ export const ResizeGroupBase = Vue.extend({
           containerDimension,
         )
 
-        if (nextState) {
+        if (nextState)
           this.state = nextState
-        }
       })
     },
   },
 
-  render (h): VNode {
+  render(): VNode {
     const { dataToMeasure, renderedData } = this.state
     const dataNeedsMeasuring = this.dataNeedsMeasuring
     const isInitialMeasure = this.isInitialMeasure
@@ -432,7 +433,7 @@ export const ResizeGroupBase = Vue.extend({
       },
     })
 
-    const onRenderData = (data: any) => this.$scopedSlots.default?.(data)
+    const onRenderData = (data: any) => this.$slots.default?.(data)
 
     return h('div', slotProps.root, [
       h('div', slotProps.parent, [

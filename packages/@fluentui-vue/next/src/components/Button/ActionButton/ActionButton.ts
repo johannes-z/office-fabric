@@ -4,6 +4,9 @@ import { getStyles } from './ActionButton.styles'
 import { asSlotProps } from '@/utils'
 
 export const ActionButton = (props, { attrs, slots }) => {
+  console.log({
+    attrs, props,
+  })
   const slotProps = asSlotProps({
     root: {
       ...attrs,

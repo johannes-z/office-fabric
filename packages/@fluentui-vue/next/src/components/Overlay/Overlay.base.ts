@@ -1,40 +1,25 @@
-
-import { asSlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { CreateElement, VNode } from 'vue'
-import { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
+import { h } from 'vue'
+import type { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
+import { asSlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IOverlayStyleProps, IOverlayStyles>()
 
-export const OverlayBase = Vue.extend({
-  name: 'OverlayBase',
+export const OverlayBase = (props, { attrs, slots }) => {
+  const { theme, styles, className, dark, isDarkThemed } = props
 
-  functional: true,
+  const classNames = getClassNames(styles, {
+    theme,
+    className,
+    isDark: dark || isDarkThemed,
+  })
 
-  props: {
-    ...useStylingProps(),
-    dark: { type: Boolean, default: false },
-    isDarkThemed: { type: Boolean, default: false },
-    // TODO use allowTouchBodyScroll
-    allowTouchBodyScroll: { type: Boolean, default: false },
-  },
+  const slotProps = asSlotProps({
+    root: {
+      ...attrs,
+      class: classNames.root,
+    },
+  })
 
-  render (h: CreateElement, ctx): VNode {
-    const { theme, styles, className, dark, isDarkThemed } = ctx.props
-
-    const classNames = getClassNames(styles, {
-      theme,
-      className,
-      isDark: dark || isDarkThemed,
-    })
-
-    const slotProps = asSlotProps({
-      root: {
-        ...ctx.data,
-        class: classNames.root,
-      },
-    })
-
-    return h('div', slotProps.root, ctx.children)
-  },
-})
+  return h('div', slotProps.root, slots)
+}

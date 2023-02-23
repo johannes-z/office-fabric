@@ -7,18 +7,22 @@ export * from './SearchBox'
 export * from './TextField'
 export * from './Toggle'
 
+// Commands, Menus & Navs
+export * from './CommandBar'
+export * from './ContextualMenu'
+export * from './Nav'
+
+// Surfaces
 export * from './Callout'
+export * from './Dialog'
+// export * from './Modal'
 
 // // export * from './ActivityItem'
-// export * from './CommandBar'
-// export * from './ContextualMenu'
-// // export * from './Dialog'
 // // export * from './Facepile'
 // // export * from './DetailsList'
 // export * from './Layer'
 // // export * from './List'
 // export * from './MessageBar'
-// export * from './Modal'
 // export * from './OverflowSet'
 // export * from './Overlay'
 // // export * from './Persona'
