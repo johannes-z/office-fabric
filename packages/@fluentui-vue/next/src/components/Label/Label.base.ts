@@ -8,11 +8,15 @@ const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 export const LabelBase = (props, { attrs, slots }) => {
   const { styles, theme, className, as: RootType = 'label', disabled, required } = props
 
+  
+  const isDisabled = disabled != null && disabled !== false
+  const isRequired = required != null && required !== false
+
   const classNames = getClassNames(styles, {
     theme,
     className,
-    disabled,
-    required,
+    disabled: isDisabled,
+    required: isRequired,
   })
 
   const slotProps = asSlotProps<ILabelStyles>({

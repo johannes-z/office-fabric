@@ -1,4 +1,4 @@
-import { getId } from '@uifabric-vue/utilities'
+import { getId } from '@fluentui-vue/utilities'
 import { ref as useRef } from 'vue'
 
 /**

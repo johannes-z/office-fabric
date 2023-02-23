@@ -8,11 +8,13 @@ const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
   const { styles, theme, as, target, className, href, disabled, underline } = props
 
+  const isDisabled = disabled != null && disabled !== false
+
   const classNames = getClassNames(styles, {
     theme: theme!,
     className,
     isButton: !href,
-    isDisabled: disabled,
+    isDisabled: isDisabled,
     isUnderlined: underline,
   })
 
@@ -24,11 +26,11 @@ export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
       class: classNames.root,
       ...rootType === 'a' && {
         target,
-        href: disabled ? undefined : href,
+        href: isDisabled ? undefined : href,
       },
       ...rootType === 'button' && {
         type: 'button',
-        disabled,
+        isDisabled,
       },
     },
   })

@@ -149,7 +149,7 @@ export const NavBase = defineComponent({
         className: classNames.link,
         style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
         onClick: this.onNavLinkClicked.bind(this, link),
-      }, link.name)
+      }, () => link.name)
     },
 
     onNavLinkClicked(link: INavLink, ev: MouseEvent): void {

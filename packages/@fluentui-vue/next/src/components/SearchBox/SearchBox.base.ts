@@ -22,7 +22,7 @@ export const SearchBoxBase = defineComponent({
     underlined: { type: Boolean, default: false },
     defaultValue: { type: String, default: null },
     placeholder: { type: String, default: 'Search' },
-    value: { type: String, default: '' },
+    modelValue: { type: String, default: '' },
     disableAnimation: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: false },
 
@@ -40,13 +40,13 @@ export const SearchBoxBase = defineComponent({
       disabled,
       disableAnimation,
       showIcon,
-      value,
+      modelValue,
       iconProps,
       placeholder,
     } = toRefs(props)
 
     const hasFocus = ref(false)
-    const internalValue = ref(value.value ?? '')
+    const internalValue = ref(modelValue.value ?? '')
 
     const classNames = computed(() => getClassNames(styles.value!, {
       theme: theme.value,
@@ -54,7 +54,7 @@ export const SearchBoxBase = defineComponent({
       underlined: underlined.value,
       hasFocus: hasFocus.value,
       disabled: disabled.value,
-      hasInput: value.value.length > 0,
+      hasInput: modelValue.value.length > 0,
       disableAnimation: disableAnimation.value,
       showIcon: showIcon.value,
     }))
@@ -156,11 +156,11 @@ export const SearchBoxBase = defineComponent({
       emit('search', internalValue.value)
     }
 
-    watch(value, (value) => {
+    watch(modelValue, (value) => {
       internalValue.value = value
     })
     watch(internalValue, (value) => {
-      emit('input', value)
+      emit('update:modelValue', value)
       emit('change', value)
     })
 

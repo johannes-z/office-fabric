@@ -1,4 +1,5 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
     "noImplicitAny": false,
     "outDir": "lib",
@@ -22,7 +23,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "src/*" ],
+      "@/*": [ "./src/*" ],
     },
     "lib": [
       "esnext",
@@ -31,15 +32,6 @@
       "scripthost"
     ]
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
-  "exclude": [
-    "src/**/*.test.ts",
-    "node_modules"
-  ]
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
 }

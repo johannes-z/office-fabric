@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "serve": "yarn workspace api-docs serve",
-    "dev": "yarn workspace @uifabric-vue/office-ui-fabric-vue build -w",
-    "build": "yarn workspace @uifabric-vue/utilities build && yarn workspace @uifabric-vue/office-ui-fabric-vue build",
-    "ghpages": "yarn workspace api-docs build && cd ./packages/api-docs/dist && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/johannes-z/office-fabric master:gh-pages"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.35.2",

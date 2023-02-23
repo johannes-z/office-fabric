@@ -17,11 +17,11 @@ function defineRoute({ path, name, component }) {
   return {
     name,
     url: path,
-    key: path,
+    key: path
   }
 }
 
-export const nav: INavLinkGroup[] = [
+export const nav = [
   {
     links: [{
       name: 'Basic Inputs',
@@ -60,6 +60,80 @@ export const nav: INavLinkGroup[] = [
           path: '/Toggle',
           name: 'Toggle',
           component: () => import('../views/TogglePage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
+      name: 'Commands, Menus & Navs',
+      links: [
+        defineRoute({
+          path: '/ContextualMenu',
+          name: 'ContextualMenu',
+          component: () => import('../views/ContextualMenuPage.vue'),
+        }),
+        defineRoute({
+          path: '/CommandBar',
+          name: 'CommandBar',
+          component: () => import('../views/CommandBarPage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
+      name: 'Progress',
+      links: [
+        defineRoute({
+          path: '/ProgressIndicator',
+          name: 'ProgressIndicator',
+          component: () => import('../views/ProgressIndicatorPage.vue'),
+        }),
+        defineRoute({
+          path: '/Spinner',
+          name: 'Spinner',
+          component: () => import('../views/SpinnerPage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
+      name: 'Surfaces',
+      links: [
+        defineRoute({
+          path: '/Callout',
+          name: 'Callout',
+          component: () => import('../views/CalloutPage.vue'),
+        }),
+        defineRoute({
+          path: '/Dialog',
+          name: 'Dialog',
+          component: () => import('../views/DialogPage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
+      name: 'Utilities',
+      links: [
+        defineRoute({
+          path: '/Icon',
+          name: 'Icon',
+          component: () => import('../views/IconPage.vue'),
+        }),
+        defineRoute({
+          path: '/Image',
+          name: 'Image',
+          component: () => import('../views/ImagePage.vue'),
+        }),
+        defineRoute({
+          path: '/Separator',
+          name: 'Separator',
+          component: () => import('../views/SeparatorPage.vue'),
+        }),
+        defineRoute({
+          path: '/Stack',
+          name: 'Stack',
+          component: () => import('../views/StackPage.vue'),
         }),
       ],
       isExpanded: true,
