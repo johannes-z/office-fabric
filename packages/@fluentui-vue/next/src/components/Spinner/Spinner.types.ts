@@ -1,4 +1,61 @@
-import type { IStyle } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+
+/**
+ * {@docCategory Spinner}
+ */
+export interface ISpinner {}
+
+/**
+ * Spinner component props.
+ * {@docCategory Spinner}
+ */
+export interface ISpinnerProps {
+
+  /**
+   * The size of Spinner to render.
+   * @defaultvalue SpinnerType.medium
+   */
+  size?: SpinnerSize
+
+  /**
+   * The label to show next to the Spinner. Label updates will be announced to the screen readers.
+   * Use ariaLive to control politeness level.
+   */
+  label?: string
+
+  /**
+   * Additional CSS class(es) to apply to the Spinner.
+   */
+  className?: string
+
+  /**
+   * Politeness setting for label update announcement.
+   * @defaultvalue polite
+   */
+  ariaLive?: 'assertive' | 'polite' | 'off'
+
+  /**
+   * Alternative status label for screen reader
+   */
+  ariaLabel?: string
+
+  /**
+   * Theme (provided through customization.)
+   */
+  theme?: ITheme
+
+  /**
+   * Call to provide customized styling that will layer on top of the variant rules.
+   */
+  styles?: IStyleFunctionOrObject<ISpinnerStyleProps, ISpinnerStyles>
+
+  /**
+   * The position of the label in regards of the spinner animation.
+   * @defaultvalue SpinnerLabelPosition.bottom
+   */
+  labelPosition?: SpinnerLabelPosition
+}
 
 /**
  * Possible locations of the label in regards to the spinner

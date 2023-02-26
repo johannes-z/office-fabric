@@ -30,16 +30,17 @@ export const TextFieldBase = defineComponent({
     readonly: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: String, default: null },
-    value: { type: String, default: '' },
     defaultValue: { type: String, default: '' },
     errorMessage: { type: String, default: null },
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
+
+    modelValue: { type: String, default: '' },
   },
 
   setup(props, { attrs, slots, emit }) {
     const {
-      value,
+      modelValue,
       styles,
       theme,
       className,
@@ -60,7 +61,7 @@ export const TextFieldBase = defineComponent({
     } = toRefs(props)
 
     const isFocused = ref(false)
-    const internalValue = ref(value.value || defaultValue.value || '')
+    const internalValue = ref(modelValue.value || defaultValue.value || '')
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
@@ -85,7 +86,7 @@ export const TextFieldBase = defineComponent({
 
     const textElementRef = ref() as Ref<HTMLTextAreaElement>
 
-    watch(value, (value: string) => {
+    watch(modelValue, (value: string) => {
       internalValue.value = value
     })
 
@@ -113,7 +114,7 @@ export const TextFieldBase = defineComponent({
     }
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
-      emit('input', internalValue.value)
+      emit('update:modelValue', internalValue.value)
       emit('change', ev, internalValue.value)
     }
 

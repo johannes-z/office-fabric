@@ -9,7 +9,7 @@ const value1 = ref(true)
   <h1>Toggle</h1>
 
   <Toggle v-model="value1" label="Enabled and checked" on-text="On" off-text="Off" />
-  {{ value1 }}
+
   <Toggle label="Enabled and unchecked" on-text="On" off-text="Off" />
 
   <Toggle label="Disabled and checked" default-checked disabled on-text="On" off-text="Off" />

@@ -60,7 +60,14 @@ export const PersonaPresenceBase = defineComponent({
     },
 
     coinSizeWithPresenceIconStyle(): any {
-      const { coinSize, presenceFontSize, presenceHeightWidth } = this
+      const { coinSize, presenceHeightWidth } = this
+
+      const presenceFontSize: string = coinSize
+        ? coinSize / coinSizeFontScaleFactor < presenceFontMaxSize
+          ? `${coinSize / coinSizeFontScaleFactor}px`
+          : `${presenceFontMaxSize}px`
+        : ''
+
       return coinSize
         ? { fontSize: presenceFontSize, lineHeight: presenceHeightWidth }
         : undefined
@@ -78,7 +85,6 @@ export const PersonaPresenceBase = defineComponent({
 
     icon() {
       const { presence, isOutOfOffice } = this
-      console.log(presence, isOutOfOffice)
       return determineIcon(presence, isOutOfOffice)
     },
   },

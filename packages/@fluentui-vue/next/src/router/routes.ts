@@ -151,6 +151,11 @@ export const nav = [
           name: 'Stack',
           component: () => import('../views/StackPage.vue'),
         }),
+        defineRoute({
+          path: '/Text',
+          name: 'Text',
+          component: () => import('../views/TextPage.vue'),
+        }),
       ],
       isExpanded: true,
     }],

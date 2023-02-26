@@ -1,6 +1,6 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
-import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
+import type { ISpinnerProps, ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ISpinnerStyleProps, ISpinnerStyles>()
@@ -14,8 +14,8 @@ export const SpinnerBase = defineFunctionalComponent({
     default: 'bottom' as const,
   },
   size: { type: [Number, String], default: 20 },
-}, (props, { attrs, slots }) => {
-  const { styles, className, size = 20, label, labelPosition = 'bottom' } = props
+}, (props: ISpinnerProps, { attrs, slots }) => {
+  const { styles, className, size = 20, label, labelPosition } = props
 
   const classNames = getClassNames(styles, {
     className,
