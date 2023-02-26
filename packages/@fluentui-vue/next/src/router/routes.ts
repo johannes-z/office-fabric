@@ -17,7 +17,7 @@ function defineRoute({ path, name, component }) {
   return {
     name,
     url: path,
-    key: path
+    key: path,
   }
 }
 
@@ -60,6 +60,17 @@ export const nav = [
           path: '/Toggle',
           name: 'Toggle',
           component: () => import('../views/TogglePage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
+      name: 'Items & Lists',
+      links: [
+        defineRoute({
+          path: '/Persona',
+          name: 'Persona',
+          component: () => import('../views/PersonaPage.vue'),
         }),
       ],
       isExpanded: true,

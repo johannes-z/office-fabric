@@ -1,14 +1,14 @@
+import { AnimationClassNames } from '@fluentui-vue/style-utilities'
 import type { ICalloutPositionedInfo, IPosition, IRectangle } from '@fluentui-vue/utilities'
 import { DirectionalHint, RectangleEdge, classNamesFunction, getBoundsFromTargetWindow, getMaxHeight, positionCallout } from '@fluentui-vue/utilities'
-import { AnimationClassNames } from '@fluentui-vue/style-utilities'
 import { elementContains } from '@fluentui/dom-utilities'
 import type { IProcessedStyleSet, IStyle } from '@fluentui/merge-styles'
 import type { VNode } from 'vue'
-import Vue, { defineComponent, h } from 'vue'
+import { defineComponent, h } from 'vue'
 import { Popup } from '../Popup'
 import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
-import type { SlotProps } from '@/utils'
 import { asSlotProps, useStylingProps } from '@/utils'
+import type { SlotProps } from '@/utils'
 
 const ANIMATIONS: { [key: number]: string | undefined } = {
   [RectangleEdge.top]: AnimationClassNames.slideUpIn10,

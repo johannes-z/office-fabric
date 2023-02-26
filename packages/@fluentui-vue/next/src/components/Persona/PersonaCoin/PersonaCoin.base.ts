@@ -1,7 +1,6 @@
 import { classNamesFunction, getRTL, memoizeFunction } from '@fluentui-vue/utilities'
 import { mergeStyles } from '@fluentui/merge-styles'
-import type { CreateElement, VNode } from 'vue'
-import Vue from 'vue'
+import { defineComponent, h } from 'vue'
 import { Icon } from '../../Icon'
 import { Image, ImageFit } from '../../Image'
 import type {
@@ -38,7 +37,7 @@ const getInitialsStyles = memoizeFunction(
     ),
 )
 
-export const PersonaCoinBase = Vue.extend({
+export const PersonaCoinBase = defineComponent({
   props: {
     ...useStylingProps(),
 
@@ -111,18 +110,18 @@ export const PersonaCoinBase = Vue.extend({
     },
   },
 
-  render(h: CreateElement): VNode {
+  render() {
     const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
 
     return h('div', {
       class: classNames.coin,
-      attrs: { role: 'presentation' },
+      role: 'presentation',
     }, [
       (size !== PersonaSize.size8)
         ? h('div', {
           class: classNames.imageArea,
           style: this.coinSizeStyle,
-          attrs: { role: 'presentation' },
+          role: 'presentation',
         }, [
           shouldRenderInitials && h('div', {
             class: mergeStyles(
@@ -130,7 +129,7 @@ export const PersonaCoinBase = Vue.extend({
               !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor(this.$props as any) },
             ),
             style: coinSizeStyle,
-            attrs: { ariaHidden: 'true' },
+            ariaHidden: 'true',
           }, [
             initials
               ? h('span', initials)
@@ -138,18 +137,17 @@ export const PersonaCoinBase = Vue.extend({
           ]),
           imageUrl && h(Image, {
             class: classNames.image,
-            attrs: {
-              imageFit: ImageFit.cover,
-              src: imageUrl,
-              width: dimension,
-              height: dimension,
-            },
+
+            imageFit: ImageFit.cover,
+            src: imageUrl,
+            width: dimension,
+            height: dimension,
           }),
-          h(PersonaPresence, { props: personaPresenceProps }),
+          h(PersonaPresence, personaPresenceProps),
         ])
         : presence
-          ? h(PersonaPresence, { props: personaPresenceProps })
-          : h(Icon, { class: classNames.size10WithoutPresenceIcon, props: { iconName: 'Contact' } }),
+          ? h(PersonaPresence, personaPresenceProps)
+          : h(Icon, { class: classNames.size10WithoutPresenceIcon, iconName: 'Contact' }),
     ])
   },
 })

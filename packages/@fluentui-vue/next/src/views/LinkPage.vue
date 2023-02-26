@@ -11,13 +11,16 @@ function handleClickOnLink(ev: MouseEvent) {
   <h1>Link</h1>
 
   <DocumentCard>
+    <h2>Usage</h2>
+
+    <h3>Link</h3>
     <Text>
       When a link has an href,
       <Link href="https://developer.microsoft.com/en-us/fluentui#/controls/web/link" underline>
         it renders as an anchor tag.
       </Link>
       Without an href,
-      <Link @click="handleClickOnLink" underline>
+      <Link underline @click="handleClickOnLink">
         the link is rendered as a button
       </Link>
       . You can also use the disabled attribute to create a

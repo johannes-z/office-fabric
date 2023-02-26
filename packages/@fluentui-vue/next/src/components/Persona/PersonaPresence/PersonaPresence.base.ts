@@ -1,10 +1,10 @@
-import {
-  PersonaPresence as PersonaPresenceEnum, PersonaSize, IPersonaPresenceStyleProps, IPersonaPresenceStyles, IPersonaPresenceProps,
-} from '../Persona.types'
-import { sizeBoolean } from '../PersonaConsts'
-import { Icon } from '../../Icon'
-import Vue, { CreateElement, VNode } from 'vue'
+import { defineComponent, h } from 'vue'
+
 import { classNamesFunction } from '@fluentui-vue/utilities'
+import { Icon } from '../../Icon'
+import type { IPersonaPresenceStyleProps, IPersonaPresenceStyles, PersonaSize } from '../Persona.types'
+import { PersonaPresence as PersonaPresenceEnum } from '../Persona.types'
+import { sizeBoolean } from '../PersonaConsts'
 import { useStylingProps } from '@/utils'
 
 const coinSizeFontScaleFactor = 6
@@ -18,7 +18,7 @@ const getClassNames = classNamesFunction<IPersonaPresenceStyleProps, IPersonaPre
   cacheSize: 100,
 })
 
-export const PersonaPresenceBase = Vue.extend({
+export const PersonaPresenceBase = defineComponent({
   props: {
     ...useStylingProps(),
 
@@ -29,44 +29,44 @@ export const PersonaPresenceBase = Vue.extend({
     presenceTitle: {},
   },
 
-  data () {
+  data() {
     return {
       PersonaPresenceEnum,
     }
   },
 
   computed: {
-    renderIcon () {
+    renderIcon() {
       const { coinSize } = this
       const size = sizeBoolean(this.size as PersonaSize)
-      return !(size.isSize8 || size.isSize10 || size.isSize16 || size.isSize24 || size.isSize28 || size.isSize32) &&
-        (coinSize ? coinSize > 32 : true)
+      return !(size.isSize8 || size.isSize10 || size.isSize16 || size.isSize24 || size.isSize28 || size.isSize32)
+        && (coinSize ? coinSize > 32 : true)
     },
 
-    presenceHeightWidth () {
+    presenceHeightWidth() {
       const { coinSize } = this
       return coinSize
         ? coinSize / coinSizePresenceScaleFactor < presenceMaxSize
-          ? coinSize / coinSizePresenceScaleFactor + 'px'
-          : presenceMaxSize + 'px'
+          ? `${coinSize / coinSizePresenceScaleFactor}px`
+          : `${presenceMaxSize}px`
         : ''
     },
 
-    coinSizeWithPresenceStyle () {
+    coinSizeWithPresenceStyle() {
       const { coinSize, presenceHeightWidth } = this
       return coinSize
         ? { width: presenceHeightWidth, height: presenceHeightWidth }
         : undefined
     },
 
-    coinSizeWithPresenceIconStyle (): any {
+    coinSizeWithPresenceIconStyle(): any {
       const { coinSize, presenceFontSize, presenceHeightWidth } = this
       return coinSize
         ? { fontSize: presenceFontSize, lineHeight: presenceHeightWidth }
         : undefined
     },
 
-    classNames () {
+    classNames() {
       const { styles, theme, presence, size, isOutOfOffice } = this
       return getClassNames(styles, {
         theme,
@@ -76,41 +76,38 @@ export const PersonaPresenceBase = Vue.extend({
       })
     },
 
-    icon () {
+    icon() {
       const { presence, isOutOfOffice } = this
+      console.log(presence, isOutOfOffice)
       return determineIcon(presence, isOutOfOffice)
     },
   },
 
-  render (h: CreateElement): VNode {
+  render() {
     const { classNames, presence, presenceTitle, coinSizeWithPresenceStyle, coinSizeWithPresenceIconStyle, icon, renderIcon } = this
-    if (presence === PersonaPresenceEnum.none) return
+    if (presence === PersonaPresenceEnum.none)
+      return
 
     return h('div', {
       class: classNames.presence,
-      attrs: {
-        title: presenceTitle,
-      },
+      title: presenceTitle,
       style: coinSizeWithPresenceStyle,
     }, [
       renderIcon && h(Icon, {
         class: classNames.presenceIcon,
         style: coinSizeWithPresenceIconStyle,
-        props: {
-          iconName: icon,
-        },
+        iconName: icon,
       }),
     ])
   },
 })
 
-function determineIcon (
+function determineIcon(
   presence: PersonaPresenceEnum | undefined,
   isOutOfOffice: boolean | undefined,
 ): string | undefined {
-  if (!presence) {
+  if (!presence)
     return undefined
-  }
 
   const oofIcon = 'SkypeArrow'
 

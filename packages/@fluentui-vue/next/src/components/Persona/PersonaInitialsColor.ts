@@ -33,17 +33,16 @@ const COLOR_SWATCHES_LOOKUP: PersonaInitialsColor[] = [
 
 const COLOR_SWATCHES_NUM_ENTRIES = COLOR_SWATCHES_LOOKUP.length
 
-function getInitialsColorFromName (displayName: string | undefined): PersonaInitialsColor {
+function getInitialsColorFromName(displayName: string | undefined): PersonaInitialsColor {
   let color = PersonaInitialsColor.blue
-  if (!displayName) {
+  if (!displayName)
     return color
-  }
 
   let hashCode = 0
   for (let iLen: number = displayName.length - 1; iLen >= 0; iLen--) {
     const ch: number = displayName.charCodeAt(iLen)
     const shift: number = iLen % 8
-    // eslint-disable-next-line no-bitwise
+
     hashCode ^= (ch << shift) + (ch >> (8 - shift))
   }
 
@@ -52,7 +51,7 @@ function getInitialsColorFromName (displayName: string | undefined): PersonaInit
   return color
 }
 
-function personaInitialsColorToHexCode (personaInitialsColor: PersonaInitialsColor): string {
+function personaInitialsColorToHexCode(personaInitialsColor: PersonaInitialsColor): string {
   switch (personaInitialsColor) {
     case PersonaInitialsColor.lightBlue:
       return '#4F6BED'
@@ -77,7 +76,6 @@ function personaInitialsColorToHexCode (personaInitialsColor: PersonaInitialsCol
       return '#5C2E91'
     case PersonaInitialsColor.orange:
       return '#CA5010'
-    // eslint-disable-next-line deprecation/deprecation
     case PersonaInitialsColor.red:
       return '#EE1111'
     case PersonaInitialsColor.lightRed:
@@ -100,7 +98,6 @@ function personaInitialsColorToHexCode (personaInitialsColor: PersonaInitialsCol
       return '#8E562E'
     case PersonaInitialsColor.coolGray:
       return '#69797E'
-    // eslint-disable-next-line deprecation/deprecation
     case PersonaInitialsColor.black:
       return '#1D1D1D'
     case PersonaInitialsColor.gray:
@@ -109,7 +106,7 @@ function personaInitialsColorToHexCode (personaInitialsColor: PersonaInitialsCol
 }
 
 /** @deprecated Use `getPersonaInitialsColor` */
-export function initialsColorPropToColorCode (props: IPersonaProps): string {
+export function initialsColorPropToColorCode(props: IPersonaProps): string {
   return getPersonaInitialsColor(props)
 }
 
@@ -119,14 +116,14 @@ export function initialsColorPropToColorCode (props: IPersonaProps): string {
  * @param props - Current persona props
  * @returns Hex color string prefixed with #
  */
-export function getPersonaInitialsColor (props: Pick<IPersonaProps, 'primaryText' | 'text' | 'initialsColor'>): string {
-  // eslint-disable-next-line deprecation/deprecation
+export function getPersonaInitialsColor(props: Pick<IPersonaProps, 'primaryText' | 'text' | 'initialsColor'>): string {
   const { primaryText, text } = props
   let { initialsColor } = props
   let initialsColorCode: string
   if (typeof initialsColor === 'string') {
     initialsColorCode = initialsColor
-  } else {
+  }
+  else {
     initialsColor = initialsColor !== undefined ? initialsColor : getInitialsColorFromName(text || primaryText)
     initialsColorCode = personaInitialsColorToHexCode(initialsColor)
   }

@@ -1,25 +1,18 @@
-import { useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { VNode } from 'vue'
-import { IVerticalDividerPropsStyles, IVerticalDividerStyles } from './VerticalDivider.types'
+import { h } from 'vue'
+import type { IVerticalDividerPropsStyles, IVerticalDividerStyles } from './VerticalDivider.types'
+import { defineFunctionalComponent, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IVerticalDividerPropsStyles, IVerticalDividerStyles>()
 
-export const VerticalDividerBase = Vue.extend({
-  name: 'VerticalDividerBase',
+export const VerticalDividerBase = defineFunctionalComponent({
+  ...useStylingProps(),
 
-  functional: true,
+}, (props, { attrs, slots }) => {
+  const { styles, theme, className } = props
+  const classNames = getClassNames(styles, { theme, className })
 
-  props: {
-    ...useStylingProps(),
-  },
-
-  render (h, ctx): VNode {
-    const { styles, theme, className } = ctx.props
-    const classNames = getClassNames(styles, { theme, className })
-
-    return h('span', { class: classNames.wrapper }, [
-      h('span', { class: classNames.divider }),
-    ])
-  },
+  return h('span', { class: classNames.wrapper }, [
+    h('span', { class: classNames.divider }),
+  ])
 })

@@ -1,7 +1,6 @@
-import { PersonaSize } from '../Persona.types'
-import { HighContrastSelector, FontWeights, getGlobalClassNames, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
+import { FontWeights, HighContrastSelector, getGlobalClassNames, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
+import type { IPersonaCoinStyleProps, IPersonaCoinStyles, PersonaSize } from '../Persona.types'
 import { sizeBoolean, sizeToPixels } from '../PersonaConsts'
-import type { IPersonaCoinStyleProps, IPersonaCoinStyles } from '../Persona.types'
 
 const GlobalClassNames = {
   coin: 'ms-Persona-coin',
@@ -142,23 +141,23 @@ export const getStyles = (props: IPersonaCoinStyleProps): IPersonaCoinStyles => 
         fontSize: fonts.xSmall.fontSize,
       },
 
-      dimension >= 32 &&
-        dimension < 40 && {
+      dimension >= 32
+        && dimension < 40 && {
         fontSize: fonts.medium.fontSize,
       },
 
-      dimension >= 40 &&
-        dimension < 56 && {
+      dimension >= 40
+        && dimension < 56 && {
         fontSize: fonts.mediumPlus.fontSize,
       },
 
-      dimension >= 56 &&
-        dimension < 72 && {
+      dimension >= 56
+        && dimension < 72 && {
         fontSize: fonts.xLarge.fontSize,
       },
 
-      dimension >= 72 &&
-        dimension < 100 && {
+      dimension >= 72
+        && dimension < 100 && {
         fontSize: fonts.xxLarge.fontSize,
       },
 

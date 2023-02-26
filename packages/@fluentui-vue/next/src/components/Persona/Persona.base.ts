@@ -1,14 +1,15 @@
-import Vue, { CreateElement, VNode } from 'vue'
+import { defineComponent, h } from 'vue'
 
-import { PersonaCoin } from './PersonaCoin'
-import { PersonaSize, PersonaPresence, IPersonaStyleProps, IPersonaStyles } from './Persona.types'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import type { IPersonaStyleProps, IPersonaStyles } from './Persona.types'
+import { PersonaPresence, PersonaSize } from './Persona.types'
+import { PersonaCoin } from './PersonaCoin'
+import { useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IPersonaStyleProps, IPersonaStyles>()
 
-export const PersonaBase = Vue.extend({
+export const PersonaBase = defineComponent({
   name: 'PersonaBase',
 
   props: {
@@ -29,14 +30,14 @@ export const PersonaBase = Vue.extend({
     showSecondaryText: { type: Boolean, default: false },
   },
 
-  data () {
+  data() {
     return {
       PersonaSize,
     }
   },
 
   computed: {
-    classNames (): IProcessedStyleSet<IPersonaStyles> {
+    classNames(): IProcessedStyleSet<IPersonaStyles> {
       const { theme, className, showSecondaryText, presence, size } = this
       return getClassNames(this.styles, {
         theme: theme!,
@@ -48,7 +49,7 @@ export const PersonaBase = Vue.extend({
     },
   },
 
-  render (h: CreateElement): VNode {
+  render() {
     const {
       classNames,
       coinSize,
@@ -72,7 +73,7 @@ export const PersonaBase = Vue.extend({
       class: classNames.root,
       style: coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : {},
     }, [
-      h(PersonaCoin, { props: this.$props }),
+      h(PersonaCoin, this.$props),
       $details,
     ])
   },

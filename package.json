@@ -2,12 +2,11 @@
   "name": "office-ui-fabric-vue",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-  },
+  "scripts": {},
   "devDependencies": {
-    "@antfu/eslint-config": "^0.35.2",
+    "@antfu/eslint-config": "^0.35.3",
     "conventional-changelog": "^3.1.25",
-    "eslint": "^8.34.0",
+    "eslint": "^8.35.0",
     "typescript": "^4.9.5",
     "vitest": "^0.28.5"
   }

@@ -4,7 +4,7 @@ const elevation = DefaultEffects.elevation4
 </script>
 
 <template>
-  <div :style="{ boxShadow: elevation, padding: '28px', background: 'var(--fluentui-white)' }">
+  <div :style="{ boxShadow: elevation, padding: '28px', margin: '4px', background: 'var(--fluentui-white)' }">
     <slot />
   </div>
 </template>

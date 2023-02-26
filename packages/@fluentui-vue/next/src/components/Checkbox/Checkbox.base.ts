@@ -38,11 +38,13 @@ export const CheckboxBase = defineComponent({
     inputProps: { type: Object as () => any, default: undefined },
 
     checkmarkIconProps: { type: Object as () => any, default: undefined },
+
+    modelValue: { type: Boolean, default: false },
   },
 
   setup(props, { attrs, emit, slots }) {
     const {
-      checked, defaultChecked, indeterminate, defaultIndeterminate,
+      modelValue, defaultChecked, indeterminate, defaultIndeterminate,
       theme, styles, className, disabled, boxSide,
       checkmarkIconProps,
       title,
@@ -52,10 +54,10 @@ export const CheckboxBase = defineComponent({
 
     const id = computed(() => getId('Checkbox'))
 
-    const internalValue = ref(checked.value || defaultChecked.value)
+    const internalValue = ref(modelValue.value || defaultChecked.value)
     const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
 
-    watch(checked, (value) => {
+    watch(modelValue, (value) => {
       internalValue.value = value
     })
 
@@ -80,7 +82,7 @@ export const CheckboxBase = defineComponent({
       else {
         internalValue.value = !internalValue.value
       }
-      emit('input', internalValue.value)
+      emit('update:modelValue', internalValue.value)
     }
 
     const slotProps = computed<SlotProps<ICheckboxStyles>>(() => ({

@@ -1,7 +1,7 @@
 import { DirectionalHint } from '@fluentui-vue/utilities'
-import Vue, { h } from 'vue'
-import { Layer } from '../Layer'
+import { h } from 'vue'
 import { asSlotProps } from '../../utils/types'
+import { Layer } from '../Layer'
 import { CalloutContent } from './CalloutContent'
 
 export const Callout = (props, { attrs, slots }) => {

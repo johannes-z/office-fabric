@@ -24,7 +24,9 @@ const stackTokens: IStackTokens = {
   <h1>Spinner</h1>
 
   <DocumentCard>
-    <h2>Spinner sizes</h2>
+    <h2>Usage</h2>
+
+    <h3>Spinner sizes</h3>
     <Stack :tokens="tokens.sectionStack">
       <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
         <Label>Extra small spinner</Label>
@@ -47,7 +49,7 @@ const stackTokens: IStackTokens = {
       </Stack>
     </Stack>
 
-    <h2>Spinner label positioning</h2>
+    <h3>Spinner label positioning</h3>
     <Stack :tokens="stackTokens">
       <div>
         <Label>Spinner with label positioned below</Label>

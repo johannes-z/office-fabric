@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { IIconProps } from '../components'
-import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton } from '../components'
+import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, Stack } from '../components'
 import type { IContextualMenuProps } from '@/components/ContextualMenu'
-import type { IStackStyles } from '@/components/Stack'
+import type { IStackStyles, IStackTokens } from '@/components/Stack'
 
 const menuProps: IContextualMenuProps = {
   items: [
@@ -26,29 +26,31 @@ const menuProps: IContextualMenuProps = {
 }
 const addIcon: IIconProps = { iconName: 'Add' }
 const mailIcon: IIconProps = { iconName: 'Mail' }
-const stackStyles: Partial<IStackStyles> = { root: { height: 44 } }
+const stackTokens: IStackTokens = { childrenGap: 40 };
 </script>
 
 <template>
   <h1>Button</h1>
 
   <h2>Default Button</h2>
-  <DefaultButton>Standard</DefaultButton>
-  <DefaultButton primary>
-    Primary
-  </DefaultButton>
-  <DefaultButton disabled>
-    Standard
-  </DefaultButton>
-  <DefaultButton disabled primary>
-    Primary
-  </DefaultButton>
-  <DefaultButton checked>
-    Standard
-  </DefaultButton>
-  <DefaultButton checked primary>
-    Primary
-  </DefaultButton>
+    <Stack horizontal :tokens="stackTokens">
+      <DefaultButton>Standard</DefaultButton>
+      <DefaultButton primary>
+        Primary
+      </DefaultButton>
+      <DefaultButton disabled>
+        Standard
+      </DefaultButton>
+      <DefaultButton disabled primary>
+        Primary
+      </DefaultButton>
+      <DefaultButton checked>
+        Standard
+      </DefaultButton>
+      <DefaultButton checked primary>
+        Primary
+      </DefaultButton>
+    </Stack>
 
   <h2>Compound Button</h2>
   <CompoundButton secondary-text="This is the secondary text.">

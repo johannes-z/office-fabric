@@ -1,22 +1,27 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { ILinkProps, ILinkStyleProps, ILinkStyles } from './Link.types'
-import { StylingPropKeys, asSlotProps } from '@/utils/'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
-export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
-  const { styles, theme, as, target, className, href, disabled, underline } = props
+export const LinkBase = defineFunctionalComponent({
+  ...useStylingProps(),
 
-  const isDisabled = disabled != null && disabled !== false
-  const isUnderlined = underline != null && underline !== false
+  as: { type: String, default: undefined },
+  underline: { type: Boolean, default: false },
+  disabled: { type: Boolean, default: false },
+  href: { type: String, default: '' },
+  target: { type: String, default: undefined },
+}, (props: ILinkProps, { attrs, slots }) => {
+  const { styles, theme, as, target, className, href, disabled, underline } = props
 
   const classNames = getClassNames(styles, {
     theme: theme!,
     className,
     isButton: !href,
-    isDisabled: isDisabled,
-    isUnderlined: isUnderlined,
+    isDisabled: disabled,
+    isUnderlined: underline,
   })
 
   const rootType = as || (href ? 'a' : 'button')
@@ -27,16 +32,14 @@ export const LinkBase = (props: ILinkProps, { attrs, slots }) => {
       class: classNames.root,
       ...rootType === 'a' && {
         target,
-        href: isDisabled ? undefined : href,
+        href: disabled ? undefined : href,
       },
       ...rootType === 'button' && {
         type: 'button',
-        disabled: isDisabled,
+        disabled,
       },
     },
   })
 
   return h(rootType, slotProps.root, slots)
-}
-
-LinkBase.props = [...StylingPropKeys, 'as', 'underline', 'disabled', 'href', 'target']
+})

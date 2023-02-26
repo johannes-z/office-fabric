@@ -1,4 +1,4 @@
-import { VNode, VNodeData } from 'vue'
+import type { VNodeData } from 'vue'
 
 // replace [key: string] with generic type
 export type SlotProps<T = unknown> = { [K in keyof T]?: VNodeData | undefined }

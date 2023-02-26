@@ -1,8 +1,7 @@
-import { PersonaPresence, PersonaSize } from './Persona.types'
-import { personaSize, presenceBoolean, sizeBoolean } from './PersonaConsts'
-import type { IPersonaStyleProps, IPersonaStyles } from './Persona.types'
-import { FontWeights, getGlobalClassNames, normalize, noWrap } from '@fluentui-vue/style-utilities'
+import { FontWeights, getGlobalClassNames, noWrap, normalize } from '@fluentui-vue/style-utilities'
 import type { IStyle } from '@fluentui/merge-styles'
+import type { IPersonaStyleProps, IPersonaStyles, PersonaPresence, PersonaSize } from './Persona.types'
+import { personaSize, presenceBoolean, sizeBoolean } from './PersonaConsts'
 
 const GlobalClassNames = {
   root: 'ms-Persona',
@@ -104,8 +103,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         },
       ],
 
-      size.isSize24 &&
-        showSecondaryText && {
+      size.isSize24
+        && showSecondaryText && {
         height: '36px',
       },
 
@@ -118,8 +117,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         },
       ],
 
-      size.isSize28 &&
-        showSecondaryText && {
+      size.isSize28
+        && showSecondaryText && {
         height: '32px',
       },
 
@@ -239,8 +238,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         lineHeight: personaSize.size28,
       },
 
-      (size.isSize24 || size.isSize28 || size.isSize32 || size.isSize40 || size.isSize48) &&
-        showSecondaryText && {
+      (size.isSize24 || size.isSize28 || size.isSize32 || size.isSize40 || size.isSize48)
+        && showSecondaryText && {
         height: 18,
       },
 
@@ -248,8 +247,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         fontSize: fonts.xLarge.fontSize,
       },
 
-      (size.isSize56 || size.isSize72 || size.isSize100 || size.isSize120) &&
-        showSecondaryText && {
+      (size.isSize56 || size.isSize72 || size.isSize100 || size.isSize120)
+        && showSecondaryText && {
         height: 22,
       },
     ],
@@ -270,8 +269,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         overflowX: 'hidden',
       },
 
-      size.isSize24 &&
-        showSecondaryText && {
+      size.isSize24
+        && showSecondaryText && {
         height: 18,
       },
 
@@ -279,8 +278,8 @@ export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
         fontSize: fonts.medium.fontSize,
       },
 
-      (size.isSize56 || size.isSize72 || size.isSize100 || size.isSize120) &&
-        showSecondaryText && {
+      (size.isSize56 || size.isSize72 || size.isSize100 || size.isSize120)
+        && showSecondaryText && {
         height: 18,
       },
     ],

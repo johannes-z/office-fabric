@@ -1,5 +1,5 @@
 import type { VNode } from 'vue'
-import Vue, { CreateElement, Teleport, defineComponent, h } from 'vue'
+import { Teleport, defineComponent, h } from 'vue'
 
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'

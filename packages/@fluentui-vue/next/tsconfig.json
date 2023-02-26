@@ -1,6 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
+    "preserveValueImports": false,
+    "importsNotUsedAsValues": "remove",
+    
     "noImplicitAny": false,
     "outDir": "lib",
     "target": "ES6",

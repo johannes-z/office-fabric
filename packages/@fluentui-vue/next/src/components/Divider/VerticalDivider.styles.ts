@@ -1,14 +1,13 @@
-import { IStyleFunction } from '@fluentui/merge-styles'
-import { IVerticalDividerPropsStyles, IVerticalDividerStyles } from './VerticalDivider.types'
+import type { IStyleFunction } from '@fluentui/merge-styles'
+import type { IVerticalDividerPropsStyles, IVerticalDividerStyles } from './VerticalDivider.types'
 
 export const getStyles: IStyleFunction<IVerticalDividerPropsStyles, IVerticalDividerStyles> = (
   props: IVerticalDividerPropsStyles,
 ): IVerticalDividerStyles => {
   const { theme, className } = props
 
-  if (!theme) {
+  if (!theme)
     throw new Error('Theme is undefined or null.')
-  }
 
   return {
     wrapper: [

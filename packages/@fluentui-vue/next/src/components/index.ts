@@ -7,6 +7,9 @@ export * from './SearchBox'
 export * from './TextField'
 export * from './Toggle'
 
+// Items & Lists
+export * from './Persona'
+
 // Commands, Menus & Navs
 export * from './CommandBar'
 export * from './ContextualMenu'
@@ -25,7 +28,6 @@ export * from './Modal'
 // export * from './MessageBar'
 // export * from './OverflowSet'
 // export * from './Overlay'
-// // export * from './Persona'
 // export * from './Popup'
 export * from './ProgressIndicator'
 // export * from './ResizeGroup'

@@ -2,4 +2,6 @@ export * from './responsiveMode'
 export * from './types'
 export * from './useStyling'
 export * from './getInitials'
-export { default as VNodes } from './VNodes'
+
+export * from './defineFunctionalComponent'
+export * from './useBooleanProp'

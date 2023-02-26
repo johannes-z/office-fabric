@@ -4,7 +4,7 @@
   "description": "Fluent UI Vue file type icon set.",
   "main": "lib/index.js",
   "module": "lib/index.js",
-  "types": "types/index.d.ts",
+  "types": "./types/index.d.ts",
   "files": [
     "lib",
     "types"

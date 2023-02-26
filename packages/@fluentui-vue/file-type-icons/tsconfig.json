@@ -8,7 +8,7 @@
     "jsx": "preserve",
     "jsxFactory": "h",
     "importHelpers": true,
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "strictNullChecks": true,

@@ -10,8 +10,8 @@ const navLinkGroups: INavLinkGroup[] = nav
 </script>
 
 <template>
-  <div style="display: grid; grid-template-columns: 250px 1fr; max-width: 100%;">
-    <div>
+  <div style="display: grid; grid-template-columns: 300px 1fr; max-width: 100%;">
+    <div style="background: white; margin-right: 50px">
       <Nav :groups="navLinkGroups" />
     </div>
 

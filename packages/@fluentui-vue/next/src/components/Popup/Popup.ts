@@ -1,6 +1,6 @@
-import Vue, { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs } from 'vue'
+import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs } from 'vue'
 import { asSlotProps } from '../../utils/types'
-import { StylingPropKeys, useStylingProps } from '@/utils'
+import { useStylingProps } from '@/utils'
 
 export const Popup = defineComponent({
   name: 'Popup',
