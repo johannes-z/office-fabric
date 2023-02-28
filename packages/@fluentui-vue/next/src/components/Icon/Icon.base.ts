@@ -35,11 +35,9 @@ export const IconBase = (props, { attrs }) => {
 
   return h(RootType, {
     ...attrs,
-    class: classNames.root,
-    attrs: {
-      'aria-hidden': 'true',
-      'data-icon-name': iconName,
-    },
+    'class': classNames.root,
+    'aria-hidden': 'true',
+    'data-icon-name': iconName,
   }, typeof children === 'function'
     ? [children(h)]
     : (Array.isArray(children))

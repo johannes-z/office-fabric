@@ -1,34 +1,72 @@
-import { type } from 'os'
-import { useBoolean } from '@fluentui-vue/vue-hooks'
-import type { VNode } from 'vue'
-import { ComponentPropsOptions } from 'vue'
-import { useBooleanProp } from './useBooleanProp'
-import { toCamelCase } from './toCamelCase'
+import type { DefineComponent, ExtractPropTypes, FunctionalComponent, RendererElement, RendererNode, Slot, VNode } from 'vue'
+import { includeBooleanAttr } from './includeBooleanAttr'
 import { toKebabCase } from './toKebabCase'
 
-export const defineFunctionalComponent = (propDefs, renderFn) => {
-  renderFn.props = Object.keys(propDefs)
+type LooseRequired<T> = { [P in string & keyof T]: T[P] }
+type Data = Record<string, unknown>
+interface InternalSlots {
+  [name: string]: Slot | undefined
+}
 
-  return (_props, ctx): VNode => {
-    const props = Object.entries(propDefs).reduce((obj, [_key, prop]) => {
+type MapPropsType<TProps> = Readonly<LooseRequired<Readonly<ExtractPropTypes<TProps>>>>
+
+export interface Context {
+  attrs: Data
+  slots: Readonly<InternalSlots>
+  emit: (event: string, ...args: any[]) => void
+}
+
+export interface FunctionalRenderFunction<T> {
+  (props: MapPropsType<T>, ctx: Context): VNode<RendererNode, RendererElement, {
+    [key: string]: any
+  }>
+
+  props?: string[]
+  name?: string
+}
+
+export interface FunctionalComponentDefinition<TProps extends object> {
+  name?: string
+  props?: TProps
+  render: FunctionalRenderFunction<TProps>
+}
+
+export const defineFunctionalComponent = <TProps extends object>({ name, props: propDefs = {} as any, render }: FunctionalComponentDefinition<TProps>) => {
+  const functionalRenderFn = (props: TProps, ctx: Context) => {
+    const normalizedProps = Object.entries(propDefs).reduce((obj, [_key, propDef]) => {
       const key = toKebabCase(_key)
+      const value = props[key] ?? props[_key]
 
-      switch (prop.type) {
+      switch (propDef.type) {
         case Boolean:
-          obj[_key] = useBooleanProp(_props[key], prop.default)
+          obj[_key] = includeBooleanAttr(value) // useBooleanProp(value, prop.default)
           break
         case Number:
-          obj[_key] = Number(_props[key]) ?? prop.default
+          obj[_key] = Number(value) ?? propDef.default
           break
         case String:
-          obj[_key] = _props[key] ?? prop.default
+          obj[_key] = value ?? propDef.default
           break
         default:
-          obj[_key] = _props[key]
+          obj[_key] = value
       }
 
       return obj
-    }, {})
-    return renderFn(props, ctx)
+    }, {}) as MapPropsType<TProps>
+    return render(normalizedProps, ctx)
+  }
+
+  functionalRenderFn.props = Object.keys(propDefs)
+
+  Object.defineProperty(functionalRenderFn, 'name', {
+    writable: true,
+    value: name,
+  })
+
+  return functionalRenderFn as {
+    (props: Partial<MapPropsType<TProps>>, ctx: Context): VNode<RendererNode, RendererElement, {
+      [key: string]: any
+    }>
+    props: string[]
   }
 }

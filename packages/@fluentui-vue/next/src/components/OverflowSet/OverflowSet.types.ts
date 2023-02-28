@@ -1,4 +1,4 @@
-import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
 /**
  * {@docCategory OverflowSet}
@@ -10,7 +10,7 @@ export interface IOverflowSet {
    * focus is already in the focus zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
-  focus(forceIntoFirstElement?: boolean): boolean;
+  focus(forceIntoFirstElement?: boolean): boolean
 
   /**
    * Sets focus to a specific child element within the zone. This can be used in conjunction with
@@ -19,7 +19,7 @@ export interface IOverflowSet {
    * @param childElement - The child element within the zone to focus.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
-  focusElement(childElement?: HTMLElement): boolean;
+  focusElement(childElement?: HTMLElement): boolean
 }
 
 /**
@@ -30,42 +30,42 @@ export interface IOverflowSetProps {
   /**
    * Class name
    */
-  className?: string;
+  className?: string
 
   /**
    * An array of items to be rendered by your onRenderItem function in the primary content area
    */
-  items?: IOverflowSetItemProps[];
+  items?: IOverflowSetItemProps[]
 
   /**
    * Change item layout direction to vertical/stacked.
    * If role is set to `menubar`, `vertical={true}` will also add proper `aria-orientation`.
    * @defaultvalue false
    */
-  vertical?: boolean;
+  vertical?: boolean
 
   /**
    * Controls wether or not the overflow button is placed at the start or end of the items.
    * This gives a reversed visual behavior but maintains correct keyboard navigation.
    * @defaultValue 'end'
    */
-  overflowSide?: 'start' | 'end';
+  overflowSide?: 'start' | 'end'
 
   /**
    * An array of items to be passed to overflow contextual menu
    */
-  overflowItems?: IOverflowSetItemProps[];
+  overflowItems?: IOverflowSetItemProps[]
 
   /**
    * The role for the OverflowSet.
    * @defaultvalue 'group'
    */
-  role?: string;
+  role?: string
 
   /**
    * Optional full keytip sequence for the overflow button, if it will have a keytip.
    */
-  keytipSequences?: string[];
+  keytipSequences?: string[]
 
   /**
    * Function that will take in an IOverflowSetItemProps and return the subMenu for that item.
@@ -73,12 +73,12 @@ export interface IOverflowSetProps {
    * Alternatively accepts a boolean, return True if the item has a menu and False if not
    * This is only used if your overflow set has keytips.
    */
-  itemSubMenuProvider?: (item: IOverflowSetItemProps) => any[] | boolean | undefined;
+  itemSubMenuProvider?: (item: IOverflowSetItemProps) => any[] | boolean | undefined
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  styles?: IStyleFunctionOrObject<IOverflowSetProps, IOverflowSetStyles>;
+  styles?: IStyleFunctionOrObject<IOverflowSetProps, IOverflowSetStyles>
 }
 
 /**
@@ -86,11 +86,11 @@ export interface IOverflowSetProps {
  */
 export interface IOverflowSetStyles {
   /** The style that is layered onto the root element of OverflowSet. */
-  root?: IStyle;
+  root?: IStyle
   /** The style that is layered onto each individual item in the overflow set. */
-  item?: IStyle;
+  item?: IStyle
   /** The style that is layered onto the overflow button for the overflow set. */
-  overflowButton?: IStyle;
+  overflowButton?: IStyle
 }
 
 /**
@@ -98,7 +98,7 @@ export interface IOverflowSetStyles {
  * This represents the simplified set of immutable things which control the class names.
  * {@docCategory OverflowSet}
  */
-export type IOverflowSetStyleProps = Pick<IOverflowSetProps, 'vertical' | 'className'>;
+export type IOverflowSetStyleProps = Pick<IOverflowSetProps, 'vertical' | 'className'>
 
 /**
  * {@docCategory OverflowSet}
@@ -107,15 +107,15 @@ export interface IOverflowSetItemProps {
   /**
    * Unique id to identify the item.
    */
-  key: string;
+  key: string
 
   /**
    * Optional keytip for the overflowSetItem.
    */
-  keytipProps?: any;
+  keytipProps?: any
 
   /**
    * Any additional properties to use when custom rendering menu items.
    */
-  [propertyName: string]: any;
+  [propertyName: string]: any
 }

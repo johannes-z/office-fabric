@@ -43,6 +43,16 @@ export const NavBase = defineComponent({
     }
   },
 
+  watch: {
+    selectedKey(value) {
+      this.internalSelectedKey = this.selectedKey
+    },
+  },
+
+  created() {
+    this.internalSelectedKey = this.selectedKey ?? ''
+  },
+
   methods: {
     renderGroup(group: INavLinkGroup, groupIndex: number): VNode {
       const { groups, theme } = this

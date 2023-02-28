@@ -44,16 +44,14 @@ export const ToggleBase = defineComponent({
 
     const id = getId('Toggle')
     const onOffMissing = computed(() => !onText.value && !offText.value)
-    const classNames = computed(() => {
-      return getClassNames(styles.value, {
-        theme: theme.value!,
-        className: className.value,
-        disabled: disabled.value,
-        checked: checked.value,
-        inlineLabel: inlineLabel.value,
-        onOffMissing: onOffMissing.value,
-      })
-    })
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value!,
+      className: className.value,
+      disabled: disabled.value,
+      checked: checked.value,
+      inlineLabel: inlineLabel.value,
+      onOffMissing: onOffMissing.value,
+    }))
 
     const slotProps = computed(() => ({
       root: {

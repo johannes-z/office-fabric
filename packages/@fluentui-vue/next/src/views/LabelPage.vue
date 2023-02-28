@@ -10,7 +10,11 @@ const textFieldId = useId('anInput')
 
 <template>
   <h1>Label</h1>
+
   <DocumentCard>
+    <h2>Usage</h2>
+
+    <h3>Label</h3>
     <Label>I'm a Label</Label>
     <Label disabled>I'm a disabled Label</Label>
     <Label required>I'm a required Label</Label>

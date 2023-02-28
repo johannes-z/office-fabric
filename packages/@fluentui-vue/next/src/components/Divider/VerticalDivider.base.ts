@@ -6,13 +6,17 @@ import { defineFunctionalComponent, useStylingProps } from '@/utils'
 const getClassNames = classNamesFunction<IVerticalDividerPropsStyles, IVerticalDividerStyles>()
 
 export const VerticalDividerBase = defineFunctionalComponent({
-  ...useStylingProps(),
+  props: {
+    ...useStylingProps(),
 
-}, (props, { attrs, slots }) => {
-  const { styles, theme, className } = props
-  const classNames = getClassNames(styles, { theme, className })
+  },
 
-  return h('span', { class: classNames.wrapper }, [
-    h('span', { class: classNames.divider }),
-  ])
+  render(props, { attrs, slots }) {
+    const { styles, theme, className } = props
+    const classNames = getClassNames(styles, { theme, className })
+
+    return h('span', { class: classNames.wrapper }, [
+      h('span', { class: classNames.divider }),
+    ])
+  },
 })

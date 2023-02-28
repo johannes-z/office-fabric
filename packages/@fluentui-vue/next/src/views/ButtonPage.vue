@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { IIconProps } from '../components'
-import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, Stack } from '../components'
+import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, PrimaryButton, Stack, Toggle } from '../components'
+import DocumentCard from './components/DocumentCard.vue'
 import type { IContextualMenuProps } from '@/components/ContextualMenu'
 import type { IStackStyles, IStackTokens } from '@/components/Stack'
 
@@ -26,75 +28,62 @@ const menuProps: IContextualMenuProps = {
 }
 const addIcon: IIconProps = { iconName: 'Add' }
 const mailIcon: IIconProps = { iconName: 'Mail' }
-const stackTokens: IStackTokens = { childrenGap: 40 };
+const stackTokens: IStackTokens = { childrenGap: 40 }
+
+const checked = ref(false)
+const disabled = ref(false)
 </script>
 
 <template>
   <h1>Button</h1>
 
-  <h2>Default Button</h2>
+  <DocumentCard>
+    <h2>Usage</h2>
+
+    <Toggle v-model="checked" label="Mark as checked" inline-label />
+    <Toggle v-model="disabled" label="Disable buttons" inline-label />
+
+    <h3>Default Button</h3>
     <Stack horizontal :tokens="stackTokens">
-      <DefaultButton>Standard</DefaultButton>
-      <DefaultButton primary>
-        Primary
-      </DefaultButton>
-      <DefaultButton disabled>
+      <DefaultButton :disabled="disabled" :checked="checked">
         Standard
       </DefaultButton>
-      <DefaultButton disabled primary>
-        Primary
-      </DefaultButton>
-      <DefaultButton checked>
-        Standard
-      </DefaultButton>
-      <DefaultButton checked primary>
+      <DefaultButton :disabled="disabled" :checked="checked" primary>
         Primary
       </DefaultButton>
     </Stack>
 
-  <h2>Compound Button</h2>
-  <CompoundButton secondary-text="This is the secondary text.">
-    Standard
-  </CompoundButton>
-  <CompoundButton primary secondary-text="This is the secondary text.">
-    Primary
-  </CompoundButton>
-  <CompoundButton disabled secondary-text="This is the secondary text.">
-    Standard
-  </CompoundButton>
-  <CompoundButton disabled primary secondary-text="This is the secondary text.">
-    Primary
-  </CompoundButton>
-  <CompoundButton checked secondary-text="This is the secondary text.">
-    Standard
-  </CompoundButton>
-  <CompoundButton checked primary secondary-text="This is the secondary text.">
-    Primary
-  </CompoundButton>
+    <h3>Primary Button</h3>
+    <PrimaryButton :disabled="disabled" :checked="checked">
+      Primary Button
+    </PrimaryButton>
 
-  <h2>IconButton</h2>
-  <IconButton :icon-props="{ iconName: 'Emoji2' }" title="Emoji" aria-label="Emoji" />
-  <IconButton disabled :icon-props="{ iconName: 'Emoji2' }" title="Emoji" aria-label="Emoji" />
-  <IconButton checked :icon-props="{ iconName: 'Emoji2' }" title="Emoji" aria-label="Emoji" />
+    <h3>Compound Button</h3>
+    <CompoundButton :disabled="disabled" :checked="checked" secondary-text="This is the secondary text.">
+      Standard
+    </CompoundButton>
+    <CompoundButton :disabled="disabled" :checked="checked" primary secondary-text="This is the secondary text.">
+      Primary
+    </CompoundButton>
 
-  <h2>ActionButton</h2>
-  <ActionButton :icon-props="{ iconName: 'AddFriend' }" allow-disabled-focus>
-    Create account
-  </ActionButton>
-  <ActionButton disabled :icon-props="{ iconName: 'AddFriend' }" allow-disabled-focus>
-    Create account
-  </ActionButton>
-  <ActionButton checked :icon-props="{ iconName: 'AddFriend' }" allow-disabled-focus>
-    Create account
-  </ActionButton>
+    <h3>IconButton</h3>
+    <IconButton :disabled="disabled" :checked="checked" :icon-props="{ iconName: 'Emoji2' }" title="Emoji" aria-label="Emoji" />
 
-  <h2>Command Bar Button</h2>
-  <div style="display: flex; height: 44px;">
-    <CommandBarButton
-      :icon-props="addIcon"
-      text="New item"
-      :menu-props="menuProps"
-    />
-    <CommandBarButton :icon-props="mailIcon" text="Send mail" />
-  </div>
+    <h3>ActionButton</h3>
+    <ActionButton :disabled="disabled" :checked="checked" :icon-props="{ iconName: 'AddFriend' }" allow-disabled-focus>
+      Create account
+    </ActionButton>
+
+    <h3>Command Bar Button</h3>
+    <div style="display: flex; height: 44px;">
+      <CommandBarButton
+        :icon-props="addIcon"
+        text="New item"
+        :menu-props="menuProps"
+        :disabled="disabled"
+        :checked="checked"
+      />
+      <CommandBarButton :icon-props="mailIcon" text="Send mail" :disabled="disabled" :checked="checked" />
+    </div>
+  </DocumentCard>
 </template>

@@ -2,60 +2,68 @@ import { classNamesFunction } from '@fluentui-vue/utilities'
 import Vue, { VNode, h } from 'vue'
 import { OverflowButton } from './OverflowButton'
 import type { IOverflowSetStyleProps, IOverflowSetStyles } from './OverflowSet.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IOverflowSetStyleProps, IOverflowSetStyles>()
 
-export const OverflowSetBase = (props, { attrs, slots }) => {
-  const { styles, className, vertical } = props
-  const { items, overflowItems, overflowSide = 'end', role = 'group' } = props
-  const classNames = getClassNames(styles, {
-    className,
-    vertical,
-  })
+export const OverflowSetBase = defineFunctionalComponent({
+  name: 'OverflowSetBase',
 
-  const slotProps = asSlotProps({
-    root: {
-      'class': classNames.root,
-      'role': role || 'group',
-      'aria-orientation': role === 'menubar' ? (vertical === true ? 'vertical' : 'horizontal') : undefined,
-    },
-    item: {
-      class: classNames.item,
-      role: 'none',
-    },
-    overflowButton: {
-      ...attrs,
-      ...props,
-      class: classNames.overflowButton,
-    },
-  })
+  props: {
+    ...useStylingProps(),
 
-  const showOverflow = !!overflowItems && overflowItems.length > 0
+    vertical: { type: Boolean, default: false },
+    overflowSide: { type: String, default: 'end', validator: e => ['start', 'end'].includes(e) },
+    role: { type: String, default: 'group' },
 
-  return h('div', slotProps.root, [
-    // overflowbutton
-    overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
-    items && items.map((item, index) => h('div', {
-      ...slotProps.item,
-      on: {
-        ...item.onClick
-          ? { click: item.onClick }
-          : {},
+    items: { type: Array as () => any[], default: () => [] },
+    overflowItems: { type: Array as () => any[], default: () => [] },
+  },
+
+  render(props, { attrs, slots }) {
+    const { styles, className, vertical } = props
+    const { items, overflowItems, overflowSide = 'end', role = 'group' } = props
+    const classNames = getClassNames(styles, {
+      className,
+      vertical,
+    })
+
+    const slotProps = asSlotProps({
+      root: {
+        'class': classNames.root,
+        'role': role || 'group',
+        'aria-orientation': role === 'menubar' ? (vertical === true ? 'vertical' : 'horizontal') : undefined,
       },
-    }, slots.item?.({ item, index }))),
-    overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
-    // overflowbutton
-  ])
-}
+      item: {
+        class: classNames.item,
+        role: 'none',
+      },
+      overflowButton: {
+        ...attrs,
+        ...props,
+        class: classNames.overflowButton,
+      },
+    })
 
-OverflowSetBase.props = Object.keys({
-  ...useStylingProps(),
+    const showOverflow = !!overflowItems && overflowItems.length > 0
 
-  vertical: { type: Boolean, default: false },
-  overflowSide: { type: String, default: 'end', validator: e => ['start', 'end'].includes(e) },
-  role: { type: String, default: 'group' },
-
-  items: { type: Array as () => any[], default: () => [] },
-  overflowItems: { type: Array as () => any[], default: () => [] },
+    return h('div', slotProps.root, {
+      default: () => [
+        // overflowbutton
+        overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+        items && items.map((item, index) => h('div', {
+          ...slotProps.item,
+          on: {
+            ...item.onClick
+              ? { click: item.onClick }
+              : {},
+          },
+        }, {
+          default: () => slots.item?.({ item, index }),
+        })),
+        overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+        // overflowbutton
+      ],
+    })
+  },
 })

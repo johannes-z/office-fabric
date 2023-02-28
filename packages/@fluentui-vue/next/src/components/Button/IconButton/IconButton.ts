@@ -1,19 +1,29 @@
 import { h } from 'vue'
 import { BaseButton } from '../BaseButton'
-import { BaseButtonPropKeys } from '../useBaseButton'
+import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './IconButton.styles'
-import { StylingPropKeys, asSlotProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
-export const IconButton = (props, { attrs, slots }) => {
-  const slotProps = asSlotProps({
-    root: {
-      ...attrs,
-      ...props,
-      variantClassName: 'ms-Button--icon',
-      styles: getStyles(props.styles),
-    },
-  })
+export const IconButton = defineFunctionalComponent({
 
-  return h(BaseButton, slotProps.root, slots)
-}
-IconButton.props = [...StylingPropKeys, ...BaseButtonPropKeys, 'iconProps']
+  name: 'IconButton',
+
+  props: {
+    ...useStylingProps(),
+    ...useBaseButtonProps(),
+    iconProps: { type: Object, default: () => {} },
+  },
+
+  render(props, { attrs, slots }) {
+    const slotProps = asSlotProps({
+      root: {
+        ...attrs,
+        ...props,
+        variantClassName: 'ms-Button--icon',
+        styles: getStyles(props.styles),
+      },
+    })
+
+    return h(BaseButton, slotProps.root, slots)
+  },
+})

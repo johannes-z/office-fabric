@@ -1,38 +1,38 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { defineComponent, h } from 'vue'
+import { h } from 'vue'
 import type { ILabelStyleProps, ILabelStyles } from './Label.types'
-import { asSlotProps, useStylingProps } from '@/utils/'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 
-export const LabelBase = (props, { attrs, slots }) => {
-  const { styles, theme, className, as: RootType = 'label', disabled, required } = props
+export const LabelBase = defineFunctionalComponent({
+  name: 'LabelBase',
 
-  
-  const isDisabled = disabled != null && disabled !== false
-  const isRequired = required != null && required !== false
+  props: {
+    ...useStylingProps(),
 
-  const classNames = getClassNames(styles, {
-    theme,
-    className,
-    disabled: isDisabled,
-    required: isRequired,
-  })
+    as: { type: String, default: 'label' },
+    disabled: { type: Boolean, default: false },
+    required: { type: Boolean, default: false },
+  },
 
-  const slotProps = asSlotProps<ILabelStyles>({
-    root: {
-      ...attrs,
-      class: classNames.root,
-    },
-  })
+  render(props, { attrs, slots }) {
+    const { styles, theme, className, as: RootType = 'label', disabled, required } = props
 
-  return h(RootType, slotProps.root, slots)
-}
+    const classNames = getClassNames(styles, {
+      theme,
+      className,
+      disabled,
+      required,
+    })
 
-LabelBase.props = Object.keys({
-  ...useStylingProps(),
+    const slotProps = asSlotProps<ILabelStyles>({
+      root: {
+        ...attrs,
+        class: classNames.root,
+      },
+    })
 
-  as: { type: String, default: 'label' },
-  disabled: { type: Boolean, default: false },
-  required: { type: Boolean, default: false },
+    return h(RootType, slotProps.root, slots)
+  },
 })

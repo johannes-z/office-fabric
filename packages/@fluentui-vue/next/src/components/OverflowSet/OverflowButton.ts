@@ -1,28 +1,29 @@
 import { h } from 'vue'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
-export const OverflowButton = (props, { attrs, slots }) => {
-  const { className, overflowItems = [] } = props
+export const OverflowButton = defineFunctionalComponent({
+  name: 'OverflowButton',
 
-  const modifiedOverflowItems = overflowItems
+  props: {
+    ...useStylingProps(),
 
-  const slotProps = asSlotProps({
-    root: {
-      ...attrs,
-      class: className ?? attrs.class,
-    },
-  })
+    overflowItems: { type: Array as () => any[], default: () => [] },
+  },
 
-  console.log({
-    overflowItems,
-    modifiedOverflowItems,
-  })
+  render(props, { attrs, slots }) {
+    const { className, overflowItems = [] } = props
 
-  return h('div', slotProps.root, slots.overflow?.(modifiedOverflowItems))
-}
+    const modifiedOverflowItems = overflowItems
 
-OverflowButton.props = Object.keys({
-  ...useStylingProps(),
+    const slotProps = asSlotProps({
+      root: {
+        ...attrs,
+        class: className ?? attrs.class,
+      },
+    })
 
-  overflowItems: { type: Array as () => any[], default: () => [] },
+    return h('div', slotProps.root, {
+      default: () => slots.overflow?.(modifiedOverflowItems),
+    })
+  },
 })

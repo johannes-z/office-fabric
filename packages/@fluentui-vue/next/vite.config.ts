@@ -33,10 +33,11 @@ export default defineConfig({
     cssCodeSplit: false,
     assetsInlineLimit: 0,
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: path.resolve(__dirname, 'src/main.ts'),
       name: '@fluentui-vue/components',
       formats: ['es', 'umd'],
     },
+    minify: false,
     rollupOptions: {
       external: [
         'vue',

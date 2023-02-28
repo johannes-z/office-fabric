@@ -10,7 +10,7 @@ export const Callout = (props, { attrs, slots }) => {
   const slotProps = asSlotProps({
     root: {
       ...attrs,
-      props: layerProps,
+      ...layerProps,
     },
     content: {
       ...rest,

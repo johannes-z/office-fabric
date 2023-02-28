@@ -6,40 +6,44 @@ import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
 export const LinkBase = defineFunctionalComponent({
-  ...useStylingProps(),
+  props: {
+    ...useStylingProps(),
 
-  as: { type: String, default: undefined },
-  underline: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  href: { type: String, default: '' },
-  target: { type: String, default: undefined },
-}, (props: ILinkProps, { attrs, slots }) => {
-  const { styles, theme, as, target, className, href, disabled, underline } = props
+    as: { type: String, default: undefined },
+    underline: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    href: { type: String, default: '' },
+    target: { type: String, default: undefined },
+  },
 
-  const classNames = getClassNames(styles, {
-    theme: theme!,
-    className,
-    isButton: !href,
-    isDisabled: disabled,
-    isUnderlined: underline,
-  })
+  render(props: ILinkProps, { attrs, slots }) {
+    const { styles, theme, as, target, className, href, disabled, underline } = props
 
-  const rootType = as || (href ? 'a' : 'button')
+    const classNames = getClassNames(styles, {
+      theme: theme!,
+      className,
+      isButton: !href,
+      isDisabled: disabled,
+      isUnderlined: underline,
+    })
 
-  const slotProps = asSlotProps({
-    root: {
-      ...attrs,
-      class: classNames.root,
-      ...rootType === 'a' && {
-        target,
-        href: disabled ? undefined : href,
+    const rootType = as || (href ? 'a' : 'button')
+
+    const slotProps = asSlotProps({
+      root: {
+        ...attrs,
+        class: classNames.root,
+        ...rootType === 'a' && {
+          target,
+          href: disabled ? undefined : href,
+        },
+        ...rootType === 'button' && {
+          type: 'button',
+          disabled,
+        },
       },
-      ...rootType === 'button' && {
-        type: 'button',
-        disabled,
-      },
-    },
-  })
+    })
 
-  return h(rootType, slotProps.root, slots)
+    return h(rootType, slotProps.root, slots)
+  },
 })

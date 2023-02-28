@@ -26,8 +26,8 @@ export const ProgressIndicatorBase = defineComponent({
     const { styles, className, theme, ariaValueText, ariaLabel, barHeight, label, progressHidden, description } = props
 
     const percentComplete = computed(() => {
-      const _percentComplete = +props.percentComplete
-      return (typeof _percentComplete === 'number' && !isNaN(_percentComplete))
+      const percentComplete = +props.percentComplete
+      return (typeof percentComplete === 'number' && !isNaN(percentComplete))
         ? Math.min(100, Math.max(0, props.percentComplete * 100))
         : undefined
     })
@@ -87,24 +87,23 @@ export const ProgressIndicatorBase = defineComponent({
       },
     }))
 
-    const _onRenderProgress = () => h('div', slotProps.value.itemProgress, [
+    const onRenderProgress = () => h('div', slotProps.value.itemProgress, [
       h('div', slotProps.value.progressTrack),
       h('div', slotProps.value.progressBar),
     ])
-    const onRenderProgress = slots.progress || _onRenderProgress
 
     return () => h('div', slotProps.value.root, [
       (slots.label || label)
         && h('div', slotProps.value.label, slots.label?.() || label),
 
-      !progressHidden && onRenderProgress({
+      !progressHidden && (slots.progress || onRenderProgress)({
         ...props,
         percentComplete: percentComplete.value,
-        defaultRender: _onRenderProgress,
+        defaultRender: onRenderProgress,
       }),
 
       (slots.description || description)
-        && h('div', slotProps.value.itemDescription, slots.description?.() || description),
+        && h('div', slotProps.value.itemDescription, slots.description || description),
     ])
   },
 
