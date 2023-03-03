@@ -1,5 +1,5 @@
 {
-  "name": "@fluentui-vue/vue-hooks",
+  "name": "@fluentui-vue/hooks",
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
@@ -13,9 +13,10 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^3.2.47"
   },
   "dependencies": {
-    "@fluentui-vue/utilities": "workspace:^1.0.0"
+    "@fluentui-vue/utilities": "workspace:^1.0.0",
+    "tslib": "^2.5.0"
   }
 }
