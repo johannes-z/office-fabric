@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/utilities",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@fluentui/dom-utilities": "^2.2.5",
-    "@fluentui/merge-styles": "^8.5.6"
+    "@fluentui/merge-styles": "^8.5.6",
+    "tslib": "^2.5.0"
   }
 }
