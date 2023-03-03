@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/icons",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Fluent UI Vue icons.",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -13,7 +13,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:^1.1.0"
+    "@fluentui-vue/style-utilities": "workspace:^1.1.0",
+    "tslib": "^2.5.0"
   },
   "keywords": [],
   "author": "",
