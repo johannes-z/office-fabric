@@ -99,6 +99,7 @@ const yammerClassName = mergeStyles(iconClass, {
 
   <DocumentCard>
     <h2>Icon</h2>
+    <Icon icon-name="ShoppingCart" />
     <FontIcon icon-name="CompassNW" :class="iconClass" />
     <FontIcon icon-name="Dictionary" :class-name="iconClass" />
     <FontIcon icon-name="TrainSolid" :class-name="iconClass" />

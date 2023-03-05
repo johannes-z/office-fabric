@@ -6,9 +6,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import pkg from './package.json'
 
 export default defineConfig({
-  optimizeDeps: {
-    entries: 'src/dev.ts',
-  },
   plugins: [
     vue(),
     vueJsx(),
@@ -33,7 +30,7 @@ export default defineConfig({
     cssCodeSplit: false,
     assetsInlineLimit: 0,
     lib: {
-      entry: path.resolve(__dirname, 'src/main.ts'),
+      entry: path.resolve(__dirname, 'src/index.ts'),
       name: '@fluentui-vue/components',
       formats: ['es', 'umd'],
     },
@@ -41,8 +38,18 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
+        '@fluentui-vue/file-type-icons',
+        '@fluentui-vue/hooks',
+        '@fluentui-vue/icons',
+        '@fluentui-vue/style-utilities',
+        '@fluentui-vue/theme',
+        '@fluentui-vue/utilities',
+        '@fluentui/dom-utilities',
+        '@fluentui/merge-styles',
+        'tslib',
       ],
       output: {
+        exports: 'named',
         globals: {
           vue: 'Vue',
         },

@@ -1,9 +1,9 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import type { VNode } from 'vue'
+import type { PropType, VNode } from 'vue'
 import { h } from 'vue'
 import { getIconContent } from './FontIcon'
-import type { IIconStyleProps, IIconStyles } from './Icon.types'
-import { StylingPropKeys } from '@/utils/'
+import type { IIconStyleProps, IIconStyles, IImageIconProps } from './Icon.types'
+import { StylingPropKeys, defineFunctionalComponent, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<IIconStyleProps, IIconStyles>({
   // Icon is used a lot by other components.
@@ -14,35 +14,44 @@ const getClassNames = classNamesFunction<IIconStyleProps, IIconStyles>({
 
 type IconContentChildren = string | undefined | VNode | VNode[] | typeof h
 
-export const IconBase = (props, { attrs }) => {
-  const { className, iconName, theme, styles, imageProps } = props
+export const IconBase = defineFunctionalComponent({
+  name: 'IconBase',
 
-  const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
-  const isImage = !!imageProps
-  const iconContent = getIconContent(iconName) || {}
-  const children = iconContent.children as IconContentChildren
-  const { iconClassName } = iconContent
+  props: {
+    ...useStylingProps(),
 
-  const classNames = getClassNames(styles, {
-    theme: theme!,
-    className,
-    iconClassName,
-    isImage,
-    isPlaceholder,
-  })
+    iconName: { type: String, default: '' },
+    imageProps: { type: Object as PropType<IImageIconProps>, default: undefined },
+  },
 
-  const RootType = isImage ? 'span' : 'i'
+  render(props, { attrs }) {
+    const { className, iconName, theme, styles, imageProps } = props
 
-  return h(RootType, {
-    ...attrs,
-    'class': classNames.root,
-    'aria-hidden': 'true',
-    'data-icon-name': iconName,
-  }, typeof children === 'function'
-    ? [children(h)]
-    : (Array.isArray(children))
-        ? children
-        : [children])
-}
+    const isPlaceholder = typeof iconName === 'string' && iconName.length === 0
+    const isImage = !!imageProps
+    const iconContent = getIconContent(iconName) || {}
+    const children = iconContent.children as IconContentChildren
+    const { iconClassName } = iconContent
 
-IconBase.props = [...StylingPropKeys, 'iconName', 'imageProps']
+    const classNames = getClassNames(styles, {
+      theme: theme!,
+      className,
+      iconClassName,
+      isImage,
+      isPlaceholder,
+    })
+
+    const RootType = isImage ? 'span' : 'i'
+
+    return h(RootType, {
+      ...attrs,
+      'class': classNames.root,
+      'aria-hidden': 'true',
+      'data-icon-name': iconName,
+    }, typeof children === 'function'
+      ? [children(h)]
+      : (Array.isArray(children))
+          ? children
+          : [children])
+  },
+})

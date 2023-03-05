@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import { getId } from '@fluentui-vue/utilities'
-import { useId } from '@fluentui-vue/vue-hooks'
+import { useId } from '@fluentui-vue/hooks'
 import { mergeStyles } from '@fluentui/merge-styles'
 import { ref } from 'vue'
 import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, Toggle } from '../components'
@@ -60,7 +60,6 @@ const modalProps = ({
       :modal-props="modalProps"
       @dismiss="toggleHideDialog"
     >
-      test
       <DialogFooter>
         <PrimaryButton text="Send" @click="toggleHideDialog" />
         <DefaultButton text="Don't send" @click="toggleHideDialog" />

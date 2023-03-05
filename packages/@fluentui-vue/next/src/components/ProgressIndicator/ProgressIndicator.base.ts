@@ -103,7 +103,7 @@ export const ProgressIndicatorBase = defineComponent({
       }),
 
       (slots.description || description)
-        && h('div', slotProps.value.itemDescription, slots.description || description),
+        && h('div', slotProps.value.itemDescription, slots.description?.() || description),
     ])
   },
 

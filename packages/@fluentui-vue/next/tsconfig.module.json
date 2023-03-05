@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "src/**/__tests__/*",
+    "src/dev.ts",
+    "src/router/**",
+    "src/views/**"
+  ]
+}

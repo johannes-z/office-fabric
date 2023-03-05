@@ -1,27 +1,31 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { IDialogFooterStyleProps, IDialogFooterStyles } from './DialogFooter.types'
-import { useStylingProps } from '@/utils'
+import { defineFunctionalComponent, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IDialogFooterStyleProps, IDialogFooterStyles>()
 
-export const DialogFooterBase = (props, { attrs, slots }) => {
-  const { className, styles, theme } = props
+export const DialogFooterBase = defineFunctionalComponent({
+  name: 'DialogFooterBase',
 
-  const classNames = getClassNames(styles!, {
-    theme: theme!,
-    className,
-  })
+  props: {
+    ...useStylingProps(),
+  },
 
-  console.log(slots)
+  render(props, { attrs, slots }) {
+    const { className, styles, theme } = props
 
-  return h('div', {
-    class: classNames.actions,
-  }, h('div', {
-    class: classNames.actionsRight,
-  }, slots))
-}
+    const classNames = getClassNames(styles!, {
+      theme: theme!,
+      className,
+    })
 
-DialogFooterBase.props = Object.keys({
-  ...useStylingProps(),
+    console.log(slots)
+
+    return h('div', {
+      class: classNames.actions,
+    }, h('div', {
+      class: classNames.actionsRight,
+    }, slots))
+  },
 })

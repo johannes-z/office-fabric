@@ -1,5 +1,5 @@
-import { IStyleFunctionOrObject, IStyle } from '@fluentui/merge-styles'
-import { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
 
 /**
  * {@docCategory Overlay}
@@ -13,30 +13,30 @@ export interface IOverlayProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules
    */
-  styles?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+  styles?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>
 
   /**
    * Theme provided by HOC.
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Additional css class to apply to the Overlay
    * @defaultvalue undefined
    */
-  className?: string;
+  className?: string
 
   /**
    * Whether to use the dark-themed overlay.
    * @defaultvalue false
    */
-  isDarkThemed?: boolean;
+  isDarkThemed?: boolean
 
   /**
    * Allow body scroll on touch devices. Changing after mounting has no effect.
    * @defaultvalue false
    */
-  allowTouchBodyScroll?: boolean;
+  allowTouchBodyScroll?: boolean
 }
 
 /**
@@ -46,22 +46,22 @@ export interface IOverlayStyleProps {
   /**
    * Accept theme prop.
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Accept custom classNames
    */
-  className?: string;
+  className?: string
 
   /**
    * Is overlay visible
    */
-  isNone?: boolean;
+  isNone?: boolean
 
   /**
    * Is overlay dark themed
    */
-  isDark?: boolean;
+  isDark?: boolean
 }
 
 /**
@@ -71,5 +71,5 @@ export interface IOverlayStyles {
   /**
    * Style for the root element.
    */
-  root: IStyle;
+  root: IStyle
 }

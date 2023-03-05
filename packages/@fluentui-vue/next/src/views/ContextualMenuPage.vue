@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useId } from '@fluentui-vue/vue-hooks'
+import { useId } from '@fluentui-vue/hooks'
 import { Ref, ref } from 'vue'
 import { ContextualMenu } from '../components'
 import DocumentCard from './components/DocumentCard.vue'

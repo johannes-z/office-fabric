@@ -26,5 +26,6 @@ onBeforeUnmount(() => clearInterval(id))
 
     <h3>Indeterminate ProgressIndicator</h3>
     <ProgressIndicator label="Example title" description="Example description" />
+    <ProgressIndicator label="Example title" description="Example description" :bar-height="5" />
   </DocumentCard>
 </template>

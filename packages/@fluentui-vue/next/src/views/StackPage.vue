@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { DefaultPalette } from '@fluentui-vue/theme'
-import { useId } from '@fluentui-vue/vue-hooks'
+import { useId } from '@fluentui-vue/hooks'
 import { Stack, StackItem } from '../components'
 import DocumentCard from './components/DocumentCard.vue'
 import type { IStackStyles, IStackTokens } from '@/components/Stack'
