@@ -33,7 +33,7 @@ export const ProgressIndicatorBase = defineComponent({
     })
 
     const classNames = getClassNames(styles, {
-      theme: theme!,
+      theme,
       className,
       barHeight,
       indeterminate: percentComplete.value === undefined,
@@ -46,7 +46,7 @@ export const ProgressIndicatorBase = defineComponent({
 
     const ariaValueMin = percentComplete.value !== undefined ? 0 : undefined
     const ariaValueMax = percentComplete.value !== undefined ? 100 : undefined
-    const ariaValueNow = percentComplete.value !== undefined ? Math.floor(percentComplete.value!) : undefined
+    const ariaValueNow = percentComplete.value !== undefined ? Math.floor(percentComplete.value) : undefined
 
     const slotProps = computed(() => asSlotProps({
       root: {

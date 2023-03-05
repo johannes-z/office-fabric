@@ -1,3 +1,5 @@
+import type { DialogType } from './DialogContent.types'
+
 /**
  * {@docCategory Dialog}
  */

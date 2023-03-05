@@ -53,11 +53,10 @@ export const DialogContentBase = defineFunctionalComponent({
     // const groupings = groupChildren();
     let subTextContent
     if (subText) {
-      subTextContent = (
-        <p className={classNames.subText} id={subTextId}>
-          {subText}
-        </p>
-      )
+      subTextContent = h('p', {
+        class: classNames.subText,
+        id: subTextId,
+      }, subText)
     }
 
     const slotProps = {
@@ -95,7 +94,7 @@ export const DialogContentBase = defineFunctionalComponent({
       h('div', slotProps.header, [
         h('div', slotProps.title, title),
         h('div', slotProps.topButton, [
-          topButtonsProps.map((props, index) => h(IconButton, { key: props.uniqueId || index, ...props })),
+          topButtonsProps.map((props: any, index) => h(IconButton, { key: props.uniqueId || index, ...props })),
           (type === DialogType.close || (showCloseButton && type !== DialogType.largeHeader)) && h(IconButton, slotProps.button),
         ]),
       ]),
