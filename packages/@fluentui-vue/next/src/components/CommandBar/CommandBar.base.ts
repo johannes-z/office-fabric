@@ -170,7 +170,7 @@ export const CommandBarBase = defineComponent({
       return h(CommandBarButton, {
         class: ['ms-CommandBarItem-link', item.className],
         ...commandButtonProps,
-      }, item.text)
+      }, () => item.text)
     },
   },
 
@@ -189,54 +189,55 @@ export const CommandBarBase = defineComponent({
       default: data => [
         h('div', {
           class: classNames.root,
-        }, [
-          h(OverflowSet, {
-            ref: 'overflow',
-            class: classNames.primarySet,
-            items: data.primaryItems.map(i => ({
-              ...i,
-              text: !i.iconOnly ? i.text : undefined,
-            })),
-            overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
-          }, {
-            item: ({ item }) => {
-              if (item.key in this.$slots) {
-                return this.$slots[item.key]!({
-                  item,
-                  render: onRenderItem,
+        }, {
+          default: () => [
+            h(OverflowSet, {
+              ref: 'overflow',
+              class: classNames.primarySet,
+              items: data.primaryItems.map(i => ({
+                ...i,
+                text: !i.iconOnly ? i.text : undefined,
+              })),
+              overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
+            }, {
+              item: ({ item }) => {
+                if (item.key in this.$slots) {
+                  return this.$slots[item.key]!({
+                    item,
+                    render: onRenderItem,
+                  })
+                }
+                return onRenderItem(item)
+              },
+              overflow: (overflowItems) => {
+                const { overflowButtonProps = {} } = this
+
+                const combinedOverflowItems: any[] = [
+                  ...(overflowButtonProps.menuProps ? overflowButtonProps.menuProps.items : []),
+                  ...overflowItems,
+                ]
+
+                return h(CommandBarButton, {
+                  role: 'menuitem',
+                  ...overflowButtonProps,
+                  styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.styles },
+                  className: ['ms-CommandBar-overflowButton', overflowButtonProps.className].join(' '),
+                  menuProps: { ...overflowButtonProps.menuProps, items: combinedOverflowItems },
+                  menuIconProps: { iconName: 'More', ...overflowButtonProps.menuIconProps },
                 })
-              }
-              return onRenderItem(item)
-            },
-            overflow: (overflowItems) => {
-              console.log(overflowItems)
-              const { overflowButtonProps = {} } = this
-
-              const combinedOverflowItems: any[] = [
-                ...(overflowButtonProps.menuProps ? overflowButtonProps.menuProps.items : []),
-                ...overflowItems,
-              ]
-
-              return h(CommandBarButton, {
-                role: 'menuitem',
-                ...overflowButtonProps,
-                styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.styles },
-                className: ['ms-CommandBar-overflowButton', overflowButtonProps.className].join(' '),
-                menuProps: { ...overflowButtonProps.menuProps, items: combinedOverflowItems },
-                menuIconProps: { iconName: 'More', ...overflowButtonProps.menuIconProps },
-              })
-            },
-          }),
-          h(OverflowSet, {
-            class: classNames.secondarySet,
-            items: data.farItems.map(i => ({
-              ...i,
-              text: !i.iconOnly ? i.text : undefined,
-            })),
-          }, {
-            item: ({ item }) => onRenderItem(item),
-          }),
-        ]),
+              },
+            }),
+            h(OverflowSet, {
+              class: classNames.secondarySet,
+              items: data.farItems.map(i => ({
+                ...i,
+                text: !i.iconOnly ? i.text : undefined,
+              })),
+            }, {
+              item: ({ item }) => onRenderItem(item),
+            }),
+          ],
+        }),
       ],
     })
   },
