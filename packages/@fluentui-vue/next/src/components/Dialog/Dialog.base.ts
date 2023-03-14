@@ -8,6 +8,8 @@ import { useStylingProps } from '@/utils'
 const getClassNames = classNamesFunction<IDialogStyleProps, IDialogStyles>()
 
 export const DialogBase = defineComponent({
+  name: 'DialogBase',
+
   props: {
     ...useStylingProps(),
     dialogContentProps: { type: Object, default: () => ({}) },
@@ -53,7 +55,7 @@ export const DialogBase = defineComponent({
       },
     }))
 
-    return () => h(Modal, slotProps.value.root, [
+    return () => h(Modal, slotProps.value.root, () => [
       h(DialogContent, slotProps.value.content, slots),
     ])
   },

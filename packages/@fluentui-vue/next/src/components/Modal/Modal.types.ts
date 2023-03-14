@@ -1,35 +1,35 @@
-import { IIconProps } from '../Icon'
-import { IStyleFunctionOrObject, IStyle } from '@fluentui/merge-styles'
-import { ILayerProps } from '../Layer'
-import { IOverlayProps } from '../Overlay'
-import { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IIconProps } from '../Icon'
+import type { ILayerProps } from '../Layer'
+import type { IOverlayProps } from '../Overlay'
 
 export interface IDragOptions {
   /**
    * Optional selector for the element where the drag can be initiated. If not supplied when
    * isDraggable is true dragging can be initated by the whole contents of the modal
    */
-  dragHandleSelector?: string;
+  dragHandleSelector?: string
 
   /**
    * IconProps for the icon used to indicate that the dialog is in keyboard move mode
    */
-  keyboardMoveIconProps?: IIconProps;
+  keyboardMoveIconProps?: IIconProps
 
   /**
    * The text to use for the modal move menu item
    */
-  moveMenuItemText: string;
+  moveMenuItemText: string
 
   /**
    * The text to use for the modal close menu item
    */
-  closeMenuItemText: string;
+  closeMenuItemText: string
 
   /**
    * The Draggable Control Menu so that the draggable zone can be moved via the keyboard
    */
-  menu: any;
+  menu: any
 }
 
 /**
@@ -39,7 +39,7 @@ export interface IModal {
   /**
    * Sets focus on the first focusable, or configured, child in focus trap zone
    */
-  focus: () => void;
+  focus: () => void
 }
 
 /**
@@ -49,105 +49,105 @@ export interface IModalProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  styles?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+  styles?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>
 
   /**
    * Theme provided by High-Order Component.
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Whether the dialog is displayed.
    * @defaultvalue false
    */
-  isOpen?: boolean;
+  isOpen?: boolean
 
   /**
    * Whether the overlay is dark themed.
    * @defaultvalue true
    */
-  isDarkOverlay?: boolean;
+  isDarkOverlay?: boolean
 
   /**
    * A callback function for when the Modal is dismissed light dismiss, before the animation completes.
    */
-  onDismiss?: (ev?: MouseEvent) => any;
+  onDismiss?: (ev?: MouseEvent) => any
 
   /**
    * A callback function which is called after the Modal is dismissed and the animation is complete.
    */
-  onDismissed?: () => any;
+  onDismissed?: () => any
 
   /**
    * Defines an optional set of props to be passed through to Layer
    */
-  layerProps?: ILayerProps;
+  layerProps?: ILayerProps
 
   /**
    * Defines an optional set of props to be passed through to Overlay
    */
-  overlay?: IOverlayProps;
+  overlay?: IOverlayProps
 
   /**
    * Whether the dialog can be light dismissed by clicking outside the dialog (on the overlay).
    * @defaultvalue false
    */
-  isBlocking?: boolean;
+  isBlocking?: boolean
 
   /**
    * Whether the dialog should be modeless (e.g. not dismiss when focusing/clicking outside of the dialog).
    * if true: isBlocking is ignored, there will be no overlay (isDarkOverlay is ignored),
    * isClickableOutsideFocusTrap is true, and forceFocusInsideTrap is false
    */
-  isModeless?: boolean;
+  isModeless?: boolean
 
   /**
    * Optional class name to be added to the root class
    */
-  className?: string;
+  className?: string
 
   /**
    * Optional override for container class
    */
-  containerClassName?: string;
+  containerClassName?: string
 
   /**
    * Optional override for scrollable content class
    */
-  scrollableContentClassName?: string;
+  scrollableContentClassName?: string
 
   /**
    * A callback function for when the Modal content is mounted on the overlay layer
    * @deprecated Use layerProps.onLayerDidMount instead
    */
-  onLayerDidMount?: () => void;
+  onLayerDidMount?: () => void
 
   /**
    * ARIA id for the title of the Modal, if any
    */
-  titleAriaId?: string;
+  titleAriaId?: string
 
   /**
    * ARIA id for the subtitle of the Modal, if any
    */
-  subtitleAriaId?: string;
+  subtitleAriaId?: string
 
   /**
    * Whether the modal should have top offset fixed once opened and expand from the bottom only
    * when the content changes dynamically.
    */
-  topOffsetFixed?: boolean;
+  topOffsetFixed?: boolean
 
   /**
    * The options to make the modal draggable
    */
-  dragOptions?: IDragOptions;
+  dragOptions?: IDragOptions
 
   /**
    * Allow body scroll on content and overlay on touch devices. Changing after mounting has no effect.
    * @defaultvalue false
    */
-  allowTouchBodyScroll?: boolean;
+  allowTouchBodyScroll?: boolean
 }
 
 /**
@@ -159,27 +159,27 @@ IModalProps,
 'className' | 'containerClassName' | 'scrollableContentClassName' | 'topOffsetFixed' | 'isModeless'
 > & {
   /** Modal open state. */
-  isOpen?: boolean;
+  isOpen?: boolean
   /** Modal visible state. */
-  isVisible?: boolean;
+  isVisible?: boolean
   /** Modal has been opened state. */
-  hasBeenOpened?: boolean;
+  hasBeenOpened?: boolean
   /** Positioning of modal on first render */
-  modalRectangleTop?: number;
+  modalRectangleTop?: number
   /** Classname for layer element */
-  layerClassName?: string;
+  layerClassName?: string
   /** Whether this modal is draggable and using the default handler */
-  isDefaultDragHandle?: boolean;
-};
+  isDefaultDragHandle?: boolean
+}
 
 /**
  * {@docCategory Modal}
  */
 export interface IModalStyles {
-  root: IStyle;
-  main: IStyle;
-  scrollableContent: IStyle;
-  layer: IStyle;
-  keyboardMoveIconContainer: IStyle;
-  keyboardMoveIcon: IStyle;
+  root: IStyle
+  main: IStyle
+  scrollableContent: IStyle
+  layer: IStyle
+  keyboardMoveIconContainer: IStyle
+  keyboardMoveIcon: IStyle
 }

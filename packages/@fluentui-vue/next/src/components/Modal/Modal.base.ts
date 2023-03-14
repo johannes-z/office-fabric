@@ -1,9 +1,9 @@
 import { DirectionalHint, classNamesFunction } from '@fluentui-vue/utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, defineComponent, h } from 'vue'
+import { defineComponent, h } from 'vue'
 import { Icon } from '../Icon'
 import type { ILayerProps } from '../Layer'
-import { ILayerStyles, Layer } from '../Layer'
+import { Layer } from '../Layer'
 import { Overlay } from '../Overlay'
 import { Popup } from '../Popup'
 import type { IDragOptions, IModalStyleProps, IModalStyles } from './Modal.types'
@@ -126,7 +126,7 @@ export const ModalBase = defineComponent({
           'data-is-scrollable': true,
         },
         popup: {
-          role: isModeless || !isBlocking ? 'dialog' : 'alertdialog',
+          role: (isModeless || !isBlocking) ? 'dialog' : 'alertdialog',
           ariaModal: !isModeless,
           ariaLabelledBy: titleAriaId,
           ariaDescribedBy: subtitleAriaId,
@@ -220,32 +220,34 @@ export const ModalBase = defineComponent({
     if (!isOpen)
       return
 
-    const modalContent = h('div', this.slotProps.main, [
+    const modalContent = () => h('div', this.slotProps.main, [
       dragOptions && isInKeyboardMoveMode && h('div', {
         class: classNames.keyboardMoveIconContainer,
       }, [
         dragOptions.keyboardMoveIconProps
-          ? h(Icon, dragOptions.keyboardMoveIconProps)
+          ? h(Icon, dragOptions.keyboardMoveIconProps!)
           : h(Icon, this.slotProps.keyboardMoveIcon),
       ]),
       h('div', this.slotProps.scrollableContent, [
         dragOptions && this.isModalMenuOpen && h(dragOptions.menu, this.slotProps.menu),
-        this.$slots.default({}),
+        this.$slots.default?.({}),
       ]),
     ])
 
     if (responsiveMode! >= ResponsiveMode.small) {
-      return h(Layer, mergedLayerProps, [
-        h(Popup, this.slotProps.popup, [
-          h('div', this.slotProps.root, [
+      return h(Layer, mergedLayerProps, {
+        default: () => h(Popup, this.slotProps.popup, {
+          default: () => h('div', this.slotProps.root, [
             !isModeless && h(Overlay, this.slotProps.overlay),
             dragOptions
-              // TODO DraggableZone
-              ? modalContent
-              : modalContent,
+            // TODO DraggableZone
+              ? modalContent()
+              : modalContent(),
           ]),
-        ]),
-      ])
+
+        }),
+
+      })
     }
   },
 })

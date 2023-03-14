@@ -20,6 +20,6 @@ export const Callout = (props, { attrs, slots }) => {
     },
   })
 
-  const content = h(CalloutContent, slotProps.content, slots)
-  return doNotLayer ? content : h(Layer, slotProps.root, [content])
+  const content = () => h(CalloutContent, slotProps.content, slots)
+  return doNotLayer ? content() : h(Layer, slotProps.root, content)
 }
