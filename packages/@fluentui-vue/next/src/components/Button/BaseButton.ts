@@ -92,7 +92,6 @@ export const BaseButton = defineComponent({
         onClick: (ev) => {
           if (disabled)
             return
-          console.log('BaseButton > click')
           this.showMenu = !this.showMenu
           // this.$emit('click', ev)
         },

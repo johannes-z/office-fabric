@@ -21,7 +21,6 @@ export const SeparatorBase = defineFunctionalComponent({
 
   render(props, { attrs, slots }) {
     const { styles, theme, className, vertical: _vertical, alignContent } = props
-    console.log(theme)
 
     const vertical = _vertical != null && _vertical !== false
 
