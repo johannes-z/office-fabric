@@ -383,7 +383,7 @@ export const ResizeGroupBase = defineComponent({
         let containerDimension
         if (this.measureContainer && this.$refs.root) {
           const boundingRect = this.$refs.root.getBoundingClientRect()
-          containerDimension = direction && direction === ResizeGroupDirection.vertical
+          containerDimension = (direction && direction === ResizeGroupDirection.vertical)
             ? boundingRect.height
             : boundingRect.width
         }
@@ -397,7 +397,7 @@ export const ResizeGroupBase = defineComponent({
             if (!refToMeasure)
               return 0
 
-            return direction && direction === ResizeGroupDirection.vertical
+            return (direction && direction === ResizeGroupDirection.vertical)
               ? refToMeasure.scrollHeight
               : refToMeasure.scrollWidth
           },
@@ -444,7 +444,7 @@ export const ResizeGroupBase = defineComponent({
         h('div', slotProps.content, [
           isInitialMeasure
             ? onRenderData(dataToMeasure)
-            : renderedData && onRenderData(renderedData),
+            : (renderedData && onRenderData(renderedData)),
         ]),
       ]),
     ])
