@@ -421,11 +421,11 @@ export const ResizeGroupBase = defineComponent({
         class: this.className,
       },
       parent: {
-        staticStyle: hiddenParentStyles,
+        style: hiddenParentStyles,
       },
       hidden: {
         ref: 'updateHiddenDiv',
-        staticStyle: hiddenDivStyles,
+        style: hiddenDivStyles,
       },
       content: {
         ref: 'initialHiddenDiv',

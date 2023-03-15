@@ -53,11 +53,9 @@ export const OverflowSetBase = defineFunctionalComponent({
         overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
         items && items.map((item, index) => h('div', {
           ...slotProps.item,
-          on: {
-            ...item.onClick
-              ? { click: item.onClick }
-              : {},
-          },
+          ...item.onClick
+            ? { onClick: item.onClick }
+            : {},
         }, {
           default: () => slots.item?.({ item, index }),
         })),
