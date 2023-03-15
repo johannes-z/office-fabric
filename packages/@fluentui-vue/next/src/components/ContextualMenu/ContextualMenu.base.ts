@@ -118,36 +118,38 @@ export const ContextualMenuBase = defineComponent({
     if (hidden)
       return
 
-    return h(Callout, slotProps.root, [
-      h('div', slotProps.container, [
-        title && h('div', slotProps.title, title),
-        items && h(MenuList, {
-          theme,
-          styles,
-          menuListProps: {
-            ariaLabel,
-            items,
-            totalItemCount,
-            hasCheckmarks,
-            hasIcons,
-            defaultMenuItemRenderer: null,
-          },
-          menuClassNames: classNames,
-          onClick: (ev: PointerEvent, item) => {
-            if (item?.disabled)
-              return
+    return h(Callout, slotProps.root, {
+      default: () =>
+        h('div', slotProps.container, [
+          title && h('div', slotProps.title, title),
+          items && h(MenuList, {
+            theme,
+            styles,
+            menuListProps: {
+              ariaLabel,
+              items,
+              totalItemCount,
+              hasCheckmarks,
+              hasIcons,
+              defaultMenuItemRenderer: null,
+            },
+            menuClassNames: classNames,
+            onClick: (ev: PointerEvent, item) => {
+              if (item?.disabled)
+                return
 
-            this.$emit('itemClick', ev)
+              this.$emit('itemClick', ev)
 
-            let shouldDismiss = false
-            if (item?.onClick)
-              shouldDismiss = !!item.onClick(ev, item)
+              let shouldDismiss = false
+              if (item?.onClick)
+                shouldDismiss = !!item.onClick(ev, item)
 
-            if (shouldDismiss || !ev.defaultPrevented)
-              this.$emit('dismiss')
-          },
-        }),
-      ]),
-    ])
+              if (shouldDismiss || !ev.defaultPrevented)
+                this.$emit('dismiss')
+            },
+          }),
+        ]),
+
+    })
   },
 })

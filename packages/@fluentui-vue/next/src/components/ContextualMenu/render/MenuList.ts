@@ -24,26 +24,28 @@ export const MenuList = (props, { attrs }) => {
     },
   })
   let indexCorrection = 0
-  return h('ul', slotProps.list, items.map((item: any, index) => {
-    const menuItem = h(MenuItem, {
-      ...attrs,
-      theme,
-      styles,
-      item,
-      index,
-      indexCorrection,
-      totalItemCount,
-      hasCheckmarks,
-      hasIcons,
-      classNames: menuClassNames,
-    })
-    if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
-      const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1
-      indexCorrection += indexIncrease
-    }
+  return h('ul', slotProps.list, {
+    default: () => items.map((item: any, index) => {
+      const menuItem = h(MenuItem, {
+        ...attrs,
+        theme,
+        styles,
+        item,
+        index,
+        indexCorrection,
+        totalItemCount,
+        hasCheckmarks,
+        hasIcons,
+        classNames: menuClassNames,
+      })
+      if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
+        const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1
+        indexCorrection += indexIncrease
+      }
 
-    return menuItem
-  }))
+      return menuItem
+    }),
+  })
 }
 MenuList.props = Object.keys({
   ...useStylingProps(),

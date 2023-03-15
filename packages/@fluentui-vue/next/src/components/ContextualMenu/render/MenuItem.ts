@@ -108,21 +108,22 @@ export const MenuItem = (props, { attrs, slots }) => {
         }),
       ]
     default: {
-      const menuItem = h(MenuNormalItem, {
-        item,
-        classNames: itemClassNames,
-        index,
-        focusableElementIndex,
-        totalItemCount,
-        hasCheckmarks,
-        hasIcons,
-      })
       return h(MenuListItem, {
         ...attrs,
         key: item.key || index,
         classNames: itemClassNames,
         title: item.title,
-      }, [menuItem])
+      }, {
+        default: () => h(MenuNormalItem, {
+          item,
+          classNames: itemClassNames,
+          index,
+          focusableElementIndex,
+          totalItemCount,
+          hasCheckmarks,
+          hasIcons,
+        }),
+      })
     }
   }
 }
