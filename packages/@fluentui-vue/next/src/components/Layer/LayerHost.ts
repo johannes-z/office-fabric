@@ -6,7 +6,7 @@ export const LayerHost = defineComponent({
   name: 'LayerHost',
 
   props: {
-    styles: { type: Object as () => any, default: () => {} },
+    styles: { type: Object as () => any, default: () => ({}) },
 
     hostId: { type: String, default: null },
   },

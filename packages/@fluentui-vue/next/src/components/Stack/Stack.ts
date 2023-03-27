@@ -21,7 +21,7 @@ export const Stack = defineFunctionalComponent({
     verticalAlign: { type: String, default: '' },
     disableShrink: { type: Boolean, default: false },
 
-    tokens: { type: Object, default: () => {} },
+    tokens: { type: Object, default: () => ({}) },
   },
 
   render(props, { attrs, slots }) {

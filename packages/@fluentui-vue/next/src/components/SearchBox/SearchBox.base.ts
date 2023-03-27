@@ -4,6 +4,8 @@ import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { IconButton } from '../Button'
 import { Icon } from '../Icon'
 import type { IIconProps } from '../Icon/Icon.types'
+import type { IButtonProps } from '../Button/Button.types'
+import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
 import { useStylingProps } from '@/utils'
 
 export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
@@ -26,7 +28,7 @@ export const SearchBoxBase = defineComponent({
     disableAnimation: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: false },
 
-    iconProps: { type: Object, default: () => {} },
+    iconProps: { type: Object, default: () => ({}) },
 
     disabled: { type: Boolean, default: false },
   },

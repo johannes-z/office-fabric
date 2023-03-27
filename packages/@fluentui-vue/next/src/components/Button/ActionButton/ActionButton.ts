@@ -13,7 +13,7 @@ export const ActionButton = defineFunctionalComponent({
 
     checked: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
-    iconProps: { type: Object, default: () => {} },
+    iconProps: { type: Object, default: () => ({}) },
   },
 
   render(props, { attrs, slots }) {

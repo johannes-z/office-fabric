@@ -3,7 +3,7 @@
   "compilerOptions": {
     "preserveValueImports": false,
     "importsNotUsedAsValues": "remove",
-    
+
     "noImplicitAny": false,
     "outDir": "lib",
     "target": "ES6",
@@ -11,7 +11,7 @@
 
     "declaration": true,
     "declarationDir": "types",
-    
+
     "strict": true,
     "jsx": "preserve",
     "jsxFactory": "h",
@@ -26,7 +26,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "./src/*" ],
+      "@/*": ["./src/*"]
     },
     "lib": [
       "esnext",
@@ -36,5 +36,5 @@
     ]
   },
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["src/**/__tests__/*"],
+  "exclude": ["src/**/__tests__/*"]
 }

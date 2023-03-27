@@ -40,12 +40,9 @@ importers:
     specifiers:
       '@fluentui-vue/style-utilities': workspace:^1.1.0
       tslib: ^2.5.0
-      vue-tsc: ^1.2.0
     dependencies:
       '@fluentui-vue/style-utilities': link:../style-utilities
       tslib: 2.5.0
-    devDependencies:
-      vue-tsc: 1.2.0
 
   packages/@fluentui-vue/next:
     specifiers:
@@ -133,15 +130,6 @@ importers:
       '@fluentui/dom-utilities': 2.2.5
       '@fluentui/merge-styles': 8.5.6
       tslib: 2.5.0
-
-  packages/@fluentui-vue/vue-hooks:
-    specifiers:
-      '@fluentui-vue/utilities': workspace:^1.0.0
-      vue: ^3.0.0
-    dependencies:
-      '@fluentui-vue/utilities': link:../utilities
-    devDependencies:
-      vue: 3.2.47
 
 packages:
 
@@ -5136,16 +5124,6 @@ packages:
     dependencies:
       de-indent: 1.0.2
       he: 1.2.0
-    dev: true
-
-  /vue-tsc/1.2.0:
-    resolution: {integrity: sha512-rIlzqdrhyPYyLG9zxsVRa+JEseeS9s8F2BbVVVWRRsTZvJO2BbhLEb2HW3MY+DFma0378tnIqs+vfTzbcQtRFw==}
-    hasBin: true
-    peerDependencies:
-      typescript: '*'
-    dependencies:
-      '@volar/vue-language-core': 1.2.0
-      '@volar/vue-typescript': 1.2.0
     dev: true
 
   /vue-tsc/1.2.0_typescript@4.9.5:

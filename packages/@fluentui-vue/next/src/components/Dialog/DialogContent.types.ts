@@ -1,5 +1,6 @@
 import type { ITheme } from '@fluentui-vue/theme'
 import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { IButtonProps } from '../Button/Button.types'
 import type { ResponsiveMode } from '@/utils'
 
 /**

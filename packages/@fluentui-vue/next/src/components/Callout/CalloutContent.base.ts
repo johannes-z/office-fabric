@@ -35,7 +35,7 @@ export const CalloutContentBase = defineComponent({
   props: {
     ...useStylingProps(),
 
-    target: { type: [HTMLElement, Object], required: true },
+    target: { type: [HTMLElement, String, Object, PointerEvent], required: true },
     calloutWidth: { type: Number, default: null },
     beakWidth: { type: Number, default: 16 },
     minPagePadding: { type: Number, default: 8 },
@@ -59,6 +59,12 @@ export const CalloutContentBase = defineComponent({
     dismissOnTargetClick: { type: Boolean, default: false },
 
     repositionOnChildrenUpdated: { type: Boolean, default: false },
+
+    role: { type: String, default: undefined },
+    ariaRoledescription: { type: String, default: undefined },
+    ariaDescribedBy: { type: String, default: undefined },
+    ariaLabel: { type: String, default: undefined },
+    ariaLabelledBy: { type: String, default: undefined },
   },
 
   data() {
@@ -72,12 +78,14 @@ export const CalloutContentBase = defineComponent({
   },
 
   computed: {
-    targetRef(): HTMLElement {
+    targetRef(): any {
       if (typeof this.target === 'string')
         return document.querySelector(this.target) as HTMLElement
-      return this.target instanceof HTMLElement
-        ? this.target
-        : this.target.$el as HTMLElement
+      if (this.target instanceof HTMLElement)
+        return this.target
+      if (this.target instanceof PointerEvent)
+        return this.target
+      return this.target.$el as HTMLElement
     },
     beakVisible(): boolean {
       return this.isBeakVisible && !!this.targetRef

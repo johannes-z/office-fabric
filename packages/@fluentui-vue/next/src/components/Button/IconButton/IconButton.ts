@@ -11,7 +11,7 @@ export const IconButton = defineFunctionalComponent({
   props: {
     ...useStylingProps(),
     ...useBaseButtonProps(),
-    iconProps: { type: Object, default: () => {} },
+    iconProps: { type: Object, default: () => ({}) },
   },
 
   render(props, { attrs, slots }) {

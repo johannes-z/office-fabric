@@ -8,7 +8,7 @@ export function useStylingProps<TStyleProps = any, TStyle extends IStyleSet<TSty
     /**
      * test
      */
-    styles: { type: [Object, Function] as PropType<IStyleFunctionOrObject<TStyleProps, TStyle> | undefined>, default: () => {} },
+    styles: { type: [Object, Function] as PropType<IStyleFunctionOrObject<TStyleProps, TStyle> | undefined>, default: () => ({}) },
     theme: { type: Object as PropType<ITheme>, default: () => getTheme() },
     className: { type: String, default: undefined },
   }

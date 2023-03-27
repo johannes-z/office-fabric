@@ -26,7 +26,7 @@ export const MessageBarBase = Vue.extend({
     actions: { type: Boolean, default: false },
     truncated: { type: Boolean, default: false },
     expandSingleLine: { type: Boolean, default: true },
-    expandButtonProps: { type: Object as () => IButtonProps, default: () => {} },
+    expandButtonProps: { type: Object as () => IButtonProps, default: () => ({}) },
   },
 
   data () {
