@@ -17,8 +17,15 @@ T, TStyleProps, TStyleSet extends IStyleSet<TStyleSet>,
       _styles.__cachedInputs__ = [baseStyles, props.styles]
     }
 
+    const forwardRef = attrs.componentRef || attrs['component-ref']
+
     // @ts-ignore
     return h(Component, {
+      ref: forwardRef
+        ? (el) => {
+            forwardRef(el)
+          }
+        : undefined,
       ...attrs,
       ...props,
       theme: props.theme ?? getTheme(),

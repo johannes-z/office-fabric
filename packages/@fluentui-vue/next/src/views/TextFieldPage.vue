@@ -1,10 +1,26 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+import type { ITextField } from '../components'
 import { TextField } from '../components'
+
+function onRef(el?: ITextField) {
+  el?.focus()
+}
+
+defineExpose({
+  onRef,
+})
+
+const text = ref('')
+const isMultiline = computed(() => {
+  console.log(text.value)
+  return text.value.length > 50
+})
 </script>
 
 <template>
   <h1>TextField</h1>
-  <TextField label="Standard" />
+  <TextField :component-ref="onRef" label="Standard" />
   <TextField label="Disabled" disabled default-value="I am disabled" />
   <TextField label="Read-only" readonly default-value="I am read-only" />
   <TextField label="Required " required />
@@ -19,6 +35,8 @@ import { TextField } from '../components'
 
   <TextField label="With auto adjusting height" multiline auto-adjust-height />
   <TextField
+    v-model="text"
     label="Switches from single to multiline if more than 50 characters are entered"
+    :multiline="isMultiline"
   />
 </template>
