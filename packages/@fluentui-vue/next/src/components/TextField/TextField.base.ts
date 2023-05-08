@@ -115,6 +115,7 @@ export const TextFieldBase = defineComponent({
 
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
+      internalValue.value = value
       emit('update:modelValue', internalValue.value)
       emit('change', ev, internalValue.value)
     }
@@ -124,13 +125,19 @@ export const TextFieldBase = defineComponent({
     expose({
       focus: () => {
         isFocused.value = true
+        if (!textElementRef.value)
+          return
+        textElementRef.value.focus()
       },
       blur: () => {
         isFocused.value = false
+        if (!textElementRef.value)
+          return
+        textElementRef.value.blur()
       },
     })
 
-    const Component = multiline.value ? 'textarea' : 'input'
+    const Component = computed(() => multiline.value ? 'textarea' : 'input')
 
     const id = attrs.id || fallbackId
 
@@ -167,9 +174,7 @@ export const TextFieldBase = defineComponent({
       },
     }))
 
-    const onRenderLabel = (props: ITextFieldProps) => {
-      const { label, disabled, required } = toRefs(props)
-
+    const onRenderLabel = () => {
       const labelStyles = classNames.value.subComponentStyles
         ? (classNames.value.subComponentStyles.label as IStyleFunctionOrObject<ILabelStyleProps, ILabelStyles>)
         : undefined
@@ -188,7 +193,7 @@ export const TextFieldBase = defineComponent({
       })
     }
 
-    const onRenderDescription = (props: ITextFieldProps) => {
+    const onRenderDescription = () => {
       if (!description.value)
         return null
       return h('span', slotProps.value.description, description.value)
@@ -197,7 +202,7 @@ export const TextFieldBase = defineComponent({
     const $label = () => (slots.label ?? onRenderLabel)(props)
 
     const $fieldGroup = () => h('div', slotProps.value.fieldGroup, [
-      h(Component, slotProps.value.field, internalValue.value),
+      h(Component.value, slotProps.value.field, internalValue.value),
     ])
 
     const $errorMessage = () => errorMessage.value && h('div', slotProps.value.description, [
