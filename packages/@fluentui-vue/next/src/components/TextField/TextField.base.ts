@@ -38,7 +38,7 @@ export const TextFieldBase = defineComponent({
     modelValue: { type: String, default: '' },
   },
 
-  setup(props, { attrs, slots, emit }) {
+  setup(props, { attrs, slots, emit, expose }) {
     const {
       modelValue,
       styles,
@@ -60,14 +60,14 @@ export const TextFieldBase = defineComponent({
       defaultValue,
     } = toRefs(props)
 
-    const isFocused = ref(false)
+    const isFocused = ref(focused.value)
     const internalValue = ref(modelValue.value || defaultValue.value || '')
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
       className: className.value,
       disabled: disabled.value,
-      focused: focused.value,
+      focused: isFocused.value,
       required: required.value,
       multiline: multiline.value,
       hasLabel: !!label.value,
@@ -112,6 +112,7 @@ export const TextFieldBase = defineComponent({
       isFocused.value = true
       ;(textElementRef.value).setSelectionRange(internalValue.value.length, internalValue.value.length)
     }
+
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
       emit('update:modelValue', internalValue.value)
@@ -119,6 +120,15 @@ export const TextFieldBase = defineComponent({
     }
 
     onMounted(adjustInputHeight)
+
+    expose({
+      focus: () => {
+        isFocused.value = true
+      },
+      blur: () => {
+        isFocused.value = false
+      },
+    })
 
     const Component = multiline.value ? 'textarea' : 'input'
 
