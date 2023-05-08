@@ -1,10 +1,9 @@
-import type { CreateElement, VNode } from 'vue'
-import Vue, { defineComponent, h } from 'vue'
 import { classNamesFunction } from '@fluentui-vue/utilities'
+import type { VNode } from 'vue'
+import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { ActionButton } from '../Button'
 import { Icon } from '../Icon'
 import type { INavLink, INavLinkGroup, INavStyleProps, INavStyles } from './Nav.types'
-import { INavProps } from './Nav.types'
 import { useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<INavStyleProps, INavStyles>()
@@ -36,182 +35,188 @@ export const NavBase = defineComponent({
     isOnTop: { type: Boolean, default: false },
   },
 
-  data() {
-    return {
-      isGroupCollapsed: {},
-      internalSelectedKey: '',
-    }
-  },
+  setup(props, { attrs, emit }) {
+    const {
+      theme,
+      styles,
+      className,
+      groups,
+      selectedKey,
+      isOnTop,
+    } = toRefs(props)
 
-  watch: {
-    selectedKey(value) {
-      this.internalSelectedKey = this.selectedKey
-    },
-  },
+    const isGroupCollapsed = ref({})
+    const internalSelectedKey = ref('')
+    const internalGroups = ref<INavLinkGroup[]>([])
 
-  created() {
-    this.internalSelectedKey = this.selectedKey ?? ''
-  },
+    watch(groups, (value) => {
+      internalGroups.value = value
+    }, {
+      immediate: true,
+    })
 
-  methods: {
-    renderGroup(group: INavLinkGroup, groupIndex: number): VNode {
-      const { groups, theme } = this
-      const classNames: any = getClassNames(this.styles, {
-        theme: theme!,
+    watch(selectedKey, (value) => {
+      internalSelectedKey.value = value
+    }, {
+      immediate: true,
+    })
+
+    const onRenderGroup = (group: INavLinkGroup, groupIndex: number): VNode => {
+      const classNames: any = computed(() => getClassNames(styles.value, {
+        theme: theme.value,
         isGroup: true,
-        isExpanded: this.isGroupExpanded(group),
-        groups,
-      })
+        isExpanded: isGroupExpanded(group),
+        groups: groups.value,
+      }))
 
       return h('div', { key: groupIndex }, [
-        h('div', { class: classNames.groupContent }, [
-          this.renderLinks(group.links, 0),
+        h('div', { class: classNames.value.groupContent }, [
+          onRenderLinks(group.links, 0),
         ]),
       ])
-    },
+    }
 
-    renderLinks(links: INavLink[] | undefined, nestingLevel: number): VNode | null {
+    const onRenderLinks = (links: INavLink[] | undefined, nestingLevel: number): VNode | null => {
       if (!links || !links.length)
         return null
 
-      const linkElements: VNode[] = links.map((link: INavLink, linkIndex: number) =>
-        this.renderLink(link, linkIndex, nestingLevel),
-      )
-
-      const { groups, theme } = this
-      const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
+      const classNames: any = computed(() => getClassNames(styles.value, {
+        theme: theme.value,
+        groups: groups.value,
+      }))
 
       return h('ul', {
-        class: classNames.navItems,
+        class: classNames.value.navItems,
         role: 'list',
-      }, linkElements)
-    },
+      }, links.map((link: INavLink, linkIndex: number) =>
+        onRenderLink(link, linkIndex, nestingLevel),
+      ))
+    }
 
-    renderLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const { groups, theme } = this
-      const classNames: any = getClassNames(this.styles, { theme: theme!, groups })
+    const onRenderLink = (link: INavLink, linkIndex: number, nestingLevel: number): VNode => {
+      const classNames: any = computed(() => getClassNames(styles.value, {
+        theme: theme.value,
+        groups: groups.value,
+      }))
 
       return h('li', {
-        key: linkIndex,
-        class: classNames.navItem,
+        key: link.key || linkIndex,
+        class: classNames.value.navItem,
         role: 'listItem',
       }, [
-        this.renderCompositeLink(link, linkIndex, nestingLevel),
-        link.isExpanded && this.renderLinks(link.links, ++nestingLevel),
+        onRenderCompositeLink(link, linkIndex, nestingLevel),
+        link.isExpanded && onRenderLinks(link.links, ++nestingLevel),
       ])
-    },
+    }
 
-    renderCompositeLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const { styles, groups, theme } = this
-      const classNames: any = getClassNames(styles, {
-        theme: theme!,
+    const onRenderCompositeLink = (link: INavLink, linkIndex: number, nestingLevel: number): VNode => {
+      const classNames: any = computed(() => getClassNames(styles.value, {
+        theme: theme.value,
         isExpanded: !!link.isExpanded,
         isSelected: false,
         isLink: true,
         isDisabled: link.disabled,
         position: INDENTATION_SIZE * nestingLevel + 1,
-        groups,
-      })
+        groups: groups.value,
+      }))
 
       return h('div', {
         key: linkIndex,
-        class: classNames.compositeLink,
+        class: classNames.value.compositeLink,
       }, [
         (link.links && link.links.length > 0)
         && h('button', {
-          class: classNames.chevronButton,
-          onClick: this.onLinkExpandClicked.bind(this, link),
+          class: classNames.value.chevronButton,
+          onClick: () => onLinkExpandClicked(link),
         }, [
           h(Icon, {
             style: link.isExpanded ? { transform: 'rotate(-180deg)' } : {},
-            class: classNames.chevronIcon,
+            class: classNames.value.chevronIcon,
             iconName: 'ChevronDown',
           }),
         ]),
-        this.renderNavLink(link, linkIndex, nestingLevel),
+        onRenderNavLink(link, linkIndex, nestingLevel),
       ])
-    },
+    }
 
-    onLinkExpandClicked(link: INavLink): void {
-      link.isExpanded = !link.isExpanded
-    },
-
-    renderNavLink(link: INavLink, linkIndex: number, nestingLevel: number): VNode {
-      const isSelected = link.key === this.internalSelectedKey
+    const onRenderNavLink = (link: INavLink, linkIndex: number, nestingLevel: number): VNode => {
+      const isSelected = computed(() => link.key === internalSelectedKey.value)
       const isLinkWithIcon = link.icon || link.iconProps
 
-      const { groups, theme } = this
-
-      const classNames: any = getClassNames(this.styles, {
-        theme: theme!,
-        isSelected,
+      const classNames: any = computed(() => getClassNames(styles.value, {
+        theme: theme.value,
+        isSelected: isSelected.value,
         isDisabled: link.disabled,
         isButtonEntry: link.onClick && !link.forceAnchor,
         leftPadding: INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24),
-        groups,
-      })
+        groups: groups.value,
+      }))
 
       return h(ActionButton, {
         href: link.url || (link.forceAnchor ? '#' : undefined),
         title: link.title || link.name,
         target: link.target,
         disabled: link.disabled,
-        className: classNames.link,
+        className: classNames.value.link,
         style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
-        onClick: this.onNavLinkClicked.bind(this, link),
+        onClick: (ev: PointerEvent) => onNavLinkClicked(link, ev),
       }, () => link.name)
-    },
+    }
 
-    onNavLinkClicked(link: INavLink, ev: MouseEvent): void {
+    const onLinkExpandClicked = (link: INavLink): void => {
+      link.isExpanded = !link.isExpanded
+    }
+
+    const onNavLinkClicked = (link: INavLink, ev: PointerEvent): void => {
       if (link.onClick)
         link.onClick(ev, link)
 
       if (!link.url && link.links && link.links.length > 0)
         link.isExpanded = !link.isExpanded
 
-      this.internalSelectedKey = link.key!
-    },
+      internalSelectedKey.value = link.key!
+    }
 
-    preventBounce(link: INavLink, ev: Event): void {
+    const preventBounce = (link: INavLink, ev: Event): void => {
       if (!link.href && link.forceAnchor)
         ev.preventDefault()
-    },
+    }
 
-    isGroupExpanded(group: INavLinkGroup): boolean {
-      if (group.name && Object.prototype.hasOwnProperty.call(this.isGroupCollapsed, group.name))
-        return !this.isGroupCollapsed[group.name]
+    const isGroupExpanded = (group: INavLinkGroup): boolean => {
+      if (group.name && Object.prototype.hasOwnProperty.call(isGroupCollapsed, group.name))
+        return !isGroupCollapsed[group.name]
 
       if (group.collapseByDefault !== undefined)
         return !group.collapseByDefault
 
       return true
-    },
+    }
 
-    toggleCollapsed(group: INavLinkGroup): void {
+    const toggleCollapsed = (group: INavLinkGroup): void => {
       if (group.name) {
         const newGroupCollapsed = {
-          ...this.isGroupCollapsed,
-          [group.name]: this.isGroupExpanded(group),
+          ...isGroupCollapsed,
+          [group.name]: isGroupExpanded(group),
         }
-        this.isGroupCollapsed = newGroupCollapsed
-        // this.$set(this, 'isGroupCollapsed', newGroupCollapsed)
+        isGroupCollapsed.value = newGroupCollapsed
       }
-    },
-  },
+    }
 
-  render(): any {
-    const { theme, className, isOnTop, groups } = this
-    if (!groups)
-      return ''
+    const classNames: any = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value,
+      isOnTop: isOnTop.value,
+      groups: internalGroups.value,
+    }))
 
-    const groupElements = this.groups.map(this.renderGroup)
-
-    const classNames: any = getClassNames(this.styles, { theme: theme!, className, isOnTop, groups })
-
-    return h('nav', {
-      class: classNames.root,
-      role: 'navigation',
-    }, groupElements)
+    return () => {
+      return !internalGroups.value
+        ? ''
+        : h('nav', {
+          class: classNames.value.root,
+          role: 'navigation',
+        }, internalGroups.value.map(onRenderGroup))
+    }
   },
 
 })
