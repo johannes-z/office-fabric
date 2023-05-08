@@ -12,10 +12,7 @@ defineExpose({
 })
 
 const text = ref('')
-const isMultiline = computed(() => {
-  console.log(text.value)
-  return text.value.length > 50
-})
+const isMultiline = computed(() => text.value.length > 50)
 </script>
 
 <template>

@@ -108,10 +108,6 @@ export const TextFieldBase = defineComponent({
         textField.style.height = `${textField.scrollHeight}px`
       }
     }
-    const onFocus = async () => {
-      isFocused.value = true
-      ;(textElementRef.value).setSelectionRange(internalValue.value.length, internalValue.value.length)
-    }
 
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
@@ -124,13 +120,11 @@ export const TextFieldBase = defineComponent({
 
     expose({
       focus: () => {
-        isFocused.value = true
         if (!textElementRef.value)
           return
         textElementRef.value.focus()
       },
       blur: () => {
-        isFocused.value = false
         if (!textElementRef.value)
           return
         textElementRef.value.blur()
@@ -168,7 +162,10 @@ export const TextFieldBase = defineComponent({
         type: 'text',
         autocomplete: 'off',
         style: { resize: (resizable.value === false) && 'none' },
-        onFocus,
+        onFocus: async () => {
+          isFocused.value = true
+          ;(textElementRef.value).setSelectionRange(internalValue.value.length, internalValue.value.length)
+        },
         onBlur: () => (isFocused.value = false),
         onInput: ev => onInput(ev, ev.target.value),
       },
