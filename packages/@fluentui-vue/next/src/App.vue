@@ -5,7 +5,7 @@ import type { INavLinkGroup } from './components'
 import { Nav } from './components'
 import { nav } from './router/routes'
 
-const navLinkGroups: INavLinkGroup[] = nav
+const navLinkGroups: INavLinkGroup[] = computed(() => nav)
 
 const router = useRouter()
 const currentUrl = computed(() => router.currentRoute.value.path)

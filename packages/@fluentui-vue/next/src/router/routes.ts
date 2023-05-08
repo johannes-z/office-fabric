@@ -3,7 +3,7 @@ import type { INavLink, INavLinkGroup } from '../components/Nav/Nav.types'
 
 const routes: any[] = []
 
-const defineRoute = ({ path, name, component }) => {
+function defineRoute({ path, name, component }) {
   const route = {
     path,
     name,
@@ -21,6 +21,7 @@ const defineRoute = ({ path, name, component }) => {
 export const nav = [
   {
     links: [{
+      key: 'Basic Inputs',
       name: 'Basic Inputs',
       links: [
         defineRoute({
@@ -63,6 +64,7 @@ export const nav = [
     },
     {
       name: 'Items & Lists',
+      key: 'Items & Lists',
       links: [
         defineRoute({
           path: '/Persona',
@@ -74,6 +76,7 @@ export const nav = [
     },
     {
       name: 'Commands, Menus & Navs',
+      key: 'Commands, Menus & Navs',
       links: [
         defineRoute({
           path: '/ContextualMenu',
@@ -90,6 +93,7 @@ export const nav = [
     },
     {
       name: 'Progress',
+      key: 'Progress',
       links: [
         defineRoute({
           path: '/ProgressIndicator',
@@ -106,6 +110,7 @@ export const nav = [
     },
     {
       name: 'Surfaces',
+      key: 'Surfaces',
       links: [
         defineRoute({
           path: '/Callout',
@@ -127,6 +132,7 @@ export const nav = [
     },
     {
       name: 'Utilities',
+      key: 'Utilities',
       links: [
         defineRoute({
           path: '/Icon',
