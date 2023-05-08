@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fluentui/dom-utilities": "^2.2.5",
-    "@fluentui/merge-styles": "^8.5.6",
+    "@fluentui/dom-utilities": "^2.2.9",
+    "@fluentui/merge-styles": "^8.5.10",
     "tslib": "^2.5.0"
   }
 }
