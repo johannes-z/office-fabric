@@ -25,7 +25,6 @@ export const Popup = defineComponent({
     const needsVerticalScrollBar = ref(false)
 
     const onKeyDown = (e: KeyboardEvent) => {
-      console.log('onKeyDown')
       if (e.key !== 'Escape')
         return
       // ;(ctx.listeners.dismiss as Function | null)?.(e)

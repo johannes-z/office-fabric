@@ -1,12 +1,12 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import type { VNode } from 'vue'
-import Vue, { CreateElement, VueConstructor, defineComponent, h } from 'vue'
+import { defineComponent, h } from 'vue'
 import { CommandBarButton } from '../Button'
 import { OverflowSet } from '../OverflowSet'
 import { ResizeGroup } from '../ResizeGroup'
 import { getCommandButtonStyles } from './CommandBar.styles'
 import type { ICommandBarItemProps, ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
-import { asSlotProps, useStylingProps } from '@/utils/'
+import { useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ICommandBarStyleProps, ICommandBarStyles>()
 

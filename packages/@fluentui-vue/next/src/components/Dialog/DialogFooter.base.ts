@@ -12,15 +12,13 @@ export const DialogFooterBase = defineFunctionalComponent({
     ...useStylingProps(),
   },
 
-  render(props, { attrs, slots }) {
+  render(props, { slots }) {
     const { className, styles, theme } = props
 
     const classNames = getClassNames(styles!, {
       theme: theme!,
       className,
     })
-
-    console.log(slots)
 
     return h('div', {
       class: classNames.actions,
