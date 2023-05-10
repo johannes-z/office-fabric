@@ -21,7 +21,11 @@ export const DialogBase = defineComponent({
     responsiveMode: { type: Number, default: null },
   },
 
-  setup(props, { attrs, slots }) {
+  emits: [
+    'dismiss',
+  ],
+
+  setup(props, { attrs, slots, emit }) {
     const {
       styles, theme, className, hidden, minWidth,
       maxWidth,
@@ -35,6 +39,9 @@ export const DialogBase = defineComponent({
 
     const dialogContentProps = computed(() => ({
       ...props.dialogContentProps,
+      onDismiss: () => {
+        emit('dismiss')
+      },
     }))
 
     const classNames = computed(() => getClassNames(styles.value, {

@@ -21,11 +21,7 @@ T, TStyleProps, TStyleSet extends IStyleSet<TStyleSet>,
 
     // @ts-ignore
     return h(Component, {
-      ref: forwardRef
-        ? (el) => {
-            forwardRef(el)
-          }
-        : undefined,
+      ref: forwardRef || undefined,
       ...attrs,
       ...props,
       theme: props.theme ?? getTheme(),

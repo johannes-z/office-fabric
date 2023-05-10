@@ -16,7 +16,7 @@ const dragOptions = {
 }
 const screenReaderOnly = mergeStyles(hiddenContentStyle)
 const dialogContentProps = {
-  type: DialogType.normal,
+  type: DialogType.close,
   title: 'Missing Subject',
   closeButtonAriaLabel: 'Close',
   subText: 'Do you want to send this message without a subject?',
@@ -27,7 +27,7 @@ const isDraggable = ref(true)
 const labelId = getId('dialogLabel')
 const subTextId = getId('subTextLabel')
 
-const toggleHideDialog = () => {
+function toggleHideDialog() {
   console.log(hideDialog.value)
   hideDialog.value = !hideDialog.value
 }

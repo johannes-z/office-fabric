@@ -22,6 +22,7 @@ export const DialogContentBase = defineFunctionalComponent({
     subText: { type: String, default: null },
     subTextId: { type: String, default: null },
     topButtonsProps: { type: Array },
+    onDismiss: { type: Function, default: undefined },
   },
 
   render(props, { attrs, slots }) {

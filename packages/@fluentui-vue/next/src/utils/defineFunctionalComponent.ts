@@ -31,7 +31,7 @@ export interface FunctionalComponentDefinition<TProps extends object> {
   render: FunctionalRenderFunction<TProps>
 }
 
-export const defineFunctionalComponent = <TProps extends object>({ name, props: propDefs = {} as any, render }: FunctionalComponentDefinition<TProps>) => {
+export function defineFunctionalComponent<TProps extends object>({ name, props: propDefs = {} as any, render }: FunctionalComponentDefinition<TProps>) {
   const functionalRenderFn = (props: TProps, ctx: Context) => {
     const normalizedProps = Object.entries(propDefs).reduce((obj, [_key, propDef]) => {
       const key = toKebabCase(_key)
