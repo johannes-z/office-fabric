@@ -11,6 +11,7 @@ export * from './Toggle'
 export * from './Persona'
 
 // Commands, Menus & Navs
+export * from './Breadcrumb'
 export * from './CommandBar'
 export * from './ContextualMenu'
 export * from './Nav'

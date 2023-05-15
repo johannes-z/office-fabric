@@ -79,6 +79,16 @@ export const nav = [
       key: 'Commands, Menus & Navs',
       links: [
         defineRoute({
+          path: '/Breadcrumb',
+          name: 'Breadcrumb',
+          component: () => import('../views/BreadcrumbPage.vue'),
+        }),
+        defineRoute({
+          path: '/ContextualMenu',
+          name: 'ContextualMenu',
+          component: () => import('../views/ContextualMenuPage.vue'),
+        }),
+        defineRoute({
           path: '/ContextualMenu',
           name: 'ContextualMenu',
           component: () => import('../views/ContextualMenuPage.vue'),
