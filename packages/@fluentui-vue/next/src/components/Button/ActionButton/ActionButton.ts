@@ -1,10 +1,10 @@
-import { h } from 'vue'
+import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './ActionButton.styles'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
-export const ActionButton = defineFunctionalComponent({
+export const ActionButton = defineComponent({
   name: 'ActionButton',
 
   props: {
@@ -16,16 +16,23 @@ export const ActionButton = defineFunctionalComponent({
     iconProps: { type: Object, default: () => ({}) },
   },
 
-  render(props, { attrs, slots }) {
-    const slotProps = asSlotProps({
+  setup(props, { attrs, slots }) {
+    const componentRef = ref(null)
+
+    onMounted(() => {
+      props.componentRef?.(componentRef.value)
+    })
+
+    const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
         ...props,
         variantClassName: 'ms-Button--action ms-Button--comand',
         styles: getStyles(props.styles),
+        ref: componentRef,
       },
-    })
+    }))
 
-    return h(BaseButton, slotProps.root, slots)
+    return () => h(BaseButton, slotProps.value.root, slots)
   },
 })

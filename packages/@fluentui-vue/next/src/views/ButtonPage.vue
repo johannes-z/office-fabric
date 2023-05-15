@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import type { IIconProps } from '../components'
 import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, PrimaryButton, Stack, Toggle } from '../components'
 import DocumentCard from './components/DocumentCard.vue'
+import type { IStackTokens } from '@/components/Stack'
 import type { IContextualMenuProps } from '@/components/ContextualMenu'
-import type { IStackStyles, IStackTokens } from '@/components/Stack'
 
 const menuProps: IContextualMenuProps = {
   items: [
@@ -32,6 +32,11 @@ const stackTokens: IStackTokens = { childrenGap: 40 }
 
 const checked = ref(false)
 const disabled = ref(false)
+
+async function onRef(ref) {
+  console.log(ref)
+  ref.focus()
+}
 </script>
 
 <template>
@@ -45,7 +50,7 @@ const disabled = ref(false)
 
     <h3>Default Button</h3>
     <Stack horizontal :tokens="stackTokens">
-      <DefaultButton :disabled="disabled" :checked="checked">
+      <DefaultButton :component-ref="onRef" :disabled="disabled" :checked="checked">
         Standard
       </DefaultButton>
       <DefaultButton :disabled="disabled" :checked="checked" primary>

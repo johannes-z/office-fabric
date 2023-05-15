@@ -1,21 +1,19 @@
-export const useBaseButtonProps = () => ({
-  variantClassName: { type: String, default: undefined },
+export function useBaseButtonProps() {
+  return {
+    componentRef: { type: Function, default: undefined },
 
-  checked: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
+    variantClassName: { type: String, default: undefined },
 
-  /**
-   * Same as default slot. Useful for `v-bind`.
-   */
-  text: { type: String, default: undefined },
+    checked: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
 
-  href: { type: String, default: undefined },
-})
+    /**
+     * Same as default slot. Useful for `v-bind`.
+     */
+    text: { type: String, default: undefined },
 
-export const BaseButtonPropKeys = [
-  'variantClassName',
-  'checked',
-  'disabled',
-  'text',
-  'href',
-]
+    href: { type: String, default: undefined },
+  }
+}
+
+export const BaseButtonPropKeys = Object.keys(useBaseButtonProps())

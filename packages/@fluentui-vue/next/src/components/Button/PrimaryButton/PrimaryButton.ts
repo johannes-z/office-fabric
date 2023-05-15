@@ -1,9 +1,9 @@
-import { h } from 'vue'
+import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
-export const PrimaryButton = defineFunctionalComponent({
+export const PrimaryButton = defineComponent({
 
   name: 'PrimaryButton',
 
@@ -12,15 +12,22 @@ export const PrimaryButton = defineFunctionalComponent({
     ...useBaseButtonProps(),
   },
 
-  render(props, { attrs, slots }) {
-    const slotProps = asSlotProps({
+  setup(props, { attrs, slots }) {
+    const componentRef = ref(null)
+
+    onMounted(() => {
+      props.componentRef?.(componentRef.value)
+    })
+
+    const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
         ...props,
         primary: true,
+        ref: componentRef,
       },
-    })
-    return h(DefaultButton, slotProps.root, slots)
+    }))
+    return () => h(DefaultButton, slotProps.value.root, slots)
   },
 
 })

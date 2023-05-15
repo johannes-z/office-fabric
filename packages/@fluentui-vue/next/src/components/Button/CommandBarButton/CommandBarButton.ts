@@ -1,10 +1,10 @@
-import { h } from 'vue'
+import { computed, defineComponent, h, onMounted, ref, toRefs } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './CommandBarButton.styles'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
-export const CommandBarButton = defineFunctionalComponent({
+export const CommandBarButton = defineComponent({
   name: 'CommandBarButton',
 
   props: {
@@ -12,18 +12,25 @@ export const CommandBarButton = defineFunctionalComponent({
     ...useBaseButtonProps(),
   },
 
-  render(props, { attrs, slots }) {
-    const { styles } = props
+  setup(props, { attrs, slots }) {
+    const { styles } = toRefs(props)
 
-    const slotProps = asSlotProps({
+    const componentRef = ref(null)
+
+    onMounted(() => {
+      props.componentRef?.(componentRef.value)
+    })
+
+    const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
         ...props,
         variantClassName: 'ms-Button--commandBar',
-        styles: getStyles(styles),
+        styles: getStyles(styles.value),
+        ref: componentRef,
       },
-    })
+    }))
 
-    return h(BaseButton, slotProps.root, slots)
+    return () => h(BaseButton, slotProps.value.root, slots)
   },
 })

@@ -12,12 +12,28 @@ defineExpose({
 })
 
 const text = ref('')
-const isMultiline = computed(() => text.value.length > 50)
+function onChange(_, value) {
+  text.value = value
+}
+const text2 = ref('')
+const isMultiline = computed(() => text2.value.length > 50)
 </script>
 
 <template>
   <h1>TextField</h1>
-  <TextField :component-ref="onRef" label="Standard" />
+
+  <TextField
+    :component-ref="onRef"
+    placeholder="string.newFolderPlaceholder"
+    error-message="folderNameError"
+    :styles="{ root: { width: '100%' } }"
+    :model-value="text"
+    @change="onChange"
+    @clear.stop
+    @keydown.enter.stop.prevent="onChange"
+  />
+
+  <TextField label="Standard" />
   <TextField label="Disabled" disabled default-value="I am disabled" />
   <TextField label="Read-only" readonly default-value="I am read-only" />
   <TextField label="Required " required />
@@ -32,7 +48,7 @@ const isMultiline = computed(() => text.value.length > 50)
 
   <TextField label="With auto adjusting height" multiline auto-adjust-height />
   <TextField
-    v-model="text"
+    v-model="text2"
     label="Switches from single to multiline if more than 50 characters are entered"
     :multiline="isMultiline"
   />

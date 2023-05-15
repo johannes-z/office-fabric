@@ -1,43 +1,44 @@
 import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { concatStyleSetsWithProps } from '@fluentui/merge-styles'
-import { Component, DefineComponent, FunctionalComponent, h, mergeProps } from 'vue'
+import { type ConcreteComponent, defineComponent, h, onMounted, ref } from 'vue'
 
 export function styled<
-T, TStyleProps, TStyleSet extends IStyleSet<TStyleSet>,
+T extends ConcreteComponent, TStyleProps, TStyleSet extends IStyleSet<TStyleSet>,
 >(
   Component: T,
   baseStyles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>,
 ): T {
   let _styles: any
 
-  const StyledComponent = (props, { slots, emit, attrs }) => {
-    if (!_styles || props.styles !== _styles.__cachedInputs__[1] || !!props.styles) {
-      _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, props.styles)
-      _styles.__cachedInputs__ = [baseStyles, props.styles]
-    }
+  const _theme = ref(getTheme())
 
-    const forwardRef = attrs.componentRef || attrs['component-ref']
+  const StyledComponent = defineComponent({
+    name: `Styled${Component.name}`,
 
-    // @ts-ignore
-    return h(Component, {
-      ref: forwardRef || undefined,
-      ...attrs,
-      ...props,
-      theme: props.theme ?? getTheme(),
-      className: props.className || attrs.class,
-      styles: _styles,
-    }, slots)
-  }
+    props: [...new Set([...Array.isArray(Component.props) ? Component.props : Object.keys(Component.props ?? {}), 'styles', 'theme', 'className', 'componentRef'])],
 
-  Object.defineProperty(StyledComponent, 'name', {
-    writable: true,
-    // @ts-ignore
-    value: `Styled${Component.name}`,
+    setup(props, { attrs, slots }) {
+      if (!_styles || props.styles !== _styles.__cachedInputs__[1] || !!props.styles) {
+        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, props.styles)
+        _styles.__cachedInputs__ = [baseStyles, props.styles]
+      }
+
+      const componentRef = ref(null)
+      onMounted(() => {
+        props.componentRef?.(componentRef.value)
+      })
+
+      return () => h(Component, {
+        ref: componentRef,
+        ...attrs,
+        ...props,
+        theme: props.theme ?? _theme.value,
+        className: props.className || attrs.class,
+        styles: _styles,
+      }, slots)
+    },
   })
-
-  // @ts-ignore
-  StyledComponent.props = [...new Set([...Array.isArray(Component.props) ? Component.props : Object.keys(Component.props ?? {}), 'styles', 'theme', 'className'])]
 
   // @ts-ignore
   return StyledComponent

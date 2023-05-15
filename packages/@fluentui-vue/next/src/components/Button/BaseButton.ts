@@ -1,5 +1,6 @@
 import type { VNode } from 'vue'
 import { defineComponent, h } from 'vue'
+
 // import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
 import { Icon } from '../Icon'
 import { FontIcon } from '../Icon/FontIcon'
@@ -45,6 +46,11 @@ export const BaseButton = defineComponent({
   methods: {
     hideMenu() {
       this.showMenu = false
+    },
+    focus() {
+      console.log(this.$refs)
+      console.log(this.$refs.root)
+      this.$refs.root?.focus()
     },
   },
 

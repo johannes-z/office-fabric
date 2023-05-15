@@ -40,6 +40,10 @@ const modalProps = ({
   styles: dialogStyles,
   dragOptions: isDraggable.value ? dragOptions : undefined,
 })
+
+function onDefaultButtonRef(el?: any) {
+  console.log(el)
+}
 </script>
 
 <template>
@@ -62,7 +66,7 @@ const modalProps = ({
     >
       <DialogFooter>
         <PrimaryButton text="Send" @click="toggleHideDialog" />
-        <DefaultButton text="Don't send" @click="toggleHideDialog" />
+        <DefaultButton :component-ref="onDefaultButtonRef" text="Don't send" @click="toggleHideDialog" />
       </DialogFooter>
     </Dialog>
   </DocumentCard>
