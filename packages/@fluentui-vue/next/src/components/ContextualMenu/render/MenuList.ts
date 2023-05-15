@@ -5,7 +5,7 @@ import { ContextualMenuItemType } from '../ContextualMenu.types'
 import { MenuItem } from './MenuItem'
 import { asSlotProps, useStylingProps } from '@/utils'
 
-export const MenuList = (props, { attrs }) => {
+export function MenuList(props, { attrs }) {
   const {
     theme,
     styles,
@@ -37,6 +37,9 @@ export const MenuList = (props, { attrs }) => {
         hasCheckmarks,
         hasIcons,
         classNames: menuClassNames,
+        onClick: (ev: PointerEvent) => {
+          attrs.onClick(ev, item)
+        },
       })
       if (item.itemType !== ContextualMenuItemType.Divider && item.itemType !== ContextualMenuItemType.Header) {
         const indexIncrease = item.customOnRenderListLength ? item.customOnRenderListLength : 1
@@ -47,6 +50,7 @@ export const MenuList = (props, { attrs }) => {
     }),
   })
 }
+MenuList.inheritAttrs = false
 MenuList.props = Object.keys({
   ...useStylingProps(),
   menuListProps: {

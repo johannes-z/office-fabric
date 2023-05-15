@@ -46,7 +46,7 @@ export function isItemDisabled(item: IContextualMenuItem): boolean {
   return !!(item.isDisabled || item.disabled)
 }
 
-export const MenuItem = (props, { attrs, slots }) => {
+export function MenuItem(props, { attrs, slots }) {
   const {
     theme,
     styles,

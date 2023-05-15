@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { ContextualMenuItem } from '../ContextualMenuItem'
 import { ContextualMenuAnchor, ContextualMenuButton } from '../ContextualMenuItemWrapper'
 
-export const MenuNormalItem = (props, { attrs, slots }) => {
+export function MenuNormalItem(props, { attrs, slots }) {
   const {
     item,
     classNames,

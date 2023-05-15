@@ -1,7 +1,7 @@
 import { h } from 'vue'
 import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const MenuListItem = (props, { attrs, slots }) => {
+export function MenuListItem(props, { attrs, slots }) {
   const {
     classNames,
     title,

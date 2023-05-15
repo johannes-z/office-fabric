@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { Checkbox } from '../components'
+
+function onComponentRef(el) {
+  console.log(el)
+  el.focus()
+}
 </script>
 
 <template>
   <h1>Checkbox</h1>
-  <Checkbox label="Unchecked checkbox (uncontrolled)" />
+  <Checkbox :component-ref="onComponentRef" label="Unchecked checkbox (uncontrolled)" />
 
   <Checkbox label="Checked checkbox (uncontrolled)" default-checked />
 

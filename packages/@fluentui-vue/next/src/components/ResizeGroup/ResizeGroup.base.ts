@@ -1,5 +1,5 @@
 import { debounce } from '@fluentui-vue/utilities'
-import type { VNode } from 'vue'
+import { type VNode, computed, nextTick, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
 import { defineComponent, h } from 'vue'
 import type { IResizeGroupProps } from './ResizeGroup.types'
 import { ResizeGroupDirection } from './ResizeGroup.types'
@@ -37,7 +37,7 @@ export interface IResizeGroupState {
 /**
  * Returns a simple object is able to store measurements with a given key.
  */
-export const getMeasurementCache = () => {
+export function getMeasurementCache() {
   const measurementsCache: { [key: string]: number } = {}
 
   return {
@@ -67,7 +67,7 @@ export const getMeasurementCache = () => {
  * Returns a function that is able to compute the next state for the ResizeGroup given the current
  * state and any measurement updates.
  */
-export const getNextResizeGroupStateProvider = (measurementCache = getMeasurementCache()) => {
+export function getNextResizeGroupStateProvider(measurementCache = getMeasurementCache()) {
   const _measurementCache = measurementCache
   let _containerDimension: number | undefined
 
@@ -319,81 +319,69 @@ export const ResizeGroupBase = defineComponent({
     getItemRefs: { type: Function, default: null },
   },
 
-  data(): any {
-    return {
-      resizeObserver: null,
-      hasRenderedContent: false,
-      measureContainer: true,
-      dataNeedsMeasuring: true,
-      state: {},
-    }
-  },
+  setup(props, { attrs, slots, expose }) {
+    const {
+      data,
+      direction,
+      className,
+    } = toRefs(props)
 
-  computed: {
-    isInitialMeasure(): boolean {
-      return !this.hasRenderedContent && this.dataNeedsMeasuring
-    },
-  },
+    const hasRenderedContent = ref(false)
+    const measureContainer = ref(true)
+    const dataNeedsMeasuring = ref(true)
+    const state = ref({
+      dataToMeasure: undefined,
+      renderedData: undefined,
+      measureContainer: undefined,
+      resizeDirection: undefined,
+    })
 
-  watch: {
-    'data': {
-      handler(value) {
-        this.state = Object.assign({}, nextResizeGroupStateProvider.getInitialResizeGroupState(this.data))
-      },
-      deep: true,
-      immediate: true,
-    },
-    'state.dataToMeasure': function (value) {
-      this.dataNeedsMeasuring = nextResizeGroupStateProvider.shouldRenderDataForMeasurement(value)
-    },
-    'state.renderedData': function (value) {
-      // if (value) this.hasRenderedContent = true
-      this.hasRenderedContent = !!value
-    },
-    'state': function (value) {
+    const isInitialMeasure = computed(() => {
+      return !hasRenderedContent.value && dataNeedsMeasuring.value
+    })
+
+    watch(data, (value) => {
+      state.value = Object.assign({}, nextResizeGroupStateProvider.getInitialResizeGroupState(value))
+    }, { immediate: true, deep: true })
+
+    watch(() => state.value.dataToMeasure, (value) => {
+      dataNeedsMeasuring.value = nextResizeGroupStateProvider.shouldRenderDataForMeasurement(value)
+    })
+    watch(() => state.value.renderedData, (value) => {
+      hasRenderedContent.value = !!value
+    })
+
+    watch(state, (value) => {
       if (!value.dataToMeasure)
         return
-      this.afterComponentRendered(this.direction)
-    },
-  },
+      afterComponentRendered(direction.value)
+    }, { deep: true })
 
-  beforeUnmount() {
-    this.resizeObserver?.disconnect()
-  },
+    const root = ref<HTMLDivElement | null>(null)
+    const initialHiddenDiv = ref<HTMLDivElement | null>(null)
+    const updateHiddenDiv = ref<HTMLDivElement | null>(null)
 
-  async mounted(): Promise<void> {
-    this.afterComponentRendered(this.direction)
-    this.resizeObserver = new ResizeObserver(
-      () => debounce(window.requestAnimationFrame(this.onResize), RESIZE_DELAY, false),
-    )
-    this.resizeObserver.observe(this.$refs.root)
-  },
-
-  methods: {
-    onResize(): void {
-      if (this.$refs.root)
-        this.measureContainer = true
-      this.afterComponentRendered(this.direction)
-    },
-    remeasure(): void {
-      this.onResize()
-    },
-    afterComponentRendered(direction?: ResizeGroupDirection): void {
+    const onResize = () => {
+      if (root.value)
+        measureContainer.value = true
+      afterComponentRendered(direction.value)
+    }
+    const afterComponentRendered = (direction?: ResizeGroupDirection) => {
       window.requestAnimationFrame(async () => {
         let containerDimension
-        if (this.measureContainer && this.$refs.root) {
-          const boundingRect = this.$refs.root.getBoundingClientRect()
+        if (measureContainer.value && root.value) {
+          const boundingRect = root.value.getBoundingClientRect()
           containerDimension = (direction && direction === ResizeGroupDirection.vertical)
             ? boundingRect.height
             : boundingRect.width
         }
         const nextState = nextResizeGroupStateProvider.getNextState(
-          this.$props,
-          this.state,
+          props,
+          state.value,
           () => {
-            const refToMeasure = !this.hasRenderedContent
-              ? this.$refs.initialHiddenDiv
-              : this.$refs.updateHiddenDiv
+            const refToMeasure = !hasRenderedContent.value
+              ? initialHiddenDiv.value
+              : updateHiddenDiv.value
             if (!refToMeasure)
               return 0
 
@@ -403,48 +391,58 @@ export const ResizeGroupBase = defineComponent({
           },
           containerDimension,
         )
-
         if (nextState)
-          this.state = nextState
+          state.value = nextState
       })
-    },
-  },
+    }
 
-  render(): VNode {
-    const { dataToMeasure, renderedData } = this.state
-    const dataNeedsMeasuring = this.dataNeedsMeasuring
-    const isInitialMeasure = this.isInitialMeasure
+    const resizeObserver = new ResizeObserver(
+      () => debounce(window.requestAnimationFrame(onResize), RESIZE_DELAY, false),
+    )
 
-    const slotProps = asSlotProps({
+    onMounted(async () => {
+      afterComponentRendered(direction.value)
+      resizeObserver.observe(root.value!)
+    })
+
+    onBeforeUnmount(() => {
+      resizeObserver.disconnect()
+    })
+
+    const slotProps = computed(() => asSlotProps({
       root: {
-        ref: 'root',
-        class: this.className,
+        ref: root,
+        class: className.value,
       },
       parent: {
         style: hiddenParentStyles,
       },
       hidden: {
-        ref: 'updateHiddenDiv',
+        ref: updateHiddenDiv,
         style: hiddenDivStyles,
       },
       content: {
-        ref: 'initialHiddenDiv',
-        style: isInitialMeasure ? hiddenDivStyles : undefined,
+        ref: initialHiddenDiv,
+        style: isInitialMeasure.value ? hiddenDivStyles : undefined,
       },
+    }))
+
+    const onRenderData = (data: any) => slots.default?.(data)
+
+    expose({
+      remeasure: () => onResize(),
     })
 
-    const onRenderData = (data: any) => this.$slots.default?.(data)
-
-    return h('div', slotProps.root, [
-      h('div', slotProps.parent, [
-        dataNeedsMeasuring && !isInitialMeasure && h('div', slotProps.hidden, [
-          onRenderData(dataToMeasure),
+    return () => h('div', slotProps.value.root, [
+      h('div', slotProps.value.parent, [
+        dataNeedsMeasuring.value && !isInitialMeasure.value && h('div', slotProps.value.hidden, [
+          onRenderData(state.value.dataToMeasure),
         ]),
 
-        h('div', slotProps.content, [
-          isInitialMeasure
-            ? onRenderData(dataToMeasure)
-            : (renderedData && onRenderData(renderedData)),
+        h('div', slotProps.value.content, [
+          isInitialMeasure.value
+            ? onRenderData(state.value.dataToMeasure)
+            : (state.value.renderedData && onRenderData(state.value.renderedData)),
         ]),
       ]),
     ])

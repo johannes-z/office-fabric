@@ -5,7 +5,6 @@ import { getStyles } from './IconButton.styles'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
 export const IconButton = defineComponent({
-
   name: 'IconButton',
 
   props: {

@@ -4,7 +4,7 @@ import { IContextualMenuItem } from '../ContextualMenu.types'
 import { ContextualMenuItem } from '../ContextualMenuItem'
 import { StylingPropKeys, asSlotProps, useStylingProps } from '@/utils'
 
-export const ContextualMenuButton = (props, { attrs, slots }) => {
+export function ContextualMenuButton(props, { attrs, slots }) {
   const {
     item,
     classNames,

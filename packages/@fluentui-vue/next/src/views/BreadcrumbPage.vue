@@ -25,7 +25,7 @@ const items: Ref<IBreadcrumbItem[]> = ref([
 ])
 
 function _onBreadcrumbItemClicked(ev: MouseEvent, item: IBreadcrumbItem): void {
-  console.log(`Breadcrumb item with key "${item.key}" has been clicked.`)
+  console.trace(`Breadcrumb item with key "${item.key}" has been clicked.`)
 }
 </script>
 

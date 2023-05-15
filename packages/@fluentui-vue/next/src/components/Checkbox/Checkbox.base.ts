@@ -42,7 +42,7 @@ export const CheckboxBase = defineComponent({
     modelValue: { type: Boolean, default: false },
   },
 
-  setup(props, { attrs, emit, slots }) {
+  setup(props, { attrs, slots, emit, expose }) {
     const {
       modelValue, defaultChecked, indeterminate, defaultIndeterminate,
       theme, styles, className, disabled, boxSide,
@@ -85,6 +85,14 @@ export const CheckboxBase = defineComponent({
       emit('update:modelValue', internalValue.value)
     }
 
+    const inputRef = ref<HTMLInputElement | null>(null)
+
+    expose({
+      focus: () => {
+        inputRef.value?.focus()
+      },
+    })
+
     const slotProps = computed<SlotProps<ICheckboxStyles>>(() => ({
       root: {
         class: classNames.value.root,
@@ -96,6 +104,7 @@ export const CheckboxBase = defineComponent({
         ...inputProps.value,
         disabled: disabled.value,
         type: 'checkbox',
+        ref: inputRef,
         onInput,
       },
       label: {

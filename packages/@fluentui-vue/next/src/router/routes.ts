@@ -89,11 +89,6 @@ export const nav = [
           component: () => import('../views/ContextualMenuPage.vue'),
         }),
         defineRoute({
-          path: '/ContextualMenu',
-          name: 'ContextualMenu',
-          component: () => import('../views/ContextualMenuPage.vue'),
-        }),
-        defineRoute({
           path: '/CommandBar',
           name: 'CommandBar',
           component: () => import('../views/CommandBarPage.vue'),

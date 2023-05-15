@@ -1,14 +1,17 @@
 import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { concatStyleSetsWithProps } from '@fluentui/merge-styles'
-import { type ConcreteComponent, defineComponent, h, onMounted, ref } from 'vue'
+import { defineComponent, h, onMounted, ref } from 'vue'
 
 export function styled<
-T extends ConcreteComponent, TStyleProps, TStyleSet extends IStyleSet<TStyleSet>,
+// TComponentProps extends ComponentPropsOptions,
+TStyleProps,
+TStyleSet extends IStyleSet<TStyleSet>,
+TRef = unknown,
 >(
-  Component: T,
+  Component: any,
   baseStyles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>,
-): T {
+) {
   let _styles: any
 
   const _theme = ref(getTheme())

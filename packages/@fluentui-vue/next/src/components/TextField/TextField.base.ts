@@ -84,20 +84,19 @@ export const TextFieldBase = defineComponent({
     const fallbackId = getId(COMPONENT_NAME)
     const labelId = getId(`${COMPONENT_NAME}Label`)
 
-    const textElementRef = ref() as Ref<HTMLTextAreaElement>
+    const textElementRef = ref<HTMLTextAreaElement | null>(null)
 
     watch(modelValue, (value: string) => {
       internalValue.value = value
     })
 
     watch(multiline, async (newValue: boolean, oldValue: boolean) => {
-      const textElement = textElementRef.value
-      const start = textElement.selectionStart || 0
-      const end = textElement.selectionEnd || 0
+      const start = textElementRef.value?.selectionStart || 0
+      const end = textElementRef.value?.selectionEnd || 0
       if ((newValue !== oldValue) && isFocused.value) {
         await nextTick()
-        ;(textElementRef.value).focus()
-        ;(textElementRef.value).setSelectionRange(start, end)
+        textElementRef.value?.focus()
+        textElementRef.value?.setSelectionRange(start, end)
       }
     })
 
@@ -164,7 +163,7 @@ export const TextFieldBase = defineComponent({
         style: { resize: (resizable.value === false) && 'none' },
         onFocus: async () => {
           isFocused.value = true
-          ;(textElementRef.value).setSelectionRange(internalValue.value.length, internalValue.value.length)
+          textElementRef.value?.setSelectionRange(internalValue.value.length, internalValue.value.length)
         },
         onBlur: () => (isFocused.value = false),
         onInput: ev => onInput(ev, ev.target.value),

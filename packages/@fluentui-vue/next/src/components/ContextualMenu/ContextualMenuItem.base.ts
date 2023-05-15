@@ -28,9 +28,9 @@ export const ContextualMenuItemBase = defineFunctionalComponent({
         ...attrs,
         ...props,
         class: classNames.linkContent,
-        ...item.onClick
-          ? { onClick: item.onClick }
-          : {},
+        // ...item.onClick
+        //   ? { onClick: item.onClick }
+        //   : {},
       },
       icon: {
         class: classNames.icon,

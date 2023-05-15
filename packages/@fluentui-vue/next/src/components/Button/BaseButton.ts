@@ -79,7 +79,7 @@ export const BaseButton = defineComponent({
     const classNames = getBaseButtonClassNames(
       null,
       styles,
-      className,
+      className || this.$attrs.class,
       variantClassName,
       iconProps && iconProps.className,
       menuIconProps && menuIconProps.className,
@@ -178,7 +178,7 @@ export const BaseButton = defineComponent({
           h('span', slotProps.label, this.$slots.default?.({}) || text),
           secondaryText && h('span', slotProps.description, secondaryText),
         ]),
-        (menuProps || menuIconProps) && onRenderMenuIcon(),
+        (menuProps || menuIconProps) && (this.$slots.renderMenuIcon || onRenderMenuIcon)(),
         menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
       ]),
     ])
