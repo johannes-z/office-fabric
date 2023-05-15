@@ -7,6 +7,10 @@ import DocumentCard from './components/DocumentCard.vue'
 const search = ref('test')
 const stackTokens: Partial<IStackTokens> = { childrenGap: 20 }
 const filterIcon: IIconProps = { iconName: 'Filter' }
+
+function onRef(el) {
+  el.focus()
+}
 </script>
 
 <template>
@@ -16,7 +20,7 @@ const filterIcon: IIconProps = { iconName: 'Filter' }
     <h2>Usage</h2>
 
     <h3>Default SearchBox</h3>
-    <SearchBox v-model="search" placeholder="Search" />
+    <SearchBox v-model="search" :component-ref="onRef" placeholder="Search" />
     <SearchBox
       placeholder="Search with no animation"
       disable-animation

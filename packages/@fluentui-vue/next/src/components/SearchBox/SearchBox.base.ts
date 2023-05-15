@@ -33,7 +33,7 @@ export const SearchBoxBase = defineComponent({
     disabled: { type: Boolean, default: false },
   },
 
-  setup(props, { attrs, slots, emit }) {
+  setup(props, { attrs, slots, emit, expose }) {
     const {
       styles,
       theme,
@@ -151,7 +151,7 @@ export const SearchBoxBase = defineComponent({
       if (e && e.defaultPrevented)
         return
       internalValue.value = ''
-      inputRef.value.focus()
+      inputRef.value?.focus()
     }
 
     const submit = () => {
@@ -166,7 +166,17 @@ export const SearchBoxBase = defineComponent({
       emit('change', value)
     })
 
-    const inputRef = ref() as Ref<HTMLInputElement>
+    const inputRef = ref<HTMLInputElement | null>(null)
+
+    expose({
+      focus: () => {
+        inputRef.value?.focus()
+      },
+      clear: () => {
+        internalValue.value = ''
+      },
+    })
+
     return () => h('div', slotProps.value.root, [
       h('div', slotProps.value.iconContainer, [
         h(Icon, slotProps.value.icon),
