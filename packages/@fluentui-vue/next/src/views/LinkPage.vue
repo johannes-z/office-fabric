@@ -33,5 +33,10 @@ function handleClickOnLink(ev: MouseEvent) {
       are inline-block or in the case of imgs, block. However, it is possible to create a linked image button by
       making a button with an unstyled variant and adding the img content and href source to that.
     </Text>
+
+    <h3>Vue Router</h3>
+    This link renders as a Vue Router link: <Link to="/Spinner" underline>
+      Spinner
+    </Link>.
   </DocumentCard>
 </template>

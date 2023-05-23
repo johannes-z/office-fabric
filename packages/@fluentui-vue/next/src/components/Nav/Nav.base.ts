@@ -1,6 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import type { VNode } from 'vue'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import { ActionButton } from '../Button'
 import { Icon } from '../Icon'
 import type { INavLink, INavLinkGroup, INavStyleProps, INavStyles } from './Nav.types'
@@ -31,8 +32,9 @@ export const NavBase = defineComponent({
     ...useStylingProps(),
 
     groups: { type: Array as () => INavLinkGroup[], default: () => [] },
-    selectedKey: { type: String, default: '' },
     isOnTop: { type: Boolean, default: false },
+    selectedKey: { type: String, default: '' },
+    initialSelectedKey: { type: String, default: '' },
   },
 
   setup(props, { attrs, emit }) {
@@ -43,6 +45,7 @@ export const NavBase = defineComponent({
       groups,
       selectedKey,
       isOnTop,
+      router,
     } = toRefs(props)
 
     const isGroupCollapsed = ref({})
@@ -143,7 +146,7 @@ export const NavBase = defineComponent({
       const isSelected = computed(() => link.key === internalSelectedKey.value)
       const isLinkWithIcon = link.icon || link.iconProps
 
-      const classNames: any = computed(() => getClassNames(styles.value, {
+      const classNames = computed(() => getClassNames(styles.value, {
         theme: theme.value,
         isSelected: isSelected.value,
         isDisabled: link.disabled,
@@ -153,6 +156,7 @@ export const NavBase = defineComponent({
       }))
 
       return h(ActionButton, {
+        ...link,
         href: link.url || (link.forceAnchor ? '#' : undefined),
         title: link.title || link.name,
         target: link.target,

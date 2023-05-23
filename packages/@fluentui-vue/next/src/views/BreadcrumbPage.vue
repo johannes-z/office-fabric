@@ -20,7 +20,7 @@ const items: Ref<IBreadcrumbItem[]> = ref([
   { text: 'Folder 7', key: 'f7', onClick: _onBreadcrumbItemClicked },
   { text: 'Folder 8', key: 'f8', onClick: _onBreadcrumbItemClicked },
   { text: 'Folder 9', key: 'f9', onClick: _onBreadcrumbItemClicked },
-  { text: 'Folder 10', key: 'f10', onClick: _onBreadcrumbItemClicked },
+  { text: 'Spinner', to: '/Spinner', key: 'f10', onClick: _onBreadcrumbItemClicked },
   { text: 'Folder 11', key: 'f11', onClick: _onBreadcrumbItemClicked, isCurrentItem: true },
 ])
 
@@ -36,6 +36,6 @@ function _onBreadcrumbItemClicked(ev: MouseEvent, item: IBreadcrumbItem): void {
     <h2>Usage</h2>
 
     <Label :styles="labelStyles">With items rendered as buttons</Label>
-    <Breadcrumb :items="items" />
+    <Breadcrumb :items="items" router />
   </DocumentCard>
 </template>

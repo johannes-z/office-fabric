@@ -2,12 +2,14 @@ import type { VNode } from 'vue'
 import { defineComponent, h } from 'vue'
 
 // import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
+import { RouterLink } from 'vue-router'
 import { Icon } from '../Icon'
 import { FontIcon } from '../Icon/FontIcon'
 import { ContextualMenu } from '../ContextualMenu'
 import { getBaseButtonClassNames } from './Button.classNames'
 import { useBaseButtonProps } from './useBaseButton'
 import { asSlotProps, useStylingProps } from '@/utils'
+import { makeRouterProps } from '@/composables'
 
 export const BaseButton = defineComponent({
   name: 'BaseButton',
@@ -15,6 +17,7 @@ export const BaseButton = defineComponent({
   props: {
     ...useStylingProps(),
     ...useBaseButtonProps(),
+    ...makeRouterProps(),
 
     primaryDisabled: { type: Boolean, default: false },
 
@@ -24,6 +27,7 @@ export const BaseButton = defineComponent({
     hasMenu: { type: Boolean, default: false },
     expanded: { type: Boolean, default: false },
     split: { type: Boolean, default: false },
+    router: { type: Boolean, default: false },
 
     menuIconProps: { type: Object, default: undefined },
     menuProps: { type: Object, default: undefined },
@@ -69,6 +73,9 @@ export const BaseButton = defineComponent({
       checked,
       split,
       secondaryText,
+      to,
+      exact,
+      replace,
     } = this
 
     const isPrimaryButtonDisabled = disabled || primaryDisabled
@@ -101,6 +108,12 @@ export const BaseButton = defineComponent({
           this.showMenu = !this.showMenu
           // this.$emit('click', ev)
         },
+        ...to && {
+          href: disabled ? undefined : href,
+          to: disabled ? undefined : to,
+          exact,
+          replace,
+        },
       },
       flexContainer: {
         class: classNames.flexContainer,
@@ -117,7 +130,7 @@ export const BaseButton = defineComponent({
     })
 
     const renderAsAnchor: boolean = !isPrimaryButtonDisabled && !!href
-    const tag = renderAsAnchor ? 'a' : 'button'
+    const tag = renderAsAnchor ? (to ? RouterLink : 'a') : 'button'
 
     const renderIcon = () => {
       if (iconProps && (iconProps.iconName !== undefined || iconProps.imageProps)) {
@@ -171,7 +184,7 @@ export const BaseButton = defineComponent({
 
     const hasContent = this.$slots.default || text
 
-    return h(tag, slotProps.root, [
+    const $tagContent = () => [
       h('span', slotProps.flexContainer, [
         renderIcon(),
         hasContent && h('span', slotProps.textContainer, [
@@ -181,6 +194,7 @@ export const BaseButton = defineComponent({
         (menuProps || menuIconProps) && (this.$slots.renderMenuIcon || onRenderMenuIcon)(),
         menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
       ]),
-    ])
+    ]
+    return h(tag, slotProps.root, tag === RouterLink ? $tagContent : $tagContent())
   },
 })

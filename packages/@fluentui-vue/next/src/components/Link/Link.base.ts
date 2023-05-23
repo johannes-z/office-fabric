@@ -1,13 +1,16 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { h } from 'vue'
+import { computed, defineComponent, h, toRefs } from 'vue'
+import { RouterLink, useRouter } from 'vue-router'
 import type { ILinkProps, ILinkStyleProps, ILinkStyles } from './Link.types'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils/'
+import { makeRouterProps, useLink } from '@/composables'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
-export const LinkBase = defineFunctionalComponent({
+export const LinkBase = defineComponent({
   props: {
     ...useStylingProps(),
+    ...makeRouterProps(),
 
     as: { type: String, default: undefined },
     underline: { type: Boolean, default: false },
@@ -16,34 +19,42 @@ export const LinkBase = defineFunctionalComponent({
     target: { type: String, default: undefined },
   },
 
-  render(props: ILinkProps, { attrs, slots }) {
-    const { styles, theme, as, target, className, href, disabled, underline } = props
+  setup(props, { attrs, slots }) {
+    const { styles, theme, as, to, target, className, href, disabled, underline } = toRefs(props)
 
-    const classNames = getClassNames(styles, {
-      theme: theme!,
-      className,
-      isButton: !href,
-      isDisabled: disabled,
-      isUnderlined: underline,
-    })
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value,
+      isButton: !href.value,
+      isDisabled: disabled.value,
+      isUnderlined: underline.value,
+    }))
 
-    const rootType = as || (href ? 'a' : 'button')
+    const rootType = computed(() => to.value
+      ? RouterLink
+      : (as.value || (href.value ? 'a' : 'button')))
 
-    const slotProps = asSlotProps({
+    const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
-        class: classNames.root,
-        ...rootType === 'a' && {
-          target,
-          href: disabled ? undefined : href,
+        class: classNames.value.root,
+        ...rootType.value !== 'button' && {
+          target: target.value,
+          href: disabled.value ? undefined : href.value,
         },
-        ...rootType === 'button' && {
+        ...rootType.value === 'button' && {
           type: 'button',
-          disabled,
+          disabled: disabled.value,
+        },
+        ...to.value && {
+          href: disabled.value ? undefined : props.href,
+          to: disabled.value ? undefined : props.to,
+          exact: props.exact,
+          replace: props.replace,
         },
       },
-    })
+    }))
 
-    return h(rootType, slotProps.root, slots)
+    return () => h(rootType.value, slotProps.value.root, slots)
   },
 })

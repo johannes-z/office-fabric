@@ -9,3 +9,5 @@ export * from './useBooleanProp'
 
 export * from './toCamelCase'
 export * from './toKebabCase'
+
+export * from './event'

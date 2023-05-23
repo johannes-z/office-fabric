@@ -15,6 +15,7 @@ function defineRoute({ path, name, component }) {
     name,
     url: path,
     key: path,
+    to: path,
   }
 }
 
