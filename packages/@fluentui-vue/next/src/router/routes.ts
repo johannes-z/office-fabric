@@ -98,6 +98,18 @@ export const nav = [
       isExpanded: true,
     },
     {
+      name: 'Notification & Engagement',
+      key: 'Notification & Engagement',
+      links: [
+        defineRoute({
+          path: '/MessageBar',
+          name: 'MessageBar',
+          component: () => import('../views/MessageBarPage.vue'),
+        }),
+      ],
+      isExpanded: true,
+    },
+    {
       name: 'Progress',
       key: 'Progress',
       links: [

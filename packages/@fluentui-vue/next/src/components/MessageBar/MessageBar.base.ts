@@ -1,10 +1,11 @@
-import { useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode } from 'vue'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import { defineComponent, h } from 'vue'
 import { IconButton } from '../Button'
 import { Icon } from '../Icon'
-import { IMessageBarStyleProps, IMessageBarStyles, MessageBarType } from './MessageBar.types'
+import type { IMessageBarStyleProps, IMessageBarStyles } from './MessageBar.types'
+import { MessageBarType } from './MessageBar.types'
+import { useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IMessageBarStyleProps, IMessageBarStyles>()
 
@@ -17,7 +18,7 @@ const ICON_MAP = {
   [MessageBarType.success]: 'Completed',
 }
 
-export const MessageBarBase = Vue.extend({
+export const MessageBarBase = defineComponent({
   props: {
     ...useStylingProps(),
 
@@ -25,27 +26,27 @@ export const MessageBarBase = Vue.extend({
     isMultiline: { type: Boolean, default: true },
     actions: { type: Boolean, default: false },
     truncated: { type: Boolean, default: false },
-    expandSingleLine: { type: Boolean, default: true },
+    expandSingleLine: { type: Boolean, default: false },
     expandButtonProps: { type: Object as () => IButtonProps, default: () => ({}) },
   },
 
-  data () {
+  data() {
     return {
       internalExpandSingleLine: this.expandSingleLine,
     }
   },
 
   computed: {
-    classNames (): IProcessedStyleSet<IMessageBarStyles> {
+    classNames(): IProcessedStyleSet<IMessageBarStyles> {
       const { theme, className, messageBarType, actions, truncated, isMultiline } = this
 
       return getClassNames(this.styles, {
         theme,
         messageBarType: messageBarType || MessageBarType.info,
-        onDismiss: this.$listeners.dismiss !== undefined,
+        onDismiss: this.$attrs.onDismiss !== undefined,
         actions: actions !== undefined,
-        truncated: truncated,
-        isMultiline: isMultiline,
+        truncated,
+        isMultiline,
         expandSingleLine: this.internalExpandSingleLine,
         className,
       })
@@ -53,70 +54,69 @@ export const MessageBarBase = Vue.extend({
   },
 
   watch: {
-    expandSingleLine (value: boolean) {
+    expandSingleLine(value: boolean) {
       this.internalExpandSingleLine = value
     },
   },
 
   methods: {
-    onClick () {
+    onClick() {
       this.internalExpandSingleLine = !this.internalExpandSingleLine
     },
   },
 
-  render (h: CreateElement): VNode {
+  render() {
     const { theme, classNames, messageBarType, actions, truncated, isMultiline, expandButtonProps } = this
 
     const $iconSpan = h('div', { class: classNames.iconContainer }, [
       h(Icon, {
         class: classNames.icon,
-        attrs: { iconName: ICON_MAP[messageBarType] },
+        iconName: ICON_MAP[messageBarType],
       }),
     ])
     const $innerText = h('div', { class: classNames.text, attrs: { role: 'status' } }, [
       h('span', { class: classNames.innerText }, [
-        h('span', this.$slots.default),
+        h('span', this.$slots.default?.()),
       ]),
     ])
     const $expandSingleLine = (!actions && truncated) && h('div', { class: classNames.expandSingleLine }, [
       h(IconButton, {
         class: classNames.expand,
-        attrs: {
-          iconProps: { iconName: this.internalExpandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown' },
-        },
-        props: {
-          ...expandButtonProps,
-        },
-        nativeOn: {
-          click: this.onClick,
-        },
+        iconProps: { iconName: this.internalExpandSingleLine ? 'DoubleChevronUp' : 'DoubleChevronDown' },
+        ...expandButtonProps,
+        onClick: this.onClick,
       }),
     ])
-    const $singleLine = (!isMultiline && this.$slots.actions) && h(
+    const $singleLine = (!isMultiline && this.$slots.actions?.()) && h(
       'div',
-      { class: classNames.actions },
-      this.$slots.actions,
+      {
+        class: classNames.actions,
+      },
+      this.$slots.actions?.(),
     )
-    const $dismissDiv = (this.$listeners.dismiss && isMultiline) && h(
+    const $dismissDiv = (this.$attrs.onDismiss && isMultiline) && h(
       IconButton,
-      { class: classNames.dismissal, attrs: { iconProps: { iconName: 'Clear' } } },
+      {
+        class: classNames.dismissal,
+        iconProps: { iconName: 'Clear' },
+      },
     )
-    const $dismissSingleLine = (this.$listeners.dismiss && !isMultiline) && h(
+    const $dismissSingleLine = (this.$attrs.onDismiss && !isMultiline) && h(
       'div', {
         class: classNames.dismissSingleLine,
       }, [
         h(IconButton, {
           class: classNames.dismissal,
-          attrs: {
-            iconProps: { iconName: 'Clear' },
-          },
+          iconProps: { iconName: 'Clear' },
         }),
       ],
     )
-    const $multiLine = (isMultiline && this.$slots.actions) && h(
+    const $multiLine = (isMultiline && this.$slots.actions?.()) && h(
       'div',
-      { class: classNames.actions },
-      this.$slots.actions,
+      {
+        class: classNames.actions,
+      },
+      this.$slots.actions?.(),
     )
 
     return h('div', { style: { background: theme.semanticColors.bodyBackground } }, [

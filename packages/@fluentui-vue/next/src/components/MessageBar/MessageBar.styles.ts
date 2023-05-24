@@ -1,7 +1,9 @@
-import { getFocusStyle, getGlobalClassNames, getScreenSelector, HighContrastSelector, ScreenWidthMaxSmall } from '@fluentui-vue/style-utilities'
-import { IconFontSizes, ISemanticColors } from '@fluentui-vue/theme'
-import { IStyle } from '@fluentui/merge-styles'
-import { IMessageBarStyleProps, IMessageBarStyles, MessageBarType } from './MessageBar.types'
+import { HighContrastSelector, ScreenWidthMaxSmall, getFocusStyle, getGlobalClassNames, getScreenSelector } from '@fluentui-vue/style-utilities'
+import type { ISemanticColors } from '@fluentui-vue/theme'
+import { IconFontSizes } from '@fluentui-vue/theme'
+import type { IStyle } from '@fluentui/merge-styles'
+import type { IMessageBarStyleProps, IMessageBarStyles } from './MessageBar.types'
+import { MessageBarType } from './MessageBar.types'
 
 const GlobalClassNames = {
   root: 'ms-MessageBar',
@@ -53,7 +55,7 @@ const iconColor: { [key: string]: keyof ISemanticColors } = {
   [MessageBarType.info]: 'infoIcon',
 }
 
-export const getStyles = (props: IMessageBarStyleProps): IMessageBarStyles => {
+export function getStyles(props: IMessageBarStyleProps): IMessageBarStyles {
   const {
     theme,
     className,
@@ -216,8 +218,8 @@ export const getStyles = (props: IMessageBarStyleProps): IMessageBarStyles => {
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
       },
-      !isMultiline &&
-        !truncated && {
+      !isMultiline
+        && !truncated && {
         selectors: {
           [SmallScreenSelector]: {
             overflow: 'visible',
@@ -253,8 +255,8 @@ export const getStyles = (props: IMessageBarStyleProps): IMessageBarStyles => {
       isMultiline && {
         marginBottom: 8,
       },
-      onDismiss &&
-        !isMultiline && {
+      onDismiss
+        && !isMultiline && {
         marginRight: 0,
       },
     ],

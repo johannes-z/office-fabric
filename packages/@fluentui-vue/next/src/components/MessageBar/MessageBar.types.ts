@@ -1,6 +1,6 @@
-import { ITheme, IStyle } from '@uifabric/styling'
-import { IButtonProps } from '../Button'
-import { IIconProps } from '../Icon'
+import type { IStyle, ITheme } from '@fluentui-vue/style-utilities'
+import type { IButtonProps } from '../Button'
+import type { IIconProps } from '../Icon'
 
 /**
  * {@docCategory MessageBar}
@@ -15,37 +15,37 @@ export interface IMessageBarProps {
    * The type of MessageBar to render.
    * @defaultvalue MessageBarType.info
    */
-  messageBarType?: MessageBarType;
+  messageBarType?: MessageBarType
 
   /**
    * The actions you want to show on the other side.
    */
-  actions?: JSX.Element;
+  actions?: JSX.Element
 
   /**
    * A description of the message bar for the benefit of screen readers.
    * @deprecated Use native prop `aria-label` instead.
    */
-  ariaLabel?: string;
+  ariaLabel?: string
 
   /**
    * Whether the message bar has a dismiss button and its callback.
    * If null, we don't show a dismiss button.
    * @defaultvalue null
    */
-  onDismiss?: (ev?: any) => any;
+  onDismiss?: (ev?: any) => any
 
   /**
    * Determines if the message bar is multi lined.
    * If false, and the text overflows over buttons or to another line, it is clipped.
    * @defaultvalue true
    */
-  isMultiline?: boolean;
+  isMultiline?: boolean
 
   /**
    * Aria label on dismiss button if onDismiss is defined.
    */
-  dismissButtonAriaLabel?: string;
+  dismissButtonAriaLabel?: string
 
   /**
    * Determines if the message bar text is truncated.
@@ -53,44 +53,44 @@ export interface IMessageBarProps {
    * This prop is for single line message bars with no buttons only in a limited space scenario.
    * @defaultvalue false
    */
-  truncated?: boolean;
+  truncated?: boolean
 
   /**
    * Aria label on overflow button if truncated is defined.
    */
-  overflowButtonAriaLabel?: string;
+  overflowButtonAriaLabel?: string
 
   /**
    * Additional CSS class(es) to apply to the MessageBar.
    */
-  className?: string;
+  className?: string
 
   /**
    * Theme (provided through customization.)
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
-  styles?: any;
+  styles?: any
 
   /**
    * Custom icon prop to replace the dismiss icon.
    * If unset, default will be the Fabric Clear icon.
    */
-  dismissIconProps?: IIconProps;
+  dismissIconProps?: IIconProps
 
   /**
    * Custom icon prop to replace the message bar icon.
    * If unset, default will be the icon set by messageBarType.
    */
-  messageBarIconProps?: IIconProps;
+  messageBarIconProps?: IIconProps
 
   /**
    *  Button props that can be applied to the expand button of the MessageBar.
    */
-  expandButtonProps?: IButtonProps;
+  expandButtonProps?: IButtonProps
 }
 
 /**
@@ -100,42 +100,42 @@ export interface IMessageBarStyleProps {
   /**
    * Theme (provided through customization).
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Additional CSS class(es).
    */
-  className?: string;
+  className?: string
 
   /**
    * Type of the MessageBar.
    */
-  messageBarType?: MessageBarType;
+  messageBarType?: MessageBarType
 
   /**
    * Whether the MessageBar contains a dismiss button.
    */
-  onDismiss?: boolean;
+  onDismiss?: boolean
 
   /**
    * Whether the text is truncated.
    */
-  truncated?: boolean;
+  truncated?: boolean
 
   /**
    * Whether the MessageBar is rendered in multi line (as opposed to single line) mode.
    */
-  isMultiline?: boolean;
+  isMultiline?: boolean
 
   /**
    * Whether the single line MessageBar is being expanded.
    */
-  expandSingleLine?: boolean;
+  expandSingleLine?: boolean
 
   /**
    * Whether the MessageBar contains any action elements.
    */
-  actions?: boolean;
+  actions?: boolean
 }
 
 /**
@@ -145,57 +145,57 @@ export interface IMessageBarStyles {
   /**
    * Style set for the root element.
    */
-  root?: IStyle;
+  root?: IStyle
 
   /**
    * Style set for the element containing the icon, text, and optional dismiss button.
    */
-  content?: IStyle;
+  content?: IStyle
 
   /**
    * Style set for the element containing the icon.
    */
-  iconContainer?: IStyle;
+  iconContainer?: IStyle
 
   /**
    * Style set for the icon.
    */
-  icon?: IStyle;
+  icon?: IStyle
 
   /**
    * Style set for the element containing the text.
    */
-  text?: IStyle;
+  text?: IStyle
 
   /**
    * Style set for the text.
    */
-  innerText?: IStyle;
+  innerText?: IStyle
 
   /**
    * Style set for the optional dismiss button.
    */
-  dismissal?: IStyle;
+  dismissal?: IStyle
 
   /**
    * Style set for the icon used to expand and collapse the MessageBar.
    */
-  expand?: IStyle;
+  expand?: IStyle
 
   /**
    * Style set for the element containing the dismiss button.
    */
-  dismissSingleLine?: IStyle;
+  dismissSingleLine?: IStyle
 
   /**
    * Style set for the element containing the expand icon.
    */
-  expandSingleLine?: IStyle;
+  expandSingleLine?: IStyle
 
   /**
    * Style set for the optional element containing the action elements.
    */
-  actions?: IStyle;
+  actions?: IStyle
 }
 
 /**
