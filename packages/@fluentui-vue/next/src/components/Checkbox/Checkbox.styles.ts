@@ -1,7 +1,7 @@
 import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
-import { getGlobalClassNames, getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
-import type{ IStyle } from '@fluentui/merge-styles'
-import type{ ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
+import { HighContrastSelector, getGlobalClassNames, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
+import type { IStyle } from '@fluentui/merge-styles'
+import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
 
 const GlobalClassNames = {
   root: 'ms-Checkbox',
@@ -15,7 +15,7 @@ const MS_CHECKBOX_LABEL_SIZE = '20px'
 const MS_CHECKBOX_TRANSITION_DURATION = '200ms'
 const MS_CHECKBOX_TRANSITION_TIMING = 'cubic-bezier(.4, 0, .23, 1)'
 
-export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
+export function getStyles(props: ICheckboxStyleProps): ICheckboxStyles {
   const { className, theme, reversed, checked, disabled, isUsingCustomLabelRender, indeterminate } = props
   const { semanticColors, effects, fonts } = theme
 
@@ -87,8 +87,8 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
             },
           },
         },
-        checked &&
-          !indeterminate && {
+        checked
+          && !indeterminate && {
           [`:hover .${classNames.checkbox}`]: {
             background: checkboxBackgroundCheckedHovered,
             borderColor: checkboxBorderColorCheckedHovered,
@@ -147,7 +147,7 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
 
       opacity: 0,
       [`.${IsFocusVisibleClassName} &:focus + label::before`]: {
-        outline: '1px solid ' + theme.palette.neutralSecondary,
+        outline: `1px solid ${theme.palette.neutralSecondary}`,
         outlineOffset: '2px',
         [HighContrastSelector]: {
           outline: '1px solid WindowText',
@@ -183,22 +183,22 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
     checkbox: [
       classNames.checkbox,
       {
-        position: 'relative',
-        display: 'flex',
-        flexShrink: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: MS_CHECKBOX_LABEL_SIZE,
-        width: MS_CHECKBOX_LABEL_SIZE,
-        border: `1px solid ${checkboxBorderColor}`,
-        borderRadius: effects.roundedCorner2,
-        boxSizing: 'border-box',
-        transitionProperty: 'background, border, border-color',
-        transitionDuration: MS_CHECKBOX_TRANSITION_DURATION,
-        transitionTimingFunction: MS_CHECKBOX_TRANSITION_TIMING,
+        'position': 'relative',
+        'display': 'flex',
+        'flexShrink': 0,
+        'alignItems': 'center',
+        'justifyContent': 'center',
+        'height': MS_CHECKBOX_LABEL_SIZE,
+        'width': MS_CHECKBOX_LABEL_SIZE,
+        'border': `1px solid ${checkboxBorderColor}`,
+        'borderRadius': effects.roundedCorner2,
+        'boxSizing': 'border-box',
+        'transitionProperty': 'background, border, border-color',
+        'transitionDuration': MS_CHECKBOX_TRANSITION_DURATION,
+        'transitionTimingFunction': MS_CHECKBOX_TRANSITION_TIMING,
 
         /* in case the icon is bigger than the box */
-        overflow: 'hidden',
+        'overflow': 'hidden',
         ':after': indeterminate ? indeterminateDotStyles : null,
         [HighContrastSelector]: {
           borderColor: 'WindowText',
@@ -213,15 +213,15 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
       // is used, there will be only a 4px margin from checkbox to label. The label by default would have
       // another 4px margin for a total of 8px margin between checkbox and label. We don't combine the two
       // (and move it into the text) to not incur a breaking change for everyone using custom render atm.
-        {
-          marginRight: 4,
-        }
+          {
+            marginRight: 4,
+          }
         : {
-          marginLeft: 4,
-        },
-      !disabled &&
-        !indeterminate &&
-        checked && {
+            marginLeft: 4,
+          },
+      !disabled
+        && !indeterminate
+        && checked && {
         background: checkboxBackgroundChecked,
         borderColor: checkboxBorderColorChecked,
         [HighContrastSelector]: {
@@ -235,8 +235,8 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
           borderColor: 'GrayText',
         },
       },
-      checked &&
-        disabled && {
+      checked
+        && disabled && {
         background: checkboxBackgroundDisabledChecked,
         borderColor: checkboxBorderColorDisabled,
         [HighContrastSelector]: {
@@ -268,11 +268,11 @@ export const getStyles = (props: ICheckboxStyleProps): ICheckboxStyles => {
       },
       !reversed
         ? {
-          marginLeft: 4,
-        }
+            marginLeft: 4,
+          }
         : {
-          marginRight: 4,
-        },
+            marginRight: 4,
+          },
     ],
   }
 }

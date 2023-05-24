@@ -17,6 +17,8 @@ type IconContentChildren = string | undefined | VNode | VNode[] | typeof h
 export const IconBase = defineFunctionalComponent({
   name: 'IconBase',
 
+  inheritAttrs: false,
+
   props: {
     ...useStylingProps(),
 

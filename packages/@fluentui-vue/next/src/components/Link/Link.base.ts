@@ -30,9 +30,7 @@ export const LinkBase = defineComponent({
       isUnderlined: underline.value,
     }))
 
-    const rootType = computed(() => to.value
-      ? RouterLink
-      : (as.value || (href.value ? 'a' : 'button')))
+    const rootType = computed(() => as.value || (to.value ? RouterLink : (href.value ? 'a' : 'button')))
 
     const slotProps = computed(() => asSlotProps({
       root: {

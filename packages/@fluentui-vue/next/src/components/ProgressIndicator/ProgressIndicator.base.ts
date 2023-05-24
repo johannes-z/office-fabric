@@ -26,22 +26,22 @@ export const ProgressIndicatorBase = defineComponent({
     const { styles, className, theme, ariaValueText, ariaLabel, barHeight, label, progressHidden, description } = props
 
     const percentComplete = computed(() => {
-      const percentComplete = +props.percentComplete
+      const percentComplete = +props.percentComplete!
       return (typeof percentComplete === 'number' && !isNaN(percentComplete))
-        ? Math.min(100, Math.max(0, props.percentComplete * 100))
+        ? Math.min(100, Math.max(0, percentComplete * 100))
         : undefined
     })
 
-    const classNames = getClassNames(styles, {
+    const classNames = computed(() => getClassNames(styles, {
       theme,
       className,
       barHeight,
       indeterminate: percentComplete.value === undefined,
-    })
+    }))
 
     const progressBarStyles = computed(() => ({
       width: percentComplete.value !== undefined ? `${percentComplete.value}%` : undefined,
-      transition: percentComplete.value !== undefined && percentComplete.value < ZERO_THRESHOLD ? 'none' : undefined,
+      transition: (percentComplete.value !== undefined && percentComplete.value < ZERO_THRESHOLD) ? 'none' : undefined,
     }))
 
     const ariaValueMin = percentComplete.value !== undefined ? 0 : undefined
@@ -51,22 +51,22 @@ export const ProgressIndicatorBase = defineComponent({
     const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
-        class: classNames.root,
+        class: classNames.value.root,
       },
       label: {
-        class: classNames.itemName,
+        class: classNames.value.itemName,
       },
       itemProgress: {
-        class: classNames.itemProgress,
+        class: classNames.value.itemProgress,
       },
       progressTrack: {
-        class: classNames.progressTrack,
+        class: classNames.value.progressTrack,
         style: [
           { height: `${barHeight}px` },
         ],
       },
       progressBar: {
-        'class': classNames.progressBar,
+        'class': classNames.value.progressBar,
         'style': [
           {
             height: `${barHeight}px`,
@@ -83,7 +83,7 @@ export const ProgressIndicatorBase = defineComponent({
         'aria-valuetext': ariaValueText,
       },
       itemDescription: {
-        class: classNames.itemDescription,
+        class: classNames.value.itemDescription,
       },
     }))
 

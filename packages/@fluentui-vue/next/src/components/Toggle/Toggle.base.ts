@@ -83,6 +83,7 @@ export const ToggleBase = defineComponent({
       },
     }))
 
+    const showLabel = computed(() => (checked.value && onText.value) || (!checked.value && offText.value))
     return () => h('div', slotProps.value.root, [
       h(Label, slotProps.value.label, {
         default: () => slots.label?.({ checked: checked.value, disabled: disabled.value, label: label.value }) ?? label.value,
@@ -91,8 +92,7 @@ export const ToggleBase = defineComponent({
         h('button', slotProps.value.pill, [
           h('div', slotProps.value.thumb),
         ]),
-        ((checked.value && onText.value) || (!checked.value && offText.value))
-        && h(Label, slotProps.value.text, {
+        showLabel.value && h(Label, slotProps.value.text, {
           default: () => checked.value ? onText.value : offText.value,
         }),
       ]),

@@ -27,11 +27,12 @@ export interface FunctionalRenderFunction<T> {
 
 export interface FunctionalComponentDefinition<TProps extends object> {
   name?: string
+  inheritAttrs?: boolean
   props?: TProps
   render: FunctionalRenderFunction<TProps>
 }
 
-export function defineFunctionalComponent<TProps extends object>({ name, props: propDefs = {} as any, render }: FunctionalComponentDefinition<TProps>) {
+export function defineFunctionalComponent<TProps extends object>({ name, inheritAttrs = true, props: propDefs = {} as any, render }: FunctionalComponentDefinition<TProps>) {
   const functionalRenderFn = (props: TProps, ctx: Context) => {
     const normalizedProps = Object.entries(propDefs).reduce((obj, [_key, propDef]) => {
       const key = toKebabCase(_key)
@@ -57,13 +58,14 @@ export function defineFunctionalComponent<TProps extends object>({ name, props: 
   }
 
   functionalRenderFn.props = Object.keys(propDefs)
+  functionalRenderFn.inheritAttrs = inheritAttrs
 
   Object.defineProperty(functionalRenderFn, 'name', {
     writable: true,
     value: name,
   })
 
-  return functionalRenderFn as {
+  return functionalRenderFn as unknown as {
     (props: Partial<MapPropsType<TProps>>, ctx: Context): VNode<RendererNode, RendererElement, {
       [key: string]: any
     }>

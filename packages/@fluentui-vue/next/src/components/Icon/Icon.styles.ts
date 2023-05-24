@@ -22,7 +22,7 @@ export const classNames = mergeStyleSets({
 /** Class name used only in non-themeable Icon components */
 export const MS_ICON = 'ms-Icon'
 
-export const getStyles = (props: IIconStyleProps): IIconStyles => {
+export function getStyles(props: IIconStyleProps): IIconStyles {
   const { className, iconClassName, isPlaceholder, isImage, styles } = props
 
   return {

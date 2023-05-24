@@ -1,5 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { DefaultEffects } from '@fluentui-vue/style-utilities'
+
 const elevation = DefaultEffects.elevation4
 </script>
 
