@@ -1,28 +1,34 @@
-import { asSlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
+import { defineComponent, h, onMounted, ref } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
+import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './MessageBarButton.styles'
+import { asSlotProps, useStylingProps } from '@/utils'
 
-export const MessageBarButton = Vue.extend({
+export const MessageBarButton = defineComponent({
   name: 'MessageBarButton',
-
-  functional: true,
 
   props: {
     ...useStylingProps(),
+    ...useBaseButtonProps(),
   },
 
-  render (h: CreateElement, ctx): VNode {
+  setup(props, { attrs, slots }) {
+    const componentRef = ref(null)
+
+    onMounted(() => {
+      props.componentRef?.(componentRef.value)
+    })
+
     const slotProps = asSlotProps({
       root: {
-        ...ctx.data,
-        props: {
-          ...ctx.props,
-          styles: getStyles(ctx.props.theme, ctx.props.styles),
-        },
+        ...attrs,
+        ...props,
+        styles: getStyles(props.theme, props.styles),
+        ref: componentRef,
       },
     })
 
-    return h(DefaultButton, slotProps.root, ctx.children)
+    return () => h(DefaultButton, slotProps.value, slots)
   },
+
 })

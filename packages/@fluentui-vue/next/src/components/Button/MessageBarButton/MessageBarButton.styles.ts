@@ -1,5 +1,5 @@
 import { getFocusStyle } from '@fluentui-vue/style-utilities'
-import { ITheme } from '@fluentui-vue/theme'
+import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import type { IButtonStyles } from '../Button.types'

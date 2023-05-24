@@ -3,6 +3,7 @@ import { getGlobalClassNames, memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 import { primaryStyles, standardStyles } from '../ButtonThemes'
+import type { IButtonStyles } from '../Button.types'
 
 const DEFAULT_BUTTON_HEIGHT = '32px'
 const DEFAULT_BUTTON_MIN_WIDTH = '80px'

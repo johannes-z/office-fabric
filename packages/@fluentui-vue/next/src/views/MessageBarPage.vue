@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { Link, MessageBar, MessageBarType } from '../components'
 import DocumentCard from './components/DocumentCard.vue'
 import { TextField } from '@/components/TextField'
+import { MessageBarButton } from '@/components/Button/MessageBarButton/MessageBarButton'
 
 const textFieldId = useId('anInput')
 
@@ -48,8 +49,8 @@ function onDismiss() {
       </Link>
       <template #actions>
         <div>
-          <button>Yes</button>
-          <button>No</button>
+          <MessageBarButton>Yes</MessageBarButton>
+          <MessageBarButton>No</MessageBarButton>
         </div>
       </template>
     </MessageBar>
