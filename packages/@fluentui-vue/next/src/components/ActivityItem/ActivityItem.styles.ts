@@ -1,13 +1,13 @@
 import {
+  HighContrastSelector,
+  PulsingBeaconAnimationStyles,
   concatStyleSets,
   getTheme,
-  HighContrastSelector,
   keyframes,
-  PulsingBeaconAnimationStyles,
-} from '../../Styling'
-import type { ITheme } from '../../Styling'
-import type { IActivityItemStyles, IActivityItemProps } from './ActivityItem.types'
+} from '@fluentui-vue/style-utilities'
+import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
+import type { IActivityItemProps, IActivityItemStyles } from './ActivityItem.types'
 
 const DEFAULT_PERSONA_SIZE = '32px'
 const COMPACT_PERSONA_SIZE = '16px'
@@ -138,7 +138,7 @@ export const getStyles = memoizeFunction(
         selectors: {
           '.ms-Persona-imageArea': {
             margin: '-2px 0 0 -2px',
-            border: '2px solid' + theme.palette.white,
+            border: `2px solid${theme.palette.white}`,
             borderRadius: '50%',
             selectors: {
               [HighContrastSelector]: {

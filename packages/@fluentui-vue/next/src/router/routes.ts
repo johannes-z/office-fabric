@@ -68,6 +68,11 @@ export const nav = [
       key: 'Items & Lists',
       links: [
         defineRoute({
+          path: '/ActivityItem',
+          name: 'ActivityItem',
+          component: () => import('../views/ActivityItemPage.vue'),
+        }),
+        defineRoute({
           path: '/Persona',
           name: 'Persona',
           component: () => import('../views/PersonaPage.vue'),

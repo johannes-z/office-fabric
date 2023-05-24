@@ -1,11 +1,15 @@
-import { SlotProps, useStylingProps } from '@/utils'
-import Vue, { CreateElement, VNode } from 'vue'
-import { IPersonaCoinProps, IPersonaProps, IPersonaSharedProps, PersonaCoin, PersonaSize } from '../Persona'
-import { IActivityItemClassNames, getClassNames } from './ActivityItem.classNames'
+import { computed, defineComponent, h, toRefs } from 'vue'
+import type { IPersonaProps } from '../Persona'
+import { IPersonaCoinProps, IPersonaSharedProps, PersonaCoin, PersonaSize } from '../Persona'
+import type { IActivityItemClassNames } from './ActivityItem.classNames'
+import { getClassNames } from './ActivityItem.classNames'
 import { getStyles } from './ActivityItem.styles'
-import { IActivityItemProps, IActivityItemStyles } from './ActivityItem.types'
+import type { IActivityItemStyles } from './ActivityItem.types'
+import { IActivityItemProps } from './ActivityItem.types'
+import { asSlotProps, useStylingProps } from '@/utils'
+import type { SlotProps } from '@/utils'
 
-export const ActivityItem = Vue.extend({
+export const ActivityItem = defineComponent({
   name: 'ActivityItem',
 
   props: {
@@ -19,93 +23,96 @@ export const ActivityItem = Vue.extend({
     activityIcon: { type: Function, default: () => undefined },
   },
 
-  computed: {
-    classNames (): IActivityItemClassNames {
-      return getClassNames(
-        getStyles(
-          undefined,
-          this.styles,
-          this.animateBeaconSignal,
-          this.beaconColorOne,
-          this.beaconColorTwo,
-          this.isCompact,
-        ),
-        this.className!,
-        this.activityPersonas!,
-        this.isCompact!,
-      )
-    },
-    slotProps (): SlotProps<IActivityItemStyles> {
-      const { classNames } = this
-      return {
-        root: {
-          class: classNames.root,
-        },
-        personaContainer: {
-          class: classNames.personaContainer,
-        },
-        pulsingBeacon: {
-          class: classNames.pulsingBeacon,
-        },
-        activityTypeIcon: {
-          class: classNames.activityTypeIcon,
-        },
-        activityContent: {
-          class: classNames.activityContent,
-        },
-        activityText: {
-          class: classNames.activityText,
-        },
-        commentText: {
-          class: classNames.commentText,
-        },
-        timeStamp: {
-          class: classNames.timeStamp,
-        },
-      }
-    },
-    personaStyle (): any {
-      if (!this.isCompact) return {}
+  setup(props, { attrs, slots }) {
+    const {
+      theme,
+      styles,
+      animateBeaconSignal,
+      beaconColorOne,
+      beaconColorTwo,
+      isCompact,
+      className,
+      activityPersonas,
+    } = toRefs(props)
+
+    const classNames = computed(() => getClassNames(
+      getStyles(
+        undefined,
+        styles.value,
+        animateBeaconSignal.value,
+        beaconColorOne.value,
+        beaconColorTwo.value,
+        isCompact.value,
+      ),
+      className.value,
+      activityPersonas.value,
+      isCompact.value,
+    ))
+
+    const slotProps = computed(() => asSlotProps({
+      root: {
+        class: classNames.value.root,
+      },
+      personaContainer: {
+        class: classNames.value.personaContainer,
+      },
+      pulsingBeacon: {
+        class: classNames.value.pulsingBeacon,
+      },
+      activityTypeIcon: {
+        class: classNames.value.activityTypeIcon,
+      },
+      activityContent: {
+        class: classNames.value.activityContent,
+      },
+      activityText: {
+        class: classNames.value.activityText,
+      },
+      commentText: {
+        class: classNames.value.commentText,
+      },
+      timeStamp: {
+        class: classNames.value.timeStamp,
+      },
+    }))
+
+    const personaStyle = computed(() => {
+      if (!isCompact.value)
+        return {}
       return {
         display: 'inline-block',
         width: '10px',
         minWidth: '10px',
         overflow: 'visible',
       }
-    },
-    personasToRender (): IPersonaProps[] {
-      const personaLimit = this.isCompact ? 3 : 4
+    })
 
-      return this.activityPersonas.slice(0, personaLimit)
-    },
-  },
+    const personasToRender = computed(() => {
+      const personaLimit = isCompact.value ? 3 : 4
+      return activityPersonas.value.slice(0, personaLimit)
+    })
 
-  methods: {},
-
-  render (h: CreateElement): VNode {
-    const { classNames, slotProps, activityPersonas, animateBeaconSignal, isCompact, personasToRender, personaStyle } = this
-
-    return h('div', {
-      class: classNames.root,
+    return () => h('div', {
+      class: classNames.value.root,
     }, [
-      (activityPersonas || this.$slots.icon) && h('div', slotProps.activityTypeIcon, [
-        (animateBeaconSignal && isCompact) && h('div', slotProps.pulsingBeacon),
-        (activityPersonas.length > 0) && h('div', slotProps.personaContainer, personasToRender.map((person, index) => h(PersonaCoin, {
+      (activityPersonas.value || slots.icon?.()) && h('div', slotProps.value.activityTypeIcon, [
+        (animateBeaconSignal.value && isCompact) && h('div', slotProps.value.pulsingBeacon),
+        (activityPersonas.value.length > 0) && h('div', slotProps.value.personaContainer, personasToRender.value.map((person, index) => h(PersonaCoin, {
           props: {
             ...person,
-            size: (activityPersonas.length > 1 || isCompact) ? PersonaSize.size16 : PersonaSize.size32,
+            size: (activityPersonas.value.length > 1 || isCompact) ? PersonaSize.size16 : PersonaSize.size32,
           },
           key: person.key || index,
-          class: classNames.activityPersona,
+          class: classNames.value.activityPersona,
           style: personaStyle,
         }))),
-        this.$slots.icon,
+        slots.icon?.(),
       ]),
 
-      h('div', slotProps.activityContent, [
-        this.$slots.description && h('span', slotProps.activityText, this.$slots.description),
-        (!isCompact && this.$slots.comments) && h('div', slotProps.commentText, this.$slots.comments),
-        (!isCompact && this.$slots.timestamp) && h('div', slotProps.timeStamp, this.$slots.timestamp),
+      h('div', slotProps.value.activityContent, [
+        slots.description?.() && h('span', slotProps.value.activityText, slots.description?.()),
+        (!isCompact.value && slots.comments?.()) && h('div', slotProps.value.commentText, slots.comments?.()),
+        (!isCompact.value && slots.timestamp?.()) && h('div', slotProps.value.timeStamp, slots.timestamp?.()),
       ]),
     ])
   },

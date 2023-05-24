@@ -8,6 +8,7 @@ export * from './TextField'
 export * from './Toggle'
 
 // Items & Lists
+export * from './ActivityItem'
 export * from './Persona'
 
 // Commands, Menus & Navs
@@ -21,7 +22,6 @@ export * from './Callout'
 export * from './Dialog'
 export * from './Modal'
 
-// // export * from './ActivityItem'
 // // export * from './Facepile'
 // // export * from './DetailsList'
 // export * from './Layer'

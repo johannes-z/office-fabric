@@ -1,18 +1,18 @@
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { mergeStyles } from '../../Styling'
-import { IPersonaProps } from '../Persona'
+import { mergeStyles } from '@fluentui/merge-styles'
+import type { IPersonaProps } from '../Persona'
 import type { IActivityItemStyles } from './ActivityItem.types'
 
 export interface IActivityItemClassNames {
-  root?: string;
-  activityContent?: string;
-  activityText?: string;
-  personaContainer?: string;
-  activityPersona?: string;
-  activityTypeIcon?: string;
-  commentText?: string;
-  timeStamp?: string;
-  pulsingBeacon?: string;
+  root?: string
+  activityContent?: string
+  activityText?: string
+  personaContainer?: string
+  activityPersona?: string
+  activityTypeIcon?: string
+  commentText?: string
+  timeStamp?: string
+  pulsingBeacon?: string
 }
 
 export const getClassNames = memoizeFunction(
