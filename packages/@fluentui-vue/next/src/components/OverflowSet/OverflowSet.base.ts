@@ -1,5 +1,5 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { VNode, h } from 'vue'
+import { h } from 'vue'
 import { OverflowButton } from './OverflowButton'
 import type { IOverflowSetStyleProps, IOverflowSetStyles } from './OverflowSet.types'
 import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
