@@ -1,9 +1,9 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h, toRefs } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
-import type { ILinkProps, ILinkStyleProps, ILinkStyles } from './Link.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils/'
-import { makeRouterProps, useLink } from '@/composables'
+import { RouterLink } from 'vue-router'
+import type { ILinkStyleProps, ILinkStyles } from './Link.types'
+import { asSlotProps, useStylingProps } from '@/utils/'
+import { makeRouterProps } from '@/composables'
 
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 

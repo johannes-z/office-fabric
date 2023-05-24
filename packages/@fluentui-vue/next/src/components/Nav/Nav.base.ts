@@ -1,7 +1,6 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import type { VNode } from 'vue'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
-import { RouterLink, useRouter } from 'vue-router'
 import { ActionButton } from '../Button'
 import { Icon } from '../Icon'
 import type { INavLink, INavLinkGroup, INavStyleProps, INavStyles } from './Nav.types'

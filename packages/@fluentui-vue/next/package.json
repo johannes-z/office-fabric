@@ -1,8 +1,8 @@
 {
   "name": "@fluentui-vue/components",
-  "version": "2.0.0-rc.16",
+  "version": "2.0.0-rc.17",
   "main": "./dist/components.umd.js",
-  "module": "./dist/components.mjs",
+  "module": "./lib/index.js",
   "types": "./types/index.d.ts",
   "files": [
     "dist",
@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "vite",
     "clean": "rimraf dist; rimraf lib; rimraf types",
-    "build": "run-p type-check build-only",
+    "build": "run-p build-only build:module",
     "build:module": "tsc -p tsconfig.module.json; tsc-alias -p tsconfig.module.json",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
