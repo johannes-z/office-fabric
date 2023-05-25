@@ -36,20 +36,22 @@ export namespace personaPresenceSize {
 }
 
 // TODO: remove the deprecated parts in a future major release.
-export const sizeBoolean = (size: PersonaSize) => ({
-  isSize8: size === PersonaSize.size8,
-  isSize10: size === PersonaSize.size10 || size === PersonaSize.tiny,
-  isSize16: size === PersonaSize.size16,
-  isSize24: size === PersonaSize.size24 || size === PersonaSize.extraExtraSmall,
-  isSize28: size === PersonaSize.size28 || size === PersonaSize.extraSmall,
-  isSize32: size === PersonaSize.size32,
-  isSize40: size === PersonaSize.size40 || size === PersonaSize.small,
-  isSize48: size === PersonaSize.size48 || size === PersonaSize.regular,
-  isSize56: size === PersonaSize.size56,
-  isSize72: size === PersonaSize.size72 || size === PersonaSize.large,
-  isSize100: size === PersonaSize.size100 || size === PersonaSize.extraLarge,
-  isSize120: size === PersonaSize.size120,
-})
+export function sizeBoolean(size: PersonaSize) {
+  return {
+    isSize8: size === PersonaSize.size8,
+    isSize10: size === PersonaSize.size10 || size === PersonaSize.tiny,
+    isSize16: size === PersonaSize.size16,
+    isSize24: size === PersonaSize.size24 || size === PersonaSize.extraExtraSmall,
+    isSize28: size === PersonaSize.size28 || size === PersonaSize.extraSmall,
+    isSize32: size === PersonaSize.size32,
+    isSize40: size === PersonaSize.size40 || size === PersonaSize.small,
+    isSize48: size === PersonaSize.size48 || size === PersonaSize.regular,
+    isSize56: size === PersonaSize.size56,
+    isSize72: size === PersonaSize.size72 || size === PersonaSize.large,
+    isSize100: size === PersonaSize.size100 || size === PersonaSize.extraLarge,
+    isSize120: size === PersonaSize.size120,
+  }
+}
 
 export const sizeToPixels: { [key: number]: number } = {
   // Old deprecated sizes
@@ -75,11 +77,13 @@ export const sizeToPixels: { [key: number]: number } = {
   [PersonaSize.size120]: 120,
 }
 
-export const presenceBoolean = (presence: PersonaPresence) => ({
-  isAvailable: presence === PersonaPresence.online,
-  isAway: presence === PersonaPresence.away,
-  isBlocked: presence === PersonaPresence.blocked,
-  isBusy: presence === PersonaPresence.busy,
-  isDoNotDisturb: presence === PersonaPresence.dnd,
-  isOffline: presence === PersonaPresence.offline,
-})
+export function presenceBoolean(presence: PersonaPresence) {
+  return {
+    isAvailable: presence === PersonaPresence.online,
+    isAway: presence === PersonaPresence.away,
+    isBlocked: presence === PersonaPresence.blocked,
+    isBusy: presence === PersonaPresence.busy,
+    isDoNotDisturb: presence === PersonaPresence.dnd,
+    isOffline: presence === PersonaPresence.offline,
+  }
+}

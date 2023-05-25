@@ -25,8 +25,8 @@ export const PersonaPresenceBase = defineComponent({
     presence: { type: Number as () => PersonaPresenceEnum, required: true },
     size: { type: Number, default: undefined },
     coinSize: { type: Number, default: undefined },
-    isOutOfOffice: {},
-    presenceTitle: {},
+    isOutOfOffice: { type: Boolean, default: false },
+    presenceTitle: { type: String, default: undefined },
   },
 
   data() {

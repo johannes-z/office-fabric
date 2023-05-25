@@ -65,25 +65,14 @@ function cleanupDisplayName(displayName: string): string {
 }
 
 /**
-  * Get (up to 2 characters) initials based on display name of the persona.
-  *
-  * @param displayName - The full name of the person or entity
-  * @param isRtl - Whether the display is in RTL
-  * @param options - Extra options to control the behavior of getInitials
-  *
-  * @returns The 1 or 2 character initials based on the name. Or an empty string if no initials
-  * could be derived from the name.
-  */
+ * Get (up to 2 characters) initials based on display name of the persona.
+ *
+ * @public
+ */
 export function getInitials(
   displayName: string | undefined | null,
   isRtl: boolean,
-  options?: {
-    /** Should initials be generated from phone numbers (default false) */
-    allowPhoneInitials?: boolean
-
-    /** Returns only the first initial */
-    firstInitialOnly?: boolean
-  },
+  allowPhoneInitials?: boolean,
 ): string {
   if (!displayName)
     return ''
@@ -91,11 +80,8 @@ export function getInitials(
   displayName = cleanupDisplayName(displayName)
 
   // For names containing CJK characters, and phone numbers, we don't display initials
-  if (
-    UNSUPPORTED_TEXT_REGEX.test(displayName)
-     || (!options?.allowPhoneInitials && PHONENUMBER_REGEX.test(displayName))
-  )
+  if (UNSUPPORTED_TEXT_REGEX.test(displayName) || (!allowPhoneInitials && PHONENUMBER_REGEX.test(displayName)))
     return ''
 
-  return getInitialsLatin(displayName, isRtl, options?.firstInitialOnly)
+  return getInitialsLatin(displayName, isRtl)
 }

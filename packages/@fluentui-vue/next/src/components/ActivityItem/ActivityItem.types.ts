@@ -1,5 +1,5 @@
-import { IStyle } from '@fluentui/merge-styles'
-import { IPersonaSharedProps } from '../Persona'
+import type { IStyle } from '@fluentui/merge-styles'
+import type { IPersonaSharedProps } from '../Persona'
 
 /**
  * {@docCategory ActivityItem}
@@ -9,40 +9,40 @@ export interface IActivityItemProps {
    * An element describing the activity that took place. If no `activityDescription`, `activityDescriptionText`, or
    * `onRenderActivityDescription` are included, no description of the activity is shown.
    */
-  activityDescription?: any;
+  activityDescription?: any
 
   /**
    * Text describing the activity that occurred and naming the people involved in it.
    * @deprecated Use `activityDescription` instead.
    */
-  activityDescriptionText?: string;
+  activityDescriptionText?: string
 
   /**
    * An element containing an icon shown next to the activity item.
    */
-  activityIcon?: any;
+  activityIcon?: any
 
   /**
    * If `activityIcon` is not set, the personas in this array will be used as the icon for the this activity item.
    */
-  activityPersonas?: IPersonaSharedProps[];
+  activityPersonas?: IPersonaSharedProps[]
 
   /**
    * An element containing the text of comments or \@mention messages.
    * If no `comments`, `commentText`, or `onRenderComments` are included, no comments are shown.
    */
-  comments?: any;
+  comments?: any
 
   /**
    * Text of comments or \@mention messages.
    * @deprecated Use `comments` instead.
    */
-  commentText?: string;
+  commentText?: string
 
   /**
    * Indicated if the compact styling should be used.
    */
-  isCompact?: boolean;
+  isCompact?: boolean
 
   // /**
   //  * A renderer for the description of the current activity.
@@ -67,29 +67,29 @@ export interface IActivityItemProps {
   /**
    * Optional styling for the elements within the activity item.
    */
-  styles?: IActivityItemStyles;
+  styles?: IActivityItemStyles
 
   /**
    * Element shown as a timestamp on this activity. If not included, no timestamp is shown.
    */
-  timeStamp?: string;
+  timeStamp?: string
 
   /**
    * Beacon color one
    */
-  beaconColorOne?: string;
+  beaconColorOne?: string
 
   /**
    * Beacon color two
    */
-  beaconColorTwo?: string;
+  beaconColorTwo?: string
 
   /**
    * Enables/disables the beacon that radiates from the center of the center of the activity icon.
    * Signals an activity has started.
    * @defaultvalue false
    */
-  animateBeaconSignal?: boolean;
+  animateBeaconSignal?: boolean
 }
 
 /**
@@ -99,81 +99,81 @@ export interface IActivityItemStyles {
   /**
    * Styles applied to the root activity item container.
    */
-  root?: IStyle;
+  root?: IStyle
 
   /**
    * Styles applied to the root activity item container.
    */
-  pulsingBeacon?: IStyle;
+  pulsingBeacon?: IStyle
 
   /**
    * Styles applied to the main container of the activity's description.
    */
-  activityContent?: IStyle;
+  activityContent?: IStyle
 
   /**
    * Styles applied to the persona of the user that did this activity.
    */
-  activityPersona?: IStyle;
+  activityPersona?: IStyle
 
   /**
    * Styles applied to the activity's description.
    */
-  activityText?: IStyle;
+  activityText?: IStyle
 
   /**
    * Styles applied to the icon indicating the type of the activity. Only shown when personas are unavailable.
    */
-  activityTypeIcon?: IStyle;
+  activityTypeIcon?: IStyle
 
   /**
    * Styles applied to the text of comments.
    */
-  commentText?: IStyle;
+  commentText?: IStyle
 
   /**
    * Styles applied to personas when two users are involved in a single activity.
    */
-  doublePersona?: IStyle;
+  doublePersona?: IStyle
 
   /**
    * Styles applied to root in the compact variant.
    */
-  isCompactRoot?: IStyle;
+  isCompactRoot?: IStyle
 
   /**
    * Styles applied to personas and icons in the compact variant.
    */
-  isCompactIcon?: IStyle;
+  isCompactIcon?: IStyle
 
   /**
    * Styles applied to main text container in the compact variant.
    */
-  isCompactContent?: IStyle;
+  isCompactContent?: IStyle
 
   /**
    * Styles applied to personas in the compact variant.
    */
-  isCompactPersona?: IStyle;
+  isCompactPersona?: IStyle
 
   /**
    * Styles applied to a wrapper around personas in the compact variant.
    */
-  isCompactPersonaContainer?: IStyle;
+  isCompactPersonaContainer?: IStyle
 
   /**
    * Styles applied to the container of the persona image or activity type icon.
    */
-  personaContainer?: IStyle;
+  personaContainer?: IStyle
 
   /**
    * Styles applied to the timestamp at the end of each activity item.
    */
-  timeStamp?: IStyle;
+  timeStamp?: IStyle
 
   /**
    * Styles applied to the timestamp in compact mode.
    * This can occur if a host overrides the render behavior to force the timestamp to render.
    */
-  isCompactTimeStamp?: IStyle;
+  isCompactTimeStamp?: IStyle
 }

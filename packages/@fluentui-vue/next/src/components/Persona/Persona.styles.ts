@@ -31,7 +31,7 @@ const GlobalClassNames = {
   textContent: 'ms-Persona-textContent',
 }
 
-export const getStyles = (props: IPersonaStyleProps): IPersonaStyles => {
+export function getStyles(props: IPersonaStyleProps): IPersonaStyles {
   const { className, showSecondaryText, theme } = props
 
   const { semanticColors, fonts } = theme

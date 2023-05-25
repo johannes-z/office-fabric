@@ -1,13 +1,10 @@
-import { computed, defineComponent, h, toRefs } from 'vue'
+import { type PropType, computed, defineComponent, h, toRefs } from 'vue'
 import type { IPersonaProps } from '../Persona'
-import { IPersonaCoinProps, IPersonaSharedProps, PersonaCoin, PersonaSize } from '../Persona'
-import type { IActivityItemClassNames } from './ActivityItem.classNames'
+import { PersonaCoin, PersonaSize } from '../Persona'
 import { getClassNames } from './ActivityItem.classNames'
 import { getStyles } from './ActivityItem.styles'
 import type { IActivityItemStyles } from './ActivityItem.types'
-import { IActivityItemProps } from './ActivityItem.types'
 import { asSlotProps, useStylingProps } from '@/utils'
-import type { SlotProps } from '@/utils'
 
 export const ActivityItem = defineComponent({
   name: 'ActivityItem',
@@ -15,11 +12,13 @@ export const ActivityItem = defineComponent({
   props: {
     ...useStylingProps(),
 
+    styles: { type: [Object, Function] as PropType<IActivityItemStyles>, default: () => ({}) },
+
     animateBeaconSignal: { type: Boolean, default: false },
     beaconColorOne: { type: String, default: '' },
     beaconColorTwo: { type: String, default: '' },
     isCompact: { type: Boolean, default: false },
-    activityPersonas: { type: Array as () => IPersonaProps[], default: () => [] },
+    activityPersonas: { type: Array as PropType<(IPersonaProps & { key: any })[]>, default: () => [] },
     activityIcon: { type: Function, default: () => undefined },
   },
 
@@ -44,7 +43,7 @@ export const ActivityItem = defineComponent({
         beaconColorTwo.value,
         isCompact.value,
       ),
-      className.value,
+      className.value!,
       activityPersonas.value,
       isCompact.value,
     ))
@@ -97,15 +96,14 @@ export const ActivityItem = defineComponent({
     }, [
       (activityPersonas.value || slots.icon?.()) && h('div', slotProps.value.activityTypeIcon, [
         (animateBeaconSignal.value && isCompact) && h('div', slotProps.value.pulsingBeacon),
-        (activityPersonas.value.length > 0) && h('div', slotProps.value.personaContainer, personasToRender.value.map((person, index) => h(PersonaCoin, {
-          props: {
+        (activityPersonas.value.length > 0) && h('div', slotProps.value.personaContainer, personasToRender.value.map((person: IPersonaProps & { key: any }, index: number) =>
+          h(PersonaCoin, {
             ...person,
-            size: (activityPersonas.value.length > 1 || isCompact) ? PersonaSize.size16 : PersonaSize.size32,
-          },
-          key: person.key || index,
-          class: classNames.value.activityPersona,
-          style: personaStyle,
-        }))),
+            size: (activityPersonas.value.length > 1 || isCompact.value) ? PersonaSize.size16 : PersonaSize.size32,
+            key: person.key || index,
+            class: classNames.value.activityPersona,
+            style: personaStyle.value,
+          }))),
         slots.icon?.(),
       ]),
 

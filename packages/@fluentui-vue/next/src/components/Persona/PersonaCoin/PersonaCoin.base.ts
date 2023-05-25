@@ -1,6 +1,6 @@
 import { classNamesFunction, getRTL, memoizeFunction } from '@fluentui-vue/utilities'
 import { mergeStyles } from '@fluentui/merge-styles'
-import { defineComponent, h } from 'vue'
+import { computed, defineComponent, h, toRefs } from 'vue'
 import { Icon } from '../../Icon'
 import { Image, ImageFit } from '../../Image'
 import type {
@@ -11,7 +11,7 @@ import { PersonaPresence as PersonaPresenceEnum, PersonaSize } from '../Persona.
 import { sizeToPixels } from '../PersonaConsts'
 import { getPersonaInitialsColor } from '../PersonaInitialsColor'
 import { PersonaPresence } from '../PersonaPresence'
-import { getInitials, useStylingProps } from '@/utils'
+import { asSlotProps, getInitials, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IPersonaCoinStyleProps, IPersonaCoinStyles>({
   // There can be many PersonaCoin rendered with different sizes.
@@ -45,109 +45,115 @@ export const PersonaCoinBase = defineComponent({
     presence: { type: Number as () => PersonaPresenceEnum, default: PersonaPresenceEnum.none },
     size: { type: Number, default: null },
     coinSize: { type: Number, default: null },
-    coinProps: {},
-    showUnknownPersonaCoin: {},
+    coinProps: { type: Object, default: undefined },
+    showUnknownPersonaCoin: { type: Boolean, default: false },
     isOutOfOffice: {},
     presenceTitle: {},
     imageUrl: {},
     imageInitials: {},
-    text: {},
-    initialsColor: {},
+    text: { type: String, default: undefined },
+    primaryText: { type: String, default: undefined },
+    initialsColor: { type: String, default: undefined },
+    initialsTextColor: { type: String, default: undefined },
   },
 
-  data() {
-    return {
-      mergeStyles,
-      getPersonaInitialsColor,
-      PersonaSize,
-      ImageFit,
-    }
-  },
+  setup(props, { attrs, slots }) {
+    const {
+      theme,
+      styles,
+      className,
+      coinProps,
+      imageInitials,
+      allowPhoneInitials,
+      showUnknownPersonaCoin,
+      text,
+      coinSize,
+      size,
+      isOutOfOffice,
+      presence,
+      presenceTitle,
+      imageUrl,
+      initialsColor,
+      initialsTextColor,
+      primaryText,
+    } = toRefs(props)
 
-  computed: {
-    initials() {
-      const { imageInitials, allowPhoneInitials, showUnknownPersonaCoin } = this
-      const isRTL = getRTL(this.theme)
+    const initials = computed(() => {
+      const isRTL = getRTL(theme.value)
 
-      return imageInitials || getInitials(this.text, isRTL, allowPhoneInitials)
-    },
+      return imageInitials.value || getInitials(text.value, isRTL, allowPhoneInitials.value)
+    })
 
-    dimension() {
-      const { coinSize, size } = this
-      return coinSize || sizeToPixels[size]
-    },
+    const dimension = computed(() => coinSize.value || sizeToPixels[size.value])
 
-    personaPresenceProps() {
-      const { coinSize, theme, isOutOfOffice, presence, presenceTitle, size } = this
-      return {
-        coinSize,
-        isOutOfOffice,
-        presence,
-        presenceTitle,
-        size,
-        theme,
-      }
-    },
+    const personaPresenceProps = computed(() => ({
+      coinSize: coinSize.value,
+      isOutOfOffice: isOutOfOffice.value,
+      presence: presence.value,
+      presenceTitle: presenceTitle.value,
+      size: size.value,
+      theme: theme.value,
+    }))
 
-    shouldRenderInitials() {
-      return !this.imageUrl
-    },
+    const shouldRenderInitials = computed(() => !imageUrl.value)
+    const coinSizeStyle = computed(() => coinSize.value ? { width: coinSize.value, height: coinSize.value } : undefined)
 
-    coinSizeStyle() {
-      const { coinSize } = this
-      return coinSize ? { width: coinSize, height: coinSize } : undefined
-    },
-
-    classNames() {
-      const { styles, theme, className, coinProps, size, coinSize, showUnknownPersonaCoin } = this
-      return getClassNames(styles, {
-        theme: theme!,
-        className: coinProps && coinProps.className ? coinProps.className : className,
-        size,
-        coinSize,
-        showUnknownPersonaCoin,
+    const classNames = computed(() => {
+      return getClassNames(styles.value, {
+        theme: theme.value,
+        className: (coinProps.value && coinProps.value.className) ? coinProps.value.className : className.value,
+        size: size.value,
+        coinSize: coinSize.value,
+        showUnknownPersonaCoin: showUnknownPersonaCoin.value,
       })
-    },
-  },
+    })
 
-  render() {
-    const { classNames, size, initials, presence, personaPresenceProps, coinSizeStyle, shouldRenderInitials, showUnknownPersonaCoin, imageUrl, dimension } = this
+    const slotProps = computed(() => asSlotProps({
+      coin: {
+        class: classNames.value.coin,
+        role: 'presentation',
+      },
+      imageArea: {
+        class: classNames.value.imageArea,
+        style: coinSizeStyle.value,
+        role: 'presentation',
+      },
+      image: {
+        class: classNames.value.image,
+        imageFit: ImageFit.cover,
+        src: imageUrl.value,
+        width: dimension.value,
+        height: dimension.value,
+      },
+      initials: {
+        class: getInitialsStyles(
+          classNames.value.initials,
+          initialsColor.value,
+          initialsTextColor.value,
+          text.value,
+          primaryText.value,
+          showUnknownPersonaCoin.value,
+        ),
+        style: coinSizeStyle.value,
+        ariaHidden: 'true',
+      },
 
-    return h('div', {
-      class: classNames.coin,
-      role: 'presentation',
-    }, [
-      (size !== PersonaSize.size8)
-        ? h('div', {
-          class: classNames.imageArea,
-          style: this.coinSizeStyle,
-          role: 'presentation',
-        }, [
-          shouldRenderInitials && h('div', {
-            class: mergeStyles(
-              classNames.initials,
-              !showUnknownPersonaCoin && { backgroundColor: getPersonaInitialsColor(this.$props as any) },
-            ),
-            style: coinSizeStyle,
-            ariaHidden: 'true',
-          }, [
-            initials
-              ? h('span', initials)
+    }))
+
+    return () => h('div', slotProps.value.coin, [
+      (size.value !== PersonaSize.size8)
+        ? h('div', slotProps.value.imageArea, [
+          shouldRenderInitials.value && h('div', slotProps.value.initials, [
+            initials.value
+              ? h('span', initials.value)
               : h(Icon, { props: { iconName: 'Contact' } }),
           ]),
-          imageUrl && h(Image, {
-            class: classNames.image,
-
-            imageFit: ImageFit.cover,
-            src: imageUrl,
-            width: dimension,
-            height: dimension,
-          }),
-          h(PersonaPresence, personaPresenceProps),
+          imageUrl.value && h(Image, slotProps.value.image),
+          h(PersonaPresence, personaPresenceProps.value),
         ])
-        : presence
-          ? h(PersonaPresence, personaPresenceProps)
-          : h(Icon, { class: classNames.size10WithoutPresenceIcon, iconName: 'Contact' }),
+        : presence.value
+          ? h(PersonaPresence, personaPresenceProps.value)
+          : h(Icon, { class: classNames.value.size10WithoutPresenceIcon, iconName: 'Contact' }),
     ])
   },
 })

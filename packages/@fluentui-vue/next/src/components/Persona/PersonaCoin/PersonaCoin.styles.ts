@@ -21,7 +21,7 @@ const GlobalClassNames = {
   size120: 'ms-Persona--size120',
 }
 
-export const getStyles = (props: IPersonaCoinStyleProps): IPersonaCoinStyles => {
+export function getStyles(props: IPersonaCoinStyleProps): IPersonaCoinStyles {
   const { className, theme, coinSize } = props
 
   const { palette, fonts } = theme

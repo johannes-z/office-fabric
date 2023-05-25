@@ -8,7 +8,7 @@ const GlobalClassNames = {
   presenceIcon: 'ms-Persona-presenceIcon',
 }
 
-export const getStyles = (props: IPersonaPresenceStyleProps): IPersonaPresenceStyles => {
+export function getStyles(props: IPersonaPresenceStyleProps): IPersonaPresenceStyles {
   const { theme, presenceColors } = props
   const { semanticColors, fonts } = theme
 
@@ -33,7 +33,7 @@ export const getStyles = (props: IPersonaPresenceStyleProps): IPersonaPresenceSt
   const borderSizeForSmallPersonas = '1px'
   const borderSizeForLargePersonas = '2px'
 
-  const borderSize = size.isSize72 || size.isSize100 ? borderSizeForLargePersonas : borderSizeForSmallPersonas
+  const borderSize = (size.isSize72 || size.isSize100) ? borderSizeForLargePersonas : borderSizeForSmallPersonas
 
   return {
     presence: [
@@ -108,7 +108,7 @@ export const getStyles = (props: IPersonaPresenceStyleProps): IPersonaPresenceSt
           selectors: {
             // Only show :after at larger sizes
             ':after':
-              size.isSize40 || size.isSize48 || size.isSize72 || size.isSize100
+              (size.isSize40 || size.isSize48 || size.isSize72 || size.isSize100)
                 ? {
                     content: '""',
                     width: '100%',

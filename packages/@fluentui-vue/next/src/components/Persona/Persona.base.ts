@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue'
+import { computed, defineComponent, h, toRefs } from 'vue'
 
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
@@ -30,51 +30,51 @@ export const PersonaBase = defineComponent({
     showSecondaryText: { type: Boolean, default: false },
   },
 
+  setup(props, { slots }) {
+    const {
+      theme,
+      styles,
+      className,
+      showSecondaryText,
+      presence,
+      size,
+      hidePersonaDetails,
+      text,
+      secondaryText,
+      tertiaryText,
+      optionalText,
+      coinSize,
+    } = toRefs(props)
+
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value,
+      showSecondaryText: showSecondaryText.value,
+      presence: presence.value,
+      size: size.value,
+    }))
+
+    const $details = (!hidePersonaDetails.value || (size.value === PersonaSize.size8 || size.value === PersonaSize.size10 || size.value === PersonaSize.tiny)) && h('div', { class: classNames.value.details }, [
+      h('div', { class: classNames.value.primaryText }, text.value),
+      h('div', { class: classNames.value.secondaryText }, secondaryText.value),
+      h('div', { class: classNames.value.tertiaryText }, tertiaryText.value),
+      h('div', { class: classNames.value.optionalText }, optionalText.value),
+      slots.default?.(),
+    ])
+
+    return () => h('div', {
+      class: classNames.value.root,
+      style: coinSize.value ? { height: `${coinSize.value}px`, minWidth: `${coinSize.value}px` } : {},
+    }, [
+      h(PersonaCoin, props),
+      $details,
+    ])
+  },
+
   data() {
     return {
       PersonaSize,
     }
   },
 
-  computed: {
-    classNames(): IProcessedStyleSet<IPersonaStyles> {
-      const { theme, className, showSecondaryText, presence, size } = this
-      return getClassNames(this.styles, {
-        theme: theme!,
-        className,
-        showSecondaryText,
-        presence,
-        size,
-      })
-    },
-  },
-
-  render() {
-    const {
-      classNames,
-      coinSize,
-      text,
-      secondaryText,
-      tertiaryText,
-      optionalText,
-      hidePersonaDetails,
-      size,
-    } = this
-
-    const $details = (!hidePersonaDetails || (size === PersonaSize.size8 || size === PersonaSize.size10 || size === PersonaSize.tiny)) && h('div', { class: classNames.details }, [
-      h('div', { class: classNames.primaryText }, text),
-      h('div', { class: classNames.secondaryText }, secondaryText),
-      h('div', { class: classNames.tertiaryText }, tertiaryText),
-      h('div', { class: classNames.optionalText }, optionalText),
-      this.$slots.default,
-    ])
-
-    return h('div', {
-      class: classNames.root,
-      style: coinSize ? { height: `${coinSize}px`, minWidth: `${coinSize}px` } : {},
-    }, [
-      h(PersonaCoin, this.$props),
-      $details,
-    ])
-  },
 })
