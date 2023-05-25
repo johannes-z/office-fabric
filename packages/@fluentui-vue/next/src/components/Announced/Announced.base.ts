@@ -1,14 +1,12 @@
-import { asSlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import Vue, { VNode } from 'vue'
-import { IAnnouncedStyles } from './Announced.types'
+import { defineComponent, h } from 'vue'
+import type { IAnnouncedStyles } from './Announced.types'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<{}, IAnnouncedStyles>()
 
-export const AnnouncedBase = Vue.extend({
+export const AnnouncedBase = defineFunctionalComponent({
   name: 'AnnouncedBase',
-
-  functional: true,
 
   props: {
     ...useStylingProps(),
@@ -17,17 +15,15 @@ export const AnnouncedBase = Vue.extend({
     as: { type: String, default: undefined },
   },
 
-  render (h, ctx): VNode {
-    const { message, styles, as: Root = 'div', className } = ctx.props
+  render(props, { attrs, slots }) {
+    const { message, styles, as: Root = 'div', className } = props
 
     const classNames = getClassNames(styles, { className })
 
     const slotProps = asSlotProps({
       root: {
-        attrs: {
-          role: 'status',
-        },
-        ...ctx.data,
+        ...attrs,
+        role: 'status',
         class: classNames.root,
       },
       screenReaderText: {

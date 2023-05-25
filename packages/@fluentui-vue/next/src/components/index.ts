@@ -35,6 +35,7 @@ export * from './ProgressIndicator'
 export * from './Spinner'
 
 // Utilities
+export * from './Announced'
 export * from './Icon'
 export * from './Image'
 export * from './Separator'

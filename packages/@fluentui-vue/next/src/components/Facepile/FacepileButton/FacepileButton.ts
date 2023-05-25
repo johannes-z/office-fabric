@@ -1,26 +1,29 @@
+import { computed, defineComponent, h, toRefs } from 'vue'
+import { getStyles } from './FacepileButton.styles'
 import { BaseButton } from '@/components/Button/BaseButton'
 import { useStylingProps } from '@/utils'
-import Vue, { VNode } from 'vue'
-import { getStyles } from './FacepileButton.styles'
 
-export const FacepileButton = Vue.extend({
+export const FacepileButton = defineComponent({
   name: 'FacepileButton',
-
-  functional: true,
 
   props: {
     ...useStylingProps(),
   },
 
-  render (h, ctx): VNode {
-    const styles = getStyles(ctx.props.theme, ctx.props.className, ctx.props.styles)
+  setup(props, { attrs }) {
+    const {
+      theme,
+      styles,
+      className,
+    } = toRefs(props)
+    const internalStyles = computed(() => getStyles(theme.value, className.value, styles.value))
 
-    return h(BaseButton, {
-      ...ctx.data,
+    return () => h(BaseButton, {
+      ...attrs,
       props: {
-        ...ctx.data.props,
+        ...props,
         variantClassName: 'ms-Button--facepile',
-        styles,
+        styles: internalStyles.value,
       },
     })
   },
