@@ -1,4 +1,4 @@
-import Vue, { VNode, h } from 'vue'
+import { h } from 'vue'
 import { IMenuItemClassNames } from '../ContextualMenu.classNames'
 import { IContextualMenuItem } from '../ContextualMenu.types'
 import { ContextualMenuItem } from '../ContextualMenuItem'

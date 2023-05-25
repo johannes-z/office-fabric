@@ -2,6 +2,7 @@ import type { ITheme } from '@fluentui-vue/theme'
 import type { IStyle } from '@fluentui/merge-styles'
 import type { IContextualMenuProps } from '../ContextualMenu'
 import type { IIconProps } from '../Icon'
+
 // import type { IKeytipProps } from '../Keytip'
 import type { BaseButton } from './BaseButton'
 import type { IButtonClassNames } from './Button.classNames'

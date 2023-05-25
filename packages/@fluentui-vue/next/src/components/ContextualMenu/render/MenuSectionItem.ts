@@ -1,5 +1,5 @@
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, h } from 'vue'
+import { h } from 'vue'
 import type { IContextualMenuClassNames, IMenuItemClassNames } from '../ContextualMenu.classNames'
 import type { IContextualMenuItem, IContextualMenuStyles } from '../ContextualMenu.types'
 import { ContextualMenuItemType } from '../ContextualMenu.types'
@@ -9,7 +9,7 @@ import { MenuListItem } from './MenuListItem'
 import { MenuSeparator } from './MenuSeparator'
 import { asSlotProps } from '@/utils'
 
-export const MenuSectionItem = (props, { attrs, slots }) => {
+export function MenuSectionItem(props, { attrs, slots }) {
   const {
     item,
     itemClassNames,
@@ -17,7 +17,7 @@ export const MenuSectionItem = (props, { attrs, slots }) => {
     index,
     hasCheckmarks,
     hasIcons,
-  } = ctx.props
+  } = props
 
   const menuId = 'Test'
 
@@ -91,7 +91,7 @@ export const MenuSectionItem = (props, { attrs, slots }) => {
         headerItem && h(MenuListItem, slotProps.headerItem, [headerItem]),
         ...sectionProps.items.map((contextualMenuItem, itemsIndex) =>
           h(MenuItem, {
-            ...ctx.data,
+            ...attrs,
             item: contextualMenuItem,
             classNames: menuClassNames,
             index: itemsIndex,

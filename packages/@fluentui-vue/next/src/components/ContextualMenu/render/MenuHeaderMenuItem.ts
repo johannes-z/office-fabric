@@ -1,11 +1,8 @@
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, h } from 'vue'
-import { IContextualMenuClassNames, IMenuItemClassNames } from '../ContextualMenu.classNames'
-import { IContextualMenuItem, IContextualMenuStyles } from '../ContextualMenu.types'
+import { h } from 'vue'
 import { ContextualMenuItem } from '../ContextualMenuItem'
 import { asSlotProps } from '@/utils'
 
-export const MenuHeaderMenuItem = (props, { attrs, slots }) => {
+export function MenuHeaderMenuItem(props, { attrs, slots }) {
   const {
     item,
     itemClassNames,

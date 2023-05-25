@@ -157,7 +157,7 @@ export const TextFieldBase = defineComponent({
         readonly: readonly.value,
         required: required.value,
         placeholder: placeholder.value,
-        rows: +attrs.rows || 1,
+        rows: attrs.rows ? (+attrs.rows || 1) : 1,
         type: 'text',
         autocomplete: 'off',
         style: { resize: (resizable.value === false) && 'none' },

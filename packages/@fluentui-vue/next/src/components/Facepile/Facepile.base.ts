@@ -1,13 +1,15 @@
-import { SlotProps, useStylingProps } from '@/utils'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { VNode } from 'vue'
-import { Persona, PersonaCoin, PersonaSize } from '../Persona'
-import { IFacepilePersona, IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import { defineComponent, h } from 'vue'
+import type { PersonaSize } from '../Persona'
+import { Persona, PersonaCoin } from '../Persona'
+import type { IFacepilePersona, IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
+import { useStylingProps } from '@/utils'
+import type { SlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IFacepileStyleProps, IFacepileStyles>()
 
-export const FacepileBase = Vue.extend({
+export const FacepileBase = defineComponent({
   name: 'FacepileBase',
 
   props: {
@@ -19,16 +21,16 @@ export const FacepileBase = Vue.extend({
   },
 
   computed: {
-    singlePersona (): boolean {
+    singlePersona(): boolean {
       return this.personas.length === 1
     },
-    classNames (): IProcessedStyleSet<IFacepileStyles> {
+    classNames(): IProcessedStyleSet<IFacepileStyles> {
       return getClassNames(this.styles, {
         theme: this.theme!,
         className: this.className,
       })
     },
-    slotProps (): SlotProps<IFacepileStyles> {
+    slotProps(): SlotProps<IFacepileStyles> {
       const { classNames, personas, singlePersona, personaSize } = this
 
       return {
@@ -48,7 +50,7 @@ export const FacepileBase = Vue.extend({
     },
   },
 
-  render (h): VNode {
+  render() {
     const { classNames, slotProps, personas, singlePersona, personaSize, getPersonaProps } = this
 
     const personaStyles = {
@@ -63,21 +65,17 @@ export const FacepileBase = Vue.extend({
     }, [
       h('div', {
         class: classNames.itemButton,
-        attrs: {
-          title: persona.personaName,
-        },
+        title: persona.personaName,
       }, [
         h(PersonaCoin, {
-          props: {
-            imageInitials: persona.imageInitials,
-            imageUrl: persona.imageUrl,
-            initialsColor: persona.initialsColor,
-            allowPhoneInitials: persona.allowPhoneInitials,
-            text: persona.personaName,
-            size: personaSize,
-            ...(getPersonaProps ? getPersonaProps(persona) : null),
-            styles: personaStyles,
-          },
+          imageInitials: persona.imageInitials,
+          imageUrl: persona.imageUrl,
+          initialsColor: persona.initialsColor,
+          allowPhoneInitials: persona.allowPhoneInitials,
+          text: persona.personaName,
+          size: personaSize,
+          ...(getPersonaProps ? getPersonaProps(persona) : null),
+          styles: personaStyles,
         }),
       ]),
     ]))

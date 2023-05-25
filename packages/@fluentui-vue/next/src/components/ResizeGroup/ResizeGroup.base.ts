@@ -1,5 +1,5 @@
 import { debounce } from '@fluentui-vue/utilities'
-import { type VNode, computed, nextTick, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
+import { type PropType, type VNode, computed, nextTick, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
 import { defineComponent, h } from 'vue'
 import type { IResizeGroupProps } from './ResizeGroup.types'
 import { ResizeGroupDirection } from './ResizeGroup.types'
@@ -312,11 +312,11 @@ export const ResizeGroupBase = defineComponent({
     ...useStylingProps(),
 
     data: { type: Object, required: true },
-    onReduceData: { type: Function, required: true },
-    onGrowData: { type: Function, required: true },
-    direction: { type: Number as () => ResizeGroupDirection, default: ResizeGroupDirection.horizontal },
+    onReduceData: { type: Function as PropType<(prevData: any) => any>, required: true },
+    onGrowData: { type: Function as PropType<(prevData: any) => any>, required: true },
+    direction: { type: Number as PropType<ResizeGroupDirection>, default: ResizeGroupDirection.horizontal },
 
-    getItemRefs: { type: Function, default: null },
+    getItemRefs: { type: Function as PropType<(prevData: any) => any>, default: null },
   },
 
   setup(props, { attrs, slots, expose }) {
@@ -329,7 +329,7 @@ export const ResizeGroupBase = defineComponent({
     const hasRenderedContent = ref(false)
     const measureContainer = ref(true)
     const dataNeedsMeasuring = ref(true)
-    const state = ref({
+    const state = ref<IResizeGroupState>({
       dataToMeasure: undefined,
       renderedData: undefined,
       measureContainer: undefined,

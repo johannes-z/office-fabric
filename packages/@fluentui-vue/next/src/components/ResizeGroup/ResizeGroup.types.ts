@@ -53,7 +53,7 @@ export interface IResizeGroupProps {
    * Function to render the data. Called when rendering the contents to the screen and when
    * rendering in a hidden div to measure the size of the contents.
    */
-  onRenderData: (data: any) => JSX.Element
+  // onRenderData: (data: any) => JSX.Element
 
   /**
    * Function to be performed on the data in order to reduce its width and make it fit into the given space.

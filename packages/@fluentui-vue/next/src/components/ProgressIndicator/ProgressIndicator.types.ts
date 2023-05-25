@@ -1,6 +1,5 @@
-import type { IStyle } from '@fluentui/style-utilities'
-import type { IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import type { ITheme } from '@uifabric/styling'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import type { VNode } from 'vue'
 
 /**

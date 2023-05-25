@@ -1,5 +1,4 @@
 import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
-import type { IStackItemComponent, IStackItemStyles, IStackItemStylesReturnType } from './StackItem.types'
 
 const GlobalClassNames = {
   root: 'ms-StackItem',
@@ -10,7 +9,7 @@ const alignMap: { [key: string]: string } = {
   end: 'flex-end',
 }
 
-export const StackItemStyles: IStackItemComponent['styles'] = (props, theme, tokens): IStackItemStylesReturnType => {
+export function StackItemStyles(props, theme, tokens) {
   const { grow, shrink, disableShrink, align, verticalFill, order, className, basis = 'auto' } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
@@ -46,5 +45,5 @@ export const StackItemStyles: IStackItemComponent['styles'] = (props, theme, tok
     ],
     // TODO: this cast may be hiding some potential issues with styling and name
     //        lookups and should be removed
-  } as IStackItemStyles
+  }
 }

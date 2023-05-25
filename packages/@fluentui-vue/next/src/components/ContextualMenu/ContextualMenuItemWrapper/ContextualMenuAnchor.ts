@@ -1,10 +1,8 @@
-import Vue, { VNode, h } from 'vue'
-import { IMenuItemClassNames } from '../ContextualMenu.classNames'
-import { IContextualMenuItem } from '../ContextualMenu.types'
+import { h } from 'vue'
 import { ContextualMenuItem } from '../ContextualMenuItem'
-import { StylingPropKeys, asSlotProps, useStylingProps } from '@/utils'
+import { StylingPropKeys, asSlotProps } from '@/utils'
 
-export const ContextualMenuAnchor = (props, { attrs, slots }) => {
+export function ContextualMenuAnchor(props, { attrs, slots }) {
   const {
     item,
     classNames,

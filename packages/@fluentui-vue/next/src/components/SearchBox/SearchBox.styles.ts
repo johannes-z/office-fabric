@@ -2,6 +2,7 @@ import { HighContrastSelector, getGlobalClassNames, getInputFocusStyle, getPlace
 import { AnimationVariables } from '@fluentui-vue/theme'
 import { getRTL } from '@fluentui-vue/utilities'
 import type { IStyle } from '@fluentui/merge-styles'
+import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
 
 const GlobalClassNames = {
   root: 'ms-SearchBox',

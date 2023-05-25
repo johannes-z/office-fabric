@@ -44,7 +44,6 @@ export const NavBase = defineComponent({
       groups,
       selectedKey,
       isOnTop,
-      router,
     } = toRefs(props)
 
     const isGroupCollapsed = ref({})

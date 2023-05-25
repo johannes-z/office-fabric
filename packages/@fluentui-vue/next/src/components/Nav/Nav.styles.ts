@@ -1,5 +1,6 @@
 import { AnimationClassNames, HighContrastSelector, ZIndexes, getFocusStyle, getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import { FontWeights } from '@fluentui-vue/theme'
+import type { IButtonStyles } from '../Button/Button.types'
 import type { INavStyleProps, INavStyles } from './Nav.types'
 
 const GlobalClassNames = {
@@ -27,7 +28,7 @@ export const buttonStyles: IButtonStyles = {
   },
 }
 
-export const getStyles = (props: INavStyleProps): INavStyles => {
+export function getStyles(props: INavStyleProps): INavStyles {
   const {
     className,
     theme,

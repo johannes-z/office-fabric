@@ -1,5 +1,5 @@
 import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import type { ITheme } from '@uifabric/styling'
+import type { ITheme } from '@fluentui-vue/theme'
 import type { IButtonProps } from '../Button'
 import type { IIconProps } from '../Icon'
 

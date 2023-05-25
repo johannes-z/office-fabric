@@ -1,7 +1,6 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { IProcessedStyleSet, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import type { VNode } from 'vue'
-import Vue, { CreateElement, defineComponent, h } from 'vue'
+import { defineComponent, h } from 'vue'
 import { Callout } from '../Callout'
 import type { ICalloutContentStyleProps, ICalloutContentStyles } from '../Callout/Callout.types'
 import type { IContextualMenuStyleProps, IContextualMenuStyles } from './ContextualMenu.types'
@@ -63,7 +62,7 @@ export const ContextualMenuBase = defineComponent({
     },
   },
 
-  render(): VNode | any {
+  render() {
     const {
       styles,
       classNames,

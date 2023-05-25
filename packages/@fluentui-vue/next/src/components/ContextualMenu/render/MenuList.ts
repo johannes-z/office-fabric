@@ -1,5 +1,5 @@
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import Vue, { CreateElement, VNode, h } from 'vue'
+import { h } from 'vue'
 import type { IContextualMenuListProps, IContextualMenuStyles } from '../ContextualMenu.types'
 import { ContextualMenuItemType } from '../ContextualMenu.types'
 import { MenuItem } from './MenuItem'
@@ -18,9 +18,7 @@ export function MenuList(props, { attrs }) {
   const slotProps = asSlotProps({
     list: {
       class: menuClassNames.list,
-      attrs: {
-        role: 'presentation',
-      },
+      role: 'presentation',
     },
   })
   let indexCorrection = 0
