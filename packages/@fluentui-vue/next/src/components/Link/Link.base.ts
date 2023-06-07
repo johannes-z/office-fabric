@@ -1,6 +1,6 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h, toRefs } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import type { ILinkStyleProps, ILinkStyles } from './Link.types'
 import { asSlotProps, useStylingProps } from '@/utils/'
 import { makeRouterProps } from '@/composables'
@@ -45,7 +45,7 @@ export const LinkBase = defineComponent({
           disabled: disabled.value,
         },
         ...to.value && {
-          href: disabled.value ? undefined : props.href,
+          href: disabled.value ? undefined : useRouter().resolve(to.value).href,
           to: disabled.value ? undefined : props.to,
           exact: props.exact,
           replace: props.replace,
