@@ -1,8 +1,9 @@
 // Your use of the content in the files referenced here is subject to the terms of the license at https://aka.ms/fluentui-assets-license
 
-import { IIconOptions, IIconSubset, registerIcons } from '@fluentui-vue/style-utilities'
+import type { IIconOptions, IIconSubset } from '@fluentui-vue/style-utilities'
+import { registerIcons } from '@fluentui-vue/style-utilities'
 
-export function initializeIcons (baseUrl: string = '', options?: IIconOptions): void {
+export function initializeIcons(baseUrl = '', options?: IIconOptions): void {
   const subset: IIconSubset = {
     style: {
       MozOsxFontSmoothing: 'grayscale',
@@ -12,7 +13,7 @@ export function initializeIcons (baseUrl: string = '', options?: IIconOptions): 
       speak: 'none',
     },
     fontFace: {
-      fontFamily: `"FabricMDL2Icons"`,
+      fontFamily: '"FabricMDL2Icons"',
       src: `url('${baseUrl}fabric-icons-a13498cf.woff') format('woff')`,
     },
     icons: {

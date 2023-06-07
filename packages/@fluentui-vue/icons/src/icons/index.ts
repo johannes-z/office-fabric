@@ -1,3 +1,4 @@
+import type { IIconOptions } from '@fluentui-vue/style-utilities'
 import { initializeIcons as i } from './fabric-icons'
 import { initializeIcons as i0 } from './fabric-icons-0'
 import { initializeIcons as i1 } from './fabric-icons-1'
@@ -18,12 +19,11 @@ import { initializeIcons as i15 } from './fabric-icons-15'
 import { initializeIcons as i16 } from './fabric-icons-16'
 import { initializeIcons as i17 } from './fabric-icons-17'
 
-import { IIconOptions } from '@fluentui-vue/style-utilities'
 import { registerIconAliases } from './iconAliases'
 
 const DEFAULT_BASE_URL = 'https://spoppe-b.azureedge.net/files/fabric-cdn-prod_20210407.001/assets/icons/'
 
-export function initializeIcons (baseUrl: string = DEFAULT_BASE_URL, options?: IIconOptions): void {
+export function initializeIcons(baseUrl: string = DEFAULT_BASE_URL, options?: IIconOptions): void {
   [
     i,
     i0,

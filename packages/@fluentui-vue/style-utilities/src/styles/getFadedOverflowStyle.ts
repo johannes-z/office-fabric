@@ -1,10 +1,10 @@
 import type { IRawStyle } from '@fluentui/merge-styles'
-import type { ITheme, ISemanticColors, IPalette } from '../interfaces/index'
+import type { IPalette, ISemanticColors, ITheme } from '../interfaces/index'
 
 interface IRGB {
-  r: number;
-  g: number;
-  b: number;
+  r: number
+  g: number
+  b: number
 }
 
 const DEFAULT_HEIGHT = '50%'
@@ -63,7 +63,7 @@ const DEFAULT_WIDTH = 20
  * @param height - The Height of the fading overflow. Vertical direction defaults it to 50% vs 100% when horizontal.
  * @returns The style object.
  */
-export function getFadedOverflowStyle (
+export function getFadedOverflowStyle(
   theme: ITheme,
   color: keyof ISemanticColors | keyof IPalette = 'bodyBackground',
   direction: 'horizontal' | 'vertical' = 'horizontal',
@@ -71,8 +71,8 @@ export function getFadedOverflowStyle (
   height: string | number = getDefaultValue('height', direction),
 ): IRawStyle {
   // Get the color value string from the theme semanticColors or palette.
-  const colorValue: string =
-    theme.semanticColors[color as keyof ISemanticColors] || theme.palette[color as keyof IPalette]
+  const colorValue: string
+    = theme.semanticColors[color as keyof ISemanticColors] || theme.palette[color as keyof IPalette]
   // Get the red, green, blue values of the colorValue.
   const rgbColor: IRGB = color2rgb(colorValue)
   // Apply opacity 0 to serve as a start color of the gradient.
@@ -85,8 +85,8 @@ export function getFadedOverflowStyle (
     position: 'absolute',
     right: 0,
     bottom: 0,
-    width: width,
-    height: height,
+    width,
+    height,
     pointerEvents: 'none',
     backgroundImage: `linear-gradient(${gradientDirection}, ${rgba} 0%, ${colorValue} 100%)`,
   }
@@ -98,7 +98,7 @@ export function getFadedOverflowStyle (
  *
  * @param colorValue - Color to be converted from hex to rgba.
  */
-function color2rgb (colorValue: string): IRGB {
+function color2rgb(colorValue: string): IRGB {
   if (colorValue[0] === '#') {
     // If it's a hex code
     return {
@@ -106,7 +106,8 @@ function color2rgb (colorValue: string): IRGB {
       g: parseInt(colorValue.slice(3, 5), 16),
       b: parseInt(colorValue.slice(5, 7), 16),
     }
-  } else if (colorValue.indexOf('rgba(') === 0) {
+  }
+  else if (colorValue.indexOf('rgba(') === 0) {
     // If it's an rgba color string
     colorValue = colorValue.match(/rgba\(([^)]+)\)/)![1]
     const parts = colorValue.split(/ *, */).map(Number)
@@ -131,10 +132,10 @@ function color2rgb (colorValue: string): IRGB {
  * @param style - Which style to get the default value for.
  * @param direction - What direction to take into consideration.
  */
-function getDefaultValue (style: 'width' | 'height', direction: string): number | string {
-  if (style === 'width') {
+function getDefaultValue(style: 'width' | 'height', direction: string): number | string {
+  if (style === 'width')
     return direction === 'horizontal' ? DEFAULT_WIDTH : '100%'
-  } else {
+
+  else
     return direction === 'vertical' ? DEFAULT_HEIGHT : '100%'
-  }
 }

@@ -1,6 +1,14 @@
 import { IIconOptions, registerIcons } from '@fluentui-vue/style-utilities'
-import { h } from 'vue'
+import Vue, { CreateElement } from 'vue'
 import { FileTypeIconMap } from './FileTypeIconMap'
+
+let h: CreateElement
+// eslint-disable-next-line no-new
+new Vue({
+  created () {
+    h = this.$createElement
+  },
+})
 
 const PREFIX = 'vue_'
 const PNG_SUFFIX = '_png'
