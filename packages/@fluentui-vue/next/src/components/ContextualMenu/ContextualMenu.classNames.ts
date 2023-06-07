@@ -1,48 +1,48 @@
-import { getStyles as getDividerClassNames } from '../Divider/VerticalDivider.styles'
-import { getMenuItemStyles } from './ContextualMenu.cnstyles'
 import {
+  ScreenWidthMaxMedium,
   getGlobalClassNames,
   getScreenSelector,
-  ScreenWidthMaxMedium,
   hiddenContentStyle,
 } from '@fluentui-vue/style-utilities'
 import type { ITheme } from '@fluentui-vue/theme'
-import type { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types'
-import type { IContextualMenuItemStyles, IContextualMenuItemStyleProps } from './ContextualMenuItem.types'
-import type { IContextualMenuSubComponentStyles } from './ContextualMenu.types'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { IsFocusVisibleClassName, memoizeFunction } from '@fluentui-vue/utilities'
+import { getStyles as getDividerClassNames } from '../Divider/VerticalDivider.styles'
+import type { IVerticalDividerClassNames } from '../Divider/VerticalDivider.types'
+import { getMenuItemStyles } from './ContextualMenu.cnstyles'
+import type { IContextualMenuItemStyleProps, IContextualMenuItemStyles } from './ContextualMenuItem.types'
+import type { IContextualMenuSubComponentStyles } from './ContextualMenu.types'
 
 /**
  * @deprecated Deprecated in favor of mergeStyles API.
  */
 export interface IContextualMenuClassNames {
-  container?: string;
-  root?: string;
-  list?: string;
-  header?: string;
-  title?: string;
-  subComponentStyles?: IContextualMenuSubComponentStyles;
+  container?: string
+  root?: string
+  list?: string
+  header?: string
+  title?: string
+  subComponentStyles?: IContextualMenuSubComponentStyles
 }
 
 /**
  * @deprecated Deprecated in favor of mergeStyles API.
  */
 export interface IMenuItemClassNames {
-  item?: string;
-  divider?: string;
-  root?: string;
-  linkContent?: string;
-  icon?: string;
-  checkmarkIcon?: string;
-  subMenuIcon?: string;
-  label?: string;
-  secondaryText?: string;
-  splitContainer?: string;
-  splitPrimary?: string;
-  splitMenu?: string;
-  linkContentMenu?: string;
-  screenReaderText?: string;
+  item?: string
+  divider?: string
+  root?: string
+  linkContent?: string
+  icon?: string
+  checkmarkIcon?: string
+  subMenuIcon?: string
+  label?: string
+  secondaryText?: string
+  splitContainer?: string
+  splitPrimary?: string
+  splitMenu?: string
+  linkContentMenu?: string
+  screenReaderText?: string
 }
 
 const CONTEXTUAL_SPLIT_MENU_MINWIDTH = '28px'
@@ -124,8 +124,8 @@ export const getItemClassNames = memoizeFunction(
         isAnchorLink && styles.anchorLink,
         expanded && [classNames.isExpanded, styles.rootExpanded],
         disabled && [classNames.isDisabled, styles.rootDisabled],
-        !disabled &&
-          !expanded && [
+        !disabled
+          && !expanded && [
           {
             selectors: {
               ':hover': styles.rootHovered,
@@ -144,8 +144,8 @@ export const getItemClassNames = memoizeFunction(
         },
         checked && ['is-checked', styles.rootChecked],
         (disabled || primaryDisabled) && ['is-disabled', styles.rootDisabled],
-        !(disabled || primaryDisabled) &&
-          !checked && [
+        !(disabled || primaryDisabled)
+          && !checked && [
           {
             selectors: {
               ':hover': styles.rootHovered,
@@ -168,8 +168,8 @@ export const getItemClassNames = memoizeFunction(
         },
         expanded && ['is-expanded', styles.rootExpanded],
         disabled && ['is-disabled', styles.rootDisabled],
-        !disabled &&
-          !expanded && [
+        !disabled
+          && !expanded && [
           {
             selectors: {
               ':hover': styles.rootHovered,
@@ -209,8 +209,8 @@ export const getItemClassNames = memoizeFunction(
       secondaryText: [classNames.secondaryText, styles.secondaryText],
       splitContainer: [
         styles.splitButtonFlexContainer,
-        !disabled &&
-          !checked && [
+        !disabled
+          && !checked && [
           {
             selectors: {
               [`.${IsFocusVisibleClassName} &:focus, .${IsFocusVisibleClassName} &:focus:hover`]: styles.rootFocused,
@@ -235,7 +235,7 @@ export const getItemClassNames = memoizeFunction(
  *
  * @param props the ContextualMenuItem style props used to generate its styles.
  */
-export const getItemStyles = (props: IContextualMenuItemStyleProps): IContextualMenuItemStyles => {
+export function getItemStyles(props: IContextualMenuItemStyleProps): IContextualMenuItemStyles {
   const {
     theme,
     disabled,

@@ -2,7 +2,7 @@
 import { useId } from '@fluentui-vue/hooks'
 import { ref } from 'vue'
 import { Text } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import { TextField } from '@/components/TextField'
 
 const testText = 'The quick brown fox jumped over the lazy dog.'
@@ -24,7 +24,7 @@ const variants = [
 <template>
   <h1>Text</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Text Ramp Example</h3>
@@ -42,5 +42,5 @@ const variants = [
         </tbody>
       </table>
     </div>
-  </DocumentCard>
+  </DocSection>
 </template>

@@ -3,7 +3,7 @@ import type { INavLink, INavLinkGroup } from '../components/Nav/Nav.types'
 
 const routes: any[] = []
 
-function defineRoute({ path, name, component }) {
+function defineRoute({ path, name, component, ...rest }) {
   const route = {
     path,
     name,
@@ -12,6 +12,7 @@ function defineRoute({ path, name, component }) {
   routes.push(route)
 
   return {
+    ...rest,
     name,
     url: path,
     key: path,
@@ -21,9 +22,19 @@ function defineRoute({ path, name, component }) {
 
 export const nav = [
   {
+    links: [
+      defineRoute({
+        path: '/',
+        name: 'Home',
+        component: () => import('../views/Home.vue'),
+      }),
+    ],
+  },
+  {
     links: [{
       key: 'Basic Inputs',
       name: 'Basic Inputs',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/Button',
@@ -61,11 +72,23 @@ export const nav = [
           component: () => import('../views/TogglePage.vue'),
         }),
       ],
-      isExpanded: true,
+    },
+    {
+      name: 'Galleries & Pickers',
+      key: 'Galleries & Pickers',
+      isExpanded: false,
+      links: [
+        defineRoute({
+          path: '/SwatchColorPicker',
+          name: 'SwatchColorPicker',
+          component: () => import('../views/SwatchColorPickerPage.vue'),
+        }),
+      ],
     },
     {
       name: 'Items & Lists',
       key: 'Items & Lists',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/ActivityItem',
@@ -78,11 +101,11 @@ export const nav = [
           component: () => import('../views/PersonaPage.vue'),
         }),
       ],
-      isExpanded: true,
     },
     {
       name: 'Commands, Menus & Navs',
       key: 'Commands, Menus & Navs',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/Breadcrumb',
@@ -100,11 +123,11 @@ export const nav = [
           component: () => import('../views/CommandBarPage.vue'),
         }),
       ],
-      isExpanded: true,
     },
     {
       name: 'Notification & Engagement',
       key: 'Notification & Engagement',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/MessageBar',
@@ -112,11 +135,11 @@ export const nav = [
           component: () => import('../views/MessageBarPage.vue'),
         }),
       ],
-      isExpanded: true,
     },
     {
       name: 'Progress',
       key: 'Progress',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/ProgressIndicator',
@@ -129,11 +152,11 @@ export const nav = [
           component: () => import('../views/SpinnerPage.vue'),
         }),
       ],
-      isExpanded: true,
     },
     {
       name: 'Surfaces',
       key: 'Surfaces',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/Callout',
@@ -151,11 +174,11 @@ export const nav = [
           component: () => import('../views/ModalPage.vue'),
         }),
       ],
-      isExpanded: true,
     },
     {
       name: 'Utilities',
       key: 'Utilities',
+      isExpanded: false,
       links: [
         defineRoute({
           path: '/Icon',
@@ -183,7 +206,6 @@ export const nav = [
           component: () => import('../views/TextPage.vue'),
         }),
       ],
-      isExpanded: true,
     }],
   },
 ]

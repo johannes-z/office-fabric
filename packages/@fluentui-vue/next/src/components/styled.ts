@@ -19,6 +19,8 @@ TRef = unknown,
   const StyledComponent = defineComponent({
     name: `Styled${Component.name}`,
 
+    inheritAttrs: false,
+
     props: [...new Set([...Array.isArray(Component.props) ? Component.props : Object.keys(Component.props ?? {}), 'styles', 'theme', 'className', 'componentRef'])],
 
     setup(props, { attrs, slots }) {

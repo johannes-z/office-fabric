@@ -91,37 +91,36 @@ export const BreadcrumbBase = defineComponent({
     }))
 
     const onReduceData = (data) => {
+      let { renderedItems, renderedOverflowItems } = data
       const { overflowIndex } = data.props
 
-      const movedItem = data.renderedItems[overflowIndex!]
+      const movedItem = renderedItems[overflowIndex!]
 
       if (!movedItem)
         return undefined
 
-      data.renderedItems = [...data.renderedItems]
-      data.renderedItems.splice(overflowIndex!, 1)
+      renderedItems = [...renderedItems]
+      renderedItems.splice(overflowIndex!, 1)
 
-      data.renderedOverflowItems = [...data.renderedOverflowItems, movedItem]
+      renderedOverflowItems = [...renderedOverflowItems, movedItem]
 
-      return { ...data }
+      return { ...data, renderedItems, renderedOverflowItems }
     }
 
     const onGrowData = (data) => {
+      let { renderedItems, renderedOverflowItems } = data
       const { overflowIndex, maxDisplayedItems } = data.props
 
-      data.renderedOverflowItems = [...data.renderedOverflowItems]
-      const movedItem = data.renderedOverflowItems.pop()
+      renderedOverflowItems = [...renderedOverflowItems]
+      const movedItem = renderedOverflowItems.pop()
 
-      if (!movedItem || data.renderedItems.length >= maxDisplayedItems!)
+      if (!movedItem || renderedItems.length >= maxDisplayedItems!)
         return undefined
 
-      data.renderedItems = [...data.renderedItems]
-      data.renderedItems.splice(overflowIndex!, 0, movedItem)
+      renderedItems = [...renderedItems]
+      renderedItems.splice(overflowIndex!, 0, movedItem)
 
-      renderedItems.value = data.renderedItems
-      renderedOverflowItems.value = data.renderedOverflowItems
-
-      return { ...data }
+      return { ...data, renderedItems, renderedOverflowItems }
     }
 
     const $item = (item?: IBreadcrumbItem) => {
@@ -168,35 +167,39 @@ export const BreadcrumbBase = defineComponent({
             }
           })
 
+          const lastItemIndex = renderedItems.length - 1
+          const hasOverflowItems = renderedOverflowItems && renderedOverflowItems.length !== 0
+
+          const $items = renderedItems.map((item, index) => [
+            h('li', slotProps.value.listItem, [
+              $item(item),
+              (index !== lastItemIndex || (hasOverflowItems && index === overflowIndex.value - 1)) && h(DividerType, {
+                ...slotProps.value.chevron,
+                item,
+              }),
+            ]),
+          ])
+
+          if (hasOverflowItems) {
+            $items.splice(overflowIndex.value, 0, h('li', slotProps.value.overflow, [
+              h(IconButton, {
+                ...slotProps.value.overflowButton,
+                menuProps: {
+                  items: contextualItems,
+                  directionalHint: DirectionalHint.bottomLeftEdge,
+                },
+              }, {
+                renderMenuIcon: () => null,
+              }),
+              (overflowIndex.value !== lastItemIndex + 1) && h(DividerType, {
+                ...slotProps.value.chevron,
+                item: renderedOverflowItems[renderedOverflowItems.length - 1],
+              }),
+            ]))
+          }
+
           return h('div', slotProps.value.root, [
-            h('ol', slotProps.value.list,
-              [
-                h('li', slotProps.value.overflow, [
-                  h(IconButton, {
-                    ...slotProps.value.overflowButton,
-                    menuProps: {
-                      items: contextualItems,
-                      directionalHint: DirectionalHint.bottomLeftEdge,
-                    },
-                  }, {
-                    renderMenuIcon: () => null,
-                  }),
-                  h(DividerType, {
-                    ...slotProps.value.chevron,
-                    item: renderedOverflowItems[renderedOverflowItems.length - 1],
-                  }),
-                ]),
-                ...renderedItems.map((item, index) => [
-                  h('li', slotProps.value.listItem, [
-                    $item(item),
-                    index < (renderedItems.length - 1) && h(DividerType, {
-                      ...slotProps.value.chevron,
-                      item,
-                    }),
-                  ]),
-                ]),
-              ],
-            ),
+            h('ol', slotProps.value.list, $items),
           ])
         },
       })

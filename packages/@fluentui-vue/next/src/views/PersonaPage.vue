@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Checkbox, Label, Persona, PersonaSize, Stack } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import type { IPersonaSharedProps } from '@/components/Persona'
 import { PersonaPresence } from '@/components/Persona'
 
@@ -20,7 +20,7 @@ const examplePersona: IPersonaSharedProps = {
 <template>
   <h1>Persona</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Persona in various sizes</h3>
@@ -117,5 +117,5 @@ const examplePersona: IPersonaSharedProps = {
         image-alt="Annie Lindqvist, status is away"
       />
     </Stack>
-  </DocumentCard>
+  </DocSection>
 </template>

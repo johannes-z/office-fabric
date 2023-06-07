@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, Text } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 function handleClickOnLink(ev: MouseEvent) {
   window.alert('clicked on Link component which is rendered as html button')
@@ -10,7 +10,7 @@ function handleClickOnLink(ev: MouseEvent) {
 <template>
   <h1>Link</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Link</h3>
@@ -38,5 +38,5 @@ function handleClickOnLink(ev: MouseEvent) {
     This link renders as a Vue Router link: <Link to="/Spinner" underline>
       Spinner
     </Link>.
-  </DocumentCard>
+  </DocSection>
 </template>

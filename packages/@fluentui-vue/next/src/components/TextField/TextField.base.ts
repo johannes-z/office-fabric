@@ -148,8 +148,8 @@ export const TextFieldBase = defineComponent({
         class: classNames.value.fieldGroup,
       },
       field: {
-        class: classNames.value.field,
         ...attrs,
+        class: classNames.value.field,
         ref: textElementRef,
         id,
         value: internalValue.value,

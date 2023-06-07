@@ -2,7 +2,7 @@
 import { registerIcons } from '@fluentui-vue/style-utilities'
 import { mergeStyleSets, mergeStyles } from '@fluentui/merge-styles'
 import { FontIcon, Icon } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const iconClass = mergeStyles({
   fontSize: 50,
@@ -97,9 +97,8 @@ const yammerClassName = mergeStyles(iconClass, {
 <template>
   <h1>Icon</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Icon</h2>
-    <Icon icon-name="ShoppingCart" />
     <FontIcon icon-name="CompassNW" :class="iconClass" />
     <FontIcon icon-name="Dictionary" :class-name="iconClass" />
     <FontIcon icon-name="TrainSolid" :class-name="iconClass" />
@@ -117,5 +116,5 @@ const yammerClassName = mergeStyles(iconClass, {
       :class-name="yammerClassName"
     />
     <BorderBlindsIcon color3="pink" />
-  </DocumentCard>
+  </DocSection>
 </template>

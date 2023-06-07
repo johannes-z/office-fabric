@@ -4,7 +4,7 @@ import { createTheme } from '@fluentui-vue/theme'
 import { mergeStyles } from '@fluentui/merge-styles'
 import type { IIconStyles, IStackTokens } from '../components'
 import { Icon, Separator, Stack, StackItem, Text } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const stackTokens: IStackTokens = { childrenGap: 12 }
 
@@ -33,7 +33,7 @@ const theme: ITheme = createTheme({
 <template>
   <h1>Separator</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Basic Separator with Text</h3>
@@ -87,5 +87,5 @@ const theme: ITheme = createTheme({
         <Icon icon-name="Clock" :styles="iconStyles" />
       </Separator>
     </Stack>
-  </DocumentCard>
+  </DocSection>
 </template>

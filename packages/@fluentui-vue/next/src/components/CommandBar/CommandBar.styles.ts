@@ -1,10 +1,11 @@
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { IStyle } from '@fluentui/merge-styles'
-import { ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
+import type { IStyle } from '@fluentui/merge-styles'
+import type { IButtonStyles } from '../Button/Button.types'
+import type { ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
 
 const COMMAND_BAR_HEIGHT = 44
 
-export const getStyles = (props: ICommandBarStyleProps): ICommandBarStyles => {
+export function getStyles(props: ICommandBarStyleProps): ICommandBarStyles {
   const { className, theme } = props
   const { semanticColors } = theme
 

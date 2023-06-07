@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { IIconProps, IStackTokens } from '../components'
 import { SearchBox, Stack } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const search = ref('test')
 const stackTokens: Partial<IStackTokens> = { childrenGap: 20 }
@@ -16,7 +16,7 @@ function onRef(el) {
 <template>
   <h1>SearchBox</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Default SearchBox</h3>
@@ -37,5 +37,5 @@ function onRef(el) {
 
     <h3>SearchBox with custom icon</h3>
     <SearchBox placeholder="Filter" :icon-props="filterIcon" />
-  </DocumentCard>
+  </DocSection>
 </template>

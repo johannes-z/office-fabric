@@ -1,6 +1,7 @@
 import type { ITheme } from '@fluentui-vue/theme'
 import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 import type { IContextualMenuItem } from '../ContextualMenu'
+import type { IButtonProps, IButtonStyles } from '../Button/Button.types'
 import type { ICommandBarData } from './CommandBar.base'
 
 /**
@@ -10,12 +11,12 @@ export interface ICommandBar {
   /**
    * Sets focus to the active command in the list.
    */
-  focus(): void;
+  focus(): void
 
   /**
    * Remeasures the available space.
    */
-  remeasure(): void;
+  remeasure(): void
 }
 
 /**
@@ -25,66 +26,66 @@ export interface ICommandBarProps {
   /**
    * Items to render. ICommandBarItemProps extends IContextualMenuItem.
    */
-  items: ICommandBarItemProps[];
+  items: ICommandBarItemProps[]
 
   /**
    * Items to render on the right side (or left, in RTL). ICommandBarItemProps extends IContextualMenuItem.
    */
-  farItems?: ICommandBarItemProps[];
+  farItems?: ICommandBarItemProps[]
 
   /**
    * Default items to have in the overflow menu. ICommandBarItemProps extends IContextualMenuItem.
    */
-  overflowItems?: ICommandBarItemProps[];
+  overflowItems?: ICommandBarItemProps[]
 
   /**
    * Props to be passed to overflow button.
    * If `menuProps` are passed through this prop, any items provided will be prepended to any
    * computed overflow items.
    */
-  overflowButtonProps?: IButtonProps;
+  overflowButtonProps?: IButtonProps
 
   /**
    * Custom component for the ResizeGroup.
    */
-  resizeGroupAs?: IComponentAs<IResizeGroupProps>;
+  resizeGroupAs?: IComponentAs<IResizeGroupProps>
 
   /**
    * Custom component for the overflow button.
    */
-  overflowButtonAs?: IComponentAs<IButtonProps>;
+  overflowButtonAs?: IComponentAs<IButtonProps>
 
   /**
    * Custom component for the near and far item buttons. Not used for overflow menu items.
    */
-  buttonAs?: IComponentAs<IButtonProps>;
+  buttonAs?: IComponentAs<IButtonProps>
 
   /**
    * When true, items will be 'shifted' off the front of the array when reduced, and unshifted during grow.
    */
-  shiftOnReduce?: boolean;
+  shiftOnReduce?: boolean
 
   /**
    * Custom function to reduce data if items do not fit in a given space.
    * Return `undefined` if no more steps can be taken to avoid an infinite loop.
    */
-  onReduceData?: (data: ICommandBarData) => ICommandBarData | undefined;
+  onReduceData?: (data: ICommandBarData) => ICommandBarData | undefined
 
   /**
    * Custom function to grow data if items are too small for the given space.
    * Return `undefined` if no more steps can be taken to avoid an infinite loop.
    */
-  onGrowData?: (data: ICommandBarData) => ICommandBarData | undefined;
+  onGrowData?: (data: ICommandBarData) => ICommandBarData | undefined
 
   /**
    * Callback invoked when data has been reduced.
    */
-  onDataReduced?: (movedItem: ICommandBarItemProps) => void;
+  onDataReduced?: (movedItem: ICommandBarItemProps) => void
 
   /**
    * Callback invoked when data has been grown.
    */
-  onDataGrown?: (movedItem: ICommandBarItemProps) => void;
+  onDataGrown?: (movedItem: ICommandBarItemProps) => void
 
   /**
    * Function to be called every time data is rendered. It provides the data that was actually rendered.
@@ -92,43 +93,43 @@ export interface ICommandBarProps {
    * as a result of `onReduceData`, or to count the number of renders that an implementation of
    * `onReduceData` triggers.
    */
-  dataDidRender?: (renderedData: any) => void;
+  dataDidRender?: (renderedData: any) => void
 
   /**
    * Additional css class to apply to the command bar
    */
-  className?: string;
+  className?: string
 
   /**
    * Accessibility text to be read by the screen reader when the user's
    * focus enters the command bar. The screen reader will read this text
    * after reading information about the first focusable item in the command bar.
    */
-  ariaLabel?: string;
+  ariaLabel?: string
 
   /**
    * When using farItems, primaryGroupAriaLabel and farItemsGroupAriaLabel function as
    * labels for each group that are exposed to screen reader users.
    * This helps clarify when a screen reader user is entering or leaving each group.
    */
-  primaryGroupAriaLabel?: string;
+  primaryGroupAriaLabel?: string
 
   /**
    * When using farItems, primaryGroupAriaLabel and farItemsGroupAriaLabel function as
    * labels for each group that are exposed to screen reader users.
    * This helps clarify when a screen reader user is entering or leaving each group.
    */
-  farItemsGroupAriaLabel?: string;
+  farItemsGroupAriaLabel?: string
 
   /**
    * Customized styling that will layer on top of the variant rules.
    */
-  styles?: IStyleFunctionOrObject<ICommandBarStyleProps, ICommandBarStyles>;
+  styles?: IStyleFunctionOrObject<ICommandBarStyleProps, ICommandBarStyles>
 
   /**
    * Theme provided by HOC.
    */
-  theme?: ITheme;
+  theme?: ITheme
 }
 
 /**
@@ -141,51 +142,51 @@ export interface ICommandBarItemProps extends IContextualMenuItem {
    * Does not apply if item is in the overflow.
    * @defaultvalue false
    */
-  iconOnly?: boolean;
+  iconOnly?: boolean
 
   /**
    * Props for the tooltip when in `iconOnly` mode.
    */
-  tooltipHostProps?: ITooltipHostProps;
+  tooltipHostProps?: ITooltipHostProps
 
   /**
    * Custom styles for individual button
    */
-  buttonStyles?: IButtonStyles;
+  buttonStyles?: IButtonStyles
 
   /**
    * A custom cache key to be used for this item. If `cacheKey` is changed, the cache will invalidate.
    * Defaults to `key` value.
    */
-  cacheKey?: string;
+  cacheKey?: string
 
   /**
    * Context under which the item is being rendered.
    * This value is mutated by the CommandBar and is useful for adjusting the `onRender` function.
    */
-  renderedInOverflow?: boolean;
+  renderedInOverflow?: boolean
 
   /**
    * Method to override the render of the individual command bar button.
    * Not used when item is rendered in overflow.
    * @defaultvalue CommandBarButton
    */
-  commandBarButtonAs?: IComponentAs<ICommandBarItemProps>;
+  commandBarButtonAs?: IComponentAs<ICommandBarItemProps>
 }
 
 /**
  * {@docCategory CommandBar}
  */
 export interface ICommandBarStyleProps {
-  theme: ITheme;
-  className?: string;
+  theme: ITheme
+  className?: string
 }
 
 /**
  * {@docCategory CommandBar}
  */
 export interface ICommandBarStyles {
-  root?: IStyle;
-  primarySet?: IStyle;
-  secondarySet?: IStyle;
+  root?: IStyle
+  primarySet?: IStyle
+  secondarySet?: IStyle
 }

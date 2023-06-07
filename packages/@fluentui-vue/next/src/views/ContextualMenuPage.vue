@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useId } from '@fluentui-vue/hooks'
 import { Ref, ref } from 'vue'
-import { ContextualMenu } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import { CommandBarButton, ContextualMenu } from '../components'
+import DocSection from './components/DocSection.vue'
 import { ContextualMenuItemType } from '@/components/ContextualMenu'
 import type { IContextualMenuItem } from '@/components/ContextualMenu'
 
@@ -65,11 +65,19 @@ const menuItems: IContextualMenuItem[] = [
     onClick: () => console.error('Disabled item should not be clickable.'),
   },
 ]
+
+const test = ref(null)
+const buttonRef = ref(null)
+function onRef(ref) {
+  console.log(ref)
+  console.log(test)
+  buttonRef.value = ref
+}
 </script>
 
 <template>
   <h1>ContextualMenu</h1>
-  <DocumentCard>
+  <DocSection>
     <h2>Basic ContextualMenu</h2>
     <div>
       <p>
@@ -78,18 +86,21 @@ const menuItems: IContextualMenuItem[] = [
       </p>
       <p>
         <b>
-          <a ref="linkRef" href="#" @click="onShowContextualMenu">
+          <a ref="linkRef" href="#" @click.prevent="onShowContextualMenu">
             Click for ContextualMenu
           </a>
         </b>
       </p>
+      <CommandBarButton ref="test" :component-ref="onRef" @click="onShowContextualMenu">
+        test
+      </CommandBarButton>
       <ContextualMenu
+        v-if="showContextualMenu"
         :items="menuItems"
-        :hidden="!showContextualMenu"
-        :target="linkRef"
+        :target="buttonRef.$el"
         @itemClick="onHideContextualMenu"
         @dismiss="onHideContextualMenu"
       />
     </div>
-  </DocumentCard>
+  </DocSection>
 </template>

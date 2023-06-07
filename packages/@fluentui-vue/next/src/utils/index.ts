@@ -11,3 +11,5 @@ export * from './toCamelCase'
 export * from './toKebabCase'
 
 export * from './event'
+export * from './array'
+export * from './color'

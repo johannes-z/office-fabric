@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { IIconProps } from '../components'
 import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, PrimaryButton, Stack, Toggle } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import type { IStackTokens } from '@/components/Stack'
 import type { IContextualMenuProps } from '@/components/ContextualMenu'
 
@@ -42,7 +42,7 @@ async function onRef(ref) {
 <template>
   <h1>Button</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <Toggle v-model="checked" label="Mark as checked" inline-label />
@@ -90,5 +90,5 @@ async function onRef(ref) {
       />
       <CommandBarButton :icon-props="mailIcon" text="Send mail" :disabled="disabled" :checked="checked" />
     </div>
-  </DocumentCard>
+  </DocSection>
 </template>

@@ -22,11 +22,6 @@ export function isRelativeUrl(url: string): boolean {
 export const NavBase = defineComponent({
   name: 'NavBase',
 
-  components: {
-    ActionButton,
-    Icon,
-  },
-
   props: {
     ...useStylingProps(),
 
@@ -131,7 +126,6 @@ export const NavBase = defineComponent({
           onClick: () => onLinkExpandClicked(link),
         }, [
           h(Icon, {
-            style: link.isExpanded ? { transform: 'rotate(-180deg)' } : {},
             class: classNames.value.chevronIcon,
             iconName: 'ChevronDown',
           }),
@@ -160,7 +154,6 @@ export const NavBase = defineComponent({
         target: link.target,
         disabled: link.disabled,
         className: classNames.value.link,
-        style: { paddingLeft: `${INDENTATION_SIZE * nestingLevel + BASE_INDENT + (isLinkWithIcon ? 0 : 24)}px` },
         onClick: (ev: PointerEvent) => onNavLinkClicked(link, ev),
       }, () => link.name)
     }
@@ -204,7 +197,7 @@ export const NavBase = defineComponent({
       }
     }
 
-    const classNames: any = computed(() => getClassNames(styles.value, {
+    const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
       className: className.value,
       isOnTop: isOnTop.value,

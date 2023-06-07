@@ -1,4 +1,4 @@
-import { debounce } from '@fluentui-vue/utilities'
+import { debounce, throttle } from '@fluentui-vue/utilities'
 import { type PropType, type VNode, computed, nextTick, onBeforeUnmount, onMounted, ref, toRefs, watch } from 'vue'
 import { defineComponent, h } from 'vue'
 import type { IResizeGroupProps } from './ResizeGroup.types'
@@ -303,8 +303,6 @@ export function getNextResizeGroupStateProvider(measurementCache = getMeasuremen
 const hiddenDivStyles = { position: 'fixed', visibility: 'hidden' }
 const hiddenParentStyles = { position: 'relative' }
 
-const nextResizeGroupStateProvider = getNextResizeGroupStateProvider()
-
 export const ResizeGroupBase = defineComponent({
   name: 'ResizeGroupBase',
 
@@ -326,6 +324,8 @@ export const ResizeGroupBase = defineComponent({
       className,
     } = toRefs(props)
 
+    const nextResizeGroupStateProvider = getNextResizeGroupStateProvider()
+
     const hasRenderedContent = ref(false)
     const measureContainer = ref(true)
     const dataNeedsMeasuring = ref(true)
@@ -342,7 +342,7 @@ export const ResizeGroupBase = defineComponent({
 
     watch(data, (value) => {
       state.value = Object.assign({}, nextResizeGroupStateProvider.getInitialResizeGroupState(value))
-    }, { immediate: true, deep: true })
+    }, { immediate: true })
 
     watch(() => state.value.dataToMeasure, (value) => {
       dataNeedsMeasuring.value = nextResizeGroupStateProvider.shouldRenderDataForMeasurement(value)
@@ -355,11 +355,15 @@ export const ResizeGroupBase = defineComponent({
       if (!value.dataToMeasure)
         return
       afterComponentRendered(direction.value)
-    }, { deep: true })
+    })
 
     const root = ref<HTMLDivElement | null>(null)
     const initialHiddenDiv = ref<HTMLDivElement | null>(null)
     const updateHiddenDiv = ref<HTMLDivElement | null>(null)
+
+    const refToMeasure = computed(() => !hasRenderedContent.value
+      ? initialHiddenDiv.value
+      : updateHiddenDiv.value)
 
     const onResize = () => {
       if (root.value)
@@ -379,15 +383,12 @@ export const ResizeGroupBase = defineComponent({
           props,
           state.value,
           () => {
-            const refToMeasure = !hasRenderedContent.value
-              ? initialHiddenDiv.value
-              : updateHiddenDiv.value
-            if (!refToMeasure)
+            if (!refToMeasure.value)
               return 0
 
             return (direction && direction === ResizeGroupDirection.vertical)
-              ? refToMeasure.scrollHeight
-              : refToMeasure.scrollWidth
+              ? refToMeasure.value.scrollHeight
+              : refToMeasure.value.scrollWidth
           },
           containerDimension,
         )
@@ -397,7 +398,7 @@ export const ResizeGroupBase = defineComponent({
     }
 
     const resizeObserver = new ResizeObserver(
-      () => debounce(window.requestAnimationFrame(onResize), RESIZE_DELAY, false),
+      debounce(onResize, RESIZE_DELAY, false),
     )
 
     onMounted(async () => {
@@ -423,7 +424,7 @@ export const ResizeGroupBase = defineComponent({
       },
       content: {
         ref: initialHiddenDiv,
-        style: isInitialMeasure.value ? hiddenDivStyles : undefined,
+        style: isInitialMeasure.value && hiddenDivStyles,
       },
     }))
 

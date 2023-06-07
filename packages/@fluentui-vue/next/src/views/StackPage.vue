@@ -2,7 +2,7 @@
 import { DefaultPalette } from '@fluentui-vue/theme'
 import { useId } from '@fluentui-vue/hooks'
 import { Stack, StackItem } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import type { IStackStyles, IStackTokens } from '@/components/Stack'
 
 // Styles definition
@@ -36,7 +36,7 @@ const clickableStackTokens: IStackTokens = {
 
 <template>
   <h1>Stack</h1>
-  <DocumentCard>
+  <DocSection>
     <h2>Basic Vertical Stack </h2>
 
     <Stack enable-scoped-selectors :tokens="containerStackTokens">
@@ -96,5 +96,5 @@ const clickableStackTokens: IStackTokens = {
     </Stack>
 
     <h2>Reversed Basic Vertical Stack</h2>
-  </DocumentCard>
+  </DocSection>
 </template>

@@ -2,7 +2,7 @@
 import { useId } from '@fluentui-vue/hooks'
 import { ref } from 'vue'
 import { CommandBar, Label } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import { TextField } from '@/components/TextField'
 
 const overflowProps: IButtonProps = { ariaLabel: 'More commands' }
@@ -143,7 +143,7 @@ const _farItems: ICommandBarItemProps[] = [
 
 <template>
   <h1>CommandBar</h1>
-  <DocumentCard>
+  <DocSection>
     <CommandBar
       :items="_items"
       :overflow-items="_overflowItems"
@@ -153,5 +153,5 @@ const _farItems: ICommandBarItemProps[] = [
       primary-group-aria-label="Email actions"
       far-items-group-aria-label="More actions"
     />
-  </DocumentCard>
+  </DocSection>
 </template>

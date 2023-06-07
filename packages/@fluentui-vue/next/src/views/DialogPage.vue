@@ -5,7 +5,7 @@ import { useId } from '@fluentui-vue/hooks'
 import { mergeStyles } from '@fluentui/merge-styles'
 import { ref } from 'vue'
 import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, Toggle } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const dialogStyles = { main: { maxWidth: 450 } }
 const dragOptions = {
@@ -48,7 +48,7 @@ function onDefaultButtonRef(el?: any) {
 
 <template>
   <h1>Dialog</h1>
-  <DocumentCard>
+  <DocSection>
     <Toggle label="Is draggable" :checked="isDraggable" @change="toggleIsDraggable" />
     <DefaultButton secondary-text="Opens the Sample Dialog" text="Open Dialog" @click="toggleHideDialog" />
     <label :id="labelId" :className="screenReaderOnly">
@@ -69,5 +69,5 @@ function onDefaultButtonRef(el?: any) {
         <DefaultButton :component-ref="onDefaultButtonRef" text="Don't send" @click="toggleHideDialog" />
       </DialogFooter>
     </Dialog>
-  </DocumentCard>
+  </DocSection>
 </template>

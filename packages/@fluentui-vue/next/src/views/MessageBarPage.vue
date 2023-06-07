@@ -2,7 +2,7 @@
 import { useId } from '@fluentui-vue/hooks'
 import { ref } from 'vue'
 import { Link, MessageBar, MessageBarType } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import { TextField } from '@/components/TextField'
 import { MessageBarButton } from '@/components/Button/MessageBarButton/MessageBarButton'
 
@@ -16,7 +16,7 @@ function onDismiss() {
 <template>
   <h1>MessageBar</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>MessageBar</h3>
@@ -60,5 +60,5 @@ function onDismiss() {
     <MessageBar :message-bar-type="MessageBarType.warning">
       I'm a MessageBar
     </MessageBar>
-  </DocumentCard>
+  </DocSection>
 </template>

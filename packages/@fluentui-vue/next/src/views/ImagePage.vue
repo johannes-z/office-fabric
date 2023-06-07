@@ -2,7 +2,7 @@
 import { useId } from '@fluentui-vue/hooks'
 import { ref } from 'vue'
 import { Image } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import type { IImageProps } from '@/components/Image'
 
 const imageProps: Partial<IImageProps> = {
@@ -14,7 +14,7 @@ const imageProps: Partial<IImageProps> = {
 
 <template>
   <h1>Image</h1>
-  <DocumentCard>
+  <DocSection>
     <p>
       With no <code>imageFit</code> property set, the <code>width</code> and <code>height</code> props control the size
       of the frame. Depending on which of those props is used, the image may scale to fit the frame.
@@ -44,5 +44,5 @@ const imageProps: Partial<IImageProps> = {
       :width="100"
       :height="100"
     />
-  </DocumentCard>
+  </DocSection>
 </template>

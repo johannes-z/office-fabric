@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IStackProps, IStackTokens } from '../components'
 import { Label, Spinner, Stack } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' }
 
@@ -23,7 +23,7 @@ const stackTokens: IStackTokens = {
 <template>
   <h1>Spinner</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Spinner sizes</h3>
@@ -71,5 +71,5 @@ const stackTokens: IStackTokens = {
         <Spinner label="Nope, still loading..." aria-live="assertive" label-position="left" />
       </div>
     </Stack>
-  </DocumentCard>
+  </DocSection>
 </template>

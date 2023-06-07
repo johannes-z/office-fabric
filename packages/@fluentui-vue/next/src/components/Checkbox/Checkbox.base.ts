@@ -1,6 +1,7 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { PropType } from 'vue'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { syncRefs } from '@vueuse/core'
 import { Label } from '../Label'
 import { Icon } from '../Icon'
 import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
@@ -14,14 +15,15 @@ const getClassNames = classNamesFunction<ICheckboxStyleProps, ICheckboxStyles>()
 export const CheckboxBase = defineComponent({
   name: 'CheckboxBase',
 
-  model: {
-    prop: 'checked',
-    event: 'input',
-  },
+  emits: [
+    'update:checked',
+    'update:modelValue',
+  ],
 
   props: {
     ...useStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
 
+    modelValue: { type: Boolean, default: false },
     checked: { type: Boolean, default: false },
     defaultChecked: { type: Boolean, default: false },
     indeterminate: { type: Boolean, default: false },
@@ -38,14 +40,20 @@ export const CheckboxBase = defineComponent({
     inputProps: { type: Object as () => any, default: undefined },
 
     checkmarkIconProps: { type: Object as () => any, default: undefined },
-
-    modelValue: { type: Boolean, default: false },
   },
 
   setup(props, { attrs, slots, emit, expose }) {
     const {
-      modelValue, defaultChecked, indeterminate, defaultIndeterminate,
-      theme, styles, className, disabled, boxSide,
+      checked,
+      defaultChecked,
+      modelValue,
+      indeterminate,
+      defaultIndeterminate,
+      theme,
+      styles,
+      className,
+      disabled,
+      boxSide,
       checkmarkIconProps,
       title,
       inputProps,
@@ -54,10 +62,10 @@ export const CheckboxBase = defineComponent({
 
     const id = computed(() => getId('Checkbox'))
 
-    const internalValue = ref(modelValue.value || defaultChecked.value)
+    const internalValue = ref(modelValue.value || checked.value || checked.value || defaultChecked.value)
     const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
 
-    watch(modelValue, (value) => {
+    watch(checked, (value) => {
       internalValue.value = value
     })
 
@@ -82,6 +90,7 @@ export const CheckboxBase = defineComponent({
       else {
         internalValue.value = !internalValue.value
       }
+      emit('update:checked', internalValue.value)
       emit('update:modelValue', internalValue.value)
     }
 
@@ -98,9 +107,9 @@ export const CheckboxBase = defineComponent({
         class: classNames.value.root,
       },
       input: {
+        ...attrs,
         class: classNames.value.input,
         id: id.value,
-        ...attrs,
         ...inputProps.value,
         disabled: disabled.value,
         type: 'checkbox',
@@ -115,7 +124,7 @@ export const CheckboxBase = defineComponent({
         class: classNames.value.checkbox,
       },
       checkmark: {
-        class: classNames.value.checkmark,
+        className: classNames.value.checkmark,
         iconName: 'CheckMark',
         ...checkmarkIconProps.value,
       },

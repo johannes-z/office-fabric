@@ -1,4 +1,4 @@
-import type { VNode } from 'vue'
+import { type VNode, computed, onBeforeMount, onBeforeUnmount, ref, toRefs } from 'vue'
 import { defineComponent, h } from 'vue'
 
 // import { ContextualMenu, DirectionalHint } from '../ContextualMenu'
@@ -10,6 +10,7 @@ import { getBaseButtonClassNames } from './Button.classNames'
 import { useBaseButtonProps } from './useBaseButton'
 import { asSlotProps, useStylingProps } from '@/utils'
 import { makeRouterProps } from '@/composables'
+import { useSlotHelpers } from '@/composables/useSlotHelpers'
 
 export const BaseButton = defineComponent({
   name: 'BaseButton',
@@ -19,6 +20,7 @@ export const BaseButton = defineComponent({
     ...useBaseButtonProps(),
     ...makeRouterProps(),
 
+    allowDisabledFocus: { type: Boolean, default: false },
     primaryDisabled: { type: Boolean, default: false },
 
     secondaryText: { type: String, default: undefined },
@@ -33,33 +35,26 @@ export const BaseButton = defineComponent({
     menuProps: { type: Object, default: undefined },
   },
 
-  data() {
-    return {
-      showMenu: false,
-    }
-  },
+  setup(props, { attrs, expose, slots }) {
+    const showMenu = ref(false)
+    const rootRef = ref<HTMLElement | null>(null)
 
-  created() {
-    window.addEventListener('resize', this.hideMenu)
-  },
+    const hideMenu = () => (showMenu.value = false)
+    const focus = () => (rootRef.value?.focus?.())
 
-  beforeUnmount() {
-    window.removeEventListener('resize', this.hideMenu)
-  },
+    expose({
+      focus,
+    })
 
-  methods: {
-    hideMenu() {
-      this.showMenu = false
-    },
-    focus() {
-      console.log(this.$refs)
-      console.log(this.$refs.root)
-      this.$refs.root?.focus()
-    },
-  },
+    onBeforeMount(() => {
+      window.addEventListener('resize', hideMenu)
+    })
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', hideMenu)
+    })
 
-  render(): VNode {
     const {
+      theme,
       styles,
       className,
       text,
@@ -76,77 +71,92 @@ export const BaseButton = defineComponent({
       to,
       exact,
       replace,
-    } = this
+      getClassNames,
+      allowDisabledFocus,
+    } = toRefs(props)
 
-    const isPrimaryButtonDisabled = disabled || primaryDisabled
+    const isPrimaryButtonDisabled = computed(() => disabled.value || primaryDisabled.value)
 
-    // State
-    const menuHidden = true
+    const menuHidden = ref(true)
 
-    const classNames = getBaseButtonClassNames(
-      null,
-      styles,
-      className || this.$attrs.class,
-      variantClassName,
-      iconProps && iconProps.className,
-      menuIconProps && menuIconProps.className,
-      isPrimaryButtonDisabled!,
-      !!menuProps,
-      checked!,
-      !menuHidden,
-      split,
-    )
+    const classNames = computed(() => getClassNames.value
+      ? getClassNames.value(
+        theme!,
+        className.value || attrs.class,
+        variantClassName.value!,
+        iconProps.value && iconProps.value.className,
+        menuIconProps.value && menuIconProps.value.className,
+        isPrimaryButtonDisabled.value!,
+        checked.value!,
+        !menuHidden.value,
+        !!menuProps.value,
+        split.value,
+        !!allowDisabledFocus.value,
+      )
+      : getBaseButtonClassNames(
+        null,
+        styles.value,
+        className.value || attrs.class,
+        variantClassName.value,
+        iconProps.value && iconProps.value.className,
+        menuIconProps.value && menuIconProps.value.className,
+        isPrimaryButtonDisabled.value!,
+        !!menuProps.value,
+        checked.value!,
+        !menuHidden.value,
+        split.value,
+      ))
 
-    const slotProps = asSlotProps({
+    const slotProps = computed(() => asSlotProps({
       root: {
-        ref: 'root',
-        href,
-        class: classNames.root,
+        ref: rootRef,
+        href: href.value,
+        class: classNames.value.root,
         onClick: (ev) => {
-          if (disabled)
+          if (disabled.value)
             return
-          this.showMenu = !this.showMenu
+          showMenu.value = !showMenu.value
           // this.$emit('click', ev)
         },
-        ...to && {
-          href: disabled ? undefined : href,
-          to: disabled ? undefined : to,
-          exact,
-          replace,
+        ...to.value && {
+          href: disabled.value ? undefined : href.value,
+          to: disabled.value ? undefined : to.value,
+          exact: exact.value,
+          replace: replace.value,
         },
       },
       flexContainer: {
-        class: classNames.flexContainer,
+        class: classNames.value.flexContainer,
       },
       textContainer: {
-        class: classNames.textContainer,
+        class: classNames.value.textContainer,
       },
       label: {
-        class: classNames.label,
+        class: classNames.value.label,
       },
       description: {
-        class: classNames.description,
+        class: classNames.value.description,
       },
-    })
+    }))
 
-    const renderAsAnchor: boolean = !isPrimaryButtonDisabled && !!href
-    const tag = renderAsAnchor ? (to ? RouterLink : 'a') : 'button'
+    const renderAsAnchor = computed(() => !isPrimaryButtonDisabled.value && !!href.value)
+    const RootElement = computed(() => renderAsAnchor.value ? (to.value ? RouterLink : 'a') : 'button')
 
-    const renderIcon = () => {
-      if (iconProps && (iconProps.iconName !== undefined || iconProps.imageProps)) {
-        const { className, imageProps, ...rest } = iconProps
+    const onRenderIcon = () => {
+      if (iconProps.value && (iconProps.value.iconName !== undefined || iconProps.value.imageProps)) {
+        const { className, imageProps, ...rest } = iconProps.value
 
         // If the styles prop is specified as part of iconProps, fall back to regular Icon as FontIcon and ImageIcon
         // do not have this prop.
-        if (iconProps.styles) {
+        if (iconProps.value.styles) {
           return h(Icon, {
-            class: [classNames.icon, className].filter(e => e).join(''),
-            props: iconProps,
+            class: [classNames.value.icon, className].filter(e => e).join(''),
+            props: iconProps.value,
           })
         }
-        if (iconProps.iconName) {
+        if (iconProps.value.iconName) {
           return h(FontIcon, {
-            class: [classNames.icon, className].filter(e => e).join(''),
+            class: [classNames.value.icon, className].filter(e => e).join(''),
             ...rest,
           })
         }
@@ -163,38 +173,84 @@ export const BaseButton = defineComponent({
         // directionalHint: DirectionalHint.bottomLeftEdge,
         ...menuProps,
         className: menuProps.className,
-        target: this.$refs.root,
+        target: rootRef.value,
         onDismiss: (ev) => {
-          this.showMenu = false
+          showMenu.value = false
         },
       }
     }
 
     const onRenderMenuIcon = (): VNode | null => {
       return h(FontIcon, {
-        class: classNames.menuIcon,
+        class: classNames.value.menuIcon,
         iconName: 'ChevronDown',
-        ...menuIconProps,
+        ...menuIconProps.value,
       })
     }
+
+    const {
+      slotContent,
+      isText,
+      renderSlot,
+    } = useSlotHelpers(slots, 'default')
 
     const onRenderMenu = (menuProps): VNode | null => {
       return h(ContextualMenu, menuProps)
     }
 
-    const hasContent = this.$slots.default || text
+    const onRenderTextContents = () => {
+      const children = () => [
+        onRenderText(),
+        onRenderDescription(),
+      ]
+      if (text.value || isText.value || secondaryText.value)
+        return h('span', slotProps.value.textContainer, children())
+
+      return children()
+    }
+
+    const onRenderText = () => {
+      let text: any = props.text
+
+      if (text === undefined && isText.value)
+        text = slotContent.value
+
+      if (props.text == null && !isText.value && !slots.text)
+        return null
+
+      return h('span', slotProps.value.label, slots.text?.({}) || text)
+    }
+
+    const onRenderDescription = () => {
+      return secondaryText.value
+        ? h('span', slotProps.value.description, slots.description?.({}) || secondaryText.value)
+        : null
+    }
+
+    const onRenderChildren = () => {
+      if (isText.value)
+        return null
+
+      return renderSlot()
+    }
 
     const $tagContent = () => [
-      h('span', slotProps.flexContainer, [
-        renderIcon(),
-        hasContent && h('span', slotProps.textContainer, [
-          h('span', slotProps.label, this.$slots.default?.({}) || text),
-          secondaryText && h('span', slotProps.description, secondaryText),
-        ]),
-        (menuProps || menuIconProps) && (this.$slots.renderMenuIcon || onRenderMenuIcon)(),
-        menuProps && !menuProps.doNotLayer && this.showMenu && onRenderMenu(getMenuProps(menuProps)),
+      h('span', slotProps.value.flexContainer, [
+        // onRenderIcon
+        onRenderIcon(),
+        // onRenderTextContents
+        onRenderTextContents(),
+        // onRenderChildren
+        onRenderChildren(),
+        // onRenderMenuIcon
+        (menuProps.value || menuIconProps.value) && (slots.renderMenuIcon || onRenderMenuIcon)(),
+        // onRenderMenu
+        menuProps.value && !menuProps.value.doNotLayer && showMenu.value && onRenderMenu(getMenuProps(menuProps.value)),
       ]),
     ]
-    return h(tag, slotProps.root, tag === RouterLink ? $tagContent : $tagContent())
+    return () => h(RootElement.value, slotProps.value.root, RootElement.value === RouterLink
+      ? $tagContent
+      : $tagContent(),
+    )
   },
 })

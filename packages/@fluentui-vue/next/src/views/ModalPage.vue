@@ -2,7 +2,7 @@
 import { FontWeights, getTheme, mergeStyleSets } from '@fluentui-vue/style-utilities'
 import { ref } from 'vue'
 import { IIconProps, Modal } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 import { DefaultButton, IconButton } from '../components'
 
@@ -72,7 +72,7 @@ const iconButtonStyles: Partial<IButtonStyles> = {
 
 <template>
   <h1>Modal</h1>
-  <DocumentCard>
+  <DocSection>
     <h2>Modal</h2>
 
       <DefaultButton @click="showModal" text="Open Modal" />
@@ -137,5 +137,5 @@ const iconButtonStyles: Partial<IButtonStyles> = {
           </p>
         </div>
       </Modal>
-  </DocumentCard>
+  </DocSection>
 </template>

@@ -2,7 +2,7 @@
 import { type Ref, ref } from 'vue'
 import type { IBreadcrumbItem } from '../components'
 import { Breadcrumb, Label } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 import type { ILabelStyles } from '@/components/Label/Label.types'
 
 const labelStyles: Partial<ILabelStyles> = {
@@ -32,10 +32,14 @@ function _onBreadcrumbItemClicked(ev: MouseEvent, item: IBreadcrumbItem): void {
 <template>
   <h1>Breadcrumb</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <Label :styles="labelStyles">With items rendered as buttons</Label>
-    <Breadcrumb :items="items" router />
-  </DocumentCard>
+    <Breadcrumb :items="items" />
+    <Label :styles="labelStyles">With maxDisplayedItems set to 3</Label>
+    <Breadcrumb :items="items" :max-displayed-items="3" />
+    <Label :styles="labelStyles">With maxDisplayedItems set to 2 and overflowIndex set to 1 (second element)</Label>
+    <Breadcrumb :items="items" :max-displayed-items="2" :overflow-index="1" />
+  </DocSection>
 </template>

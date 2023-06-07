@@ -54,20 +54,18 @@ export const PersonaBase = defineComponent({
       size: size.value,
     }))
 
-    const $details = (!hidePersonaDetails.value || (size.value === PersonaSize.size8 || size.value === PersonaSize.size10 || size.value === PersonaSize.tiny)) && h('div', { class: classNames.value.details }, [
-      h('div', { class: classNames.value.primaryText }, text.value),
-      h('div', { class: classNames.value.secondaryText }, secondaryText.value),
-      h('div', { class: classNames.value.tertiaryText }, tertiaryText.value),
-      h('div', { class: classNames.value.optionalText }, optionalText.value),
-      slots.default?.(),
-    ])
-
     return () => h('div', {
       class: classNames.value.root,
       style: coinSize.value ? { height: `${coinSize.value}px`, minWidth: `${coinSize.value}px` } : {},
     }, [
       h(PersonaCoin, props),
-      $details,
+      (!hidePersonaDetails.value || (size.value === PersonaSize.size8 || size.value === PersonaSize.size10 || size.value === PersonaSize.tiny)) && h('div', { class: classNames.value.details }, [
+        h('div', { class: classNames.value.primaryText }, text.value),
+        h('div', { class: classNames.value.secondaryText }, secondaryText.value),
+        h('div', { class: classNames.value.tertiaryText }, tertiaryText.value),
+        h('div', { class: classNames.value.optionalText }, optionalText.value),
+        slots.default?.(),
+      ]),
     ])
   },
 

@@ -1,4 +1,4 @@
-import * as path from 'path'
+import * as path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -38,6 +38,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
         'vue',
+        '@vueuse/core',
         '@fluentui-vue/file-type-icons',
         '@fluentui-vue/hooks',
         '@fluentui-vue/icons',

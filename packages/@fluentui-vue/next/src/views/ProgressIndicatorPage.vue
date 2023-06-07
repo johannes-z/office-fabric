@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
 import { ProgressIndicator } from '../components'
-import DocumentCard from './components/DocumentCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const intervalDelay = 100
 const intervalIncrement = 0.01
@@ -18,7 +18,7 @@ onBeforeUnmount(() => clearInterval(id))
 <template>
   <h1>ProgressIndicator</h1>
 
-  <DocumentCard>
+  <DocSection>
     <h2>Usage</h2>
 
     <h3>Default ProgressIndicator</h3>
@@ -27,5 +27,5 @@ onBeforeUnmount(() => clearInterval(id))
     <h3>Indeterminate ProgressIndicator</h3>
     <ProgressIndicator label="Example title" description="Example description" />
     <ProgressIndicator label="Example title" description="Example description" :bar-height="5" />
-  </DocumentCard>
+  </DocSection>
 </template>

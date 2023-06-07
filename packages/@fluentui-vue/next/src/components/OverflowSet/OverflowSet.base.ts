@@ -21,8 +21,16 @@ export const OverflowSetBase = defineFunctionalComponent({
   },
 
   render(props, { attrs, slots }) {
-    const { styles, className, vertical } = props
-    const { items, overflowItems, overflowSide = 'end', role = 'group' } = props
+    const {
+      styles,
+      className,
+      vertical,
+      items,
+      overflowItems,
+      overflowSide = 'end',
+      role = 'group',
+    } = props
+
     const classNames = getClassNames(styles, {
       className,
       vertical,
@@ -51,16 +59,13 @@ export const OverflowSetBase = defineFunctionalComponent({
       default: () => [
         // overflowbutton
         overflowSide === 'start' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+        // items
         items && items.map((item, index) => h('div', {
           ...slotProps.item,
-          ...item.onClick
-            ? { onClick: item.onClick }
-            : {},
-        }, {
-          default: () => slots.item?.({ item, index }),
-        })),
-        overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
+          onClick: item.onClick,
+        }, slots.item?.({ item, index }))),
         // overflowbutton
+        overflowSide === 'end' && showOverflow && h(OverflowButton, slotProps.overflowButton, slots),
       ],
     })
   },

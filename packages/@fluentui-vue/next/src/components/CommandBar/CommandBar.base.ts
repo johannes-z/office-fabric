@@ -1,12 +1,12 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import type { VNode } from 'vue'
+import { type VNode, computed, ref, toRefs, watch } from 'vue'
 import { defineComponent, h } from 'vue'
 import { CommandBarButton } from '../Button'
 import { OverflowSet } from '../OverflowSet'
 import { ResizeGroup } from '../ResizeGroup'
 import { getCommandButtonStyles } from './CommandBar.styles'
 import type { ICommandBarItemProps, ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
-import { useStylingProps } from '@/utils/'
+import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ICommandBarStyleProps, ICommandBarStyles>()
 
@@ -47,56 +47,22 @@ export const CommandBarBase = defineComponent({
     overflowButtonProps: { type: Object, default: () => ({}) },
   },
 
-  data() {
-    return {
-      dataToRender: null,
-    }
-  },
+  setup(props, { attrs, slots }) {
+    const {
+      theme,
+      styles,
+      items,
+      farItems,
+      overflowItems,
+      shiftOnReduce,
+      overflowButtonProps,
+    } = toRefs(props)
 
-  computed: {
-    classNames(): any {
-      const { styles, theme } = this
-      return getClassNames(styles, {
-        theme,
-      })
-    },
-
-    commandBarData(): ICommandBarData {
-      const {
-        items,
-        overflowItems,
-        farItems,
-      } = this
-      return {
-        primaryItems: [...items],
-        overflowItems: [...overflowItems!],
-        minimumOverflowItems: [...overflowItems!].length, // for tracking
-        farItems,
-        cacheKey: this.computeCacheKey({
-          primaryItems: [...items],
-          overflow: overflowItems && overflowItems.length > 0,
-          farItems,
-        }),
-      }
-    },
-  },
-
-  watch: {
-    commandBarData: {
-      deep: true,
-      immediate: true,
-      handler(val) {
-        this.dataToRender = val
-      },
-    },
-  },
-
-  methods: {
-    computeCacheKey(data: {
+    const computeCacheKey = (data: {
       primaryItems?: ICommandBarItemProps[]
       overflow?: boolean
       farItems?: ICommandBarItemProps[]
-    }): string {
+    }) => {
       const { primaryItems, overflow, farItems } = data
       const returnKey = (acc: string, current: ICommandBarItemProps): string => {
         const { cacheKey = current.key } = current
@@ -108,32 +74,32 @@ export const CommandBarBase = defineComponent({
       const farKey = farItems && farItems.reduce(returnKey, '')
 
       return [primaryKey, overflowKey, farKey].join('')
-    },
-    onReduceData(data: any): any | undefined {
-      const { shiftOnReduce } = this
+    }
+
+    const onReduceData = (data: any) => {
       let { primaryItems, overflowItems, cacheKey } = data
       const { farItems } = data
 
       // Use first item if shiftOnReduce, otherwise use last item
-      const movedItem = primaryItems[shiftOnReduce ? 0 : primaryItems.length - 1]
+      const movedItem = primaryItems[shiftOnReduce.value ? 0 : primaryItems.length - 1]
 
       if (movedItem !== undefined) {
         movedItem.renderedInOverflow = true
 
         overflowItems = [movedItem, ...overflowItems]
-        primaryItems = shiftOnReduce ? primaryItems.slice(1) : primaryItems.slice(0, -1)
+        primaryItems = shiftOnReduce.value ? primaryItems.slice(1) : primaryItems.slice(0, -1)
 
         const newData = { ...data, primaryItems, overflowItems }
-        cacheKey = this.computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
+        cacheKey = computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
 
         newData.cacheKey = cacheKey
         return newData
       }
 
       return undefined
-    },
-    onGrowData(data: any): any | undefined {
-      const { shiftOnReduce } = this
+    }
+
+    const onGrowData = (data: any) => {
       const { minimumOverflowItems } = data
       let { primaryItems, overflowItems, cacheKey } = data
       const { farItems } = data
@@ -145,19 +111,19 @@ export const CommandBarBase = defineComponent({
 
         overflowItems = overflowItems.slice(1)
         // if shiftOnReduce, movedItem goes first, otherwise, last.
-        primaryItems = shiftOnReduce ? [movedItem, ...primaryItems] : [...primaryItems, movedItem]
+        primaryItems = shiftOnReduce.value ? [movedItem, ...primaryItems] : [...primaryItems, movedItem]
 
         const newData = { ...data, primaryItems, overflowItems }
-        cacheKey = this.computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
+        cacheKey = computeCacheKey({ primaryItems, overflow: overflowItems.length > 0, farItems })
 
         newData.cacheKey = cacheKey
         return newData
       }
 
       return undefined
-    },
+    }
 
-    onRenderItem(item: any): VNode {
+    const onRenderItem = (item: any) => {
       const commandButtonProps: ICommandBarItemProps = {
         allowDisabledFocus: true,
         role: 'menuitem',
@@ -171,29 +137,61 @@ export const CommandBarBase = defineComponent({
         class: ['ms-CommandBarItem-link', item.className],
         ...commandButtonProps,
       }, () => item.text)
-    },
-  },
+    }
 
-  render(): VNode {
-    const {
-      classNames,
-      onRenderItem,
-    } = this
-    const data = this.dataToRender
+    const dataToRender = ref(null)
 
-    return h(ResizeGroup, {
-      data,
-      onReduceData: this.onReduceData,
-      onGrowData: this.onGrowData,
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+    }))
+
+    const commandBarData = computed(() => ({
+      primaryItems: [...items.value],
+      overflowItems: [...overflowItems.value!],
+      minimumOverflowItems: [...overflowItems.value!].length, // for tracking
+      farItems: farItems.value,
+      cacheKey: computeCacheKey({
+        primaryItems: [...items.value],
+        overflow: overflowItems.value && overflowItems.value.length > 0,
+        farItems: farItems.value,
+      }),
+    }))
+
+    watch(commandBarData, value => (dataToRender.value = value), { deep: true, immediate: true })
+
+    const overflowRef = ref(null)
+
+    const slotProps = computed(() => asSlotProps({
+      root: {
+        ...attrs,
+        class: classNames.value.root,
+      },
+      primarySet: {
+        ref: overflowRef,
+        class: classNames.value.primarySet,
+      },
+      secondarySet: {
+        class: classNames.value.secondarySet,
+      },
+      overflowButton: {
+        role: 'menuitem',
+        ...overflowButtonProps.value,
+        styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.value.styles },
+        className: ['ms-CommandBar-overflowButton', overflowButtonProps.value.className].join(' '),
+        menuIconProps: { iconName: 'More', ...overflowButtonProps.value.menuIconProps },
+      },
+    }))
+
+    return () => h(ResizeGroup, {
+      data: dataToRender.value,
+      onReduceData,
+      onGrowData,
     }, {
       default: data => [
-        h('div', {
-          class: classNames.root,
-        }, {
+        h('div', slotProps.value.root, {
           default: () => [
             h(OverflowSet, {
-              ref: 'overflow',
-              class: classNames.primarySet,
+              ...slotProps.value.primarySet,
               items: data.primaryItems.map(i => ({
                 ...i,
                 text: !i.iconOnly ? i.text : undefined,
@@ -201,8 +199,8 @@ export const CommandBarBase = defineComponent({
               overflowItems: data.overflowItems.length ? data.overflowItems : undefined,
             }, {
               item: ({ item }) => {
-                if (item.key in this.$slots) {
-                  return this.$slots[item.key]!({
+                if (item.key in slots) {
+                  return slots[item.key]!({
                     item,
                     render: onRenderItem,
                   })
@@ -210,25 +208,22 @@ export const CommandBarBase = defineComponent({
                 return onRenderItem(item)
               },
               overflow: (overflowItems) => {
-                const { overflowButtonProps = {} } = this
-
                 const combinedOverflowItems: any[] = [
-                  ...(overflowButtonProps.menuProps ? overflowButtonProps.menuProps.items : []),
+                  ...(overflowButtonProps.value.menuProps ? overflowButtonProps.value.menuProps.items : []),
                   ...overflowItems,
                 ]
 
                 return h(CommandBarButton, {
-                  role: 'menuitem',
-                  ...overflowButtonProps,
-                  styles: { menuIcon: { fontSize: '17px' }, ...overflowButtonProps.styles },
-                  className: ['ms-CommandBar-overflowButton', overflowButtonProps.className].join(' '),
-                  menuProps: { ...overflowButtonProps.menuProps, items: combinedOverflowItems },
-                  menuIconProps: { iconName: 'More', ...overflowButtonProps.menuIconProps },
+                  ...slotProps.value.overflowButton,
+                  menuProps: {
+                    ...overflowButtonProps.value.menuProps,
+                    items: combinedOverflowItems,
+                  },
                 })
               },
             }),
             h(OverflowSet, {
-              class: classNames.secondarySet,
+              ...slotProps.value.secondarySet,
               items: data.farItems.map(i => ({
                 ...i,
                 text: !i.iconOnly ? i.text : undefined,
