@@ -1,7 +1,7 @@
 import type { ITheme } from '@fluentui-vue/style-utilities'
 import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
-import type { PropType } from 'vue'
+import { type PropType, ref } from 'vue'
 
 export function useStylingProps<TStyleProps = any, TStyle extends IStyleSet<TStyle> = any>() {
   return {
@@ -14,4 +14,4 @@ export function useStylingProps<TStyleProps = any, TStyle extends IStyleSet<TSty
   }
 }
 
-export const StylingPropKeys = ['styles', 'theme', 'className']
+export const StylingPropKeys = Object.keys(useStylingProps())

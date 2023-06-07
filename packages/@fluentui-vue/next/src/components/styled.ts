@@ -3,6 +3,14 @@ import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { concatStyleSetsWithProps } from '@fluentui/merge-styles'
 import { defineComponent, h, onMounted, ref } from 'vue'
 
+export type StyleFunction<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> = IStyleFunctionOrObject<TStyleProps, TStyleSet> & {
+  /** Cache for all style functions. */
+  __cachedInputs__: (IStyleFunctionOrObject<TStyleProps, TStyleSet> | undefined)[]
+
+  /** True if no styles prop or styles from Customizer is passed to wrapped component. */
+  __noStyleOverride__: boolean
+}
+
 export function styled<
 // TComponentProps extends ComponentPropsOptions,
 TStyleProps,
@@ -12,8 +20,6 @@ TRef = unknown,
   Component: any,
   baseStyles?: IStyleFunctionOrObject<TStyleProps, TStyleSet>,
 ) {
-  let _styles: any
-
   const _theme = ref(getTheme())
 
   const StyledComponent = defineComponent({
@@ -24,9 +30,19 @@ TRef = unknown,
     props: [...new Set([...Array.isArray(Component.props) ? Component.props : Object.keys(Component.props ?? {}), 'styles', 'theme', 'className', 'componentRef'])],
 
     setup(props, { attrs, slots }) {
-      if (!_styles || props.styles !== _styles.__cachedInputs__[1] || !!props.styles) {
-        _styles = (styleProps: any) => concatStyleSetsWithProps(styleProps, baseStyles, props.styles)
-        _styles.__cachedInputs__ = [baseStyles, props.styles]
+      const styles = ref<StyleFunction<TStyleProps, TStyleSet>>()
+
+      if (!styles.value || props.styles !== styles.value.__cachedInputs__[1] || !!props.styles) {
+        const concatenatedStyles: IStyleFunctionOrObject<TStyleProps, TStyleSet> = (styleProps: TStyleProps) =>
+          concatStyleSetsWithProps(styleProps, baseStyles, props.styles)
+
+        ;(concatenatedStyles as StyleFunction<TStyleProps, TStyleSet>).__cachedInputs__ = [
+          baseStyles,
+          props.styles,
+        ]
+        ;(concatenatedStyles as StyleFunction<TStyleProps, TStyleSet>).__noStyleOverride__ = !props.styles
+
+        styles.value = concatenatedStyles as StyleFunction<TStyleProps, TStyleSet>
       }
 
       const componentRef = ref(null)
@@ -40,7 +56,7 @@ TRef = unknown,
         ...props,
         theme: props.theme ?? _theme.value,
         className: props.className || attrs.class,
-        styles: _styles,
+        styles: styles.value,
       }, slots)
     },
   })

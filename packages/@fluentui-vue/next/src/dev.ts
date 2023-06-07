@@ -1,6 +1,6 @@
 import { initializeFileTypeIcons } from '@fluentui-vue/file-type-icons'
 import { initializeIcons } from '@fluentui-vue/icons'
-import { createApp, defineComponent, h } from 'vue'
+import { createApp } from 'vue'
 
 import router from './router'
 
