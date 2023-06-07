@@ -1,6 +1,7 @@
 <script setup lang="tsx">
 import { registerIcons } from '@fluentui-vue/style-utilities'
 import { mergeStyleSets, mergeStyles } from '@fluentui/merge-styles'
+import { FileIconType, getFileTypeIconProps } from '@fluentui-vue/file-type-icons'
 import { FontIcon, Icon } from '../components'
 import DocSection from './components/DocSection.vue'
 
@@ -53,7 +54,7 @@ registerIcons({
   },
 })
 
-const BorderBlindsIcon = (props) => {
+function BorderBlindsIcon(props) {
   const { color1 = 'red', color2 = 'green', color3 = 'blue' } = props
 
   // FontIcon is an optimized variant of standard Icon.
@@ -116,5 +117,17 @@ const yammerClassName = mergeStyles(iconClass, {
       :class-name="yammerClassName"
     />
     <BorderBlindsIcon color3="pink" />
+
+    <h2>File Type Icons </h2>
+    <h3>FileIconTypes</h3>
+    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.folder, size: 48, imageFileType: 'svg' })" />
+    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.listItem, size: 48, imageFileType: 'svg' })" />
+    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.picturesFolder, size: 48, imageFileType: 'svg' })" />
+    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.desktopFolder, size: 48, imageFileType: 'svg' })" />
+
+    <h3>Extension Icons</h3>
+    <Icon v-bind="getFileTypeIconProps({ extension: 'docx', size: 48, imageFileType: 'svg' })" />
+    <Icon v-bind="getFileTypeIconProps({ extension: 'xlsx', size: 48, imageFileType: 'svg' })" />
+    <Icon v-bind="getFileTypeIconProps({ extension: 'pptx', size: 48, imageFileType: 'svg' })" />
   </DocSection>
 </template>
