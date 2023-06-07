@@ -18,8 +18,8 @@
   "dependencies": {
     "@fluentui-vue/theme": "workspace:^1.0.1",
     "@fluentui-vue/utilities": "workspace:^1.0.2",
-    "@fluentui/merge-styles": "^8.5.10",
-    "@microsoft/load-themed-styles": "^2.0.39",
-    "tslib": "^2.5.0"
+    "@fluentui/merge-styles": "^8.5.12",
+    "@microsoft/load-themed-styles": "^2.0.47",
+    "tslib": "^2.5.3"
   }
 }

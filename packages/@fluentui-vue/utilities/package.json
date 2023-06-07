@@ -15,8 +15,8 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui/dom-utilities": "^2.2.9",
-    "@fluentui/merge-styles": "^8.5.10",
-    "tslib": "^2.5.0"
+    "@fluentui/dom-utilities": "^2.2.11",
+    "@fluentui/merge-styles": "^8.5.12",
+    "tslib": "^2.5.3"
   }
 }

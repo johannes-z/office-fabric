@@ -24,6 +24,6 @@
     "@fluentui-vue/style-utilities": "workspace:^1.1.0"
   },
   "devDependencies": {
-    "vue": "^2.7.0"
+    "vue": "^2.7.14"
   }
 }
