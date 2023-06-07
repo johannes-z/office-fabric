@@ -1,14 +1,15 @@
 import { HighContrastSelector, getFocusStyle, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { DefaultFontStyles, Palette, SemanticColors } from '@fluentui-vue/theme'
+import { DefaultFontStyles, type ITheme, Palette, SemanticColors } from '@fluentui-vue/theme'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 import { ButtonGlobalClassNames } from '../Button.classNames'
 import { primaryStyles, standardStyles } from '../ButtonThemes'
+import type { IButtonStyles } from '../Button.types'
 
 export const getStyles = memoizeFunction(
-  (customStyles?: IButtonStyles, focusInset?: string, focusColor?: string): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles()
+  (theme: ITheme, customStyles?: IButtonStyles, focusInset?: string, focusColor?: string): IButtonStyles => {
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
     // const baseSplitButtonStyles: IButtonStyles = getSplitButtonStyles()
 
     const commandButtonHighContrastFocus = {

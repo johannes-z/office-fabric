@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, useStylingProps } from '@/utils'
 
 export const PrimaryButton = defineComponent({
 

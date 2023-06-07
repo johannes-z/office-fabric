@@ -1,4 +1,4 @@
-import { computed, defineComponent, h, onMounted, ref } from 'vue'
+import { computed, defineComponent, h, onMounted, ref, watch } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './DefaultButton.styles'
@@ -26,7 +26,7 @@ export const DefaultButton = defineComponent({
         ...attrs,
         ...props,
         variantClassName: props.primary ? 'ms-Button--primary' : 'ms-Button--default',
-        styles: getStyles(props.styles, props.primary),
+        styles: getStyles(props.theme, props.styles, props.primary),
         ref: componentRef,
       },
     }))

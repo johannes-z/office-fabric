@@ -26,7 +26,7 @@ export const CommandBarButton = defineComponent({
         ...attrs,
         ...props,
         variantClassName: 'ms-Button--commandBar',
-        styles: getStyles(styles.value),
+        styles: getStyles(props.theme, styles.value),
         ref: componentRef,
       },
     }))

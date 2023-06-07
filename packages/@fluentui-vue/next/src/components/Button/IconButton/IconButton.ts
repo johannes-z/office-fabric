@@ -25,7 +25,7 @@ export const IconButton = defineComponent({
         ...attrs,
         ...props,
         variantClassName: 'ms-Button--icon',
-        styles: getStyles(props.styles),
+        styles: getStyles(props.theme, props.styles),
         ref: componentRef,
       },
     }))

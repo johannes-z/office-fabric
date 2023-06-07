@@ -1,13 +1,14 @@
-import { getHighContrastNoAdjustStyle, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import { memoizeFunction } from '@fluentui-vue/utilities'
-import { DefaultFontStyles, FontWeights, Palette } from '@fluentui-vue/theme'
+import { DefaultFontStyles, FontWeights, type ITheme, Palette } from '@fluentui-vue/theme'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 import { primaryStyles, standardStyles } from '../ButtonThemes'
+import type { IButtonStyles } from '../Button.types'
 
 export const getStyles = memoizeFunction(
-  (customStyles?: IButtonStyles, primary?: boolean): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles()
+  (theme: ITheme, customStyles?: IButtonStyles, primary?: boolean): IButtonStyles => {
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
     // const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme)
     const compoundButtonStyles: IButtonStyles = {
       root: {

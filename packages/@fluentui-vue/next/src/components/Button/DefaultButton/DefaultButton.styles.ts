@@ -1,4 +1,4 @@
-import { FontWeights } from '@fluentui-vue/theme'
+import { FontWeights, type ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
@@ -9,8 +9,8 @@ const DEFAULT_BUTTON_HEIGHT = '32px'
 const DEFAULT_BUTTON_MIN_WIDTH = '80px'
 
 export const getStyles = memoizeFunction(
-  (customStyles?: IButtonStyles, primary?: boolean): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles()
+  (theme: ITheme, customStyles?: IButtonStyles, primary?: boolean): IButtonStyles => {
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
     // const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme)
     const defaultButtonStyles: IButtonStyles = {
       root: {

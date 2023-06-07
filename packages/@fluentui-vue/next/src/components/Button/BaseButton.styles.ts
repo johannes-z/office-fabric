@@ -1,13 +1,14 @@
 import { HighContrastSelector, getFocusStyle, hiddenContentStyle } from '@fluentui-vue/style-utilities'
-import { DefaultEffects, DefaultFontStyles, SemanticColors } from '@fluentui-vue/theme'
+import { DefaultEffects, DefaultFontStyles, type ITheme, SemanticColors } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import type { IRawStyle } from '@fluentui/merge-styles'
+import type { IButtonStyles } from './Button.types'
 
 const noOutline: IRawStyle = {
   outline: 0,
 }
 
-const iconStyle = (fontSize?: string | number): IRawStyle => {
+function iconStyle(fontSize?: string | number): IRawStyle {
   return {
     fontSize,
     margin: '0 4px',
@@ -23,104 +24,104 @@ const iconStyle = (fontSize?: string | number): IRawStyle => {
  * helper, it should have values for all class names in the interface. This let `mergeRules` optimize
  * mixing class names together.
  */
-export const getStyles = memoizeFunction(
-  (): IButtonStyles => {
-    const border = SemanticColors.buttonBorder
-    const disabledBackground = SemanticColors.disabledBackground
-    const disabledText = SemanticColors.disabledText
-    const buttonHighContrastFocus = {
-      left: -2,
-      top: -2,
-      bottom: -2,
-      right: -2,
-      outlineColor: 'ButtonText',
-    }
+export const getStyles = memoizeFunction((theme: ITheme): IButtonStyles => {
+  const { semanticColors, effects, fonts } = theme
 
-    return {
-      root: [
-        // getFocusStyle(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
-        DefaultFontStyles.medium,
-        {
-          boxSizing: 'border-box',
-          border: `1px solid ${border}`,
-          userSelect: 'none',
-          display: 'inline-block',
-          textDecoration: 'none',
-          textAlign: 'center',
-          cursor: 'pointer',
-          padding: '0 16px',
-          borderRadius: DefaultEffects.roundedCorner2,
+  const border = semanticColors.buttonBorder
+  const disabledBackground = semanticColors.disabledBackground
+  const disabledText = semanticColors.disabledText
+  const buttonHighContrastFocus = {
+    left: -2,
+    top: -2,
+    bottom: -2,
+    right: -2,
+    outlineColor: 'ButtonText',
+  }
 
-          selectors: {
-            // IE11 workaround for preventing shift of child elements of a button when active.
-            ':active > *': {
-              position: 'relative',
-              left: 0,
-              top: 0,
-            },
-          },
-        },
-      ],
+  return {
+    root: [
+      getFocusStyle(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
+      theme.fonts.medium,
+      {
+        border: `1px solid ${border}`,
+        borderRadius: effects.roundedCorner2,
+        boxSizing: 'border-box',
+        cursor: 'pointer',
+        display: 'inline-block',
+        padding: '0 16px',
+        textDecoration: 'none',
+        textAlign: 'center',
+        userSelect: 'none',
 
-      rootDisabled: [
-        // getFocusStyle(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
-        {
-          backgroundColor: disabledBackground,
-          borderColor: disabledBackground,
-          color: disabledText,
-          cursor: 'default',
-          selectors: {
-            ':hover': noOutline,
-            ':focus': noOutline,
-          },
-        },
-      ],
-
-      iconDisabled: {
-        color: disabledText,
         selectors: {
-          [HighContrastSelector]: {
-            color: 'GrayText',
+          // IE11 workaround for preventing shift of child elements of a button when active.
+          ':active > span': {
+            position: 'relative',
+            left: 0,
+            top: 0,
           },
         },
       },
+    ],
 
-      menuIconDisabled: {
+    rootDisabled: [
+      getFocusStyle(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
+      {
+        backgroundColor: disabledBackground,
+        borderColor: disabledBackground,
         color: disabledText,
+        cursor: 'default',
         selectors: {
-          [HighContrastSelector]: {
-            color: 'GrayText',
-          },
+          ':hover': noOutline,
+          ':focus': noOutline,
         },
       },
+    ],
 
-      flexContainer: {
-        display: 'flex',
-        height: '100%',
-        flexWrap: 'nowrap',
-        justifyContent: 'center',
-        alignItems: 'center',
+    iconDisabled: {
+      color: disabledText,
+      selectors: {
+        [HighContrastSelector]: {
+          color: 'GrayText',
+        },
       },
-      description: {
-        display: 'block',
+    },
+
+    menuIconDisabled: {
+      color: disabledText,
+      selectors: {
+        [HighContrastSelector]: {
+          color: 'GrayText',
+        },
       },
+    },
 
-      textContainer: {
-        flexGrow: 1,
-        display: 'block',
-      },
+    flexContainer: {
+      display: 'flex',
+      height: '100%',
+      flexWrap: 'nowrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    description: {
+      display: 'block',
+    },
 
-      icon: iconStyle(DefaultFontStyles.mediumPlus.fontSize),
+    textContainer: {
+      flexGrow: 1,
+      display: 'block',
+    },
 
-      menuIcon: iconStyle(DefaultFontStyles.small.fontSize),
+    icon: iconStyle(fonts.mediumPlus.fontSize),
 
-      label: {
-        margin: '0 4px',
-        lineHeight: '100%',
-        display: 'block',
-      },
+    menuIcon: iconStyle(fonts.small.fontSize),
 
-      screenReaderText: hiddenContentStyle,
-    }
-  },
-)
+    label: {
+      margin: '0 4px',
+      lineHeight: '100%',
+      display: 'block',
+    },
+
+    screenReaderText: hiddenContentStyle,
+  }
+})

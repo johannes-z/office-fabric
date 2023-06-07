@@ -1,15 +1,15 @@
-import { Palette } from '@fluentui-vue/theme'
+import { type ITheme, Palette } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
-import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 import { HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
 
 const DEFAULT_BUTTON_HEIGHT = '40px'
 const DEFAULT_PADDING = '0 4px'
 
 export const getStyles = memoizeFunction(
-  (customStyles?: any): any => {
-    const baseButtonStyles: any = getBaseButtonStyles()
+  (theme: ITheme, customStyles?: any): any => {
+    const baseButtonStyles: any = getBaseButtonStyles(theme)
     const actionButtonStyles: any = {
       root: {
         padding: DEFAULT_PADDING,

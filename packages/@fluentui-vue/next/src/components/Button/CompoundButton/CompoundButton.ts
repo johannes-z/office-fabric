@@ -27,7 +27,7 @@ export const CompoundButton = defineComponent({
         ...attrs,
         ...props,
         variantClassName: primary.value ? 'ms-Button--compoundPrimary' : 'ms-Button--compound',
-        styles: getStyles(styles.value, primary.value),
+        styles: getStyles(props.theme, styles.value, primary.value),
         ref: componentRef,
       },
     }))

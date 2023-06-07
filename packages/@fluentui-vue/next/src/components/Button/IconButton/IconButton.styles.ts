@@ -1,12 +1,13 @@
-import { Palette, SemanticColors } from '@fluentui-vue/theme'
+import { type ITheme, Palette, SemanticColors } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { HighContrastSelector } from '@fluentui-vue/style-utilities'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
+import type { IButtonStyles } from '../Button.types'
 
 export const getStyles = memoizeFunction(
-  (customStyles?: IButtonStyles): IButtonStyles => {
-    const baseButtonStyles: IButtonStyles = getBaseButtonStyles()
+  (theme: ITheme, customStyles?: IButtonStyles): IButtonStyles => {
+    const baseButtonStyles: IButtonStyles = getBaseButtonStyles(theme)
     // const splitButtonStyles: IButtonStyles = getSplitButtonStyles(theme)
     const iconButtonStyles: IButtonStyles = {
       root: {

@@ -1,5 +1,8 @@
+import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
+import { getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import type { IButtonStyles } from './Button.types'
 
 export interface IButtonClassNames {
   root?: string
@@ -26,7 +29,7 @@ export const ButtonGlobalClassNames = {
 
 export const getBaseButtonClassNames = memoizeFunction(
   (
-    theme: null,
+    theme: ITheme,
     styles: IButtonStyles,
     className: string,
     variantClassName: string,
@@ -38,7 +41,7 @@ export const getBaseButtonClassNames = memoizeFunction(
     expanded: boolean,
     isSplit: boolean | undefined,
   ): IButtonClassNames => {
-    const classNames = ButtonGlobalClassNames
+    const classNames = getGlobalClassNames(ButtonGlobalClassNames, theme || {})
 
     const isExpanded = expanded && !isSplit
     return mergeStyleSets({

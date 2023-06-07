@@ -81,7 +81,7 @@ export const BaseButton = defineComponent({
 
     const classNames = computed(() => getClassNames.value
       ? getClassNames.value(
-        theme!,
+        theme.value!,
         className.value || attrs.class,
         variantClassName.value!,
         iconProps.value && iconProps.value.className,
@@ -94,7 +94,7 @@ export const BaseButton = defineComponent({
         !!allowDisabledFocus.value,
       )
       : getBaseButtonClassNames(
-        null,
+        theme.value,
         styles.value,
         className.value || attrs.class,
         variantClassName.value,
