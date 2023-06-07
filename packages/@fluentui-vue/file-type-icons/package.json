@@ -17,10 +17,11 @@
     "build": "tsc"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^2.7.0 || >=3.0.0"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:^1.1.0"
+    "@fluentui-vue/style-utilities": "workspace:^1.1.0",
+    "vue-demi": "latest"
   },
   "devDependencies": {
     "vue": "^3.2.47"

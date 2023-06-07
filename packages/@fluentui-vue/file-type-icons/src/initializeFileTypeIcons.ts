@@ -1,6 +1,6 @@
 import type { IIconOptions } from '@fluentui-vue/style-utilities'
 import { registerIcons } from '@fluentui-vue/style-utilities'
-import { h } from 'vue'
+import { h as hDemi, isVue2 } from 'vue-demi'
 import { FileTypeIconMap } from './FileTypeIconMap'
 
 const PREFIX = 'vue_'
@@ -9,6 +9,12 @@ const SVG_SUFFIX = '_svg'
 
 const DEFAULT_BASE_URL = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20201125.001/assets/item-types/'
 const ICON_SIZES: number[] = [16, 20, 24, 32, 40, 48, 64, 96]
+
+function h(el: string, props: any) {
+  if (!isVue2)
+    return hDemi(el, props)
+  return hDemi(el, { attrs: props })
+}
 
 export function initializeFileTypeIcons(baseUrl: string = DEFAULT_BASE_URL, options?: Partial<IIconOptions>): void {
   ICON_SIZES.forEach((size: number) => {
