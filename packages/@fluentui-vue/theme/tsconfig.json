@@ -8,12 +8,12 @@
     "declaration": true,
     "declarationDir": "types",
     "declarationMap": true,
-    
+
     "strict": true,
     "jsx": "preserve",
     "jsxFactory": "h",
     "importHelpers": true,
-    "moduleResolution": "node16",
+    "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
@@ -23,7 +23,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [ "src/*" ],
+      "@/*": ["src/*"]
     },
     "lib": [
       "esnext",

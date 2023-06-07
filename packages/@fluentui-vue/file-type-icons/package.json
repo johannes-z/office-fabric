@@ -2,6 +2,11 @@
   "name": "@fluentui-vue/file-type-icons",
   "version": "1.0.2",
   "description": "Fluent UI Vue file type icon set.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johannes-z/office-fabric"
+  },
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "./types/index.d.ts",
@@ -9,21 +14,16 @@
     "lib",
     "types"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/johannes-z/office-fabric"
-  },
-  "license": "MIT",
   "scripts": {
     "build": "tsc"
+  },
+  "peerDependencies": {
+    "vue": "^2.7.0"
   },
   "dependencies": {
     "@fluentui-vue/style-utilities": "workspace:^1.1.0"
   },
-  "peerDependencies": {
-    "vue": "^3.0.0"
-  },
   "devDependencies": {
-    "vue": "^3.2.47"
+    "vue": "^2.7.0"
   }
 }
