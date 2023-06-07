@@ -2,21 +2,21 @@
   "name": "@fluentui-vue/hooks",
   "version": "1.0.0",
   "description": "",
+  "license": "MIT",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
-  "license": "MIT",
   "scripts": {
     "build": "tsc"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
   },
-  "devDependencies": {
-    "vue": "^3.2.47"
-  },
   "dependencies": {
     "@fluentui-vue/utilities": "workspace:^1.0.0",
     "tslib": "^2.5.0"
+  },
+  "devDependencies": {
+    "vue": "^3.2.47"
   }
 }
