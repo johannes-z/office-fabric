@@ -1,58 +1,17 @@
 /// <reference types="vitest" />
-import * as path from 'path'
+import * as path from 'node:path'
 import { defineConfig } from 'vite'
-import { createVuePlugin } from 'vite-plugin-vue2'
+import vue from '@vitejs/plugin-vue2'
 
 import pkg from './package.json'
 
-const toKebabCase = (str: string) =>
-  str &&
-  str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-    ?.map(x => x.toLowerCase())
-    .join('-')
-
 export default defineConfig({
-  optimizeDeps: {
-    entries: 'src/dev.ts',
-  },
-  css: {
-    modules: {
-      generateScopedName: (name, filename, css) => {
-        // if (name[0] === name[0].toUpperCase()) {
-        //   return `${name}`
-        // }
-        const scope = path.dirname(filename).split(path.sep).pop()
-        const className = name === 'root' ? '' : `-${name}`
-
-        if (/^is[A-Z]/.test(name)) {
-          return `ms-${scope}--${toKebabCase(name.substring(2))}`
-        }
-
-        return `ms-${scope}${className}`
-      },
-    },
-    postcss: {
-      plugins: [
-        require('postcss-sort-alphabetically'),
-      ],
-    },
-  },
   plugins: [
-    createVuePlugin({
-      include: [/\.vue$/, /\.md$/],
-      jsx: true,
-      vueTemplateOptions: {
-        compilerOptions: {
-          whitespace: 'condense',
-        },
-      },
-    }),
+    vue(),
   ],
   resolve: {
     alias: {
-      vue: 'vue/dist/vue.js',
-      '@/': path.resolve(__dirname, './src') + '/',
+      '@/': `${path.resolve(__dirname, './src')}/`,
     },
   },
   define: {
@@ -74,11 +33,23 @@ export default defineConfig({
       name: '@fluentui-vue/components',
       formats: ['es', 'umd'],
     },
+    minify: false,
     rollupOptions: {
       external: [
         'vue',
+        '@vueuse/core',
+        '@fluentui-vue/file-type-icons',
+        '@fluentui-vue/hooks',
+        '@fluentui-vue/icons',
+        '@fluentui-vue/style-utilities',
+        '@fluentui-vue/theme',
+        '@fluentui-vue/utilities',
+        '@fluentui/dom-utilities',
+        '@fluentui/merge-styles',
+        'tslib',
       ],
       output: {
+        exports: 'named',
         globals: {
           vue: 'Vue',
         },
