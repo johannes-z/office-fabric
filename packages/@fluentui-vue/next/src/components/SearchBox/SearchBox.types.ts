@@ -11,6 +11,10 @@ export interface ISearchBox {
    * Sets focus inside the search input box.
    */
   focus(): void
+  /**
+   * Clears the search input box.
+   */
+  clear(): void
 
   /**
    * Returns whether or not the SearchBox has focus

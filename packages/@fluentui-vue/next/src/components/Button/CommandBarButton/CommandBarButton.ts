@@ -2,7 +2,7 @@ import { computed, defineComponent, h, onMounted, ref, toRefs } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './CommandBarButton.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useForwardRef, useStylingProps } from '@/utils'
 
 export const CommandBarButton = defineComponent({
   name: 'CommandBarButton',
@@ -14,12 +14,7 @@ export const CommandBarButton = defineComponent({
 
   setup(props, { attrs, slots }) {
     const { styles } = toRefs(props)
-
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -27,7 +22,7 @@ export const CommandBarButton = defineComponent({
         ...props,
         variantClassName: 'ms-Button--commandBar',
         styles: getStyles(props.theme, styles.value),
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
 

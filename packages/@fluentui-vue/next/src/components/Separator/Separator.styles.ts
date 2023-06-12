@@ -1,7 +1,7 @@
 import { HighContrastSelector } from '@fluentui-vue/style-utilities'
 import type { ISeparatorStyleProps, ISeparatorStyles } from './Separator.types'
 
-export const getStyles = (props: ISeparatorStyleProps): ISeparatorStyles => {
+export function getStyles(props: ISeparatorStyleProps): ISeparatorStyles {
   const { theme, alignContent, vertical, className } = props
 
   const alignStart = alignContent === 'start'
@@ -20,16 +20,16 @@ export const getStyles = (props: ISeparatorStyleProps): ISeparatorStyles => {
       !alignContent && {
         textAlign: 'center',
       },
-      vertical &&
-        (alignCenter || !alignContent) && {
+      vertical
+        && (alignCenter || !alignContent) && {
         verticalAlign: 'middle',
       },
-      vertical &&
-        alignStart && {
+      vertical
+        && alignStart && {
         verticalAlign: 'top',
       },
-      vertical &&
-        alignEnd && {
+      vertical
+        && alignEnd && {
         verticalAlign: 'bottom',
       },
       vertical && {

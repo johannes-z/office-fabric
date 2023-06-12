@@ -1,6 +1,5 @@
 export function useBaseButtonProps() {
   return {
-    componentRef: { type: Function, default: undefined },
     getClassNames: { type: Function, default: undefined },
 
     variantClassName: { type: String, default: undefined },

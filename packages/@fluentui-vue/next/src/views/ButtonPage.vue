@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { IIconProps } from '../components'
 import { ActionButton, CommandBarButton, CompoundButton, DefaultButton, IconButton, PrimaryButton, Stack, Toggle } from '../components'
 import DocSection from './components/DocSection.vue'
 import type { IStackTokens } from '@/components/Stack'
 import type { IContextualMenuProps } from '@/components/ContextualMenu'
+import type { IButton } from '@/components/Button/Button.types'
 
 const menuProps: IContextualMenuProps = {
   items: [
@@ -33,10 +34,11 @@ const stackTokens: IStackTokens = { childrenGap: 40 }
 const checked = ref(false)
 const disabled = ref(false)
 
-async function onRef(ref) {
-  console.log(ref)
-  ref.focus()
-}
+const componentRef = ref<IButton | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
+})
 </script>
 
 <template>
@@ -50,7 +52,7 @@ async function onRef(ref) {
 
     <h3>Default Button</h3>
     <Stack horizontal :tokens="stackTokens">
-      <DefaultButton :component-ref="onRef" :disabled="disabled" :checked="checked">
+      <DefaultButton ref="componentRef" :disabled="disabled" :checked="checked">
         Standard
       </DefaultButton>
       <DefaultButton :disabled="disabled" :checked="checked" primary>

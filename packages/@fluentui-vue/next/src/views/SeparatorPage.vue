@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import type { ITheme } from '@fluentui-vue/theme'
 import { createTheme } from '@fluentui-vue/theme'
 import { mergeStyles } from '@fluentui/merge-styles'
@@ -28,6 +29,11 @@ const theme: ITheme = createTheme({
     },
   },
 })
+
+const myRef = ref(null)
+watch(myRef, () => {
+  console.log(myRef.value)
+})
 </script>
 
 <template>
@@ -38,7 +44,9 @@ const theme: ITheme = createTheme({
 
     <h3>Basic Separator with Text</h3>
     <Stack :tokens="stackTokens">
-      <Separator>Today</Separator>
+      <Separator>
+        Today
+      </Separator>
       <Separator align-content="start">
         Today
       </Separator>
@@ -56,7 +64,7 @@ const theme: ITheme = createTheme({
       </StackItem>
 
       <StackItem :class-name="verticalStyle">
-        <Separator vertical align-content="start">
+        <Separator ref="myRef" vertical align-content="start">
           Today
         </Separator>
       </StackItem>

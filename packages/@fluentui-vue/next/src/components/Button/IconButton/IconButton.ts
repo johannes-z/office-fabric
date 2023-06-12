@@ -2,7 +2,7 @@ import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './IconButton.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useForwardRef, useStylingProps } from '@/utils'
 
 export const IconButton = defineComponent({
   name: 'IconButton',
@@ -14,11 +14,7 @@ export const IconButton = defineComponent({
   },
 
   setup(props, { attrs, slots }) {
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -26,7 +22,7 @@ export const IconButton = defineComponent({
         ...props,
         variantClassName: 'ms-Button--icon',
         styles: getStyles(props.theme, props.styles),
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
 

@@ -1,18 +1,25 @@
 import type { ITheme } from '@fluentui-vue/theme'
 import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
+/**
+ * {@docCategory Separator}
+ */
+export interface ISeparator {}
+
+/**
+ * {@docCategory Separator}
+ */
 export interface ISeparatorProps {
   /**
    * Theme (provided through customization.)
    */
   theme?: ITheme
+  className?: string
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules.
    */
   styles?: IStyleFunctionOrObject<ISeparatorStyleProps, ISeparatorStyles>
-
-  className?: string
 
   /**
    * Whether the element is a vertical separator.
@@ -26,6 +33,9 @@ export interface ISeparatorProps {
   alignContent?: 'start' | 'center' | 'end'
 }
 
+/**
+ * {@docCategory Separator}
+ */
 export type ISeparatorStyleProps = Required<Pick<ISeparatorProps, 'theme'>> &
 Pick<ISeparatorProps, 'className' | 'alignContent' | 'vertical'>
 

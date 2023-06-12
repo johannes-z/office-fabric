@@ -2,7 +2,7 @@ import { computed, defineComponent, h, onMounted, ref, watch } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './DefaultButton.styles'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, useForwardRef, useStylingProps } from '@/utils'
 
 export const DefaultButton = defineComponent({
   name: 'DefaultButton',
@@ -15,11 +15,7 @@ export const DefaultButton = defineComponent({
   },
 
   setup(props, { attrs, slots }) {
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -27,7 +23,7 @@ export const DefaultButton = defineComponent({
         ...props,
         variantClassName: props.primary ? 'ms-Button--primary' : 'ms-Button--default',
         styles: getStyles(props.theme, props.styles, props.primary),
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
 

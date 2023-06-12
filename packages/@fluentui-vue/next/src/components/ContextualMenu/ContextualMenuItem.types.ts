@@ -1,6 +1,6 @@
 import type { ITheme } from '@fluentui-vue/theme'
 import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import type { IButtonStyles } from '../../Button'
+import type { IButtonStyles } from '../Button/Button.types'
 import type { IMenuItemClassNames } from './ContextualMenu.classNames'
 import type { IContextualMenuItem } from './ContextualMenu.types'
 
@@ -52,7 +52,6 @@ export interface IContextualMenuItemProps {
   /**
    * Classnames for different aspects of a menu item
    */
-  // eslint-disable-next-line deprecation/deprecation
   classNames: IMenuItemClassNames
 
   /**

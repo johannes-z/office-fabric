@@ -3,9 +3,10 @@ import { hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import { getId } from '@fluentui-vue/utilities'
 import { useId } from '@fluentui-vue/hooks'
 import { mergeStyles } from '@fluentui/merge-styles'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, Toggle } from '../components'
 import DocSection from './components/DocSection.vue'
+import type { IButton } from '@/components/Button/Button.types'
 
 const dialogStyles = { main: { maxWidth: 450 } }
 const dragOptions = {
@@ -41,9 +42,11 @@ const modalProps = ({
   dragOptions: isDraggable.value ? dragOptions : undefined,
 })
 
-function onDefaultButtonRef(el?: any) {
-  console.log(el)
-}
+const componentRef = ref<IButton | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
+})
 </script>
 
 <template>
@@ -66,7 +69,7 @@ function onDefaultButtonRef(el?: any) {
     >
       <DialogFooter>
         <PrimaryButton text="Send" @click="toggleHideDialog" />
-        <DefaultButton :component-ref="onDefaultButtonRef" text="Don't send" @click="toggleHideDialog" />
+        <DefaultButton ref="componentRef" text="Don't send" @click="toggleHideDialog" />
       </DialogFooter>
     </Dialog>
   </DocSection>

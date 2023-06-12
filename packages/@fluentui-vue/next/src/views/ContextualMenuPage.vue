@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useId } from '@fluentui-vue/hooks'
-import { Ref, ref } from 'vue'
-import { CommandBarButton, ContextualMenu } from '../components'
+import { ref, watch } from 'vue'
+import { ActionButton, ContextualMenu } from '../components'
 import DocSection from './components/DocSection.vue'
-import { ContextualMenuItemType } from '@/components/ContextualMenu'
+import type { IButton } from '@/components/Button/Button.types'
 import type { IContextualMenuItem } from '@/components/ContextualMenu'
+import { ContextualMenuItemType } from '@/components/ContextualMenu'
 
 const linkRef = ref(null)
 const showContextualMenu = ref(false)
@@ -66,13 +66,11 @@ const menuItems: IContextualMenuItem[] = [
   },
 ]
 
-const test = ref(null)
-const buttonRef = ref(null)
-function onRef(ref) {
-  console.log(ref)
-  console.log(test)
-  buttonRef.value = ref
-}
+const componentRef = ref<IButton | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
+})
 </script>
 
 <template>
@@ -91,13 +89,14 @@ function onRef(ref) {
           </a>
         </b>
       </p>
-      <CommandBarButton ref="test" :component-ref="onRef" @click="onShowContextualMenu">
+      <ActionButton ref="componentRef" :icon-props="{ iconName: 'More' }" @click="onShowContextualMenu">
         test
-      </CommandBarButton>
+      </ActionButton>
+
       <ContextualMenu
         v-if="showContextualMenu"
         :items="menuItems"
-        :target="buttonRef.$el"
+        :target="componentRef"
         @itemClick="onHideContextualMenu"
         @dismiss="onHideContextualMenu"
       />

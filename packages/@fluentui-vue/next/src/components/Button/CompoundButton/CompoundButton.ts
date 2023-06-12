@@ -2,7 +2,7 @@ import { computed, defineComponent, h, onMounted, ref, toRefs } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './CompoundButton.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useForwardRef, useStylingProps } from '@/utils'
 
 export const CompoundButton = defineComponent({
   name: 'CompoundButton',
@@ -16,11 +16,7 @@ export const CompoundButton = defineComponent({
   setup(props, { attrs, slots }) {
     const { primary, styles } = toRefs(props)
 
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -28,7 +24,7 @@ export const CompoundButton = defineComponent({
         ...props,
         variantClassName: primary.value ? 'ms-Button--compoundPrimary' : 'ms-Button--compound',
         styles: getStyles(props.theme, styles.value, primary.value),
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
 

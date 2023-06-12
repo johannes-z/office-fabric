@@ -1,9 +1,10 @@
 import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { concatStyleSetsWithProps } from '@fluentui/merge-styles'
-import { defineComponent, h, onMounted, ref } from 'vue'
+import { defineComponent, getCurrentInstance, h, ref } from 'vue'
+import { useForwardRef } from '@/utils'
 
-export type StyleFunction<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> = IStyleFunctionOrObject<TStyleProps, TStyleSet> & {
+export type StyleFunction<TStyleProps, TStyleSet extends IStyleSet> = IStyleFunctionOrObject<TStyleProps, TStyleSet> & {
   /** Cache for all style functions. */
   __cachedInputs__: (IStyleFunctionOrObject<TStyleProps, TStyleSet> | undefined)[]
 
@@ -14,7 +15,7 @@ export type StyleFunction<TStyleProps, TStyleSet extends IStyleSet<TStyleSet>> =
 export function styled<
 // TComponentProps extends ComponentPropsOptions,
 TStyleProps,
-TStyleSet extends IStyleSet<TStyleSet>,
+TStyleSet extends IStyleSet,
 TRef = unknown,
 >(
   Component: any,
@@ -27,9 +28,18 @@ TRef = unknown,
 
     inheritAttrs: false,
 
-    props: [...new Set([...Array.isArray(Component.props) ? Component.props : Object.keys(Component.props ?? {}), 'styles', 'theme', 'className', 'componentRef'])],
+    props: [
+      ...new Set([
+        ...Array.isArray(Component.props)
+          ? Component.props
+          : Object.keys(Component.props ?? {}),
+        'styles',
+        'theme',
+        'className',
+      ]),
+    ],
 
-    setup(props, { attrs, slots }) {
+    setup(props, { attrs, emit, slots }) {
       const styles = ref<StyleFunction<TStyleProps, TStyleSet>>()
 
       if (!styles.value || props.styles !== styles.value.__cachedInputs__[1] || !!props.styles) {
@@ -45,13 +55,10 @@ TRef = unknown,
         styles.value = concatenatedStyles as StyleFunction<TStyleProps, TStyleSet>
       }
 
-      const componentRef = ref(null)
-      onMounted(() => {
-        props.componentRef?.(componentRef.value)
-      })
+      const handleRef = useForwardRef()
 
       return () => h(Component, {
-        ref: componentRef,
+        ref: handleRef,
         ...attrs,
         ...props,
         theme: props.theme ?? _theme.value,

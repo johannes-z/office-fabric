@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import type { IIconProps, IStackTokens } from '../components'
 import { SearchBox, Stack } from '../components'
 import DocSection from './components/DocSection.vue'
+import type { ISearchBox } from '@/components/SearchBox/SearchBox.types'
 
 const search = ref('test')
 const stackTokens: Partial<IStackTokens> = { childrenGap: 20 }
 const filterIcon: IIconProps = { iconName: 'Filter' }
 
-function onRef(el) {
-  el.focus()
-}
+const componentRef = ref<ISearchBox | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
+})
 </script>
 
 <template>
@@ -20,7 +23,7 @@ function onRef(el) {
     <h2>Usage</h2>
 
     <h3>Default SearchBox</h3>
-    <SearchBox v-model="search" :component-ref="onRef" placeholder="Search" />
+    <SearchBox ref="componentRef" v-model="search" placeholder="Search" />
     <SearchBox
       placeholder="Search with no animation"
       disable-animation

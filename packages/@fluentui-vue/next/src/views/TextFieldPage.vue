@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { ITextField } from '../components'
 import { TextField } from '../components'
 
-function onRef(el?: ITextField) {
-  el?.focus()
-}
-
-defineExpose({
-  onRef,
+const componentRef = ref<ITextField | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
 })
 
 const text = ref('')
@@ -23,7 +21,7 @@ const isMultiline = computed(() => text2.value.length > 50)
   <h1>TextField</h1>
 
   <TextField
-    :component-ref="onRef"
+    ref="componentRef"
     placeholder="string.newFolderPlaceholder"
     error-message="folderNameError"
     :styles="{ root: { width: '100%' } }"

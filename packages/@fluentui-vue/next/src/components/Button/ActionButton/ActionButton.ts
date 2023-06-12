@@ -2,7 +2,7 @@ import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './ActionButton.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useForwardRef, useStylingProps } from '@/utils'
 
 export const ActionButton = defineComponent({
   name: 'ActionButton',
@@ -17,11 +17,7 @@ export const ActionButton = defineComponent({
   },
 
   setup(props, { attrs, slots }) {
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -29,7 +25,7 @@ export const ActionButton = defineComponent({
         ...props,
         variantClassName: 'ms-Button--action ms-Button--comand',
         styles: getStyles(props.theme, props.styles),
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
 

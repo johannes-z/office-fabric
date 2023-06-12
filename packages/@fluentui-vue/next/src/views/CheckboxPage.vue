@@ -1,15 +1,18 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { Checkbox } from '../components'
+import type { IButton } from '@/components/Button/Button.types'
 
-function onComponentRef(el) {
-  console.log(el)
-  el.focus()
-}
+const componentRef = ref<IButton | null>(null)
+watch(componentRef, () => {
+  console.log(componentRef.value)
+  componentRef.value?.focus()
+})
 </script>
 
 <template>
   <h1>Checkbox</h1>
-  <Checkbox :component-ref="onComponentRef" label="Unchecked checkbox (uncontrolled)" />
+  <Checkbox ref="componentRef" label="Unchecked checkbox (uncontrolled)" />
 
   <Checkbox label="Checked checkbox (uncontrolled)" default-checked />
 

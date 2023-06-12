@@ -1,7 +1,7 @@
 import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, useForwardRef, useStylingProps } from '@/utils'
 
 export const PrimaryButton = defineComponent({
 
@@ -13,18 +13,14 @@ export const PrimaryButton = defineComponent({
   },
 
   setup(props, { attrs, slots }) {
-    const componentRef = ref(null)
-
-    onMounted(() => {
-      props.componentRef?.(componentRef.value)
-    })
+    const handleRef = useForwardRef()
 
     const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
         ...props,
         primary: true,
-        ref: componentRef,
+        ref: handleRef,
       },
     }))
     return () => h(DefaultButton, slotProps.value.root, slots)
