@@ -5,6 +5,7 @@ import type { ICalloutContentStyleProps, ICalloutProps } from '../Callout/Callou
 import type { IVerticalDividerClassNames } from '../Divider'
 import type { IIconProps } from '../Icon'
 import type { IPopupRestoreFocusParams } from '../Popup'
+import type { IButtonStyles } from '../Button/Button.types'
 import type { IContextualMenuClassNames, IMenuItemClassNames } from './ContextualMenu.classNames'
 import type { IContextualMenuItemProps, IContextualMenuItemRenderFunctions, IContextualMenuItemStyleProps } from './ContextualMenuItem.types'
 
@@ -49,7 +50,7 @@ export interface IContextualMenuProps {
    * It can be either an element, a query selector string resolving to a valid element,
    * or a MouseEvent. If a MouseEvent is given, the origin point of the event will be used.
    */
-  target?: Target
+  target?: any
 
   /**
    * How the menu should be positioned
@@ -90,7 +91,7 @@ export interface IContextualMenuProps {
   /**
    * The bounding rectangle (or callback that returns a rectangle) which the contextual menu can appear in.
    */
-  bounds?: IRectangle | ((target?: Target, targetWindow?: Window) => IRectangle | undefined)
+  bounds?: IRectangle | ((target?: any, targetWindow?: Window) => IRectangle | undefined)
 
   /**
    * If true then the beak is visible. If false it will not be shown.
@@ -205,18 +206,18 @@ export interface IContextualMenuProps {
   getMenuClassNames?: (theme: ITheme, className?: string) => IContextualMenuClassNames
 
   /** Custom render function for a submenu. */
-  onRenderSubMenu?: IRenderFunction<IContextualMenuProps>
+  // onRenderSubMenu?: IRenderFunction<IContextualMenuProps>
 
   /**
    * Method to override the render of the list of menu items.
    */
-  onRenderMenuList?: IRenderFunction<IContextualMenuListProps>
+  // onRenderMenuList?: IRenderFunction<IContextualMenuListProps>
 
   /**
    * Method to wrap menu items. Gives the ability to wrap a custom
    * tooltip to each menu item button.
    */
-  onRenderContextualMenuItem?: IRenderFunction<IContextualMenuItem>
+  // onRenderContextualMenuItem?: IRenderFunction<IContextualMenuItem>
 
   /**
    * Delay (in milliseconds) to wait before expanding / dismissing a submenu on mouseEnter or mouseLeave
@@ -227,9 +228,9 @@ export interface IContextualMenuProps {
    * Custom component to use for rendering individual menu items.
    * @defaultvalue ContextualMenuItem
    */
-  contextualMenuItemAs?:
-  | React.ComponentClass<IContextualMenuItemProps>
-  | React.FunctionComponent<IContextualMenuItemProps>
+  // contextualMenuItemAs?:
+  // | React.ComponentClass<IContextualMenuItemProps>
+  // | React.FunctionComponent<IContextualMenuItemProps>
 
   /**
    * Props to pass down to the FocusZone.
@@ -237,13 +238,13 @@ export interface IContextualMenuProps {
    * is specified in the focusZoneProps (even if other focusZoneProps are defined)
    * @defaultvalue \{ direction: FocusZoneDirection.vertical \}
    */
-  focusZoneProps?: IFocusZoneProps
+  // focusZoneProps?: IFocusZoneProps
 
   /**
    * Custom component to use for rendering the focus zone (the root).
    * @defaultValue FocusZone
    */
-  focusZoneAs?: React.ComponentClass<IFocusZoneProps> | React.FunctionComponent<IFocusZoneProps>
+  // focusZoneAs?: React.ComponentClass<IFocusZoneProps> | React.FunctionComponent<IFocusZoneProps>
 
   /**
    * If true, renders the ContextualMenu in a hidden state.
@@ -293,7 +294,7 @@ export interface IContextualMenuListProps {
   totalItemCount: number
   hasCheckmarks: boolean
   hasIcons: boolean
-  defaultMenuItemRenderer: (item: IContextualMenuItemRenderProps) => React.ReactNode
+  // defaultMenuItemRenderer: (item: IContextualMenuItemRenderProps) => React.ReactNode
   ariaLabel?: string
   labelElementId?: string
   role?: string
@@ -331,7 +332,7 @@ export interface IContextualMenuItem {
    * Custom render function for the menu item icon.
    * iconProps must be present on at least one item for onRenderIcon to be called.
    */
-  onRenderIcon?: IRenderFunction<IContextualMenuItemProps>
+  // onRenderIcon?: IRenderFunction<IContextualMenuItemProps>
 
   /**
    * Props for the Icon used for the chevron.
@@ -460,7 +461,7 @@ export interface IContextualMenuItem {
    * Additional styles to apply to the menu item
    * @deprecated Use `styles` instead to leverage mergeStyles API.
    */
-  style?: React.CSSProperties
+  // style?: React.CSSProperties
 
   /**
    * Custom accessible label for the element.
@@ -483,7 +484,7 @@ export interface IContextualMenuItem {
    * @param dismissMenu - Function to dismiss the menu. Can be used to ensure that a custom menu
    * item click dismisses the menu. (Will be undefined if rendering a command bar item.)
    */
-  onRender?: (item: any, dismissMenu: (ev?: any, dismissAll?: boolean) => void) => React.ReactNode
+  // onRender?: (item: any, dismissMenu: (ev?: any, dismissAll?: boolean) => void) => React.ReactNode
 
   /**
    * Method to customize sub-components rendering of this menu item.
@@ -491,10 +492,10 @@ export interface IContextualMenuItem {
    * @param props - Props used to pass into render functions
    * @param defaultRenders - Default render functions that renders default sub-components
    */
-  onRenderContent?: (
-    props: IContextualMenuItemProps,
-    defaultRenders: IContextualMenuItemRenderFunctions,
-  ) => React.ReactNode
+  // onRenderContent?: (
+  //   props: IContextualMenuItemProps,
+  //   defaultRenders: IContextualMenuItemRenderFunctions,
+  // ) => React.ReactNode
 
   /**
    * A function to be executed on mouse down. This is executed before an `onClick` event and can
@@ -519,7 +520,7 @@ export interface IContextualMenuItem {
   /**
    * Keytip for this contextual menu item
    */
-  keytipProps?: IKeytipProps
+  // keytipProps?: IKeytipProps
 
   /**
    * @deprecated Use subMenuProps.items instead.
