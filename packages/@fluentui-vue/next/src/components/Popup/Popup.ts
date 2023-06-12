@@ -1,6 +1,34 @@
-import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs } from 'vue'
+import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs, watchEffect } from 'vue'
 import { asSlotProps } from '../../utils/types'
 import { useStylingProps } from '@/utils'
+
+function styleToObject(styles: object | string): Record<string, string> {
+  if (!styles || typeof styles !== 'string')
+    return {}
+
+  const rules = styles.split(';')
+  return rules.reduce((obj, rule) => {
+    const [key, value] = rule.split(':')
+    obj[key.trim()] = value.trim()
+    return obj
+  }, {})
+}
+
+function useScrollbar(style, rootRef) {
+  const needsVerticalScrollBar = ref(false)
+
+  watchEffect(() => {
+    if (style.value.overflowY || !rootRef.value?.firstElementChild)
+      return
+
+    const rootHeight = rootRef.value.clientHeight
+    const firstChildHeight = rootRef.value.firstElementChild.clientHeight
+    if (rootHeight > 0 && firstChildHeight > rootHeight)
+      needsVerticalScrollBar.value = firstChildHeight - rootHeight > 1
+  })
+
+  return needsVerticalScrollBar
+}
 
 export const Popup = defineComponent({
   name: 'Popup',
@@ -14,20 +42,28 @@ export const Popup = defineComponent({
     ariaDescribedBy: { type: String, default: undefined },
   },
 
-  setup(props, { attrs, slots }) {
+  emits: [
+    'dismiss',
+  ],
+
+  setup(props, { attrs, emit, slots }) {
     const {
       role,
       ariaLabel,
       ariaLabelledBy,
       ariaDescribedBy,
     } = toRefs(props)
+    const style = computed(() => styleToObject(attrs.style as any))
 
-    const needsVerticalScrollBar = ref(false)
+    const rootRef = ref<HTMLElement | null>(null)
+
+    const needsVerticalScrollBar = useScrollbar(style, rootRef)
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key !== 'Escape')
         return
-      // ;(ctx.listeners.dismiss as Function | null)?.(e)
+
+      emit('dismiss', e)
 
       e.preventDefault()
       e.stopPropagation()
@@ -38,21 +74,24 @@ export const Popup = defineComponent({
 
     const slotProps = computed(() => asSlotProps({
       root: {
-        'class': props.className,
         ...attrs,
-        role,
-        'aria-label': ariaLabel,
-        'aria-labelledby': ariaLabelledBy,
-        'aria-describedby': ariaDescribedBy,
+        'class': props.className,
+        'role': role.value,
+        'aria-label': ariaLabel.value,
+        'aria-labelledby': ariaLabelledBy.value,
+        'aria-describedby': ariaDescribedBy.value,
         'style': {
           overflowY: needsVerticalScrollBar.value ? 'scroll' : undefined,
           outline: 'none',
-          // ...attrs.style,
+          ...style,
         },
         onKeyDown,
       },
     }))
 
-    return () => h('div', slotProps.value.root, slots)
+    return () => h('div', {
+      ref: rootRef,
+      ...slotProps.value.root,
+    }, slots)
   },
 })

@@ -1,10 +1,9 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import type { Ref } from 'vue'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { IconButton } from '../Button'
+import type { IButtonProps } from '../Button/Button.types'
 import { Icon } from '../Icon'
 import type { IIconProps } from '../Icon/Icon.types'
-import type { IButtonProps } from '../Button/Button.types'
 import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
 import { useStylingProps } from '@/utils'
 

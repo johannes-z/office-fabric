@@ -1,6 +1,6 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { computed, defineComponent, h, watch } from 'vue'
-import type { IProgressIndicatorSlots, IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
+import { computed, defineComponent, h } from 'vue'
+import type { IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
 import { asSlotProps, useStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
@@ -27,7 +27,7 @@ export const ProgressIndicatorBase = defineComponent({
 
     const percentComplete = computed(() => {
       const percentComplete = +props.percentComplete!
-      return (typeof percentComplete === 'number' && !isNaN(percentComplete))
+      return (typeof percentComplete === 'number' && !Number.isNaN(percentComplete))
         ? Math.min(100, Math.max(0, percentComplete * 100))
         : undefined
     })
@@ -87,16 +87,16 @@ export const ProgressIndicatorBase = defineComponent({
       },
     }))
 
-    const onRenderProgress = () => h('div', slotProps.value.itemProgress, [
+    const onRenderProgress = slots.progress ?? (() => h('div', slotProps.value.itemProgress, [
       h('div', slotProps.value.progressTrack),
       h('div', slotProps.value.progressBar),
-    ])
+    ]))
 
     return () => h('div', slotProps.value.root, [
       (slots.label || label)
         && h('div', slotProps.value.label, slots.label?.() || label),
 
-      !progressHidden && (slots.progress || onRenderProgress)({
+      !progressHidden && onRenderProgress({
         ...props,
         percentComplete: percentComplete.value,
         defaultRender: onRenderProgress,

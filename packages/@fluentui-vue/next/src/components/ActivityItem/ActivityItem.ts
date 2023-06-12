@@ -36,7 +36,7 @@ export const ActivityItem = defineComponent({
 
     const classNames = computed(() => getClassNames(
       getStyles(
-        undefined,
+        theme.value,
         styles.value,
         animateBeaconSignal.value,
         beaconColorOne.value,
@@ -73,6 +73,13 @@ export const ActivityItem = defineComponent({
       timeStamp: {
         class: classNames.value.timeStamp,
       },
+      activityPersona: {
+        size: (activityPersonas.value.length > 1 || isCompact.value)
+          ? PersonaSize.size16
+          : PersonaSize.size32,
+        class: classNames.value.activityPersona,
+        style: personaStyle.value,
+      },
     }))
 
     const personaStyle = computed(() => {
@@ -99,10 +106,8 @@ export const ActivityItem = defineComponent({
         (activityPersonas.value.length > 0) && h('div', slotProps.value.personaContainer, personasToRender.value.map((person: IPersonaProps & { key: any }, index: number) =>
           h(PersonaCoin, {
             ...person,
-            size: (activityPersonas.value.length > 1 || isCompact.value) ? PersonaSize.size16 : PersonaSize.size32,
+            ...slotProps.value.activityPersona,
             key: person.key || index,
-            class: classNames.value.activityPersona,
-            style: personaStyle.value,
           }))),
         slots.icon?.(),
       ]),

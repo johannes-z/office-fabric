@@ -37,11 +37,13 @@ export const DialogBase = defineComponent({
       isOpen: isOpen.value,
     }))
 
+    const onDismiss = () => {
+      emit('dismiss')
+    }
+
     const dialogContentProps = computed(() => ({
       ...props.dialogContentProps,
-      onDismiss: () => {
-        emit('dismiss')
-      },
+      onDismiss,
     }))
 
     const classNames = computed(() => getClassNames(styles.value, {
@@ -56,6 +58,7 @@ export const DialogBase = defineComponent({
         ...mergedModalProps.value,
         class: classNames.value.root,
         containerClassName: classNames.value.main,
+        onDismiss,
       },
       content: {
         ...dialogContentProps.value,

@@ -18,7 +18,7 @@ const spinAnimation = keyframes({
   },
 })
 
-export const getStyles = (props: ISpinnerStyleProps): ISpinnerStyles => {
+export function getStyles(props: ISpinnerStyleProps): ISpinnerStyles {
   const { size, className, labelPosition } = props
 
   const classNames = GlobalClassNames
