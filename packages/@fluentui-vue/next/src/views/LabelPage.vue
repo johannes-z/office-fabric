@@ -3,6 +3,7 @@ import { useId } from '@fluentui-vue/hooks'
 import { ref } from 'vue'
 import { Label } from '../components'
 import DocSection from './components/DocSection.vue'
+import ExampleCard from './components/ExampleCard.vue'
 import { TextField } from '@/components/TextField'
 
 const textFieldId = useId('anInput')
@@ -11,14 +12,13 @@ const textFieldId = useId('anInput')
 <template>
   <h1>Label</h1>
 
-  <DocSection>
-    <h2>Usage</h2>
-
-    <h3>Label</h3>
-    <Label>I'm a Label</Label>
-    <Label disabled>I'm a disabled Label</Label>
-    <Label required>I'm a required Label</Label>
-    <Label :for="textFieldId">A Label for An Input</Label>
-    <TextField :id="textFieldId" />
+  <DocSection title="Usage">
+    <ExampleCard title="Label">
+      <Label>I'm a Label</Label>
+      <Label disabled>I'm a disabled Label</Label>
+      <Label required>I'm a required Label</Label>
+      <Label :for="textFieldId">A Label for An Input</Label>
+      <TextField :id="textFieldId" />
+    </ExampleCard>
   </DocSection>
 </template>

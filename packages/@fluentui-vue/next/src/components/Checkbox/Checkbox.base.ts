@@ -16,6 +16,7 @@ export const CheckboxBase = defineComponent({
   name: 'CheckboxBase',
 
   emits: [
+    'change',
     'update:checked',
     'update:modelValue',
   ],
@@ -90,6 +91,7 @@ export const CheckboxBase = defineComponent({
       else {
         internalValue.value = !internalValue.value
       }
+      emit('change', internalValue.value)
       emit('update:checked', internalValue.value)
       emit('update:modelValue', internalValue.value)
     }

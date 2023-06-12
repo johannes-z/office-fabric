@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import type { IIconProps, IStackTokens } from '../components'
 import { SearchBox, Stack } from '../components'
 import DocSection from './components/DocSection.vue'
+import ExampleCard from './components/ExampleCard.vue'
 import type { ISearchBox } from '@/components/SearchBox/SearchBox.types'
 
 const search = ref('test')
@@ -19,26 +20,27 @@ watch(componentRef, () => {
 <template>
   <h1>SearchBox</h1>
 
-  <DocSection>
-    <h2>Usage</h2>
-
-    <h3>Default SearchBox</h3>
-    <SearchBox ref="componentRef" v-model="search" placeholder="Search" />
-    <SearchBox
-      placeholder="Search with no animation"
-      disable-animation
-    />
-
-    <h3>Underlined SearchBox</h3>
-    <SearchBox underlined placeholder="Search" />
-
-    <h3>Disabled SearchBox</h3>
-    <Stack :tokens="stackTokens">
-      <SearchBox placeholder="Search" disabled />
-      <SearchBox placeholder="Search" underlined disabled />
-    </Stack>
-
-    <h3>SearchBox with custom icon</h3>
-    <SearchBox placeholder="Filter" :icon-props="filterIcon" />
+  <DocSection title="Usage">
+    <ExampleCard title="Default SearchBox">
+      <Stack :tokens="stackTokens">
+        <SearchBox ref="componentRef" v-model="search" placeholder="Search" />
+        <SearchBox
+          placeholder="Search with no animation"
+          disable-animation
+        />
+      </Stack>
+    </ExampleCard>
+    <ExampleCard title="Underlined SearchBox">
+      <SearchBox underlined placeholder="Search" />
+    </ExampleCard>
+    <ExampleCard title="Disabled SearchBoxes">
+      <Stack :tokens="stackTokens">
+        <SearchBox placeholder="Search" disabled />
+        <SearchBox placeholder="Search" underlined disabled />
+      </Stack>
+    </ExampleCard>
+    <ExampleCard title="SearchBox with custom icon">
+      <SearchBox placeholder="Filter" :icon-props="filterIcon" />
+    </ExampleCard>
   </DocSection>
 </template>

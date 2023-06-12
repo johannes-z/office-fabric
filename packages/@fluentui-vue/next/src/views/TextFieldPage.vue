@@ -2,52 +2,37 @@
 import { computed, ref, watch } from 'vue'
 import type { ITextField } from '../components'
 import { TextField } from '../components'
-
-const componentRef = ref<ITextField | null>(null)
-watch(componentRef, () => {
-  console.log(componentRef.value)
-  componentRef.value?.focus()
-})
+import ExampleCard from './components/ExampleCard.vue'
+import DocSection from './components/DocSection.vue'
 
 const text = ref('')
-function onChange(_, value) {
-  text.value = value
-}
-const text2 = ref('')
-const isMultiline = computed(() => text2.value.length > 50)
+const isMultiline = computed(() => text.value.length > 50)
 </script>
 
 <template>
   <h1>TextField</h1>
 
-  <TextField
-    ref="componentRef"
-    placeholder="string.newFolderPlaceholder"
-    error-message="folderNameError"
-    :styles="{ root: { width: '100%' } }"
-    :model-value="text"
-    @change="onChange"
-    @clear.stop
-    @keydown.enter.stop.prevent="onChange"
-  />
+  <DocSection title="Usage">
+    <ExampleCard title="Basic TextFields">
+      <TextField label="Standard" />
+      <TextField label="Disabled" disabled default-value="I am disabled" />
+      <TextField label="Read-only" readonly default-value="I am read-only" />
+      <TextField label="Required " required />
+      <TextField aria-label="Required without visible label" required />
+      <TextField label="With error message" error-message="Error message" />
+    </ExampleCard>
 
-  <TextField label="Standard" />
-  <TextField label="Disabled" disabled default-value="I am disabled" />
-  <TextField label="Read-only" readonly default-value="I am read-only" />
-  <TextField label="Required " required />
-  <TextField aria-label="Required without visible label" required />
-  <TextField label="With error message" error-message="Error message" />
+    <ExampleCard title="Multiline TextField">
+      <TextField label="Standard" multiline :rows="3" />
+      <TextField label="Disabled" multiline :rows="3" disabled default-value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" />
+      <TextField label="Non-resizable" multiline :resizable="false" />
 
-  <h2>Multiline TextField</h2>
-
-  <TextField label="Standard" multiline :rows="3" />
-  <TextField label="Disabled" multiline :rows="3" disabled default-value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut" />
-  <TextField label="Non-resizable" multiline :resizable="false" />
-
-  <TextField label="With auto adjusting height" multiline auto-adjust-height />
-  <TextField
-    v-model="text2"
-    label="Switches from single to multiline if more than 50 characters are entered"
-    :multiline="isMultiline"
-  />
+      <TextField label="With auto adjusting height" multiline auto-adjust-height />
+      <TextField
+        v-model="text"
+        label="Switches from single to multiline if more than 50 characters are entered"
+        :multiline="isMultiline"
+      />
+    </ExampleCard>
+  </DocSection>
 </template>

@@ -2,6 +2,7 @@
 import type { IStackProps, IStackTokens } from '../components'
 import { Label, Spinner, Stack } from '../components'
 import DocSection from './components/DocSection.vue'
+import ExampleCard from './components/ExampleCard.vue'
 
 const rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' }
 
@@ -23,53 +24,53 @@ const stackTokens: IStackTokens = {
 <template>
   <h1>Spinner</h1>
 
-  <DocSection>
-    <h2>Usage</h2>
+  <DocSection title="Usage">
+    <ExampleCard title="Spinner sizes">
+      <Stack :tokens="tokens.sectionStack">
+        <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
+          <Label>Extra small spinner</Label>
+          <Spinner size="12" />
+        </Stack>
 
-    <h3>Spinner sizes</h3>
-    <Stack :tokens="tokens.sectionStack">
-      <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
-        <Label>Extra small spinner</Label>
-        <Spinner size="12" />
+        <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
+          <Label>Small spinner</Label>
+          <Spinner size="16" />
+        </Stack>
+
+        <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
+          <Label>Medium spinner</Label>
+          <Spinner size="20" />
+        </Stack>
+
+        <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
+          <Label>Large spinner</Label>
+          <Spinner size="28" />
+        </Stack>
       </Stack>
+    </ExampleCard>
 
-      <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
-        <Label>Small spinner</Label>
-        <Spinner size="16" />
+    <ExampleCard title="Spinner label positioning">
+      <Stack :tokens="stackTokens">
+        <div>
+          <Label>Spinner with label positioned below</Label>
+          <Spinner label="I am definitely loading..." />
+        </div>
+
+        <div>
+          <Label>Spinner with label positioned above</Label>
+          <Spinner label="Seriously, still loading..." aria-live="assertive" label-position="top" />
+        </div>
+
+        <div>
+          <Label>Spinner with label positioned to right</Label>
+          <Spinner label="Wait, wait..." aria-live="assertive" label-position="right" />
+        </div>
+
+        <div>
+          <Label>Spinner with label positioned to left</Label>
+          <Spinner label="Nope, still loading..." aria-live="assertive" label-position="left" />
+        </div>
       </Stack>
-
-      <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
-        <Label>Medium spinner</Label>
-        <Spinner size="20" />
-      </Stack>
-
-      <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
-        <Label>Large spinner</Label>
-        <Spinner size="28" />
-      </Stack>
-    </Stack>
-
-    <h3>Spinner label positioning</h3>
-    <Stack :tokens="stackTokens">
-      <div>
-        <Label>Spinner with label positioned below</Label>
-        <Spinner label="I am definitely loading..." />
-      </div>
-
-      <div>
-        <Label>Spinner with label positioned above</Label>
-        <Spinner label="Seriously, still loading..." aria-live="assertive" label-position="top" />
-      </div>
-
-      <div>
-        <Label>Spinner with label positioned to right</Label>
-        <Spinner label="Wait, wait..." aria-live="assertive" label-position="right" />
-      </div>
-
-      <div>
-        <Label>Spinner with label positioned to left</Label>
-        <Spinner label="Nope, still loading..." aria-live="assertive" label-position="left" />
-      </div>
-    </Stack>
+    </ExampleCard>
   </DocSection>
 </template>

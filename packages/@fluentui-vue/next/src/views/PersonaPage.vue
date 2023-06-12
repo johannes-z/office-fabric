@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { Checkbox, Label, Persona, PersonaSize, Stack } from '../components'
 import DocSection from './components/DocSection.vue'
+import ExampleCard from './components/ExampleCard.vue'
 import type { IPersonaSharedProps } from '@/components/Persona'
 import { PersonaPresence } from '@/components/Persona'
 
@@ -20,102 +21,101 @@ const examplePersona: IPersonaSharedProps = {
 <template>
   <h1>Persona</h1>
 
-  <DocSection>
-    <h2>Usage</h2>
+  <DocSection title="Usage">
+    <ExampleCard title="Persona in various sizes">
+      <Stack :tokens="{ childrenGap: 10 }">
+        <Checkbox
+          v-model="renderDetails"
+          label="Include persona details"
+        />
 
-    <h3>Persona in various sizes</h3>
-    <Stack :tokens="{ childrenGap: 10 }">
-      <Checkbox
-        v-model="renderDetails"
-        label="Include persona details"
-      />
+        <Label>Size 8 Persona, with no presence</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size8"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, no presence detected"
+        />
+        <Label>Size 8 Persona, with presence</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size8"
+          :presence="PersonaPresence.offline"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is offline"
+        />
+        <Label>Size 24 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          text="Annie Lindqvist (Available)"
+          :size="PersonaSize.size24"
+          :presence="PersonaPresence.online"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is online"
+        />
+        <Label>Size 32 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          text="Annie Lindqvist (Available)"
+          :size="PersonaSize.size32"
+          :presence="PersonaPresence.online"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is online"
+        />
 
-      <Label>Size 8 Persona, with no presence</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size8"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, no presence detected"
-      />
-      <Label>Size 8 Persona, with presence</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size8"
-        :presence="PersonaPresence.offline"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is offline"
-      />
-      <Label>Size 24 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        text="Annie Lindqvist (Available)"
-        :size="PersonaSize.size24"
-        :presence="PersonaPresence.online"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is online"
-      />
-      <Label>Size 32 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        text="Annie Lindqvist (Available)"
-        :size="PersonaSize.size32"
-        :presence="PersonaPresence.online"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is online"
-      />
+        <Label>Size 40 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size40"
+          :presence="PersonaPresence.away"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is away"
+        />
 
-      <Label>Size 40 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size40"
-        :presence="PersonaPresence.away"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is away"
-      />
+        <Label>Size 48 Persona (default) </Label>
+        <Persona
+          v-bind="examplePersona"
+          :hide-persona-details="!renderDetails"
+          :presence="PersonaPresence.busy"
+          image-alt="Annie Lindqvist, status is busy"
+        />
 
-      <Label>Size 48 Persona (default) </Label>
-      <Persona
-        v-bind="examplePersona"
-        :hide-persona-details="!renderDetails"
-        :presence="PersonaPresence.busy"
-        image-alt="Annie Lindqvist, status is busy"
-      />
+        <Label>Size 56 Persona (default) </Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size56"
+          :hide-persona-details="!renderDetails"
+          :presence="PersonaPresence.online"
+          image-alt="Annie Lindqvist, status is online"
+        />
 
-      <Label>Size 56 Persona (default) </Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size56"
-        :hide-persona-details="!renderDetails"
-        :presence="PersonaPresence.online"
-        image-alt="Annie Lindqvist, status is online"
-      />
+        <Label>Size 72 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size72"
+          :presence="PersonaPresence.dnd"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is dnd"
+        />
 
-      <Label>Size 72 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size72"
-        :presence="PersonaPresence.dnd"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is dnd"
-      />
+        <Label>Size 100 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size100"
+          :presence="PersonaPresence.blocked"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is blocked"
+        />
 
-      <Label>Size 100 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size100"
-        :presence="PersonaPresence.blocked"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is blocked"
-      />
-
-      <Label>Size 120 Persona</Label>
-      <Persona
-        v-bind="examplePersona"
-        :size="PersonaSize.size120"
-        :presence="PersonaPresence.away"
-        :hide-persona-details="!renderDetails"
-        image-alt="Annie Lindqvist, status is away"
-      />
-    </Stack>
+        <Label>Size 120 Persona</Label>
+        <Persona
+          v-bind="examplePersona"
+          :size="PersonaSize.size120"
+          :presence="PersonaPresence.away"
+          :hide-persona-details="!renderDetails"
+          image-alt="Annie Lindqvist, status is away"
+        />
+      </Stack>
+    </ExampleCard>
   </DocSection>
 </template>
