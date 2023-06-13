@@ -57,6 +57,11 @@ export const nav = [
           component: () => import('../views/LinkPage.vue'),
         }),
         defineRoute({
+          path: '/Rating',
+          name: 'Rating',
+          component: () => import('../views/RatingPage.vue'),
+        }),
+        defineRoute({
           path: '/SearchBox',
           name: 'SearchBox',
           component: () => import('../views/SearchBoxPage.vue'),
