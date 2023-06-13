@@ -22,6 +22,11 @@ export const ToggleBase = defineComponent({
     offText: { type: String, default: null },
   },
 
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
+
   setup(props, { emit, slots }) {
     const {
       label,
@@ -71,6 +76,7 @@ export const ToggleBase = defineComponent({
           if (disabled.value)
             return
           checked.value = !checked.value
+          emit('change', checked.value)
           emit('update:modelValue', checked.value)
         },
       },

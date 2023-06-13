@@ -4,6 +4,7 @@ import { mergeStyleSets, mergeStyles } from '@fluentui/merge-styles'
 import { FileIconType, getFileTypeIconProps } from '@fluentui-vue/file-type-icons'
 import { FontIcon, Icon } from '../components'
 import DocSection from './components/DocSection.vue'
+import ExampleCard from './components/ExampleCard.vue'
 
 const iconClass = mergeStyles({
   fontSize: 50,
@@ -98,36 +99,37 @@ const yammerClassName = mergeStyles(iconClass, {
 <template>
   <h1>Icon</h1>
 
-  <DocSection>
-    <h2>Icon</h2>
-    <FontIcon icon-name="CompassNW" :class="iconClass" />
-    <FontIcon icon-name="Dictionary" :class-name="iconClass" />
-    <FontIcon icon-name="TrainSolid" :class-name="iconClass" />
+  <DocSection title="Usage">
+    <ExampleCard title="Icon">
+      <FontIcon icon-name="CompassNW" :class="iconClass" />
+      <FontIcon icon-name="Dictionary" :class-name="iconClass" />
+      <FontIcon icon-name="TrainSolid" :class-name="iconClass" />
+    </ExampleCard>
+    <ExampleCard title="Icon with custom color">
+      <FontIcon aria-label="Compass" icon-name="CompassNW" :class-name="classNames.deepSkyBlue" />
+      <FontIcon aria-label="Dictionary" icon-name="Dictionary" :class-name="classNames.greenYellow" />
+      <FontIcon aria-label="Train" icon-name="TrainSolid" :class-name="classNames.salmon" />
+    </ExampleCard>
+    <ExampleCard title="Icon using custom svg">
+      <FontIcon aria-label="OneDrive logo" icon-name="onedrive-svg" :class-name="iconClass" />
+      <FontIcon
+        aria-label="Yammer logo"
+        icon-name="yammer-svg"
+        :class-name="yammerClassName"
+      />
+      <BorderBlindsIcon color3="pink" />
+    </ExampleCard>
+    <ExampleCard title="File Type Icons">
+      <h3>FileIconTypes</h3>
+      <Icon v-bind="getFileTypeIconProps({ type: FileIconType.folder, size: 48, imageFileType: 'svg' })" />
+      <Icon v-bind="getFileTypeIconProps({ type: FileIconType.listItem, size: 48, imageFileType: 'svg' })" />
+      <Icon v-bind="getFileTypeIconProps({ type: FileIconType.picturesFolder, size: 48, imageFileType: 'svg' })" />
+      <Icon v-bind="getFileTypeIconProps({ type: FileIconType.desktopFolder, size: 48, imageFileType: 'svg' })" />
 
-    <h2>Icon with custom color</h2>
-    <FontIcon aria-label="Compass" icon-name="CompassNW" :class-name="classNames.deepSkyBlue" />
-    <FontIcon aria-label="Dictionary" icon-name="Dictionary" :class-name="classNames.greenYellow" />
-    <FontIcon aria-label="Train" icon-name="TrainSolid" :class-name="classNames.salmon" />
-
-    <h2>Icon using custom svg</h2>
-    <FontIcon aria-label="OneDrive logo" icon-name="onedrive-svg" :class-name="iconClass" />
-    <FontIcon
-      aria-label="Yammer logo"
-      icon-name="yammer-svg"
-      :class-name="yammerClassName"
-    />
-    <BorderBlindsIcon color3="pink" />
-
-    <h2>File Type Icons </h2>
-    <h3>FileIconTypes</h3>
-    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.folder, size: 48, imageFileType: 'svg' })" />
-    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.listItem, size: 48, imageFileType: 'svg' })" />
-    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.picturesFolder, size: 48, imageFileType: 'svg' })" />
-    <Icon v-bind="getFileTypeIconProps({ type: FileIconType.desktopFolder, size: 48, imageFileType: 'svg' })" />
-
-    <h3>Extension Icons</h3>
-    <Icon v-bind="getFileTypeIconProps({ extension: 'docx', size: 48, imageFileType: 'svg' })" />
-    <Icon v-bind="getFileTypeIconProps({ extension: 'xlsx', size: 48, imageFileType: 'svg' })" />
-    <Icon v-bind="getFileTypeIconProps({ extension: 'pptx', size: 48, imageFileType: 'svg' })" />
+      <h3>Extension Icons</h3>
+      <Icon v-bind="getFileTypeIconProps({ extension: 'docx', size: 48, imageFileType: 'svg' })" />
+      <Icon v-bind="getFileTypeIconProps({ extension: 'xlsx', size: 48, imageFileType: 'svg' })" />
+      <Icon v-bind="getFileTypeIconProps({ extension: 'pptx', size: 48, imageFileType: 'svg' })" />
+    </ExampleCard>
   </DocSection>
 </template>

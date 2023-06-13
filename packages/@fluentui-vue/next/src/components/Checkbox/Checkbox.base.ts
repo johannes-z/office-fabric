@@ -1,9 +1,8 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { PropType } from 'vue'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
-import { syncRefs } from '@vueuse/core'
-import { Label } from '../Label'
 import { Icon } from '../Icon'
+import { Label } from '../Label'
 import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
 import { useStylingProps } from '@/utils/'
 import type { SlotProps } from '@/utils/'
@@ -63,7 +62,7 @@ export const CheckboxBase = defineComponent({
 
     const id = computed(() => getId('Checkbox'))
 
-    const internalValue = ref(modelValue.value || checked.value || checked.value || defaultChecked.value)
+    const internalValue = ref(modelValue.value || checked.value || defaultChecked.value)
     const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
 
     watch(checked, (value) => {

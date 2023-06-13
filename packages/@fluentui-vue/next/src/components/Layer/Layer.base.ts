@@ -99,7 +99,6 @@ export const LayerBase = defineComponent({
   },
 
   render(): VNode {
-    // @ts-expect-error
     if (!this.hasTarget)
       return
 

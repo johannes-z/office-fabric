@@ -196,6 +196,11 @@ export const nav = [
           component: () => import('../views/ImagePage.vue'),
         }),
         defineRoute({
+          path: '/Layer',
+          name: 'Layer',
+          component: () => import('../views/LayerPage.vue'),
+        }),
+        defineRoute({
           path: '/Separator',
           name: 'Separator',
           component: () => import('../views/SeparatorPage.vue'),
