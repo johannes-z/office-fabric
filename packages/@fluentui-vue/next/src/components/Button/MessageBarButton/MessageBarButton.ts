@@ -1,8 +1,9 @@
-import { defineComponent, h, onMounted, ref } from 'vue'
+import { defineComponent, h } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './MessageBarButton.styles'
-import { asSlotProps, useForwardRef, useStylingProps } from '@/utils'
+import { asSlotProps, useStylingProps } from '@/utils'
+import { useForwardRef } from '@/composables'
 
 export const MessageBarButton = defineComponent({
   name: 'MessageBarButton',

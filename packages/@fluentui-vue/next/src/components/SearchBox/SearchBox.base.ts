@@ -6,6 +6,7 @@ import { Icon } from '../Icon'
 import type { IIconProps } from '../Icon/Icon.types'
 import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
 import { useStylingProps } from '@/utils'
+import { useProxiedModel } from '@/composables'
 
 export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 const iconButtonStyles = { root: { height: 'auto' }, icon: { fontSize: '12px' } }
@@ -16,6 +17,16 @@ const getClassNames = classNamesFunction<ISearchBoxStyleProps, ISearchBoxStyles>
 
 export const SearchBoxBase = defineComponent({
   name: 'SearchBoxBase',
+
+  emits: [
+    'escape',
+    'focus',
+    'blur',
+    'clear',
+    'search',
+    'change',
+    'update:modelValue',
+  ],
 
   props: {
     ...useStylingProps(),
@@ -41,13 +52,12 @@ export const SearchBoxBase = defineComponent({
       disabled,
       disableAnimation,
       showIcon,
-      modelValue,
       iconProps,
       placeholder,
     } = toRefs(props)
 
     const hasFocus = ref(false)
-    const internalValue = ref(modelValue.value ?? '')
+    const modelValue = useProxiedModel(props, 'modelValue')
 
     const classNames = computed(() => getClassNames(styles.value!, {
       theme: theme.value,
@@ -60,7 +70,7 @@ export const SearchBoxBase = defineComponent({
       showIcon: showIcon.value,
     }))
 
-    const hasInput = computed(() => internalValue.value.length > 0)
+    const hasInput = computed(() => modelValue.value.length > 0)
 
     const slotProps = computed(() => ({
       root: {
@@ -81,7 +91,7 @@ export const SearchBoxBase = defineComponent({
         'role': 'searchbox',
         ...attrs,
         'disabled': disabled.value,
-        'value': internalValue.value,
+        'value': modelValue.value,
         'aria-label': placeholder.value,
         'placeholder': placeholder.value,
         'class': classNames.value.field,
@@ -108,7 +118,7 @@ export const SearchBoxBase = defineComponent({
       clearInput()
     }
     const onInput = (e: InputEvent) => {
-      internalValue.value = (<HTMLInputElement>e.target).value
+      modelValue.value = (<HTMLInputElement>e.target).value
     }
     const onFocus = (e: FocusEvent) => {
       emit('focus', e)
@@ -132,7 +142,7 @@ export const SearchBoxBase = defineComponent({
           break
 
         case 'Enter':
-          emit('search', internalValue.value)
+          emit('search', modelValue.value)
           return
 
         default:
@@ -149,19 +159,18 @@ export const SearchBoxBase = defineComponent({
       emit('clear', e)
       if (e && e.defaultPrevented)
         return
-      internalValue.value = ''
+      modelValue.value = ''
       inputRef.value?.focus()
     }
 
     const submit = () => {
-      emit('search', internalValue.value)
+      emit('search', modelValue.value)
     }
 
     watch(modelValue, (value) => {
-      internalValue.value = value
+      modelValue.value = value
     })
-    watch(internalValue, (value) => {
-      emit('update:modelValue', value)
+    watch(modelValue, (value) => {
       emit('change', value)
     })
 
@@ -172,7 +181,7 @@ export const SearchBoxBase = defineComponent({
         inputRef.value?.focus()
       },
       clear: () => {
-        internalValue.value = ''
+        modelValue.value = ''
       },
     })
 

@@ -19,6 +19,8 @@ function onChange(value: boolean) {
     isIndeterminate.value = false
   else isChecked.value = !!value
 }
+const checked = ref(true)
+const checked2 = ref(true)
 </script>
 
 <template>
@@ -35,7 +37,7 @@ function onChange(value: boolean) {
       <Checkbox label="Disabled checked checkbox" disabled default-checked />
     </ExampleCard>
     <ExampleCard title="Other Implementation Examples">
-      <Checkbox label="Controlled checkbox" :checked="true" />
+      <Checkbox v-model="checked" label="Controlled checkbox" />
 
       <Checkbox label="Checkbox rendered with boxSide &quot;end&quot;" box-side="end" />
 
@@ -49,9 +51,9 @@ function onChange(value: boolean) {
       <Checkbox label="Indeterminate checkbox (uncontrolled)" default-indeterminate />
 
       <Checkbox
+        v-model="checked2"
         label="Indeterminate checkbox which defaults to true when clicked (uncontrolled)"
         default-indeterminate
-        default-checked
       />
 
       <Checkbox label="Disabled indeterminate checkbox" disabled default-indeterminate />

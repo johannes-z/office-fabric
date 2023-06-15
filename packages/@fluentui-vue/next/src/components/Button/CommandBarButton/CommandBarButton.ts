@@ -2,7 +2,8 @@ import { computed, defineComponent, h, onMounted, ref, toRefs } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './CommandBarButton.styles'
-import { asSlotProps, defineFunctionalComponent, useForwardRef, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { useForwardRef } from '@/composables'
 
 export const CommandBarButton = defineComponent({
   name: 'CommandBarButton',

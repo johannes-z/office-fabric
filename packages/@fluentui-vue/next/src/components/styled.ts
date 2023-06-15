@@ -2,7 +2,7 @@ import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { concatStyleSetsWithProps } from '@fluentui/merge-styles'
 import { defineComponent, getCurrentInstance, h, ref } from 'vue'
-import { useForwardRef } from '@/utils'
+import { useForwardRef } from '@/composables'
 
 export type StyleFunction<TStyleProps, TStyleSet extends IStyleSet> = IStyleFunctionOrObject<TStyleProps, TStyleSet> & {
   /** Cache for all style functions. */

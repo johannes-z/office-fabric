@@ -6,6 +6,7 @@ import { Label } from '../Label'
 import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
 import type { ITextFieldProps, ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
 import { asSlotProps, useStylingProps } from '@/utils'
+import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
 
@@ -16,8 +17,15 @@ export const TextFieldBase = defineComponent({
 
   inheritAttrs: false,
 
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
+
   props: {
     ...useStylingProps(),
+
+    modelValue: { type: String, default: '' },
 
     multiline: { type: Boolean, default: false },
     resizable: { type: Boolean, default: null },
@@ -30,17 +38,13 @@ export const TextFieldBase = defineComponent({
     readonly: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: String, default: null },
-    defaultValue: { type: String, default: '' },
     errorMessage: { type: String, default: null },
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
-
-    modelValue: { type: String, default: '' },
   },
 
   setup(props, { attrs, slots, emit, expose }) {
     const {
-      modelValue,
       styles,
       theme,
       className,
@@ -57,11 +61,10 @@ export const TextFieldBase = defineComponent({
       readonly,
       placeholder,
       description,
-      defaultValue,
     } = toRefs(props)
 
     const isFocused = ref(focused.value)
-    const internalValue = ref(modelValue.value || defaultValue.value || '')
+    const modelValue = useProxiedModel(props, 'modelValue')
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
@@ -86,10 +89,6 @@ export const TextFieldBase = defineComponent({
 
     const textElementRef = ref<HTMLTextAreaElement | null>(null)
 
-    watch(modelValue, (value: string) => {
-      internalValue.value = value
-    })
-
     watch(multiline, async (newValue: boolean, oldValue: boolean) => {
       const start = textElementRef.value?.selectionStart || 0
       const end = textElementRef.value?.selectionEnd || 0
@@ -110,9 +109,9 @@ export const TextFieldBase = defineComponent({
 
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
-      internalValue.value = value
-      emit('update:modelValue', internalValue.value)
-      emit('change', ev, internalValue.value)
+      modelValue.value = value
+      emit('update:modelValue', modelValue.value)
+      emit('change', ev, modelValue.value)
     }
 
     onMounted(adjustInputHeight)
@@ -152,7 +151,7 @@ export const TextFieldBase = defineComponent({
         class: classNames.value.field,
         ref: textElementRef,
         id,
-        value: internalValue.value,
+        value: modelValue.value,
         disabled: disabled.value,
         readonly: readonly.value,
         required: required.value,
@@ -163,7 +162,7 @@ export const TextFieldBase = defineComponent({
         style: { resize: (resizable.value === false) && 'none' },
         onFocus: async () => {
           isFocused.value = true
-          textElementRef.value?.setSelectionRange(internalValue.value.length, internalValue.value.length)
+          textElementRef.value?.setSelectionRange(modelValue.value.length, modelValue.value.length)
         },
         onBlur: () => (isFocused.value = false),
         onInput: ev => onInput(ev, ev.target.value),
@@ -198,7 +197,7 @@ export const TextFieldBase = defineComponent({
     const $label = () => (slots.label ?? onRenderLabel)(props)
 
     const $fieldGroup = () => h('div', slotProps.value.fieldGroup, [
-      h(Component.value, slotProps.value.field, internalValue.value),
+      h(Component.value, slotProps.value.field, modelValue.value),
     ])
 
     const $errorMessage = () => errorMessage.value && h('div', slotProps.value.description, [

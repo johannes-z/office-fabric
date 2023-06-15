@@ -1,11 +1,12 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { PropType } from 'vue'
-import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, getCurrentInstance, h, ref, toRefs, watch } from 'vue'
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
 import { useStylingProps } from '@/utils/'
 import type { SlotProps } from '@/utils/'
+import { useProxiedModel } from '@/composables'
 
 export type CheckboxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 
@@ -44,9 +45,6 @@ export const CheckboxBase = defineComponent({
 
   setup(props, { attrs, slots, emit, expose }) {
     const {
-      checked,
-      defaultChecked,
-      modelValue,
       indeterminate,
       defaultIndeterminate,
       theme,
@@ -62,19 +60,15 @@ export const CheckboxBase = defineComponent({
 
     const id = computed(() => getId('Checkbox'))
 
-    const internalValue = ref(modelValue.value || checked.value || defaultChecked.value)
+    const modelValue = useProxiedModel(props, 'modelValue')
     const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
-
-    watch(checked, (value) => {
-      internalValue.value = value
-    })
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
       className: className.value,
       disabled: disabled.value,
       indeterminate: isIndeterminate.value,
-      checked: isIndeterminate.value ? false : internalValue.value,
+      checked: isIndeterminate.value ? false : modelValue.value,
       reversed: boxSide.value !== 'start',
       isUsingCustomLabelRender: true,
     }))
@@ -83,16 +77,12 @@ export const CheckboxBase = defineComponent({
       if (disabled.value)
         return
 
-      if (isIndeterminate.value) {
-        internalValue.value = defaultChecked.value
+      if (isIndeterminate.value)
         isIndeterminate.value = false
-      }
-      else {
-        internalValue.value = !internalValue.value
-      }
-      emit('change', internalValue.value)
-      emit('update:checked', internalValue.value)
-      emit('update:modelValue', internalValue.value)
+      else
+        modelValue.value = !modelValue.value
+
+      emit('update:modelValue', modelValue.value)
     }
 
     const inputRef = ref<HTMLInputElement | null>(null)

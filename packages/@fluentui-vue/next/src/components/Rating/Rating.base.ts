@@ -3,6 +3,7 @@ import { type PropType, type VNode, computed, defineComponent, h, ref, toRefs } 
 import { Icon } from '../Icon/'
 import { type IRatingStarProps, type IRatingStyleProps, type IRatingStyles, RatingSize } from './Rating.types'
 import { asSlotProps, useStylingProps } from '@/utils'
+import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IRatingStyleProps, IRatingStyles>()
 
@@ -49,23 +50,24 @@ function getFillingPercentage(starNum: number, displayRating: number): number {
 }
 
 export const RatingBase = defineComponent({
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
+
   props: {
     ...useStylingProps(),
+
+    modelValue: { type: Number, default: undefined },
+
     allowZeroStars: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     readOnly: { type: Boolean, default: false },
     size: { type: Number as PropType<RatingSize>, default: RatingSize.Small },
     max: { type: Number, default: 5 },
-    rating: { type: Number, default: undefined },
-    defaultRating: { type: Number, default: undefined },
     icon: { type: String, default: 'FavoriteStarFill' },
     unselectedIcon: { type: String, default: 'FavoriteStar' },
   },
-
-  emits: [
-    'change',
-    'update:modelValue',
-  ],
 
   setup(props, { attrs, slots }) {
     const {
@@ -80,6 +82,8 @@ export const RatingBase = defineComponent({
       icon,
       unselectedIcon,
     } = toRefs(props)
+
+    const modelValue = useProxiedModel(props, 'modelValue')
 
     const classNames = computed(() => getClassNames(styles.value, {
       disabled: disabled.value,
@@ -106,32 +110,36 @@ export const RatingBase = defineComponent({
     }))
 
     const min = computed(() => Math.max(allowZeroStars.value ? 0 : 1, 0))
-    const rating = ref(props.rating ?? props.defaultRating)
-    const displayRating = computed(() => getClampedRating(rating.value, min.value, max.value))
+    const displayRating = computed(() => getClampedRating(modelValue.value, min.value, max.value))
 
-    const stars: VNode[] = []
-    for (let starNum = 1; starNum <= max.value; starNum++) {
-      const fillPercentage = getFillingPercentage(starNum, displayRating.value)
+    return () => {
+      const stars: VNode[] = []
+      for (let starNum = 1; starNum <= max.value; starNum++) {
+        const fillPercentage = getFillingPercentage(starNum, displayRating.value)
 
-      const starProps = {
-        fillPercentage,
-        disabled: disabled.value,
-        icon: fillPercentage > 0 ? icon.value : unselectedIcon.value,
-        unselectedIcon: unselectedIcon.value,
-        starNum,
-        classNames: classNames.value,
+        const starProps = {
+          fillPercentage,
+          disabled: disabled.value,
+          icon: fillPercentage > 0 ? icon.value : unselectedIcon.value,
+          unselectedIcon: unselectedIcon.value,
+          starNum,
+          classNames: classNames.value,
+        }
+
+        stars.push(
+          h('button', {
+            ...slotProps.value.ratingButton,
+            'aria-checked': starNum === Math.ceil(displayRating.value),
+            'onClick': () => {
+              modelValue.value = starNum
+            },
+          }, [
+            slots.star?.(starProps) || h(RatingStar, starProps),
+          ]),
+        )
       }
 
-      stars.push(
-        h('button', {
-          ...slotProps.value.ratingButton,
-          'aria-checked': starNum === Math.ceil(displayRating.value),
-        }, [
-          slots.star?.(starProps) || h(RatingStar, starProps),
-        ]),
-      )
+      return h('div', slotProps.value.root, stars)
     }
-
-    return () => h('div', slotProps.value.root, stars)
   },
 })

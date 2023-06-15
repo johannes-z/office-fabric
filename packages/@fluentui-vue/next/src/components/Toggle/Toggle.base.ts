@@ -3,6 +3,7 @@ import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
 import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
 import { useStylingProps } from '@/utils'
+import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
@@ -17,7 +18,6 @@ export const ToggleBase = defineComponent({
     label: { type: String, default: '' },
     inlineLabel: { type: Boolean, default: false },
     modelValue: { type: Boolean, default: false },
-    defaultChecked: { type: Boolean, default: false },
     onText: { type: String, default: null },
     offText: { type: String, default: null },
   },
@@ -31,7 +31,6 @@ export const ToggleBase = defineComponent({
     const {
       label,
       modelValue,
-      defaultChecked,
       onText,
       offText,
       styles,
@@ -41,7 +40,7 @@ export const ToggleBase = defineComponent({
       inlineLabel,
     } = toRefs(props)
 
-    const checked = ref(defaultChecked.value || modelValue.value)
+    const checked = useProxiedModel(props, 'modelValue')
 
     watch(modelValue, (value) => {
       checked.value = value
@@ -77,7 +76,6 @@ export const ToggleBase = defineComponent({
             return
           checked.value = !checked.value
           emit('change', checked.value)
-          emit('update:modelValue', checked.value)
         },
       },
       thumb: {
