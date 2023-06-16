@@ -17,18 +17,16 @@ export const CheckboxBase = defineComponent({
 
   emits: [
     'change',
-    'update:checked',
     'update:modelValue',
+    'update:indeterminate',
   ],
 
   props: {
     ...useStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
 
     modelValue: { type: Boolean, default: false },
-    checked: { type: Boolean, default: false },
-    defaultChecked: { type: Boolean, default: false },
     indeterminate: { type: Boolean, default: false },
-    defaultIndeterminate: { type: Boolean, default: false },
+
     disabled: { type: Boolean, default: false },
     required: { type: Boolean, default: false },
     label: { type: String, default: null },
@@ -45,8 +43,6 @@ export const CheckboxBase = defineComponent({
 
   setup(props, { attrs, slots, emit, expose }) {
     const {
-      indeterminate,
-      defaultIndeterminate,
       theme,
       styles,
       className,
@@ -61,14 +57,14 @@ export const CheckboxBase = defineComponent({
     const id = computed(() => getId('Checkbox'))
 
     const modelValue = useProxiedModel(props, 'modelValue')
-    const isIndeterminate = ref(indeterminate.value || defaultIndeterminate.value)
+    const indeterminate = useProxiedModel(props, 'indeterminate')
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
       className: className.value,
       disabled: disabled.value,
-      indeterminate: isIndeterminate.value,
-      checked: isIndeterminate.value ? false : modelValue.value,
+      indeterminate: indeterminate.value,
+      checked: indeterminate.value ? false : modelValue.value,
       reversed: boxSide.value !== 'start',
       isUsingCustomLabelRender: true,
     }))
@@ -77,12 +73,10 @@ export const CheckboxBase = defineComponent({
       if (disabled.value)
         return
 
-      if (isIndeterminate.value)
-        isIndeterminate.value = false
+      if (indeterminate.value)
+        indeterminate.value = false
       else
         modelValue.value = !modelValue.value
-
-      emit('update:modelValue', modelValue.value)
     }
 
     const inputRef = ref<HTMLInputElement | null>(null)
@@ -91,6 +85,8 @@ export const CheckboxBase = defineComponent({
       focus: () => {
         inputRef.value?.focus()
       },
+      checked: computed(() => modelValue.value),
+      indeterminate: computed(() => indeterminate.value),
     })
 
     const slotProps = computed<SlotProps<ICheckboxStyles>>(() => ({
