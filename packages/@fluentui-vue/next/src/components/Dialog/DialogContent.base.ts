@@ -3,7 +3,7 @@ import { h } from 'vue'
 import { IconButton } from '../Button'
 import type { IDialogContentStyleProps, IDialogContentStyles } from './DialogContent.types'
 import { DialogType } from './DialogContent.types'
-import { defineFunctionalComponent, useStylingProps } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IDialogContentStyleProps, IDialogContentStyles>()
 
@@ -11,7 +11,7 @@ export const DialogContentBase = defineFunctionalComponent({
   name: 'DialogContentBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     type: { type: Number, default: DialogType.normal },
     draggableHeaderClassName: { type: String, default: null },

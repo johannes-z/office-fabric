@@ -8,7 +8,7 @@ import { FontIcon } from '../Icon/FontIcon'
 import { ContextualMenu } from '../ContextualMenu'
 import { getBaseButtonClassNames } from './Button.classNames'
 import { useBaseButtonProps } from './useBaseButton'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { makeRouterProps } from '@/composables'
 import { useSlotHelpers } from '@/composables/useSlotHelpers'
 
@@ -16,7 +16,7 @@ export const BaseButton = defineComponent({
   name: 'BaseButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     ...useBaseButtonProps(),
     ...makeRouterProps(),
 

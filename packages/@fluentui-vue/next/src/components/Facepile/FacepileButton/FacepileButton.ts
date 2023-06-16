@@ -1,13 +1,13 @@
 import { computed, defineComponent, h, toRefs } from 'vue'
 import { getStyles } from './FacepileButton.styles'
 import { BaseButton } from '@/components/Button/BaseButton'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 export const FacepileButton = defineComponent({
   name: 'FacepileButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
   },
 
   setup(props, { attrs }) {

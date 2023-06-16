@@ -2,13 +2,13 @@ import { h } from 'vue'
 import { Icon } from '../Icon'
 import type { IContextualMenuItem } from './ContextualMenu.types'
 import type { IMenuItemClassNames } from './ContextualMenu.classNames'
-import { StylingPropKeys, asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { StylingPropKeys, asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 export const ContextualMenuItemBase = defineFunctionalComponent({
   name: 'ContextualMenuItemBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     item: { type: Object as () => IContextualMenuItem, required: true },
     hasIcons: { type: Boolean, default: undefined },

@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { IDialogFooterStyleProps, IDialogFooterStyles } from './DialogFooter.types'
-import { defineFunctionalComponent, useStylingProps } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IDialogFooterStyleProps, IDialogFooterStyles>()
 
@@ -9,7 +9,7 @@ export const DialogFooterBase = defineFunctionalComponent({
   name: 'DialogFooterBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
   },
 
   render(props, { slots }) {

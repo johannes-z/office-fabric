@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { ITextStyles } from './Text.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<any, ITextStyles>()
 
@@ -9,7 +9,7 @@ export const TextBase = defineFunctionalComponent({
   name: 'TextBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     as: { type: String, default: 'span' },
     nowrap: { type: Boolean, default: false },

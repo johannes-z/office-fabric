@@ -5,7 +5,7 @@ import type { IButtonProps } from '../Button/Button.types'
 import { Icon } from '../Icon'
 import type { IIconProps } from '../Icon/Icon.types'
 import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
@@ -29,7 +29,7 @@ export const SearchBoxBase = defineComponent({
   ],
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     underlined: { type: Boolean, default: false },
     defaultValue: { type: String, default: null },

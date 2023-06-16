@@ -6,7 +6,7 @@ import type { IProcessedStyleSet } from '@fluentui/merge-styles'
 import type { SlotProps } from '../../utils/types'
 import { createDefaultLayerHost, getDefaultTarget, registerLayer, unregisterLayer } from './Layer.notification'
 import type { ILayerStyleProps, ILayerStyles } from './Layer.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ILayerStyleProps, ILayerStyles>()
 
@@ -14,7 +14,7 @@ export const LayerBase = defineComponent({
   name: 'LayerBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     hostId: { type: String, default: null },
   },

@@ -4,7 +4,7 @@ import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { ActionButton } from '../Button'
 import { Icon } from '../Icon'
 import type { INavLink, INavLinkGroup, INavStyleProps, INavStyles } from './Nav.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<INavStyleProps, INavStyles>()
 
@@ -23,7 +23,7 @@ export const NavBase = defineComponent({
   name: 'NavBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     groups: { type: Array as () => INavLinkGroup[], default: () => [] },
     isOnTop: { type: Boolean, default: false },

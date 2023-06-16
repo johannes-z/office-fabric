@@ -4,7 +4,7 @@ import { computed, defineComponent, getCurrentInstance, h, ref, toRefs, watch } 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
-import { useStylingProps } from '@/utils/'
+import { makeStylingProps } from '@/utils/'
 import type { SlotProps } from '@/utils/'
 import { useProxiedModel } from '@/composables'
 
@@ -22,7 +22,7 @@ export const CheckboxBase = defineComponent({
   ],
 
   props: {
-    ...useStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
+    ...makeStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
 
     modelValue: { type: Boolean, default: false },
     indeterminate: { type: Boolean, default: false },

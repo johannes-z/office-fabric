@@ -3,7 +3,7 @@ import { mergeStyleSets } from '@fluentui/merge-styles'
 import { h } from 'vue'
 import { getTheme } from '@fluentui-vue/style-utilities'
 import { StackItemStyles as baseStyles } from './StackItem.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction({
   disableCaching: true,
@@ -13,7 +13,7 @@ export const StackItem = defineFunctionalComponent({
   name: 'StackItem',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     grow: { type: [Number, Boolean], default: 0 },
     shrink: { type: [Boolean, Number, String], default: undefined },

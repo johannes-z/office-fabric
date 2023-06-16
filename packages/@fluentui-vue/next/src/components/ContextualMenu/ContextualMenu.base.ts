@@ -6,7 +6,7 @@ import type { ICalloutContentStyleProps, ICalloutContentStyles } from '../Callou
 import type { IContextualMenuStyleProps, IContextualMenuStyles } from './ContextualMenu.types'
 import { ContextualMenuItemType, DirectionalHint } from './ContextualMenu.types'
 import { MenuList } from './render/MenuList'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IContextualMenuStyleProps, IContextualMenuStyles>()
 
@@ -14,7 +14,7 @@ export const ContextualMenuBase = defineComponent({
   name: 'ContextualMenuBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     ariaLabel: { type: String, default: undefined },
 

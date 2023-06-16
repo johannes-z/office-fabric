@@ -5,7 +5,7 @@ import { Icon } from '../../Icon'
 import type { IPersonaPresenceStyleProps, IPersonaPresenceStyles, PersonaSize } from '../Persona.types'
 import { PersonaPresence as PersonaPresenceEnum } from '../Persona.types'
 import { sizeBoolean } from '../PersonaConsts'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const coinSizeFontScaleFactor = 6
 const coinSizePresenceScaleFactor = 3
@@ -20,7 +20,7 @@ const getClassNames = classNamesFunction<IPersonaPresenceStyleProps, IPersonaPre
 
 export const PersonaPresenceBase = defineComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     presence: { type: Number as () => PersonaPresenceEnum, required: true },
     size: { type: Number, default: undefined },

@@ -2,7 +2,7 @@ import { h } from 'vue'
 import { IMenuItemClassNames } from '../ContextualMenu.classNames'
 import { IContextualMenuItem } from '../ContextualMenu.types'
 import { ContextualMenuItem } from '../ContextualMenuItem'
-import { StylingPropKeys, asSlotProps, useStylingProps } from '@/utils'
+import { StylingPropKeys, asSlotProps, makeStylingProps } from '@/utils'
 
 export function ContextualMenuButton(props, { attrs, slots }) {
   const {

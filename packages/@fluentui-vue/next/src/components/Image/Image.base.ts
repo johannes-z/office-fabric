@@ -2,7 +2,7 @@ import { classNamesFunction } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h, ref, toRefs } from 'vue'
 import type { IImageStyleProps, IImageStyles } from './Image.types'
 import { ImageCoverStyle, ImageFit, ImageLoadState } from './Image.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IImageStyleProps, IImageStyles>()
 
@@ -11,7 +11,7 @@ const KEY_PREFIX = 'fabricImage'
 
 export const ImageBase = defineComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     src: { type: String, required: true },
     alt: { type: String, default: '' },

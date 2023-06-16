@@ -7,7 +7,7 @@ import type { VNode } from 'vue'
 import { defineComponent, h } from 'vue'
 import { Popup } from '../Popup'
 import type { ICalloutContentStyleProps, ICalloutContentStyles } from './Callout.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import type { SlotProps } from '@/utils'
 
 const ANIMATIONS: { [key: number]: string | undefined } = {
@@ -33,7 +33,7 @@ export const CalloutContentBase = defineComponent({
   name: 'CalloutContent',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     target: { type: [HTMLElement, String, Object, PointerEvent], required: true },
     calloutWidth: { type: Number, default: null },

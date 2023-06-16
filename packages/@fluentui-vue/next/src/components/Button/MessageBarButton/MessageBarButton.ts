@@ -2,14 +2,14 @@ import { defineComponent, h } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './MessageBarButton.styles'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { useForwardRef } from '@/composables'
 
 export const MessageBarButton = defineComponent({
   name: 'MessageBarButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     ...useBaseButtonProps(),
   },
 

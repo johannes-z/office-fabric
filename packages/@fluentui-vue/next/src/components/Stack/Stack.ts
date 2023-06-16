@@ -3,13 +3,13 @@ import { classNamesFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { h } from 'vue'
 import { styles } from './Stack.styles'
-import { defineFunctionalComponent, useBooleanProp, useStylingProps } from '@/utils/'
+import { defineFunctionalComponent, useBooleanProp, makeStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction()
 
 export const Stack = defineFunctionalComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     verticalFill: { type: String, default: '' },
     horizontal: { type: Boolean, default: false },

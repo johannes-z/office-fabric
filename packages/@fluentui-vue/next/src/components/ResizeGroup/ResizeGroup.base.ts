@@ -3,7 +3,7 @@ import { type PropType, type VNode, computed, nextTick, onBeforeUnmount, onMount
 import { defineComponent, h } from 'vue'
 import type { IResizeGroupProps } from './ResizeGroup.types'
 import { ResizeGroupDirection } from './ResizeGroup.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 
 const RESIZE_DELAY = 16
 
@@ -307,7 +307,7 @@ export const ResizeGroupBase = defineComponent({
   name: 'ResizeGroupBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     data: { type: Object, required: true },
     onReduceData: { type: Function as PropType<(prevData: any) => any>, required: true },

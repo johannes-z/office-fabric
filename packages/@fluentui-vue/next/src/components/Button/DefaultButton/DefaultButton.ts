@@ -2,14 +2,14 @@ import { computed, defineComponent, h, onMounted, ref, watch } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './DefaultButton.styles'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { useForwardRef } from '@/composables'
 
 export const DefaultButton = defineComponent({
   name: 'DefaultButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     ...useBaseButtonProps(),
 
     primary: { type: Boolean, default: false },

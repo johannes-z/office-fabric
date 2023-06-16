@@ -1,6 +1,6 @@
 import { defineComponent, h, toRefs } from 'vue'
 import { css } from '@fluentui-vue/utilities'
-import { useStylingProps } from '..'
+import { makeStylingProps } from '..'
 import { ActionButton } from '@/components'
 
 export const ButtonGridCell = defineComponent({
@@ -11,7 +11,7 @@ export const ButtonGridCell = defineComponent({
   ],
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     item: { type: Object, default: undefined },
     selected: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },

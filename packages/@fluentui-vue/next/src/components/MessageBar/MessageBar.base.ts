@@ -5,7 +5,7 @@ import { IconButton } from '../Button'
 import { Icon } from '../Icon'
 import type { IMessageBarStyleProps, IMessageBarStyles } from './MessageBar.types'
 import { MessageBarType } from './MessageBar.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IMessageBarStyleProps, IMessageBarStyles>()
 
@@ -20,7 +20,7 @@ const ICON_MAP = {
 
 export const MessageBarBase = defineComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     messageBarType: { type: Number, default: MessageBarType.info },
     isMultiline: { type: Boolean, default: true },

@@ -5,7 +5,7 @@ import { computed, defineComponent, h, toRefs } from 'vue'
 import type { IButtonClassNames } from '../Button/Button.classNames'
 import { getStyles as getActionButtonStyles } from '../Button/ActionButton/ActionButton.styles'
 import type { IColorCellProps, IColorPickerGridCellStyleProps, IColorPickerGridCellStyles } from './ColorPickerGridCell.types'
-import { getColorFromString, useStylingProps } from '@/utils'
+import { getColorFromString, makeStylingProps } from '@/utils'
 import { ButtonGridCell } from '@/utils/ButtonGrid'
 
 const getClassNames = classNamesFunction<IColorPickerGridCellStyleProps, IColorPickerGridCellStyles>()
@@ -65,7 +65,7 @@ export const ColorPickerGridCellBase = defineComponent({
   inheritAttrs: false,
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     disabled: { type: Boolean, default: false },
     selected: { type: Boolean, default: false },

@@ -4,7 +4,7 @@ import { defineComponent, h } from 'vue'
 import type { PersonaSize } from '../Persona'
 import { Persona, PersonaCoin } from '../Persona'
 import type { IFacepilePersona, IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 import type { SlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IFacepileStyleProps, IFacepileStyles>()
@@ -13,7 +13,7 @@ export const FacepileBase = defineComponent({
   name: 'FacepileBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     personas: { type: Array as () => IFacepilePersona[], default: () => [] },
     personaSize: { type: Number as () => PersonaSize, default: 11 },

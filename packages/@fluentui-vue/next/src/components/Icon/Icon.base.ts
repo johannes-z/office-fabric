@@ -3,7 +3,7 @@ import type { PropType, VNode } from 'vue'
 import { h } from 'vue'
 import { getIconContent } from './FontIcon'
 import type { IIconStyleProps, IIconStyles, IImageIconProps } from './Icon.types'
-import { StylingPropKeys, defineFunctionalComponent, useStylingProps } from '@/utils/'
+import { StylingPropKeys, defineFunctionalComponent, makeStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<IIconStyleProps, IIconStyles>({
   // Icon is used a lot by other components.
@@ -20,7 +20,7 @@ export const IconBase = defineFunctionalComponent({
   inheritAttrs: false,
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     iconName: { type: String, default: '' },
     imageProps: { type: Object as PropType<IImageIconProps>, default: undefined },

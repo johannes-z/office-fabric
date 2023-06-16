@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IOverlayStyleProps, IOverlayStyles>()
 
@@ -9,7 +9,7 @@ export const OverlayBase = defineFunctionalComponent({
   name: 'OverlayBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     dark: { type: Boolean, default: false },
     isDarkThemed: { type: Boolean, default: false },
   },

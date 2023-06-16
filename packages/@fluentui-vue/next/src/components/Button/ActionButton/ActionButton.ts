@@ -2,14 +2,14 @@ import { computed, defineComponent, h, onMounted, ref } from 'vue'
 import { BaseButton } from '../BaseButton'
 import { useBaseButtonProps } from '../useBaseButton'
 import { getStyles } from './ActionButton.styles'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 import { useForwardRef } from '@/composables'
 
 export const ActionButton = defineComponent({
   name: 'ActionButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     ...useBaseButtonProps(),
 
     checked: { type: Boolean, default: false },

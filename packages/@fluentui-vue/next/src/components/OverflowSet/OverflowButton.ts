@@ -1,11 +1,11 @@
 import { h } from 'vue'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 export const OverflowButton = defineFunctionalComponent({
   name: 'OverflowButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     overflowItems: { type: Array as () => any[], default: () => [] },
   },

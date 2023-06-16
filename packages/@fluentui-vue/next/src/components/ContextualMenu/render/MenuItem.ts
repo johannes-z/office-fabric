@@ -11,7 +11,7 @@ import { MenuListItem } from './MenuListItem'
 import { MenuNormalItem } from './MenuNormalItem'
 import { MenuSectionItem } from './MenuSectionItem'
 import { MenuSeparator } from './MenuSeparator'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getContextualMenuItemClassNames = classNamesFunction<IContextualMenuItemStyleProps, IContextualMenuItemStyles>()
 
@@ -128,7 +128,7 @@ export function MenuItem(props, { attrs, slots }) {
   }
 }
 MenuItem.props = Object.keys({
-  ...useStylingProps(),
+  ...makeStylingProps(),
 
   item: {
     type: Object as () => IContextualMenuItem,

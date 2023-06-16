@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs, watchEffect } from 'vue'
 import { asSlotProps } from '../../utils/types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 function styleToObject(styles: object | string): Record<string, string> {
   if (!styles || typeof styles !== 'string')
@@ -34,7 +34,7 @@ export const Popup = defineComponent({
   name: 'Popup',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     role: { type: String, default: undefined },
     ariaLabel: { type: String, default: undefined },

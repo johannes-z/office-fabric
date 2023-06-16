@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { defineComponent, h } from 'vue'
 import type { IAnnouncedStyles } from './Announced.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<{}, IAnnouncedStyles>()
 
@@ -9,7 +9,7 @@ export const AnnouncedBase = defineFunctionalComponent({
   name: 'AnnouncedBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     message: { type: String, default: undefined },
     as: { type: String, default: undefined },

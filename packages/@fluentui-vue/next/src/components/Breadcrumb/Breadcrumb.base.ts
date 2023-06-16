@@ -3,7 +3,7 @@ import { DirectionalHint, classNamesFunction } from '@fluentui-vue/utilities'
 import { ResizeGroup } from '../ResizeGroup'
 import { OverflowButton } from '../OverflowSet/OverflowButton'
 import type { IBreadcrumbItem, IBreadcrumbStyleProps, IBreadcrumbStyles } from '.'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { type IContextualMenuItem, type IContextualMenuItemProps, Icon, IconButton, Link } from '@/components'
 
 const getClassNames = classNamesFunction<IBreadcrumbStyleProps, IBreadcrumbStyles>()
@@ -27,7 +27,7 @@ export const BreadcrumbBase = defineComponent({
   name: 'BreadcrumbBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     maxDisplayedItems: { type: Number, default: 999 },
     overflowIndex: { type: Number, default: 0 },
     items: { type: Array as () => IBreadcrumbItem[], default: () => [] },

@@ -2,7 +2,7 @@ import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import { asSlotProps } from '../../utils/types'
 import type { ISeparatorProps, ISeparatorStyleProps, ISeparatorStyles } from './Separator.types'
-import { defineFunctionalComponent, useStylingProps } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<ISeparatorStyleProps, ISeparatorStyles>()
 
@@ -10,7 +10,7 @@ export const SeparatorBase = defineFunctionalComponent({
   name: 'SeparatorBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     alignContent: {
       type: String as () => ISeparatorProps['alignContent'],

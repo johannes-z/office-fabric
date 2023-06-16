@@ -11,7 +11,7 @@ import { PersonaPresence as PersonaPresenceEnum, PersonaSize } from '../Persona.
 import { sizeToPixels } from '../PersonaConsts'
 import { getPersonaInitialsColor } from '../PersonaInitialsColor'
 import { PersonaPresence } from '../PersonaPresence'
-import { asSlotProps, getInitials, useStylingProps } from '@/utils'
+import { asSlotProps, getInitials, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IPersonaCoinStyleProps, IPersonaCoinStyles>({
   // There can be many PersonaCoin rendered with different sizes.
@@ -39,7 +39,7 @@ const getInitialsStyles = memoizeFunction(
 
 export const PersonaCoinBase = defineComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     allowPhoneInitials: { type: Boolean, default: false },
     presence: { type: Number as () => PersonaPresenceEnum, default: PersonaPresenceEnum.none },

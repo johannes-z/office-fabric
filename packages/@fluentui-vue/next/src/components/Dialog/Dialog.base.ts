@@ -3,7 +3,7 @@ import { computed, defineComponent, h, toRefs } from 'vue'
 import { Modal } from '../Modal'
 import type { IDialogStyleProps, IDialogStyles } from './Dialog.types'
 import { DialogContent } from './DialogContent'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IDialogStyleProps, IDialogStyles>()
 
@@ -11,7 +11,7 @@ export const DialogBase = defineComponent({
   name: 'DialogBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     dialogContentProps: { type: Object, default: () => ({}) },
     hidden: { type: Boolean, default: !0 },
     modalProps: { type: Object, default: null },

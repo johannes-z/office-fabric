@@ -2,7 +2,7 @@ import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import { OverflowButton } from './OverflowButton'
 import type { IOverflowSetStyleProps, IOverflowSetStyles } from './OverflowSet.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IOverflowSetStyleProps, IOverflowSetStyles>()
 
@@ -10,7 +10,7 @@ export const OverflowSetBase = defineFunctionalComponent({
   name: 'OverflowSetBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     vertical: { type: Boolean, default: false },
     overflowSide: { type: String, default: 'end', validator: e => ['start', 'end'].includes(e) },

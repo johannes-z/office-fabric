@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { ILabelStyleProps, ILabelStyles } from './Label.types'
-import { asSlotProps, defineFunctionalComponent, useStylingProps } from '@/utils/'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 
@@ -9,7 +9,7 @@ export const LabelBase = defineFunctionalComponent({
   name: 'LabelBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     as: { type: String, default: 'label' },
     disabled: { type: Boolean, default: false },

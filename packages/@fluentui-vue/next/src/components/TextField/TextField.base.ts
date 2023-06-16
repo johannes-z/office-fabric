@@ -5,7 +5,7 @@ import { computed, defineComponent, h, nextTick, onMounted, onUpdated, ref, toRe
 import { Label } from '../Label'
 import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
 import type { ITextFieldProps, ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
@@ -23,7 +23,7 @@ export const TextFieldBase = defineComponent({
   ],
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     modelValue: { type: String, default: '' },
 

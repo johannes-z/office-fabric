@@ -2,7 +2,7 @@ import { classNamesFunction, css } from '@fluentui-vue/utilities'
 import { type PropType, type VNode, computed, defineComponent, h, ref, toRefs } from 'vue'
 import { Icon } from '../Icon/'
 import { type IRatingStarProps, type IRatingStyleProps, type IRatingStyles, RatingSize } from './Rating.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IRatingStyleProps, IRatingStyles>()
@@ -56,7 +56,7 @@ export const RatingBase = defineComponent({
   ],
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     modelValue: { type: Number, default: undefined },
 

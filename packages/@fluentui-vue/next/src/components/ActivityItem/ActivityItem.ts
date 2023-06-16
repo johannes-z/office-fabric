@@ -4,13 +4,13 @@ import { PersonaCoin, PersonaSize } from '../Persona'
 import { getClassNames } from './ActivityItem.classNames'
 import { getStyles } from './ActivityItem.styles'
 import type { IActivityItemStyles } from './ActivityItem.types'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 
 export const ActivityItem = defineComponent({
   name: 'ActivityItem',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     styles: { type: [Object, Function] as PropType<IActivityItemStyles>, default: () => ({}) },
 

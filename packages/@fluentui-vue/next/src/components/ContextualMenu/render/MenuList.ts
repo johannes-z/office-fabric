@@ -3,7 +3,7 @@ import { h } from 'vue'
 import type { IContextualMenuListProps, IContextualMenuStyles } from '../ContextualMenu.types'
 import { ContextualMenuItemType } from '../ContextualMenu.types'
 import { MenuItem } from './MenuItem'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 
 export function MenuList(props, { attrs }) {
   const {
@@ -50,7 +50,7 @@ export function MenuList(props, { attrs }) {
 }
 MenuList.inheritAttrs = false
 MenuList.props = Object.keys({
-  ...useStylingProps(),
+  ...makeStylingProps(),
   menuListProps: {
     type: Object as () => IContextualMenuListProps,
     required: true,

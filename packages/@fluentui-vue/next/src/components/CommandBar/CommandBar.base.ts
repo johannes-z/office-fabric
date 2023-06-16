@@ -6,7 +6,7 @@ import { OverflowSet } from '../OverflowSet'
 import { ResizeGroup } from '../ResizeGroup'
 import { getCommandButtonStyles } from './CommandBar.styles'
 import type { ICommandBarItemProps, ICommandBarStyleProps, ICommandBarStyles } from './CommandBar.types'
-import { asSlotProps, useStylingProps } from '@/utils/'
+import { asSlotProps, makeStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<ICommandBarStyleProps, ICommandBarStyles>()
 
@@ -37,7 +37,7 @@ export const CommandBarBase = defineComponent({
   name: 'CommandBarBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     items: { type: Array as () => any[], default: () => [] },
     overflowItems: { type: Array as () => any[], default: () => [] },

@@ -1,7 +1,7 @@
 import { computed, defineComponent, h } from 'vue'
 import { DefaultButton } from '../DefaultButton/DefaultButton'
 import { useBaseButtonProps } from '../useBaseButton'
-import { asSlotProps, useStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps } from '@/utils'
 import { useForwardRef } from '@/composables'
 
 export const PrimaryButton = defineComponent({
@@ -9,7 +9,7 @@ export const PrimaryButton = defineComponent({
   name: 'PrimaryButton',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     ...useBaseButtonProps(),
   },
 

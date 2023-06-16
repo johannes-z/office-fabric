@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
 import { ColorPickerGridCell, type IColorCellProps, type ISwatchColorPickerStyleProps, type ISwatchColorPickerStyles } from '.'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 import { ButtonGrid } from '@/utils/ButtonGrid'
 
 const getClassNames = classNamesFunction<ISwatchColorPickerStyleProps, ISwatchColorPickerStyles>()
@@ -12,7 +12,7 @@ export const SwatchColorPickerBase = defineComponent({
   name: COMPONENT_NAME,
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     colorCells: { type: Array as PropType<IColorCellProps[]>, default: () => [] },
     cellShape: { type: String, default: 'circle', validator: (v: string) => ['circle', 'square'].includes(v) },
     cellHeight: { type: Number, default: undefined },

@@ -2,7 +2,7 @@ import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
 import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
@@ -11,7 +11,7 @@ export const ToggleBase = defineComponent({
   name: 'ToggleBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     disabled: { type: Boolean, default: false },
 

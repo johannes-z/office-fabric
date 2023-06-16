@@ -5,7 +5,7 @@ import type { IProcessedStyleSet } from '@fluentui/merge-styles'
 import type { IPersonaStyleProps, IPersonaStyles } from './Persona.types'
 import { PersonaPresence, PersonaSize } from './Persona.types'
 import { PersonaCoin } from './PersonaCoin'
-import { useStylingProps } from '@/utils'
+import { makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IPersonaStyleProps, IPersonaStyles>()
 
@@ -13,7 +13,7 @@ export const PersonaBase = defineComponent({
   name: 'PersonaBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     allowPhoneInitials: { type: Boolean, default: false },
     presence: { type: Number as () => PersonaPresence, default: PersonaPresence.none },

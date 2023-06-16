@@ -1,13 +1,13 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { h } from 'vue'
 import type { IVerticalDividerPropsStyles, IVerticalDividerStyles } from './VerticalDivider.types'
-import { defineFunctionalComponent, useStylingProps } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IVerticalDividerPropsStyles, IVerticalDividerStyles>()
 
 export const VerticalDividerBase = defineFunctionalComponent({
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
   },
 

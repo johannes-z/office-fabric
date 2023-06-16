@@ -1,7 +1,7 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h } from 'vue'
 import type { IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
-import { asSlotProps, useStylingProps } from '@/utils/'
+import { asSlotProps, makeStylingProps } from '@/utils/'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
@@ -11,7 +11,7 @@ export const ProgressIndicatorBase = defineComponent({
   name: 'ProgressIndicatorBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     progressHidden: { type: Boolean, default: false },
     percentComplete: { type: [Number, String], default: undefined },

@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, toRefs } from 'vue'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { toMatrix, useStylingProps } from '..'
+import { toMatrix, makeStylingProps } from '..'
 import type { IButtonGridStyleProps, IButtonGridStyles } from './ButtonGrid.types'
 
 const getClassNames = classNamesFunction<IButtonGridStyleProps, IButtonGridStyles>()
@@ -11,7 +11,7 @@ export const ButtonGridBase = defineComponent({
   inheritAttrs: false,
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
     doNotContainWithinFocusZone: { type: Boolean, default: true },
     shouldFocusCircularNavigate: { type: Boolean, default: true },
 

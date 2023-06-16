@@ -7,7 +7,7 @@ import { Layer } from '../Layer'
 import { Overlay } from '../Overlay'
 import { Popup } from '../Popup'
 import type { IDragOptions, IModalStyleProps, IModalStyles } from './Modal.types'
-import { ResponsiveMode, asSlotProps, useStylingProps } from '@/utils'
+import { ResponsiveMode, asSlotProps, makeStylingProps } from '@/utils'
 import type { SlotProps } from '@/utils'
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()
@@ -20,7 +20,7 @@ export const ModalBase = defineComponent({
   name: 'ModalBase',
 
   props: {
-    ...useStylingProps(),
+    ...makeStylingProps(),
 
     isOpen: { type: Boolean, default: false },
     isDarkOverlay: { type: Boolean, default: true },
