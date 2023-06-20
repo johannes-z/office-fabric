@@ -39,7 +39,7 @@ export const makeCalendarProps = propsFactoryFromInterface<ICalendarProps>()({
   navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
   workWeekDays: { type: Array as PropType<DayOfWeek[]>, default: () => defaultWorkWeekDays },
 
-  value: { type: Date, default: undefined },
+  modelValue: { type: Date, default: undefined },
   minDate: { type: Date, default: undefined },
   maxDate: { type: Date, default: undefined },
   today: { type: Date, default: () => new Date() },

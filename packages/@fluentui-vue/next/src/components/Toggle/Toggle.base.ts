@@ -1,26 +1,29 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
-import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, h, toRefs, watch } from 'vue'
 import { Label } from '../Label'
-import type { IToggleStyleProps, IToggleStyles } from './Toggle.types'
-import { makeStylingProps } from '@/utils'
+import type { IToggleProps, IToggleStyleProps, IToggleStyles } from './Toggle.types'
+import { makeStylingProps, propsFactoryFromInterface } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
 
+export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
+  ...makeStylingProps(),
+
+  disabled: { type: Boolean, default: false },
+
+  label: { type: String, default: '' },
+  inlineLabel: { type: Boolean, default: false },
+  modelValue: { type: Boolean, default: false },
+  onText: { type: String, default: null },
+  offText: { type: String, default: null },
+  as: { type: String, default: '' },
+}, 'Toggle')
+
 export const ToggleBase = defineComponent({
   name: 'ToggleBase',
 
-  props: {
-    ...makeStylingProps(),
-
-    disabled: { type: Boolean, default: false },
-
-    label: { type: String, default: '' },
-    inlineLabel: { type: Boolean, default: false },
-    modelValue: { type: Boolean, default: false },
-    onText: { type: String, default: null },
-    offText: { type: String, default: null },
-  },
+  props: makeToggleProps(),
 
   emits: [
     'change',

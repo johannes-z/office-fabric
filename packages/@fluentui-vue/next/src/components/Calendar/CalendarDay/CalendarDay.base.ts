@@ -16,6 +16,7 @@ export function makeCalendarDayProps() {
     ...makeStylingProps(),
     ...makeCalendarDayGridProps(),
     navigatedDate: { type: Date, required: true },
+    selectedDate: { type: Date, required: true },
     minDate: { type: Date, default: undefined },
     maxDate: { type: Date, default: undefined },
     navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, required: true },
@@ -26,11 +27,16 @@ export function makeCalendarDayProps() {
 export const CalendarDayBase = defineComponent({
   name: 'CalendarDayBase',
 
+  emits: [
+    'update:navigatedDate',
+    'update:selectedDate',
+  ],
+
   props: {
     ...makeCalendarDayProps(),
   },
 
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const {
       styles,
       theme,
@@ -76,10 +82,11 @@ export const CalendarDayBase = defineComponent({
           'onUpdate:navigatedDate': (date, focus) => {
             // TODO bubble up
             console.log('onUpdate:navigatedDate', date, focus)
+            emit('update:navigatedDate', date, focus)
           },
         }),
       ]),
-      h(CalendarDayGrid, { ...props }),
+      h(CalendarDayGrid, { ...props, 'onUpdate:selectedDate': (...args) => emit('update:selectedDate', ...args) }),
     ])
   },
 })

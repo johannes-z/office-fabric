@@ -16,7 +16,7 @@ const selectedDate = ref(new Date())
     <ExampleCard title="Calendar">
       <div style="height: 360px">
         <div>Selected date: {{ selectedDate?.toLocaleString() || 'Not set' }}</div>
-        <Calendar show-go-to-today :value="selectedDate" :strings="defaultCalendarStrings" />
+        <Calendar v-model="selectedDate" show-go-to-today :strings="defaultCalendarStrings" />
       </div>
     </ExampleCard>
   </DocSection>

@@ -20,7 +20,7 @@ export const LabelBase = defineFunctionalComponent({
   props: makeLabelProps(),
 
   render(props, { attrs, slots }) {
-    const { styles, theme, className, as: RootType = 'label', disabled, required } = props
+    const { styles, theme, className, as: RootType, disabled, required } = props
 
     const classNames = getClassNames(styles, {
       theme,

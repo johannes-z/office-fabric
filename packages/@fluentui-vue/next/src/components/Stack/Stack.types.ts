@@ -90,32 +90,6 @@ export interface IStackProps {
   grow?: boolean | number | 'inherit' | 'initial' | 'unset'
 
   /**
-   * Defines the spacing between Stack children.
-   * The property is specified as a value for 'row gap', followed optionally by a value for 'column gap'.
-   * If 'column gap' is omitted, it's set to the same value as 'row gap'.
-   * @deprecated Use `tokens.childrenGap` instead.
-   */
-  gap?: number | string
-
-  /**
-   * Defines the maximum width that the Stack can take.
-   * @deprecated Use `tokens.maxWidth` instead.
-   */
-  maxWidth?: number | string
-
-  /**
-   * Defines the maximum height that the Stack can take.
-   * @deprecated Use `tokens.maxHeight` instead.
-   */
-  maxHeight?: number | string
-
-  /**
-   * Defines the inner padding of the Stack.
-   * @deprecated Use `tokens.padding` instead.
-   */
-  padding?: number | string
-
-  /**
    * Defines whether Stack children should wrap onto multiple rows or columns when they are about to overflow
    * the size of the Stack.
    * @defaultvalue false

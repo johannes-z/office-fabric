@@ -43,7 +43,5 @@ export function StackItemStyles(props, theme, tokens) {
       },
       className,
     ],
-    // TODO: this cast may be hiding some potential issues with styling and name
-    //        lookups and should be removed
   }
 }

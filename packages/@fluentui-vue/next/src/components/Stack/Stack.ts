@@ -1,28 +1,29 @@
 import { getTheme } from '@fluentui-vue/style-utilities'
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { mergeStyleSets } from '@fluentui/merge-styles'
-import { h } from 'vue'
+import { type PropType, h } from 'vue'
 import { styles } from './Stack.styles'
-import { defineFunctionalComponent, useBooleanProp, makeStylingProps } from '@/utils/'
+import type { Alignment, IStackProps } from './Stack.types'
+import { defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface, useBooleanProp } from '@/utils/'
 
 const getClassNames = classNamesFunction()
 
+export const makeStackProps = propsFactoryFromInterface<IStackProps>()({
+  ...makeStylingProps(),
+
+  enableScopedSelectors: { type: Boolean, default: false },
+  verticalFill: { type: Boolean, default: false },
+  horizontal: { type: Boolean, default: false },
+  reversed: { type: Boolean, default: false },
+  grow: { type: Boolean, default: false },
+  wrap: { type: Boolean, default: false },
+  horizontalAlign: { type: String as PropType<Alignment>, default: undefined },
+  verticalAlign: { type: String as PropType<Alignment>, default: undefined },
+  disableShrink: { type: Boolean, default: false },
+}, 'Stack')
+
 export const Stack = defineFunctionalComponent({
-  props: {
-    ...makeStylingProps(),
-
-    verticalFill: { type: String, default: '' },
-    horizontal: { type: Boolean, default: false },
-    reversed: { type: Boolean, default: false },
-    childrenGap: { type: Number, default: 0 },
-    grow: { type: Boolean, default: false },
-    wrap: { type: Boolean, default: false },
-    horizontalAlign: { type: String, default: '' },
-    verticalAlign: { type: String, default: '' },
-    disableShrink: { type: Boolean, default: false },
-
-    tokens: { type: Object, default: () => ({}) },
-  },
+  props: makeStackProps(),
 
   render(props, { attrs, slots }) {
     const { theme = getTheme(), tokens, verticalFill, horizontalAlign, verticalAlign, className, horizontal, reversed, grow, wrap, disableShrink } = props

@@ -31,11 +31,14 @@ export const CalendarGridDayCell = defineComponent({
           !day.value.isInBounds && classNames.value.dayOutsideBounds,
           !day.value.isInMonth && classNames.value.dayOutsideNavigatedMonth,
         ),
+        onClick: day.value.isInBounds ? day.value.onSelected : undefined,
         role: 'gridcell',
       },
       dayButton: {
         class: css(
           classNames.value.dayButton,
+          day.value.isToday && classNames.value.dayIsToday,
+          day.value.isToday && 'ms-CalendarDay-dayIsToday',
         ),
         type: 'button',
       },

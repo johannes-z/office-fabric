@@ -56,118 +56,65 @@ export interface IStackSlots {
 /**
  * {@docCategory Stack}
  */
-export interface IStackProps {
+export interface IStackItemProps {
   /**
-   * Defines how to render the Stack.
+   * Defines a CSS class name used to style the StackItem.
    */
-  // as?: React.ElementType<React.HTMLAttributes<HTMLElement>>
+  className?: string
 
   /**
-   * Defines whether to render Stack children horizontally.
-   * @defaultvalue false
+   * Defines how much to grow the StackItem in proportion to its siblings.
    */
-  horizontal?: boolean
+  grow?: boolean | number | 'inherit' | 'initial' | 'unset'
 
   /**
-   * Defines whether to render Stack children in the opposite direction (bottom-to-top if it's a vertical Stack and
-   * right-to-left if it's a horizontal Stack).
-   * @defaultvalue false
+   * Defines at what ratio should the StackItem shrink to fit the available space.
    */
-  reversed?: boolean
+  shrink?: boolean | number | 'inherit' | 'initial' | 'unset'
 
   /**
-   * Defines how to align Stack children horizontally (along the x-axis).
-   */
-  horizontalAlign?: Alignment
-
-  /**
-   * Defines how to align Stack children vertically (along the y-axis).
-   */
-  verticalAlign?: Alignment
-
-  /**
-   * Defines whether the Stack should take up 100% of the height of its parent.
-   * This property is required to be set to true when using the `grow` flag on children in vertical oriented Stacks.
-   * Stacks are rendered as block elements and grow horizontally to the container already.
-   * @defaultvalue false
-   */
-  verticalFill?: boolean
-
-  /**
-   * Defines whether Stack children should not shrink to fit the available space.
+   * Defines whether the StackItem should be prevented from shrinking.
+   * This can be used to prevent a StackItem from shrinking when it is inside of a Stack that has shrinking items.
    * @defaultvalue false
    */
   disableShrink?: boolean
 
   /**
-   * Defines how much to grow the Stack in proportion to its siblings.
+   * Defines how to align the StackItem along the x-axis (for vertical Stacks) or the y-axis (for horizontal Stacks).
    */
-  grow?: boolean | number | 'inherit' | 'initial' | 'unset'
+  align?: 'auto' | 'stretch' | 'baseline' | 'start' | 'center' | 'end'
 
   /**
-   * Defines the spacing between Stack children.
-   * The property is specified as a value for 'row gap', followed optionally by a value for 'column gap'.
-   * If 'column gap' is omitted, it's set to the same value as 'row gap'.
-   * @deprecated Use `tokens.childrenGap` instead.
+   * Defines whether the StackItem should take up 100% of the height of its parent.
+   * @defaultvalue true
    */
-  gap?: number | string
+  verticalFill?: boolean
 
   /**
-   * Defines the maximum width that the Stack can take.
-   * @deprecated Use `tokens.maxWidth` instead.
+   * Defines the initial main size of the StackItem, setting the size of the content box unless otherwise set with
+   * box-sizing.
+   * @defaultvalue auto
    */
-  maxWidth?: number | string
+  basis?: React.CSSProperties['flexBasis']
 
   /**
-   * Defines the maximum height that the Stack can take.
-   * @deprecated Use `tokens.maxHeight` instead.
+   * Defines order of the StackItem.
+   * @defaultvalue 0
    */
-  maxHeight?: number | string
-
-  /**
-   * Defines the inner padding of the Stack.
-   * @deprecated Use `tokens.padding` instead.
-   */
-  padding?: number | string
-
-  /**
-   * Defines whether Stack children should wrap onto multiple rows or columns when they are about to overflow
-   * the size of the Stack.
-   * @defaultvalue false
-   */
-  wrap?: boolean
-
-  /**
-   * Defines if scoped style selectors are enabled for the Stack component, which greatly helps in style recalculation
-   * performance, but requires children of the Stack to be able to accept a className prop (excluding Fragments).
-   * @defaultvalue false
-   */
-  enableScopedSelectors?: boolean
+  order?: number | string
 }
 
 /**
  * {@docCategory Stack}
  */
-export interface IStackTokens {
+export interface IStackItemTokens {
   /**
-   * Defines the spacing between Stack children.
-   * The property is specified as a value for 'row gap', followed optionally by a value for 'column gap'.
-   * If 'column gap' is omitted, it's set to the same value as 'row gap'.
+   * Defines the margin to be applied to the StackItem relative to its container.
    */
-  childrenGap?: number | string
+  margin?: number | string
 
   /**
-   * Defines a maximum height for the Stack.
-   */
-  maxHeight?: number | string
-
-  /**
-   * Defines a maximum width for the Stack.
-   */
-  maxWidth?: number | string
-
-  /**
-   * Defines the padding to be applied to the Stack contents relative to its border.
+   * Defines the padding to be applied to the StackItem contents relative to its border.
    */
   padding?: number | string
 }
@@ -175,4 +122,4 @@ export interface IStackTokens {
 /**
  * {@docCategory Stack}
  */
-export type IStackStyles = any
+export type IStackItemStyles = IComponentStyles<IStackItemSlots>

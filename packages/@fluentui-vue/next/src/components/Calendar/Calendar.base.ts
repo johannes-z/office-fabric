@@ -14,16 +14,20 @@ const getClassNames = classNamesFunction<ICalendarStyleProps, ICalendarStyles>()
 export const CalendarBase = defineComponent({
   name: 'CalendarBase',
 
+  emits: [
+    'update:modelValue',
+  ],
+
   props: {
     ...makeCalendarProps(),
   },
 
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const {
       styles,
       theme,
       className,
-      value,
+      modelValue,
       today,
       minDate,
       maxDate,
@@ -45,9 +49,9 @@ export const CalendarBase = defineComponent({
     const monthPickerOnly = computed(() => !_showMonthPickerAsOverlay.value && !isDayPickerVisible.value)
     const overlaidWithButton = computed(() => _showMonthPickerAsOverlay.value && showGoToToday.value)
 
-    const selectedDate = ref(value.value || today.value)
-    const navigatedDate = ref(value.value || today.value)
-    const navigatedMonth = ref(value.value || today.value)
+    const selectedDate = ref(modelValue.value || today.value)
+    const navigatedDate = ref(modelValue.value || today.value)
+    const navigatedMonth = ref(modelValue.value || today.value)
 
     const todayDateString = computed(() => {
       if (!props.dateTimeFormatter || !strings.value.todayDateFormatString)
@@ -96,41 +100,65 @@ export const CalendarBase = defineComponent({
         type: 'button',
       },
       calendarDay: {
-        strings: props.strings,
-        today: props.today,
-        showWeekNumbers: props.showWeekNumbers,
-        firstWeekOfYear: props.firstWeekOfYear!,
-        dateTimeFormatter: props.dateTimeFormatter!,
-        showSixWeeksByDefault: props.showSixWeeksByDefault,
-        navigationIcons: props.navigationIcons,
-        minDate: props.minDate,
-        maxDate: props.maxDate,
-        firstDayOfWeek: props.firstDayOfWeek,
-        dateRangeType: props.dateRangeType,
-        showCloseButton: props.showCloseButton,
-        allFocusable: props.allFocusable,
+        'strings': props.strings,
+        'today': props.today,
+        'showWeekNumbers': props.showWeekNumbers,
+        'firstWeekOfYear': props.firstWeekOfYear!,
+        'dateTimeFormatter': props.dateTimeFormatter!,
+        'showSixWeeksByDefault': props.showSixWeeksByDefault,
+        'navigationIcons': props.navigationIcons,
+        'minDate': props.minDate,
+        'maxDate': props.maxDate,
+        'firstDayOfWeek': props.firstDayOfWeek,
+        'dateRangeType': props.dateRangeType,
+        'showCloseButton': props.showCloseButton,
+        'allFocusable': props.allFocusable,
 
-        navigatedDate: navigatedDate.value,
-        selectedDate: selectedDate.value,
+        'navigatedDate': navigatedDate.value,
+        'selectedDate': selectedDate.value,
+
+        'onUpdate:navigatedDate': (date, focus) => {
+          // TODO
+          navigatedMonth.value = date
+          navigatedDate.value = date
+          console.log('onUpdate:navigatedDate', date, focus)
+        },
+        'onUpdate:selectedDate': (date) => {
+          console.log(date)
+          selectedDate.value = date
+          emit('update:modelValue', date)
+          console.log(selectedDateString.value)
+        },
       },
       calendarMonth: {
-        strings: props.strings,
-        today: props.today,
-        dateTimeFormatter: props.dateTimeFormatter,
-        highlightCurrentMonth: props.highlightCurrentMonth,
-        highlightSelectedMonth: props.highlightSelectedMonth,
+        'strings': props.strings,
+        'today': props.today,
+        'dateTimeFormatter': props.dateTimeFormatter,
+        'highlightCurrentMonth': props.highlightCurrentMonth,
+        'highlightSelectedMonth': props.highlightSelectedMonth,
 
-        minDate: props.minDate,
-        maxDate: props.maxDate,
+        'minDate': props.minDate,
+        'maxDate': props.maxDate,
 
-        navigatedDate: navigatedMonth.value,
-        selectedDate: selectedDate.value,
+        'navigatedDate': navigatedMonth.value,
+        'selectedDate': selectedDate.value,
+
+        'onUpdate:navigatedDate': (date, focus) => {
+          // TODO
+          navigatedMonth.value = date
+          navigatedDate.value = date
+          console.log('onUpdate:navigatedDate', date, focus)
+        },
       },
     }))
 
     const renderGoToTodayButton = () => {
       return showGoToToday.value && h('button', {
         ...slotProps.value.goTodayButton,
+        onClick: () => {
+          navigatedMonth.value = props.today
+          navigatedDate.value = props.today
+        },
       }, strings.value.goToToday)
     }
 

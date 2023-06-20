@@ -7,7 +7,7 @@ import { AnimationDirection } from '../Calendar/Calendar.types'
 import type { ICalendarDayGridProps, ICalendarDayGridStyleProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 import { CalendarGridRow } from './CalendarGridRow'
-import { makeStylingProps } from '@/utils'
+import { makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 const getClassNames = classNamesFunction<ICalendarDayGridStyleProps, ICalendarDayGridStyles>()
 
@@ -31,6 +31,7 @@ function useWeeks(
    */
   const weeks = computed(() => {
     const weeksGrid = getDayGrid(props)
+    console.log(weeksGrid)
 
     const firstVisibleDay = weeksGrid[1][0].originalDate
     const lastVisibleDay = weeksGrid[weeksGrid.length - 1][6].originalDate
@@ -66,23 +67,27 @@ function useWeeks(
   return weeks
 }
 
+export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGridProps>()({
+  ...makeStylingProps(),
+  ...makeCalendarProps(),
+
+  lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
+  animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
+  navigatedDate: { type: Date, default: undefined },
+  selectedDate: { type: Date, default: undefined },
+}, 'CalendarDayGrid')
+
 export const CalendarDayGridBase = defineComponent({
   name: 'CalendarDayGridBase',
 
-  props: {
-    ...makeStylingProps(),
-    ...makeCalendarProps(),
+  emits: [
+    'update:selectedDate',
+  ],
 
-    lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-    classNames: { type: Object as PropType<any>, default: () => ({}) },
-  },
+  props: makeCalendarDayGridProps(),
 
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const {
-      styles,
-      theme,
-      className,
       dateRangeType,
       showWeekNumbers,
       lightenDaysOutsideNavigatedMonth,
@@ -90,11 +95,14 @@ export const CalendarDayGridBase = defineComponent({
     } = toRefs(props)
 
     const animateBackwards = ref(false)
-    const weeks = useWeeks(props, (date: Date) => {}, () => {})
+    const weeks = useWeeks(props, (date: Date) => {
+      console.log('test')
+      emit('update:selectedDate', date)
+    }, () => {})
 
-    const classNames = computed(() => getClassNames(styles.value, {
-      theme: theme.value!,
-      className: className.value,
+    const classNames = computed(() => getClassNames(props.styles, {
+      theme: props.theme,
+      className: props.className,
       dateRangeType: dateRangeType.value,
       showWeekNumbers: showWeekNumbers.value,
       lightenDaysOutsideNavigatedMonth:
@@ -138,7 +146,6 @@ export const CalendarDayGridBase = defineComponent({
         rowClassName: classNames.value.weekRow,
       },
     }))
-    console.log(weeks.value.slice(1, weeks.value.length - 1))
 
     return () => h('div', slotProps.value.wrapper, [
       h('table', slotProps.value.table, [
