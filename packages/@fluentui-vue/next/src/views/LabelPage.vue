@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { useId } from '@fluentui-vue/hooks'
-import { ref } from 'vue'
 import { Label } from '../components'
 import DocSection from './components/DocSection.vue'
 import ExampleCard from './components/ExampleCard.vue'
@@ -14,7 +14,7 @@ const textFieldId = useId('anInput')
 
   <DocSection title="Usage">
     <ExampleCard title="Label">
-      <Label>I'm a Label</Label>
+      <Label as="string">I'm a Label</Label>
       <Label disabled>I'm a disabled Label</Label>
       <Label required>I'm a required Label</Label>
       <Label :for="textFieldId">A Label for An Input</Label>

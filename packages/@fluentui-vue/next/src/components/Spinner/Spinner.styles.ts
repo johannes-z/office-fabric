@@ -1,7 +1,8 @@
-import { HighContrastSelector, getHighContrastNoAdjustStyle, hiddenContentStyle } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getGlobalClassNames, getHighContrastNoAdjustStyle, hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import { DefaultFontStyles, Palette } from '@fluentui-vue/theme'
 import { keyframes } from '@fluentui/merge-styles'
-import type { ISpinnerStyleProps, ISpinnerStyles } from './Spinner.types'
+import { memoizeFunction } from '@fluentui-vue/utilities'
+import { type ISpinnerStyleProps, type ISpinnerStyles, SpinnerSize } from './Spinner.types'
 
 const GlobalClassNames = {
   root: 'ms-Spinner',
@@ -9,19 +10,23 @@ const GlobalClassNames = {
   label: 'ms-Spinner-label',
 }
 
-const spinAnimation = keyframes({
-  '0%': {
-    transform: 'rotate(0deg)',
-  },
-  '100%': {
-    transform: 'rotate(360deg)',
-  },
-})
+const spinAnimation = memoizeFunction(() =>
+  keyframes({
+    '0%': {
+      transform: 'rotate(0deg)',
+    },
+    '100%': {
+      transform: 'rotate(360deg)',
+    },
+  }),
+)
 
 export function getStyles(props: ISpinnerStyleProps): ISpinnerStyles {
-  const { size, className, labelPosition } = props
+  const { theme, size, className, labelPosition } = props
 
-  const classNames = GlobalClassNames
+  const { palette } = theme
+
+  const classNames = getGlobalClassNames(GlobalClassNames, theme)
 
   return {
     root: [
@@ -48,9 +53,9 @@ export function getStyles(props: ISpinnerStyleProps): ISpinnerStyles {
       {
         boxSizing: 'border-box',
         borderRadius: '50%',
-        border: `1.5px solid ${Palette.themeLight}`,
-        borderTopColor: Palette.themePrimary,
-        animationName: spinAnimation,
+        border: `1.5px solid ${palette.themeLight}`,
+        borderTopColor: palette.themePrimary,
+        animationName: spinAnimation(),
         animationDuration: '1.3s',
         animationIterationCount: 'infinite',
         animationTimingFunction: 'cubic-bezier(.53,.21,.29,.67)',
@@ -61,16 +66,40 @@ export function getStyles(props: ISpinnerStyleProps): ISpinnerStyles {
           },
         },
       },
-      {
-        width: size,
-        height: size,
-      },
+      size === SpinnerSize.xSmall && [
+        'ms-Spinner--xSmall',
+        {
+          width: 12,
+          height: 12,
+        },
+      ],
+      size === SpinnerSize.small && [
+        'ms-Spinner--small',
+        {
+          width: 16,
+          height: 16,
+        },
+      ],
+      size === SpinnerSize.medium && [
+        'ms-Spinner--medium',
+        {
+          width: 20,
+          height: 20,
+        },
+      ],
+      size === SpinnerSize.large && [
+        'ms-Spinner--large',
+        {
+          width: 28,
+          height: 28,
+        },
+      ],
     ],
     label: [
       classNames.label,
-      DefaultFontStyles.small,
+      theme.fonts.small,
       {
-        color: Palette.themePrimary,
+        color: palette.themePrimary,
         margin: '8px 0 0',
         textAlign: 'center',
       },

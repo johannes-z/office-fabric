@@ -43,6 +43,7 @@
     "@types/node": "^18.16.18",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vue/shared": "^3.3.4",
     "@vue/tsconfig": "^0.4.0",
     "esbuild": "^0.18.3",
     "jsdom": "^22.1.0",

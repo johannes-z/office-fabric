@@ -16,7 +16,7 @@ export interface Context {
   emit: (event: string, ...args: any[]) => void
 }
 
-export interface FunctionalRenderFunction<T> {
+export interface FunctionalRenderFunction<T = {}> {
   (props: MapPropsType<T>, ctx: Context): VNode<RendererNode, RendererElement, {
     [key: string]: any
   }>
@@ -25,7 +25,7 @@ export interface FunctionalRenderFunction<T> {
   name?: string
 }
 
-export interface FunctionalComponentDefinition<TProps extends object> {
+export interface FunctionalComponentDefinition<TProps extends object = object> {
   name?: string
   inheritAttrs?: boolean
   props?: TProps
@@ -42,10 +42,11 @@ export function defineFunctionalComponent<TProps extends object>({ name, inherit
         case Boolean:
           obj[_key] = includeBooleanAttr(value) // useBooleanProp(value, prop.default)
           break
-        case Number:
-          obj[_key] = Number(value) ?? propDef.default
+        case Number:{
+          const number = Number(value)
+          obj[_key] = (Number.isNaN(number) || number == null) ? propDef.default : number
           break
-        case String:
+        } case String:
           obj[_key] = value ?? propDef.default
           break
         default:

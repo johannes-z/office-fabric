@@ -13,3 +13,5 @@ export * from './toKebabCase'
 export * from './event'
 export * from './array'
 export * from './color'
+
+export * from './props'

@@ -110,6 +110,9 @@ importers:
       '@vitejs/plugin-vue-jsx':
         specifier: ^3.0.1
         version: 3.0.1(vite@4.3.9)(vue@3.3.4)
+      '@vue/shared':
+        specifier: ^3.3.4
+        version: 3.3.4
       '@vue/tsconfig':
         specifier: ^0.4.0
         version: 0.4.0

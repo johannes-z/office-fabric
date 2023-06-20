@@ -1,4 +1,4 @@
-import { classNamesFunction, css } from '@fluentui-vue/utilities'
+import { classNamesFunction, css, format } from '@fluentui-vue/utilities'
 import { type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
 import { DEFAULT_CALENDAR_STRINGS, DEFAULT_DATE_FORMATTING, type ICalendarStrings } from '@fluentui/date-time-utilities'
 import { CalendarDay } from './CalendarDay/CalendarDay'
@@ -15,13 +15,6 @@ export const CalendarBase = defineComponent({
   name: 'CalendarBase',
 
   props: {
-    ...makeStylingProps(),
-
-    value: { type: Date, default: undefined },
-    today: { type: Date, default: () => new Date() },
-    minDate: { type: Date, default: undefined },
-    maxDate: { type: Date, default: undefined },
-
     ...makeCalendarProps(),
   },
 
@@ -52,6 +45,22 @@ export const CalendarBase = defineComponent({
     const monthPickerOnly = computed(() => !_showMonthPickerAsOverlay.value && !isDayPickerVisible.value)
     const overlaidWithButton = computed(() => _showMonthPickerAsOverlay.value && showGoToToday.value)
 
+    const selectedDate = ref(value.value || today.value)
+    const navigatedDate = ref(value.value || today.value)
+    const navigatedMonth = ref(value.value || today.value)
+
+    const todayDateString = computed(() => {
+      if (!props.dateTimeFormatter || !strings.value.todayDateFormatString)
+        return ''
+      return format(strings.value.todayDateFormatString, props.dateTimeFormatter.formatMonthDayYear(today.value, strings.value))
+    })
+    const selectedDateString = computed(() => {
+      if (!props.dateTimeFormatter || !strings.value.selectedDateFormatString)
+        return ''
+      return format(strings.value.selectedDateFormatString, props.dateTimeFormatter.formatMonthDayYear(selectedDate.value, strings.value))
+    })
+    const selectionAndTodayString = computed(() => `${todayDateString.value}, ${selectedDateString.value}`)
+
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
       className: className.value,
@@ -65,17 +74,16 @@ export const CalendarBase = defineComponent({
       showWeekNumbers: showWeekNumbers.value,
     }))
 
-    const selectedDateString = ref('')
-
     const slotProps = computed(() => asSlotProps({
       root: {
         class: css('ms-DatePicker', classNames.value.root, className.value, 'ms-slideDownIn10'),
         role: 'group',
+        ariaLabel: selectionAndTodayString.value,
       },
       liveRegion: {
-        'class': classNames.value.liveRegion,
-        'aria-live': 'polite',
-        'aria-atomic': true,
+        class: classNames.value.liveRegion,
+        ariaLive: 'polite',
+        ariaAtomic: true,
       },
       divider: {
         class: classNames.value.divider,
@@ -88,22 +96,35 @@ export const CalendarBase = defineComponent({
         type: 'button',
       },
       calendarDay: {
-        strings: strings.value,
-        today: today.value,
-        minDate: minDate.value,
-        maxDate: maxDate.value,
-        firstDayOfWeek: firstDayOfWeek.value,
-        dateRangeType: dateRangeType.value,
-        dateTimeFormatter: props.dateTimeFormatter,
-        navigatedDate: new Date(),
+        strings: props.strings,
+        today: props.today,
+        showWeekNumbers: props.showWeekNumbers,
+        firstWeekOfYear: props.firstWeekOfYear!,
+        dateTimeFormatter: props.dateTimeFormatter!,
+        showSixWeeksByDefault: props.showSixWeeksByDefault,
+        navigationIcons: props.navigationIcons,
+        minDate: props.minDate,
+        maxDate: props.maxDate,
+        firstDayOfWeek: props.firstDayOfWeek,
+        dateRangeType: props.dateRangeType,
+        showCloseButton: props.showCloseButton,
+        allFocusable: props.allFocusable,
+
+        navigatedDate: navigatedDate.value,
+        selectedDate: selectedDate.value,
       },
       calendarMonth: {
-        strings: strings.value,
-        today: today.value,
-        minDate: minDate.value,
-        maxDate: maxDate.value,
+        strings: props.strings,
+        today: props.today,
         dateTimeFormatter: props.dateTimeFormatter,
-        navigatedDate: new Date(),
+        highlightCurrentMonth: props.highlightCurrentMonth,
+        highlightSelectedMonth: props.highlightSelectedMonth,
+
+        minDate: props.minDate,
+        maxDate: props.maxDate,
+
+        navigatedDate: navigatedMonth.value,
+        selectedDate: selectedDate.value,
       },
     }))
 

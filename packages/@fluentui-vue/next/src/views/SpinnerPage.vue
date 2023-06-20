@@ -3,6 +3,7 @@ import type { IStackProps, IStackTokens } from '../components'
 import { Label, Spinner, Stack } from '../components'
 import DocSection from './components/DocSection.vue'
 import ExampleCard from './components/ExampleCard.vue'
+import { SpinnerSize } from '@/components/Spinner/Spinner.types'
 
 const rowProps: IStackProps = { horizontal: true, verticalAlign: 'center' }
 
@@ -29,22 +30,22 @@ const stackTokens: IStackTokens = {
       <Stack :tokens="tokens.sectionStack">
         <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
           <Label>Extra small spinner</Label>
-          <Spinner size="12" />
+          <Spinner :size="SpinnerSize.xSmall" />
         </Stack>
 
         <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
           <Label>Small spinner</Label>
-          <Spinner size="16" />
+          <Spinner :size="SpinnerSize.small" />
         </Stack>
 
         <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
           <Label>Medium spinner</Label>
-          <Spinner size="20" />
+          <Spinner :size="SpinnerSize.medium" />
         </Stack>
 
         <Stack v-bind="rowProps" :tokens="tokens.spinnerStack">
           <Label>Large spinner</Label>
-          <Spinner size="28" />
+          <Spinner :size="SpinnerSize.large" />
         </Stack>
       </Stack>
     </ExampleCard>

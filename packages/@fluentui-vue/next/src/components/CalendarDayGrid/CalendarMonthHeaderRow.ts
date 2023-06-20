@@ -1,34 +1,52 @@
-import { computed, defineComponent, h, ref, toRefs, watchEffect } from 'vue'
+import { type PropType, computed, defineComponent, h, ref, toRefs, watchEffect } from 'vue'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { DAYS_IN_WEEK } from '@fluentui/date-time-utilities'
+import type { ICalendarStrings } from '@fluentui/date-time-utilities'
+import { DAYS_IN_WEEK, DayOfWeek } from '@fluentui/date-time-utilities'
 import { css, findIndex } from '@fluentui-vue/utilities'
+import { makeCalendarProps } from '../Calendar/makeProps'
 import type { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { makeCalendarDayGridProps } from './makeProps'
 import type { IDayInfo } from './CalendarDayGrid.base'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarDayMonthHeaderRowProps extends ICalendarDayGridProps {
   weeks: IDayInfo[][]
   classNames: IProcessedStyleSet<ICalendarDayGridStyles>
 }
 
+export const makeCalendarMonthHeaderRowProps = propsFactoryFromInterface<ICalendarDayMonthHeaderRowProps>()({
+  ...makeCalendarDayGridProps(),
+
+  weeks: { type: Array as PropType<IDayInfo[][]>, required: true },
+  classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayGridStyles>>, required: true },
+}, 'CalendarMonthHeaderRow')
+
 export const CalendarMonthHeaderRow = defineComponent({
   name: 'CalendarMonthHeaderRow',
 
+  // inheritAttrs: false,
+
   props: {
-    ...makeStylingProps(),
     ...makeCalendarDayGridProps(),
+    weeks: { type: Array as PropType<IDayInfo[][]>, required: true },
+    classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayGridStyles>>, required: true },
+    strings: { type: Object as PropType<ICalendarStrings>, required: true },
+
+    showWeekNumbers: { type: Boolean, default: false },
+    firstDayOfWeek: { type: Number as PropType<DayOfWeek>, default: DayOfWeek.Sunday },
+    allFocusable: { type: Boolean, default: false },
+    weeksToShow: { type: Number, default: undefined },
   },
 
   setup(props, { attrs, slots }) {
     const {
-      classNames,
       showWeekNumbers,
       strings,
-      weeksToShow,
       firstDayOfWeek,
       allFocusable,
+      weeksToShow,
       weeks,
+      classNames,
     } = toRefs(props)
 
     const dayLabels = ref<string[]>([])
@@ -44,23 +62,27 @@ export const CalendarMonthHeaderRow = defineComponent({
     })
 
     const slotProps = computed(() => asSlotProps({
-      dayCell: {
+      dayCellWeekNumber: {
         class: classNames.value.dayCell,
       },
+      dayCell: {
+        class: css(classNames.value.dayCell, classNames.value.weekDayLabelCell),
+        scope: 'col',
+        dataIsFocusable: allFocusable.value ? true : undefined,
+      },
     }))
+
     return () => h('tr', [
-      showWeekNumbers.value && h('th', slotProps.value.dayCell),
+      showWeekNumbers.value && h('th', slotProps.value.dayCellWeekNumber),
       ...dayLabels.value.map((val, index) => {
         const i = (index + firstDayOfWeek.value) % DAYS_IN_WEEK
         const label = strings.value.days[i]
 
         return h('th', {
-          class: css(classNames.value.dayCell, classNames.value.weekDayLabelCell),
-          scope: 'col',
+          ...slotProps.value.dayCell,
           key: `${dayLabels.value[i]} ${index}`,
           title: label,
           ariaLabel: label,
-          dataIsFocusable: allFocusable.value ? true : undefined,
         }, dayLabels.value[i])
       }),
     ])
