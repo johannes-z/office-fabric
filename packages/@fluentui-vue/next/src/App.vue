@@ -22,7 +22,7 @@ const currentUrl = computed(() => router.currentRoute.value.path)
       <Nav :groups="navLinkGroups" :selected-key="currentUrl" :styles="styles" />
     </div>
 
-    <div style="display: flex; flex: 1; flex-direction: column; overflow-y: auto; max-height: 100vh; margin-right: 50px;">
+    <div style="display: flex; flex: 1; flex-direction: column; overflow-y: auto; max-height: 100vh; ">
       <RouterView />
     </div>
   </div>

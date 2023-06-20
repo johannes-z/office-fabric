@@ -98,7 +98,7 @@ export const LayerBase = defineComponent({
     },
   },
 
-  render(): VNode {
+  render() {
     if (!this.hasTarget)
       return
 
