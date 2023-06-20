@@ -9,8 +9,19 @@ const elevation = DefaultEffects.elevation4
 </script>
 
 <template>
-  <div :style="{ boxShadow: elevation, padding: '28px', margin: '4px', background: 'var(--fluentui-white)' }">
-    <h2>{{ title }}</h2>
+  <div class="DocSection" :style="{ boxShadow: elevation }">
+    <h2 v-if="title">
+      {{ title }}
+    </h2>
     <slot />
   </div>
 </template>
+
+<style>
+.DocSection {
+  padding: 28px;
+  margin: 4px;
+  margin-bottom: 28px;
+  background: var(--fluentui-white);
+}
+</style>

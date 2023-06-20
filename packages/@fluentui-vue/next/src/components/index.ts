@@ -8,6 +8,10 @@ export * from './SearchBox'
 export * from './TextField'
 export * from './Toggle'
 
+// Galleries & Pickers
+export * from './Calendar'
+export * from './SwatchColorPicker'
+
 // Items & Lists
 export * from './ActivityItem'
 export * from './Persona'
@@ -42,5 +46,3 @@ export * from './Layer'
 export * from './Separator'
 export * from './Stack'
 export * from './Text'
-
-export * from './SwatchColorPicker'

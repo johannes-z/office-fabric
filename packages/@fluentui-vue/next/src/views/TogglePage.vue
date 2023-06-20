@@ -10,13 +10,18 @@ const value1 = ref(true)
 <template>
   <h1>Toggle</h1>
 
+  <DocSection>
+    A toggle represents a physical switch that allows someone to choose between two mutually exclusive options.  For
+    example, "On/Off", "Show/Hide". Choosing an option should produce an immediate result.
+  </DocSection>
+
   <DocSection title="Usage">
     <ExampleCard title="Basic Toggles">
       <Toggle v-model="value1" label="Enabled and checked" on-text="On" off-text="Off" />
 
       <Toggle label="Enabled and unchecked" on-text="On" off-text="Off" />
 
-      <Toggle label="Disabled and checked" default-checked disabled on-text="On" off-text="Off" />
+      <Toggle label="Disabled and checked" disabled on-text="On" off-text="Off" />
 
       <Toggle label="Disabled and unchecked" disabled on-text="On" off-text="Off" />
 
@@ -30,7 +35,6 @@ const value1 = ref(true)
 
       <Toggle
         label="Enabled and checked (ARIA 1.0 compatible)"
-        default-checked
         on-text="On"
         off-text="Off"
         role="checkbox"
@@ -42,5 +46,9 @@ const value1 = ref(true)
         </template>
       </Toggle>
     </ExampleCard>
+  </DocSection>
+
+  <DocSection title="Implementation">
+    test
   </DocSection>
 </template>

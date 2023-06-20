@@ -27,14 +27,14 @@ export function useProxiedModel<
 
   const isControlled = checkKebab
     ? computed(() => {
-      void props[prop]
+      void props[prop] // dependency tracking
       return !!(
         (vm.vnode.props?.hasOwnProperty(prop) || vm.vnode.props?.hasOwnProperty(kebabProp))
         && (vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`) || vm.vnode.props?.hasOwnProperty(`onUpdate:${kebabProp}`))
       )
     })
     : computed(() => {
-      void props[prop]
+      void props[prop] // dependency tracking
       return !!(vm.vnode.props?.hasOwnProperty(prop) && vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`))
     })
 

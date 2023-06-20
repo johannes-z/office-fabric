@@ -4,8 +4,9 @@ import { Checkbox } from '../components'
 import DocSection from './components/DocSection.vue'
 import ExampleCard from './components/ExampleCard.vue'
 import type { IButton } from '@/components/Button/Button.types'
+import type { ICheckbox } from '@/components/Checkbox/Checkbox.types'
 
-const componentRef = ref<IButton | null>(null)
+const componentRef = ref<ICheckbox | null>(null)
 watch(componentRef, () => {
   console.log(componentRef.value)
   componentRef.value?.focus()
@@ -13,12 +14,7 @@ watch(componentRef, () => {
 
 const isIndeterminate = ref(true)
 const isChecked = ref(false)
-function onChange(value: boolean) {
-  console.log(value)
-  if (isIndeterminate.value)
-    isIndeterminate.value = false
-  else isChecked.value = !!value
-}
+
 const checked = ref(true)
 const checked2 = ref(true)
 </script>
@@ -48,21 +44,20 @@ const checked2 = ref(true)
       <Checkbox label="Checkbox with extra props for the input (including data-*)" />
     </ExampleCard>
     <ExampleCard title="Indeterminate Checkboxes">
-      <Checkbox label="Indeterminate checkbox (uncontrolled)" default-indeterminate />
+      <Checkbox label="Indeterminate checkbox (uncontrolled)" indeterminate />
 
       <Checkbox
         v-model="checked2"
         label="Indeterminate checkbox which defaults to true when clicked (uncontrolled)"
-        default-indeterminate
+        indeterminate
       />
 
-      <Checkbox label="Disabled indeterminate checkbox" disabled default-indeterminate />
+      <Checkbox label="Disabled indeterminate checkbox" disabled indeterminate />
 
       <Checkbox
+        v-model="isChecked"
+        v-model:indeterminate="isIndeterminate"
         label="Indeterminate checkbox (controlled)"
-        :indeterminate="isIndeterminate"
-        :checked="isChecked"
-        @change="onChange"
       />
     </ExampleCard>
   </DocSection>
