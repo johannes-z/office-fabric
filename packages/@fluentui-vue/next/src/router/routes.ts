@@ -84,6 +84,11 @@ export const nav = [
       isExpanded: false,
       links: [
         defineRoute({
+          path: '/Calendar',
+          name: 'Calendar',
+          component: () => import('../views/CalendarPage.vue'),
+        }),
+        defineRoute({
           path: '/SwatchColorPicker',
           name: 'SwatchColorPicker',
           component: () => import('../views/SwatchColorPickerPage.vue'),
