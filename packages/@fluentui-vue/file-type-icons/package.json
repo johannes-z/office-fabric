@@ -20,10 +20,10 @@
     "vue": "^2.7.0 || >=3.0.0"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:^1.1.0",
+    "@fluentui-vue/style-utilities": "workspace:^",
     "vue-demi": "latest"
   },
   "devDependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   }
 }

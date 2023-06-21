@@ -13,10 +13,10 @@
     "vue": "^3.0.0"
   },
   "dependencies": {
-    "@fluentui-vue/utilities": "workspace:^1.0.0",
-    "tslib": "^2.5.0"
+    "@fluentui-vue/utilities": "workspace:^",
+    "tslib": "^2.5.3"
   },
   "devDependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   }
 }
