@@ -2,17 +2,22 @@ import * as path from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import Markdown from 'vite-plugin-vue-markdown'
 
 import pkg from './package.json'
 
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      include: [/\.vue$/, /\.md$/],
+    }),
     vueJsx(),
+    Markdown(),
   ],
   resolve: {
     alias: {
       '@/': `${path.resolve(__dirname, './src')}/`,
+      '@fluentui-vue/components': `${path.resolve(__dirname, './src')}/index`,
     },
   },
   define: {

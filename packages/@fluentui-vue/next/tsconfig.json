@@ -26,7 +26,8 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@fluentui-vue/components": ["./src/index.ts"]
     },
     "lib": [
       "esnext",

@@ -49,7 +49,7 @@ export const nav = [
         defineRoute({
           path: '/Label',
           name: 'Label',
-          component: () => import('../views/LabelPage.vue'),
+          component: () => import('../views/Label/LabelPage.vue'),
         }),
         defineRoute({
           path: '/Link',
@@ -86,7 +86,7 @@ export const nav = [
         defineRoute({
           path: '/Calendar',
           name: 'Calendar',
-          component: () => import('../views/CalendarPage.vue'),
+          component: () => import('../views/Calendar/CalendarPage.vue'),
         }),
         defineRoute({
           path: '/SwatchColorPicker',

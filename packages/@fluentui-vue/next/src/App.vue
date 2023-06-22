@@ -18,11 +18,11 @@ const currentUrl = computed(() => router.currentRoute.value.path)
 
 <template>
   <div style="display: grid; grid-template-columns: 300px 1fr; max-width: 100%; max-height: 100vh;">
-    <div style="background: white; margin-right: 50px; overflow-y: auto; height: 100vh; max-height: 100vh;">
+    <div style="background: white; overflow-y: auto; height: 100vh; max-height: 100vh;">
       <Nav :groups="navLinkGroups" :selected-key="currentUrl" :styles="styles" />
     </div>
 
-    <div style="display: flex; flex: 1; flex-direction: column; overflow-y: auto; max-height: 100vh; ">
+    <div style="display: flex; flex: 1; flex-direction: column; overflow-y: auto; max-height: 100vh; padding: 0 50px; ">
       <RouterView />
     </div>
   </div>

@@ -7,11 +7,9 @@ const getClassNames = classNamesFunction<ILabelStyleProps, ILabelStyles>()
 
 export const makeLabelProps = propsFactoryFromInterface<ILabelProps>()({
   ...makeStylingProps(),
-
   as: { type: String, default: 'label' },
   disabled: { type: Boolean, default: false },
   required: { type: Boolean, default: false },
-
 }, 'Label')
 
 export const LabelBase = defineFunctionalComponent({
@@ -20,7 +18,14 @@ export const LabelBase = defineFunctionalComponent({
   props: makeLabelProps(),
 
   render(props, { attrs, slots }) {
-    const { styles, theme, className, as: RootType, disabled, required } = props
+    const {
+      styles,
+      theme,
+      className,
+      as: RootType,
+      disabled,
+      required,
+    } = props
 
     const classNames = getClassNames(styles, {
       theme,

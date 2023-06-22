@@ -1,7 +1,7 @@
 import { FontWeights, HighContrastSelector, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import type { ILabelStyleProps, ILabelStyles } from './Label.types'
 
-export const getStyles = (props: ILabelStyleProps): ILabelStyles => {
+export function getStyles(props: ILabelStyleProps): ILabelStyles {
   const { theme, className, disabled, required } = props
   const { semanticColors } = theme
 
