@@ -1,11 +1,11 @@
 import { classNamesFunction, css, format } from '@fluentui-vue/utilities'
-import { type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
-import { DEFAULT_CALENDAR_STRINGS, DEFAULT_DATE_FORMATTING, type ICalendarStrings } from '@fluentui/date-time-utilities'
+import { type PropType, type Ref, computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { CalendarDay } from './CalendarDay/CalendarDay'
 import { CalendarMonth } from './CalendarMonth/CalendarMonth'
 import { makeCalendarProps } from './makeProps'
-import { DateRangeType, DayOfWeek, type ICalendarProps, type ICalendarStyleProps, type ICalendarStyles, type IDateFormatting } from '.'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { type ICalendarStyleProps, type ICalendarStyles } from '.'
+import { asSlotProps } from '@/utils'
+import { useProxiedModel, useRender, useSyncedRef } from '@/composables'
 
 const MIN_SIZE_FORCE_OVERLAY = 440
 
@@ -14,73 +14,61 @@ const getClassNames = classNamesFunction<ICalendarStyleProps, ICalendarStyles>()
 export const CalendarBase = defineComponent({
   name: 'CalendarBase',
 
-  emits: [
-    'update:modelValue',
-  ],
-
   props: {
     ...makeCalendarProps(),
+    'onUpdate:modelValue': { type: Function as PropType<(date: Date, selectedDateRangeArray?: Date[]) => void>, default: undefined },
   },
 
   setup(props, { attrs, emit, slots }) {
-    const {
-      styles,
-      theme,
-      className,
-      modelValue,
-      today,
-      minDate,
-      maxDate,
-      strings,
-      isDayPickerVisible,
-      isMonthPickerVisible,
-      showMonthPickerAsOverlay,
-      showGoToToday,
-      showWeekNumbers,
-      firstDayOfWeek,
-      dateRangeType,
-    } = toRefs(props)
+    const selectedDate = useProxiedModel(props, 'modelValue', props.today)
+    const navigatedDate = useSyncedRef(props, 'modelValue', props.today)
+    const navigatedMonth = useSyncedRef(props, 'modelValue', props.today)
+    const isMonthPickerVisible = useSyncedRef(props, 'isMonthPickerVisible', true) as Ref<boolean | undefined>
+    const isDayPickerVisible = useSyncedRef(props, 'isDayPickerVisible', true) as Ref<boolean | undefined>
 
     const _showMonthPickerAsOverlay = computed(() => {
       const win = window
-      return showMonthPickerAsOverlay.value || (isDayPickerVisible.value && win && win.innerWidth <= MIN_SIZE_FORCE_OVERLAY)
+      return props.showMonthPickerAsOverlay || (isDayPickerVisible.value && win && win.innerWidth <= MIN_SIZE_FORCE_OVERLAY)
     })
 
     const monthPickerOnly = computed(() => !_showMonthPickerAsOverlay.value && !isDayPickerVisible.value)
-    const overlaidWithButton = computed(() => _showMonthPickerAsOverlay.value && showGoToToday.value)
-
-    const selectedDate = ref(modelValue.value || today.value)
-    const navigatedDate = ref(modelValue.value || today.value)
-    const navigatedMonth = ref(modelValue.value || today.value)
+    const overlaidWithButton = computed(() => _showMonthPickerAsOverlay.value && props.showGoToToday)
 
     const todayDateString = computed(() => {
-      if (!props.dateTimeFormatter || !strings.value.todayDateFormatString)
+      if (!props.dateTimeFormatter || !props.strings.todayDateFormatString)
         return ''
-      return format(strings.value.todayDateFormatString, props.dateTimeFormatter.formatMonthDayYear(today.value, strings.value))
+      return format(props.strings.todayDateFormatString, props.dateTimeFormatter.formatMonthDayYear(props.today, props.strings))
     })
     const selectedDateString = computed(() => {
-      if (!props.dateTimeFormatter || !strings.value.selectedDateFormatString)
+      if (!props.dateTimeFormatter || !props.strings.selectedDateFormatString)
         return ''
-      return format(strings.value.selectedDateFormatString, props.dateTimeFormatter.formatMonthDayYear(selectedDate.value, strings.value))
+      return format(props.strings.selectedDateFormatString, props.dateTimeFormatter.formatMonthDayYear(selectedDate.value!, props.strings))
     })
     const selectionAndTodayString = computed(() => `${todayDateString.value}, ${selectedDateString.value}`)
 
-    const classNames = computed(() => getClassNames(styles.value, {
-      theme: theme.value,
-      className: className.value,
+    const classNames = computed(() => getClassNames(props.styles, {
+      theme: props.theme,
+      className: props.className,
       isMonthPickerVisible: isMonthPickerVisible.value,
       isDayPickerVisible: isDayPickerVisible.value,
       monthPickerOnly: monthPickerOnly.value,
       showMonthPickerAsOverlay: _showMonthPickerAsOverlay.value,
       overlaidWithButton: overlaidWithButton.value,
       overlayedWithButton: overlaidWithButton.value,
-      showGoToToday: showGoToToday.value,
-      showWeekNumbers: showWeekNumbers.value,
+      showGoToToday: props.showGoToToday,
+      showWeekNumbers: props.showWeekNumbers,
     }))
+
+    const onHeaderSelect = computed(() => _showMonthPickerAsOverlay.value
+      ? () => {
+          isMonthPickerVisible.value = !isMonthPickerVisible.value
+          isDayPickerVisible.value = !isDayPickerVisible.value
+        }
+      : undefined)
 
     const slotProps = computed(() => asSlotProps({
       root: {
-        class: css('ms-DatePicker', classNames.value.root, className.value, 'ms-slideDownIn10'),
+        class: css('ms-DatePicker', classNames.value.root, props.className, 'ms-slideDownIn10'),
         role: 'group',
         ariaLabel: selectionAndTodayString.value,
       },
@@ -117,18 +105,17 @@ export const CalendarBase = defineComponent({
         'navigatedDate': navigatedDate.value,
         'selectedDate': selectedDate.value,
 
-        'onUpdate:navigatedDate': (date, focus) => {
+        'onNavigateDate': (date, focus) => {
           // TODO
           navigatedMonth.value = date
           navigatedDate.value = date
-          console.log('onUpdate:navigatedDate', date, focus)
         },
         'onUpdate:selectedDate': (date) => {
-          console.log(date)
           selectedDate.value = date
-          emit('update:modelValue', date)
-          console.log(selectedDateString.value)
+          props['onUpdate:modelValue']?.(date)
         },
+        onHeaderSelect: onHeaderSelect.value,
+
       },
       calendarMonth: {
         'strings': props.strings,
@@ -143,26 +130,29 @@ export const CalendarBase = defineComponent({
         'navigatedDate': navigatedMonth.value,
         'selectedDate': selectedDate.value,
 
-        'onUpdate:navigatedDate': (date, focus) => {
+        'onNavigateDate': (date, focus) => {
+          console.log('onNavigateDate', date, focus)
           // TODO
           navigatedMonth.value = date
           navigatedDate.value = date
-          console.log('onUpdate:navigatedDate', date, focus)
+          // console.log('onUpdate:navigatedDate', date, focus)
         },
+        onHeaderSelect: onHeaderSelect.value,
+
       },
     }))
 
-    const renderGoToTodayButton = () => {
-      return showGoToToday.value && h('button', {
+    const $renderGoToTodayButton = () => {
+      return props.showGoToToday && h('button', {
         ...slotProps.value.goTodayButton,
         onClick: () => {
           navigatedMonth.value = props.today
           navigatedDate.value = props.today
         },
-      }, strings.value.goToToday)
+      }, props.strings.goToToday)
     }
 
-    return () => h('div', slotProps.value.root, [
+    useRender(() => h('div', slotProps.value.root, [
       h('div', slotProps.value.liveRegion, [
         h('span', selectedDateString.value),
       ]),
@@ -171,9 +161,9 @@ export const CalendarBase = defineComponent({
       isMonthPickerVisible.value
         ? h('div', slotProps.value.monthPickerWrapper, [
           h(CalendarMonth, slotProps.value.calendarMonth),
-          renderGoToTodayButton(),
+          $renderGoToTodayButton(),
         ])
-        : renderGoToTodayButton(),
-    ])
+        : $renderGoToTodayButton(),
+    ]))
   },
 })

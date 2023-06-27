@@ -45,8 +45,8 @@ const CalendarPageProps = {
       code: CalendarInlineMonthSelectionExampleCode,
     },
   ],
-  overview: defineAsyncComponent(() => import('./docs/CalendarOverview.md')),
-  bestPractices: defineAsyncComponent(() => import('./docs/CalendarBestPractices.md')),
+  overview: import('./docs/CalendarOverview.md'),
+  bestPractices: import('./docs/CalendarBestPractices.md'),
 }
 </script>
 

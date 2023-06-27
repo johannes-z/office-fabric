@@ -51,26 +51,6 @@ export interface ICalendarDayGridProps extends IDayGridOptions/* , IBaseProps<IC
   navigatedDate: Date
 
   /**
-   * Callback issued when a date is selected
-   * @param date - The date the user selected
-   * @param selectedDateRangeArray - The resultant list of dates that are selected based on the date range type set
-   * for the component.
-   */
-  onSelectDate?: (date: Date, selectedDateRangeArray?: Date[]) => void
-
-  /**
-   * Callback issued when a date in the calendar is navigated
-   * @param date - The date that is navigated to
-   * @param focusOnNavigatedDay - Whether to set the focus to the navigated date.
-   */
-  onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => void
-
-  /**
-   * Callback issued when calendar day is closed
-   */
-  onDismiss?: () => void
-
-  /**
    * The first day of the week for your locale.
    * @defaultvalue DayOfWeek.Sunday
    */
@@ -112,12 +92,6 @@ export interface ICalendarDayGridProps extends IDayGridOptions/* , IBaseProps<IC
    * Apply additional formatting to dates, for example localized date formatting.
    */
   dateTimeFormatter: IDateFormatting
-
-  /**
-   * Ref callback for individual days. Allows for customization of the styling, properties, or listeners of the
-   * specific day.
-   */
-  customDayCellRef?: (element: HTMLElement, date: Date, classNames: IProcessedStyleSet<ICalendarDayGridStyles>) => void
 
   /**
    * How many weeks to show by default. If not provided, will show enough weeks to display the current

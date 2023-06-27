@@ -53,7 +53,7 @@ export interface ICalendarProps {
    * @param selectedDateRangeArray - The resultant list of dates that are selected based on the date range type set
    * for the component.
    */
-  // onSelectDate?: (date: Date, selectedDateRangeArray?: Date[]) => void
+  'onUpdate:modelValue'?: (date: Date, selectedDateRangeArray?: Date[]) => void
 
   /**
    * Callback for when calendar is closed
@@ -68,7 +68,7 @@ export interface ICalendarProps {
   /**
    * Default value of the Calendar, if any
    */
-  value?: Date
+  modelValue?: Date
 
   /**
    * Value of today. If unspecified, current time in client machine will be used.

@@ -54,7 +54,7 @@ export function getStyles(props: ICalendarDayStyleProps): ICalendarDayStyles {
         backgroundColor: 'transparent',
         borderRadius: 2,
         lineHeight: 28,
-        overflow: 'hidden',
+        overflow: 'hidden' as const,
         whiteSpace: 'nowrap',
         textAlign: 'left',
         textOverflow: 'ellipsis',
@@ -85,11 +85,11 @@ export function getStyles(props: ICalendarDayStyleProps): ICalendarDayStyles {
         fontFamily: 'inherit',
         color: palette.neutralPrimary,
         borderRadius: 2,
-        position: 'relative',
+        position: 'relative' as const,
         backgroundColor: 'transparent',
         border: 'none',
         padding: 0,
-        overflow: 'visible', // explicitly specify for IE11
+        overflow: 'visible' as const, // explicitly specify for IE11
         selectors: {
           '&:hover': {
             color: palette.neutralDark,

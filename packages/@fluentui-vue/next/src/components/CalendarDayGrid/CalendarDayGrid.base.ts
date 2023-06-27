@@ -1,13 +1,13 @@
-import { classNamesFunction } from '@fluentui-vue/utilities'
-import { DAYS_IN_WEEK, DateRangeType, addWeeks, compareDates, getDayGrid } from '@fluentui/date-time-utilities'
+import { classNamesFunction, getRTL } from '@fluentui-vue/utilities'
 import type { DayOfWeek, IDay } from '@fluentui/date-time-utilities'
-import { type ComputedRef, type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
-import { makeCalendarProps } from '../Calendar/makeProps'
-import { AnimationDirection } from '../Calendar/Calendar.types'
+import { DAYS_IN_WEEK, DateRangeType, compareDates, getDateRangeArray, getDayGrid } from '@fluentui/date-time-utilities'
+import { type ComputedRef, computed, defineComponent, h, ref, toRefs } from 'vue'
+import { useId } from '@fluentui-vue/hooks'
+import type { IProcessedStyleSet } from '@fluentui/merge-styles'
+import { makeCalendarDayGridProps } from '../Calendar/makeProps'
 import type { ICalendarDayGridProps, ICalendarDayGridStyleProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
-import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 import { CalendarGridRow } from './CalendarGridRow'
-import { makeStylingProps, propsFactoryFromInterface } from '@/utils'
+import { CalendarMonthHeaderRow } from './CalendarMonthHeaderRow'
 
 const getClassNames = classNamesFunction<ICalendarDayGridStyleProps, ICalendarDayGridStyles>()
 
@@ -67,15 +67,162 @@ function useWeeks(
   return weeks
 }
 
-export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGridProps>()({
-  ...makeStylingProps(),
-  ...makeCalendarProps(),
+function useWeekCornerStyles(props: ICalendarDayGridProps) {
+  /**
+   *
+   * Section for setting the rounded corner styles on individual day cells. Individual day cells need different
+   * corners to be rounded depending on which date range type and where the cell is located in the current grid.
+   * If we just round all of the corners, there isn't a good overlap and we get gaps between contiguous day boxes
+   * in Edge browser.
+   *
+   */
+  const getWeekCornerStyles = (
+    classNames: IProcessedStyleSet<ICalendarDayGridStyles>,
+    initialWeeks: IDayInfo[][],
+  ): IWeekCorners => {
+    const weekCornersStyled: { [key: string]: string } = {}
+    /* need to handle setting all of the corners on arbitrarily shaped blobs
+          __
+       __|A |
+      |B |C |__
+      |D |E |F |
 
-  lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
-  animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-  navigatedDate: { type: Date, default: undefined },
-  selectedDate: { type: Date, default: undefined },
-}, 'CalendarDayGrid')
+      in this case, A needs top left rounded, top right rounded
+      B needs top left rounded
+      C doesn't need any rounding
+      D needs bottom left rounded
+      E doesn't need any rounding
+      F needs top right rounding
+    */
+
+    // cut off the animation transition weeks
+    const weeks = initialWeeks.slice(1, initialWeeks.length - 1)
+
+    // if there's an item above, lose both top corners. Item below, lose both bottom corners, etc.
+    weeks.forEach((week: IDayInfo[], weekIndex: number) => {
+      week.forEach((day: IDayInfo, dayIndex: number) => {
+        const above
+          = weeks[weekIndex - 1]
+          && weeks[weekIndex - 1][dayIndex]
+          && isInSameHoverRange(
+            weeks[weekIndex - 1][dayIndex].originalDate,
+            day.originalDate,
+            weeks[weekIndex - 1][dayIndex].isSelected,
+            day.isSelected,
+          )
+        const below
+          = weeks[weekIndex + 1]
+          && weeks[weekIndex + 1][dayIndex]
+          && isInSameHoverRange(
+            weeks[weekIndex + 1][dayIndex].originalDate,
+            day.originalDate,
+            weeks[weekIndex + 1][dayIndex].isSelected,
+            day.isSelected,
+          )
+        const left
+          = weeks[weekIndex][dayIndex - 1]
+          && isInSameHoverRange(
+            weeks[weekIndex][dayIndex - 1].originalDate,
+            day.originalDate,
+            weeks[weekIndex][dayIndex - 1].isSelected,
+            day.isSelected,
+          )
+        const right
+          = weeks[weekIndex][dayIndex + 1]
+          && isInSameHoverRange(
+            weeks[weekIndex][dayIndex + 1].originalDate,
+            day.originalDate,
+            weeks[weekIndex][dayIndex + 1].isSelected,
+            day.isSelected,
+          )
+
+        const style = []
+        style.push(calculateRoundedStyles(classNames, above, below, left, right))
+        style.push(calculateBorderStyles(classNames, above, below, left, right))
+
+        weekCornersStyled[`${weekIndex}_${dayIndex}`] = style.join(' ')
+      })
+    })
+
+    return weekCornersStyled
+  }
+
+  const calculateRoundedStyles = (
+    classNames: IProcessedStyleSet<ICalendarDayGridStyles>,
+    above: boolean,
+    below: boolean,
+    left: boolean,
+    right: boolean,
+  ): string => {
+    const style = []
+    const roundedTopLeft = !above && !left
+    const roundedTopRight = !above && !right
+    const roundedBottomLeft = !below && !left
+    const roundedBottomRight = !below && !right
+
+    if (roundedTopLeft)
+      style.push(getRTL() ? classNames.topRightCornerDate : classNames.topLeftCornerDate)
+
+    if (roundedTopRight)
+      style.push(getRTL() ? classNames.topLeftCornerDate : classNames.topRightCornerDate)
+
+    if (roundedBottomLeft)
+      style.push(getRTL() ? classNames.bottomRightCornerDate : classNames.bottomLeftCornerDate)
+
+    if (roundedBottomRight)
+      style.push(getRTL() ? classNames.bottomLeftCornerDate : classNames.bottomRightCornerDate)
+
+    return style.join(' ')
+  }
+
+  const calculateBorderStyles = (
+    classNames: IProcessedStyleSet<ICalendarDayGridStyles>,
+    above: boolean,
+    below: boolean,
+    left: boolean,
+    right: boolean,
+  ): string => {
+    const style = []
+
+    if (!above)
+      style.push(classNames.datesAbove)
+
+    if (!below)
+      style.push(classNames.datesBelow)
+
+    if (!left)
+      style.push(getRTL() ? classNames.datesRight : classNames.datesLeft)
+
+    if (!right)
+      style.push(getRTL() ? classNames.datesLeft : classNames.datesRight)
+
+    return style.join(' ')
+  }
+
+  const isInSameHoverRange = (date1: Date, date2: Date, date1Selected: boolean, date2Selected: boolean): boolean => {
+    // The hover state looks weird with non-contiguous days in work week view. In work week, show week hover state
+    const dateRangeHoverType = props.dateRangeType === DateRangeType.WorkWeek
+      ? DateRangeType.Week
+      : props.dateRangeType
+
+    // we do not pass daysToSelectInDayView because we handle setting those styles dyanamically in onMouseOver
+    const dateRange = getDateRangeArray(date1, dateRangeHoverType, props.firstDayOfWeek, props.workWeekDays)
+
+    if (date1Selected !== date2Selected) {
+      // if one is selected and the other is not, they can't be in the same range
+      return false
+    }
+    else if (date1Selected && date2Selected) {
+      // if they're both selected at the same time they must be in the same range
+      return true
+    }
+
+    // otherwise, both must be unselected, so check the dateRange
+    return dateRange.filter((date: Date) => date.getTime() === date2.getTime()).length > 0
+  }
+
+  return [getWeekCornerStyles, calculateRoundedStyles] as const
+}
 
 export const CalendarDayGridBase = defineComponent({
   name: 'CalendarDayGridBase',
@@ -87,70 +234,81 @@ export const CalendarDayGridBase = defineComponent({
   props: makeCalendarDayGridProps(),
 
   setup(props, { attrs, emit, slots }) {
-    const {
-      dateRangeType,
-      showWeekNumbers,
-      lightenDaysOutsideNavigatedMonth,
-      animationDirection,
-    } = toRefs(props)
-
     const animateBackwards = ref(false)
     const weeks = useWeeks(props, (date: Date) => {
       console.log('test')
       emit('update:selectedDate', date)
     }, () => {})
 
+    const [getWeekCornerStyles, calculateRoundedStyles] = useWeekCornerStyles(props)
+    const weekCorners = computed(() => getWeekCornerStyles(classNames.value, weeks.value))
+
+    const activeDescendantId = useId()
+
     const classNames = computed(() => getClassNames(props.styles, {
       theme: props.theme,
       className: props.className,
-      dateRangeType: dateRangeType.value,
-      showWeekNumbers: showWeekNumbers.value,
-      lightenDaysOutsideNavigatedMonth:
-        lightenDaysOutsideNavigatedMonth.value === undefined ? true : lightenDaysOutsideNavigatedMonth.value,
-      animationDirection: animationDirection.value,
+      dateRangeType: props.dateRangeType,
+      showWeekNumbers: props.showWeekNumbers,
+      lightenDaysOutsideNavigatedMonth: props.lightenDaysOutsideNavigatedMonth === undefined
+        ? true
+        : props.lightenDaysOutsideNavigatedMonth,
+      animationDirection: props.animationDirection,
       animateBackwards: animateBackwards.value,
     }))
 
-    const slotProps = computed(() => ({
-      wrapper: {
-        class: classNames.value.wrapper,
-      },
-      table: {
-        class: classNames.value.table,
-      },
-      headerRow: {
-        ...props,
-        classNames: classNames.value,
-        weeks: weeks.value,
-      },
-      firstTransitionWeek: {
-        ...props,
+    const slotProps = computed(() => {
+      const partialWeekProps = {
         weeks: weeks.value,
         classNames: classNames.value,
-        week: weeks.value[0],
-        weekIndex: -1,
-        rowClassName: classNames.value.firstTransitionWeek,
-      },
-      lastTransitionWeek: {
-        ...props,
-        weeks: weeks.value,
-        classNames: classNames.value,
-        week: weeks.value[weeks.value.length - 1],
-        weekIndex: -2,
-        rowClassName: classNames.value.lastTransitionWeek,
-      },
-      weekRow: {
-        ...props,
-        weeks: weeks.value,
-        classNames: classNames.value,
-        rowClassName: classNames.value.weekRow,
-      },
-    }))
+        activeDescendantId,
+        calculateRoundedStyles,
+        weekCorners: weekCorners.value,
+      }
+      return {
+        wrapper: {
+          class: classNames.value.wrapper,
+          preventDefaultWhenHandled: true,
+        },
+        table: {
+          'class': classNames.value.table,
+          'aria-multiselectable': false,
+          'aria-labelledby': attrs.labelledBy,
+          'aria-activedescendant': activeDescendantId,
+          'role': 'grid',
+        },
+        monthHeaderRow: {
+          ...props,
+          classNames: classNames.value,
+          weeks: weeks.value,
+        },
+        firstTransitionWeek: {
+          ...props,
+          ...partialWeekProps,
+          week: weeks.value[0],
+          weekIndex: -1,
+          rowClassName: classNames.value.firstTransitionWeek,
+        },
+        lastTransitionWeek: {
+          ...props,
+          ...partialWeekProps,
+          week: weeks.value[weeks.value.length - 1],
+          weekIndex: -2,
+          rowClassName: classNames.value.lastTransitionWeek,
+        },
+        weekRow: {
+          ...props,
+          ...partialWeekProps,
+          rowClassName: classNames.value.weekRow,
+        },
+      }
+    })
 
+    // TODO FocusZone
     return () => h('div', slotProps.value.wrapper, [
       h('table', slotProps.value.table, [
         h('tbody', [
-          h(CalendarMonthHeaderRow, slotProps.value.headerRow),
+          h(CalendarMonthHeaderRow, slotProps.value.monthHeaderRow),
           h(CalendarGridRow, slotProps.value.firstTransitionWeek),
           weeks.value.slice(1, weeks.value.length - 1).map((week, weekIndex) => h(CalendarGridRow, {
             ...slotProps.value.weekRow,

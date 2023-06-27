@@ -1,28 +1,15 @@
 import { classNamesFunction, css } from '@fluentui-vue/utilities'
-import { type PropType, computed, defineComponent, h, toRefs } from 'vue'
 import { addMonths, compareDatePart, getMonthEnd, getMonthStart } from '@fluentui/date-time-utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { defaultCalendarStrings } from '../defaults'
+import { type PropType, computed, defineComponent, h, toRefs } from 'vue'
+import { makeCalendarDayProps } from '../makeProps'
 import type { ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { asSlotProps, propsFactory } from '@/utils'
 import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
-import { makeCalendarDayGridProps } from '@/components/CalendarDayGrid/makeProps'
-import { type ICalendarNavigationIcons, Icon } from '@/components'
+import { Icon } from '@/components'
+import { useRender } from '@/composables'
 
 const getClassNames = classNamesFunction<ICalendarDayStyleProps, ICalendarDayStyles>()
-
-export function makeCalendarDayProps() {
-  return {
-    ...makeStylingProps(),
-    ...makeCalendarDayGridProps(),
-    navigatedDate: { type: Date, required: true },
-    selectedDate: { type: Date, required: true },
-    minDate: { type: Date, default: undefined },
-    maxDate: { type: Date, default: undefined },
-    navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, required: true },
-    showCloseButton: { type: Boolean, default: false },
-  }
-}
 
 export const CalendarDayBase = defineComponent({
   name: 'CalendarDayBase',
@@ -32,32 +19,19 @@ export const CalendarDayBase = defineComponent({
     'update:selectedDate',
   ],
 
-  props: {
-    ...makeCalendarDayProps(),
-  },
+  props: makeCalendarDayProps(),
 
   setup(props, { attrs, emit, slots }) {
-    const {
-      styles,
-      theme,
-      className,
-      showWeekNumbers,
-      animationDirection,
-      dateTimeFormatter,
-      strings,
-      navigatedDate,
-    } = toRefs(props)
-
-    const classNames = computed(() => getClassNames(styles.value, {
-      theme: theme.value,
-      className: className.value,
-      // TODO headerIsClickable: !!onHeaderSelect,
-      showWeekNumbers: showWeekNumbers.value,
-      animationDirection: animationDirection.value,
+    const classNames = computed(() => getClassNames(props.styles, {
+      theme: props.theme,
+      className: props.className,
+      headerIsClickable: !!props.onHeaderSelect,
+      showWeekNumbers: props.showWeekNumbers,
+      animationDirection: props.animationDirection,
     }))
 
-    const monthAndYear = computed(() => dateTimeFormatter.value.formatMonthYear(navigatedDate.value, strings.value))
-    const HeaderButtonComponentType = 'div'
+    const monthAndYear = computed(() => props.dateTimeFormatter?.formatMonthYear(props.navigatedDate, props.strings))
+    const HeaderButtonComponentType = computed(() => props.onHeaderSelect ? 'button' : 'div')
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -68,65 +42,48 @@ export const CalendarDayBase = defineComponent({
       },
       monthAndYear: {
         class: classNames.value.monthAndYear,
+        onClick: props.onHeaderSelect,
       },
     }))
 
-    return () => h('div', slotProps.value.root, [
+    useRender(() => h('div', slotProps.value.root, [
       h('div', slotProps.value.header, [
-        h(HeaderButtonComponentType, slotProps.value.monthAndYear, [
+        h(HeaderButtonComponentType.value, slotProps.value.monthAndYear, [
           h('span', monthAndYear.value),
         ]),
         h(CalendarDayNavigationButtons, {
           ...props,
-          'classNames': classNames.value,
-          'onUpdate:navigatedDate': (date, focus) => {
-            // TODO bubble up
-            console.log('onUpdate:navigatedDate', date, focus)
-            emit('update:navigatedDate', date, focus)
-          },
+          classNames: classNames.value,
         }),
       ]),
       h(CalendarDayGrid, { ...props, 'onUpdate:selectedDate': (...args) => emit('update:selectedDate', ...args) }),
-    ])
+    ]))
   },
 })
+
+export const makeCalendarDayNavigationButtonsProps = propsFactory({
+  ...makeCalendarDayProps(),
+  classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayStyles>>, default: () => ({}) },
+}, 'CalendarDayNavigationButtons')
 
 const CalendarDayNavigationButtons = defineComponent({
   name: 'CalendarDayNavigationButtons',
 
-  emits: [
-    'update:navigatedDate',
-  ],
-
-  props: {
-    ...makeCalendarDayProps(),
-    classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayStyles>>, default: () => ({}) },
-  },
+  props: makeCalendarDayNavigationButtonsProps(),
 
   setup(props, { attrs, emit, slots }) {
-    const {
-      minDate,
-      maxDate,
-      navigatedDate,
-      classNames,
-      allFocusable,
-      navigationIcons,
-      showCloseButton,
-      strings,
-    } = toRefs(props)
-
     const onSelectPrevMonth = () => {
-      emit('update:navigatedDate', addMonths(navigatedDate.value, -1), false)
+      props.onNavigateDate(addMonths(props.navigatedDate, -1), false)
     }
     const onSelectNextMonth = () => {
-      emit('update:navigatedDate', addMonths(navigatedDate.value, 1), false)
+      props.onNavigateDate(addMonths(props.navigatedDate, 1), false)
     }
 
-    const prevMonthInBounds = computed(() => minDate.value
-      ? +compareDatePart(minDate.value, getMonthStart(navigatedDate.value)) < 0
+    const prevMonthInBounds = computed(() => props.minDate
+      ? +compareDatePart(props.minDate, getMonthStart(props.navigatedDate)) < 0
       : true)
-    const nextMonthInBounds = computed(() => maxDate.value
-      ? +compareDatePart(getMonthEnd(navigatedDate.value), maxDate.value) < 0
+    const nextMonthInBounds = computed(() => props.maxDate
+      ? +compareDatePart(getMonthEnd(props.navigatedDate), props.maxDate) < 0
       : true)
 
     const slotProps = computed(() => {
@@ -135,56 +92,56 @@ const CalendarDayNavigationButtons = defineComponent({
       }
       return asSlotProps({
         monthComponents: {
-          class: classNames.value.monthComponents,
+          class: props.classNames.monthComponents,
         },
         prevButton: {
           ...headerIconButton,
-          class: css(classNames.value.headerIconButton, {
-            [classNames.value.disabledStyle]: !prevMonthInBounds.value,
+          class: css(props.classNames.headerIconButton, {
+            [props.classNames.disabledStyle]: !prevMonthInBounds.value,
           }),
-          tabIndex: prevMonthInBounds.value ? undefined : allFocusable.value ? 0 : -1,
+          tabIndex: prevMonthInBounds.value ? undefined : props.allFocusable ? 0 : -1,
           ariaDisabled: !prevMonthInBounds.value,
           type: 'button',
           onClick: onSelectPrevMonth,
         },
         nextButton: {
           ...headerIconButton,
-          class: css(classNames.value.headerIconButton, {
-            [classNames.value.disabledStyle]: !prevMonthInBounds.value,
+          class: css(props.classNames.headerIconButton, {
+            [props.classNames.disabledStyle]: !prevMonthInBounds.value,
           }),
-          tabIndex: nextMonthInBounds.value ? undefined : allFocusable.value ? 0 : -1,
+          tabIndex: nextMonthInBounds.value ? undefined : props.allFocusable ? 0 : -1,
           ariaDisabled: !nextMonthInBounds.value,
           type: 'button',
           onClick: onSelectNextMonth,
         },
         closeButton: {
           ...headerIconButton,
-          class: css(classNames.value.headerIconButton),
-          title: strings.value.closeButtonAriaLabel,
+          class: css(props.classNames.headerIconButton),
+          title: props.strings.closeButtonAriaLabel,
           type: 'button',
         },
         leftNavigationIcon: {
-          iconName: navigationIcons.value.leftNavigation,
+          iconName: props.navigationIcons.leftNavigation,
         },
         rightNavigationIcon: {
-          iconName: navigationIcons.value.rightNavigation,
+          iconName: props.navigationIcons.rightNavigation,
         },
-        closeNavigationIcon: {
-          iconName: navigationIcons.value.closeNavigationIcon,
+        closeIcon: {
+          iconName: props.navigationIcons.closeIcon,
         },
       })
     })
 
-    return () => h('div', slotProps.value.monthComponents, [
+    useRender(() => h('div', slotProps.value.monthComponents, [
       h('button', slotProps.value.prevButton, [
         h(Icon, slotProps.value.leftNavigationIcon),
       ]),
       h('button', slotProps.value.nextButton, [
         h(Icon, slotProps.value.rightNavigationIcon),
       ]),
-      showCloseButton.value && h('button', slotProps.value.closeButton, [
-        h(Icon, slotProps.value.closeNavigationIcon),
+      props.showCloseButton && h('button', slotProps.value.closeButton, [
+        h(Icon, slotProps.value.closeIcon),
       ]),
-    ])
+    ]))
   },
 })
