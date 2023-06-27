@@ -1,5 +1,5 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { type PropType, computed, defineComponent, h, ref, toRefs, watch } from 'vue'
 import { IconButton } from '../Button'
 import type { IButtonProps } from '../Button/Button.types'
 import { Icon } from '../Icon'
@@ -19,9 +19,9 @@ export const SearchBoxBase = defineComponent({
   name: 'SearchBoxBase',
 
   emits: [
-    'escape',
     'focus',
     'blur',
+    'escape',
     'clear',
     'search',
     'change',
@@ -41,6 +41,11 @@ export const SearchBoxBase = defineComponent({
     iconProps: { type: Object, default: () => ({}) },
 
     disabled: { type: Boolean, default: false },
+
+    onChange: { type: Function as PropType<(event?: Event, newValue?: string) => void>, default: undefined },
+    onSearch: { type: Function as PropType<(newValue: any) => void>, default: undefined },
+    onClear: { type: Function as PropType<(ev?: any) => void>, default: undefined },
+    onEscape: { type: Function as PropType<(ev?: any) => void>, default: undefined },
   },
 
   setup(props, { attrs, slots, emit, expose }) {

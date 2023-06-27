@@ -1,30 +1,30 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h } from 'vue'
-import type { IProgressIndicatorStyleProps, IProgressIndicatorStyles } from './ProgressIndicator.types'
-import { asSlotProps, makeStylingProps } from '@/utils/'
+import type { IProgressIndicatorProps, type IProgressIndicatorStyleProps, type IProgressIndicatorStyles } from './ProgressIndicator.types'
+import { asSlotProps, makeStylingProps, propsFactory, propsFactoryFromInterface } from '@/utils/'
 
 const getClassNames = classNamesFunction<IProgressIndicatorStyleProps, IProgressIndicatorStyles>()
 
 const ZERO_THRESHOLD = 0.01
 
+export const makeProgressIndicatorProps = propsFactoryFromInterface<IProgressIndicatorProps>()({
+  ...makeStylingProps(),
+
+  progressHidden: { type: Boolean, default: false },
+  percentComplete: { type: Number, default: undefined },
+  label: { type: String, default: null },
+  description: { type: String, default: null },
+  barHeight: { type: Number, default: 2 },
+  ariaValueText: { type: String, default: undefined },
+  ariaLabel: { type: String, default: undefined },
+}, 'ProgressIndicator')
+
 export const ProgressIndicatorBase = defineComponent({
   name: 'ProgressIndicatorBase',
 
-  props: {
-    ...makeStylingProps(),
-
-    progressHidden: { type: Boolean, default: false },
-    percentComplete: { type: [Number, String], default: undefined },
-    label: { type: String, default: null },
-    description: { type: String, default: null },
-    barHeight: { type: Number, default: 2 },
-    ariaValueText: { type: String, default: undefined },
-    ariaLabel: { type: String, default: undefined },
-  },
+  props: makeProgressIndicatorProps(),
 
   setup(props, { attrs, emit, slots }) {
-    const { styles, className, theme, ariaValueText, ariaLabel, barHeight, label, progressHidden, description } = props
-
     const percentComplete = computed(() => {
       const percentComplete = +props.percentComplete!
       return (typeof percentComplete === 'number' && !Number.isNaN(percentComplete))
@@ -32,10 +32,10 @@ export const ProgressIndicatorBase = defineComponent({
         : undefined
     })
 
-    const classNames = computed(() => getClassNames(styles, {
-      theme,
-      className,
-      barHeight,
+    const classNames = computed(() => getClassNames(props.styles, {
+      theme: props.theme,
+      className: props.className,
+      barHeight: props.barHeight,
       indeterminate: percentComplete.value === undefined,
     }))
 
@@ -62,25 +62,25 @@ export const ProgressIndicatorBase = defineComponent({
       progressTrack: {
         class: classNames.value.progressTrack,
         style: [
-          { height: `${barHeight}px` },
+          { height: `${props.barHeight}px` },
         ],
       },
       progressBar: {
         'class': classNames.value.progressBar,
         'style': [
           {
-            height: `${barHeight}px`,
+            height: `${props.barHeight}px`,
             ...progressBarStyles.value,
           },
         ],
         'role': 'progressbar',
-        'aria-describedby': description ? (`${0}-label`) : undefined,
-        'aria-label': ariaLabel,
-        'aria-labelledby': label ? (`${0}-description`) : undefined,
+        'aria-describedby': props.description ? (`${0}-label`) : undefined,
+        'aria-label': props.ariaLabel,
+        'aria-labelledby': props.label ? (`${0}-description`) : undefined,
         'aria-valuemin': ariaValueMin,
         'aria-valuemax': ariaValueMax,
         'aria-valuenow': ariaValueNow,
-        'aria-valuetext': ariaValueText,
+        'aria-valuetext': props.ariaValueText,
       },
       itemDescription: {
         class: classNames.value.itemDescription,
@@ -93,17 +93,17 @@ export const ProgressIndicatorBase = defineComponent({
     ]))
 
     return () => h('div', slotProps.value.root, [
-      (slots.label || label)
-        && h('div', slotProps.value.label, slots.label?.() || label),
+      (slots.label || props.label)
+        && h('div', slotProps.value.label, slots.label?.() || props.label),
 
-      !progressHidden && onRenderProgress({
+      !props.progressHidden && onRenderProgress({
         ...props,
         percentComplete: percentComplete.value,
         defaultRender: onRenderProgress,
       }),
 
-      (slots.description || description)
-        && h('div', slotProps.value.itemDescription, slots.description?.() || description),
+      (slots.description || props.description)
+        && h('div', slotProps.value.itemDescription, slots.description?.() || props.description),
     ])
   },
 

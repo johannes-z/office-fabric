@@ -35,7 +35,7 @@ export const CalloutContentBase = defineComponent({
   props: {
     ...makeStylingProps(),
 
-    target: { type: [HTMLElement, String, Object, PointerEvent], required: true },
+    target: { type: [HTMLElement, String, Object, Event], required: true },
     calloutWidth: { type: Number, default: null },
     beakWidth: { type: Number, default: 16 },
     minPagePadding: { type: Number, default: 8 },

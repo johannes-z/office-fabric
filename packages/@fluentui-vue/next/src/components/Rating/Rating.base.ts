@@ -1,5 +1,6 @@
 import { classNamesFunction, css } from '@fluentui-vue/utilities'
-import { type PropType, type VNode, computed, defineComponent, h, ref, toRefs } from 'vue'
+import { type PropType, type Ref, type VNode, computed, defineComponent, h, ref, toRefs } from 'vue'
+import { useClamp } from '@vueuse/math'
 import { Icon } from '../Icon/'
 import { type IRatingStarProps, type IRatingStyleProps, type IRatingStyles, RatingSize } from './Rating.types'
 import { asSlotProps, makeStylingProps } from '@/utils'
@@ -30,10 +31,6 @@ function RatingStar(props: IRatingStarProps) {
   ])
 }
 RatingStar.props = ['classNames', 'fillPercentage', 'disabled', 'icon', 'starNum', 'unselectedIcon']
-
-function getClampedRating(rating: number | undefined, min: number, max: number): number {
-  return Math.min(Math.max(rating ?? min, min), max)
-}
 
 function getFillingPercentage(starNum: number, displayRating: number): number {
   const ceilValue = Math.ceil(displayRating)
@@ -83,7 +80,7 @@ export const RatingBase = defineComponent({
       unselectedIcon,
     } = toRefs(props)
 
-    const modelValue = useProxiedModel(props, 'modelValue')
+    const modelValue: Ref<number> = useProxiedModel(props, 'modelValue', 0)
 
     const classNames = computed(() => getClassNames(styles.value, {
       disabled: disabled.value,
@@ -110,7 +107,7 @@ export const RatingBase = defineComponent({
     }))
 
     const min = computed(() => Math.max(allowZeroStars.value ? 0 : 1, 0))
-    const displayRating = computed(() => getClampedRating(modelValue.value, min.value, max.value))
+    const displayRating = useClamp(modelValue, min, max)
 
     return () => {
       const stars: VNode[] = []

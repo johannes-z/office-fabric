@@ -1,21 +1,18 @@
 import type { IfAny } from '@vue/shared'
 import type { ComponentObjectPropsOptions, Prop, PropType } from 'vue'
 
-// export function propsFactoryFromInterface<T>() {
-// }
-
-export function propsFactory<
-  PropsOptions extends ComponentObjectPropsOptions,
->(props: PropsOptions, source: string) {
-  return makeProps(props, source)
-}
-
 /**
  * Creates props with proper defaults fixing type issues.
  *
  * @author vuetify
  * @see https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/util/propsFactory.ts
  */
+export function propsFactory<
+  PropsOptions extends ComponentObjectPropsOptions,
+>(props: PropsOptions, source: string) {
+  return makeProps(props, source)
+}
+
 export function propsFactoryFromInterface<T>() {
   return <PropsOptions extends Required<ComponentObjectPropsOptions<T>>>(props: PropsOptions, source: string) => {
     return makeProps(props, source)

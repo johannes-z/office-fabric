@@ -18,6 +18,9 @@ export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
   onText: { type: String, default: null },
   offText: { type: String, default: null },
   as: { type: String, default: '' },
+
+  onChange: { type: Function, default: undefined },
+  // 'onUpdate:modelValue': { type: Function, default: undefined },
 }, 'Toggle')
 
 export const ToggleBase = defineComponent({
@@ -26,11 +29,10 @@ export const ToggleBase = defineComponent({
   props: makeToggleProps(),
 
   emits: [
-    'change',
     'update:modelValue',
   ],
 
-  setup(props, { emit, slots }) {
+  setup(props, { attrs, emit, slots }) {
     const {
       label,
       modelValue,
@@ -42,6 +44,11 @@ export const ToggleBase = defineComponent({
       disabled,
       inlineLabel,
     } = toRefs(props)
+
+    console.log({
+      props,
+      attrs,
+    })
 
     const checked = useProxiedModel(props, 'modelValue')
 
@@ -78,7 +85,7 @@ export const ToggleBase = defineComponent({
           if (disabled.value)
             return
           checked.value = !checked.value
-          emit('change', checked.value)
+          props.onChange?.(checked.value)
         },
       },
       thumb: {

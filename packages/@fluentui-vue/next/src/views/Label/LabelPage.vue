@@ -15,8 +15,8 @@ const LabelPageProps = {
       view: LabelBasicExample,
     },
   ],
-  overview: defineAsyncComponent(() => import('./docs/LabelOverview.md')),
-  bestPractices: defineAsyncComponent(() => import('./docs/LabelBestPractices.md')),
+  overview: import('./docs/LabelOverview.md'),
+  bestPractices: import('./docs/LabelBestPractices.md'),
 }
 </script>
 

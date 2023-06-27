@@ -2,7 +2,7 @@ import type { ITheme } from '@fluentui-vue/style-utilities'
 import { getTheme } from '@fluentui-vue/style-utilities'
 import type { IStyleFunctionOrObject, IStyleSet } from '@fluentui/merge-styles'
 import { type PropType, ref } from 'vue'
-import { propsFactory } from '.'
+import { propsFactory } from './props'
 
 // export function makeStylingProps<TStyleProps = any, TStyle extends IStyleSet = any>() {
 //   return {

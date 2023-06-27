@@ -154,7 +154,7 @@ export const nav = [
         defineRoute({
           path: '/ProgressIndicator',
           name: 'ProgressIndicator',
-          component: () => import('../views/ProgressIndicatorPage.vue'),
+          component: () => import('../views/ProgressIndicator/ProgressIndicatorPage.vue'),
         }),
         defineRoute({
           path: '/Spinner',

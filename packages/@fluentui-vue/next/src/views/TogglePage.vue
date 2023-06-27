@@ -5,6 +5,9 @@ import DocSection from './components/DocSection.vue'
 import ExampleCard from './components/ExampleCard.vue'
 
 const value1 = ref(true)
+function onChange(value: boolean) {
+  console.log(value)
+}
 </script>
 
 <template>
@@ -19,7 +22,7 @@ const value1 = ref(true)
     <ExampleCard title="Basic Toggles">
       <Toggle v-model="value1" label="Enabled and checked" on-text="On" off-text="Off" />
 
-      <Toggle label="Enabled and unchecked" on-text="On" off-text="Off" />
+      <Toggle label="Enabled and unchecked" on-text="On" off-text="Off" @change="onChange" />
 
       <Toggle label="Disabled and checked" disabled on-text="On" off-text="Off" />
 

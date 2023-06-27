@@ -6,7 +6,7 @@ import { toKebabCase } from '@/utils'
 type InnerVal<T> = T extends any[] ? Readonly<T> : T
 
 /**
- * @copyright https://github.com/vuetifyjs/vuetify
+ * @author vuetify
  * @see https://github.com/vuetifyjs/vuetify/blob/master/packages/vuetify/src/composables/proxiedModel.ts
  */
 export function useProxiedModel<
@@ -56,7 +56,8 @@ export function useProxiedModel<
         return
 
       internal.value = newValue
-      vm?.emit(`update:${prop}`, newValue)
+      // TODO fix types
+      props[`onUpdate:${prop}`]?.(newValue) ?? vm?.emit(`update:${prop}`, newValue)
     },
   }) as any as Ref<InnerVal<Inner>> & { readonly externalValue: Props[Prop] }
 

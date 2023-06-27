@@ -35,7 +35,7 @@ const IndeterminateProgressRTL = memoizeFunction(() =>
   }),
 )
 
-export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicatorStyles => {
+export function getStyles(props: IProgressIndicatorStyleProps): IProgressIndicatorStyles {
   const isRTL = getRTL(props.theme)
   const { className, indeterminate, theme, barHeight = 2 } = props
 
@@ -71,8 +71,8 @@ export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicat
     itemProgress: [
       classNames.itemProgress,
       {
-        position: 'relative',
-        overflow: 'hidden',
+        position: 'relative' as const,
+        overflow: 'hidden' as const,
         height: barHeight,
         padding: `${marginBetweenText}px 0`,
       },
@@ -81,7 +81,7 @@ export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicat
     progressTrack: [
       classNames.progressTrack,
       {
-        position: 'absolute',
+        position: 'absolute' as const,
         width: '100%',
         height: barHeight,
         backgroundColor: progressTrackColor,
@@ -98,7 +98,7 @@ export const getStyles = (props: IProgressIndicatorStyleProps): IProgressIndicat
       {
         backgroundColor: palette.themePrimary,
         height: barHeight,
-        position: 'absolute',
+        position: 'absolute' as const,
         transition: 'width .3s ease',
         width: 0,
 
