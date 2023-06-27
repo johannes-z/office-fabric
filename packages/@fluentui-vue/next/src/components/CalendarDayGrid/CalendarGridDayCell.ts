@@ -1,94 +1,128 @@
 import { css } from '@fluentui-vue/utilities'
 import { type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { compareDates } from '@fluentui/date-time-utilities'
+import { DateRangeType, type IAvailableDateOptions, addDays, addWeeks, compareDates, findAvailableDate } from '@fluentui/date-time-utilities'
 import type { ICalendarDayGridStyles } from '..'
 import { makeCalendarDayGridProps } from '../Calendar/makeProps'
 import { type IDayInfo, type IWeekCorners } from './CalendarDayGrid.base'
 import type { ICalendarGridRowProps } from './CalendarGridRow'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarGridDayCellProps extends ICalendarGridRowProps {
   day: IDayInfo
   dayIndex: number
 }
 
-export const CalendarGridDayCell = defineComponent({
+const makeCalendarGridDayCellProps = propsFactoryFromInterface<ICalendarGridDayCellProps>()({
+  ...makeStylingProps(),
+  ...makeCalendarDayGridProps(),
+  day: { type: Object, required: true },
+  dayIndex: { type: Number, required: true },
+  rowClassName: { type: String, default: '' },
+  classNames: { type: Object, required: true },
+  weeks: { type: Array, required: true },
+  week: { type: Array, required: true },
+  weekIndex: { type: Number, required: true },
+  weekCorners: { type: Object, default: undefined },
+  ariaHidden: { type: String, default: undefined },
+  ariaRole: { type: String, default: undefined },
+  activeDescendantId: { type: String, required: true },
+  calculateRoundedStyles: { type: Function, required: true },
+  getDayInfosInRangeOfDay: { type: Function, required: true },
+  getRefsFromDayInfos: { type: Function, required: true },
+}, 'CalendarGridDayCell')
+
+export const CalendarGridDayCell = defineFunctionalComponent({
   name: 'CalendarGridDayCell',
 
   inheritAttrs: false,
 
-  props: {
-    ...makeStylingProps(),
-    ...makeCalendarDayGridProps(),
-    day: { type: Object as PropType<IDayInfo>, required: true },
-    dayIndex: { type: Number, required: true },
-    rowClassName: { type: String, default: '' },
-    classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayGridStyles>>, required: true },
-    weeks: { type: Array as PropType<IDayInfo[][]>, required: true },
-    week: { type: Array as PropType<IDayInfo[]>, required: true },
-    weekIndex: { type: Number, required: true },
-    weekCorners: { type: Object as PropType<IWeekCorners>, default: undefined },
-  },
+  props: makeCalendarGridDayCellProps(),
 
-  setup(props, { attrs, slots }) {
-    const cornerStyle = computed(() => props.weekCorners?.[`${props.weekIndex}_${props.dayIndex}`] ?? '')
-    const isNavigatedDate = computed(() => compareDates(props.navigatedDate, props.day.originalDate))
+  render(props, { attrs, slots }) {
+    const {
+      navigatedDate,
+      dateTimeFormatter,
+      allFocusable,
+      strings,
+      activeDescendantId,
+      calculateRoundedStyles,
+      weeks,
+      classNames,
+      day,
+      dayIndex,
+      weekIndex,
+      weekCorners,
+      ariaHidden,
+      dateRangeType,
+      daysToSelectInDayView,
+      // onSelectDate,
+      restrictedDates,
+      minDate,
+      maxDate,
+      // onNavigateDate,
+      getDayInfosInRangeOfDay,
+      getRefsFromDayInfos,
+    } = props
+    const cornerStyle = weekCorners?.[`${weekIndex}_${dayIndex}`] ?? ''
+    const isNavigatedDate = compareDates(navigatedDate, day.originalDate)
 
-    const ariaLabel = computed(() => {
-      const label = `${props.day.originalDate.getDate()}, ${props.strings.months[props.day.originalDate.getMonth()]}, ${props.day.originalDate.getFullYear()}`
-      if (props.day.isMarked)
-        return `${label}, ${props.strings.dayMarkedAriaLabel}`
-      return label
-    })
+    let ariaLabel = `${day.originalDate.getDate()}, ${strings.months[day.originalDate.getMonth()]}, ${day.originalDate.getFullYear()}`
 
-    const slotProps = computed(() => asSlotProps({
+    if (day.isMarked)
+      ariaLabel = `${ariaLabel}, ${strings.dayMarkedAriaLabel}`
+
+    const slotProps = {
       dayCell: {
-        'class': css(
-          props.classNames.dayCell,
-          props.weekCorners && cornerStyle.value,
-          props.day.isSelected && props.classNames.daySelected,
-          props.day.isSelected && 'ms-CalendarDay-daySelected',
-          !props.day.isInBounds && props.classNames.dayOutsideBounds,
-          !props.day.isInMonth && props.classNames.dayOutsideNavigatedMonth,
+        class: css(
+          classNames.dayCell,
+          weekCorners && cornerStyle,
+          day.isSelected && classNames.daySelected,
+          day.isSelected && 'ms-CalendarDay-daySelected',
+          !day.isInBounds && classNames.dayOutsideBounds,
+          !day.isInMonth && classNames.dayOutsideNavigatedMonth,
         ),
-        'ariaDisabled': !attrs.ariaHidden && !props.day.isInBounds,
-        'onClick': props.day.isInBounds ? props.day.onSelected : undefined,
+        // TODO day.setRef?
+        // ref: (element: HTMLTableCellElement) => {
+        // },
+        'aria-hidden': ariaHidden,
+        'aria-disabled': !ariaHidden && !day.isInBounds,
+        onClick: day.isInBounds && !ariaHidden ? day.onSelected : undefined,
         // TODO add onHover/onKeydown
-        'role': 'gridcell',
-        'tabIndex': isNavigatedDate.value ? 0 : undefined,
-        'ariaCurrent': props.day.isToday ? 'date' : undefined,
-        'ariaSelected': props.day.isInBounds ? props.day.isSelected : undefined,
-        'data-is-focusable': !attrs.ariaHidden && (props.allFocusable || (props.day.isInBounds ? true : undefined)),
+        role: 'gridcell',
+        'tab-index': isNavigatedDate ? 0 : undefined,
+        'aria-current': day.isToday ? 'date' : undefined,
+        'aria-selected': day.isInBounds ? day.isSelected : undefined,
+        'data-is-focusable': !ariaHidden && (allFocusable || (day.isInBounds ? true : undefined)),
       },
       dayButton: {
-        'key': `${props.day.key}button`,
-        'ariaHidden': attrs.ariaHidden,
-        'ariaLabel': ariaLabel.value,
-        'id': isNavigatedDate.value ? attrs.activeDescendantId : undefined,
-        'disabled': !attrs.ariaHidden && !props.day.isInBounds,
-        'tabIndex': -1,
-        'data-is-focusable': 'false',
-        'class': css(
-          props.classNames.dayButton,
-          props.day.isToday && props.classNames.dayIsToday,
-          props.day.isToday && 'ms-CalendarDay-dayIsToday',
+        key: `${day.key}button`,
+        class: css(
+          classNames.dayButton,
+          day.isToday && classNames.dayIsToday,
+          day.isToday && 'ms-CalendarDay-dayIsToday',
         ),
-        'type': 'button',
+        'aria-hidden': ariaHidden,
+        'aria-label': ariaLabel,
+        id: isNavigatedDate ? activeDescendantId : undefined,
+        disabled: !ariaHidden && !day.isInBounds,
+        type: 'button',
+        tabIndex: -1,
+        'data-is-focusable': false,
       },
       day: {
-        ariaHidden: true,
+        'aria-hidden': true,
       },
       dayMarker: {
-        class: props.classNames.dayMarker,
-        ariaHidden: true,
+        class: classNames.dayMarker,
+        'aria-hidden': true,
       },
-    }))
+    }
 
-    return () => h('td', slotProps.value.dayCell, [
-      h('button', slotProps.value.dayButton, [
-        h('span', slotProps.value.day, props.dateTimeFormatter.formatDay(props.day.originalDate)),
-        props.day.isMarked && h('div', slotProps.value.dayMarker),
+    return h('td', slotProps.dayCell, [
+      h('button', slotProps.dayButton, [
+        h('span', slotProps.day, dateTimeFormatter.formatDay(day.originalDate)),
+        day.isMarked && h('div', slotProps.dayMarker),
       ]),
     ])
   },

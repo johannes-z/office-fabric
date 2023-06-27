@@ -21,7 +21,7 @@ const defaultWorkWeekDays: DayOfWeek[] = [
 const makeRestrictedDatesProps = propsFactoryFromInterface<IRestrictedDatesOptions>()({
   minDate: { type: Date, default: undefined },
   maxDate: { type: Date, default: undefined },
-  restrictedDates: { type: Array as PropType<Date[]>, default: undefined },
+  restrictedDates: { type: Array, default: undefined },
 }, 'IRestrictedDatesOptions')
 
 const makeAvailableDatesProps = propsFactoryFromInterface<IAvailableDateOptions>()({
@@ -33,14 +33,14 @@ const makeAvailableDatesProps = propsFactoryFromInterface<IAvailableDateOptions>
 
 const makeDayGridOptionsProps = propsFactoryFromInterface<IDayGridOptions>()({
   ...makeRestrictedDatesProps(),
-  firstDayOfWeek: { type: Number as PropType<DayOfWeek>, default: undefined },
-  firstWeekOfYear: { type: Number as PropType<FirstWeekOfYear>, default: undefined },
-  dateRangeType: { type: Number as PropType<DateRangeType>, default: undefined },
+  firstDayOfWeek: { type: Number, default: undefined },
+  firstWeekOfYear: { type: Number, default: undefined },
+  dateRangeType: { type: Number, default: undefined },
   daysToSelectInDayView: { type: Number, default: 1 },
   today: { type: Date, default: () => new Date() },
   showWeekNumbers: { type: Boolean, default: false },
-  workWeekDays: { type: Array as PropType<DayOfWeek[]>, default: () => defaultWorkWeekDays },
-  markedDays: { type: Array as PropType<Date[]>, default: undefined },
+  workWeekDays: { type: Array, default: () => defaultWorkWeekDays },
+  markedDays: { type: Array, default: undefined },
 
   navigatedDate: { type: Date, required: true },
   selectedDate: { type: Date, required: true },
@@ -60,15 +60,15 @@ export const makeCalendarProps = propsFactoryFromInterface<ICalendarProps>()({
   //   workWeekDays: defaultWorkWeekDays,
   // }),
 
-  firstDayOfWeek: { type: Number as PropType<DayOfWeek>, default: DayOfWeek.Sunday },
-  firstWeekOfYear: { type: Number as PropType<FirstWeekOfYear>, default: FirstWeekOfYear.FirstDay },
-  dateRangeType: { type: Number as PropType<DateRangeType>, default: DateRangeType.Day },
+  firstDayOfWeek: { type: Number, default: DayOfWeek.Sunday },
+  firstWeekOfYear: { type: Number, default: FirstWeekOfYear.FirstDay },
+  dateRangeType: { type: Number, default: DateRangeType.Day },
   showWeekNumbers: { type: Boolean, default: false },
   today: { type: Date, default: () => new Date() },
-  workWeekDays: { type: Array as PropType<DayOfWeek[]>, default: () => defaultWorkWeekDays },
+  workWeekDays: { type: Array, default: () => defaultWorkWeekDays },
 
-  strings: { type: Object as PropType<ICalendarStrings>, default: () => DEFAULT_CALENDAR_STRINGS },
-  dateTimeFormatter: { type: Object as PropType<IDateFormatting>, default: () => DEFAULT_DATE_FORMATTING },
+  strings: { type: Object, default: () => DEFAULT_CALENDAR_STRINGS },
+  dateTimeFormatter: { type: Object, default: () => DEFAULT_DATE_FORMATTING },
 
   isMonthPickerVisible: { type: Boolean, default: true },
   isDayPickerVisible: { type: Boolean, default: true },
@@ -81,15 +81,15 @@ export const makeCalendarProps = propsFactoryFromInterface<ICalendarProps>()({
   showCloseButton: { type: Boolean, default: false },
   allFocusable: { type: Boolean, default: false },
 
-  navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
+  navigationIcons: { type: Object, default: () => defaultCalendarNavigationIcons },
 
   modelValue: { type: Date, default: undefined },
 
-  calendarDayProps: { type: Object as PropType<Partial<ICalendarDayProps>>, default: () => ({}) },
-  calendarMonthProps: { type: Object as PropType<Partial<ICalendarMonthProps>>, default: () => ({}) },
+  calendarDayProps: { type: Object, default: () => ({}) },
+  calendarMonthProps: { type: Object, default: () => ({}) },
 
   id: { type: String, default: undefined },
-  'onUpdate:modelValue': { type: Function as PropType<(value: Date) => void>, default: undefined },
+  'onUpdate:modelValue': { type: Function, default: undefined },
 }, 'Calendar')
 
 export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGridProps>()({
@@ -99,9 +99,9 @@ export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGr
     firstWeekOfYear: FirstWeekOfYear.FirstDay,
   }),
 
-  dateRangeType: { type: Number as PropType<DateRangeType>, default: DateRangeType.Day },
-  strings: { type: Object as PropType<ICalendarStrings>, default: () => DEFAULT_CALENDAR_STRINGS },
-  dateTimeFormatter: { type: Object as PropType<IDateFormatting>, default: () => DEFAULT_DATE_FORMATTING },
+  dateRangeType: { type: Number, default: DateRangeType.Day },
+  strings: { type: Object, default: () => DEFAULT_CALENDAR_STRINGS },
+  dateTimeFormatter: { type: Object, default: () => DEFAULT_DATE_FORMATTING },
   showCloseButton: { type: Boolean, default: false },
   allFocusable: { type: Boolean, default: false },
 
@@ -113,32 +113,32 @@ export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGr
   lightenDaysOutsideNavigatedMonth: { type: Boolean, default: true },
   daysToSelectInDayView: { type: Number, default: 1 },
   labelledBy: { type: String, default: undefined },
-  getMarkedDays: { type: Function as PropType<(startingDate: Date, endingDate: Date) => Date[]>, default: undefined },
-  markedDays: { type: Array as PropType<Date[]>, default: undefined },
+  getMarkedDays: { type: Function, default: undefined },
+  markedDays: { type: Array, default: undefined },
 
-  weeks: { type: Array as PropType<IDayInfo[][]>, required: true },
+  weeks: { type: Array, required: true },
 }, 'CalendarDayGrid')
 
 export const makeCalendarDayProps = propsFactoryFromInterface<ICalendarDayProps>()({
   ...makeStylingProps(),
   ...makeCalendarDayGridProps(),
-  navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
+  navigationIcons: { type: Object, default: () => defaultCalendarNavigationIcons },
   showSixWeeksByDefault: { type: Boolean, default: false },
 
-  onHeaderSelect: { type: Function as PropType<() => void>, default: undefined },
-  onDismiss: { type: Function as PropType<() => void>, default: undefined },
-  onNavigateDate: { type: Function as PropType<(date: Date, focusOnNavigatedDay: boolean) => void>, required: true },
+  onHeaderSelect: { type: Function, default: undefined },
+  onDismiss: { type: Function, default: undefined },
+  onNavigateDate: { type: Function, required: true },
 }, 'CalendarDay')
 
 export const makeCalendarMonthProps = propsFactoryFromInterface<ICalendarMonthProps>()({
   ...makeStylingProps(),
-  styles: { type: [Object, Function] as PropType<IStyleFunctionOrObject<any, any> | undefined>, default: () => getStyles },
-  strings: { type: Object as PropType<ICalendarStrings>, required: true },
+  styles: { type: [Object, Function], default: () => getStyles },
+  strings: { type: Object, required: true },
   selectedDate: { type: Date, required: true },
   navigatedDate: { type: Date, required: true },
 
-  navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
-  dateTimeFormatter: { type: Object as PropType<IDateFormatting>, default: () => DEFAULT_DATE_FORMATTING },
+  navigationIcons: { type: Object, default: () => defaultCalendarNavigationIcons },
+  dateTimeFormatter: { type: Object, default: () => DEFAULT_DATE_FORMATTING },
   today: { type: Date, default: new Date() },
   minDate: { type: Date, default: undefined },
   maxDate: { type: Date, default: undefined },
@@ -147,8 +147,8 @@ export const makeCalendarMonthProps = propsFactoryFromInterface<ICalendarMonthPr
   allFocusable: { type: Boolean, default: false },
   yearPickerHidden: { type: Boolean, default: false },
 
-  animationDirection: { type: Number as PropType<AnimationDirection>, default: undefined },
-  onHeaderSelect: { type: Function as PropType<() => void>, default: undefined },
-  onSelectDate: { type: Function as PropType<(date: Date, selectedDateRangeArray?: Date[]) => void>, default: undefined },
-  onNavigateDate: { type: Function as PropType<(date: Date, focusOnNavigatedDay: boolean) => void>, required: true },
+  animationDirection: { type: Number, default: undefined },
+  onHeaderSelect: { type: Function, default: undefined },
+  onSelectDate: { type: Function, default: undefined },
+  onNavigateDate: { type: Function, required: true },
 }, 'CalendarMonth')

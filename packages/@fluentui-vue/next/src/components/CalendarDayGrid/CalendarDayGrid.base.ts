@@ -238,7 +238,7 @@ export const CalendarDayGridBase = defineComponent({
     const weeks = useWeeks(props, (date: Date) => {
       console.log('test')
       emit('update:selectedDate', date)
-    }, () => {})
+    }, () => { })
 
     const [getWeekCornerStyles, calculateRoundedStyles] = useWeekCornerStyles(props)
     const weekCorners = computed(() => getWeekCornerStyles(classNames.value, weeks.value))
@@ -271,11 +271,11 @@ export const CalendarDayGridBase = defineComponent({
           preventDefaultWhenHandled: true,
         },
         table: {
-          'class': classNames.value.table,
+          class: classNames.value.table,
           'aria-multiselectable': false,
           'aria-labelledby': attrs.labelledBy,
           'aria-activedescendant': activeDescendantId,
-          'role': 'grid',
+          role: 'grid',
         },
         monthHeaderRow: {
           ...props,
@@ -288,6 +288,13 @@ export const CalendarDayGridBase = defineComponent({
           week: weeks.value[0],
           weekIndex: -1,
           rowClassName: classNames.value.firstTransitionWeek,
+          'aria-role': 'presentation',
+          'aria-hidden': true,
+        },
+        weekRow: {
+          ...props,
+          ...partialWeekProps,
+          rowClassName: classNames.value.weekRow,
         },
         lastTransitionWeek: {
           ...props,
@@ -295,11 +302,8 @@ export const CalendarDayGridBase = defineComponent({
           week: weeks.value[weeks.value.length - 1],
           weekIndex: -2,
           rowClassName: classNames.value.lastTransitionWeek,
-        },
-        weekRow: {
-          ...props,
-          ...partialWeekProps,
-          rowClassName: classNames.value.weekRow,
+          'aria-role': 'presentation',
+          'aria-hidden': true,
         },
       }
     })
@@ -312,6 +316,7 @@ export const CalendarDayGridBase = defineComponent({
           h(CalendarGridRow, slotProps.value.firstTransitionWeek),
           weeks.value.slice(1, weeks.value.length - 1).map((week, weekIndex) => h(CalendarGridRow, {
             ...slotProps.value.weekRow,
+            key: weekIndex,
             week,
             weekIndex,
           })),

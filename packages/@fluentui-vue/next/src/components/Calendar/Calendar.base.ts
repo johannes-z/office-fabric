@@ -1,5 +1,5 @@
 import { classNamesFunction, css, format } from '@fluentui-vue/utilities'
-import { type PropType, type Ref, computed, defineComponent, h, ref, toRefs, watch } from 'vue'
+import { type PropType, type Ref, computed, defineComponent, h, ref, toRefs, watch, watchEffect } from 'vue'
 import { CalendarDay } from './CalendarDay/CalendarDay'
 import { CalendarMonth } from './CalendarMonth/CalendarMonth'
 import { makeCalendarProps } from './makeProps'
@@ -23,12 +23,23 @@ export const CalendarBase = defineComponent({
     const selectedDate = useProxiedModel(props, 'modelValue', props.today)
     const navigatedDate = useSyncedRef(props, 'modelValue', props.today)
     const navigatedMonth = useSyncedRef(props, 'modelValue', props.today)
-    const isMonthPickerVisible = useSyncedRef(props, 'isMonthPickerVisible', true) as Ref<boolean | undefined>
-    const isDayPickerVisible = useSyncedRef(props, 'isDayPickerVisible', true) as Ref<boolean | undefined>
 
     const _showMonthPickerAsOverlay = computed(() => {
       const win = window
-      return props.showMonthPickerAsOverlay || (isDayPickerVisible.value && win && win.innerWidth <= MIN_SIZE_FORCE_OVERLAY)
+      return props.showMonthPickerAsOverlay || (props.isDayPickerVisible && win && win.innerWidth <= MIN_SIZE_FORCE_OVERLAY)
+    })
+
+    const isMonthPickerVisible = ref(false)
+    watchEffect(() => {
+      if (_showMonthPickerAsOverlay.value)
+        isMonthPickerVisible.value = false
+      else isMonthPickerVisible.value = props.isMonthPickerVisible
+    })
+    const isDayPickerVisible = ref(false)
+    watchEffect(() => {
+      if (_showMonthPickerAsOverlay.value)
+        isDayPickerVisible.value = true
+      else isDayPickerVisible.value = props.isDayPickerVisible
     })
 
     const monthPickerOnly = computed(() => !_showMonthPickerAsOverlay.value && !isDayPickerVisible.value)
@@ -88,24 +99,24 @@ export const CalendarBase = defineComponent({
         type: 'button',
       },
       calendarDay: {
-        'strings': props.strings,
-        'today': props.today,
-        'showWeekNumbers': props.showWeekNumbers,
-        'firstWeekOfYear': props.firstWeekOfYear!,
-        'dateTimeFormatter': props.dateTimeFormatter!,
-        'showSixWeeksByDefault': props.showSixWeeksByDefault,
-        'navigationIcons': props.navigationIcons,
-        'minDate': props.minDate,
-        'maxDate': props.maxDate,
-        'firstDayOfWeek': props.firstDayOfWeek,
-        'dateRangeType': props.dateRangeType,
-        'showCloseButton': props.showCloseButton,
-        'allFocusable': props.allFocusable,
+        strings: props.strings,
+        today: props.today,
+        showWeekNumbers: props.showWeekNumbers,
+        firstWeekOfYear: props.firstWeekOfYear!,
+        dateTimeFormatter: props.dateTimeFormatter!,
+        showSixWeeksByDefault: props.showSixWeeksByDefault,
+        navigationIcons: props.navigationIcons,
+        minDate: props.minDate,
+        maxDate: props.maxDate,
+        firstDayOfWeek: props.firstDayOfWeek,
+        dateRangeType: props.dateRangeType,
+        showCloseButton: props.showCloseButton,
+        allFocusable: props.allFocusable,
 
-        'navigatedDate': navigatedDate.value,
-        'selectedDate': selectedDate.value,
+        navigatedDate: navigatedDate.value,
+        selectedDate: selectedDate.value,
 
-        'onNavigateDate': (date, focus) => {
+        onNavigateDate: (date, focus) => {
           // TODO
           navigatedMonth.value = date
           navigatedDate.value = date
@@ -118,19 +129,19 @@ export const CalendarBase = defineComponent({
 
       },
       calendarMonth: {
-        'strings': props.strings,
-        'today': props.today,
-        'dateTimeFormatter': props.dateTimeFormatter,
-        'highlightCurrentMonth': props.highlightCurrentMonth,
-        'highlightSelectedMonth': props.highlightSelectedMonth,
+        strings: props.strings,
+        today: props.today,
+        dateTimeFormatter: props.dateTimeFormatter,
+        highlightCurrentMonth: props.highlightCurrentMonth,
+        highlightSelectedMonth: props.highlightSelectedMonth,
 
-        'minDate': props.minDate,
-        'maxDate': props.maxDate,
+        minDate: props.minDate,
+        maxDate: props.maxDate,
 
-        'navigatedDate': navigatedMonth.value,
-        'selectedDate': selectedDate.value,
+        navigatedDate: navigatedMonth.value,
+        selectedDate: selectedDate.value,
 
-        'onNavigateDate': (date, focus) => {
+        onNavigateDate: (date, focus) => {
           console.log('onNavigateDate', date, focus)
           // TODO
           navigatedMonth.value = date

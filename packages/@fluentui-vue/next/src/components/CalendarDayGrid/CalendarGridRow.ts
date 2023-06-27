@@ -1,12 +1,12 @@
-import { format } from '@fluentui-vue/utilities'
+import { format, values } from '@fluentui-vue/utilities'
 import { FirstWeekOfYear, getWeekNumbersInMonth } from '@fluentui/date-time-utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { type PropType, computed, defineComponent, h, toRefs } from 'vue'
+import { type Prop, type PropType, computed, defineComponent, h, toRefs } from 'vue'
 import { makeCalendarDayGridProps } from '../Calendar/makeProps'
 import { type IDayInfo, type IWeekCorners } from './CalendarDayGrid.base'
 import type { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { CalendarGridDayCell } from './CalendarGridDayCell'
-import { asSlotProps, makeStylingProps, propsFactory } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarGridRowProps extends ICalendarDayGridProps {
   classNames: IProcessedStyleSet<ICalendarDayGridStyles>
@@ -29,55 +29,78 @@ export interface ICalendarGridRowProps extends ICalendarDayGridProps {
   getRefsFromDayInfos(dayInfosInRange: IDayInfo[]): (HTMLElement | null)[]
 }
 
-const makeCalendarGridRowProps = propsFactory({
+const makeCalendarGridRowProps = propsFactoryFromInterface<ICalendarGridRowProps>()({
   ...makeStylingProps(),
   ...makeCalendarDayGridProps(),
   rowClassName: { type: String, default: '' },
-  classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayGridStyles>>, required: true },
-  weeks: { type: Array as PropType<IDayInfo[][]>, required: true },
-  week: { type: Array as PropType<IDayInfo[]>, required: true },
+  classNames: { type: Object, required: true },
+  weeks: { type: Array, required: true },
+  week: { type: Array, required: true },
   weekIndex: { type: Number, required: true },
-  weekCorners: { type: Object as PropType<IWeekCorners>, required: true },
+  weekCorners: { type: Object, required: true },
+  ariaHidden: { type: String, default: undefined },
+  ariaRole: { type: String, default: undefined },
+  activeDescendantId: { type: String, required: true },
+  calculateRoundedStyles: { type: Function, required: true },
+  getDayInfosInRangeOfDay: { type: Function, required: true },
+  getRefsFromDayInfos: { type: Function, required: true },
 }, 'CalendarGridRow')
 
-export const CalendarGridRow = defineComponent({
+export const CalendarGridRow = defineFunctionalComponent({
   name: 'CalendarGridRow',
 
   props: makeCalendarGridRowProps(),
 
-  setup(props, { attrs, slots }) {
-    const weekNumbers = computed(() => props.showWeekNumbers
-      ? getWeekNumbersInMonth(props.weeks.length, props.firstDayOfWeek, props.firstWeekOfYear, props.navigatedDate)
-      : null)
+  render(props, { attrs, slots }) {
+    const {
+      classNames,
+      week,
+      weeks,
+      weekIndex,
+      rowClassName,
+      ariaRole,
+      showWeekNumbers,
+      firstDayOfWeek,
+      firstWeekOfYear,
+      navigatedDate,
+      strings,
+    } = props
 
-    const titleString = computed(() => weekNumbers.value
-      ? props.strings.weekNumberFormatString && format(props.strings.weekNumberFormatString, weekNumbers.value[props.weekIndex])
-      : '')
+    const weekNumbers = showWeekNumbers
+      ? getWeekNumbersInMonth(weeks.length, firstDayOfWeek, firstWeekOfYear, navigatedDate)
+      : null
 
-    const slotProps = computed(() => asSlotProps({
+    const titleString = weekNumbers
+      ? strings.weekNumberFormatString && format(strings.weekNumberFormatString, weekNumbers[weekIndex])
+      : ''
+
+    const slotProps = {
       row: {
-        role: attrs.ariaRole,
-        class: props.rowClassName,
-        key: `${props.weekIndex}_${props.week[0].key}`,
+        role: ariaRole,
+        class: rowClassName,
+        key: `${weekIndex}_${week[0].key}`,
       },
       weekNumberCell: {
-        key: props.weekIndex,
-        class: props.classNames.weekNumberCell,
-        title: titleString.value,
-        ariaLabel: titleString.value,
+        key: weekIndex,
+        class: classNames.weekNumberCell,
+        title: titleString,
+        ariaLabel: titleString,
         scope: 'row',
       },
-    }))
-    return () => h('tr', slotProps.value.row, [
-      props.showWeekNumbers && weekNumbers.value && h('th', slotProps.value.weekNumberCell, [
-        h('span', weekNumbers.value[props.weekIndex]),
-      ]),
-      props.week.map((day: IDayInfo, dayIndex: number) => h(CalendarGridDayCell, {
+      dayCell: (day: IDayInfo, dayIndex: number) => ({
         ...props,
         key: day.key,
         day,
         dayIndex,
-      })),
+      }),
+    }
+
+    return h('tr', slotProps.row, [
+      showWeekNumbers && weekNumbers && h('th', slotProps.weekNumberCell, [
+        h('span', weekNumbers[weekIndex]),
+      ]),
+      week.map((day: IDayInfo, dayIndex: number) =>
+        h(CalendarGridDayCell, slotProps.dayCell(day, dayIndex))),
     ])
   },
 })

@@ -2,6 +2,19 @@ import type { IfAny } from '@vue/shared'
 import type { ComponentObjectPropsOptions, Prop, PropType } from 'vue'
 
 /**
+ * Automatically casts the type of the passed props to the proper `PropType`s as defined in the interface.
+ */
+function mapPropsToInterface<T, PropsOptions extends ComponentObjectPropsOptions>(props: PropsOptions) {
+  return props as unknown as {
+    [Property in keyof PropsOptions]: Omit<PropsOptions[Property], 'type'>
+  } & {
+    [Property in keyof T]: {
+      type: PropType<Exclude<T[Property], undefined>>
+    }
+  }
+}
+
+/**
  * Creates props with proper defaults fixing type issues.
  *
  * @author vuetify
@@ -14,8 +27,8 @@ export function propsFactory<
 }
 
 export function propsFactoryFromInterface<T>() {
-  return <PropsOptions extends Required<ComponentObjectPropsOptions<T>>>(props: PropsOptions, source: string) => {
-    return makeProps(props, source)
+  return <PropsOptions extends { [Property in keyof T]-?: Prop<any> }>(props: PropsOptions, source: string) => {
+    return makeProps(mapPropsToInterface<T, PropsOptions>(props), source)
   }
 }
 

@@ -1,10 +1,11 @@
-import { classNamesFunction, css } from '@fluentui-vue/utilities'
+import { classNamesFunction, css, format } from '@fluentui-vue/utilities'
 import { addMonths, compareDatePart, getMonthEnd, getMonthStart } from '@fluentui/date-time-utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { type PropType, computed, defineComponent, h, toRefs } from 'vue'
+import { type ExtractPropTypes, type PropType, computed, defineComponent, h, toRefs } from 'vue'
+import { useId } from '@fluentui-vue/hooks'
 import { makeCalendarDayProps } from '../makeProps'
 import type { ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
-import { asSlotProps, propsFactory } from '@/utils'
+import { asSlotProps, defineFunctionalComponent, propsFactory } from '@/utils'
 import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
 import { Icon } from '@/components'
 import { useRender } from '@/composables'
@@ -30,8 +31,12 @@ export const CalendarDayBase = defineComponent({
       animationDirection: props.animationDirection,
     }))
 
+    const monthAndYearId = useId()
     const monthAndYear = computed(() => props.dateTimeFormatter?.formatMonthYear(props.navigatedDate, props.strings))
     const HeaderButtonComponentType = computed(() => props.onHeaderSelect ? 'button' : 'div')
+    const headerAriaLabel = computed(() => props.strings.yearPickerHeaderAriaLabel
+      ? format(props.strings.yearPickerHeaderAriaLabel, monthAndYear.value)
+      : monthAndYear.value)
 
     const slotProps = computed(() => asSlotProps({
       root: {
@@ -41,107 +46,131 @@ export const CalendarDayBase = defineComponent({
         class: classNames.value.header,
       },
       monthAndYear: {
+        'aria-label': props.onHeaderSelect ? headerAriaLabel.value : undefined,
         class: classNames.value.monthAndYear,
         onClick: props.onHeaderSelect,
+        'data-is-focusable': !!props.onHeaderSelect,
+        'tab-index': props.onHeaderSelect ? 0 : -1,
+        type: 'button',
+      },
+      monthAndYearText: {
+        id: monthAndYearId,
+        'aria-live': 'polite',
+        'aria-atomic': true,
+      },
+      navButtons: {
+        ...props,
+        classNames: classNames.value,
+      },
+      grid: {
+        ...props,
+        'onUpdate:selectedDate': (...args) => emit('update:selectedDate', ...args),
       },
     }))
 
     useRender(() => h('div', slotProps.value.root, [
       h('div', slotProps.value.header, [
         h(HeaderButtonComponentType.value, slotProps.value.monthAndYear, [
-          h('span', monthAndYear.value),
+          h('span', slotProps.value.monthAndYearText, monthAndYear.value),
         ]),
-        h(CalendarDayNavigationButtons, {
-          ...props,
-          classNames: classNames.value,
-        }),
+        h(CalendarDayNavigationButtons, slotProps.value.navButtons),
       ]),
-      h(CalendarDayGrid, { ...props, 'onUpdate:selectedDate': (...args) => emit('update:selectedDate', ...args) }),
+      h(CalendarDayGrid, slotProps.value.grid),
     ]))
   },
 })
 
 export const makeCalendarDayNavigationButtonsProps = propsFactory({
   ...makeCalendarDayProps(),
-  classNames: { type: Object as PropType<IProcessedStyleSet<ICalendarDayStyles>>, default: () => ({}) },
+  classNames: { type: Object, required: true },
 }, 'CalendarDayNavigationButtons')
 
-const CalendarDayNavigationButtons = defineComponent({
+const CalendarDayNavigationButtons = defineFunctionalComponent({
   name: 'CalendarDayNavigationButtons',
 
   props: makeCalendarDayNavigationButtonsProps(),
 
-  setup(props, { attrs, emit, slots }) {
-    const onSelectPrevMonth = () => {
-      props.onNavigateDate(addMonths(props.navigatedDate, -1), false)
-    }
-    const onSelectNextMonth = () => {
-      props.onNavigateDate(addMonths(props.navigatedDate, 1), false)
+  render(props, { attrs, emit, slots }) {
+    const {
+      minDate,
+      maxDate,
+      navigatedDate,
+      allFocusable,
+      strings,
+      navigationIcons,
+      showCloseButton,
+      classNames,
+      onNavigateDate,
+      onDismiss,
+    } = props
+
+    const onSelectNextMonth = (): void => {
+      onNavigateDate(addMonths(navigatedDate, 1), false)
     }
 
-    const prevMonthInBounds = computed(() => props.minDate
-      ? +compareDatePart(props.minDate, getMonthStart(props.navigatedDate)) < 0
-      : true)
-    const nextMonthInBounds = computed(() => props.maxDate
-      ? +compareDatePart(getMonthEnd(props.navigatedDate), props.maxDate) < 0
-      : true)
+    const onSelectPrevMonth = (): void => {
+      onNavigateDate(addMonths(navigatedDate, -1), false)
+    }
+    // determine if previous/next months are in bounds
+    const prevMonthInBounds = minDate ? +compareDatePart(minDate, getMonthStart(navigatedDate)) < 0 : true
+    const nextMonthInBounds = maxDate ? +compareDatePart(getMonthEnd(navigatedDate), maxDate) < 0 : true
 
-    const slotProps = computed(() => {
-      const headerIconButton = {
+    // use aria-disabled instead of disabled so focus is not lost
+    // when a prev/next button becomes disabled after being clicked
+    const slotProps = {
+      monthComponents: {
+        class: classNames.monthComponents,
+      },
+      prevButton: {
+        class: css(classNames.headerIconButton, {
+          [classNames.disabledStyle]: !prevMonthInBounds,
+        }),
+        tabIndex: prevMonthInBounds ? undefined : allFocusable ? 0 : -1,
+        'aria-disabled': !prevMonthInBounds,
+        onClick: onSelectPrevMonth,
+        title: strings.prevMonthAriaLabel
+          ? `${strings.prevMonthAriaLabel} ${strings.months[addMonths(navigatedDate, -1).getMonth()]}`
+          : undefined,
         type: 'button',
-      }
-      return asSlotProps({
-        monthComponents: {
-          class: props.classNames.monthComponents,
-        },
-        prevButton: {
-          ...headerIconButton,
-          class: css(props.classNames.headerIconButton, {
-            [props.classNames.disabledStyle]: !prevMonthInBounds.value,
-          }),
-          tabIndex: prevMonthInBounds.value ? undefined : props.allFocusable ? 0 : -1,
-          ariaDisabled: !prevMonthInBounds.value,
-          type: 'button',
-          onClick: onSelectPrevMonth,
-        },
-        nextButton: {
-          ...headerIconButton,
-          class: css(props.classNames.headerIconButton, {
-            [props.classNames.disabledStyle]: !prevMonthInBounds.value,
-          }),
-          tabIndex: nextMonthInBounds.value ? undefined : props.allFocusable ? 0 : -1,
-          ariaDisabled: !nextMonthInBounds.value,
-          type: 'button',
-          onClick: onSelectNextMonth,
-        },
-        closeButton: {
-          ...headerIconButton,
-          class: css(props.classNames.headerIconButton),
-          title: props.strings.closeButtonAriaLabel,
-          type: 'button',
-        },
-        leftNavigationIcon: {
-          iconName: props.navigationIcons.leftNavigation,
-        },
-        rightNavigationIcon: {
-          iconName: props.navigationIcons.rightNavigation,
-        },
-        closeIcon: {
-          iconName: props.navigationIcons.closeIcon,
-        },
-      })
-    })
+      },
+      nextButton: {
+        class: css(classNames.headerIconButton, {
+          [classNames.disabledStyle]: !prevMonthInBounds,
+        }),
+        tabIndex: nextMonthInBounds ? undefined : allFocusable ? 0 : -1,
+        'aria-disabled': !nextMonthInBounds,
+        onClick: onSelectNextMonth,
+        title: strings.nextMonthAriaLabel
+          ? `${strings.nextMonthAriaLabel} ${strings.months[addMonths(navigatedDate, 1).getMonth()]}`
+          : undefined,
+        type: 'button',
+      },
+      closeButton: {
+        class: css(classNames.headerIconButton),
+        title: strings.closeButtonAriaLabel,
+        type: 'button',
+      },
+      leftNavigationIcon: {
+        iconName: navigationIcons.leftNavigation,
+      },
+      rightNavigationIcon: {
+        iconName: navigationIcons.rightNavigation,
+      },
+      closeIcon: {
+        iconName: navigationIcons.closeIcon,
+      },
+    }
 
-    useRender(() => h('div', slotProps.value.monthComponents, [
-      h('button', slotProps.value.prevButton, [
-        h(Icon, slotProps.value.leftNavigationIcon),
+    return h('div', slotProps.monthComponents, [
+      h('button', slotProps.prevButton, [
+        h(Icon, slotProps.leftNavigationIcon),
       ]),
-      h('button', slotProps.value.nextButton, [
-        h(Icon, slotProps.value.rightNavigationIcon),
+      h('button', slotProps.nextButton, [
+        h(Icon, slotProps.rightNavigationIcon),
       ]),
-      props.showCloseButton && h('button', slotProps.value.closeButton, [
-        h(Icon, slotProps.value.closeIcon),
+      showCloseButton && h('button', slotProps.closeButton, [
+        h(Icon, slotProps.closeIcon),
       ]),
-    ]))
+    ])
   },
 })

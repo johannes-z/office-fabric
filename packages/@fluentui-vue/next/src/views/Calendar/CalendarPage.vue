@@ -13,12 +13,16 @@ import CalendarInlineWeekSelectionExampleCode from './Calendar.Inline.WeekSelect
 import CalendarInlineMonthSelectionExample from './Calendar.Inline.MonthSelection.Example.vue'
 import CalendarInlineMonthSelectionExampleCode from './Calendar.Inline.MonthSelection.Example.vue?raw'
 
+import CalendarInlineWeekNumbersExample from './Calendar.Inline.WeekNumbers.Example.vue'
+import CalendarInlineWeekNumbersExampleCode from './Calendar.Inline.WeekNumbers.Example.vue?raw'
+
+import CalendarSixWeeksExample from './Calendar.Inline.SixWeeks.Example.vue'
+import CalendarSixWeeksExampleCode from './Calendar.Inline.SixWeeks.Example.vue?raw'
+
 import DocSection from '@/views/components/DocSection.vue'
 import ExampleCard from '@/views/components/ExampleCard.vue'
 import { defaultCalendarStrings } from '@/components/Calendar/defaults'
 
-const selectedDate5 = ref(new Date())
-const selectedDate6 = ref(new Date())
 const CalendarPageProps = {
   title: 'Calendar',
   componentName: 'Calendar',
@@ -44,6 +48,16 @@ const CalendarPageProps = {
       view: CalendarInlineMonthSelectionExample,
       code: CalendarInlineMonthSelectionExampleCode,
     },
+    {
+      title: 'Calendar with week numbers',
+      view: CalendarInlineWeekNumbersExample,
+      code: CalendarInlineWeekNumbersExampleCode,
+    },
+    {
+      title: 'Calendar displaying 6 weeks',
+      view: CalendarSixWeeksExample,
+      code: CalendarSixWeeksExampleCode,
+    },
   ],
   overview: import('./docs/CalendarOverview.md'),
   bestPractices: import('./docs/CalendarBestPractices.md'),
@@ -52,30 +66,4 @@ const CalendarPageProps = {
 
 <template>
   <DocPage v-bind="CalendarPageProps" />
-
-  <DocSection title="Usage">
-    <ExampleCard title="Calendar with week numbers">
-      <div style="height: 360px">
-        <div>Selected date: {{ selectedDate5?.toLocaleString() || 'Not set' }}</div>
-        <Calendar
-          v-model="selectedDate5"
-          show-week-numbers
-          show-go-to-today
-          :strings="defaultCalendarStrings"
-        />
-      </div>
-    </ExampleCard>
-
-    <ExampleCard title="Calendar displaying 6 weeks">
-      <div style="height: 360px">
-        <div>Selected date: {{ selectedDate6?.toLocaleString() || 'Not set' }}</div>
-        <Calendar
-          v-model="selectedDate6"
-          show-six-weeks-by-default
-          show-go-to-today
-          :strings="defaultCalendarStrings"
-        />
-      </div>
-    </ExampleCard>
-  </DocSection>
 </template>
