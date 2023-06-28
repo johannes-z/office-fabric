@@ -43,23 +43,20 @@ export const CalendarMonthHeaderRow = defineFunctionalComponent({
         const i = (index + firstDayOfWeek) % DAYS_IN_WEEK
         const label = strings.days[i]
 
-        return {
+        return [{
           class: css(classNames.dayCell, classNames.weekDayLabelCell),
           scope: 'col',
           key: `${dayLabels[i]} ${index}`,
           title: label,
           'aria-label': label,
           'data-is-focusable': allFocusable ? true : undefined,
-        }
+        }, dayLabels[i]] as const
       },
     }
 
     return h('tr', [
       showWeekNumbers && h('th', slotProps.dayCellWeekNumber),
-      ...dayLabels.map((val, index) => {
-        const i = (index + firstDayOfWeek) % DAYS_IN_WEEK
-        return h('th', slotProps.dayCell(index), dayLabels[i])
-      }),
+      ...dayLabels.map((val, index) => h('th', ...slotProps.dayCell(index))),
     ])
   },
 })

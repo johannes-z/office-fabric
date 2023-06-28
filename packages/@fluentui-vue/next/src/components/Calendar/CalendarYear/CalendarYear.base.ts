@@ -59,6 +59,7 @@ export const CalendarYearBase = defineComponent({
 
   props: {
     ...makeStylingProps(),
+    strings: { type: Object, default: () => ({}) },
 
     selected: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -73,6 +74,7 @@ export const CalendarYearBase = defineComponent({
     maxYear: { type: Number, default: undefined },
 
     onSelectYear: { type: Function, default: undefined },
+    onHeaderSelect: { type: Function, default: undefined },
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
   },

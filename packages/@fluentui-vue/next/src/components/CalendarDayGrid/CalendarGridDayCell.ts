@@ -89,6 +89,11 @@ export const CalendarGridDayCell = defineFunctionalComponent({
         'aria-disabled': !ariaHidden && !day.isInBounds,
         onClick: day.isInBounds && !ariaHidden ? day.onSelected : undefined,
         // TODO add onHover/onKeydown
+        // onMouseOver={!ariaHidden ? onMouseOverDay : undefined}
+        // onMouseDown={!ariaHidden ? onMouseDownDay : undefined}
+        // onMouseUp={!ariaHidden ? onMouseUpDay : undefined}
+        // onMouseOut={!ariaHidden ? onMouseOutDay : undefined}
+        // onKeyDown={!ariaHidden ? onDayKeyDown : undefined}
         role: 'gridcell',
         'tab-index': isNavigatedDate ? 0 : undefined,
         'aria-current': day.isToday ? 'date' : undefined,

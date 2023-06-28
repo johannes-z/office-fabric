@@ -1,5 +1,5 @@
 import { type PropType, computed, defineComponent, h } from 'vue'
-import { classNamesFunction, css, getRTL } from '@fluentui-vue/utilities'
+import { classNamesFunction, css, format, getRTL } from '@fluentui-vue/utilities'
 import { AnimationDirection, type ICalendarNavigationIcons, type ICalendarYearStrings, type ICalendarYearStyleProps, type ICalendarYearStyles, defaultCalendarNavigationIcons } from '..'
 import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory } from '@/utils'
 import { useRender } from '@/composables'
@@ -164,11 +164,41 @@ const CalendarYearTitle = defineFunctionalComponent({
       current: {
         class: classNames.current,
       },
+      currentItemButton: {
+        class: classNames.currentItemButton,
+        onClick: props.onHeaderSelect,
+        role: 'button',
+        type: 'button',
+      },
+      currentItemButtonText: {
+        'aria-live': 'assertive',
+        'aria-atomic': true,
+      },
     })
 
     const onRenderYear = (year: number) => {
-      return 'test'
-      // return slots.year?.(year) ?? year
+      return slots.year?.(year) ?? year
+    }
+
+    if (props.onHeaderSelect) {
+      const rangeAriaLabel = strings.rangeAriaLabel
+      const headerAriaLabelFormatString = strings.headerAriaLabelFormatString
+      const currentDateRange = rangeAriaLabel
+        ? typeof rangeAriaLabel === 'string'
+          ? rangeAriaLabel
+          : rangeAriaLabel(props)
+        : undefined
+
+      const ariaLabel = headerAriaLabelFormatString
+        ? format(headerAriaLabelFormatString, currentDateRange)
+        : currentDateRange
+
+      return h('button', {
+        ...slotProps.currentItemButton,
+        'aria-label': ariaLabel,
+      }, [
+        h('span', slotProps.currentItemButtonText, `${onRenderYear(fromYear)} - ${onRenderYear(toYear)}`),
+      ])
     }
 
     return h('div', slotProps.current, `${onRenderYear(fromYear)} - ${onRenderYear(toYear)}`)
@@ -180,7 +210,11 @@ export const CalendarYearHeader = defineFunctionalComponent({
 
   props: {
     ...makeStylingProps(),
+    strings: { type: Object, default: () => ({}) },
 
+    year: { type: Number, default: false },
+    fromYear: { type: Number, required: true },
+    toYear: { type: Number, required: true },
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
     onHeaderSelect: { type: Function, default: undefined },

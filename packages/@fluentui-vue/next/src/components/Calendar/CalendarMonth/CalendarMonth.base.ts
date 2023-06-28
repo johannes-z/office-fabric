@@ -40,12 +40,49 @@ export const CalendarMonthBase = defineComponent({
     } = toRefs(props)
 
     const isYearPickerVisible = ref(false)
+
+    const selectMonthCallback = (newMonth: number): (() => void) => {
+      return () => onSelectMonth(newMonth)
+    }
+    const onSelectNextYear = () => {
+      props.onNavigateDate(addYears(navigatedDate.value, 1), false)
+    }
+    const onSelectPrevYear = () => {
+      props.onNavigateDate(addYears(navigatedDate.value, -1), false)
+    }
+    const onSelectMonth = (newMonth: number): void => {
+      // If header is clickable the calendars are overlayed, switch back to day picker when month is clicked
+      props.onHeaderSelect?.()
+      props.onNavigateDate(setMonth(navigatedDate.value, newMonth), true)
+    }
+    const onYearPickerHeaderSelect = (focus: boolean): void => {
+      // focusOnNextUpdate();
+      isYearPickerVisible.value = false
+    }
     const onHeaderSelect = () => {
       if (!props.yearPickerHidden)
         isYearPickerVisible.value = true
 
       else
         props.onHeaderSelect?.()
+    }
+    const onSelectYear = (selectedYear: number) => {
+      // focusOnNextUpdate();
+      const navYear = navigatedDate.value.getFullYear()
+      if (navYear !== selectedYear) {
+        let newNavigationDate = new Date(navigatedDate.value.getTime())
+        newNavigationDate.setFullYear(selectedYear)
+        // for min and max dates, adjust the new navigation date - perhaps this should be
+        // checked on the master navigation date handler (i.e. in Calendar)
+        if (props.maxDate && newNavigationDate > props.maxDate)
+          newNavigationDate = setMonth(newNavigationDate, props.maxDate.getMonth())
+
+        else if (props.minDate && newNavigationDate < props.minDate)
+          newNavigationDate = setMonth(newNavigationDate, props.minDate.getMonth())
+
+        props.onNavigateDate(newNavigationDate, true)
+      }
+      isYearPickerVisible.value = false
     }
 
     const animateBackwards = useAnimateBackwards(navigatedDate)
@@ -66,13 +103,6 @@ export const CalendarMonthBase = defineComponent({
 
       return value
     })
-
-    const onSelectNextYear = () => {
-      props.onNavigateDate(addYears(navigatedDate.value, 1), false)
-    }
-    const onSelectPrevYear = () => {
-      props.onNavigateDate(addYears(navigatedDate.value, -1), false)
-    }
 
     const classNames = computed(() => getClassNames(props.styles, {
       theme: props.theme!,
@@ -137,10 +167,40 @@ export const CalendarMonthBase = defineComponent({
       buttonRow: {
         class: classNames.value.buttonRow,
       },
-      itemButton: {
-        type: 'button',
+      itemButton: (rowNum: number, month: string, index: number) => {
+        const monthIndex = rowNum * MONTHS_PER_ROW + index
+        const indexedMonth = setMonth(navigatedDate.value, monthIndex)
+        const isNavigatedMonth = navigatedDate.value.getMonth() === monthIndex
+        const isSelectedMonth = props.selectedDate.getMonth() === monthIndex
+        const isSelectedYear = props.selectedDate.getFullYear() === navigatedDate.value.getFullYear()
+        const isInBounds
+          = (props.minDate ? +compareDatePart(props.minDate, getMonthEnd(indexedMonth)) < 1 : true)
+          && (props.maxDate ? +compareDatePart(getMonthStart(indexedMonth), props.maxDate) < 1 : true)
+
+        return [{
+          type: 'button',
+          role: 'gridcell',
+          onClick: isInBounds ? selectMonthCallback(monthIndex) : undefined,
+          class: css(classNames.value.itemButton, {
+            [classNames.value.current]:
+            props.highlightCurrentMonth && isCurrentMonth(monthIndex, navigatedDate.value.getFullYear(), props.today),
+            [classNames.value.selected]: props.highlightSelectedMonth && isSelectedMonth && isSelectedYear,
+            [classNames.value.disabled]: !isInBounds,
+          }),
+          disabled: !props.allFocusable && !isInBounds,
+          key: monthIndex,
+          'aria-label': props.dateTimeFormatter.formatMonth(indexedMonth, props.strings),
+          'aria-selected': isNavigatedMonth,
+          'data-is-focusable': isInBounds ? true : undefined,
+        }, month] as const
       },
       year: {
+        strings: {
+          rangeAriaLabel: '',
+          prevRangeAriaLabel: '',
+          nextRangeAriaLabel: '',
+          headerAriaLabelFormatString: '',
+        },
         minYear: props.minDate?.getFullYear() ?? undefined,
         maxYear: props.maxDate?.getFullYear() ?? undefined,
         styles: props.styles,
@@ -148,6 +208,8 @@ export const CalendarMonthBase = defineComponent({
         highlightSelectedYear: props.highlightSelectedMonth,
         animationDirection: props.animationDirection,
         selectedYear: props.selectedDate?.getFullYear() ?? props.navigatedDate?.getFullYear() ?? undefined,
+        onHeaderSelect: onYearPickerHeaderSelect,
+        onSelectYear,
       },
     }))
 
@@ -178,34 +240,7 @@ export const CalendarMonthBase = defineComponent({
 
             return h('div', {
               ...slotProps.value.buttonRow,
-            }, monthsForRow.map((month, index) => {
-              const monthIndex = rowNum * MONTHS_PER_ROW + index
-              const indexedMonth = setMonth(navigatedDate.value, monthIndex)
-              const isNavigatedMonth = navigatedDate.value.getMonth() === monthIndex
-              const isSelectedMonth = props.selectedDate.getMonth() === monthIndex
-              const isSelectedYear = props.selectedDate.getFullYear() === navigatedDate.value.getFullYear()
-              const isInBounds
-                = (props.minDate ? +compareDatePart(props.minDate, getMonthEnd(indexedMonth)) < 1 : true)
-                && (props.maxDate ? +compareDatePart(getMonthStart(indexedMonth), props.maxDate) < 1 : true)
-
-              return h('button', {
-                ...slotProps.value.itemButton,
-                class: css(classNames.value.itemButton, {
-                  [classNames.value.current]:
-                  props.highlightCurrentMonth && isCurrentMonth(monthIndex, navigatedDate.value.getFullYear(), props.today),
-                  [classNames.value.selected]: props.highlightSelectedMonth && isSelectedMonth && isSelectedYear,
-                  [classNames.value.disabled]: !isInBounds,
-                }),
-                disabled: !props.allFocusable && !isInBounds,
-                key: monthIndex,
-                ariaLabel: props.dateTimeFormatter.formatMonth(indexedMonth, props.strings),
-                ariaSelected: isNavigatedMonth,
-                dataIsFocusable: isInBounds ? true : undefined,
-                onClick: () => {
-                  props.onNavigateDate(setMonth(navigatedDate.value, monthIndex), true)
-                },
-              }, month)
-            }))
+            }, monthsForRow.map((month, index) => h('button', ...slotProps.value.itemButton(rowNum, month, index))))
           }),
         ),
       ])
