@@ -20,6 +20,7 @@ export const makeStackProps = propsFactoryFromInterface<IStackProps>()({
   horizontalAlign: { type: String as PropType<Alignment>, default: undefined },
   verticalAlign: { type: String as PropType<Alignment>, default: undefined },
   disableShrink: { type: Boolean, default: false },
+  tokens: { type: Object, default: undefined },
 }, 'Stack')
 
 export const Stack = defineFunctionalComponent({

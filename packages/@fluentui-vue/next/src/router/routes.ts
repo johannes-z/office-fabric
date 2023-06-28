@@ -74,7 +74,7 @@ export const nav = [
         defineRoute({
           path: '/Toggle',
           name: 'Toggle',
-          component: () => import('../views/TogglePage.vue'),
+          component: () => import('../views/Toggle/TogglePage.vue'),
         }),
       ],
     },

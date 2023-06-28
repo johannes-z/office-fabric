@@ -47,6 +47,8 @@ export interface IStackSlots {
  * {@docCategory Stack}
  */
 export interface IStackProps {
+  tokens?: IStackTokens
+
   /**
    * Defines whether to render Stack children horizontally.
    * @defaultvalue false

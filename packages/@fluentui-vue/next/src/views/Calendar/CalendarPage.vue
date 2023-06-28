@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineAsyncComponent, ref } from 'vue'
 import DocPage from '../components/DocPage.vue'
 import CalendarInlineExample from './Calendar.Inline.Example.vue'
 import CalendarInlineExampleCode from './Calendar.Inline.Example.vue?raw'
@@ -18,10 +17,6 @@ import CalendarInlineWeekNumbersExampleCode from './Calendar.Inline.WeekNumbers.
 
 import CalendarSixWeeksExample from './Calendar.Inline.SixWeeks.Example.vue'
 import CalendarSixWeeksExampleCode from './Calendar.Inline.SixWeeks.Example.vue?raw'
-
-import DocSection from '@/views/components/DocSection.vue'
-import ExampleCard from '@/views/components/ExampleCard.vue'
-import { defaultCalendarStrings } from '@/components/Calendar/defaults'
 
 const CalendarPageProps = {
   title: 'Calendar',
