@@ -159,7 +159,7 @@ export const nav = [
         defineRoute({
           path: '/Spinner',
           name: 'Spinner',
-          component: () => import('../views/SpinnerPage.vue'),
+          component: () => import('../views/Spinner/SpinnerPage.vue'),
         }),
       ],
     },

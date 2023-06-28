@@ -38,7 +38,7 @@ const {
   donts,
 } = toRefs(props)
 
-function tbd<T>(prop: Ref<T>) {
+function toAsyncComponent<T>(prop: Ref<T>) {
   return {
     component: defineAsyncComponent(() => prop.value),
   }
@@ -46,16 +46,16 @@ function tbd<T>(prop: Ref<T>) {
 
 const {
   component: overviewComponent,
-} = tbd(overview)
+} = toAsyncComponent(overview)
 const {
   component: bestPracticesComponent,
-} = tbd(bestPractices)
+} = toAsyncComponent(bestPractices)
 const {
   component: dosComponent,
-} = tbd(dos)
+} = toAsyncComponent(dos)
 const {
   component: dontsComponent,
-} = tbd(donts)
+} = toAsyncComponent(donts)
 </script>
 
 <template>
