@@ -1,7 +1,7 @@
 import { type PropType, computed, defineComponent, h, ref, watchEffect } from 'vue'
 import { classNamesFunction, css } from '@fluentui-vue/utilities'
-import { AnimationDirection, type ICalendarYearStyleProps, type ICalendarYearStyles } from '..'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { AnimationDirection, type ICalendarYearProps, type ICalendarYearRange, type ICalendarYearStyleProps, type ICalendarYearStyles } from '..'
+import { asSlotProps, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 import { useRender } from '@/composables'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
@@ -9,10 +9,24 @@ const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearS
 const CELL_COUNT = 12
 const CELLS_PER_ROW = 4
 
+interface ICalendarYearGridProps extends ICalendarYearProps, ICalendarYearRange {
+  selectedYear?: number
+  animateBackwards?: boolean
+}
+
+interface ICalendarYearGridCellProps extends ICalendarYearProps {
+  year: number
+  current?: boolean
+  selected?: boolean
+  disabled?: boolean
+  onSelectYear?: (year: number) => void
+  // onRenderYear?: (year: number) => React.ReactNode;
+}
+
 const CalendarYearGridCell = defineComponent({
   name: 'CalendarYearGridCell',
 
-  props: {
+  props: propsFactoryFromInterface<ICalendarYearGridCellProps>()({
     ...makeStylingProps(),
 
     selected: { type: Boolean, default: false },
@@ -21,7 +35,7 @@ const CalendarYearGridCell = defineComponent({
     highlightSelectedYear: { type: Boolean, default: false },
     year: { type: Number, required: true },
     onSelectYear: { type: Function, default: undefined },
-  },
+  }, 'CalendarYearGridCell')(),
 
   setup(props, { attrs, slots }) {
     const onClick = () => {
@@ -62,7 +76,7 @@ const CalendarYearGridCell = defineComponent({
 export const CalendarYearGrid = defineComponent({
   name: 'CalendarYearGrid',
 
-  props: {
+  props: propsFactoryFromInterface<ICalendarYearGridProps>()({
     ...makeStylingProps(),
     selectedYear: { type: Number, required: true },
     fromYear: { type: Number, required: true },
@@ -73,7 +87,7 @@ export const CalendarYearGrid = defineComponent({
     onSelectYear: { type: Function, default: undefined },
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-  },
+  }, 'CalendarYearGrid')(),
 
   setup(props, { attrs, slots }) {
     const renderCell = (yearToRender: number) => {

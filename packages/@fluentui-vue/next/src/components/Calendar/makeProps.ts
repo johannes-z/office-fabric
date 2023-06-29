@@ -116,7 +116,7 @@ export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGr
   getMarkedDays: { type: Function, default: undefined },
   markedDays: { type: Array, default: undefined },
 
-  weeks: { type: Array, required: true },
+  weeks: { type: Array, default: () => [] },
 }, 'CalendarDayGrid')
 
 export const makeCalendarDayProps = propsFactoryFromInterface<ICalendarDayProps>()({

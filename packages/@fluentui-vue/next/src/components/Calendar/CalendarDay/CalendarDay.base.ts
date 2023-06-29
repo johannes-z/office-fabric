@@ -1,14 +1,12 @@
-import { classNamesFunction, css, format } from '@fluentui-vue/utilities'
-import { addMonths, compareDatePart, getMonthEnd, getMonthStart } from '@fluentui/date-time-utilities'
-import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { type ExtractPropTypes, type PropType, computed, defineComponent, h, toRefs } from 'vue'
 import { useId } from '@fluentui-vue/hooks'
+import { classNamesFunction, format } from '@fluentui-vue/utilities'
+import { computed, defineComponent, h } from 'vue'
 import { makeCalendarDayProps } from '../makeProps'
 import type { ICalendarDayStyleProps, ICalendarDayStyles } from './CalendarDay.types'
-import { asSlotProps, defineFunctionalComponent, propsFactory } from '@/utils'
-import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
-import { Icon } from '@/components'
+import { CalendarDayNavigationButtons } from './CalendarDayNavigationButtons'
+import { asSlotProps } from '@/utils'
 import { useRender } from '@/composables'
+import { CalendarDayGrid } from '@/components/CalendarDayGrid/CalendarDayGrid'
 
 const getClassNames = classNamesFunction<ICalendarDayStyleProps, ICalendarDayStyles>()
 
@@ -77,100 +75,5 @@ export const CalendarDayBase = defineComponent({
       ]),
       h(CalendarDayGrid, slotProps.value.grid),
     ]))
-  },
-})
-
-export const makeCalendarDayNavigationButtonsProps = propsFactory({
-  ...makeCalendarDayProps(),
-  classNames: { type: Object, required: true },
-}, 'CalendarDayNavigationButtons')
-
-const CalendarDayNavigationButtons = defineFunctionalComponent({
-  name: 'CalendarDayNavigationButtons',
-
-  props: makeCalendarDayNavigationButtonsProps(),
-
-  render(props, { attrs, emit, slots }) {
-    const {
-      minDate,
-      maxDate,
-      navigatedDate,
-      allFocusable,
-      strings,
-      navigationIcons,
-      showCloseButton,
-      classNames,
-      onNavigateDate,
-      onDismiss,
-    } = props
-
-    const onSelectNextMonth = (): void => {
-      onNavigateDate(addMonths(navigatedDate, 1), false)
-    }
-
-    const onSelectPrevMonth = (): void => {
-      onNavigateDate(addMonths(navigatedDate, -1), false)
-    }
-    // determine if previous/next months are in bounds
-    const prevMonthInBounds = minDate ? +compareDatePart(minDate, getMonthStart(navigatedDate)) < 0 : true
-    const nextMonthInBounds = maxDate ? +compareDatePart(getMonthEnd(navigatedDate), maxDate) < 0 : true
-
-    // use aria-disabled instead of disabled so focus is not lost
-    // when a prev/next button becomes disabled after being clicked
-    const slotProps = {
-      monthComponents: {
-        class: classNames.monthComponents,
-      },
-      prevButton: {
-        class: css(classNames.headerIconButton, {
-          [classNames.disabledStyle]: !prevMonthInBounds,
-        }),
-        tabIndex: prevMonthInBounds ? undefined : allFocusable ? 0 : -1,
-        'aria-disabled': !prevMonthInBounds,
-        onClick: onSelectPrevMonth,
-        title: strings.prevMonthAriaLabel
-          ? `${strings.prevMonthAriaLabel} ${strings.months[addMonths(navigatedDate, -1).getMonth()]}`
-          : undefined,
-        type: 'button',
-      },
-      nextButton: {
-        class: css(classNames.headerIconButton, {
-          [classNames.disabledStyle]: !prevMonthInBounds,
-        }),
-        tabIndex: nextMonthInBounds ? undefined : allFocusable ? 0 : -1,
-        'aria-disabled': !nextMonthInBounds,
-        onClick: onSelectNextMonth,
-        title: strings.nextMonthAriaLabel
-          ? `${strings.nextMonthAriaLabel} ${strings.months[addMonths(navigatedDate, 1).getMonth()]}`
-          : undefined,
-        type: 'button',
-      },
-      closeButton: {
-        class: css(classNames.headerIconButton),
-        title: strings.closeButtonAriaLabel,
-        type: 'button',
-      },
-      leftNavigationIcon: {
-        iconName: navigationIcons.leftNavigation,
-      },
-      rightNavigationIcon: {
-        iconName: navigationIcons.rightNavigation,
-      },
-      closeIcon: {
-        iconName: navigationIcons.closeIcon,
-      },
-    }
-
-    return h('div', slotProps.monthComponents, [
-      h('button', slotProps.prevButton, [
-        h(Icon, slotProps.leftNavigationIcon),
-      ]),
-      h('button', slotProps.nextButton, [
-        h(Icon, slotProps.rightNavigationIcon),
-      ]),
-      showCloseButton && h('button', slotProps.closeButton, [
-        h(Icon, slotProps.closeIcon),
-      ]),
-    ])
   },
 })

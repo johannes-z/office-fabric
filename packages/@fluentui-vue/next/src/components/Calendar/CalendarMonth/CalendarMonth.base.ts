@@ -166,6 +166,7 @@ export const CalendarMonthBase = defineComponent({
       },
       buttonRow: {
         class: classNames.value.buttonRow,
+        role: 'row',
       },
       itemButton: (rowNum: number, month: string, index: number) => {
         const monthIndex = rowNum * MONTHS_PER_ROW + index

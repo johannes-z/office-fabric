@@ -5,7 +5,7 @@ import { AnimationDirection } from '..'
 import type { ICalendarYearProps, ICalendarYearStyleProps, ICalendarYearStyles } from './CalendarYear.types'
 import { CalendarYearGrid } from './CalendarYearGrid'
 import { CalendarYearHeader } from './CalendarYearHeader'
-import { makeStylingProps } from '@/utils'
+import { makeStylingProps, propsFactoryFromInterface } from '@/utils'
 import { useRender } from '@/composables'
 
 const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearStyles>()
@@ -13,7 +13,7 @@ const getClassNames = classNamesFunction<ICalendarYearStyleProps, ICalendarYearS
 const CELL_COUNT = 12
 const CELLS_PER_ROW = 4
 
-function useAnimateBackwards(selectedYear: Ref<number>, navigatedYear: Ref<number>) {
+function useAnimateBackwards(selectedYear: Ref<number | undefined>, navigatedYear: Ref<number | undefined>) {
   return computed(() => {
     const rangeYear = selectedYear.value || navigatedYear.value || new Date().getFullYear()
     const fromYear = Math.floor(rangeYear / 10) * 10
@@ -36,7 +36,7 @@ const enum NavigationDirection {
   Next,
 }
 
-function useYearRangeState(selectedYear: Ref<number>, navigatedYear: Ref<number>) {
+function useYearRangeState(selectedYear: Ref<number | undefined>, navigatedYear: Ref<number | undefined>) {
   const fromYear = ref(0)
 
   watchEffect(() => {
@@ -57,27 +57,22 @@ function useYearRangeState(selectedYear: Ref<number>, navigatedYear: Ref<number>
 export const CalendarYearBase = defineComponent({
   name: 'CalendarYearBase',
 
-  props: {
+  props: propsFactoryFromInterface<ICalendarYearProps>()({
     ...makeStylingProps(),
     strings: { type: Object, default: () => ({}) },
 
-    selected: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
     highlightCurrentYear: { type: Boolean, default: false },
     highlightSelectedYear: { type: Boolean, default: false },
 
-    selectedYear: { type: Number, required: true },
-    navigatedYear: { type: Number, required: true },
-    fromYear: { type: Number, default: undefined },
-    toYear: { type: Number, default: undefined },
+    selectedYear: { type: Number, default: undefined },
+    navigatedYear: { type: Number, default: undefined },
     minYear: { type: Number, default: undefined },
     maxYear: { type: Number, default: undefined },
 
     onSelectYear: { type: Function, default: undefined },
     onHeaderSelect: { type: Function, default: undefined },
-    animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-  },
+  }, 'CalendarYearBase')(),
 
   setup(props, { attrs, slots }) {
     const {
@@ -89,7 +84,7 @@ export const CalendarYearBase = defineComponent({
     const [fromYear, toYear, onNavNext, onNavPrevious] = useYearRangeState(selectedYear, navigatedYear)
 
     const classNames = computed(() => getClassNames(props.styles, {
-      theme: props.theme,
+      theme: props.theme!,
       className: props.className,
     }))
 

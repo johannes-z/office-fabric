@@ -1,7 +1,7 @@
 import { type PropType, computed, defineComponent, h } from 'vue'
 import { classNamesFunction, css, format, getRTL } from '@fluentui-vue/utilities'
-import { AnimationDirection, type ICalendarNavigationIcons, type ICalendarYearStrings, type ICalendarYearStyleProps, type ICalendarYearStyles, defaultCalendarNavigationIcons } from '..'
-import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory } from '@/utils'
+import { AnimationDirection, type ICalendarNavigationIcons, type ICalendarYearHeaderProps, type ICalendarYearStrings, type ICalendarYearStyleProps, type ICalendarYearStyles, defaultCalendarNavigationIcons } from '..'
+import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory, propsFactoryFromInterface } from '@/utils'
 import { useRender } from '@/composables'
 import { Icon } from '@/components'
 
@@ -19,10 +19,14 @@ const enum CalendarYearNavDirection {
   Next,
 }
 
+interface ICalendarYearNavArrowProps extends ICalendarYearHeaderProps {
+  direction: CalendarYearNavDirection
+}
+
 const CalendarYearNavArrow = defineFunctionalComponent({
   name: 'CalendarYearNavArrow',
 
-  props: propsFactory({
+  props: propsFactoryFromInterface<ICalendarYearNavArrowProps>()({
     ...makeStylingProps(),
 
     fromYear: { type: Number, required: true },
@@ -81,7 +85,7 @@ const CalendarYearNavArrow = defineFunctionalComponent({
 const CalendarYearNav = defineFunctionalComponent({
   name: 'CalendarYearNav',
 
-  props: {
+  props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
 
     fromYear: { type: Number, required: true },
@@ -92,7 +96,7 @@ const CalendarYearNav = defineFunctionalComponent({
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
     onHeaderSelect: { type: Function, default: undefined },
-  },
+  }, 'CalendarYearNav')(),
 
   render(props, { attrs, slots }) {
     const { styles, theme, className } = props
@@ -126,7 +130,7 @@ const CalendarYearNav = defineFunctionalComponent({
 const CalendarYearTitle = defineFunctionalComponent({
   name: 'CalendarYearTitle',
 
-  props: propsFactory({
+  props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
 
     fromYear: { type: Number, required: true },
@@ -208,17 +212,16 @@ const CalendarYearTitle = defineFunctionalComponent({
 export const CalendarYearHeader = defineFunctionalComponent({
   name: 'CalendarYearHeader',
 
-  props: {
+  props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
     strings: { type: Object, default: () => ({}) },
 
-    year: { type: Number, default: false },
     fromYear: { type: Number, required: true },
     toYear: { type: Number, required: true },
     animateBackwards: { type: Boolean, default: false },
     animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
     onHeaderSelect: { type: Function, default: undefined },
-  },
+  }, 'CalendarYearHeader')(),
 
   render(props, { attrs, slots }) {
     const { styles, theme, className, animateBackwards, animationDirection } = props
