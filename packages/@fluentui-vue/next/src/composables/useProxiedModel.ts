@@ -1,9 +1,26 @@
-import { computed, getCurrentInstance, ref, toRaw, watch } from 'vue'
 import type { Ref } from 'vue'
+import { computed, getCurrentInstance, ref, toRaw, watch } from 'vue'
 import { useToggleScope } from './useToggleScope'
 import { toKebabCase } from '@/utils'
 
 type InnerVal<T> = T extends any[] ? Readonly<T> : T
+
+function useIsControlled<
+  Props extends object & { [key in Prop as `onUpdate:${Prop}`]: ((val: any) => void) | undefined },
+  Prop extends Extract<keyof Props, string>,
+>(props: Props, prop: Prop): Ref<boolean> {
+  const vm = getCurrentInstance()!
+  const kebabProp = toKebabCase(prop)
+
+  return computed(() => {
+    void props[prop] // dependency tracking
+    return !!(
+      (vm.vnode.props?.hasOwnProperty(prop) || vm.vnode.props?.hasOwnProperty(kebabProp))
+      && (vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`) || vm.vnode.props?.hasOwnProperty(`onUpdate:${kebabProp}`))
+      && (vm.vnode.props[`onUpdate:${prop}`] !== undefined || vm.vnode.props[`onUpdate:${kebabProp}`] !== undefined)
+    )
+  })
+}
 
 /**
  * @author vuetify
@@ -22,21 +39,8 @@ export function useProxiedModel<
 ) {
   const vm = getCurrentInstance()!
   const internal = ref(props[prop] !== undefined ? props[prop] : defaultValue) as Ref<Props[Prop]>
-  const kebabProp = toKebabCase(prop)
-  const checkKebab = kebabProp !== prop
 
-  const isControlled = checkKebab
-    ? computed(() => {
-      void props[prop] // dependency tracking
-      return !!(
-        (vm.vnode.props?.hasOwnProperty(prop) || vm.vnode.props?.hasOwnProperty(kebabProp))
-        && (vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`) || vm.vnode.props?.hasOwnProperty(`onUpdate:${kebabProp}`))
-      )
-    })
-    : computed(() => {
-      void props[prop] // dependency tracking
-      return !!(vm.vnode.props?.hasOwnProperty(prop) && vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`))
-    })
+  const isControlled = useIsControlled(props, prop)
 
   useToggleScope(() => !isControlled.value, () => {
     watch(() => props[prop], (val) => {
@@ -56,8 +60,7 @@ export function useProxiedModel<
         return
 
       internal.value = newValue
-      // TODO fix types
-      props[`onUpdate:${prop}`]?.(newValue) ?? vm?.emit(`update:${prop}`, newValue)
+      vm?.emit(`update:${prop}`, newValue)
     },
   }) as any as Ref<InnerVal<Inner>> & { readonly externalValue: Props[Prop] }
 
