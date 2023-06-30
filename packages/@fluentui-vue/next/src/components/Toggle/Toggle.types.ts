@@ -41,6 +41,16 @@ export interface IToggleProps {
   modelValue?: boolean
 
   /**
+   * Callback issued when the value changes.
+   */
+  'onUpdate:modelValue'?: (checked?: boolean) => void
+
+  /**
+   * Callback issued when the value changes.
+   */
+  'onChange'?: (event: PointerEvent, checked?: boolean) => void
+
+  /**
    * Optional disabled flag.
    */
   disabled?: boolean

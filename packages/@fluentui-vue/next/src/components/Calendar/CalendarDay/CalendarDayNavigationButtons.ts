@@ -20,7 +20,7 @@ export const CalendarDayNavigationButtons = defineFunctionalComponent({
 
   props: makeCalendarDayNavigationButtonsProps(),
 
-  render(props, { attrs, emit, slots }) {
+  render(props) {
     const {
       minDate,
       maxDate,

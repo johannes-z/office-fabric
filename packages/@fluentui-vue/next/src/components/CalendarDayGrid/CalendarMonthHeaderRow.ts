@@ -1,12 +1,11 @@
 import { css, findIndex } from '@fluentui-vue/utilities'
 import { DAYS_IN_WEEK } from '@fluentui/date-time-utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { type PropType, computed, defineComponent, h, ref, toRefs, watchEffect } from 'vue'
+import { h } from 'vue'
 import { makeCalendarDayGridProps } from '../Calendar/makeProps'
 import { type IDayInfo } from './CalendarDayGrid.base'
 import type { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
-import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory, propsFactoryFromInterface } from '@/utils'
-import { useRender } from '@/composables'
+import { defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarDayMonthHeaderRowProps extends ICalendarDayGridProps {
   weeks: IDayInfo[][]
@@ -25,7 +24,7 @@ export const CalendarMonthHeaderRow = defineFunctionalComponent({
 
   props: makeCalendarMonthHeaderRowProps(),
 
-  render(props, { attrs, slots }) {
+  render(props) {
     const { showWeekNumbers, strings, firstDayOfWeek, allFocusable, weeksToShow, weeks, classNames } = props
     const dayLabels = strings.shortDays.slice()
     const firstOfMonthIndex = findIndex(weeks![1], (day: IDayInfo) => day.originalDate.getDate() === 1)

@@ -48,7 +48,7 @@ const CalendarYearGridCell = defineComponent({
     }
 
     const classNames = computed(() => getClassNames(props.styles, {
-      theme: props.theme,
+      theme: props.theme!,
       className: props.className,
       highlightCurrent: props.highlightCurrentYear,
       highlightSelected: props.highlightSelectedYear,
@@ -119,7 +119,7 @@ export const CalendarYearGrid = defineComponent({
     const gridAriaLabel = computed(() => `${onRenderYear(props.fromYear)} - ${onRenderYear(props.toYear)}`)
 
     const classNames = computed(() => getClassNames(props.styles, {
-      theme: props.theme,
+      theme: props.theme!,
       className: props.className,
       animateBackwards: props.animateBackwards,
       animationDirection: props.animationDirection,

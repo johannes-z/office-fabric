@@ -48,17 +48,9 @@ export interface ICalendarProps {
   className?: string
 
   /**
-   * Callback for when a date is selected
-   * @param date - The date the user selected
-   * @param selectedDateRangeArray - The resultant list of dates that are selected based on the date range type set
-   * for the component.
-   */
-  'onUpdate:modelValue'?: (date: Date, selectedDateRangeArray?: Date[]) => void
-
-  /**
    * Callback for when calendar is closed
    */
-  // onDismiss?: () => void
+  onDismiss?: () => void
 
   /**
    * ID for the calendar
@@ -69,6 +61,14 @@ export interface ICalendarProps {
    * Default value of the Calendar, if any
    */
   modelValue?: Date
+
+  /**
+   * Callback for when a date is selected
+   * @param date - The date the user selected
+   * @param selectedDateRangeArray - The resultant list of dates that are selected based on the date range type set
+   * for the component.
+   */
+  'onUpdate:modelValue'?: (date: Date, selectedDateRangeArray?: Date[]) => void
 
   /**
    * Value of today. If unspecified, current time in client machine will be used.
@@ -247,11 +247,6 @@ export interface ICalendarStyleProps {
    * Whether the month picker is overlaid on the day picker
    */
   showMonthPickerAsOverlay?: boolean
-
-  /**
-   * @deprecated Use `overlaidWithButton`
-   */
-  overlayedWithButton?: boolean
 
   /**
    * Whether the month and day picker are overlaid and the 'go to today' button is shown

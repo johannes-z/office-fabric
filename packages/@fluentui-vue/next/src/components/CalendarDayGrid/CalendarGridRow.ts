@@ -1,12 +1,12 @@
-import { format, values } from '@fluentui-vue/utilities'
-import { FirstWeekOfYear, getWeekNumbersInMonth } from '@fluentui/date-time-utilities'
+import { format } from '@fluentui-vue/utilities'
+import { getWeekNumbersInMonth } from '@fluentui/date-time-utilities'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { type Prop, type PropType, computed, defineComponent, h, toRefs } from 'vue'
+import { h } from 'vue'
 import { makeCalendarDayGridProps } from '../Calendar/makeProps'
 import { type IDayInfo, type IWeekCorners } from './CalendarDayGrid.base'
 import type { ICalendarDayGridProps, ICalendarDayGridStyles } from './CalendarDayGrid.types'
 import { CalendarGridDayCell } from './CalendarGridDayCell'
-import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactory, propsFactoryFromInterface } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarGridRowProps extends ICalendarDayGridProps {
   classNames: IProcessedStyleSet<ICalendarDayGridStyles>
@@ -51,7 +51,7 @@ export const CalendarGridRow = defineFunctionalComponent({
 
   props: makeCalendarGridRowProps(),
 
-  render(props, { attrs, slots }) {
+  render(props) {
     const {
       classNames,
       week,

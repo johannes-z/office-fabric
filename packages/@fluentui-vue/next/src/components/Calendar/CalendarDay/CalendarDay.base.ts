@@ -13,16 +13,11 @@ const getClassNames = classNamesFunction<ICalendarDayStyleProps, ICalendarDaySty
 export const CalendarDayBase = defineComponent({
   name: 'CalendarDayBase',
 
-  emits: [
-    'update:navigatedDate',
-    'update:selectedDate',
-  ],
-
   props: makeCalendarDayProps(),
 
-  setup(props, { attrs, emit, slots }) {
+  setup(props) {
     const classNames = computed(() => getClassNames(props.styles, {
-      theme: props.theme,
+      theme: props.theme!,
       className: props.className,
       headerIsClickable: !!props.onHeaderSelect,
       showWeekNumbers: props.showWeekNumbers,
@@ -62,7 +57,6 @@ export const CalendarDayBase = defineComponent({
       },
       grid: {
         ...props,
-        'onUpdate:selectedDate': (...args) => emit('update:selectedDate', ...args),
       },
     }))
 

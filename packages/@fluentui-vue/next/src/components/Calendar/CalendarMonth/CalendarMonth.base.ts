@@ -2,6 +2,7 @@ import { classNamesFunction, css, getRTL } from '@fluentui-vue/utilities'
 import { addYears, compareDatePart, getMonthEnd, getMonthStart, getYearEnd, getYearStart, setMonth } from '@fluentui/date-time-utilities'
 import { usePrevious } from '@vueuse/core'
 import { type Ref, computed, defineComponent, h, ref, toRefs } from 'vue'
+import { watch } from 'vue'
 import { makeCalendarMonthProps } from '../makeProps'
 import { CalendarYear } from '../CalendarYear/CalendarYear'
 import type { ICalendarMonthStyleProps, ICalendarMonthStyles } from './CalendarMonth.types'
@@ -216,7 +217,7 @@ export const CalendarMonthBase = defineComponent({
 
     useRender(() => {
       if (isYearPickerVisible.value)
-        return h(CalendarYear, slotProps.value.year)
+        return h(CalendarYear, slotProps.value.year, slots)
 
       // Month Picker
       return h('div', slotProps.value.root, [

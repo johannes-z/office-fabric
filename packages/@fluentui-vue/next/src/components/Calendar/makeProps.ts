@@ -89,6 +89,8 @@ export const makeCalendarProps = propsFactoryFromInterface<ICalendarProps>()({
   calendarMonthProps: { type: Object, default: () => ({}) },
 
   id: { type: String, default: undefined },
+
+  onDismiss: { type: Function, default: undefined },
   'onUpdate:modelValue': { type: Function, default: undefined },
 }, 'Calendar')
 
@@ -106,7 +108,7 @@ export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGr
   allFocusable: { type: Boolean, default: false },
 
   navigatedDate: { type: Date, required: true },
-  selectedDate: { type: Date, default: undefined },
+  selectedDate: { type: Date, required: true },
 
   weeksToShow: { type: Number, default: undefined },
   animationDirection: { type: Number, default: 0 },
@@ -116,7 +118,10 @@ export const makeCalendarDayGridProps = propsFactoryFromInterface<ICalendarDayGr
   getMarkedDays: { type: Function, default: undefined },
   markedDays: { type: Array, default: undefined },
 
-  weeks: { type: Array, default: () => [] },
+  onSelectDate: { type: Function, default: undefined },
+  onNavigateDate: { type: Function, required: true },
+  onDismiss: { type: Function, default: undefined },
+
 }, 'CalendarDayGrid')
 
 export const makeCalendarDayProps = propsFactoryFromInterface<ICalendarDayProps>()({

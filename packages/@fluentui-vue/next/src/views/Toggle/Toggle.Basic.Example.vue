@@ -6,7 +6,7 @@ import { Stack, Toggle } from '@fluentui-vue/components'
 const stackTokens: IStackTokens = { childrenGap: 10 }
 
 const value = ref(true)
-function onChange(value: boolean) {
+function onChange(ev: PointerEvent, value?: boolean) {
   console.log(value)
 }
 </script>

@@ -1,6 +1,6 @@
 import { classNamesFunction, getRTL } from '@fluentui-vue/utilities'
 import type { DayOfWeek, IDay } from '@fluentui/date-time-utilities'
-import { DAYS_IN_WEEK, DateRangeType, compareDates, getDateRangeArray, getDayGrid } from '@fluentui/date-time-utilities'
+import { DAYS_IN_WEEK, DateRangeType, compareDates, getBoundedDateRange, getDateRangeArray, getDayGrid, isRestrictedDate } from '@fluentui/date-time-utilities'
 import { type ComputedRef, computed, defineComponent, h, ref, toRefs } from 'vue'
 import { useId } from '@fluentui-vue/hooks'
 import type { IProcessedStyleSet } from '@fluentui/merge-styles'
@@ -31,7 +31,6 @@ function useWeeks(
    */
   const weeks = computed(() => {
     const weeksGrid = getDayGrid(props)
-    console.log(weeksGrid)
 
     const firstVisibleDay = weeksGrid[1][0].originalDate
     const lastVisibleDay = weeksGrid[weeksGrid.length - 1][6].originalDate
@@ -227,18 +226,28 @@ function useWeekCornerStyles(props: ICalendarDayGridProps) {
 export const CalendarDayGridBase = defineComponent({
   name: 'CalendarDayGridBase',
 
-  emits: [
-    'update:selectedDate',
-  ],
-
   props: makeCalendarDayGridProps(),
 
   setup(props, { attrs, emit, slots }) {
     const animateBackwards = ref(false)
-    const weeks = useWeeks(props, (date: Date) => {
-      console.log('test')
-      emit('update:selectedDate', date)
-    }, () => { })
+
+    const onSelectDate = (selectedDate: Date): void => {
+      // we can destructure props because they don't have to be reactive within the callback
+      const { dateRangeType, firstDayOfWeek, minDate, maxDate, workWeekDays, daysToSelectInDayView, restrictedDates } = props
+      const restrictedDatesOptions = { minDate, maxDate, restrictedDates }
+
+      let dateRange = getDateRangeArray(selectedDate, dateRangeType, firstDayOfWeek, workWeekDays, daysToSelectInDayView)
+      dateRange = getBoundedDateRange(dateRange, minDate, maxDate)
+
+      dateRange = dateRange.filter((d: Date) => {
+        return !isRestrictedDate(d, restrictedDatesOptions)
+      })
+
+      props.onSelectDate?.(selectedDate, dateRange)
+      props.onNavigateDate?.(selectedDate, true)
+    }
+
+    const weeks = useWeeks(props, onSelectDate, () => { })
 
     const [getWeekCornerStyles, calculateRoundedStyles] = useWeekCornerStyles(props)
     const weekCorners = computed(() => getWeekCornerStyles(classNames.value, weeks.value))

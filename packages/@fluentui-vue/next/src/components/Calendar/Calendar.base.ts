@@ -23,6 +23,7 @@ export const CalendarBase = defineComponent({
     const selectedDate = useProxiedModel(props, 'modelValue', props.today)
     const navigatedDate = useSyncedRef(props, 'modelValue', props.today)
     const navigatedMonth = useSyncedRef(props, 'modelValue', props.today)
+    const navigatedDay = useSyncedRef(props, 'modelValue', props.today)
 
     const _showMonthPickerAsOverlay = computed(() => {
       const win = window
@@ -65,7 +66,6 @@ export const CalendarBase = defineComponent({
       monthPickerOnly: monthPickerOnly.value,
       showMonthPickerAsOverlay: _showMonthPickerAsOverlay.value,
       overlaidWithButton: overlaidWithButton.value,
-      overlayedWithButton: overlaidWithButton.value,
       showGoToToday: props.showGoToToday,
       showWeekNumbers: props.showWeekNumbers,
     }))
@@ -117,13 +117,10 @@ export const CalendarBase = defineComponent({
         selectedDate: selectedDate.value,
 
         onNavigateDate: (date, focus) => {
-          // TODO
-          navigatedMonth.value = date
           navigatedDate.value = date
         },
-        'onUpdate:selectedDate': (date) => {
+        onSelectDate: (date) => {
           selectedDate.value = date
-          props['onUpdate:modelValue']?.(date)
         },
         onHeaderSelect: onHeaderSelect.value,
 
@@ -141,12 +138,17 @@ export const CalendarBase = defineComponent({
         navigatedDate: navigatedMonth.value,
         selectedDate: selectedDate.value,
 
-        onNavigateDate: (date, focus) => {
-          console.log('onNavigateDate', date, focus)
-          // TODO
+        onNavigateDate: (date: Date, focusOnNavigatedDay: boolean) => {
           navigatedMonth.value = date
+          navigatedDay.value = date
+          if (!focusOnNavigatedDay) {
+            navigatedMonth.value = date
+            return
+          }
+          if (monthPickerOnly.value)
+            selectedDate.value = date
+
           navigatedDate.value = date
-          // console.log('onUpdate:navigatedDate', date, focus)
         },
         onHeaderSelect: onHeaderSelect.value,
 

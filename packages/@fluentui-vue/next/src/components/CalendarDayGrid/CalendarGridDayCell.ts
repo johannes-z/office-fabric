@@ -1,12 +1,10 @@
 import { css } from '@fluentui-vue/utilities'
-import { type PropType, computed, defineComponent, h, ref, toRefs } from 'vue'
-import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { DateRangeType, type IAvailableDateOptions, addDays, addWeeks, compareDates, findAvailableDate } from '@fluentui/date-time-utilities'
-import type { ICalendarDayGridStyles } from '..'
+import { compareDates } from '@fluentui/date-time-utilities'
+import { h } from 'vue'
 import { makeCalendarDayGridProps } from '../Calendar/makeProps'
-import { type IDayInfo, type IWeekCorners } from './CalendarDayGrid.base'
+import { type IDayInfo } from './CalendarDayGrid.base'
 import type { ICalendarGridRowProps } from './CalendarGridRow'
-import { asSlotProps, defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface } from '@/utils'
+import { defineFunctionalComponent, makeStylingProps, propsFactoryFromInterface } from '@/utils'
 
 export interface ICalendarGridDayCellProps extends ICalendarGridRowProps {
   day: IDayInfo
@@ -39,7 +37,7 @@ export const CalendarGridDayCell = defineFunctionalComponent({
 
   props: makeCalendarGridDayCellProps(),
 
-  render(props, { attrs, slots }) {
+  render(props) {
     const {
       navigatedDate,
       dateTimeFormatter,
