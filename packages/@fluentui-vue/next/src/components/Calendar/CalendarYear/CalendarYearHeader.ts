@@ -23,18 +23,37 @@ interface ICalendarYearNavArrowProps extends ICalendarYearHeaderProps {
   direction: CalendarYearNavDirection
 }
 
+function makeCalendarYearHeaderProps() {
+  return {
+    fromYear: { type: Number, required: true },
+    toYear: { type: Number, required: true },
+    minYear: { type: Number, default: undefined },
+    maxYear: { type: Number, default: undefined },
+    navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
+    strings: { type: Object, default: undefined },
+    animateBackwards: { type: Boolean, default: false },
+    animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
+
+    selectedYear: { type: Date, default: undefined },
+    navigatedYear: { type: Date, default: undefined },
+    highlightCurrentYear: { type: Boolean, default: false },
+    highlightSelectedYear: { type: Boolean, default: false },
+
+    onSelectYear: { type: Function, default: undefined },
+    onHeaderSelect: { type: Function, default: undefined },
+    onSelectPrev: { type: Function, default: undefined },
+    onSelectNext: { type: Function, default: undefined },
+  }
+}
+
 const CalendarYearNavArrow = defineFunctionalComponent({
   name: 'CalendarYearNavArrow',
 
   props: propsFactoryFromInterface<ICalendarYearNavArrowProps>()({
     ...makeStylingProps(),
+    ...makeCalendarYearHeaderProps(),
 
-    fromYear: { type: Number, required: true },
-    toYear: { type: Number, required: true },
-    minYear: { type: Number, default: undefined },
-    maxYear: { type: Number, default: undefined },
     direction: { type: Number as PropType<CalendarYearNavDirection>, default: CalendarYearNavDirection.Next },
-    navigationIcons: { type: Object as PropType<ICalendarNavigationIcons>, default: () => defaultCalendarNavigationIcons },
   }, 'CalendarYearNavArrow')(),
 
   render(props, { attrs, slots }) {
@@ -48,7 +67,20 @@ const CalendarYearNavArrow = defineFunctionalComponent({
       toYear,
       maxYear,
       minYear,
+      strings = DefaultCalendarYearStrings,
+      onSelectPrev,
+      onSelectNext,
     } = props
+    console.log('render CalendarYearNavArrow')
+
+    const onNavigate = () => {
+      direction === CalendarYearNavDirection.Previous ? onSelectPrev?.() : onSelectNext?.()
+    }
+
+    const ariaLabel = direction === CalendarYearNavDirection.Previous ? strings.prevRangeAriaLabel : strings.nextRangeAriaLabel
+    const newRangeOffset = direction === CalendarYearNavDirection.Previous ? -CELL_COUNT : CELL_COUNT
+    const newRange = { fromYear: fromYear + newRangeOffset, toYear: toYear + newRangeOffset }
+    const ariaLabelString = ariaLabel ? (typeof ariaLabel === 'string' ? ariaLabel : ariaLabel(newRange)) : undefined
 
     const disabled = direction === CalendarYearNavDirection.Previous
       ? minYear !== undefined && fromYear < minYear
@@ -69,7 +101,10 @@ const CalendarYearNavArrow = defineFunctionalComponent({
         class: css(classNames.navigationButton, {
           [classNames.disabled]: disabled,
         }),
+        onClick: !disabled ? onNavigate : undefined,
         type: 'button',
+        title: ariaLabelString,
+        disabled,
       },
       icon: {
         iconName: isLeftNavigation ? navigationIcons.leftNavigation : navigationIcons.rightNavigation,
@@ -87,15 +122,7 @@ const CalendarYearNav = defineFunctionalComponent({
 
   props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
-
-    fromYear: { type: Number, required: true },
-    toYear: { type: Number, required: true },
-
-    strings: { type: Object as PropType<ICalendarYearStrings>, default: () => DefaultCalendarYearStrings },
-
-    animateBackwards: { type: Boolean, default: false },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-    onHeaderSelect: { type: Function, default: undefined },
+    ...makeCalendarYearHeaderProps(),
   }, 'CalendarYearNav')(),
 
   render(props, { attrs, slots }) {
@@ -132,15 +159,7 @@ const CalendarYearTitle = defineFunctionalComponent({
 
   props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
-
-    fromYear: { type: Number, required: true },
-    toYear: { type: Number, required: true },
-
-    strings: { type: Object as PropType<ICalendarYearStrings>, default: () => DefaultCalendarYearStrings },
-
-    animateBackwards: { type: Boolean, default: false },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-    onHeaderSelect: { type: Function, default: undefined },
+    ...makeCalendarYearHeaderProps(),
   }, 'CalendarYearTitle')(),
 
   render(props, { attrs, slots }) {
@@ -214,13 +233,7 @@ export const CalendarYearHeader = defineFunctionalComponent({
 
   props: propsFactoryFromInterface<ICalendarYearHeaderProps>()({
     ...makeStylingProps(),
-    strings: { type: Object, default: () => ({}) },
-
-    fromYear: { type: Number, required: true },
-    toYear: { type: Number, required: true },
-    animateBackwards: { type: Boolean, default: false },
-    animationDirection: { type: Number as PropType<AnimationDirection>, default: AnimationDirection.Horizontal },
-    onHeaderSelect: { type: Function, default: undefined },
+    ...makeCalendarYearHeaderProps(),
   }, 'CalendarYearHeader')(),
 
   render(props, { attrs, slots }) {
