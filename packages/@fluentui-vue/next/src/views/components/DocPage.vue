@@ -3,6 +3,7 @@ import { DefaultEffects } from '@fluentui-vue/style-utilities'
 import { type PropType, type Ref, computed, defineAsyncComponent, ref, toRefs } from 'vue'
 import DocSection from './DocSection.vue'
 import ExampleCard from './ExampleCard.vue'
+import CodeBlock from './CodeBlock.vue'
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -83,7 +84,7 @@ const {
   <DocSection title="Usage">
     <ExampleCard v-for="(example, index) in examples" :key="index" :title="example.title">
       <component :is="example.view" />
-      <pre>{{ example.code }}</pre>
+      <CodeBlock :code="example.code" />
     </ExampleCard>
   </DocSection>
 </template>

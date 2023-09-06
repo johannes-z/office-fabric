@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
 import DocPage from '../components/DocPage.vue'
 import ProgressIndicatorBasicExample from './ProgressIndicator.Basic.Example.vue'
 import ProgressIndicatorBasicExampleCode from './ProgressIndicator.Basic.Example.vue?raw'
