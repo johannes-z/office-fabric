@@ -8,7 +8,8 @@ let _window: Window | undefined
 // Caching the window value at the file scope lets us minimize the impact.
 try {
   _window = window
-} catch (e) {
+}
+catch (e) {
   /* no-op */
 }
 
@@ -20,10 +21,11 @@ try {
  *
  * @public
  */
-export function getWindow (rootElement?: Element | null): Window | undefined {
+export function getWindow(rootElement?: Element | null): Window | undefined {
   if (_isSSR || typeof _window === 'undefined') {
     return undefined
-  } else {
+  }
+  else {
     const el = rootElement as Element
 
     return el && el.ownerDocument && el.ownerDocument.defaultView ? el.ownerDocument.defaultView : _window

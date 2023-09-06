@@ -5,6 +5,6 @@ export let _isSSR = false
  *
  * @public
  */
-export function setSSR (isEnabled: boolean): void {
+export function setSSR(isEnabled: boolean): void {
   _isSSR = isEnabled
 }

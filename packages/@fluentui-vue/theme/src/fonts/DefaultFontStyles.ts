@@ -1,10 +1,10 @@
 import { fontFace } from '@fluentui/merge-styles'
-import { FontWeights, LocalizedFontFamilies, LocalizedFontNames } from './FluentFonts'
-import { createFontStyles } from './createFontStyles'
 import type { IFontWeight } from '@fluentui/merge-styles'
+import { getLanguage, getWindow } from '@fluentui-vue/utilities'
 import type { IFontStyles } from '../types/IFontStyles'
 import type { IFabricConfig } from '../types/IFabricConfig'
-import { getLanguage, getWindow } from '@fluentui-vue/utilities'
+import { FontWeights, LocalizedFontFamilies, LocalizedFontNames } from './FluentFonts'
+import { createFontStyles } from './createFontStyles'
 
 // Default urls.
 const DefaultBaseUrl = 'https://static2.sharepointonline.com/files/fabric/assets'
@@ -12,21 +12,21 @@ const DefaultBaseUrl = 'https://static2.sharepointonline.com/files/fabric/assets
 // Standard font styling.
 export const DefaultFontStyles: IFontStyles = createFontStyles(getLanguage())
 
-function _registerFontFace (fontFamily: string, url: string, fontWeight?: IFontWeight, localFontName?: string): void {
+function _registerFontFace(fontFamily: string, url: string, fontWeight?: IFontWeight, localFontName?: string): void {
   fontFamily = `'${fontFamily}'`
 
   const localFontSrc = localFontName !== undefined ? `local('${localFontName}'),` : ''
 
   fontFace({
     fontFamily,
-    src: localFontSrc + `url('${url}.woff2') format('woff2'),` + `url('${url}.woff') format('woff')`,
+    src: `${localFontSrc}url('${url}.woff2') format('woff2'),` + `url('${url}.woff') format('woff')`,
     fontWeight,
     fontStyle: 'normal',
     fontDisplay: 'swap',
   })
 }
 
-function _registerFontFaceSet (
+function _registerFontFaceSet(
   baseUrl: string,
   fontFamily: string,
   cdnFolder: string,
@@ -35,24 +35,24 @@ function _registerFontFaceSet (
 ): void {
   const urlBase = `${baseUrl}/${cdnFolder}/${cdnFontName}`
 
-  _registerFontFace(fontFamily, urlBase + '-light', FontWeights.light, localFontName && localFontName + ' Light')
+  _registerFontFace(fontFamily, `${urlBase}-light`, FontWeights.light, localFontName && `${localFontName} Light`)
   _registerFontFace(
     fontFamily,
-    urlBase + '-semilight',
+    `${urlBase}-semilight`,
     FontWeights.semilight,
-    localFontName && localFontName + ' SemiLight',
+    localFontName && `${localFontName} SemiLight`,
   )
-  _registerFontFace(fontFamily, urlBase + '-regular', FontWeights.regular, localFontName)
+  _registerFontFace(fontFamily, `${urlBase}-regular`, FontWeights.regular, localFontName)
   _registerFontFace(
     fontFamily,
-    urlBase + '-semibold',
+    `${urlBase}-semibold`,
     FontWeights.semibold,
-    localFontName && localFontName + ' SemiBold',
+    localFontName && `${localFontName} SemiBold`,
   )
-  _registerFontFace(fontFamily, urlBase + '-bold', FontWeights.bold, localFontName && localFontName + ' Bold')
+  _registerFontFace(fontFamily, `${urlBase}-bold`, FontWeights.bold, localFontName && `${localFontName} Bold`)
 }
 
-export function registerDefaultFontFaces (baseUrl: string): void {
+export function registerDefaultFontFaces(baseUrl: string): void {
   if (baseUrl) {
     const fontUrl = `${baseUrl}/fonts`
 
@@ -82,8 +82,7 @@ export function registerDefaultFontFaces (baseUrl: string): void {
 /**
  * Reads the fontBaseUrl from window.FabricConfig.fontBaseUrl or falls back to a default.
  */
-function _getFontBaseUrl (): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+function _getFontBaseUrl(): string {
   const fabricConfig: IFabricConfig | undefined = (getWindow() as any)?.FabricConfig
 
   return fabricConfig?.fontBaseUrl ?? DefaultBaseUrl

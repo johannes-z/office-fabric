@@ -11,29 +11,26 @@ const STORAGE_KEY = 'language'
  * Gets the language set for the page.
  * @param persistenceType - Where to persist the value. Default is `sessionStorage` if available.
  */
-export function getLanguage (
+export function getLanguage(
   persistenceType: 'localStorage' | 'sessionStorage' | 'none' = 'sessionStorage',
 ): string | null {
   if (_language === undefined) {
     const doc = getDocument()
-    const savedLanguage =
-      persistenceType === 'localStorage'
+    const savedLanguage
+      = persistenceType === 'localStorage'
         ? localStorage.getItem(STORAGE_KEY)
         : persistenceType === 'sessionStorage'
           ? sessionStorage.getItem(STORAGE_KEY)
           : undefined
 
-    if (savedLanguage) {
+    if (savedLanguage)
       _language = savedLanguage
-    }
 
-    if (_language === undefined && doc) {
+    if (_language === undefined && doc)
       _language = doc.documentElement.getAttribute('lang')
-    }
 
-    if (_language === undefined) {
+    if (_language === undefined)
       _language = 'en'
-    }
   }
 
   return _language
@@ -44,30 +41,28 @@ export function getLanguage (
  * @param language - Language to set.
  * @param persistenceType - Where to persist the value. Default is `sessionStorage` if available.
  */
-export function setLanguage(language: string, persistenceType?: 'localStorage' | 'sessionStorage' | 'none'): void;
+export function setLanguage(language: string, persistenceType?: 'localStorage' | 'sessionStorage' | 'none'): void
 /**
  * Sets the language for the page (by adjusting the lang attribute of the html element).
  * @deprecated Use string parameter version.
  * @param language - Language to set.
  * @param avoidPersisting - If true, don't store the value.
  */
-export function setLanguage(language: string, avoidPersisting?: boolean): void;
-export function setLanguage (
+export function setLanguage(language: string, avoidPersisting?: boolean): void
+export function setLanguage(
   language: string,
   persistenceParam?: 'localStorage' | 'sessionStorage' | 'none' | boolean,
 ): void {
   const doc = getDocument()
 
-  if (doc) {
+  if (doc)
     doc.documentElement.setAttribute('lang', language)
-  }
 
   const persistenceType = persistenceParam === true ? 'none' : !persistenceParam ? 'sessionStorage' : persistenceParam
-  if (persistenceType === 'localStorage') {
+  if (persistenceType === 'localStorage')
     localStorage.setItem(STORAGE_KEY, language)
-  } else if (persistenceType === 'sessionStorage') {
+  else if (persistenceType === 'sessionStorage')
     sessionStorage.setItem(STORAGE_KEY, language)
-  }
 
   _language = language
 }

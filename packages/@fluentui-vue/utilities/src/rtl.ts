@@ -1,7 +1,6 @@
-import { KeyCodes } from './KeyCodes'
+import { setRTL as mergeStylesSetRTL } from '@fluentui/merge-styles'
 import { getDocument } from './dom/getDocument'
 import { getItem, setItem } from './sessionStorage'
-import { setRTL as mergeStylesSetRTL } from '@fluentui/merge-styles'
 
 const RTL_LOCAL_STORAGE_KEY = 'isRTL'
 
@@ -11,10 +10,10 @@ let _isRTL: boolean | undefined
 /**
  * Gets the rtl state of the page (returns true if in rtl.)
  */
-export function getRTL (theme: { rtl?: boolean } = {}): boolean {
-  if (theme.rtl !== undefined) {
+export function getRTL(theme: { rtl?: boolean } = {}): boolean {
+  if (theme.rtl !== undefined)
     return theme.rtl
-  }
+
   if (_isRTL === undefined) {
     // Fabric supports persisting the RTL setting between page refreshes via session storage
     const savedRTL = getItem(RTL_LOCAL_STORAGE_KEY)
@@ -36,15 +35,13 @@ export function getRTL (theme: { rtl?: boolean } = {}): boolean {
 /**
  * Sets the rtl state of the page (by adjusting the dir attribute of the html element.)
  */
-export function setRTL (isRTL: boolean, persistSetting: boolean = false): void {
+export function setRTL(isRTL: boolean, persistSetting: boolean = false): void {
   const doc = getDocument()
-  if (doc) {
+  if (doc)
     doc.documentElement.setAttribute('dir', isRTL ? 'rtl' : 'ltr')
-  }
 
-  if (persistSetting) {
+  if (persistSetting)
     setItem(RTL_LOCAL_STORAGE_KEY, isRTL ? '1' : '0')
-  }
 
   _isRTL = isRTL
   mergeStylesSetRTL(_isRTL)
@@ -53,13 +50,12 @@ export function setRTL (isRTL: boolean, persistSetting: boolean = false): void {
 /**
  * Returns the given key, but flips right/left arrows if necessary.
  */
-export function getRTLSafeKeyCode (key: string, theme: { rtl?: boolean } = {}): string {
+export function getRTLSafeKeyCode(key: string, theme: { rtl?: boolean } = {}): string {
   if (getRTL(theme)) {
-    if (key === 'left') {
+    if (key === 'left')
       key = 'right'
-    } else if (key === 'right') {
+    else if (key === 'right')
       key = 'left'
-    }
   }
 
   return key

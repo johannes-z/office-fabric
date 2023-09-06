@@ -7,7 +7,7 @@
  * @param cb - Callback which returns true on matches.
  * @param fromIndex - Optional index to start from (defaults to 0)
  */
-export function findIndex<T> (array: T[], cb: (item: T, index: number) => boolean, fromIndex: number = 0): number {
+export function findIndex<T>(array: T[], cb: (item: T, index: number) => boolean, fromIndex: number = 0): number {
   let index = -1
 
   for (let i = fromIndex; i < array.length; i++) {

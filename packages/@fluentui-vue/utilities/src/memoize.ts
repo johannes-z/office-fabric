@@ -1,11 +1,9 @@
 import { Stylesheet } from '@fluentui/merge-styles'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 declare class WeakMap {
-  public get(key: any): any;
-  public set(key: any, value: any): void;
-  public has(key: any): boolean;
+  public get(key: any): any
+  public set(key: any, value: any): void
+  public has(key: any): boolean
 }
 
 let _initializedStylesheetResets = false
@@ -15,8 +13,8 @@ const _dictionary: any = {}
 let _weakMap = typeof WeakMap === 'undefined' ? null : WeakMap
 
 interface IMemoizeNode {
-  map: WeakMap | null;
-  value?: any;
+  map: WeakMap | null
+  value?: any
 }
 
 /**
@@ -24,14 +22,14 @@ interface IMemoizeNode {
  *
  * @internal
  * */
-export function setMemoizeWeakMap (weakMap: any): void {
+export function setMemoizeWeakMap(weakMap: any): void {
   _weakMap = weakMap
 }
 
 /**
  * Reset memoizations.
  */
-export function resetMemoizations (): void {
+export function resetMemoizations(): void {
   _resetCounter++
 }
 
@@ -42,13 +40,13 @@ export function resetMemoizations (): void {
  *
  * @public
  */
-export function memoize<T extends Function> (
+export function memoize<T extends Function>(
   _target: any,
   _key: string,
   descriptor: TypedPropertyDescriptor<T>,
 ): {
-    configurable: boolean;
-    get(): T;
+    configurable: boolean
+    get(): T
   } {
   // We bind to "null" to prevent people from inadvertently pulling values from "this",
   // rather than passing them in as input values which can be memoized.
@@ -56,7 +54,7 @@ export function memoize<T extends Function> (
 
   return {
     configurable: true,
-    get (): T {
+    get(): T {
       return fn
     },
   }
@@ -87,16 +85,15 @@ export function memoizeFunction<T extends (...args: any[]) => RetType, RetType>(
   ignoreNullOrUndefinedResult: boolean = false,
 ): T {
   // Avoid breaking scenarios which don't have weak map.
-  if (!_weakMap) {
+  if (!_weakMap)
     return cb
-  }
 
   if (!_initializedStylesheetResets) {
     const stylesheet = Stylesheet.getInstance()
 
-    if (stylesheet && (stylesheet as { onReset?: unknown }).onReset) {
+    if (stylesheet && (stylesheet as { onReset?: unknown }).onReset)
       Stylesheet.getInstance().onReset(resetMemoizations)
-    }
+
     _initializedStylesheetResets = true
   }
 
@@ -104,13 +101,13 @@ export function memoizeFunction<T extends (...args: any[]) => RetType, RetType>(
   let cacheSize = 0
   let localResetCounter = _resetCounter
 
-  return function memoizedFunction (...args: any[]): RetType {
+  return function memoizedFunction(...args: any[]): RetType {
     let currentNode: any = rootNode
 
     if (
-      rootNode === undefined ||
-      localResetCounter !== _resetCounter ||
-      (maxCacheSize > 0 && cacheSize > maxCacheSize)
+      rootNode === undefined
+      || localResetCounter !== _resetCounter
+      || (maxCacheSize > 0 && cacheSize > maxCacheSize)
     ) {
       rootNode = _createNode()
       cacheSize = 0
@@ -123,9 +120,8 @@ export function memoizeFunction<T extends (...args: any[]) => RetType, RetType>(
     for (let i = 0; i < args.length; i++) {
       const arg = _normalizeArg(args[i])
 
-      if (!currentNode.map.has(arg)) {
+      if (!currentNode.map.has(arg))
         currentNode.map.set(arg, _createNode())
-      }
 
       currentNode = currentNode.map.get(arg)
     }
@@ -135,9 +131,8 @@ export function memoizeFunction<T extends (...args: any[]) => RetType, RetType>(
       cacheSize++
     }
 
-    if (ignoreNullOrUndefinedResult && (currentNode.value === null || currentNode.value === undefined)) {
+    if (ignoreNullOrUndefinedResult && (currentNode.value === null || currentNode.value === undefined))
       currentNode.value = cb(...args)
-    }
 
     return currentNode.value
   } as any
@@ -162,16 +157,15 @@ export function createMemoizer<F extends (input: any) => any>(getValue: F): F {
 
   const cache = new _weakMap()
 
-  function memoizedGetValue (input: any): any {
+  function memoizedGetValue(input: any): any {
     if (!input || (typeof input !== 'function' && typeof input !== 'object')) {
       // A WeakMap can only be used to test against reference values, i.e. 'function' and 'object'.
       // All other inputs cannot be memoized against in this manner.
       return getValue(input)
     }
 
-    if (cache.has(input)) {
+    if (cache.has(input))
       return cache.get(input)!
-    }
 
     const value = getValue(input)
 
@@ -183,21 +177,20 @@ export function createMemoizer<F extends (input: any) => any>(getValue: F): F {
   return memoizedGetValue as F
 }
 
-function _normalizeArg(val: null | undefined): { empty: boolean } | any;
-function _normalizeArg(val: object): any;
-function _normalizeArg (val: any): any {
-  if (!val) {
+function _normalizeArg(val: null | undefined): { empty: boolean } | any
+function _normalizeArg(val: object): any
+function _normalizeArg(val: any): any {
+  if (!val)
     return _emptyObject
-  } else if (typeof val === 'object' || typeof val === 'function') {
+  else if (typeof val === 'object' || typeof val === 'function')
     return val
-  } else if (!_dictionary[val]) {
+  else if (!_dictionary[val])
     _dictionary[val] = { val }
-  }
 
   return _dictionary[val]
 }
 
-function _createNode (): IMemoizeNode {
+function _createNode(): IMemoizeNode {
   return {
     map: _weakMap ? new _weakMap() : null,
   }

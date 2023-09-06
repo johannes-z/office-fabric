@@ -4,7 +4,7 @@ import type { IEffects, IPalette, ISemanticColors } from '../types/index'
  * We'll use these as fallbacks for semantic slots that the passed in theme did not define.
  * The caller must still mix in the customized semantic slots at the end.
  */
-export function makeSemanticColors (
+export function makeSemanticColors(
   p: IPalette,
   e: IEffects,
   s: Partial<ISemanticColors> | undefined,
@@ -48,7 +48,7 @@ export function makeSemanticColors (
 /**
  * Map partial platte and effects to partial semantic colors.
  */
-export function getSemanticColors<TResult = Partial<ISemanticColors>> (
+export function getSemanticColors<TResult = Partial<ISemanticColors>>(
   p: Partial<IPalette> | undefined,
   e: Partial<IEffects> | undefined,
   s: Partial<ISemanticColors> | undefined,
@@ -113,15 +113,15 @@ export function getSemanticColors<TResult = Partial<ISemanticColors>> (
     result.inputBackgroundCheckedHovered = themeDark
     result.inputIconHovered = themeDark
   }
-  if (themeDarker) {
+  if (themeDarker)
     result.linkHovered = themeDarker
-  }
-  if (themeDarkAlt) {
+
+  if (themeDarkAlt)
     result.primaryButtonBackgroundHovered = themeDarkAlt
-  }
-  if (themeLighter) {
+
+  if (themeLighter)
     result.inputPlaceholderBackgroundChecked = themeLighter
-  }
+
   if (neutralLight) {
     result.bodyBackgroundChecked = neutralLight
     result.bodyFrameDivider = neutralLight
@@ -150,9 +150,9 @@ export function getSemanticColors<TResult = Partial<ISemanticColors>> (
     result.primaryButtonTextDisabled = neutralQuaternary
     result.disabledSubtext = neutralQuaternary
   }
-  if (neutralQuaternaryAlt) {
+  if (neutralQuaternaryAlt)
     result.listItemBackgroundCheckedHovered = neutralQuaternaryAlt
-  }
+
   if (neutralTertiary) {
     result.disabledBodyText = neutralTertiary
     result.variantBorderHovered = s?.variantBorderHovered || neutralTertiary
@@ -188,28 +188,26 @@ export function getSemanticColors<TResult = Partial<ISemanticColors>> (
     result.smallInputBorder = neutralSecondary
     result.inputPlaceholderText = neutralSecondary
   }
-  if (neutralSecondaryAlt) {
+  if (neutralSecondaryAlt)
     result.buttonBorder = neutralSecondaryAlt
-  }
+
   if (neutralTertiaryAlt) {
     result.disabledBodySubtext = neutralTertiaryAlt
     result.disabledBorder = neutralTertiaryAlt
     result.buttonBackgroundChecked = neutralTertiaryAlt
     result.menuDivider = neutralTertiaryAlt
   }
-  if (accent) {
+  if (accent)
     result.accentButtonBackground = accent
-  }
 
   // map effects
-  if (e?.elevation4) {
+  if (e?.elevation4)
     result.cardShadow = e.elevation4
-  }
-  if (!isInverted && e?.elevation8) {
+
+  if (!isInverted && e?.elevation8)
     result.cardShadowHovered = e.elevation8
-  } else if (result.variantBorderHovered) {
-    result.cardShadowHovered = '0 0 1px ' + result.variantBorderHovered
-  }
+  else if (result.variantBorderHovered)
+    result.cardShadowHovered = `0 0 1px ${result.variantBorderHovered}`
 
   result = {
     ...result,
@@ -220,12 +218,11 @@ export function getSemanticColors<TResult = Partial<ISemanticColors>> (
   return result as TResult
 }
 
-function _fixDeprecatedSlots (s: ISemanticColors, depComments: boolean): ISemanticColors {
+function _fixDeprecatedSlots(s: ISemanticColors, depComments: boolean): ISemanticColors {
   // Add @deprecated tag as comment if enabled
   let dep = ''
-  if (depComments === true) {
+  if (depComments === true)
     dep = ' /* @deprecated */'
-  }
 
   /* eslint-disable deprecation/deprecation */
   s.listTextColor = s.listText + dep

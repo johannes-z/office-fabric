@@ -1,6 +1,6 @@
 import { keyframes } from '@fluentui/merge-styles'
-import type { IAnimationStyles, IAnimationVariables } from '../types/IAnimationStyles'
 import type { IRawStyle } from '@fluentui/merge-styles'
+import type { IAnimationStyles, IAnimationVariables } from '../types/IAnimationStyles'
 
 /* Register the keyframes */
 
@@ -141,7 +141,7 @@ export const AnimationStyles: IAnimationStyles = {
   // expandCollapse 100/200/400, delay 100/200
 }
 
-function _createAnimation (
+function _createAnimation(
   animationName: string,
   animationDuration: string,
   animationTimingFunction: string,
@@ -154,30 +154,30 @@ function _createAnimation (
   }
 }
 
-function _createSlideInX (fromX: number): string {
+function _createSlideInX(fromX: number): string {
   return keyframes({
     from: { transform: `translate3d(${fromX}px,0,0)`, pointerEvents: 'none' },
-    to: { transform: `translate3d(0,0,0)`, pointerEvents: 'auto' },
+    to: { transform: 'translate3d(0,0,0)', pointerEvents: 'auto' },
   })
 }
 
-function _createSlideInY (fromY: number): string {
+function _createSlideInY(fromY: number): string {
   return keyframes({
     from: { transform: `translate3d(0,${fromY}px,0)`, pointerEvents: 'none' },
-    to: { transform: `translate3d(0,0,0)`, pointerEvents: 'auto' },
+    to: { transform: 'translate3d(0,0,0)', pointerEvents: 'auto' },
   })
 }
 
-function _createSlideOutX (toX: number): string {
+function _createSlideOutX(toX: number): string {
   return keyframes({
-    from: { transform: `translate3d(0,0,0)` },
+    from: { transform: 'translate3d(0,0,0)' },
     to: { transform: `translate3d(${toX}px,0,0)` },
   })
 }
 
-function _createSlideOutY (toY: number): string {
+function _createSlideOutY(toY: number): string {
   return keyframes({
-    from: { transform: `translate3d(0,0,0)` },
+    from: { transform: 'translate3d(0,0,0)' },
     to: { transform: `translate3d(0,${toY}px,0)` },
   })
 }

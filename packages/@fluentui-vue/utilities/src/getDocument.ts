@@ -9,10 +9,11 @@ const _isSSR = false
  *
  * @public
  */
-export function getDocument (rootElement?: HTMLElement | null): Document | undefined {
+export function getDocument(rootElement?: HTMLElement | null): Document | undefined {
   if (_isSSR || typeof document === 'undefined') {
     return undefined
-  } else {
+  }
+  else {
     const el = rootElement as Element
 
     return el && el.ownerDocument ? el.ownerDocument : document

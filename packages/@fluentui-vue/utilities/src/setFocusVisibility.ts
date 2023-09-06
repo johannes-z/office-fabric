@@ -1,4 +1,5 @@
 import { getWindow } from './dom/getWindow'
+
 export const IsFocusVisibleClassName = 'ms-Fabric--isFocusVisible'
 export const IsFocusHiddenClassName = 'ms-Fabric--isFocusHidden'
 
@@ -15,7 +16,7 @@ export const IsFocusHiddenClassName = 'ms-Fabric--isFocusHidden'
  * @param enabled - whether to remove or add focus
  * @param target - optional target
  */
-export function setFocusVisibility (enabled: boolean, target?: Element): void {
+export function setFocusVisibility(enabled: boolean, target?: Element): void {
   const win = target ? getWindow(target) : getWindow()
 
   if (win) {

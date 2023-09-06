@@ -74,7 +74,7 @@ export namespace MotionTimings {
   export const standard = 'cubic-bezier(0.8, 0, 0.2, 1)'
 }
 
-function _createAnimation (animationName: string, animationDuration: string, animationTimingFunction: string): string {
+function _createAnimation(animationName: string, animationDuration: string, animationTimingFunction: string): string {
   return `${animationName} ${animationDuration} ${animationTimingFunction}`
 }
 

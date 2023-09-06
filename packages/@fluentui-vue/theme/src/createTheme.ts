@@ -11,7 +11,7 @@ import type { PartialTheme, Theme } from './types/index'
  * @param theme - Partial theme object.
  * @param depComments - Whether to include deprecated tags as comments for deprecated slots.
  */
-export function createTheme (theme: PartialTheme = {}, depComments: boolean = false): Theme {
+export function createTheme(theme: PartialTheme = {}, depComments: boolean = false): Theme {
   const isInverted = !!theme.isInverted
   const baseTheme: Theme = {
     palette: DefaultPalette,

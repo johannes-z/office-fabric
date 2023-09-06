@@ -1,40 +1,38 @@
 import { assign } from './object'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 /**
  * @internal
  */
 export interface IEventRecord {
-  target: any;
-  eventName: string;
-  parent: any;
-  callback: (args?: any) => void;
-  elementCallback?: (...args: any[]) => void;
-  objectCallback?: (args?: any) => void;
-  options?: boolean | AddEventListenerOptions;
+  target: any
+  eventName: string
+  parent: any
+  callback: (args?: any) => void
+  elementCallback?: (...args: any[]) => void
+  objectCallback?: (args?: any) => void
+  options?: boolean | AddEventListenerOptions
 }
 
 /**
  * @internal
  */
 export interface IEventRecordsByName {
-  [eventName: string]: IEventRecordList;
+  [eventName: string]: IEventRecordList
 }
 
 /**
  * @internal
  */
 export interface IEventRecordList {
-  [id: string]: IEventRecord[] | number;
-  count: number;
+  [id: string]: IEventRecord[] | number
+  count: number
 }
 
 /**
  * @internal
  */
 export interface IDeclaredEventsByName {
-  [eventName: string]: boolean;
+  [eventName: string]: boolean
 }
 
 /** An instance of EventGroup allows anything with a handle to it to trigger events on it.
@@ -61,7 +59,7 @@ export class EventGroup {
    *  which may lead to unexpected behavior if it differs from the defaults.
    *
    */
-  public static raise (target: any, eventName: string, eventArgs?: any, bubbleEvent?: boolean): boolean | undefined {
+  public static raise(target: any, eventName: string, eventArgs?: any, bubbleEvent?: boolean): boolean | undefined {
     let retVal
 
     if (EventGroup._isElement(target)) {
@@ -73,15 +71,16 @@ export class EventGroup {
         assign(ev, eventArgs)
 
         retVal = target.dispatchEvent(ev)
-      } else if (typeof document !== 'undefined' && (document as any).createEventObject) {
+      }
+      else if (typeof document !== 'undefined' && (document as any).createEventObject) {
         // IE8
         const evObj = (document as any).createEventObject(eventArgs)
         // cannot set cancelBubble on evObj, fireEvent will overwrite it
-        target.fireEvent('on' + eventName, evObj)
+        target.fireEvent(`on${eventName}`, evObj)
       }
-    } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
+    }
+    else {
+      // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
       while (target && retVal !== false) {
         const events = <IEventRecordsByName>target.__events__
         const eventRecords = events ? events[eventName] : null
@@ -91,14 +90,12 @@ export class EventGroup {
             if (eventRecords.hasOwnProperty(id)) {
               const eventRecordList = <IEventRecord[]>eventRecords[id]
 
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
+              // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
               for (let listIndex = 0; retVal !== false && listIndex < eventRecordList.length; listIndex++) {
                 const record = eventRecordList[listIndex]
 
-                if (record.objectCallback) {
+                if (record.objectCallback)
                   retVal = record.objectCallback.call(record.parent, eventArgs)
-                }
               }
             }
           }
@@ -112,41 +109,42 @@ export class EventGroup {
     return retVal
   }
 
-  public static isObserved (target: any, eventName: string): boolean {
+  public static isObserved(target: any, eventName: string): boolean {
     const events = target && <IEventRecordsByName>target.__events__
 
     return !!events && !!events[eventName]
   }
 
   /** Check to see if the target has declared support of the given event. */
-  public static isDeclared (target: any, eventName: string): boolean {
+  public static isDeclared(target: any, eventName: string): boolean {
     const declaredEvents = target && <IDeclaredEventsByName>target.__declaredEvents
 
     return !!declaredEvents && !!declaredEvents[eventName]
   }
 
-  public static stopPropagation (event: any): void {
+  public static stopPropagation(event: any): void {
     if (event.stopPropagation) {
       event.stopPropagation()
-    } else {
+    }
+    else {
       // IE8
       event.cancelBubble = true
     }
   }
 
-  private static _isElement (target: HTMLElement): boolean {
+  private static _isElement(target: HTMLElement): boolean {
     return (
       !!target && (!!target.addEventListener || (typeof HTMLElement !== 'undefined' && target instanceof HTMLElement))
     )
   }
 
   /** parent: the context in which events attached to non-HTMLElements are called */
-  public constructor (parent: any) {
+  public constructor(parent: any) {
     this._parent = parent
     this._eventRecords = []
   }
 
-  public dispose (): void {
+  public dispose(): void {
     if (!this._isDisposed) {
       this._isDisposed = true
 
@@ -156,11 +154,10 @@ export class EventGroup {
   }
 
   /** On the target, attach a set of events, where the events object is a name to function mapping. */
-  public onAll (target: any, events: { [key: string]: (args?: any) => void }, useCapture?: boolean): void {
+  public onAll(target: any, events: { [key: string]: (args?: any) => void }, useCapture?: boolean): void {
     for (const eventName in events) {
-      if (events.hasOwnProperty(eventName)) {
+      if (events.hasOwnProperty(eventName))
         this.on(target, eventName, events[eventName], useCapture)
-      }
     }
   }
 
@@ -168,33 +165,33 @@ export class EventGroup {
    * On the target, attach an event whose handler will be called in the context of the parent
    * of this instance of EventGroup.
    */
-  public on (
+  public on(
     target: any,
     eventName: string,
     callback: (args?: any) => void,
     options?: boolean | AddEventListenerOptions,
   ): void {
-    if (eventName.indexOf(',') > -1) {
+    if (eventName.includes(',')) {
       const events = eventName.split(/[ ,]+/)
 
-      for (let i = 0; i < events.length; i++) {
+      for (let i = 0; i < events.length; i++)
         this.on(target, events[i], callback, options)
-      }
-    } else {
+    }
+    else {
       const parent = this._parent
       const eventRecord: IEventRecord = {
-        target: target,
-        eventName: eventName,
-        parent: parent,
-        callback: callback,
+        target,
+        eventName,
+        parent,
+        callback,
         options,
       }
 
       // Initialize and wire up the record on the target, so that it can call the callback if the event fires.
       const events = <IEventRecordsByName>(target.__events__ = target.__events__ || {})
-      events[eventName] =
-        events[eventName] ||
-        <IEventRecordList>{
+      events[eventName]
+        = events[eventName]
+        || <IEventRecordList>{
           count: 0,
         }
       events[eventName][this._id] = events[eventName][this._id] || [];
@@ -203,29 +200,27 @@ export class EventGroup {
 
       if (EventGroup._isElement(target)) {
         const processElementEvent = (...args: any) => {
-          if (this._isDisposed) {
+          if (this._isDisposed)
             return
-          }
 
           let result
           try {
             result = callback.apply(parent, args)
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
+
+            // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
             if (result === false && args[0]) {
               const e = args[0]
 
-              if (e.preventDefault) {
+              if (e.preventDefault)
                 e.preventDefault()
-              }
 
-              if (e.stopPropagation) {
+              if (e.stopPropagation)
                 e.stopPropagation()
-              }
 
               e.cancelBubble = true
             }
-          } catch (e) {
+          }
+          catch (e) {
             // ignore
           }
 
@@ -236,15 +231,16 @@ export class EventGroup {
 
         if (target.addEventListener) {
           (<EventTarget>target).addEventListener(eventName, processElementEvent, options)
-        } else if (target.attachEvent) {
-          // IE8
-          target.attachEvent('on' + eventName, processElementEvent)
         }
-      } else {
+        else if (target.attachEvent) {
+          // IE8
+          target.attachEvent(`on${eventName}`, processElementEvent)
+        }
+      }
+      else {
         const processObjectEvent = (...args: any) => {
-          if (this._isDisposed) {
+          if (this._isDisposed)
             return
-          }
 
           return callback.apply(parent, args)
         }
@@ -257,7 +253,7 @@ export class EventGroup {
     }
   }
 
-  public off (
+  public off(
     target?: any,
     eventName?: string,
     callback?: (args?: any) => void,
@@ -266,10 +262,10 @@ export class EventGroup {
     for (let i = 0; i < this._eventRecords.length; i++) {
       const eventRecord = this._eventRecords[i]
       if (
-        (!target || target === eventRecord.target) &&
-        (!eventName || eventName === eventRecord.eventName) &&
-        (!callback || callback === eventRecord.callback) &&
-        (typeof options !== 'boolean' || options === eventRecord.options)
+        (!target || target === eventRecord.target)
+        && (!eventName || eventName === eventRecord.eventName)
+        && (!callback || callback === eventRecord.callback)
+        && (typeof options !== 'boolean' || options === eventRecord.options)
       ) {
         const events = <IEventRecordsByName>eventRecord.target.__events__
         const targetArrayLookup = events[eventRecord.eventName]
@@ -280,14 +276,14 @@ export class EventGroup {
           if (targetArray.length === 1 || !callback) {
             targetArrayLookup.count -= targetArray.length
             delete events[eventRecord.eventName][this._id]
-          } else {
+          }
+          else {
             targetArrayLookup.count--
             targetArray.splice(targetArray.indexOf(eventRecord), 1)
           }
 
-          if (!targetArrayLookup.count) {
+          if (!targetArrayLookup.count)
             delete events[eventRecord.eventName]
-          }
         }
 
         if (eventRecord.elementCallback) {
@@ -297,9 +293,10 @@ export class EventGroup {
               eventRecord.elementCallback,
               eventRecord.options,
             )
-          } else if (eventRecord.target.detachEvent) {
+          }
+          else if (eventRecord.target.detachEvent) {
             // IE8
-            eventRecord.target.detachEvent('on' + eventRecord.eventName, eventRecord.elementCallback)
+            eventRecord.target.detachEvent(`on${eventRecord.eventName}`, eventRecord.elementCallback)
           }
         }
 
@@ -309,20 +306,20 @@ export class EventGroup {
   }
 
   /** Trigger the given event in the context of this instance of EventGroup. */
-  public raise (eventName: string, eventArgs?: any, bubbleEvent?: boolean): boolean | undefined {
+  public raise(eventName: string, eventArgs?: any, bubbleEvent?: boolean): boolean | undefined {
     return EventGroup.raise(this._parent, eventName, eventArgs, bubbleEvent)
   }
 
   /** Declare an event as being supported by this instance of EventGroup. */
-  public declare (event: string | string[]): void {
+  public declare(event: string | string[]): void {
     const declaredEvents = (this._parent.__declaredEvents = this._parent.__declaredEvents || {})
 
     if (typeof event === 'string') {
       declaredEvents[event] = true
-    } else {
-      for (let i = 0; i < event.length; i++) {
+    }
+    else {
+      for (let i = 0; i < event.length; i++)
         declaredEvents[event[i]] = true
-      }
     }
   }
 }

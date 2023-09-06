@@ -4,14 +4,14 @@
  * @public
  * {@docCategory Point}
  */
-// eslint-disable-next-line @typescript-eslint/naming-convention
+
 export interface Point {
-  left?: number;
-  top?: number;
+  left?: number
+  top?: number
   /** @deprecated Use `left` instead */
-  x?: number;
+  x?: number
   /** @deprecated Use `top` instead */
-  y?: number;
+  y?: number
 }
 
 /**

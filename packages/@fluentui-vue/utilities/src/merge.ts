@@ -3,10 +3,9 @@
  * together in the order provided. If an object creates a circular reference, it will assign the
  * original reference.
  */
-export function merge<T = {}> (target: Partial<T>, ...args: (Partial<T> | null | undefined | false)[]): T {
-  for (const arg of args) {
+export function merge<T = {}>(target: Partial<T>, ...args: (Partial<T> | null | undefined | false)[]): T {
+  for (const arg of args)
     _merge(target || {}, arg as Partial<T>)
-  }
 
   return target as T
 }
@@ -17,8 +16,8 @@ export function merge<T = {}> (target: Partial<T>, ...args: (Partial<T> | null |
  * there is a circular reference, the value will not be deep cloned and will persist
  * the reference.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function _merge<T extends Object> (target: T, source: T, circularReferences: any[] = []): T {
+
+function _merge<T extends Object>(target: T, source: T, circularReferences: any[] = []): T {
   circularReferences.push(source)
 
   for (const name in source) {
@@ -26,11 +25,12 @@ function _merge<T extends Object> (target: T, source: T, circularReferences: any
       if (name !== '__proto__' && name !== 'constructor' && name !== 'prototype') {
         const value: T[Extract<keyof T, string>] = source[name]
         if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-          const isCircularReference = circularReferences.indexOf(value) > -1
+          const isCircularReference = circularReferences.includes(value)
           target[name] = (isCircularReference
             ? value
             : _merge(target[name] || {}, value, circularReferences)) as T[Extract<keyof T, string>]
-        } else {
+        }
+        else {
           target[name] = value
         }
       }

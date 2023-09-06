@@ -4,12 +4,13 @@ import { getWindow } from './dom/getWindow'
  * Fetches an item from local storage without throwing an exception
  * @param key The key of the item to fetch from local storage
  */
-export function getItem (key: string): string | null {
+export function getItem(key: string): string | null {
   let result: string | null = null
   try {
     const win = getWindow()
     result = win ? win.localStorage.getItem(key) : null
-  } catch (e) {
+  }
+  catch (e) {
     /* Eat the exception */
   }
   return result
@@ -20,12 +21,13 @@ export function getItem (key: string): string | null {
  * @param key The key of the item to add to local storage
  * @param data The data to put into local storage
  */
-export function setItem (key: string, data: string): void {
+export function setItem(key: string, data: string): void {
   try {
     const win = getWindow()
 
     win && win.localStorage.setItem(key, data)
-  } catch (e) {
+  }
+  catch (e) {
     /* Eat the exception */
   }
 }

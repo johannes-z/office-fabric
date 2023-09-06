@@ -1,6 +1,6 @@
 import { registerIconAlias } from '@fluentui-vue/style-utilities'
 
-export const registerIconAliases = () => {
+export function registerIconAliases() {
   registerIconAlias('trash', 'delete')
   registerIconAlias('onedrive', 'onedrivelogo')
   registerIconAlias('alertsolid12', 'eventdatemissed12')

@@ -102,9 +102,9 @@ function color2rgb(colorValue: string): IRGB {
   if (colorValue[0] === '#') {
     // If it's a hex code
     return {
-      r: parseInt(colorValue.slice(1, 3), 16),
-      g: parseInt(colorValue.slice(3, 5), 16),
-      b: parseInt(colorValue.slice(5, 7), 16),
+      r: Number.parseInt(colorValue.slice(1, 3), 16),
+      g: Number.parseInt(colorValue.slice(3, 5), 16),
+      b: Number.parseInt(colorValue.slice(5, 7), 16),
     }
   }
   else if (colorValue.indexOf('rgba(') === 0) {

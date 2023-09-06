@@ -151,12 +151,10 @@ export function getFocusOutlineStyle(theme: ITheme, inset = 0, width = 1, color?
  * as it's the most common border width of the input element)
  * @returns The style object.
  */
-export const getInputFocusStyle = (
-  borderColor: string,
+export function getInputFocusStyle(borderColor: string,
   borderRadius: string | number,
   borderType: 'border' | 'borderBottom' = 'border',
-  borderPosition = -1,
-): IRawStyle => {
+  borderPosition = -1): IRawStyle {
   const isBorderBottom = borderType === 'borderBottom'
 
   return {

@@ -1,6 +1,6 @@
-import { getDocument } from './dom/getDocument'
 import { mergeStyles } from '@fluentui/merge-styles'
-import { EventGroup } from './EventGroup'
+import { getDocument } from './dom/getDocument'
+import type { EventGroup } from './EventGroup'
 import { getWindow } from './dom/getWindow'
 
 let _scrollbarWidth: number
@@ -23,55 +23,48 @@ export const DATA_IS_SCROLLABLE_ATTRIBUTE = 'data-is-scrollable'
  * Allows the user to scroll within a element,
  * while preventing the user from scrolling the body
  */
-export const allowScrollOnElement = (element: HTMLElement | null, events: EventGroup): void => {
-  if (!element) {
+export function allowScrollOnElement(element: HTMLElement | null, events: EventGroup): void {
+  if (!element)
     return
-  }
 
   let _previousClientY = 0
   let _element: Element | null = null
 
   // remember the clientY for future calls of _preventOverscrolling
   const _saveClientY = (event: TouchEvent): void => {
-    if (event.targetTouches.length === 1) {
+    if (event.targetTouches.length === 1)
       _previousClientY = event.targetTouches[0].clientY
-    }
   }
 
   // prevent the body from scrolling when the user attempts
   // to scroll past the top or bottom of the element
   const _preventOverscrolling = (event: TouchEvent): void => {
     // only respond to a single-finger touch
-    if (event.targetTouches.length !== 1) {
+    if (event.targetTouches.length !== 1)
       return
-    }
 
     // prevent the body touchmove handler from firing
     // so that scrolling is allowed within the element
     event.stopPropagation()
 
-    if (!_element) {
+    if (!_element)
       return
-    }
 
     const clientY = event.targetTouches[0].clientY - _previousClientY
 
     const scrollableParent = findScrollableParent(event.target as HTMLElement) as HTMLElement
-    if (scrollableParent) {
+    if (scrollableParent)
       _element = scrollableParent
-    }
 
     // if the element is scrolled to the top,
     // prevent the user from scrolling up
-    if (_element.scrollTop === 0 && clientY > 0) {
+    if (_element.scrollTop === 0 && clientY > 0)
       event.preventDefault()
-    }
 
     // if the element is scrolled to the bottom,
     // prevent the user from scrolling down
-    if (_element.scrollHeight - Math.ceil(_element.scrollTop) <= _element.clientHeight && clientY < 0) {
+    if (_element.scrollHeight - Math.ceil(_element.scrollTop) <= _element.clientHeight && clientY < 0)
       event.preventDefault()
-    }
   }
 
   events.on(element, 'touchstart', _saveClientY, { passive: false })
@@ -83,17 +76,17 @@ export const allowScrollOnElement = (element: HTMLElement | null, events: EventG
 /**
  * Same as allowScrollOnElement but does not prevent overscrolling.
  */
-export const allowOverscrollOnElement = (element: HTMLElement | null, events: EventGroup): void => {
-  if (!element) {
+export function allowOverscrollOnElement(element: HTMLElement | null, events: EventGroup): void {
+  if (!element)
     return
-  }
+
   const _allowElementScroll = (event: TouchEvent) => {
     event.stopPropagation()
   }
   events.on(element, 'touchmove', _allowElementScroll, { passive: false })
 }
 
-const _disableIosBodyScroll = (event: TouchEvent) => {
+function _disableIosBodyScroll(event: TouchEvent) {
   event.preventDefault()
 }
 
@@ -102,7 +95,7 @@ const _disableIosBodyScroll = (event: TouchEvent) => {
  *
  * @public
  */
-export function disableBodyScroll (): void {
+export function disableBodyScroll(): void {
   const doc = getDocument()
 
   if (doc && doc.body && !_bodyScrollDisabledCount) {
@@ -118,7 +111,7 @@ export function disableBodyScroll (): void {
  *
  * @public
  */
-export function enableBodyScroll (): void {
+export function enableBodyScroll(): void {
   if (_bodyScrollDisabledCount > 0) {
     const doc = getDocument()
 
@@ -136,7 +129,7 @@ export function enableBodyScroll (): void {
  *
  * @public
  */
-export function getScrollbarWidth (): number {
+export function getScrollbarWidth(): number {
   if (_scrollbarWidth === undefined) {
     const scrollDiv: HTMLElement = document.createElement('div')
     scrollDiv.style.setProperty('width', '100px')
@@ -161,15 +154,15 @@ export function getScrollbarWidth (): number {
  *
  * @public
  */
-export function findScrollableParent (startingElement: HTMLElement | null): HTMLElement | Window | undefined | null {
+export function findScrollableParent(startingElement: HTMLElement | null): HTMLElement | Window | undefined | null {
   let el: HTMLElement | Window | undefined | null = startingElement
   const doc = getDocument(startingElement)!
 
   // First do a quick scan for the scrollable attribute.
   while (el && el !== doc.body) {
-    if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) === 'true') {
+    if (el.getAttribute(DATA_IS_SCROLLABLE_ATTRIBUTE) === 'true')
       return el
-    }
+
     el = el.parentElement
   }
 
@@ -181,18 +174,16 @@ export function findScrollableParent (startingElement: HTMLElement | null): HTML
       const computedStyles = getComputedStyle(el)
       const overflowY = computedStyles ? computedStyles.getPropertyValue('overflow-y') : ''
 
-      if (overflowY && (overflowY === 'scroll' || overflowY === 'auto')) {
+      if (overflowY && (overflowY === 'scroll' || overflowY === 'auto'))
         return el
-      }
     }
 
     el = el.parentElement
   }
 
   // Fall back to window scroll.
-  if (!el || el === doc.body) {
+  if (!el || el === doc.body)
     el = getWindow(startingElement)
-  }
 
   return el
 }

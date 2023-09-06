@@ -1,10 +1,11 @@
-import { IRectangle } from '../IRectangle'
+import type { IRectangle } from '../IRectangle'
+
 /**
  * Helper to get bounding client rect. Passing in window will get the window size.
  *
  * @public
  */
-export function getRect (element: HTMLElement | Window | null): IRectangle | undefined {
+export function getRect(element: HTMLElement | Window | null): IRectangle | undefined {
   let rect: IRectangle | undefined
   if (element) {
     if (element === window) {
@@ -16,8 +17,9 @@ export function getRect (element: HTMLElement | Window | null): IRectangle | und
         right: window.innerWidth,
         bottom: window.innerHeight,
       }
-    // @ts-ignore
-    } else if ((element as HTMLElement).getBoundingClientRect) {
+    // @ts-expect-error
+    }
+    else if ((element as HTMLElement).getBoundingClientRect) {
       rect = (element as HTMLElement).getBoundingClientRect()
     }
   }
