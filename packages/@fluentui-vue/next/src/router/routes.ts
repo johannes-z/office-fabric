@@ -1,6 +1,3 @@
-import { useRouter } from 'vue-router'
-import type { INavLink, INavLinkGroup } from '../components/Nav/Nav.types'
-
 const routes: any[] = []
 
 function defineRoute({ path, name, component, ...rest }) {

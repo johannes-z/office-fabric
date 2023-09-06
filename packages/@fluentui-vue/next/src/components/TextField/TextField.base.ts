@@ -110,8 +110,6 @@ export const TextFieldBase = defineComponent({
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
       modelValue.value = value
-      emit('update:modelValue', modelValue.value)
-      emit('change', ev, modelValue.value)
     }
 
     onMounted(adjustInputHeight)
