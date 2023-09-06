@@ -9,7 +9,7 @@ const labelId = 'callout-label'
 const descriptionId = 'callout-description'
 
 const isCalloutVisible = ref(false)
-const toggle = () => {
+function toggle() {
   isCalloutVisible.value = !isCalloutVisible.value
   console.log(isCalloutVisible.value)
 }

@@ -17,7 +17,7 @@ const GlobalClassNames = {
   calloutMain: 'ms-Callout-main',
 }
 
-export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyles => {
+export function getStyles(props: ICalloutContentStyleProps): ICalloutContentStyles {
   const {
     theme,
     className,

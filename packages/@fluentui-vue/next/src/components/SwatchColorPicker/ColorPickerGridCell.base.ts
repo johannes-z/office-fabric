@@ -107,11 +107,11 @@ export const ColorPickerGridCellBase = defineComponent({
     // Render the core of a color cell
     const onRenderColorOption = (colorOption: IColorCellProps) => {
       return h('svg', {
-        'class': classNames.value.svg,
-        'role': 'img',
+        class: classNames.value.svg,
+        role: 'img',
         'aria-label': colorOption.label,
-        'viewBox': '0 0 20 20',
-        'fill': getColorFromString(colorOption.color)!.str,
+        viewBox: '0 0 20 20',
+        fill: getColorFromString(colorOption.color)!.str,
       }, [
         circle.value
           ? h('circle', { cx: '50%', cy: '50%', r: '50%' })

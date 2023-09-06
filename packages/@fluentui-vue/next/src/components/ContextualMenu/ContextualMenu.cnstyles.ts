@@ -1,10 +1,10 @@
 import {
-  getFocusStyle,
   HighContrastSelector,
-  getScreenSelector,
-  ScreenWidthMaxMedium,
   IconFontSizes,
+  ScreenWidthMaxMedium,
+  getFocusStyle,
   getHighContrastNoAdjustStyle,
+  getScreenSelector,
 } from '@fluentui-vue/style-utilities'
 import type { ITheme } from '@fluentui-vue/theme'
 import { memoizeFunction } from '@fluentui-vue/utilities'

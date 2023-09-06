@@ -1,5 +1,5 @@
-import { AnimationVariables, getGlobalClassNames, ZIndexes } from '@fluentui-vue/style-utilities'
-import { IModalStyles } from './Modal.types'
+import { AnimationVariables, ZIndexes, getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import type { IModalStyles } from './Modal.types'
 
 export const animationDuration = AnimationVariables.durationValue2
 
@@ -11,7 +11,7 @@ const globalClassNames = {
   layer: 'ms-Modal-Layer',
 }
 
-export const getStyles = (props: any): IModalStyles => {
+export function getStyles(props: any): IModalStyles {
   const {
     className,
     containerClassName,
@@ -46,8 +46,8 @@ export const getStyles = (props: any): IModalStyles => {
         pointerEvents: 'none',
         transition: `opacity ${animationDuration}`,
       },
-      topOffsetFixed &&
-        hasBeenOpened && {
+      topOffsetFixed
+        && hasBeenOpened && {
         alignItems: 'flex-start',
       },
       isOpen && classNames.isOpen,
@@ -74,8 +74,8 @@ export const getStyles = (props: any): IModalStyles => {
         overflowY: 'auto',
         zIndex: isModeless ? ZIndexes.Layer : undefined,
       },
-      topOffsetFixed &&
-        hasBeenOpened && {
+      topOffsetFixed
+        && hasBeenOpened && {
         top: modalRectangleTop,
       },
       isDefaultDragHandle && {

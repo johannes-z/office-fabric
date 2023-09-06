@@ -3,7 +3,7 @@ import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
 import { Palette, SemanticColors } from '@fluentui-vue/theme'
 import type { IRawStyle } from '@fluentui/merge-styles'
 
-const splitButtonDividerBaseStyles = (): IRawStyle => {
+function splitButtonDividerBaseStyles(): IRawStyle {
   return {
     position: 'absolute',
     width: 1,

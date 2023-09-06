@@ -17,7 +17,7 @@ const GlobalClassNames = {
   imagePortrait: 'ms-Image-image--portrait',
 }
 
-export const getStyles = (props: IImageStyleProps): IImageStyles => {
+export function getStyles(props: IImageStyleProps): IImageStyles {
   const {
     className,
     width,
@@ -51,8 +51,8 @@ export const getStyles = (props: IImageStyleProps): IImageStyles => {
   const window: Window | undefined = getWindow()
   // @ts-ignore
   const supportsObjectFit: boolean = window !== undefined && window.navigator.msMaxTouchPoints === undefined
-  const fallbackObjectFitStyles =
-    (isContain && isLandscape) || (isCover && !isLandscape)
+  const fallbackObjectFitStyles
+    = (isContain && isLandscape) || (isCover && !isLandscape)
       ? { width: '100%', height: 'auto' }
       : { width: 'auto', height: '100%' }
 
@@ -137,18 +137,18 @@ export const getStyles = (props: IImageStyleProps): IImageStyles => {
         },
       ],
       isNotImageFit && [
-        !!width &&
-          !height && {
+        !!width
+          && !height && {
           height: 'auto',
           width: '100%',
         },
-        !width &&
-          !!height && {
+        !width
+          && !!height && {
           height: '100%',
           width: 'auto',
         },
-        !!width &&
-          !!height && {
+        !!width
+          && !!height && {
           height: '100%',
           width: '100%',
         },

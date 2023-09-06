@@ -36,14 +36,14 @@ export const ButtonGridCell = defineComponent({
 
     return () => h(ActionButton, {
       ...attrs,
-      'label': label.value,
+      label: label.value,
       'aria-label': label.value,
-      'class': css(className.value, {
+      class: css(className.value, {
         [`${cellIsSelectedStyle.value}`]: selected.value,
         [`${cellDisabledStyle.value}`]: disabled.value,
       }),
-      'getClassNames': props.getClassNames,
-      'onClick': (ev: PointerEvent) => {
+      getClassNames: props.getClassNames,
+      onClick: (ev: PointerEvent) => {
         if (disabled.value)
           return
         emit('click', ev, item.value)

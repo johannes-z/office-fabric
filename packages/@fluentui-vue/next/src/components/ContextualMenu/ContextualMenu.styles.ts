@@ -11,7 +11,7 @@ const GlobalClassNames = {
   isopen: 'is-open',
 }
 
-export const getStyles = (props: IContextualMenuStyleProps): IContextualMenuStyles => {
+export function getStyles(props: IContextualMenuStyleProps): IContextualMenuStyles {
   const { className, theme } = props
   const classNames = getGlobalClassNames(GlobalClassNames, theme)
 

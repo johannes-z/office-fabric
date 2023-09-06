@@ -5,7 +5,7 @@ const DEFAULT_PILL_WIDTH = 40
 const DEFAULT_PILL_HEIGHT = 20
 const DEFAULT_THUMB_SIZE = 12
 
-export const getStyles = (props: IToggleStyleProps): IToggleStyles => {
+export function getStyles(props: IToggleStyleProps): IToggleStyles {
   const { theme, className, disabled, checked, inlineLabel, onOffMissing } = props
   const { semanticColors, palette } = theme
 

@@ -1,4 +1,4 @@
-import { getGlobalClassNames, HighContrastSelector } from '@fluentui-vue/style-utilities'
+import { HighContrastSelector, getGlobalClassNames } from '@fluentui-vue/style-utilities'
 import type { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 
 const GlobalClassNames = {
@@ -6,7 +6,7 @@ const GlobalClassNames = {
   rootDark: 'ms-Overlay--dark',
 }
 
-export const getStyles = (props: IOverlayStyleProps): IOverlayStyles => {
+export function getStyles(props: IOverlayStyleProps): IOverlayStyles {
   const { className, theme, isNone, isDark } = props
 
   const { palette } = theme

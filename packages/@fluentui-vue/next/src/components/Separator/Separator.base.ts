@@ -37,8 +37,8 @@ export const SeparatorBase = defineFunctionalComponent({
         class: classNames.root,
       },
       content: {
-        'class': classNames.content,
-        'role': 'separator',
+        class: classNames.content,
+        role: 'separator',
         'aria-orientation': vertical ? 'vertical' : 'horizontal',
       },
     })

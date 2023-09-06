@@ -95,14 +95,14 @@ export const RatingBase = defineComponent({
         role: !readOnly.value ? 'radiogroup' : undefined,
       },
       ratingButton: {
-        'class': css(
+        class: css(
           classNames.value.ratingButton,
           size.value === RatingSize.Large ? classNames.value.ratingStarIsLarge : classNames.value.ratingStarIsSmall,
         ),
-        'disabled': !!(disabled.value || readOnly.value),
-        'role': 'radio',
+        disabled: !!(disabled.value || readOnly.value),
+        role: 'radio',
         'aria-hidden': readOnly.value ? 'true' : undefined,
-        'type': 'button',
+        type: 'button',
       },
     }))
 
@@ -127,7 +127,7 @@ export const RatingBase = defineComponent({
           h('button', {
             ...slotProps.value.ratingButton,
             'aria-checked': starNum === Math.ceil(displayRating.value),
-            'onClick': () => {
+            onClick: () => {
               modelValue.value = starNum
             },
           }, [

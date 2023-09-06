@@ -13,7 +13,7 @@ const GlobalClassNames = {
   title: 'ms-Dialog-title',
 }
 
-export const getStyles = (props: IDialogContentStyleProps): IDialogContentStyles => {
+export function getStyles(props: IDialogContentStyleProps): IDialogContentStyles {
   const { className, theme, isLargeHeader, isClose, hidden, isMultiline, draggableHeaderClassName } = props
 
   const { palette, fonts, effects, semanticColors } = theme

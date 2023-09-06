@@ -68,11 +68,11 @@ export const DialogContentBase = defineFunctionalComponent({
         class: classNames.header,
       },
       title: {
-        'id': titleId,
-        'role': 'heading',
+        id: titleId,
+        role: 'heading',
         'aria-level': 1,
         ...titleProps,
-        'class': css(classNames.title, titleProps.className),
+        class: css(classNames.title, titleProps.className),
       },
       topButton: {
         class: classNames.topButton,
@@ -84,10 +84,10 @@ export const DialogContentBase = defineFunctionalComponent({
         class: classNames.innerContent,
       },
       button: {
-        'class': classNames.button,
-        'iconProps': { iconName: 'Cancel' },
+        class: classNames.button,
+        iconProps: { iconName: 'Cancel' },
         'aria-label': closeButtonAriaLabel,
-        'onClick': onDismiss,
+        onClick: onDismiss,
       },
     }
 

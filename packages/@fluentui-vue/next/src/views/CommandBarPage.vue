@@ -15,9 +15,9 @@ const _items: ICommandBarItemProps[] = [
     subMenuProps: {
       items: [
         {
-          'key': 'emailMessage',
-          'text': 'Email message',
-          'iconProps': { iconName: 'Mail' },
+          key: 'emailMessage',
+          text: 'Email message',
+          iconProps: { iconName: 'Mail' },
           'data-automation-id': 'newEmailButton', // optional
         },
         {

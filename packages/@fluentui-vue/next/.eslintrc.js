@@ -9,5 +9,21 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
 
     'unused-imports/no-unused-imports': 'off',
+
+    'no-restricted-syntax': [
+      'error',
+      {
+        message: 'Using \'emit\' is not allowed.',
+        selector: '[name=emit]',
+      },
+    ],
+    'vue/no-restricted-syntax': [
+      'error',
+      {
+        message: 'Using \'$emit\' is not allowed.',
+        selector: '[name=$emit]',
+      },
+    ],
   },
+
 }

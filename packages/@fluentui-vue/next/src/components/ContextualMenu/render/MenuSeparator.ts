@@ -2,7 +2,7 @@ import { h } from 'vue'
 import type { IMenuItemClassNames } from '../ContextualMenu.classNames'
 import { asSlotProps } from '@/utils'
 
-export const MenuSeparator = (props, { attrs, slots }) => {
+export function MenuSeparator(props, { attrs, slots }) {
   const {
     index,
     classNames,
@@ -14,10 +14,10 @@ export const MenuSeparator = (props, { attrs, slots }) => {
 
   const slotProps = asSlotProps({
     root: {
-      'key': `separator-${index}${top === undefined ? '' : top ? '-top' : '-bottom'}`,
-      'class': classNames.divider,
+      key: `separator-${index}${top === undefined ? '' : top ? '-top' : '-bottom'}`,
+      class: classNames.divider,
       'aria-hidden': true,
-      'role': 'separator',
+      role: 'separator',
     },
   })
 

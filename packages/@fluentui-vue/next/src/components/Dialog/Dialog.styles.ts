@@ -4,7 +4,7 @@ const GlobalClassNames = {
   root: 'ms-Dialog',
 }
 
-export const getStyles = (props: IDialogStyleProps): IDialogStyles => {
+export function getStyles(props: IDialogStyleProps): IDialogStyles {
   const {
     className,
     containerClassName, // eslint-disable-line deprecation/deprecation

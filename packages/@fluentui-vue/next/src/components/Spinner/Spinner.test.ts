@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { VNodeData } from 'vue'
-import { Spinner } from '.'
 import styles from './Spinner.module.scss?inline'
+import { Spinner } from '.'
 
 describe('Spinner', () => {
   it('has correct style', () => {

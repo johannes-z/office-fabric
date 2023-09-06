@@ -1,5 +1,5 @@
-import { ITheme } from '@fluentui-vue/theme'
-import { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
 
 /**
  * {@docCategory Image}
@@ -13,31 +13,31 @@ export interface IImageProps {
   /**
    * Call to provide customized styling that will layer on top of the variant rules
    */
-  styles?: IStyleFunctionOrObject<IImageStyleProps, IImageStyles>;
+  styles?: IStyleFunctionOrObject<IImageStyleProps, IImageStyles>
 
   /**
    * Theme provided by HOC.
    */
-  theme?: ITheme;
+  theme?: ITheme
 
   /**
    * Additional css class to apply to the Component
    * @defaultvalue undefined
    */
-  className?: string;
+  className?: string
 
   /**
    * If true, fades the image in when loaded.
    * @defaultvalue true
    */
-  shouldFadeIn?: boolean;
+  shouldFadeIn?: boolean
 
   /**
    * If true, the image starts as visible and is hidden on error. Otherwise, the image is hidden until
    * it is successfully loaded. This disables shouldFadeIn.
    * @defaultvalue false;
    */
-  shouldStartVisible?: boolean;
+  shouldStartVisible?: boolean
 
   /**
    * Used to determine how the image is scaled and cropped to fit the frame.
@@ -45,7 +45,7 @@ export interface IImageProps {
    * @defaultvalue If both dimensions are provided, then the image is fit using ImageFit.scale.
    * Otherwise, the image won't be scaled or cropped.
    */
-  imageFit?: ImageFit;
+  imageFit?: ImageFit
 
   /**
    * Deprecated at v1.3.6, to replace the src in case of errors, use `onLoadingStateChange` instead and
@@ -53,25 +53,25 @@ export interface IImageProps {
    * @deprecated Use `onLoadingStateChange` instead and
    * re-render the Image with a difference src.
    */
-  errorSrc?: string;
+  errorSrc?: string
 
   /**
    * If true, the image frame will expand to fill its parent container.
    */
-  maximizeFrame?: boolean;
+  maximizeFrame?: boolean
 
   /**
    * Optional callback method for when the image load state has changed.
    * The 'loadState' parameter indicates the current state of the Image.
    */
-  onLoadingStateChange?: (loadState: ImageLoadState) => void;
+  onLoadingStateChange?: (loadState: ImageLoadState) => void
 
   /**
    * Specifies the cover style to be used for this image. If not
    * specified, this will be dynamically calculated based on the
    * aspect ratio for the image.
    */
-  coverStyle?: ImageCoverStyle;
+  coverStyle?: ImageCoverStyle
 }
 
 /**
@@ -169,70 +169,70 @@ export interface IImageStyleProps {
   /**
    * Accept theme prop.
    */
-  theme: ITheme;
+  theme: ITheme
 
   /**
    * Accept custom classNames
    */
-  className?: string;
+  className?: string
 
   /**
    * If true, the image frame will expand to fill its parent container.
    */
-  maximizeFrame?: boolean;
+  maximizeFrame?: boolean
 
   /**
    * If true, the image is loaded
    */
-  isLoaded?: boolean;
+  isLoaded?: boolean
 
   /**
    * If true, fades the image in when loaded.
    * @defaultvalue true
    */
-  shouldFadeIn?: boolean;
+  shouldFadeIn?: boolean
 
   /**
    * If true, the image starts as visible and is hidden on error. Otherwise, the image is hidden until
    * it is successfully loaded. This disables shouldFadeIn.
    * @defaultvalue false;
    */
-  shouldStartVisible?: boolean;
+  shouldStartVisible?: boolean
 
   /**
    * If true the image is coverStyle landscape instead of portrait
    */
-  isLandscape?: boolean;
+  isLandscape?: boolean
 
   /**
    * ImageFit booleans for center, cover, contain, centerContain, centerCover, none
    */
-  isCenter?: boolean;
-  isContain?: boolean;
-  isCover?: boolean;
-  isCenterContain?: boolean;
-  isCenterCover?: boolean;
-  isNone?: boolean;
+  isCenter?: boolean
+  isContain?: boolean
+  isCover?: boolean
+  isCenterContain?: boolean
+  isCenterCover?: boolean
+  isNone?: boolean
 
   /**
    * if true image load is in error
    */
-  isError?: boolean;
+  isError?: boolean
 
   /**
    * if true, imageFit is undefined
    */
-  isNotImageFit?: boolean;
+  isNotImageFit?: boolean
 
   /**
    * Image width value
    */
-  width?: number | string;
+  width?: number | string
 
   /**
    * Image height value
    */
-  height?: number | string;
+  height?: number | string
 }
 
 /**
@@ -242,9 +242,9 @@ export interface IImageStyles {
   /**
    * Style set for the root div element.
    */
-  root: IStyle;
+  root: IStyle
   /**
    * Style set for the img element.
    */
-  image: IStyle;
+  image: IStyle
 }

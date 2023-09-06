@@ -4,7 +4,7 @@ import { asSlotProps } from '../../utils/types'
 import { Layer } from '../Layer'
 import { CalloutContent } from './CalloutContent'
 
-export const Callout = (props, { attrs, slots }) => {
+export function Callout(props, { attrs, slots }) {
   const { layerProps, doNotLayer, directionalHint = DirectionalHint.bottomAutoEdge, ...rest } = props
 
   const slotProps = asSlotProps({

@@ -1,6 +1,6 @@
-import { hiddenContentStyle, HighContrastSelector, getFocusStyle, getGlobalClassNames } from '../../Styling'
-import type { IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
+import { HighContrastSelector, getFocusStyle, getGlobalClassNames, hiddenContentStyle } from '../../Styling'
 import type { IStyle } from '../../Styling'
+import type { IFacepileStyleProps, IFacepileStyles } from './Facepile.types'
 
 const GlobalClassNames = {
   root: 'ms-Facepile',
@@ -13,7 +13,7 @@ const GlobalClassNames = {
   overflowButton: 'ms-Facepile-overflowButton ms-Facepile-itemButton',
 }
 
-export const styles = (props: IFacepileStyleProps): IFacepileStyles => {
+export function styles(props: IFacepileStyleProps): IFacepileStyles {
   const { className, theme, spacingAroundItemButton = 2 } = props
 
   const { palette, fonts } = theme
@@ -53,7 +53,7 @@ export const styles = (props: IFacepileStyleProps): IFacepileStyles => {
         fontSize: fonts.medium.fontSize,
         color: palette.white,
         backgroundColor: palette.themePrimary,
-        marginRight: spacingAroundItemButton * 2 + 'px',
+        marginRight: `${spacingAroundItemButton * 2}px`,
         selectors: {
           '&:hover': {
             backgroundColor: palette.themeDark,

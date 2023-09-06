@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { Link } from '.'
-import { VNodeData } from 'vue'
+import type { VNodeData } from 'vue'
 import styles from './Link.module.scss?inline'
+import { Link } from '.'
 
 describe('Link', () => {
   it('has correct style', () => {

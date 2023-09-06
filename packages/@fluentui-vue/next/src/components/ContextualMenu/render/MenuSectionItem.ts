@@ -50,7 +50,7 @@ export function MenuSectionItem(props, { attrs, slots }) {
 
     if (headerContextualMenuItem) {
       groupProps = {
-        'role': 'group',
+        role: 'group',
         'aria-labelledby': ariaLabelledby,
       }
       headerItem = h(MenuHeaderMenuItem, {

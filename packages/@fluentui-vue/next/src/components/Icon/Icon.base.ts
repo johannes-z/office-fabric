@@ -47,7 +47,7 @@ export const IconBase = defineFunctionalComponent({
 
     return h(RootType, {
       ...attrs,
-      'class': classNames.root,
+      class: classNames.root,
       'aria-hidden': 'true',
       'data-icon-name': iconName,
     }, typeof children === 'function'

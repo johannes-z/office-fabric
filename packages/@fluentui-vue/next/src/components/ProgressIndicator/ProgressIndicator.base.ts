@@ -66,14 +66,14 @@ export const ProgressIndicatorBase = defineComponent({
         ],
       },
       progressBar: {
-        'class': classNames.value.progressBar,
-        'style': [
+        class: classNames.value.progressBar,
+        style: [
           {
             height: `${props.barHeight}px`,
             ...progressBarStyles.value,
           },
         ],
-        'role': 'progressbar',
+        role: 'progressbar',
         'aria-describedby': props.description ? (`${0}-label`) : undefined,
         'aria-label': props.ariaLabel,
         'aria-labelledby': props.label ? (`${0}-description`) : undefined,

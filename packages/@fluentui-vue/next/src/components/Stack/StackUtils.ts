@@ -2,7 +2,7 @@ import type { ITheme } from '@fluentui-vue/theme'
 import type { IStackProps } from './Stack.types'
 
 // Helper function that converts a themed spacing key (if given) to the corresponding themed spacing value.
-const _getThemedSpacing = (space: string, theme: ITheme): string => {
+function _getThemedSpacing(space: string, theme: ITheme): string {
   if (theme.spacing.hasOwnProperty(space))
     return theme.spacing[space as keyof typeof theme.spacing]
 
@@ -10,8 +10,8 @@ const _getThemedSpacing = (space: string, theme: ITheme): string => {
 }
 
 // Helper function that takes a gap as a string and converts it into a { value, unit } representation.
-const _getValueUnitGap = (gap: string): { value: number; unit: string } => {
-  const numericalPart = parseFloat(gap)
+function _getValueUnitGap(gap: string): { value: number; unit: string } {
+  const numericalPart = Number.parseFloat(gap)
   const numericalValue = isNaN(numericalPart) ? 0 : numericalPart
   const numericalString = isNaN(numericalPart) ? '' : numericalPart.toString()
 
@@ -29,10 +29,8 @@ const _getValueUnitGap = (gap: string): { value: number; unit: string } => {
  * Returns the separate numerical value of the padding (e.g. 10)
  *  and the CSS unit (e.g. "px").
  */
-export const parseGap = (
-  gap: IStackProps['gap'],
-  theme: ITheme,
-): { rowGap: { value: number; unit: string }; columnGap: { value: number; unit: string } } => {
+export function parseGap(gap: IStackProps['gap'],
+  theme: ITheme): { rowGap: { value: number; unit: string }; columnGap: { value: number; unit: string } } {
   if (gap === undefined || gap === '') {
     return {
       rowGap: {
@@ -98,7 +96,7 @@ export const parseGap = (
  *  (e.g. "s1 m", "10px l1 20px l2", etc.).
  * Returns a CSS-style padding.
  */
-export const parsePadding = (padding: number | string | undefined, theme: ITheme): number | string | undefined => {
+export function parsePadding(padding: number | string | undefined, theme: ITheme): number | string | undefined {
   if (padding === undefined || typeof padding === 'number' || padding === '')
     return padding
 

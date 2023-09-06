@@ -3,7 +3,7 @@ import type { IHSV } from './interfaces'
 
 /** Converts RGB components to an HSV color. */
 export function rgb2hsv(r: number, g: number, b: number): IHSV {
-  let h = NaN
+  let h = Number.NaN
   const max = Math.max(r, g, b)
   const min = Math.min(r, g, b)
   const delta = max - min

@@ -1,6 +1,6 @@
 import { computed, defineComponent, h, toRefs } from 'vue'
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { toMatrix, makeStylingProps } from '..'
+import { makeStylingProps, toMatrix } from '..'
 import type { IButtonGridStyleProps, IButtonGridStyles } from './ButtonGrid.types'
 
 const getClassNames = classNamesFunction<IButtonGridStyleProps, IButtonGridStyles>()

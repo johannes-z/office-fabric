@@ -7,7 +7,7 @@ const GlobalClassNames = {
   actionsRight: 'ms-Dialog-actionsRight',
 }
 
-export const getStyles = (props: IDialogFooterStyleProps): IDialogFooterStyles => {
+export function getStyles(props: IDialogFooterStyleProps): IDialogFooterStyles {
   const { className, theme } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)

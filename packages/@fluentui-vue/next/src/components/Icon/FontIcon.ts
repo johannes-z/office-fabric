@@ -31,7 +31,7 @@ export const getIconContent = memoizeFunction(
   true,
 )
 
-export const FontIcon = (props, { attrs }) => {
+export function FontIcon(props, { attrs }) {
   const { iconName, className = attrs.class, style = attrs.style || {} } = props
   const iconContent = getIconContent(iconName) || {}
   const { iconClassName, children, fontFamily } = iconContent
@@ -39,14 +39,14 @@ export const FontIcon = (props, { attrs }) => {
   return h('i', {
     ...attrs,
     'data-icon-name': iconName,
-    'class': [
+    class: [
       MS_ICON,
       classNames.root,
       iconClassName,
       !iconName && classNames.placeholder,
       className,
     ],
-    'style': { fontFamily, ...style },
+    style: { fontFamily, ...style },
   }, typeof children === 'function'
     ? [children(h)]
     : (Array.isArray(children))

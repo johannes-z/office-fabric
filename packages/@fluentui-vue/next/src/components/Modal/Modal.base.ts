@@ -121,8 +121,8 @@ export const ModalBase = defineComponent({
           onClick: !isBlocking && onDismiss,
         },
         scrollableContent: {
-          'ref': 'scrollableContent',
-          'class': classNames.scrollableContent,
+          ref: 'scrollableContent',
+          class: classNames.scrollableContent,
           'data-is-scrollable': true,
         },
         popup: {

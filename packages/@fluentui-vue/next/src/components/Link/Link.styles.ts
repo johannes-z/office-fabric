@@ -5,7 +5,7 @@ export const GlobalClassNames = {
   root: 'ms-Link',
 }
 
-export const getStyles = (props: ILinkStyleProps): ILinkStyles => {
+export function getStyles(props: ILinkStyleProps): ILinkStyles {
   const { className, isButton, isDisabled, isUnderlined, theme } = props
   const { semanticColors } = theme
 

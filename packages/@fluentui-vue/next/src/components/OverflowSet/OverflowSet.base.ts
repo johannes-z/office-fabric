@@ -38,8 +38,8 @@ export const OverflowSetBase = defineFunctionalComponent({
 
     const slotProps = asSlotProps({
       root: {
-        'class': classNames.root,
-        'role': role || 'group',
+        class: classNames.root,
+        role: role || 'group',
         'aria-orientation': role === 'menubar' ? (vertical === true ? 'vertical' : 'horizontal') : undefined,
       },
       item: {

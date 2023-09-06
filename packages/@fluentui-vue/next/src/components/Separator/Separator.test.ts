@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
-import { VNodeData } from 'vue'
+import type { VNodeData } from 'vue'
 import { Separator } from '.'
 
 describe('Separator', () => {

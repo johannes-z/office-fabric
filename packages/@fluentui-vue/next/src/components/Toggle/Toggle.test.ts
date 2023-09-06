@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import { VNodeData } from 'vue'
-import { Toggle } from '.'
 import styles from './Toggle.module.scss?inline'
+import { Toggle } from '.'
 
 describe('Toggle', () => {
   it('has correct style', () => {

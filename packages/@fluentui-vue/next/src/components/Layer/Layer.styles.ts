@@ -7,7 +7,7 @@ const GlobalClassNames = {
   content: 'ms-Layer-content',
 }
 
-export const getStyles = (props: ILayerStyleProps): ILayerStyles => {
+export function getStyles(props: ILayerStyleProps): ILayerStyles {
   const { className, isNotHost, theme } = props
 
   const classNames = getGlobalClassNames(GlobalClassNames, theme)

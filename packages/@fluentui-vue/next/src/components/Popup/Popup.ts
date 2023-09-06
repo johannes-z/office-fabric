@@ -75,12 +75,12 @@ export const Popup = defineComponent({
     const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
-        'class': props.className,
-        'role': role.value,
+        class: props.className,
+        role: role.value,
         'aria-label': ariaLabel.value,
         'aria-labelledby': ariaLabelledBy.value,
         'aria-describedby': ariaDescribedBy.value,
-        'style': {
+        style: {
           overflowY: needsVerticalScrollBar.value ? 'scroll' : undefined,
           outline: 'none',
           ...style,
