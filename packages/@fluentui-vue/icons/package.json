@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "@fluentui-vue/style-utilities": "workspace:^",
-    "tslib": "^2.6.0"
+    "tslib": "^2.6.2"
   }
 }

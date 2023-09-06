@@ -17,6 +17,6 @@
   "dependencies": {
     "@fluentui/dom-utilities": "^2.2.11",
     "@fluentui/merge-styles": "^8.5.12",
-    "tslib": "^2.6.0"
+    "tslib": "^2.6.2"
   }
 }
