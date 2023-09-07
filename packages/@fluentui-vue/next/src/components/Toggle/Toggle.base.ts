@@ -28,10 +28,9 @@ export const ToggleBase = defineComponent({
 
   props: makeToggleProps(),
 
-  setup(props, { attrs, emit, slots }) {
+  setup(props, { slots }) {
     const {
       label,
-      modelValue,
       onText,
       offText,
       styles,
@@ -41,11 +40,7 @@ export const ToggleBase = defineComponent({
       inlineLabel,
     } = toRefs(props)
 
-    const checked = useProxiedModel(props, 'modelValue')
-
-    watch(modelValue, (value) => {
-      checked.value = value
-    })
+    const modelValue = useProxiedModel(props, 'modelValue')
 
     const id = getId('Toggle')
     const onOffMissing = computed(() => !onText.value && !offText.value)
@@ -53,7 +48,7 @@ export const ToggleBase = defineComponent({
       theme: theme.value!,
       className: className.value,
       disabled: disabled.value,
-      checked: checked.value,
+      checked: modelValue.value,
       inlineLabel: inlineLabel.value,
       onOffMissing: onOffMissing.value,
     }))
@@ -75,8 +70,8 @@ export const ToggleBase = defineComponent({
         onClick: (ev: PointerEvent) => {
           if (disabled.value)
             return
-          checked.value = !checked.value
-          props.onChange?.(ev, checked.value)
+          modelValue.value = !modelValue.value
+          props.onChange?.(ev, modelValue.value)
         },
       },
       thumb: {
@@ -88,17 +83,21 @@ export const ToggleBase = defineComponent({
       },
     }))
 
-    const showLabel = computed(() => (checked.value && onText.value) || (!checked.value && offText.value))
+    const showLabel = computed(() => (modelValue.value && onText.value) || (!modelValue.value && offText.value))
     return () => h('div', slotProps.value.root, [
       h(Label, slotProps.value.label, {
-        default: () => slots.label?.({ checked: checked.value, disabled: disabled.value, label: label.value }) ?? label.value,
+        default: () => slots.label?.({
+          checked: modelValue.value,
+          disabled: disabled.value,
+          label: label.value,
+        }) ?? label.value,
       }),
       h('div', slotProps.value.container, [
         h('button', slotProps.value.pill, [
           h('div', slotProps.value.thumb),
         ]),
         showLabel.value && h(Label, slotProps.value.text, {
-          default: () => checked.value ? onText.value : offText.value,
+          default: () => modelValue.value ? onText.value : offText.value,
         }),
       ]),
     ])

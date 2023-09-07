@@ -1,6 +1,6 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import { computed, defineComponent, h, nextTick, onMounted, ref, toRefs, watch } from 'vue'
+import { type PropType, computed, defineComponent, h, nextTick, onMounted, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
 import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
 import type { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
@@ -15,11 +15,6 @@ export const TextFieldBase = defineComponent({
   name: 'TextFieldBase',
 
   inheritAttrs: false,
-
-  emits: [
-    'change',
-    'update:modelValue',
-  ],
 
   props: {
     ...makeStylingProps(),
@@ -40,9 +35,12 @@ export const TextFieldBase = defineComponent({
     errorMessage: { type: String, default: null },
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
+
+    onChange: { type: Function, default: undefined },
+    'onUpdate:modelValue': { type: Function as PropType<(value: string) => void | undefined>, default: undefined },
   },
 
-  setup(props, { attrs, slots, emit, expose }) {
+  setup(props, { attrs, slots, expose }) {
     const {
       styles,
       theme,
@@ -109,6 +107,7 @@ export const TextFieldBase = defineComponent({
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
       modelValue.value = value
+      props.onChange?.(value)
     }
 
     onMounted(adjustInputHeight)
