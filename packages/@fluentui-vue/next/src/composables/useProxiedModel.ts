@@ -60,7 +60,7 @@ export function useProxiedModel<
         return
 
       internal.value = newValue
-      vm?.emit(`onUpdate:${prop}`, newValue)
+      vm?.emit(`update:${prop}`, newValue)
     },
   }) as any as Ref<InnerVal<Inner>> & { readonly externalValue: Props[Prop] }
 

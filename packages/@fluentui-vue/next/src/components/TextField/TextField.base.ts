@@ -1,10 +1,9 @@
 import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import type { IStyleFunctionOrObject } from '@fluentui/merge-styles'
-import type { Ref } from 'vue'
-import { computed, defineComponent, h, nextTick, onMounted, onUpdated, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, ref, toRefs, watch } from 'vue'
 import { Label } from '../Label'
 import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
-import type { ITextFieldProps, ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
+import type { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
 import { asSlotProps, makeStylingProps } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
@@ -16,6 +15,11 @@ export const TextFieldBase = defineComponent({
   name: 'TextFieldBase',
 
   inheritAttrs: false,
+
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
 
   props: {
     ...makeStylingProps(),
