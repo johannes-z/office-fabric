@@ -24,42 +24,7 @@ importers:
         specifier: ^0.34.3
         version: 0.34.3
 
-  packages/@fluentui-vue/file-type-icons:
-    dependencies:
-      '@fluentui-vue/style-utilities':
-        specifier: workspace:^
-        version: link:../style-utilities
-      vue-demi:
-        specifier: latest
-        version: 0.14.6(vue@3.3.4)
-    devDependencies:
-      vue:
-        specifier: ^3.3.4
-        version: 3.3.4
-
-  packages/@fluentui-vue/hooks:
-    dependencies:
-      '@fluentui-vue/utilities':
-        specifier: workspace:^
-        version: link:../utilities
-      tslib:
-        specifier: ^2.6.2
-        version: 2.6.2
-    devDependencies:
-      vue:
-        specifier: ^3.3.4
-        version: 3.3.4
-
-  packages/@fluentui-vue/icons:
-    dependencies:
-      '@fluentui-vue/style-utilities':
-        specifier: workspace:^
-        version: link:../style-utilities
-      tslib:
-        specifier: ^2.6.2
-        version: 2.6.2
-
-  packages/@fluentui-vue/next:
+  packages/components:
     dependencies:
       '@fluentui-vue/file-type-icons':
         specifier: workspace:^
@@ -159,7 +124,42 @@ importers:
         specifier: ^1.8.10
         version: 1.8.10(typescript@5.2.2)
 
-  packages/@fluentui-vue/style-utilities:
+  packages/file-type-icons:
+    dependencies:
+      '@fluentui-vue/style-utilities':
+        specifier: workspace:^
+        version: link:../style-utilities
+      vue-demi:
+        specifier: latest
+        version: 0.14.6(vue@3.3.4)
+    devDependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+
+  packages/hooks:
+    dependencies:
+      '@fluentui-vue/utilities':
+        specifier: workspace:^
+        version: link:../utilities
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+    devDependencies:
+      vue:
+        specifier: ^3.3.4
+        version: 3.3.4
+
+  packages/icons:
+    dependencies:
+      '@fluentui-vue/style-utilities':
+        specifier: workspace:^
+        version: link:../style-utilities
+      tslib:
+        specifier: ^2.6.2
+        version: 2.6.2
+
+  packages/style-utilities:
     dependencies:
       '@fluentui-vue/theme':
         specifier: workspace:^
@@ -177,7 +177,7 @@ importers:
         specifier: ^2.6.2
         version: 2.6.2
 
-  packages/@fluentui-vue/theme:
+  packages/theme:
     dependencies:
       '@fluentui-vue/utilities':
         specifier: workspace:^
@@ -189,7 +189,7 @@ importers:
         specifier: ^2.6.2
         version: 2.6.2
 
-  packages/@fluentui-vue/utilities:
+  packages/utilities:
     dependencies:
       '@fluentui/dom-utilities':
         specifier: ^2.2.11

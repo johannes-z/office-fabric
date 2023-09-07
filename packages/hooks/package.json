@@ -1,11 +1,16 @@
 {
   "name": "@fluentui-vue/hooks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "license": "MIT",
   "main": "./lib/index.js",
   "module": "./lib/index.js",
   "types": "./types/index.d.ts",
+  "files": [
+    "lib",
+    "src",
+    "types"
+  ],
   "scripts": {
     "build": "tsc"
   },
