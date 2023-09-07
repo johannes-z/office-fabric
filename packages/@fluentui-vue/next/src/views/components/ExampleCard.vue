@@ -13,7 +13,7 @@ defineProps({
   </div>
 </template>
 
-<style lang="css">
+<style lang="scss">
 .ExampleCard ~ .ExampleCard {
   margin-top: 2rem;
 }

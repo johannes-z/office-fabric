@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { computedAsync } from '@vueuse/core'
-import { getHighlighter } from 'shiki'
+import { getHighlighter, setWasm } from 'shiki'
 
 const props = defineProps({
   code: { type: String, required: true },
   language: { type: String, default: 'vue' },
 })
 
-const highlightPromise = getHighlighter({
-  theme: 'light-plus',
-  langs: ['vue'],
+const highlightPromise = fetch('/public/onig.wasm').then((wasm) => {
+  setWasm(wasm)
+  return getHighlighter({
+    theme: 'light-plus',
+    langs: ['vue'],
+  })
 })
 const highlightedCode = computedAsync(async () => {
   const highlighter = await highlightPromise

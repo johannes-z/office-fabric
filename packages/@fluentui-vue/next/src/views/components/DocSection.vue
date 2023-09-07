@@ -17,7 +17,7 @@ const elevation = DefaultEffects.elevation4
   </div>
 </template>
 
-<style>
+<style lang="scss">
 .DocSection {
   padding: 28px;
   margin: 4px;

@@ -51,7 +51,7 @@ export const nav = [
         defineRoute({
           path: '/Link',
           name: 'Link',
-          component: () => import('../views/LinkPage.vue'),
+          component: () => import('../views/Link/LinkPage.vue'),
         }),
         defineRoute({
           path: '/Rating',
@@ -205,7 +205,7 @@ export const nav = [
         defineRoute({
           path: '/Separator',
           name: 'Separator',
-          component: () => import('../views/SeparatorPage.vue'),
+          component: () => import('../views/Separator/SeparatorPage.vue'),
         }),
         defineRoute({
           path: '/Stack',

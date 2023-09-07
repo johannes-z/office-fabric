@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { DefaultEffects } from '@fluentui-vue/style-utilities'
-import { type PropType, type Ref, computed, defineAsyncComponent, ref, toRefs } from 'vue'
+import { type PropType, type Ref, defineAsyncComponent, ref, toRefs } from 'vue'
+import CodeBlock from './CodeBlock.vue'
 import DocSection from './DocSection.vue'
 import ExampleCard from './ExampleCard.vue'
-import CodeBlock from './CodeBlock.vue'
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -47,16 +46,16 @@ function toAsyncComponent<T>(prop: Ref<T>) {
 
 const {
   component: overviewComponent,
-} = toAsyncComponent(overview)
+} = toAsyncComponent(overview!)
 const {
   component: bestPracticesComponent,
-} = toAsyncComponent(bestPractices)
+} = toAsyncComponent(bestPractices!)
 const {
   component: dosComponent,
-} = toAsyncComponent(dos)
+} = toAsyncComponent(dos!)
 const {
   component: dontsComponent,
-} = toAsyncComponent(donts)
+} = toAsyncComponent(donts!)
 </script>
 
 <template>

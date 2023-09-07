@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import type { IStackTokens } from '@fluentui-vue/components'
 import { Stack, Toggle } from '@fluentui-vue/components'
+import { ref } from 'vue'
 
 const stackTokens: IStackTokens = { childrenGap: 10 }
 
