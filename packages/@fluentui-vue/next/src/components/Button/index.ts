@@ -1,4 +1,5 @@
 export * from './ActionButton/ActionButton'
+export * from './CommandButton/CommandButton'
 export * from './CommandBarButton/CommandBarButton'
 export * from './CompoundButton/CompoundButton'
 export * from './DefaultButton/DefaultButton'

@@ -21,6 +21,7 @@ export * from './Breadcrumb'
 export * from './CommandBar'
 export * from './ContextualMenu'
 export * from './Nav'
+export * from './Pivot'
 
 // Surfaces
 export * from './Callout'
