@@ -67,7 +67,7 @@ export const nav = [
         defineRoute({
           path: '/TextField',
           name: 'TextField',
-          component: () => import('../views/TextFieldPage.vue'),
+          component: () => import('../views/TextField/TextFieldPage.vue'),
         }),
         defineRoute({
           path: '/Toggle',
