@@ -17,11 +17,6 @@ export const TextFieldBase = defineComponent({
 
   inheritAttrs: false,
 
-  emits: [
-    'change',
-    'update:modelValue',
-  ],
-
   props: {
     ...makeStylingProps(),
 
