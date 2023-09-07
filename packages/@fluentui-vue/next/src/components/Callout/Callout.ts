@@ -23,3 +23,5 @@ export function Callout(props, { attrs, slots }) {
   const content = () => h(CalloutContent, slotProps.content, slots)
   return doNotLayer ? content() : h(Layer, slotProps.root, content)
 }
+
+Callout.props = ['layerProps', 'doNotLayer', 'directionalHint']
