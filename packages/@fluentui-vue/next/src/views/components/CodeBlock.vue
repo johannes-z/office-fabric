@@ -1,21 +1,31 @@
 <script setup lang="ts">
 import { computedAsync } from '@vueuse/core'
-import { getHighlighter, setWasm } from 'shiki'
+import { type Highlighter, getHighlighter, setWasm } from 'shiki'
 
 const props = defineProps({
   code: { type: String, required: true },
   language: { type: String, default: 'vue' },
 })
 
-const highlightPromise = fetch('/public/onig.wasm').then((wasm) => {
-  setWasm(wasm)
-  return getHighlighter({
-    theme: 'light-plus',
-    langs: ['vue'],
-  })
-})
+declare global {
+  interface Window {
+    __shiki_cache__?: Highlighter
+  }
+}
+
 const highlightedCode = computedAsync(async () => {
-  const highlighter = await highlightPromise
+  if (!window.__shiki_cache__) {
+    const wasmResponse = await fetch('/onig.wasm')
+    setWasm(wasmResponse)
+    const highlighter = await getHighlighter({
+      theme: 'light-plus',
+      langs: ['vue'],
+    })
+    window.__shiki_cache__ = highlighter
+  }
+
+  const highlighter = window.__shiki_cache__
+
   return highlighter.codeToHtml(props.code, {
     lang: props.language,
   })

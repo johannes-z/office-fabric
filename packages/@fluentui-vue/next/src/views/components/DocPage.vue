@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type PropType, type Ref, defineAsyncComponent, ref, toRefs } from 'vue'
-import CodeBlock from './CodeBlock.vue'
 import DocSection from './DocSection.vue'
 import ExampleCard from './ExampleCard.vue'
 
@@ -81,10 +80,13 @@ const {
     </div>
   </DocSection>
   <DocSection title="Usage">
-    <ExampleCard v-for="(example, index) in examples" :key="index" :title="example.title">
-      <component :is="example.view" />
-      <CodeBlock :code="example.code" />
-    </ExampleCard>
+    <ExampleCard
+      v-for="(example, index) in examples"
+      :key="index"
+      :title="example.title"
+      :view="example.view"
+      :code="example.code"
+    />
   </DocSection>
 </template>
 

@@ -32,6 +32,7 @@ export const nav = [
       key: 'Basic Inputs',
       name: 'Basic Inputs',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/Button',
@@ -79,6 +80,7 @@ export const nav = [
       name: 'Galleries & Pickers',
       key: 'Galleries & Pickers',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/Calendar',
@@ -96,11 +98,12 @@ export const nav = [
       name: 'Items & Lists',
       key: 'Items & Lists',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/ActivityItem',
           name: 'ActivityItem',
-          component: () => import('../views/ActivityItemPage.vue'),
+          component: () => import('../views/ActivityItem/ActivityItemPage.vue'),
         }),
         defineRoute({
           path: '/Persona',
@@ -113,6 +116,7 @@ export const nav = [
       name: 'Commands, Menus & Navs',
       key: 'Commands, Menus & Navs',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/Breadcrumb',
@@ -129,12 +133,18 @@ export const nav = [
           name: 'CommandBar',
           component: () => import('../views/CommandBarPage.vue'),
         }),
+        defineRoute({
+          path: '/Pivot',
+          name: 'Pivot',
+          component: () => import('../views/Pivot/PivotPage.vue'),
+        }),
       ],
     },
     {
       name: 'Notification & Engagement',
       key: 'Notification & Engagement',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/MessageBar',
@@ -147,6 +157,7 @@ export const nav = [
       name: 'Progress',
       key: 'Progress',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/ProgressIndicator',
@@ -164,6 +175,7 @@ export const nav = [
       name: 'Surfaces',
       key: 'Surfaces',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/Callout',
@@ -186,6 +198,7 @@ export const nav = [
       name: 'Utilities',
       key: 'Utilities',
       isExpanded: false,
+      style: 'font-weight: 600;',
       links: [
         defineRoute({
           path: '/Icon',
