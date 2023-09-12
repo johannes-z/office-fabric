@@ -5,7 +5,7 @@ import CodeBlock from './CodeBlock.vue'
 
 defineProps({
   title: { type: String, default: '' },
-  view: { type: Object as PropType<any>, required: true },
+  view: { type: [Object, Function] as PropType<any>, required: true },
   code: { type: String, default: '' },
 })
 
@@ -19,9 +19,10 @@ function onHandleLinkClicked(link) {
 <template>
   <div class="ExampleCard">
     <div>
-      <h3 class="ExampleCard-title">
+      <h3 v-if="title || code" class="ExampleCard-title">
         {{ title }}
         <Pivot
+          v-if="code"
           headers-only
           :selected-key="selectedKey"
           :styles="{

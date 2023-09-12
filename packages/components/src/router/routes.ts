@@ -37,12 +37,12 @@ export const nav = [
         defineRoute({
           path: '/Button',
           name: 'Button',
-          component: () => import('../views/ButtonPage.vue'),
+          component: () => import('../views/Button/ButtonPage.vue'),
         }),
         defineRoute({
           path: '/Checkbox',
           name: 'Checkbox',
-          component: () => import('../views/CheckboxPage.vue'),
+          component: () => import('../views/Checkbox/CheckboxPage.vue'),
         }),
         defineRoute({
           path: '/Label',
