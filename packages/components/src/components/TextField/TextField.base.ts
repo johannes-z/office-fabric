@@ -84,7 +84,7 @@ export const TextFieldBase = defineComponent({
     const fallbackId = getId(COMPONENT_NAME)
     const labelId = getId(`${COMPONENT_NAME}Label`)
 
-    const textElementRef = ref<HTMLTextAreaElement | null>(null)
+    const textElementRef = ref<HTMLTextAreaElement | HTMLInputElement | null>(null)
 
     watch(multiline, async (newValue: boolean, oldValue: boolean) => {
       const start = textElementRef.value?.selectionStart || 0
@@ -122,6 +122,22 @@ export const TextFieldBase = defineComponent({
         if (!textElementRef.value)
           return
         textElementRef.value.blur()
+      },
+      select: () => {
+        textElementRef.value?.select()
+      },
+      setSelectionStart: (value: number) => {
+        if (!textElementRef.value)
+          return
+        textElementRef.value.selectionStart = value
+      },
+      setSelectionEnd: (value: number) => {
+        if (!textElementRef.value)
+          return
+        textElementRef.value.selectionEnd = value
+      },
+      setSelectionRange: (start: number, end: number) => {
+        textElementRef.value?.setSelectionRange(start, end)
       },
     })
 
