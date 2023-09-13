@@ -16,10 +16,10 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui-vue/theme": "workspace:^",
-    "@fluentui-vue/utilities": "workspace:^",
+    "@fluentui-vue/theme": "workspace:*",
+    "@fluentui-vue/utilities": "workspace:*",
     "@fluentui/merge-styles": "^8.5.12",
-    "@microsoft/load-themed-styles": "^2.0.74",
+    "@microsoft/load-themed-styles": "^2.0.75",
     "tslib": "^2.6.2"
   }
 }

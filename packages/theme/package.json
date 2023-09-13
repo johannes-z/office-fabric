@@ -15,7 +15,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui-vue/utilities": "workspace:^",
+    "@fluentui-vue/utilities": "workspace:*",
     "@fluentui/merge-styles": "^8.5.12",
     "tslib": "^2.6.2"
   }
