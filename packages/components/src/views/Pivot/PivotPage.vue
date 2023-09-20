@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import PivotBasicExample from './Pivot.Basic.Example.vue'
-import PivotBasicExampleCode from './Pivot.Basic.Example.vue?raw'
-import PivotIconCountExample from './Pivot.IconCount.Example.vue'
-import PivotIconCountExampleCode from './Pivot.IconCount.Example.vue?raw'
 
 const PivotPageProps = {
   title: 'Pivot',
@@ -12,19 +8,19 @@ const PivotPageProps = {
   examples: [
     {
       title: 'Pivot sizes',
-      view: PivotBasicExample,
-      code: PivotBasicExampleCode,
+      view: () => import('./Pivot.Basic.Example.vue'),
+      code: () => import('./Pivot.Basic.Example.vue?raw'),
     },
     {
       title: 'Count and Icon',
-      view: PivotIconCountExample,
-      code: PivotIconCountExampleCode,
+      view: () => import('./Pivot.IconCount.Example.vue'),
+      code: () => import('./Pivot.IconCount.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/PivotOverview.md'),
-  bestPractices: import('./docs/PivotBestPractices.md'),
-  dos: import('./docs/PivotDos.md'),
-  donts: import('./docs/PivotDonts.md'),
+  overview: () => import('./docs/PivotOverview.md'),
+  bestPractices: () => import('./docs/PivotBestPractices.md'),
+  dos: () => import('./docs/PivotDos.md'),
+  donts: () => import('./docs/PivotDonts.md'),
 }
 </script>
 

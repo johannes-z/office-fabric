@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import CheckboxBasicExample from './Checkbox.Basic.Example.vue'
-import CheckboxBasicExampleCode from './Checkbox.Basic.Example.vue?raw'
-import CheckboxIndeterminateExample from './Checkbox.Indeterminate.Example.vue'
-import CheckboxIndeterminateExampleCode from './Checkbox.Indeterminate.Example.vue?raw'
-import CheckboxOtherExample from './Checkbox.Other.Example.vue'
-import CheckboxOtherExampleCode from './Checkbox.Other.Example.vue?raw'
 
 const CheckboxPageProps = {
   title: 'Checkbox',
@@ -14,22 +8,22 @@ const CheckboxPageProps = {
   examples: [
     {
       title: 'Basic Checkboxes',
-      view: CheckboxBasicExample,
-      code: CheckboxBasicExampleCode,
+      view: () => import('./Checkbox.Basic.Example.vue'),
+      code: () => import('./Checkbox.Basic.Example.vue?raw'),
     },
     {
       title: 'Other Checkboxes',
-      view: CheckboxOtherExample,
-      code: CheckboxOtherExampleCode,
+      view: () => import('./Checkbox.Other.Example.vue'),
+      code: () => import('./Checkbox.Other.Example.vue?raw'),
     },
     {
       title: 'Indeterminate Checkboxes',
-      view: CheckboxIndeterminateExample,
-      code: CheckboxIndeterminateExampleCode,
+      view: () => import('./Checkbox.Indeterminate.Example.vue'),
+      code: () => import('./Checkbox.Indeterminate.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/CheckboxOverview.md'),
-  bestPractices: import('./docs/CheckboxBestPractices.md'),
+  overview: () => import('./docs/CheckboxOverview.md'),
+  bestPractices: () => import('./docs/CheckboxBestPractices.md'),
 }
 </script>
 

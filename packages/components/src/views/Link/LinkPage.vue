@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
 import DocPage from '../components/DocPage.vue'
-import LinkBasicExample from './Link.Basic.Example.vue'
-import LinkBasicExampleCode from './Link.Basic.Example.vue?raw'
 
 const LinkPageProps = {
   title: 'Link',
@@ -11,12 +8,12 @@ const LinkPageProps = {
   examples: [
     {
       title: 'Link',
-      code: LinkBasicExampleCode,
-      view: LinkBasicExample,
+      view: () => import('./Link.Basic.Example.vue'),
+      code: () => import('./Link.Basic.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/LinkOverview.md'),
-  bestPractices: import('./docs/LinkBestPractices.md'),
+  overview: () => import('./docs/LinkOverview.md'),
+  bestPractices: () => import('./docs/LinkBestPractices.md'),
 }
 </script>
 

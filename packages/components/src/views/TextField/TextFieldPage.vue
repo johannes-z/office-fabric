@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import TextFieldBasicExample from './TextField.Basic.Example.vue'
-import TextFieldBasicExampleCode from './TextField.Basic.Example.vue?raw'
-import TextFieldMultilineExample from './TextField.Multiline.Example.vue'
-import TextFieldMultilineExampleCode from './TextField.Multiline.Example.vue?raw'
 
 const TextFieldPageProps = {
   title: 'TextField',
@@ -12,17 +8,17 @@ const TextFieldPageProps = {
   examples: [
     {
       title: 'Basic TextFields',
-      view: TextFieldBasicExample,
-      code: TextFieldBasicExampleCode,
+      view: () => import('./TextField.Basic.Example.vue'),
+      code: () => import('./TextField.Basic.Example.vue?raw'),
     },
     {
       title: 'Multiline TextField',
-      view: TextFieldMultilineExample,
-      code: TextFieldMultilineExampleCode,
+      view: () => import('./TextField.Multiline.Example.vue'),
+      code: () => import('./TextField.Multiline.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/TextFieldOverview.md'),
-  bestPractices: import('./docs/TextFieldBestPractices.md'),
+  overview: () => import('./docs/TextFieldOverview.md'),
+  bestPractices: () => import('./docs/TextFieldBestPractices.md'),
 }
 </script>
 

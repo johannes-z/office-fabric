@@ -3,7 +3,7 @@ import { computedAsync } from '@vueuse/core'
 import { type Highlighter, getHighlighter, setWasm } from 'shiki'
 
 const props = defineProps({
-  code: { type: String, required: true },
+  code: { type: [String, Function], required: true },
   language: { type: String, default: 'vue' },
 })
 
@@ -26,7 +26,9 @@ const highlightedCode = computedAsync(async () => {
 
   const highlighter = window.__shiki_cache__
 
-  return highlighter.codeToHtml(props.code, {
+  const code = typeof props.code === 'function' ? (await props.code()).default : props.code
+
+  return highlighter.codeToHtml(code, {
     lang: props.language,
   })
 }, '')

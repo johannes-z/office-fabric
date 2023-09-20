@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import SpinnerBasicExample from './Spinner.Basic.Example.vue'
-import SpinnerBasicExampleCode from './Spinner.Basic.Example.vue?raw'
-import SpinnerLabeledExample from './Spinner.Labeled.Example.vue'
-import SpinnerLabeledExampleCode from './Spinner.Labeled.Example.vue?raw'
 
 const SpinnerPageProps = {
   title: 'Spinner',
@@ -12,19 +8,19 @@ const SpinnerPageProps = {
   examples: [
     {
       title: 'Spinner sizes',
-      view: SpinnerBasicExample,
-      code: SpinnerBasicExampleCode,
+      view: () => import('./Spinner.Basic.Example.vue'),
+      code: () => import('./Spinner.Basic.Example.vue?raw'),
     },
     {
       title: 'Spinner label positioning',
-      view: SpinnerLabeledExample,
-      code: SpinnerLabeledExampleCode,
+      view: () => import('./Spinner.Labeled.Example.vue'),
+      code: () => import('./Spinner.Labeled.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/SpinnerOverview.md'),
-  bestPractices: import('./docs/SpinnerBestPractices.md'),
-  dos: import('./docs/SpinnerDos.md'),
-  donts: import('./docs/SpinnerDonts.md'),
+  overview: () => import('./docs/SpinnerOverview.md'),
+  bestPractices: () => import('./docs/SpinnerBestPractices.md'),
+  dos: () => import('./docs/SpinnerDos.md'),
+  donts: () => import('./docs/SpinnerDonts.md'),
 }
 </script>
 

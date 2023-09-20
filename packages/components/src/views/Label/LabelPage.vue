@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
 import DocPage from '../components/DocPage.vue'
-import LabelBasicExample from './Label.Basic.Example.vue'
-import LabelBasicExampleCode from './Label.Basic.Example.vue?raw'
 
 const LabelPageProps = {
   title: 'Label',
@@ -11,12 +8,12 @@ const LabelPageProps = {
   examples: [
     {
       title: 'Label',
-      code: LabelBasicExampleCode,
-      view: LabelBasicExample,
+      view: () => import('./Label.Basic.Example.vue'),
+      code: () => import('./Label.Basic.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/LabelOverview.md'),
-  bestPractices: import('./docs/LabelBestPractices.md'),
+  overview: () => import('./docs/LabelOverview.md'),
+  bestPractices: () => import('./docs/LabelBestPractices.md'),
 }
 </script>
 

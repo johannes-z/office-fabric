@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import TextBlockExample from './Text.Block.Example.vue'
-import TextBlockExampleCode from './Text.Block.Example.vue?raw'
-import TextRampExample from './Text.Ramp.Example.vue'
-import TextRampExampleCode from './Text.Ramp.Example.vue?raw'
-import TextWrapExample from './Text.Wrap.Example.vue'
-import TextWrapExampleCode from './Text.Wrap.Example.vue?raw'
 
 const TextPageProps = {
   title: 'Text',
@@ -14,24 +8,24 @@ const TextPageProps = {
   examples: [
     {
       title: 'Text Ramp Example',
-      view: TextRampExample,
-      code: TextRampExampleCode,
+      view: () => import('./Text.Ramp.Example.vue'),
+      code: () => import('./Text.Ramp.Example.vue?raw'),
     },
     {
       title: 'Text Wrap Example',
-      view: TextWrapExample,
-      code: TextWrapExampleCode,
+      view: () => import('./Text.Wrap.Example.vue'),
+      code: () => import('./Text.Wrap.Example.vue?raw'),
     },
     {
       title: 'Text Block Example',
-      view: TextBlockExample,
-      code: TextBlockExampleCode,
+      view: () => import('./Text.Block.Example.vue'),
+      code: () => import('./Text.Block.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/TextOverview.md'),
-  bestPractices: import('./docs/TextBestPractices.md'),
-  dos: import('./docs/TextDos.md'),
-  donts: import('./docs/TextDonts.md'),
+  overview: () => import('./docs/TextOverview.md'),
+  bestPractices: () => import('./docs/TextBestPractices.md'),
+  dos: () => import('./docs/TextDos.md'),
+  donts: () => import('./docs/TextDonts.md'),
 }
 </script>
 

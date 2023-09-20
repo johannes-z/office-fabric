@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import ActivityItemBasicExample from './ActivityItem.Basic.Example.vue'
-import ActivityItemBasicExampleCode from './ActivityItem.Basic.Example.vue?raw'
-import ActivityItemCompactExample from './ActivityItem.Compact.Example.vue'
-import ActivityItemCompactExampleCode from './ActivityItem.Compact.Example.vue?raw'
-import ActivityItemPersonaExample from './ActivityItem.Persona.Example.vue'
-import ActivityItemPersonaExampleCode from './ActivityItem.Persona.Example.vue?raw'
 
 const ActivityItemPageProps = {
   title: 'ActivityItem',
@@ -14,22 +8,22 @@ const ActivityItemPageProps = {
   examples: [
     {
       title: 'Activity Items with Icons',
-      view: ActivityItemBasicExample,
-      code: ActivityItemBasicExampleCode,
+      view: () => import('./ActivityItem.Basic.Example.vue'),
+      code: () => import('./ActivityItem.Basic.Example.vue?raw'),
     },
     {
       title: 'Activity Items with Personas',
-      view: ActivityItemPersonaExample,
-      code: ActivityItemPersonaExampleCode,
+      view: () => import('./ActivityItem.Persona.Example.vue'),
+      code: () => import('./ActivityItem.Persona.Example.vue?raw'),
     },
     {
       title: 'Compact Activity Items',
-      view: ActivityItemCompactExample,
-      code: ActivityItemCompactExampleCode,
+      view: () => import('./ActivityItem.Compact.Example.vue'),
+      code: () => import('./ActivityItem.Compact.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/ActivityItemOverview.md'),
-  bestPractices: import('./docs/ActivityItemBestPractices.md'),
+  overview: () => import('./docs/ActivityItemOverview.md'),
+  bestPractices: () => import('./docs/ActivityItemBestPractices.md'),
 }
 </script>
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Text } from '@fluentui-vue/components'
-import { ref } from 'vue'
 </script>
 
 <template>

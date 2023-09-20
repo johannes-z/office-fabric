@@ -1,15 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import SearchBoxFullSizeExample from './SearchBox.FullSize.Example.vue'
-import SearchBoxFullSizeExampleCode from './SearchBox.FullSize.Example.vue?raw'
-import SearchBoxUnderlinedExample from './SearchBox.Underlined.Example.vue'
-import SearchBoxUnderlinedExampleCode from './SearchBox.Underlined.Example.vue?raw'
-import SearchBoxDisabledExample from './SearchBox.Disabled.Example.vue'
-import SearchBoxDisabledExampleCode from './SearchBox.Disabled.Example.vue?raw'
-import SearchBoxCustomIconExample from './SearchBox.CustomIcon.Example.vue'
-import SearchBoxCustomIconExampleCode from './SearchBox.CustomIcon.Example.vue?raw'
-import SearchBoxSmallExample from './SearchBox.Small.Example.vue'
-import SearchBoxSmallExampleCode from './SearchBox.Small.Example.vue?raw'
 
 const SearchBoxPageProps = {
   title: 'SearchBox',
@@ -18,32 +8,32 @@ const SearchBoxPageProps = {
   examples: [
     {
       title: 'Default SearchBox',
-      view: SearchBoxFullSizeExample,
-      code: SearchBoxFullSizeExampleCode,
+      view: () => import('./SearchBox.FullSize.Example.vue'),
+      code: () => import('./SearchBox.FullSize.Example.vue?raw'),
     },
     {
       title: 'Underlined SearchBox',
-      view: SearchBoxUnderlinedExample,
-      code: SearchBoxUnderlinedExampleCode,
+      view: () => import('./SearchBox.Underlined.Example.vue'),
+      code: () => import('./SearchBox.Underlined.Example.vue?raw'),
     },
     {
       title: 'Disabled SearchBox',
-      view: SearchBoxDisabledExample,
-      code: SearchBoxDisabledExampleCode,
+      view: () => import('./SearchBox.Disabled.Example.vue'),
+      code: () => import('./SearchBox.Disabled.Example.vue?raw'),
     },
     {
       title: 'SearchBox with custom icon',
-      view: SearchBoxCustomIconExample,
-      code: SearchBoxCustomIconExampleCode,
+      view: () => import('./SearchBox.CustomIcon.Example.vue'),
+      code: () => import('./SearchBox.CustomIcon.Example.vue?raw'),
     },
     {
       title: 'SearchBox with fixed width and custom event handling',
-      view: SearchBoxSmallExample,
-      code: SearchBoxSmallExampleCode,
+      view: () => import('./SearchBox.Small.Example.vue'),
+      code: () => import('./SearchBox.Small.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/SearchBoxOverview.md'),
-  bestPractices: import('./docs/SearchBoxBestPractices.md'),
+  overview: () => import('./docs/SearchBoxOverview.md'),
+  bestPractices: () => import('./docs/SearchBoxBestPractices.md'),
 }
 </script>
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ProgressIndicator } from '@fluentui-vue/components'
-import { onBeforeUnmount, ref } from 'vue'
 </script>
 
 <template>

@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import ToggleBasicExample from './Toggle.Basic.Example.vue'
-import ToggleBasicExampleCode from './Toggle.Basic.Example.vue?raw'
-import ToggleCustomLabelExample from './Toggle.CustomLabel.Example.vue'
-import ToggleCustomLabelExampleCode from './Toggle.CustomLabel.Example.vue?raw'
 
 const TogglePageProps = {
   title: 'Toggle',
@@ -12,17 +8,17 @@ const TogglePageProps = {
   examples: [
     {
       title: 'Basic Toggles',
-      view: ToggleBasicExample,
-      code: ToggleBasicExampleCode,
+      view: () => import('./Toggle.Basic.Example.vue'),
+      code: () => import('./Toggle.Basic.Example.vue?raw'),
     },
     {
       title: 'Toggles with Custom Labels',
-      view: ToggleCustomLabelExample,
-      code: ToggleCustomLabelExampleCode,
+      view: () => import('./Toggle.CustomLabel.Example.vue'),
+      code: () => import('./Toggle.CustomLabel.Example.vue?raw'),
     },
   ],
-  overview: import('./docs/ToggleOverview.md'),
-  bestPractices: import('./docs/ToggleBestPractices.md'),
+  overview: () => import('./docs/ToggleOverview.md'),
+  bestPractices: () => import('./docs/ToggleBestPractices.md'),
 }
 </script>
 

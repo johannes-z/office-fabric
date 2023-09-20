@@ -8,27 +8,11 @@ const props = defineProps({
   componentName: { type: String, default: '' },
   componentUrl: { type: String, default: '' },
   examples: { type: Array as PropType<any>, default: () => [] },
-  overview: { type: Promise, default: undefined },
-  bestPractices: { type: Promise, default: undefined },
-  dos: { type: Promise, default: undefined },
-  donts: { type: Promise, default: undefined },
+  overview: { type: Function, default: undefined },
+  bestPractices: { type: Function, default: undefined },
+  dos: { type: Function, default: undefined },
+  donts: { type: Function, default: undefined },
 })
-
-function usePromiseRef<T>(promise?: Promise<T>) {
-  const promiseRef = ref({
-    resolved: false,
-    value: null,
-  }) as Ref<{ resolved: boolean; value: T | null }>
-  if (!promise)
-    return promiseRef
-
-  promise.then((value) => {
-    promiseRef.value.resolved = true
-    promiseRef.value.value = value
-  })
-
-  return promiseRef
-}
 
 const {
   overview,
@@ -37,9 +21,14 @@ const {
   donts,
 } = toRefs(props)
 
-function toAsyncComponent<T>(prop: Ref<T>) {
+function toAsyncComponent(prop: any) {
+  if (!prop.value) {
+    return {
+      component: null,
+    }
+  }
   return {
-    component: defineAsyncComponent(() => prop.value),
+    component: defineAsyncComponent(prop.value as any),
   }
 }
 

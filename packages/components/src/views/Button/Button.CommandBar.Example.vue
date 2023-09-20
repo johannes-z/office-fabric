@@ -30,6 +30,10 @@ const menuProps: IContextualMenuProps = {
 const addIcon: IIconProps = { iconName: 'Add' }
 const mailIcon: IIconProps = { iconName: 'Mail' }
 const stackStyles: Partial<IStackStyles> = { root: { height: 44 } }
+
+function onClick() {
+  console.log('onClick')
+}
 </script>
 
 <template>
@@ -41,6 +45,6 @@ const stackStyles: Partial<IStackStyles> = { root: { height: 44 } }
       :disabled="disabled"
       :checked="checked"
     />
-    <CommandBarButton :icon-props="mailIcon" text="Send mail" :disabled="disabled" :checked="checked" />
+    <CommandBarButton :icon-props="mailIcon" text="Send mail" :disabled="disabled" :checked="checked" @click="onClick" />
   </Stack>
 </template>

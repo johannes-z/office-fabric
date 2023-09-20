@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Pivot, PivotItem } from '@fluentui-vue/components'
-import { type PropType, ref } from 'vue'
+import { type PropType, computed, defineAsyncComponent, ref } from 'vue'
 import CodeBlock from './CodeBlock.vue'
 
-defineProps({
+const props = defineProps({
   title: { type: String, default: '' },
   view: { type: [Object, Function] as PropType<any>, required: true },
-  code: { type: String, default: '' },
+  code: { type: [String, Function], default: '' },
 })
 
 const selectedKey = ref('view')
@@ -14,6 +14,10 @@ const selectedKey = ref('view')
 function onHandleLinkClicked(link) {
   selectedKey.value = link.itemKey
 }
+
+const component = computed(() => {
+  return typeof props.view === 'function' ? defineAsyncComponent(props.view) : props.view
+})
 </script>
 
 <template>
@@ -39,7 +43,7 @@ function onHandleLinkClicked(link) {
       </h3>
     </div>
 
-    <component :is="view" v-if="selectedKey === 'view'" />
+    <component :is="component" v-if="selectedKey === 'view'" />
     <CodeBlock v-else-if="selectedKey === 'code'" :code="code" />
   </div>
 </template>

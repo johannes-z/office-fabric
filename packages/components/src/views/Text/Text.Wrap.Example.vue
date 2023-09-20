@@ -1,21 +1,6 @@
 <script setup lang="ts">
 import { Stack, Text } from '@fluentui-vue/components'
 
-const testText = 'The quick brown fox jumped over the lazy dog.'
-
-const variants = [
-  { name: 'tiny' },
-  { name: 'xSmall' },
-  { name: 'small' },
-  { name: 'smallPlus' },
-  { name: 'medium' },
-  { name: 'mediumPlus' },
-  { name: 'large' },
-  { name: 'xLarge' },
-  { name: 'xxLarge' },
-  { name: 'mega' },
-]
-
 const tokens = {
   sectionStack: {
     childrenGap: 10,

@@ -1,9 +1,5 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
-import ProgressIndicatorBasicExample from './ProgressIndicator.Basic.Example.vue'
-import ProgressIndicatorBasicExampleCode from './ProgressIndicator.Basic.Example.vue?raw'
-import ProgressIndicatorIndeterminateExample from './ProgressIndicator.Indeterminate.Example.vue'
-import ProgressIndicatorIndeterminateExampleCode from './ProgressIndicator.Indeterminate.Example.vue?raw'
 
 const ProgressIndicatorPageProps = {
   title: 'ProgressIndicator',
@@ -12,19 +8,19 @@ const ProgressIndicatorPageProps = {
   examples: [
     {
       title: 'Default ProgressIndicator',
-      view: ProgressIndicatorBasicExample,
-      code: ProgressIndicatorBasicExampleCode,
+      view: () => import('./ProgressIndicator.Basic.Example.vue'),
+      code: () => import('./ProgressIndicator.Basic.Example.vue?raw'),
     },
     {
       title: 'Indeterminate ProgressIndicator',
-      view: ProgressIndicatorIndeterminateExample,
-      code: ProgressIndicatorIndeterminateExampleCode,
+      view: () => import('./ProgressIndicator.Indeterminate.Example.vue'),
+      code: () => import('./ProgressIndicator.Indeterminate.Example.vue?raw'),
     },
   ],
-  dos: import('./docs/ProgressIndicatorDos.md'),
-  donts: import('./docs/ProgressIndicatorDonts.md'),
-  overview: import('./docs/ProgressIndicatorOverview.md'),
-  bestPractices: import('./docs/ProgressIndicatorBestPractices.md'),
+  dos: () => import('./docs/ProgressIndicatorDos.md'),
+  donts: () => import('./docs/ProgressIndicatorDonts.md'),
+  overview: () => import('./docs/ProgressIndicatorOverview.md'),
+  bestPractices: () => import('./docs/ProgressIndicatorBestPractices.md'),
 }
 </script>
 
