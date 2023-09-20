@@ -133,7 +133,9 @@ export const PivotBase = defineComponent({
               props.onLinkClick?.(link)
             },
             name: link.headerText,
-          }, renderLinkContent(link))
+          }, {
+            default: () => renderLinkContent(link),
+          })
         }),
       ]),
 
