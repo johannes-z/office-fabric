@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ActivityItem, Link } from '@fluentui-vue/components'
+import { ActivityItem, Icon } from '@fluentui-vue/components'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 
 const classNames = mergeStyleSets({
@@ -15,30 +15,6 @@ const TestImages = {
   personaFemale: 'https://res-1.cdn.office.net/files/fabric-cdn-prod_20221209.001/office-ui-fabric-react-assets/persona-female.png',
   personaMale: 'https://res-1.cdn.office.net/files/fabric-cdn-prod_20221209.001/office-ui-fabric-react-assets/persona-male.png',
 }
-
-const activityPersonas = [{
-  imageUrl: TestImages.personaMale,
-}]
-
-const activityPersonas2 = [
-  { imageInitials: 'JM', text: 'Javiera Márquez' },
-  { imageUrl: TestImages.personaFemale },
-]
-
-const activityPersonas3 = [
-  { imageInitials: 'RL', text: 'Robert Larsson' },
-  { imageUrl: TestImages.personaMale },
-  { imageUrl: TestImages.personaFemale },
-]
-
-const activityPersonas4 = [
-  { imageInitials: 'JC', text: 'Jin Cheng' },
-  { imageUrl: TestImages.personaMale },
-  { imageInitials: 'AL', text: 'Annie Lindqvist' },
-  { imageUrl: TestImages.personaFemale },
-  { imageUrl: TestImages.personaMale },
-  { imageUrl: TestImages.personaMale },
-]
 </script>
 
 <template>

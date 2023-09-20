@@ -62,7 +62,7 @@ export const nav = [
         defineRoute({
           path: '/SearchBox',
           name: 'SearchBox',
-          component: () => import('../views/SearchBoxPage.vue'),
+          component: () => import('../views/SearchBox/SearchBoxPage.vue'),
         }),
         defineRoute({
           path: '/TextField',
@@ -203,7 +203,7 @@ export const nav = [
         defineRoute({
           path: '/Icon',
           name: 'Icon',
-          component: () => import('../views/IconPage.vue'),
+          component: () => import('../views/Icon/IconPage.vue'),
         }),
         defineRoute({
           path: '/Image',
