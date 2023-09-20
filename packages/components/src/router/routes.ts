@@ -213,7 +213,7 @@ export const nav = [
         defineRoute({
           path: '/Layer',
           name: 'Layer',
-          component: () => import('../views/LayerPage.vue'),
+          component: () => import('../views/Layer/LayerPage.vue'),
         }),
         defineRoute({
           path: '/Separator',
@@ -228,7 +228,7 @@ export const nav = [
         defineRoute({
           path: '/Text',
           name: 'Text',
-          component: () => import('../views/TextPage.vue'),
+          component: () => import('../views/Text/TextPage.vue'),
         }),
       ],
     }],

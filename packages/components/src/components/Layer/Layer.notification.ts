@@ -8,6 +8,7 @@ let _defaultHostSelector: string | undefined = `#${defaultHostId}`
  * Register a layer for a given host id
  * @param hostId Id of the layer host
  * @param layer Layer instance
+ * @param callback
  */
 export function registerLayer(hostId: string, callback: () => void) {
   if (!_layersByHostId[hostId])
@@ -27,6 +28,7 @@ export function registerLayer(hostId: string, callback: () => void) {
  * Unregister a layer for a given host id
  * @param hostId Id of the layer host
  * @param layer Layer instance
+ * @param callback
  */
 export function unregisterLayer(hostId: string, callback: () => void) {
   const layers = _layersByHostId[hostId]
@@ -108,6 +110,7 @@ export function unregisterLayerHost(hostId: string, layerHost: any): void {
 /**
  * Used for notifying applicable Layers that a host is available/unavailable and to re-evaluate Layers that
  * care about the specific host.
+ * @param id
  */
 export function notifyHostChanged(id: string) {
   if (_layersByHostId[id])
@@ -121,6 +124,7 @@ export function notifyHostChanged(id: string) {
  *
  * Passing in a falsy value will clear the default target and reset back to
  * using a created element at the end of document body.
+ * @param selector
  */
 export function setDefaultTarget(selector?: string) {
   _defaultHostSelector = selector
@@ -135,6 +139,7 @@ export function getDefaultTarget(): string | undefined {
 
 /**
  * When no default layer host is provided, this function is executed to create the default host.
+ * @param doc
  */
 export function createDefaultLayerHost(doc: Document): Node | null {
   const host = doc.createElement('div')
@@ -148,6 +153,7 @@ export function createDefaultLayerHost(doc: Document): Node | null {
 
 /**
  * This function can be optionally called to clean up the default layer host as needed.
+ * @param doc
  */
 export function cleanupDefaultLayerHost(doc: Document) {
   const host = doc.querySelector(`#${defaultHostId}`)
