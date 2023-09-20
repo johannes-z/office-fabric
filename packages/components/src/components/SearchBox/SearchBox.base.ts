@@ -124,6 +124,7 @@ export const SearchBoxBase = defineComponent({
     }
     const onInput = (e: InputEvent) => {
       modelValue.value = (<HTMLInputElement>e.target).value
+      emit('change', e, modelValue.value)
     }
     const onFocus = (e: FocusEvent) => {
       emit('focus', e)
@@ -174,9 +175,6 @@ export const SearchBoxBase = defineComponent({
 
     watch(modelValue, (value) => {
       modelValue.value = value
-    })
-    watch(modelValue, (value) => {
-      emit('change', value)
     })
 
     const inputRef = ref<HTMLInputElement | null>(null)
