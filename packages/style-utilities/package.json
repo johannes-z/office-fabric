@@ -19,7 +19,7 @@
     "@fluentui-vue/theme": "workspace:*",
     "@fluentui-vue/utilities": "workspace:*",
     "@fluentui/merge-styles": "^8.5.12",
-    "@microsoft/load-themed-styles": "^2.0.75",
+    "@microsoft/load-themed-styles": "^2.0.77",
     "tslib": "^2.6.2"
   }
 }

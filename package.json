@@ -1,20 +1,18 @@
 {
   "name": "office-ui-fabric-vue",
-  "version": "1.0.0",
   "private": true,
-  "scripts": {},
   "workspaces": [
+    "packages/utilities",
+    "packages/style-utilities",
     "packages/components",
     "packages/file-type-icons",
     "packages/hooks",
     "packages/icons",
-    "packages/style-utilities",
-    "packages/theme",
-    "packages/utilities"
+    "packages/theme"
   ],
   "devDependencies": {
-    "@antfu/eslint-config": "^0.41.3",
-    "conventional-changelog": "^4.0.0",
+    "@antfu/eslint-config": "^0.43.0",
+    "conventional-changelog": "^5.1.0",
     "eslint": "^8.49.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.4"
