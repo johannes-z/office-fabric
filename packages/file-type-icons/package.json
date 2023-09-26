@@ -20,7 +20,7 @@
     "vue": "^2.7.0 || >=3.0.0"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:*",
+    "@fluentui-vue/style-utilities": "*",
     "vue-demi": "latest"
   },
   "devDependencies": {

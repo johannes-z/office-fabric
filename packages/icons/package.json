@@ -17,7 +17,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@fluentui-vue/style-utilities": "workspace:*",
+    "@fluentui-vue/style-utilities": "*",
     "tslib": "^2.6.2"
   }
 }

@@ -11,10 +11,10 @@
     "packages/theme"
   ],
   "devDependencies": {
-    "@antfu/eslint-config": "^0.43.0",
+    "@antfu/eslint-config": "^0.43.1",
     "conventional-changelog": "^5.1.0",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "typescript": "^5.2.2",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.5"
   }
 }
