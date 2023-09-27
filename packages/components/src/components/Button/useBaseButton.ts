@@ -13,6 +13,7 @@ export function useBaseButtonProps() {
     text: { type: String, default: undefined },
 
     href: { type: String, default: undefined },
+    onClick: { type: Function, default: undefined },
 
   }
 }

@@ -12,8 +12,6 @@ export const ActionButton = defineComponent({
     ...makeStylingProps(),
     ...useBaseButtonProps(),
 
-    checked: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false },
     iconProps: { type: Object, default: () => ({}) },
   },
 

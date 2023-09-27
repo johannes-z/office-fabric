@@ -113,10 +113,11 @@ export const BaseButton = defineComponent({
         href: href.value,
         class: classNames.value.root,
         onClick: (ev) => {
+          ev.stopPropagation()
           if (disabled.value)
             return
           showMenu.value = !showMenu.value
-          // this.$emit('click', ev)
+          props.onClick?.(ev)
         },
         ...to.value && {
           href: disabled.value ? undefined : href.value,
