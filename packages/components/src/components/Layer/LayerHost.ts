@@ -1,39 +1,33 @@
 import type { VNode } from 'vue'
-import { defineComponent } from 'vue'
+import { defineComponent, getCurrentInstance, h, onBeforeUnmount, onMounted, toRefs } from 'vue'
+import { css } from '@fluentui-vue/utilities'
 import { notifyHostChanged, registerLayerHost, unregisterLayerHost } from './Layer.notification'
+import { makeStylingProps } from '@/utils'
 
 export const LayerHost = defineComponent({
   name: 'LayerHost',
 
   props: {
-    styles: { type: Object as () => any, default: () => ({}) },
-
     hostId: { type: String, default: null },
   },
 
-  mounted(): void {
-    registerLayerHost(this.hostId!, this)
-    notifyHostChanged(this.hostId!)
-  },
+  setup(props, { attrs, slots }) {
+    const { hostId } = toRefs(props)
 
-  beforeUnmount(): void {
-    unregisterLayerHost(this.hostId!, this)
-    notifyHostChanged(this.hostId!)
-  },
-
-  methods: {
-    notifyLayersChanged() {
-      // Nothing, since the default implementation of Layer Host does not need to react to layer changes.
-    },
-  },
-
-  render(h): VNode {
-    return h('div', {
-      ref: 'layerHostRef',
-      class: 'LayerHost',
-      attrs: {
-        id: this.hostId,
-      },
+    onMounted(() => {
+      registerLayerHost(hostId.value, getCurrentInstance())
+      notifyHostChanged(hostId.value)
     })
+    onBeforeUnmount(() => {
+      unregisterLayerHost(hostId.value, getCurrentInstance())
+      notifyHostChanged(hostId.value)
+    })
+
+    return () => h('div', {
+      ...props,
+      ref: 'layerHostRef',
+      class: css('ms-LayerHost', attrs.class!),
+      id: hostId,
+    }, slots)
   },
 })
