@@ -1,5 +1,5 @@
 import type { ITheme } from '@fluentui-vue/theme'
-import type { IButtonClassNames } from '@/components/Button/Button.classNames'
+import type { IButtonClassNames } from '@/components/Button/BaseButton.classNames'
 
 export interface IButtonGridCellProps<T> {
   /**

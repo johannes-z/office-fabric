@@ -20,10 +20,17 @@ export const DialogFooterBase = defineFunctionalComponent({
       className,
     })
 
+    //map each child of slots in an span with class action
+    const childSlots = (slots.default?.() || []).map((slot) => {
+      return h('span', {
+        class: classNames.action,
+      }, slot)
+    })
+
     return h('div', {
       class: classNames.actions,
     }, h('div', {
       class: classNames.actionsRight,
-    }, slots))
+    }, childSlots))
   },
 })

@@ -5,8 +5,10 @@ import type { IIconProps } from '../Icon'
 
 // import type { IKeytipProps } from '../Keytip'
 import type { BaseButton } from './BaseButton'
-import type { IButtonClassNames } from './Button.classNames'
+import type { IButtonClassNames } from './BaseButton.classNames'
 import type { ISplitButtonClassNames } from './SplitButton/SplitButton.classNames'
+import type { HTMLAttributes } from 'vue'
+import type { IKeytipProps } from '../Keytip'
 
 /**
  * {@docCategory Button}
@@ -40,7 +42,7 @@ export interface IButton {
 /**
  * {@docCategory Button}
  */
-export interface IButtonProps {
+export interface IButtonProps extends HTMLAttributes{
   /**
    * If provided, this component will be rendered as an anchor.
    * @defaultvalue ElementType.anchor
@@ -237,7 +239,7 @@ export interface IButtonProps {
   /**
    * Optional keytip for this button
    */
-  // keytipProps?: IKeytipProps
+  keytipProps?: IKeytipProps
 
   /**
    * Menu will not be created or destroyed when opened or closed, instead it
@@ -321,277 +323,277 @@ export interface IButtonStyles {
   /**
    * Style for the root element in the default enabled, non-toggled state.
    */
-  root?: IStyle
+  root?: IStyle;
 
   /**
    * Style override for the root element in a checked state, layered on top of the root style.
    */
-  rootChecked?: IStyle
+  rootChecked?: IStyle;
 
   /**
    * Style override for the root element in a disabled state, layered on top of the root style.
    */
-  rootDisabled?: IStyle
+  rootDisabled?: IStyle;
 
   /**
    * Style override applied to the root on hover in the default, enabled, non-toggled state.
    */
-  rootHovered?: IStyle
+  rootHovered?: IStyle;
 
   /**
    * Style override applied to the root on focus in the default, enabled, non-toggled state.
    */
-  rootFocused?: IStyle
+  rootFocused?: IStyle;
 
   /**
    * Style override applied to the root on pressed in the default, enabled, non-toggled state.
    */
-  rootPressed?: IStyle
+  rootPressed?: IStyle;
 
   /**
    * Style override applied to the root on when menu is expanded in the default, enabled, non-toggled state.
    */
-  rootExpanded?: IStyle
+  rootExpanded?: IStyle;
 
   /**
    * Style override applied to the root on hover in a checked, enabled state
    */
-  rootCheckedHovered?: IStyle
+  rootCheckedHovered?: IStyle;
 
   /**
    * Style override applied to the root on pressed in a checked, enabled state
    */
-  rootCheckedPressed?: IStyle
+  rootCheckedPressed?: IStyle;
 
   /**
    * Style override applied to the root on hover in a checked, disabled state
    */
-  rootCheckedDisabled?: IStyle
+  rootCheckedDisabled?: IStyle;
 
   /**
    * Style override applied to the root on hover in a expanded state on hover
    */
-  rootExpandedHovered?: IStyle
+  rootExpandedHovered?: IStyle;
 
   /**
    * Style override for the root element when it has a menu button, layered on top of the root style.
    */
-  rootHasMenu?: IStyle
+  rootHasMenu?: IStyle;
 
   /**
    * Style for the flexbox container within the root element.
    */
-  flexContainer?: IStyle
+  flexContainer?: IStyle;
 
   /**
    * Style for the text container within the flexbox container element (and contains the text and description).
    */
-  textContainer?: IStyle
+  textContainer?: IStyle;
 
   /**
    * Style for the icon on the near side of the label.
    */
-  icon?: IStyle
+  icon?: IStyle;
 
   /**
    * Style for the icon on the near side of the label on hover.
    */
-  iconHovered?: IStyle
+  iconHovered?: IStyle;
 
   /**
    * Style for the icon on the near side of the label when pressed.
    */
-  iconPressed?: IStyle
+  iconPressed?: IStyle;
 
   /**
    * Style for the icon on the near side of the label when expanded.
    */
-  iconExpanded?: IStyle
+  iconExpanded?: IStyle;
 
   /**
    * Style for the icon on the near side of the label when expanded and hovered.
    */
-  iconExpandedHovered?: IStyle
+  iconExpandedHovered?: IStyle;
 
   /**
    * Style override for the icon when the button is disabled.
    */
-  iconDisabled?: IStyle
+  iconDisabled?: IStyle;
 
   /**
    * Style override for the icon when the button is checked.
    */
-  iconChecked?: IStyle
+  iconChecked?: IStyle;
 
   /**
    * Style for the text content of the button.
    */
-  label?: IStyle
+  label?: IStyle;
 
   /**
    * Style override for the text content when the button is hovered.
    */
-  labelHovered?: IStyle
+  labelHovered?: IStyle;
 
   /**
    * Style override for the text content when the button is disabled.
    */
-  labelDisabled?: IStyle
+  labelDisabled?: IStyle;
 
   /**
    * Style override for the text content when the button is checked.
    */
-  labelChecked?: IStyle
+  labelChecked?: IStyle;
 
   /**
    * Style for the menu chevron.
    */
-  menuIcon?: IStyle
+  menuIcon?: IStyle;
 
   /**
    * Style for the menu chevron on hover.
    */
-  menuIconHovered?: IStyle
+  menuIconHovered?: IStyle;
 
   /**
    * Style for the menu chevron when pressed.
    */
-  menuIconPressed?: IStyle
+  menuIconPressed?: IStyle;
 
   /**
    * Style for the menu chevron when expanded.
    */
-  menuIconExpanded?: IStyle
+  menuIconExpanded?: IStyle;
 
   /**
    * Style for the menu chevron when expanded and hovered.
    */
-  menuIconExpandedHovered?: IStyle
+  menuIconExpandedHovered?: IStyle;
 
   /**
    * Style override for the menu chevron when the button is disabled.
    */
-  menuIconDisabled?: IStyle
+  menuIconDisabled?: IStyle;
 
   /**
    * Style override for the menu chevron when the button is checked.
    */
-  menuIconChecked?: IStyle
+  menuIconChecked?: IStyle;
 
   /**
    * Style for the description text if applicable (for compound buttons).
    */
-  description?: IStyle
+  description?: IStyle;
 
   /**
    * Style for the description text if applicable (for compound buttons).
    */
-  secondaryText?: IStyle
+  secondaryText?: IStyle;
 
   /**
    * Style override for the description text when the button is hovered.
    */
-  descriptionHovered?: IStyle
+  descriptionHovered?: IStyle;
 
   /**
    * Style for the description text when the button is pressed.
    */
-  descriptionPressed?: IStyle
+  descriptionPressed?: IStyle;
 
   /**
    * Style override for the description text when the button is disabled.
    */
-  descriptionDisabled?: IStyle
+  descriptionDisabled?: IStyle;
 
   /**
    * Style override for the description text when the button is checked.
    */
-  descriptionChecked?: IStyle
+  descriptionChecked?: IStyle;
 
   /**
    * Style override for the screen reader text.
    */
-  screenReaderText?: IStyle
+  screenReaderText?: IStyle;
 
   /**
    * Style override for the container div around a SplitButton element
    */
-  splitButtonContainer?: IStyle
+  splitButtonContainer?: IStyle;
 
   /**
    * Style for container div around a SplitButton element when the button is hovered.
    */
-  splitButtonContainerHovered?: IStyle
+  splitButtonContainerHovered?: IStyle;
 
   /**
    * Style for container div around a SplitButton element when the button is focused.
    */
-  splitButtonContainerFocused?: IStyle
+  splitButtonContainerFocused?: IStyle;
 
   /**
    * Style for container div around a SplitButton element when the button is checked.
    */
-  splitButtonContainerChecked?: IStyle
+  splitButtonContainerChecked?: IStyle;
 
   /**
    * Style for container div around a SplitButton element when the button is checked and hovered.
    */
-  splitButtonContainerCheckedHovered?: IStyle
+  splitButtonContainerCheckedHovered?: IStyle;
 
   /**
    * Style override for the container div around a SplitButton element in a disabled state
    */
-  splitButtonContainerDisabled?: IStyle
+  splitButtonContainerDisabled?: IStyle;
 
   /**
    * Style override for the divider element that appears between the button and menu button
    * for a split button.
    */
-  splitButtonDivider?: IStyle
+  splitButtonDivider?: IStyle;
 
   /**
    * Style override for the divider element that appears between the button and menu button
    * for a split button in a disabled state.
    */
-  splitButtonDividerDisabled?: IStyle
+  splitButtonDividerDisabled?: IStyle;
 
   /**
    * Style override for the SplitButton menu button
    */
-  splitButtonMenuButton?: IStyle
+  splitButtonMenuButton?: IStyle;
 
   /**
    * Style override for the SplitButton menu button element in a disabled state.
    */
-  splitButtonMenuButtonDisabled?: IStyle
+  splitButtonMenuButtonDisabled?: IStyle;
 
   /**
    * Style override for the SplitButton menu button element in a checked state
    */
-  splitButtonMenuButtonChecked?: IStyle
+  splitButtonMenuButtonChecked?: IStyle;
 
   /**
    * Style override for the SplitButton menu button element in an expanded state
    */
-  splitButtonMenuButtonExpanded?: IStyle
+  splitButtonMenuButtonExpanded?: IStyle;
 
   /**
    * Style override for the SplitButton menu icon element
    */
-  splitButtonMenuIcon?: IStyle
+  splitButtonMenuIcon?: IStyle;
 
   /**
    * Style override for the SplitButton menu icon element in a disabled state
    */
-  splitButtonMenuIconDisabled?: IStyle
+  splitButtonMenuIconDisabled?: IStyle;
 
   /**
    * Style override for the SplitButton FlexContainer.
    */
-  splitButtonFlexContainer?: IStyle
+  splitButtonFlexContainer?: IStyle;
 
   /**
    * Style override for the SplitButton when only primaryButton is in a disabled state
    */
-  splitButtonMenuFocused?: IStyle
+  splitButtonMenuFocused?: IStyle;
 }

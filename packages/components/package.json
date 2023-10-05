@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/components",
-  "version": "2.0.0-rc.25",
+  "version": "2.0.0-rc.26",
   "main": "./dist/components.umd.js",
   "module": "./dist/components.mjs",
   "types": "./types/index.d.ts",
@@ -14,7 +14,7 @@
     "dev": "vite",
     "clean": "rimraf dist; rimraf lib; rimraf types",
     "build": "run-p build-only build:module",
-    "build:module": "tsc -p tsconfig.module.json; tsc-alias -p tsconfig.module.json",
+    "build:module": "tsc",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
     "build-only": "vite build",
@@ -22,7 +22,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "peerDependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   },
   "dependencies": {
     "@fluentui-vue/file-type-icons": "*",

@@ -73,6 +73,7 @@ const iconButtonStyles: Partial<IButtonStyles> = {
     <h2>Modal</h2>
 
     <DefaultButton text="Open Modal" @click="showModal" />
+
     <Modal
       :is-open="isModalOpen"
       :is-blocking="false"

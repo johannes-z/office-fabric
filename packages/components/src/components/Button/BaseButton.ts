@@ -6,11 +6,13 @@ import { RouterLink } from 'vue-router'
 import { Icon } from '../Icon'
 import { FontIcon } from '../Icon/FontIcon'
 import { ContextualMenu } from '../ContextualMenu'
-import { getBaseButtonClassNames } from './Button.classNames'
+import { getBaseButtonClassNames } from './BaseButton.classNames'
 import { useBaseButtonProps } from './useBaseButton'
 import { asSlotProps, makeStylingProps } from '@/utils'
 import { makeRouterProps } from '@/composables'
 import { useSlotHelpers } from '@/composables/useSlotHelpers'
+import { setFocusVisibility } from '@fluentui-vue/utilities'
+import type { IButtonStyles } from './Button.types'
 
 export const BaseButton = defineComponent({
   name: 'BaseButton',
@@ -40,11 +42,6 @@ export const BaseButton = defineComponent({
     const rootRef = ref<HTMLElement | null>(null)
 
     const hideMenu = () => (showMenu.value = false)
-    const focus = () => (rootRef.value?.focus?.())
-
-    expose({
-      focus,
-    })
 
     onBeforeMount(() => {
       window.addEventListener('resize', hideMenu)
@@ -94,10 +91,10 @@ export const BaseButton = defineComponent({
         !!allowDisabledFocus.value,
       )
       : getBaseButtonClassNames(
-        theme.value,
-        styles.value,
-        className.value || attrs.class,
-        variantClassName.value,
+        theme.value!,
+        styles.value! as IButtonStyles,
+        className.value || attrs.class as string,
+        variantClassName.value!,
         iconProps.value && iconProps.value.className,
         menuIconProps.value && menuIconProps.value.className,
         isPrimaryButtonDisabled.value!,
@@ -142,6 +139,15 @@ export const BaseButton = defineComponent({
 
     const renderAsAnchor = computed(() => !isPrimaryButtonDisabled.value && !!href.value)
     const RootElement = computed(() => renderAsAnchor.value ? (to.value ? RouterLink : 'a') : 'button')
+
+    const focus = () => {
+      setFocusVisibility(true, undefined)
+      rootRef.value?.focus?.()
+    }
+
+    expose({
+      focus,
+    })
 
     const onRenderIcon = () => {
       if (iconProps.value && (iconProps.value.iconName !== undefined || iconProps.value.imageProps)) {
@@ -249,6 +255,7 @@ export const BaseButton = defineComponent({
         menuProps.value && !menuProps.value.doNotLayer && showMenu.value && onRenderMenu(getMenuProps(menuProps.value)),
       ]),
     ]
+
     return () => h(RootElement.value, slotProps.value.root, RootElement.value === RouterLink
       ? $tagContent
       : $tagContent(),

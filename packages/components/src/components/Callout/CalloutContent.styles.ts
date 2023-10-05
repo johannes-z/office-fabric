@@ -6,7 +6,7 @@ function getBeakStyle(beakWidth?: number): IRawStyle {
   return {
     height: beakWidth,
     width: beakWidth,
-  }
+  };
 }
 
 const GlobalClassNames = {
@@ -15,9 +15,9 @@ const GlobalClassNames = {
   beak: 'ms-Callout-beak',
   beakCurtain: 'ms-Callout-beakCurtain',
   calloutMain: 'ms-Callout-main',
-}
+};
 
-export function getStyles(props: ICalloutContentStyleProps): ICalloutContentStyles {
+export const getStyles = (props: ICalloutContentStyleProps): ICalloutContentStyles => {
   const {
     theme,
     className,
@@ -28,11 +28,11 @@ export function getStyles(props: ICalloutContentStyleProps): ICalloutContentStyl
     calloutMaxWidth,
     calloutMinWidth,
     doNotLayer,
-  } = props
+  } = props;
 
-  const classNames = getGlobalClassNames(GlobalClassNames, theme)
+  const classNames = getGlobalClassNames(GlobalClassNames, theme);
 
-  const { semanticColors, effects } = theme
+  const { semanticColors, effects } = theme;
 
   return {
     container: [
@@ -109,5 +109,5 @@ export function getStyles(props: ICalloutContentStyleProps): ICalloutContentStyl
         backgroundColor,
       },
     ],
-  }
-}
+  };
+};

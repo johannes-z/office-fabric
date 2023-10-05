@@ -80,7 +80,6 @@ export class EventGroup {
       }
     }
     else {
-      // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
       while (target && retVal !== false) {
         const events = <IEventRecordsByName>target.__events__
         const eventRecords = events ? events[eventName] : null
@@ -90,7 +89,6 @@ export class EventGroup {
             if (eventRecords.hasOwnProperty(id)) {
               const eventRecordList = <IEventRecord[]>eventRecords[id]
 
-              // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
               for (let listIndex = 0; retVal !== false && listIndex < eventRecordList.length; listIndex++) {
                 const record = eventRecordList[listIndex]
 
@@ -207,7 +205,6 @@ export class EventGroup {
           try {
             result = callback.apply(parent, args)
 
-            // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
             if (result === false && args[0]) {
               const e = args[0]
 

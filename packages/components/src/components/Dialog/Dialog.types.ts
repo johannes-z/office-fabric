@@ -1,4 +1,8 @@
-import type { DialogType } from './DialogContent.types'
+import type { ITheme } from '@fluentui-vue/theme'
+import type { ICSSPixelUnitRule, ICSSRule, IStyle, IStyleFunctionOrObject } from '@fluentui/merge-styles'
+import type { DialogType, IDialogContentProps } from './DialogContent.types'
+import type { IModalProps } from '..'
+import type { IButtonProps } from '../Button/Button.types'
 
 /**
  * {@docCategory Dialog}
@@ -8,16 +12,16 @@ export interface IDialog {}
 /**
  * {@docCategory Dialog}
  */
-export interface IDialogProps
-  extends React.ClassAttributes<DialogBase>,
+export interface IDialogProps {
+  //extends React.ClassAttributes<DialogBase>,
   // eslint-disable-next-line deprecation/deprecation
-  IWithResponsiveModeState,
-  IAccessiblePopupProps {
-  children?: React.ReactNode
+  //IWithResponsiveModeState,
+  //IAccessiblePopupProps {
+  //children?: React.ReactNode
   /**
    * @deprecated Unused, returns no value
    */
-  componentRef?: IRefObject<IDialog>
+  //componentRef?: IRefObject<IDialog>
 
   /**
    * Call to provide customized styling that will layer on top of the variant rules
@@ -38,7 +42,7 @@ export interface IDialogProps
    * A callback function for when the Dialog is dismissed from the close button or light dismiss.
    * Can also be specified separately in content and modal.
    */
-  onDismiss?: (ev?: React.MouseEvent<HTMLButtonElement>) => any
+  onDismiss?: (ev?: MouseEvent) => any
 
   /**
    * Whether the dialog is hidden.

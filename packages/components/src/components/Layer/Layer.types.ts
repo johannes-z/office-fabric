@@ -27,14 +27,20 @@ export interface ILayerProps {
   className?: string
 
   /**
-    * Callback for when the layer is mounted.
-    */
-  onLayerDidMount?: () => void
+   * Callback for when the layer is mounted.
+   * @deprecated Use `onLayerDidMount`.
+   */
+  onLayerMounted?: () => void;
 
   /**
-    * Callback for when the layer is unmounted.
-    */
-  onLayerWillUnmount?: () => void
+   * Callback for when the layer is mounted.
+   */
+  onLayerDidMount?: () => void;
+
+  /**
+   * Callback for when the layer is unmounted.
+   */
+  onLayerWillUnmount?: () => void;
 
   /**
     * The optional id property provided on a LayerHost that this Layer should render within. The LayerHost does
@@ -57,6 +63,11 @@ export interface ILayerProps {
     * By default, the layer will be appended at the end to the host
     */
   insertFirst?: boolean
+
+  /**
+   * Props bag to forward to the Fabric component to allow customization of its behavior.
+   */
+  //fabricProps?: IFabricProps;
 }
 
 /**

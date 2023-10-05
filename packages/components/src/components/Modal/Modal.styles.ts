@@ -25,6 +25,7 @@ export function getStyles(props: any): IModalStyles {
     isModeless,
     layerClassName,
     isDefaultDragHandle,
+    windowInnerHeight,
   } = props
   const { palette, effects, fonts } = theme
 
@@ -36,7 +37,7 @@ export function getStyles(props: any): IModalStyles {
       fonts.medium,
       {
         backgroundColor: 'transparent',
-        position: isModeless ? 'absolute' : 'fixed',
+        position: 'fixed',
         height: '100%',
         width: '100%',
         display: 'flex',
@@ -46,15 +47,20 @@ export function getStyles(props: any): IModalStyles {
         pointerEvents: 'none',
         transition: `opacity ${animationDuration}`,
       },
-      topOffsetFixed
-        && hasBeenOpened && {
-        alignItems: 'flex-start',
-      },
+      topOffsetFixed &&
+        typeof modalRectangleTop === 'number' &&
+        hasBeenOpened && {
+          alignItems: 'flex-start',
+        },
       isOpen && classNames.isOpen,
       isVisible && {
         opacity: 1,
-        pointerEvents: 'auto',
       },
+      isVisible &&
+        !isModeless && {
+          pointerEvents: 'auto',
+        },
+
       className,
     ],
     main: [
@@ -74,10 +80,14 @@ export function getStyles(props: any): IModalStyles {
         overflowY: 'auto',
         zIndex: isModeless ? ZIndexes.Layer : undefined,
       },
-      topOffsetFixed
-        && hasBeenOpened && {
-        top: modalRectangleTop,
+      isModeless && {
+        pointerEvents: 'auto',
       },
+      topOffsetFixed &&
+        typeof modalRectangleTop === 'number' &&
+        hasBeenOpened && {
+          top: modalRectangleTop,
+        },
       isDefaultDragHandle && {
         cursor: 'move',
       },
@@ -90,22 +100,14 @@ export function getStyles(props: any): IModalStyles {
         flexGrow: 1,
         maxHeight: '100vh',
         selectors: {
-          '@supports (-webkit-overflow-scrolling: touch)': {
-            maxHeight: window.innerHeight,
+          ['@supports (-webkit-overflow-scrolling: touch)']: {
+            maxHeight: windowInnerHeight,
           },
         },
       },
       scrollableContentClassName,
     ],
-    layer: isModeless && [
-      layerClassName,
-      classNames.layer,
-      {
-        position: 'static',
-        width: 'unset',
-        height: 'unset',
-      },
-    ],
+    layer: isModeless && [layerClassName, classNames.layer, { pointerEvents: 'none' }],
     keyboardMoveIconContainer: {
       position: 'absolute',
       display: 'flex',
@@ -114,6 +116,7 @@ export function getStyles(props: any): IModalStyles {
       padding: '3px 0px',
     },
     keyboardMoveIcon: {
+      // eslint-disable-next-line deprecation/deprecation
       fontSize: fonts.xLargePlus.fontSize,
       width: '24px',
     },

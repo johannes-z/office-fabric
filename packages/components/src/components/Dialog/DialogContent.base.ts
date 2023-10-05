@@ -17,6 +17,7 @@ export const DialogContentBase = defineFunctionalComponent({
     draggableHeaderClassName: { type: String, default: null },
     titleProps: { type: Object, default: () => ({}) },
     title: { type: [String, Object], default: null },
+    titleId: { type: String, default: null },
     showCloseButton: { type: Boolean, default: !1 },
     closeButtonAriaLabel: { type: String, default: 'Close' },
     subText: { type: String, default: null },
@@ -95,7 +96,7 @@ export const DialogContentBase = defineFunctionalComponent({
       h('div', slotProps.header, [
         h('div', slotProps.title, title),
         h('div', slotProps.topButton, [
-          topButtonsProps.map((props: any, index) => h(IconButton, { key: props.uniqueId || index, ...props })),
+          topButtonsProps?.map((props: any, index) => h(IconButton, { key: props.uniqueId || index, ...props })),
           (type === DialogType.close || (showCloseButton && type !== DialogType.largeHeader)) && h(IconButton, slotProps.button),
         ]),
       ]),
