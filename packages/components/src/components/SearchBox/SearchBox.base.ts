@@ -26,6 +26,7 @@ export const SearchBoxBase = defineComponent({
     'search',
     'change',
     'update:modelValue',
+    'update:value',
   ],
 
   props: {
@@ -35,6 +36,7 @@ export const SearchBoxBase = defineComponent({
     defaultValue: { type: String, default: null },
     placeholder: { type: String, default: 'Search' },
     modelValue: { type: String, default: '' },
+    value: { type: String, default: '' },
     disableAnimation: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: false },
 
@@ -63,6 +65,7 @@ export const SearchBoxBase = defineComponent({
 
     const hasFocus = ref(false)
     const modelValue = useProxiedModel(props, 'modelValue')
+    const value = useProxiedModel(props, 'value', modelValue.value)
 
     const classNames = computed(() => getClassNames(styles.value!, {
       theme: theme.value,
@@ -70,12 +73,12 @@ export const SearchBoxBase = defineComponent({
       underlined: underlined.value,
       hasFocus: hasFocus.value,
       disabled: disabled.value,
-      hasInput: modelValue.value.length > 0,
+      hasInput: value.value.length > 0,
       disableAnimation: disableAnimation.value,
       showIcon: showIcon.value,
     }))
 
-    const hasInput = computed(() => modelValue.value.length > 0)
+    const hasInput = computed(() => value.value.length > 0)
 
     const slotProps = computed(() => ({
       root: {
@@ -96,7 +99,7 @@ export const SearchBoxBase = defineComponent({
         role: 'searchbox',
         ...attrs,
         disabled: disabled.value,
-        value: modelValue.value,
+        value: value.value,
         'aria-label': placeholder.value,
         placeholder: placeholder.value,
         class: classNames.value.field,
@@ -123,8 +126,10 @@ export const SearchBoxBase = defineComponent({
       clearInput()
     }
     const onInput = (e: InputEvent) => {
-      modelValue.value = (<HTMLInputElement>e.target).value
-      emit('change', e, modelValue.value)
+      value.value = (<HTMLInputElement>e.target).value
+      if(props.onChange)
+        props.onChange(e, value.value)
+      //emit('change', e, value.value)
     }
     const onFocus = (e: FocusEvent) => {
       emit('focus', e)
@@ -148,7 +153,7 @@ export const SearchBoxBase = defineComponent({
           break
 
         case 'Enter':
-          emit('search', modelValue.value)
+          emit('search', value.value)
           return
 
         default:
@@ -165,16 +170,16 @@ export const SearchBoxBase = defineComponent({
       emit('clear', e)
       if (e && e.defaultPrevented)
         return
-      modelValue.value = ''
+        value.value = ''
       inputRef.value?.focus()
     }
 
     const submit = () => {
-      emit('search', modelValue.value)
+      emit('search', value.value)
     }
 
-    watch(modelValue, (value) => {
-      modelValue.value = value
+    watch(value, (val) => {
+      value.value = val
     })
 
     const inputRef = ref<HTMLInputElement | null>(null)
@@ -184,7 +189,7 @@ export const SearchBoxBase = defineComponent({
         inputRef.value?.focus()
       },
       clear: () => {
-        modelValue.value = ''
+        value.value = ''
       },
     })
 

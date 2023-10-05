@@ -16,10 +16,17 @@ export const TextFieldBase = defineComponent({
 
   inheritAttrs: false,
 
+  emits: [
+    'change',
+    'update:modelValue',
+    'update:value',
+  ],
+
   props: {
     ...makeStylingProps(),
 
     modelValue: { type: String, default: '' },
+    value: { type: String, default: '' },
 
     multiline: { type: Boolean, default: false },
     resizable: { type: Boolean, default: null },
@@ -36,7 +43,7 @@ export const TextFieldBase = defineComponent({
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
 
-    onChange: { type: Function, default: undefined },
+    onChange: { type: Function as PropType<(event?: Event, newValue?: string) => void>, default: undefined },
     'onUpdate:modelValue': { type: Function as PropType<(value: string) => void | undefined>, default: undefined },
   },
 
@@ -62,6 +69,7 @@ export const TextFieldBase = defineComponent({
 
     const isFocused = ref(focused.value)
     const modelValue = useProxiedModel(props, 'modelValue')
+    const value = useProxiedModel(props, 'value', modelValue.value)
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
@@ -104,10 +112,11 @@ export const TextFieldBase = defineComponent({
       }
     }
 
-    const onInput = (ev: InputEvent, value: string) => {
+    const onInput = (ev: InputEvent, val: string) => {
       adjustInputHeight()
-      modelValue.value = value
-      props.onChange?.(value)
+      value.value = val
+      if(props.onChange)
+        props.onChange?.(ev, val)
     }
 
     onMounted(adjustInputHeight)
@@ -163,7 +172,7 @@ export const TextFieldBase = defineComponent({
         class: classNames.value.field,
         ref: textElementRef,
         id,
-        value: modelValue.value,
+        value: value.value,
         disabled: disabled.value,
         readonly: readonly.value,
         required: required.value,
@@ -174,7 +183,7 @@ export const TextFieldBase = defineComponent({
         style: { resize: (resizable.value === false) && 'none' },
         onFocus: async () => {
           isFocused.value = true
-          textElementRef.value?.setSelectionRange(modelValue.value.length, modelValue.value.length)
+          textElementRef.value?.setSelectionRange(value.value.length, value.value.length)
         },
         onBlur: () => (isFocused.value = false),
         onInput: ev => onInput(ev, ev.target.value),
@@ -209,7 +218,7 @@ export const TextFieldBase = defineComponent({
     const $label = () => (slots.label ?? onRenderLabel)(props)
 
     const $fieldGroup = () => h('div', slotProps.value.fieldGroup, [
-      h(Component.value, slotProps.value.field, modelValue.value),
+      h(Component.value, slotProps.value.field, value.value),
     ])
 
     const $errorMessage = () => errorMessage.value && h('div', slotProps.value.description, [

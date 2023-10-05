@@ -6,7 +6,7 @@ const checked = ref(true)
 </script>
 
 <template>
-  <Checkbox v-model="checked" label="Controlled checkbox" />
+  <Checkbox :checked="checked" label="Controlled checkbox" />
 
   <Checkbox label="Checkbox rendered with boxSide 'end'" box-side="end" />
 

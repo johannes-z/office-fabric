@@ -13,7 +13,7 @@ const checked2 = ref(true)
   <Checkbox label="Indeterminate checkbox (uncontrolled)" indeterminate />
 
   <Checkbox
-    v-model="checked2"
+    :checked="checked2"
     label="Indeterminate checkbox which defaults to true when clicked (uncontrolled)"
     indeterminate
   />
@@ -21,8 +21,8 @@ const checked2 = ref(true)
   <Checkbox label="Disabled indeterminate checkbox" disabled indeterminate />
 
   <Checkbox
-    v-model="isChecked"
-    v-model:indeterminate="isIndeterminate"
+    :checked="isChecked"
+    :indeterminate="isIndeterminate"
     label="Indeterminate checkbox (controlled)"
   />
 </template>

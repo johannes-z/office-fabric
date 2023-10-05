@@ -2,7 +2,7 @@
 import { TextField } from '@fluentui-vue/components'
 import { computed, ref } from 'vue'
 
-const text = ref('')
+const text = ref('Initial Text')
 const isMultiline = computed(() => text.value.length > 50)
 </script>
 
@@ -13,7 +13,8 @@ const isMultiline = computed(() => text.value.length > 50)
 
   <TextField label="With auto adjusting height" multiline auto-adjust-height />
   <TextField
-    v-model="text"
+    :value="text"
+    @change="(ev, newValue) => text = newValue"
     label="Switches from single to multiline if more than 50 characters are entered"
     :multiline="isMultiline"
   />

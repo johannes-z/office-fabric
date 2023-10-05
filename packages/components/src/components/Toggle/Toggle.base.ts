@@ -15,6 +15,7 @@ export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
   label: { type: String, default: '' },
   inlineLabel: { type: Boolean, default: false },
   modelValue: { type: Boolean, default: false },
+  checked: { type: Boolean, default: false },
   onText: { type: String, default: null },
   offText: { type: String, default: null },
   as: { type: String, default: '' },
@@ -27,6 +28,12 @@ export const ToggleBase = defineComponent({
   name: 'ToggleBase',
 
   props: makeToggleProps(),
+
+  emits: [
+    'change',
+    'update:modelValue',
+    'update:checked',
+  ],
 
   setup(props, { slots }) {
     const {
@@ -41,6 +48,7 @@ export const ToggleBase = defineComponent({
     } = toRefs(props)
 
     const modelValue = useProxiedModel(props, 'modelValue')
+    const checked = useProxiedModel(props, 'checked', modelValue.value)
 
     const id = getId('Toggle')
     const onOffMissing = computed(() => !onText.value && !offText.value)
@@ -48,7 +56,7 @@ export const ToggleBase = defineComponent({
       theme: theme.value!,
       className: className.value,
       disabled: disabled.value,
-      checked: modelValue.value,
+      checked: checked.value,
       inlineLabel: inlineLabel.value,
       onOffMissing: onOffMissing.value,
     }))
@@ -70,8 +78,8 @@ export const ToggleBase = defineComponent({
         onClick: (ev: PointerEvent) => {
           if (disabled.value)
             return
-          modelValue.value = !modelValue.value
-          props.onChange?.(ev, modelValue.value)
+          checked.value = !checked.value
+          props.onChange?.(ev, checked.value)
         },
       },
       thumb: {
@@ -83,11 +91,11 @@ export const ToggleBase = defineComponent({
       },
     }))
 
-    const showLabel = computed(() => (modelValue.value && onText.value) || (!modelValue.value && offText.value))
+    const showLabel = computed(() => (checked.value && onText.value) || (!checked.value && offText.value))
     return () => h('div', slotProps.value.root, [
       h(Label, slotProps.value.label, {
         default: () => slots.label?.({
-          checked: modelValue.value,
+          checked: checked.value,
           disabled: disabled.value,
           label: label.value,
         }) ?? label.value,
@@ -97,7 +105,7 @@ export const ToggleBase = defineComponent({
           h('div', slotProps.value.thumb),
         ]),
         showLabel.value && h(Label, slotProps.value.text, {
-          default: () => modelValue.value ? onText.value : offText.value,
+          default: () => checked.value ? onText.value : offText.value,
         }),
       ]),
     ])
