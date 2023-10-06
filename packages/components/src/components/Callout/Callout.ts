@@ -25,12 +25,12 @@ export const Callout = defineComponent({
       content: {
         ...props,
         ...attrs,
-        donNotLayer: doNotLayer,
+        donNotLayer: doNotLayer.value,
         ref: handleRef,
       },
     }))
 
     const content = () => h(CalloutContent, slotProps.value.content, slots)
-    return () => doNotLayer ? content() : h(Layer, slotProps.value.root, content)
+    return () => doNotLayer.value ? content() : h(Layer, slotProps.value.root, content)
   }
 })
