@@ -237,16 +237,19 @@ export const CalloutContentBase = defineComponent({
   mounted() {
     this.updatePosition()
     if (this.repositionOnChildrenUpdated && this.$refs.calloutMain) {
-      const calloutMain = this.$refs.calloutMain as HTMLDivElement
-      let currentHeight = calloutMain.clientHeight
-      const observer = new MutationObserver(() => {
-        if (calloutMain.clientHeight === currentHeight)
-          return
+      const calloutMain = (this.$refs.calloutMain as any)?.$el as HTMLDivElement
+      if(calloutMain !== undefined)
+      {
+        let currentHeight = calloutMain.clientHeight
+        const observer = new MutationObserver(() => {
+          if (calloutMain.clientHeight === currentHeight)
+            return
 
-        currentHeight = calloutMain.clientHeight
-        this.updatePosition()
-      })
-      observer.observe(calloutMain, { attributes: true, childList: true, subtree: true })
+          currentHeight = calloutMain.clientHeight
+          this.updatePosition()
+        })
+        observer.observe(calloutMain, { attributes: true, childList: true, subtree: true })
+      }
     }
   },
 
