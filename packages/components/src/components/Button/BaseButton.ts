@@ -70,6 +70,7 @@ export const BaseButton = defineComponent({
       replace,
       getClassNames,
       allowDisabledFocus,
+      defaultStopClickPropagation,
     } = toRefs(props)
 
     const isPrimaryButtonDisabled = computed(() => disabled.value || primaryDisabled.value)
@@ -110,7 +111,11 @@ export const BaseButton = defineComponent({
         href: href.value,
         class: classNames.value.root,
         onClick: (ev) => {
-          ev.stopPropagation()
+          if(defaultStopClickPropagation.value)
+          {
+            //defaultStopClickPropagation added from c4 > not the case in fluent ui
+            ev.stopPropagation()
+          }
           if (disabled.value)
             return
           showMenu.value = !showMenu.value

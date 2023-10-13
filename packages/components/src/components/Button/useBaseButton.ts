@@ -6,6 +6,7 @@ export function useBaseButtonProps() {
 
     checked: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    defaultStopClickPropagation: { type: Boolean, default: true },
 
     /**
      * Same as default slot. Useful for `v-bind`.
