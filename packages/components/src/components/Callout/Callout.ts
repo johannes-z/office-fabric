@@ -1,9 +1,7 @@
-import { DirectionalHint } from '@fluentui-vue/utilities'
-import { computed, defineComponent, h, toRefs } from 'vue'
+import { computed, defineComponent, h, ref, toRefs } from 'vue'
 import { asSlotProps } from '../../utils/types'
 import { Layer } from '../Layer'
 import { CalloutContent } from './CalloutContent'
-import { useForwardRef } from '@/composables'
 
 export const Callout = defineComponent({
   name: 'Callout',
@@ -13,22 +11,29 @@ export const Callout = defineComponent({
     doNotLayer: { type: Boolean, default: false },
   },
 
-  setup(props, { attrs, slots }) {
+  setup(props, { attrs, slots, expose }) {
     const { layerProps, doNotLayer } = toRefs(props)
-    const handleRef = useForwardRef()
+    const calloutContentRef = ref(null)
+    const layerRef = ref(null)
 
     const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
         ...layerProps,
+        ref: layerRef,
       },
       content: {
         ...props,
         ...attrs,
         donNotLayer: doNotLayer.value,
-        ref: handleRef,
+        ref: calloutContentRef,
       },
     }))
+
+    expose({
+      calloutContentRef,
+      layerRef
+    })
 
     const content = () => h(CalloutContent, slotProps.value.content, slots)
     return () => doNotLayer.value ? content() : h(Layer, slotProps.value.root, content)

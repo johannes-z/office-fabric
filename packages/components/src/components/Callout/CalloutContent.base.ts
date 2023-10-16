@@ -90,6 +90,10 @@ export const CalloutContentBase = defineComponent({
     ariaLabelledBy: { type: String, default: undefined },
   },
 
+  expose: [
+    'updatePosition',
+  ],
+
   data() {
     return {
       positions: undefined as unknown as ICalloutPositionedInfo,
