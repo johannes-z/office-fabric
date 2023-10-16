@@ -1,4 +1,5 @@
 import { ScreenWidthMinMedium, getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import type { IDialogStyleProps, IDialogStyles } from '.'
 
 const GlobalClassNames = {
   root: 'ms-Dialog',

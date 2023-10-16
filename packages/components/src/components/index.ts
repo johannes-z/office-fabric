@@ -24,9 +24,12 @@ export * from './Nav'
 export * from './Pivot'
 
 // Surfaces
+export * from './FocusTrapZone'
 export * from './Callout'
 export * from './Dialog'
 export * from './Modal'
+export * from './Panel'
+export * from './Tooltip'
 
 // // export * from './Facepile'
 // // export * from './DetailsList'

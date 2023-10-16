@@ -11,7 +11,8 @@ const textFieldId = useId('anInput')
   <h1>Rating</h1>
 
   <DocSection title="Usage">
-    <ExampleCard title="Rating">
+
+
       <Rating :size="RatingSize.Large" />
       <Rating :max="10" />
 
@@ -19,10 +20,9 @@ const textFieldId = useId('anInput')
       <Rating :max="5" :rating="2.5" read-only />
       <Rating
         :max="5"
-        :default-rating="2.5"
+        :rating="2.5"
         icon="StarburstSolid"
         unselected-icon="Starburst"
       />
-    </ExampleCard>
   </DocSection>
 </template>

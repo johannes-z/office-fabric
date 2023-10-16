@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, type VNodeRef, watch } from 'vue'
 import { ActionButton, ContextualMenu } from '../components'
 import DocSection from './components/DocSection.vue'
 import type { IButton } from '@/components/Button/Button.types'
@@ -8,9 +8,18 @@ import { ContextualMenuItemType } from '@/components/ContextualMenu'
 
 const linkRef = ref(null)
 const showContextualMenu = ref(false)
+const contextMenuTarget = ref<VNodeRef|Event>()
 
-const onShowContextualMenu = () => showContextualMenu.value = true
+const onShowContextualMenu = () => {
+  contextMenuTarget.value = componentRef.value
+  showContextualMenu.value = true
+}
 const onHideContextualMenu = () => showContextualMenu.value = false
+const onRightClickContextMenu = (ev: MouseEvent) => {
+  ev.preventDefault()
+  contextMenuTarget.value = ev
+  showContextualMenu.value = true
+}
 
 const menuItems: IContextualMenuItem[] = [
   {
@@ -77,7 +86,7 @@ watch(componentRef, () => {
   <h1>ContextualMenu</h1>
   <DocSection>
     <h2>Basic ContextualMenu</h2>
-    <div>
+    <div @contextmenu="onRightClickContextMenu">
       <p>
         This example directly uses ContextualMenu to show how it can be attached to arbitrary elements. The remaining
         examples use ContextualMenu through Fluent UI Button components.
@@ -96,7 +105,7 @@ watch(componentRef, () => {
       <ContextualMenu
         v-if="showContextualMenu"
         :items="menuItems"
-        :target="componentRef"
+        :target="contextMenuTarget"
         @itemClick="onHideContextualMenu"
         @dismiss="onHideContextualMenu"
       />

@@ -1,5 +1,5 @@
 import { classNamesFunction } from '@fluentui-vue/utilities'
-import { h } from 'vue'
+import { computed, h, toRefs, watch } from 'vue'
 import type { IOverlayStyleProps, IOverlayStyles } from './Overlay.types'
 import { asSlotProps, defineFunctionalComponent, makeStylingProps } from '@/utils'
 
@@ -15,21 +15,25 @@ export const OverlayBase = defineFunctionalComponent({
   },
 
   render(props, { attrs, slots }) {
-    const { theme, styles, className, dark, isDarkThemed } = props
+    const { theme, styles, className, dark, isDarkThemed } = toRefs(props)
 
-    const classNames = getClassNames(styles, {
-      theme,
-      className,
-      isDark: dark || isDarkThemed,
-    })
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value,
+      className: className.value!,
+      isDark: dark.value || isDarkThemed.value,
+    }))
 
-    const slotProps = asSlotProps({
+    const slotProps = computed(() => asSlotProps({
       root: {
         ...attrs,
-        class: classNames.root,
+        class: classNames.value.root,
       },
-    })
+    }))
 
-    return h('div', slotProps.root, slots)
+    watch([dark, isDarkThemed], () => {
+      console.log('dark changed')
+    });
+
+    return h('div', slotProps.value.root, slots)
   },
 })

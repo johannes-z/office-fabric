@@ -17,7 +17,6 @@ export function getRect(element: HTMLElement | Window | null): IRectangle | unde
         right: window.innerWidth,
         bottom: window.innerHeight,
       }
-    // @ts-expect-error
     }
     else if ((element as HTMLElement).getBoundingClientRect) {
       rect = (element as HTMLElement).getBoundingClientRect()

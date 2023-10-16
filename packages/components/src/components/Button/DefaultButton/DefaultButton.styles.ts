@@ -25,7 +25,7 @@ export const getStyles = memoizeFunction(
     return concatStyleSets(
       baseButtonStyles,
       defaultButtonStyles,
-      primary ? primaryStyles() : standardStyles(),
+      primary ? primaryStyles(theme) : standardStyles(theme),
       // splitButtonStyles,
       customStyles,
     )!

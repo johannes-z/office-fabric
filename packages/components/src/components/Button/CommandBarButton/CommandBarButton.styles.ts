@@ -3,7 +3,7 @@ import { memoizeFunction } from '@fluentui-vue/utilities'
 import { DefaultFontStyles, type ITheme, Palette, SemanticColors } from '@fluentui-vue/theme'
 import { concatStyleSets } from '@fluentui/merge-styles'
 import { getStyles as getBaseButtonStyles } from '../BaseButton.styles'
-import { ButtonGlobalClassNames } from '../Button.classNames'
+import { ButtonGlobalClassNames } from '../BaseButton.classNames'
 import { primaryStyles, standardStyles } from '../ButtonThemes'
 import type { IButtonStyles } from '../Button.types'
 

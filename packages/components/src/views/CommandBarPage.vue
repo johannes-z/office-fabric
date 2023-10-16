@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useId } from '@fluentui-vue/hooks'
-import { ref } from 'vue'
-import { CommandBar, Label } from '../components'
+import { computed, ref } from 'vue'
+import { CommandBar, Label, DefaultButton } from '../components'
 import DocSection from './components/DocSection.vue'
 import { TextField } from '@/components/TextField'
 
 const overflowProps: IButtonProps = { ariaLabel: 'More commands' }
-const _items: ICommandBarItemProps[] = [
+const useItemsVar1 = ref(true)
+const _itemsVar1: ICommandBarItemProps[] = [
   {
     key: 'newItem',
     text: 'New',
@@ -113,6 +114,104 @@ const _items: ICommandBarItemProps[] = [
   },
 ]
 
+const _itemsVar2: ICommandBarItemProps[] = [
+  {
+    key: 'newItem2',
+    text: 'New Demo 2',
+    cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
+    iconProps: { iconName: 'Add' },
+    subMenuProps: {
+      items: [
+        {
+          key: 'emailMessage',
+          text: 'Email message',
+          iconProps: { iconName: 'Mail' },
+          'data-automation-id': 'newEmailButton', // optional
+        },
+        {
+          key: 'calendarEvent',
+          text: 'Calendar event',
+          iconProps: { iconName: 'Calendar' },
+        },
+      ],
+    },
+  },
+  {
+    key: 'upload',
+    text: 'Upload Demo 2',
+    iconProps: { iconName: 'Upload' },
+    subMenuProps: {
+      items: [
+        {
+          key: 'uploadfile',
+          text: 'File',
+          preferMenuTargetAsEventTarget: true,
+          onClick: (ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined) => {
+            ev?.persist()
+
+            Promise.resolve().then(() => {
+              const inputElement = document.createElement('input')
+              inputElement.style.visibility = 'hidden'
+              inputElement.setAttribute('type', 'file')
+
+              document.body.appendChild(inputElement)
+
+              const target = ev?.target as HTMLElement | undefined
+
+              if (target)
+                setVirtualParent(inputElement, target)
+
+              inputElement.click()
+
+              if (target)
+                setVirtualParent(inputElement, null)
+
+              setTimeout(() => {
+                inputElement.remove()
+              }, 10000)
+            })
+          },
+        },
+        {
+          key: 'uploadfolder',
+          text: 'Folder',
+          preferMenuTargetAsEventTarget: true,
+          onClick: (ev?: React.MouseEvent<HTMLElement, MouseEvent> | React.KeyboardEvent<HTMLElement> | undefined) => {
+            ev?.persist()
+
+            Promise.resolve().then(() => {
+              const inputElement = document.createElement('input')
+              inputElement.style.visibility = 'hidden'
+              inputElement.setAttribute('type', 'file');
+
+              (inputElement as { webkitdirectory?: boolean }).webkitdirectory = true
+
+              document.body.appendChild(inputElement)
+
+              const target = ev?.target as HTMLElement | undefined
+
+              if (target)
+                setVirtualParent(inputElement, target)
+
+              inputElement.click()
+
+              if (target)
+                setVirtualParent(inputElement, null)
+
+              setTimeout(() => {
+                inputElement.remove()
+              }, 10000)
+            })
+          },
+        },
+      ],
+    },
+  }
+]
+const _items = computed(() => {
+  return useItemsVar1.value ? _itemsVar1 : _itemsVar2
+})
+
 const _overflowItems: ICommandBarItemProps[] = [
   { key: 'move', text: 'Move to...', onClick: () => console.log('Move to'), iconProps: { iconName: 'MoveToFolder' } },
   { key: 'copy', text: 'Copy to...', onClick: () => console.log('Copy to'), iconProps: { iconName: 'Copy' } },
@@ -139,11 +238,17 @@ const _farItems: ICommandBarItemProps[] = [
     onClick: () => console.log('Info'),
   },
 ]
+
+function toggle() {
+  useItemsVar1.value = !useItemsVar1.value
+}
+
 </script>
 
 <template>
   <h1>CommandBar</h1>
   <DocSection>
+    <div>
     <CommandBar
       :items="_items"
       :overflow-items="_overflowItems"
@@ -153,5 +258,11 @@ const _farItems: ICommandBarItemProps[] = [
       primary-group-aria-label="Email actions"
       far-items-group-aria-label="More actions"
     />
+
+    <DefaultButton
+      text="Toggle items"
+      @click="toggle"
+    />
+    </div>
   </DocSection>
 </template>

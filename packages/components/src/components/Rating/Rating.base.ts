@@ -50,12 +50,14 @@ export const RatingBase = defineComponent({
   emits: [
     'change',
     'update:modelValue',
+    'update:rating',
   ],
 
   props: {
     ...makeStylingProps(),
 
     modelValue: { type: Number, default: undefined },
+    rating: { type: Number, default: undefined },
 
     allowZeroStars: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -64,6 +66,8 @@ export const RatingBase = defineComponent({
     max: { type: Number, default: 5 },
     icon: { type: String, default: 'FavoriteStarFill' },
     unselectedIcon: { type: String, default: 'FavoriteStar' },
+
+    onChange: { type: Function as PropType<(event?: Event, newValue?: number) => void>, default: undefined },
   },
 
   setup(props, { attrs, slots }) {
@@ -81,6 +85,7 @@ export const RatingBase = defineComponent({
     } = toRefs(props)
 
     const modelValue: Ref<number> = useProxiedModel(props, 'modelValue', 0)
+    const rating: Ref<number> = useProxiedModel(props, 'rating', modelValue.value)
 
     const classNames = computed(() => getClassNames(styles.value, {
       disabled: disabled.value,
@@ -107,7 +112,7 @@ export const RatingBase = defineComponent({
     }))
 
     const min = computed(() => Math.max(allowZeroStars.value ? 0 : 1, 0))
-    const displayRating = useClamp(modelValue, min, max)
+    const displayRating = useClamp(rating, min, max)
 
     return () => {
       const stars: VNode[] = []
@@ -127,8 +132,10 @@ export const RatingBase = defineComponent({
           h('button', {
             ...slotProps.value.ratingButton,
             'aria-checked': starNum === Math.ceil(displayRating.value),
-            onClick: () => {
-              modelValue.value = starNum
+            onClick: (ev) => {
+              rating.value = starNum;
+              if(props.onChange)
+                props.onChange(ev, starNum);
             },
           }, [
             slots.star?.(starProps) || h(RatingStar, starProps),

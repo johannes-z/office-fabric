@@ -18,7 +18,6 @@ export const IsFocusHiddenClassName = 'ms-Fabric--isFocusHidden'
  */
 export function setFocusVisibility(enabled: boolean, target?: Element): void {
   const win = target ? getWindow(target) : getWindow()
-
   if (win) {
     const { classList } = win.document.body
     classList.add(enabled ? IsFocusVisibleClassName : IsFocusHiddenClassName)

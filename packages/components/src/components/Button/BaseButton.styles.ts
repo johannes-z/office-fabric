@@ -43,7 +43,7 @@ export const getStyles = memoizeFunction((theme: ITheme): IButtonStyles => {
       getFocusStyle(theme, { inset: 1, highContrastStyle: buttonHighContrastFocus, borderColor: 'transparent' }),
       theme.fonts.medium,
       {
-        border: `1px solid ${border}`,
+        border: '1px solid ' + border,
         borderRadius: effects.roundedCorner2,
         boxSizing: 'border-box',
         cursor: 'pointer',
