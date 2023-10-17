@@ -8,6 +8,8 @@ import { makeRouterProps } from '@/composables'
 const getClassNames = classNamesFunction<ILinkStyleProps, ILinkStyles>()
 
 export const LinkBase = defineComponent({
+  name: 'Link',
+
   props: {
     ...makeStylingProps(),
     ...makeRouterProps(),

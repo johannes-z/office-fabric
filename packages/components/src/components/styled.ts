@@ -44,7 +44,7 @@ TRef = unknown,
       ]),
     ] as any,
 
-    setup(props, { attrs, emit, slots }) {
+    setup(props, { attrs, slots }) {
       const styles = ref<StyleFunction<TStyleProps, TStyleSet>>()
 
       if (!styles.value || props.styles !== styles.value.__cachedInputs__[1] || !!props.styles) {
@@ -63,9 +63,9 @@ TRef = unknown,
       const handleRef = useForwardRef()
 
       return () => h(Component, {
-        ref: handleRef,
         ...attrs,
         ...props,
+        ref: handleRef,
         theme: props.theme ?? _theme.value,
         className: props.className || attrs.class,
         styles: styles.value,

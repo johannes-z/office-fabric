@@ -22,9 +22,9 @@ export const ActionButton = defineComponent({
       root: {
         ...attrs,
         ...props,
+        ref: handleRef,
         variantClassName: 'ms-Button--action ms-Button--command',
         styles: getStyles(props.theme, props.styles),
-        ref: handleRef,
       },
     }))
 
