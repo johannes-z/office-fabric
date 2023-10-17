@@ -5,6 +5,8 @@ import { Toggle } from '@fluentui-vue/components'
 const props = defineProps({
   checked: { type: Boolean, default: false },
   disabled: { type: Boolean, default: false },
+  onChecked: { type: Function, default: () => {} },
+  onDisabled: { type: Function, default: () => {} },
 })
 
 const emit = defineEmits(['checked', 'disabled'])

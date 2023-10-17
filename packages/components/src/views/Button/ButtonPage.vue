@@ -1,69 +1,66 @@
 <script setup lang="ts">
-import { h, ref } from 'vue'
+import { computed, defineAsyncComponent, h, ref } from 'vue'
 import DocPage from '../components/DocPage.vue'
 import MetaToggle from './Meta.Toggle.vue'
-import ButtonDefaultExample from './Button.Default.Example.vue'
-import ButtonDefaultExampleCode from './Button.Default.Example.vue?raw'
-import ButtonCompoundExample from './Button.Compound.Example.vue'
-import ButtonCompoundExampleCode from './Button.Compound.Example.vue?raw'
-import ButtonCommandBarExample from './Button.CommandBar.Example.vue'
-import ButtonCommandBarExampleCode from './Button.CommandBar.Example.vue?raw'
-import ButtonIconExample from './Button.Icon.Example.vue'
-import ButtonIconExampleCode from './Button.Icon.Example.vue?raw'
-import ButtonActionExample from './Button.Action.Example.vue'
-import ButtonActionExampleCode from './Button.Action.Example.vue?raw'
+
+import type { IExamplePage } from '@/views/docs.types'
 
 const checked = ref(false)
 const disabled = ref(false)
 
-function wrapComponent(component) {
-  return () => h(component, {
-    checked: checked.value,
-    disabled: disabled.value,
+function wrapComponent(factory) {
+  const component = defineAsyncComponent(factory)
+  return ({
+    render: () => h(component, {
+      checked: checked.value,
+      disabled: disabled.value,
+    }),
   })
 }
 
-const ButtonPageProps = {
+const ButtonPageProps: IExamplePage = {
   title: 'Button',
   componentName: 'Button',
   componentUrl: '',
   examples: [
     {
-      view: () => h(MetaToggle, {
-        checked: checked.value,
-        disabled: disabled.value,
-        onChecked: (value) => { checked.value = value },
-        onDisabled: (value) => { disabled.value = value },
-      }),
+      view: {
+        render: () => h(MetaToggle, {
+          checked: checked.value,
+          disabled: disabled.value,
+          onChecked: (value) => { checked.value = value },
+          onDisabled: (value) => { disabled.value = value },
+        }),
+      },
     },
     {
       title: 'Default Button',
-      code: ButtonDefaultExampleCode,
-      view: wrapComponent(ButtonDefaultExample),
+      code: () => import('./Button.Default.Example.vue?raw'),
+      view: wrapComponent(() => import('./Button.Default.Example.vue')),
     },
     {
       title: 'Compound Button',
-      code: ButtonCompoundExampleCode,
-      view: wrapComponent(ButtonCompoundExample),
+      code: () => import('./Button.Compound.Example.vue?raw'),
+      view: wrapComponent(() => import('./Button.Compound.Example.vue')),
     },
     {
       title: 'CommandBar Button',
-      code: ButtonCommandBarExampleCode,
-      view: wrapComponent(ButtonCommandBarExample),
+      code: () => import('./Button.CommandBar.Example.vue?raw'),
+      view: wrapComponent(() => import('./Button.CommandBar.Example.vue')),
     },
     {
       title: 'Icon Button',
-      code: ButtonIconExampleCode,
-      view: wrapComponent(ButtonIconExample),
+      code: () => import('./Button.Icon.Example.vue?raw'),
+      view: wrapComponent(() => import('./Button.Icon.Example.vue')),
     },
     {
       title: 'Action Button',
-      code: ButtonActionExampleCode,
-      view: wrapComponent(ButtonActionExample),
+      code: () => import('./Button.Action.Example.vue?raw'),
+      view: wrapComponent(() => import('./Button.Action.Example.vue')),
     },
   ],
-  overview: import('./docs/ButtonOverview.md'),
-  bestPractices: import('./docs/ButtonBestPractices.md'),
+  overview: () => import('./docs/ButtonOverview.md'),
+  bestPractices: () => import('./docs/ButtonBestPractices.md'),
 }
 </script>
 

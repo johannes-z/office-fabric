@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import DocPage from '../components/DocPage.vue'
+import type { IExamplePage } from '../docs.types'
 
-const ProgressIndicatorPageProps = {
+const ProgressIndicatorPageProps: IExamplePage = {
   title: 'ProgressIndicator',
   componentName: 'ProgressIndicator',
   componentUrl: '',

@@ -7,6 +7,7 @@ const props = defineProps({
   title: { type: String, default: '' },
   view: { type: [Object, Function] as PropType<any>, required: true },
   code: { type: [String, Function], default: '' },
+  props: { type: Object, default: () => ({}) },
 })
 
 const selectedKey = ref('view')
@@ -16,6 +17,8 @@ function onHandleLinkClicked(link) {
 }
 
 const component = computed(() => {
+  if (props.view.render)
+    return props.view.render
   return typeof props.view === 'function' ? defineAsyncComponent(props.view) : props.view
 })
 </script>
@@ -43,8 +46,8 @@ const component = computed(() => {
       </h3>
     </div>
 
-    <component :is="component" v-if="selectedKey === 'view'" />
-    <CodeBlock v-else-if="selectedKey === 'code'" :code="code" />
+    <component :is="component" v-if="selectedKey === 'view'" v-bind="props.props" />
+    <CodeBlock v-if="selectedKey === 'code'" :code="code" />
   </div>
 </template>
 

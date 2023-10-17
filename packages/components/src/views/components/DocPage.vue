@@ -72,9 +72,7 @@ const {
     <ExampleCard
       v-for="(example, index) in examples"
       :key="index"
-      :title="example.title"
-      :view="example.view"
-      :code="example.code"
+      v-bind="example"
     />
   </DocSection>
 </template>
