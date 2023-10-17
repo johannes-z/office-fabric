@@ -1,5 +1,5 @@
 import { AnimationVariables, ZIndexes, getGlobalClassNames } from '@fluentui-vue/style-utilities'
-import type { IModalStyles } from './Modal.types'
+import type { IModalStyleProps, IModalStyles } from './Modal.types'
 
 export const animationDuration = AnimationVariables.durationValue2
 
@@ -11,7 +11,7 @@ const globalClassNames = {
   layer: 'ms-Modal-Layer',
 }
 
-export function getStyles(props: any): IModalStyles {
+export function getStyles(props: IModalStyleProps): IModalStyles {
   const {
     className,
     containerClassName,
@@ -25,6 +25,7 @@ export function getStyles(props: any): IModalStyles {
     isModeless,
     layerClassName,
     isDefaultDragHandle,
+    windowInnerHeight,
   } = props
   const { palette, effects, fonts } = theme
 
@@ -36,7 +37,7 @@ export function getStyles(props: any): IModalStyles {
       fonts.medium,
       {
         backgroundColor: 'transparent',
-        position: isModeless ? 'absolute' : 'fixed',
+        position: 'fixed',
         height: '100%',
         width: '100%',
         display: 'flex',
@@ -47,14 +48,19 @@ export function getStyles(props: any): IModalStyles {
         transition: `opacity ${animationDuration}`,
       },
       topOffsetFixed
+        && typeof modalRectangleTop === 'number'
         && hasBeenOpened && {
         alignItems: 'flex-start',
       },
       isOpen && classNames.isOpen,
       isVisible && {
         opacity: 1,
+      },
+      isVisible
+        && !isModeless && {
         pointerEvents: 'auto',
       },
+
       className,
     ],
     main: [
@@ -74,7 +80,11 @@ export function getStyles(props: any): IModalStyles {
         overflowY: 'auto',
         zIndex: isModeless ? ZIndexes.Layer : undefined,
       },
+      isModeless && {
+        pointerEvents: 'auto',
+      },
       topOffsetFixed
+        && typeof modalRectangleTop === 'number'
         && hasBeenOpened && {
         top: modalRectangleTop,
       },
@@ -91,21 +101,13 @@ export function getStyles(props: any): IModalStyles {
         maxHeight: '100vh',
         selectors: {
           '@supports (-webkit-overflow-scrolling: touch)': {
-            maxHeight: window.innerHeight,
+            maxHeight: windowInnerHeight,
           },
         },
       },
       scrollableContentClassName,
     ],
-    layer: isModeless && [
-      layerClassName,
-      classNames.layer,
-      {
-        position: 'static',
-        width: 'unset',
-        height: 'unset',
-      },
-    ],
+    layer: isModeless && [layerClassName, classNames.layer, { pointerEvents: 'none' }],
     keyboardMoveIconContainer: {
       position: 'absolute',
       display: 'flex',

@@ -1,6 +1,6 @@
 import { AnimationClassNames } from '@fluentui-vue/style-utilities'
 import type { ICalloutPositionedInfo, IPosition, IRectangle } from '@fluentui-vue/utilities'
-import { DirectionalHint, RectangleEdge, classNamesFunction, getBoundsFromTargetWindow, getMaxHeight, positionCallout } from '@fluentui-vue/utilities'
+import { DirectionalHint, RectangleEdge, classNamesFunction, divProperties, getBoundsFromTargetWindow, getMaxHeight, getNativeProps, positionCallout } from '@fluentui-vue/utilities'
 import { elementContains } from '@fluentui/dom-utilities'
 import type { IProcessedStyleSet, IStyle } from '@fluentui/merge-styles'
 import type { VNode } from 'vue'
@@ -19,11 +19,32 @@ const ANIMATIONS: { [key: number]: string | undefined } = {
 
 const BEAK_ORIGIN_POSITION = { top: 0, left: 0 }
 
+// Microsoft Edge will overwrite inline styles if there is an animation pertaining to that style.
+// To help ensure that edge will respect the offscreen style opacity
+// filter needs to be added as an additional way to set opacity.
+// Also set pointer-events: none so that the callout will not occlude the element it is
+// going to be positioned against
 const OFF_SCREEN_STYLE = {
   opacity: 0,
   filter: 'opacity(0)',
   pointerEvents: 'none',
 }
+
+// role and role description go hand-in-hand. Both would be included by spreading getNativeProps for a basic element
+// This constant array can be used to filter these out of native props spread on callout root and apply them together on
+// calloutMain (the Popup component within the callout)
+const ARIA_ROLE_ATTRIBUTES = ['role', 'aria-roledescription']
+
+const DEFAULT_PROPS = {
+  preventDismissOnLostFocus: false,
+  preventDismissOnScroll: false,
+  preventDismissOnResize: false,
+  isBeakVisible: true,
+  beakWidth: 16,
+  gapSpace: 0,
+  minPagePadding: 8,
+  directionalHint: DirectionalHint.bottomAutoEdge,
+} as const
 
 const getClassNames = classNamesFunction<ICalloutContentStyleProps, ICalloutContentStyles>({
   disableCaching: true, // disabling caching because stylesProp.position mutates often
@@ -37,25 +58,26 @@ export const CalloutContentBase = defineComponent({
 
     target: { type: [HTMLElement, String, Object, Event], required: true },
     calloutWidth: { type: Number, default: null },
-    beakWidth: { type: Number, default: 16 },
-    minPagePadding: { type: Number, default: 8 },
-    isBeakVisible: { type: Boolean, default: true },
+    beakWidth: { type: Number, default: DEFAULT_PROPS.beakWidth },
+    minPagePadding: { type: Number, default: DEFAULT_PROPS.minPagePadding },
+    isBeakVisible: { type: Boolean, default: DEFAULT_PROPS.isBeakVisible },
     coverTarget: { type: Boolean, default: false },
-    gapSpace: { type: Number, default: 0 },
+    gapSpace: { type: Number, default: DEFAULT_PROPS.gapSpace },
     finalHeight: { type: Number, default: undefined },
     calloutMaxWidth: { type: Number, default: undefined },
     calloutMinWidth: { type: Number, default: undefined },
     calloutMaxHeight: { type: Number, default: undefined },
     backgroundColor: { type: String, default: undefined },
-    directionalHint: { type: Number as () => DirectionalHint, default: DirectionalHint.bottomAutoEdge },
+    directionalHint: { type: Number as () => DirectionalHint, default: DEFAULT_PROPS.directionalHint },
     directionalHintFixed: { type: Boolean, default: false },
     overflowYHidden: { type: Boolean, default: false },
     doNotLayer: { type: Boolean, default: false },
     hidden: { type: Boolean, default: false },
 
-    preventDismissOnScroll: { type: Boolean, default: false },
-    preventDismissOnResize: { type: Boolean, default: false },
-    preventDismissOnLostFocus: { type: Boolean, default: false },
+    preventDismissOnScroll: { type: Boolean, default: DEFAULT_PROPS.preventDismissOnScroll },
+    preventDismissOnResize: { type: Boolean, default: DEFAULT_PROPS.preventDismissOnResize },
+    preventDismissOnLostFocus: { type: Boolean, default: DEFAULT_PROPS.preventDismissOnLostFocus },
+    preventDismissOnEvent: { type: Function, default: undefined },
     dismissOnTargetClick: { type: Boolean, default: false },
 
     repositionOnChildrenUpdated: { type: Boolean, default: false },
@@ -83,7 +105,7 @@ export const CalloutContentBase = defineComponent({
         return document.querySelector(this.target) as HTMLElement
       if (this.target instanceof HTMLElement)
         return this.target
-      if (this.target instanceof PointerEvent)
+      if (this.target instanceof PointerEvent || this.target instanceof Event)
         return this.target
       return this.target.$el as HTMLElement
     },
@@ -170,8 +192,11 @@ export const CalloutContentBase = defineComponent({
         },
         root: {
           ref: 'calloutElement',
+          ...getNativeProps(this.$props, divProperties, ARIA_ROLE_ATTRIBUTES),
           class: [classNames.root, positions && positions.targetEdge && ANIMATIONS[positions.targetEdge!]],
           style: positions ? positionCss.elementPosition : OFF_SCREEN_STYLE,
+          // Safari and Firefox on Mac OS requires this to back-stop click events so focus remains in the Callout.
+          // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button#Clicking_and_focus
           tabIndex: -1,
         },
         beak: {
@@ -198,6 +223,12 @@ export const CalloutContentBase = defineComponent({
     },
   },
 
+  watch: {
+    targetRef() {
+      this.updatePosition()
+    },
+  },
+
   created() {
     window.addEventListener('click', this.dismissOnClickOrScroll, true)
     window.addEventListener('scroll', this.dismissOnScroll, true)
@@ -211,7 +242,9 @@ export const CalloutContentBase = defineComponent({
   mounted() {
     this.updatePosition()
     if (this.repositionOnChildrenUpdated && this.$refs.calloutMain) {
-      const calloutMain = this.$refs.calloutMain as HTMLDivElement
+      const calloutMain = (this.$refs.calloutMain as any)?.$el as HTMLDivElement
+      if (calloutMain == null)
+        return
       let currentHeight = calloutMain.clientHeight
       const observer = new MutationObserver(() => {
         if (calloutMain.clientHeight === currentHeight)
@@ -231,7 +264,7 @@ export const CalloutContentBase = defineComponent({
       const currentProps: any = { ...this.$props }
       currentProps!.bounds = this.bounds
       currentProps!.target = this.targetRef!
-      const newPositions = positionCallout(currentProps, this.$refs.rootRef, this.$refs.calloutElement, this.positions)
+      const newPositions = positionCallout(currentProps, this.$refs.rootRef as HTMLElement, this.$refs.calloutElement as HTMLElement, this.positions)
 
       if (
         (!positions && newPositions)
@@ -260,7 +293,7 @@ export const CalloutContentBase = defineComponent({
     dismissOnClickOrScroll(ev: Event): void {
       const eventPaths = ev.composedPath ? ev.composedPath() : []
       const target = eventPaths.length > 0 ? (eventPaths[0] as HTMLElement) : (ev.target as HTMLElement)
-      const isEventTargetOutsideCallout = this.$refs.rootRef && !elementContains(this.$refs.rootRef, target)
+      const isEventTargetOutsideCallout = this.$refs.rootRef && !elementContains(this.$refs.rootRef as HTMLElement, target)
 
       if (
         (!this.targetRef && isEventTargetOutsideCallout)

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { mergeStyleSets } from '@fluentui/merge-styles'
 import { FontWeights } from '@fluentui-vue/theme'
 import { Callout, DefaultButton, Link, Text } from '../components'
+
+const calloutRef = ref(null)
 
 const buttonId = 'callout-button'
 const labelId = 'callout-label'
@@ -11,7 +13,8 @@ const descriptionId = 'callout-description'
 const isCalloutVisible = ref(false)
 function toggle() {
   isCalloutVisible.value = !isCalloutVisible.value
-  console.log(isCalloutVisible.value)
+  if (!isCalloutVisible.value)
+    return
 }
 
 const styles = mergeStyleSets({
@@ -32,6 +35,11 @@ const styles = mergeStyleSets({
     marginTop: 20,
   },
 })
+
+function setEl(el) {
+  console.log('CalloutPage > setEl')
+  console.log(el)
+}
 </script>
 
 <template>
@@ -47,6 +55,7 @@ const styles = mergeStyleSets({
 
   <Callout
     v-if="isCalloutVisible"
+    :ref="el => setEl(el)"
     :class-name="styles.callout"
     :aria-labelled-by="labelId"
     :aria-described-by="descriptionId"

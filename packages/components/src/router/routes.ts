@@ -192,6 +192,16 @@ export const nav = [
           name: 'Modal',
           component: () => import('../views/ModalPage.vue'),
         }),
+        defineRoute({
+          path: '/Panel',
+          name: 'Panel',
+          component: () => import('../views/PanelPage.vue'),
+        }),
+        defineRoute({
+          path: '/Tooltip',
+          name: 'Tooltip',
+          component: () => import('../views/TooltipPage.vue'),
+        }),
       ],
     },
     {

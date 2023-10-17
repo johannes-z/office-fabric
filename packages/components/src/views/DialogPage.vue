@@ -1,14 +1,23 @@
 <script setup lang="ts">
-import { hiddenContentStyle } from '@fluentui-vue/style-utilities'
+import { ScreenWidthMinMedium, hiddenContentStyle } from '@fluentui-vue/style-utilities'
 import { getId } from '@fluentui-vue/utilities'
 import { useId } from '@fluentui-vue/hooks'
 import { mergeStyles } from '@fluentui/merge-styles'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { ContextualMenu, DefaultButton, Dialog, DialogFooter, DialogType, PrimaryButton, Toggle } from '../components'
 import DocSection from './components/DocSection.vue'
 import type { IButton } from '@/components/Button/Button.types'
 
-const dialogStyles = { main: { maxWidth: 450 } }
+const dialogStyles = {
+  main: {
+    width: 540,
+    minWidth: 'none',
+    selectors: {
+      [`@media (min-width: ${ScreenWidthMinMedium}px)`]: { width: 540 },
+    },
+  },
+}
+
 const dragOptions = {
   moveMenuItemText: 'Move',
   closeMenuItemText: 'Close',
@@ -25,6 +34,9 @@ const dialogContentProps = {
 
 const hideDialog = ref(true)
 const isDraggable = ref(true)
+const isBlocking = ref(true)
+const isDarkOverlay = ref(false)
+const isModeless = ref(false)
 const labelId = getId('dialogLabel')
 const subTextId = getId('subTextLabel')
 
@@ -32,15 +44,16 @@ function toggleHideDialog() {
   console.log(hideDialog.value)
   hideDialog.value = !hideDialog.value
 }
-const toggleIsDraggable = () => isDraggable.value = !isDraggable.value
 
-const modalProps = ({
+const modalProps = computed(() => ({
   titleAriaId: labelId,
   subtitleAriaId: subTextId,
-  isBlocking: false,
+  isBlocking: isBlocking.value,
+  isDarkOverlay: isDarkOverlay.value,
+  isModeless: isModeless.value,
   styles: dialogStyles,
   dragOptions: isDraggable.value ? dragOptions : undefined,
-})
+}))
 
 const componentRef = ref<IButton | null>(null)
 watch(componentRef, () => {
@@ -52,7 +65,10 @@ watch(componentRef, () => {
 <template>
   <h1>Dialog</h1>
   <DocSection>
-    <Toggle label="Is draggable" :checked="isDraggable" @change="toggleIsDraggable" />
+    <Toggle v-model="isDraggable" label="Is draggable" />
+    <Toggle v-model="isBlocking" label="Is blocking" />
+    <Toggle v-model="isDarkOverlay" label="Is darkoverlay" />
+    <Toggle v-model="isModeless" label="Is modeless" />
     <DefaultButton secondary-text="Opens the Sample Dialog" text="Open Dialog" @click="toggleHideDialog" />
     <label :id="labelId" :className="screenReaderOnly">
       My sample label
@@ -60,6 +76,11 @@ watch(componentRef, () => {
     <label :id="subTextId" :className="screenReaderOnly">
       My sample description
     </label>
+
+    isDragable: {{ isDraggable }}
+    isBlocking: {{ isBlocking }}
+    isDarkOverlay: {{ isDarkOverlay }}
+    isDarkOverlay: {{ isModeless }}
 
     <Dialog
       :hidden="hideDialog"

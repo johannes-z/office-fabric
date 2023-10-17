@@ -1,4 +1,5 @@
 import { ScreenWidthMinMedium, getGlobalClassNames } from '@fluentui-vue/style-utilities'
+import type { IDialogStyleProps, IDialogStyles } from './Dialog.types'
 
 const GlobalClassNames = {
   root: 'ms-Dialog',
@@ -7,7 +8,7 @@ const GlobalClassNames = {
 export function getStyles(props: IDialogStyleProps): IDialogStyles {
   const {
     className,
-    containerClassName, // eslint-disable-line deprecation/deprecation
+    containerClassName,
     dialogDefaultMinWidth = '288px',
     dialogDefaultMaxWidth = '340px',
     hidden,

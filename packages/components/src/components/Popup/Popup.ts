@@ -1,18 +1,6 @@
 import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, toRefs, watchEffect } from 'vue'
 import { asSlotProps } from '../../utils/types'
-import { makeStylingProps } from '@/utils'
-
-function styleToObject(styles: object | string): Record<string, string> {
-  if (!styles || typeof styles !== 'string')
-    return {}
-
-  const rules = styles.split(';')
-  return rules.reduce((obj, rule) => {
-    const [key, value] = rule.split(':')
-    obj[key.trim()] = value.trim()
-    return obj
-  }, {})
-}
+import { makeStylingProps, styleToObject } from '@/utils'
 
 function useScrollbar(style, rootRef) {
   const needsVerticalScrollBar = ref(false)

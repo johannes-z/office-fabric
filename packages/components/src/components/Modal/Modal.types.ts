@@ -3,6 +3,9 @@ import type { ITheme } from '@fluentui-vue/theme'
 import type { IIconProps } from '../Icon'
 import type { ILayerProps } from '../Layer'
 import type { IOverlayProps } from '../Overlay'
+import type { IFocusTrapZoneProps } from '..'
+import type { IPopupProps } from '../Popup'
+import type { ResponsiveMode } from '@/utils'
 
 export interface IDragOptions {
   /**
@@ -30,6 +33,11 @@ export interface IDragOptions {
    * The Draggable Control Menu so that the draggable zone can be moved via the keyboard
    */
   menu: any
+
+  /**
+   * Whether the draggable content should be prevented from going off-screen
+   */
+  keepInBounds?: boolean
 }
 
 /**
@@ -79,6 +87,12 @@ export interface IModalProps {
   onDismissed?: () => any
 
   /**
+   * The specified responsiveMode value for Modal to use.
+   * @default ResponsiveMode.small
+   */
+  responsiveMode?: ResponsiveMode
+
+  /**
    * Defines an optional set of props to be passed through to Layer
    */
   layerProps?: ILayerProps
@@ -102,6 +116,14 @@ export interface IModalProps {
   isModeless?: boolean
 
   /**
+   * Determines the ARIA role of the dialog (alertdialog/dialog)
+   * If this is set, it will override the ARIA role determined by isBlocking and isModeless
+   *
+   * For more information regarding dialogs please see https://w3c.github.io/aria-practices/#alertdialog
+   */
+  isAlert?: boolean
+
+  /**
    * Optional class name to be added to the root class
    */
   className?: string
@@ -115,12 +137,6 @@ export interface IModalProps {
    * Optional override for scrollable content class
    */
   scrollableContentClassName?: string
-
-  /**
-   * A callback function for when the Modal content is mounted on the overlay layer
-   * @deprecated Use layerProps.onLayerDidMount instead
-   */
-  onLayerDidMount?: () => void
 
   /**
    * ARIA id for the title of the Modal, if any
@@ -148,6 +164,26 @@ export interface IModalProps {
    * @defaultvalue false
    */
   allowTouchBodyScroll?: boolean
+
+  /**
+   * Puts aria-hidden=true on all non-ancestors of the current modal, for screen readers
+   * (unless `isModeless` is true).
+   * @default true
+   * @deprecated Setting this to `false` is deprecated since it breaks modal behavior for some screen readers.
+   * It will not be supported in future versions of the library (except for modeless modals).
+   */
+  enableAriaHiddenSiblings?: boolean
+
+  /**
+   * Set of props to customize the `FocusTrapZone` inside of the `Modal`.
+   * @default `{}`
+   */
+  focusTrapZoneProps?: IFocusTrapZoneProps
+
+  /**
+   * Props to be passed through to Popup
+   */
+  popupProps?: IPopupProps
 }
 
 /**
@@ -170,6 +206,8 @@ IModalProps,
   layerClassName?: string
   /** Whether this modal is draggable and using the default handler */
   isDefaultDragHandle?: boolean
+  /** The windows inner height */
+  windowInnerHeight?: number
 }
 
 /**

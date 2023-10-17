@@ -1,16 +1,41 @@
-import { DirectionalHint, classNamesFunction } from '@fluentui-vue/utilities'
-import type { IProcessedStyleSet } from '@fluentui/merge-styles'
-import { defineComponent, h } from 'vue'
+import { DirectionalHint, EventGroup, allowOverscrollOnElement, allowScrollOnElement, classNamesFunction, css, elementContains, getId, getWindow } from '@fluentui-vue/utilities'
+import { type PropType, type VNodeRef, computed, defineComponent, h, onBeforeUnmount, onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
 import { Icon } from '../Icon'
 import type { ILayerProps } from '../Layer'
 import { Layer } from '../Layer'
-import { Overlay } from '../Overlay'
-import { Popup } from '../Popup'
-import type { IDragOptions, IModalStyleProps, IModalStyles } from './Modal.types'
-import { ResponsiveMode, asSlotProps, makeStylingProps } from '@/utils'
-import type { SlotProps } from '@/utils'
+import { type IOverlayProps, Overlay } from '../Overlay'
+import { type IPopupProps, Popup } from '../Popup'
+import { FocusTrapZone, type IFocusTrapZoneProps } from '..'
+import type { IDragOptions, IModalProps, IModalStyleProps, IModalStyles } from './Modal.types'
+import { animationDuration } from './Modal.styles'
+import { ResponsiveMode, makeStylingProps } from '@/utils'
+import { DraggableZone, type ICoordinates, type IDragData } from '@/utils/DraggableZone'
+import { useSlotHelpers } from '@/composables'
+
+const ZERO: ICoordinates = { x: 0, y: 0 }
+
+const DEFAULT_PROPS: IModalProps = {
+  isOpen: false,
+  isDarkOverlay: true,
+  className: '',
+  containerClassName: '',
+  enableAriaHiddenSiblings: true,
+}
 
 const getClassNames = classNamesFunction<IModalStyleProps, IModalStyles>()
+
+function getMoveDelta(ev: KeyboardEvent): number {
+  let delta = 10
+  if (ev.shiftKey) {
+    if (!ev.ctrlKey)
+      delta = 50
+  }
+  else if (ev.ctrlKey) {
+    delta = 1
+  }
+
+  return delta
+}
 
 const DefaultLayerProps: ILayerProps = {
   eventBubblingEnabled: false,
@@ -22,232 +47,454 @@ export const ModalBase = defineComponent({
   props: {
     ...makeStylingProps(),
 
-    isOpen: { type: Boolean, default: false },
-    isDarkOverlay: { type: Boolean, default: true },
-    onDismissed: { type: Function, default: null },
-    layerProps: { type: Object as () => ILayerProps, default: null },
-    overlay: { type: Object, default: null },
-    isBlocking: { type: Boolean, default: false },
-    isModeless: { type: Boolean, default: false },
-    className: { type: String, default: '' },
-    containerClassName: { type: String, default: '' },
-    scrollableContentClassName: { type: String, default: '' },
-    titleAriaId: { type: String, default: '' },
-    subtitleAriaId: { type: String, default: '' },
-    topOffsetFixed: { type: Boolean, default: false },
-    dragOptions: { type: Object as () => IDragOptions, default: null },
     allowTouchBodyScroll: { type: Boolean, default: false },
+    containerClassName: { type: String, default: null },
+    scrollableContentClassName: { type: String, default: null },
+    elementToFocusOnDismiss: { type: Object as any, default: null },
+    firstFocusableSelector: { type: String, default: null },
+    focusTrapZoneProps: { type: Object as PropType<IFocusTrapZoneProps>, default: null },
+    forceFocusInsideTrap: { type: Boolean, default: false },
     ignoreExternalFocusing: { type: Boolean, default: false },
+    isBlocking: { type: Boolean, default: false },
+    isAlert: { type: Boolean, default: false },
+    isClickableOutsideFocusTrap: { type: Boolean, default: false },
+    isDarkOverlay: { type: Boolean, default: DEFAULT_PROPS.isDarkOverlay },
+    onDismiss: { type: Function, default: null },
+    layerProps: { type: Object as PropType<ILayerProps>, default: null },
+    overlay: { type: Object as PropType<IOverlayProps>, default: null },
+    isOpen: { type: Boolean, default: DEFAULT_PROPS.isOpen },
+    titleAriaId: { type: String, default: null },
+    subtitleAriaId: { type: String, default: null },
+    topOffsetFixed: { type: Boolean, default: false },
+    responsiveMode: { type: Number as PropType<ResponsiveMode>, default: ResponsiveMode.large },
+    onLayerDidMount: { type: Function as PropType<() => void>, default: null },
+    isModeless: { type: Boolean, default: false },
+    dragOptions: { type: Object as PropType<IDragOptions>, default: null },
+    onDismissed: { type: Function, default: null },
+    enableAriaHiddenSiblings: { type: Boolean, default: DEFAULT_PROPS.enableAriaHiddenSiblings },
+    popupProps: { type: Object as PropType<IPopupProps>, default: null },
   },
 
-  data() {
-    return {
-      internalIsOpen: false,
-      isVisible: false,
-      isVisibleClose: false,
-      hasBeenOpened: false,
-      modalRectangleTop: 0,
-      isModalMenuOpen: false,
-      isInKeyboardMoveMode: false,
-      x: 0,
-      y: 0,
-      lastSetX: 0,
-      lastSetY: 0,
-      responsiveMode: ResponsiveMode.large,
-    }
-  },
-
-  computed: {
-    classNames(): IProcessedStyleSet<IModalStyles> {
-      const {
-        theme,
-        styles,
-        className,
-        layerProps,
-        containerClassName,
-        scrollableContentClassName,
-        isVisible,
-        hasBeenOpened,
-        modalRectangleTop,
-        topOffsetFixed,
-        isModeless,
-        dragOptions,
-        isOpen,
-      } = this
-
-      const layerClassName = layerProps == null ? '' : layerProps.className
-
-      return getClassNames(styles, {
-        theme: theme!,
-        className,
-        containerClassName,
-        scrollableContentClassName,
-        isOpen,
-        isVisible,
-        hasBeenOpened,
-        modalRectangleTop,
-        topOffsetFixed,
-        isModeless,
-        layerClassName,
-        isDefaultDragHandle: dragOptions && !dragOptions.dragHandleSelector,
-      })
-    },
-
-    slotProps(): SlotProps<any> {
-      const {
-        classNames,
-        isDarkOverlay,
-        overlay,
-        isBlocking,
-        onDismiss,
-        isModeless,
-        titleAriaId,
-        subtitleAriaId,
-        ignoreExternalFocusing,
-        dragOptions,
-      } = this
-
-      return asSlotProps({
-        root: {
-          class: classNames.root,
-        },
-        main: {
-          class: classNames.main,
-        },
-        overlay: {
-          ...overlay,
-          dark: isDarkOverlay,
-          allowTouchBodyScroll: this.allowTouchBodyScroll,
-          onClick: !isBlocking && onDismiss,
-        },
-        scrollableContent: {
-          ref: 'scrollableContent',
-          class: classNames.scrollableContent,
-          'data-is-scrollable': true,
-        },
-        popup: {
-          role: (isModeless || !isBlocking) ? 'dialog' : 'alertdialog',
-          ariaModal: !isModeless,
-          ariaLabelledBy: titleAriaId,
-          ariaDescribedBy: subtitleAriaId,
-          shouldRestoreFocus: !ignoreExternalFocusing,
-          onDismiss,
-        },
-        menu: {
-          items: [
-            { key: 'move', text: dragOptions && dragOptions.moveMenuItemText, onClick: this.onEnterKeyboardMoveMode },
-            { key: 'close', text: dragOptions && dragOptions.closeMenuItemText, onClick: this.onModalClose },
-          ],
-          alignTargetEdge: true,
-          coverTarget: true,
-          directionalHint: DirectionalHint.topLeftEdge,
-          directionalHintFixed: true,
-          shouldFocusOnMount: true,
-          target: this.$refs.scrollableContent,
-          onDismiss: this.onModalContextMenuClose,
-        },
-        keyboardMoveIcon: {
-          class: classNames.keyboardMoveIcon,
-          iconName: 'move',
-        },
-      })
-    },
-
-    mergedLayerProps(): any {
-      const {
-        classNames,
-        isModeless,
-        layerProps,
-      } = this
-      return {
-        ...DefaultLayerProps,
-        ...layerProps,
-        onLayerDidMount: layerProps && layerProps.onLayerDidMount,
-        insertFirst: isModeless,
-        className: classNames.layer,
-      }
-    },
-  },
-
-  watch: {
-    isOpen: {
-      immediate: true,
-      handler(value): void {
-        if (value)
-          this.isVisible = true
-      },
-    },
-  },
-
-  methods: {
-    onModalContextMenuClose(): void {
-      this.isModalMenuOpen = false
-    },
-
-    onModalClose(): void {
-      this.isModalMenuOpen = false
-      this.isInKeyboardMoveMode = false
-      this.internalIsOpen = false
-      // TODO
-    },
-
-    onEnterKeyboardMoveMode(): void {
-      this.lastSetX = this.x
-      this.lastSetY = this.y
-      this.isInKeyboardMoveMode = true
-      this.isModalMenuOpen = true
-      // TODO
-      // this._events.on(window, 'keydown', this._onKeyDown, true /* useCapture */);
-    },
-
-    onDismiss(ev: Event): void {
-      this.$emit('dismiss', ev)
-    },
-  },
-
-  // eslint-disable-next-line vue/require-render-return
-  render(): any {
+  setup(props, { attrs, slots, emit }) {
     const {
-      dragOptions,
-      isInKeyboardMoveMode,
-      classNames,
+      allowTouchBodyScroll,
+      className,
+      // children,
+      containerClassName,
+      scrollableContentClassName,
+      elementToFocusOnDismiss,
+      firstFocusableSelector,
+      focusTrapZoneProps,
+      forceFocusInsideTrap,
+      ignoreExternalFocusing,
+      isBlocking,
+      isAlert,
+      isClickableOutsideFocusTrap,
+      isDarkOverlay,
+      onDismiss,
+      layerProps,
+      overlay,
       isOpen,
+      titleAriaId,
+      styles,
+      subtitleAriaId,
+      theme,
+      topOffsetFixed,
       responsiveMode,
+      // eslint-disable-next-line deprecation/deprecation
+      onLayerDidMount,
       isModeless,
-      mergedLayerProps,
-    } = this
+      dragOptions,
+      onDismissed,
+      // eslint-disable-next-line deprecation/deprecation
+      enableAriaHiddenSiblings,
+      popupProps,
+    } = toRefs(props)
 
-    if (!isOpen)
-      return
+    const disableRestoreFocus = computed(() => ignoreExternalFocusing.value)
 
-    const modalContent = () => h('div', this.slotProps.main, [
-      dragOptions && isInKeyboardMoveMode && h('div', {
-        class: classNames.keyboardMoveIconContainer,
-      }, [
-        dragOptions.keyboardMoveIconProps
-          ? h(Icon, dragOptions.keyboardMoveIconProps!)
-          : h(Icon, this.slotProps.keyboardMoveIcon),
-      ]),
-      h('div', this.slotProps.scrollableContent, [
-        dragOptions && this.isModalMenuOpen && h(dragOptions.menu, this.slotProps.menu),
-        this.$slots.default?.({}),
-      ]),
-    ])
+    const modal = ref<VNodeRef | null>(null)
+    const root = ref<VNodeRef | null>(null)
 
-    if (responsiveMode! >= ResponsiveMode.small) {
-      return h(Layer, mergedLayerProps, {
-        default: () => h(Popup, this.slotProps.popup, {
-          default: () => h('div', this.slotProps.root, [
-            !isModeless && h(Overlay, this.slotProps.overlay),
-            dragOptions
-            // TODO DraggableZone
-              ? modalContent()
-              : modalContent(),
+    const focusTrapZoneId = getId('ModalFocusTrapZone', (attrs as any).id)
+
+    const win = getWindow()
+
+    const isModalOpen = ref(isOpen.value)
+    const isInKeyboardMoveMode = ref(false)
+    const isVisible = ref(isOpen.value)
+    const coordinates = ref(ZERO)
+    const modalRectangleTop = ref<number | undefined>(undefined)
+    const isModalMenuOpen = ref(false)
+    const onModalCloseTimer = ref<NodeJS.Timeout | null>(null)
+    const allowTouchBodyScrollInternal = ref(allowTouchBodyScroll.value)
+    const scrollableContent = ref<HTMLElement | null>(null)
+    const lastSetCoordinates = ref(ZERO)
+    const events = ref<EventGroup>(new EventGroup({}))
+    const hasBeenOpened = ref(false)
+
+    const minPosition = ref<ICoordinates | undefined>(undefined)
+    const maxPosition = ref<ICoordinates | undefined>(undefined)
+
+    const keepInBounds = computed(() => (dragOptions.value || ({} as IDragOptions)).keepInBounds)
+    const isAlertRole = computed(() => isAlert.value || isBlocking.value || isModeless.value)
+
+    const disposeOnKeyUp = ref<(() => void) | null>(null)
+    const disposeOnKeyDown = ref<(() => void) | null>(null)
+
+    const layerClassName = computed(() => (layerProps.value === undefined || layerProps.value === null) ? '' : layerProps.value.className)
+    const classNames = computed(() => getClassNames(styles.value, {
+      theme: theme.value!,
+      className: className.value,
+      containerClassName: containerClassName.value,
+      scrollableContentClassName: scrollableContentClassName.value,
+      isOpen: isOpen.value,
+      isVisible: isVisible.value,
+      hasBeenOpened: hasBeenOpened.value,
+      modalRectangleTop: modalRectangleTop.value,
+      topOffsetFixed: topOffsetFixed.value,
+      isModeless: isModeless.value,
+      layerClassName: layerClassName.value,
+      windowInnerHeight: win?.innerHeight,
+      isDefaultDragHandle: dragOptions.value && !dragOptions.value.dragHandleSelector,
+    }),
+    )
+
+    const mergedLayerProps = computed(() => {
+      return {
+        eventBubblingEnabled: true,
+        ...layerProps.value,
+        onLayerDidMount: layerProps.value && layerProps.value.onLayerDidMount ? layerProps.value.onLayerDidMount : onLayerDidMount.value,
+        insertFirst: layerProps.value?.insertFirst || isModeless.value,
+        className: classNames.value.layer,
+      } as ILayerProps
+    })
+
+    // Allow the user to scroll within the modal but not on the body
+    const allowScrollOnModal = () => {
+      if (modal.value) {
+        if (allowTouchBodyScroll.value)
+          allowOverscrollOnElement(modal.value, events.value as EventGroup)
+
+        else
+          allowScrollOnElement(modal.value, events.value as EventGroup)
+      }
+      else {
+        events.value.off(scrollableContent.value)
+      }
+      scrollableContent.value = modal.value
+    }
+
+    onMounted(() => {
+      // Call allowScrollOnModal when the component is mounted
+      allowScrollOnModal()
+    })
+
+    const registerInitialModalPosition = (): void => {
+      const dialogMain = getFocusTrapZone()
+      const modalRectangle = dialogMain?.getBoundingClientRect()
+
+      if (modalRectangle) {
+        if (topOffsetFixed.value)
+          modalRectangleTop.value = modalRectangle.top
+
+        if (keepInBounds.value) {
+          // x/y are unavailable in IE, so use the equivalent left/top
+          minPosition.value = { x: -modalRectangle.left, y: -modalRectangle.top }
+          maxPosition.value = { x: modalRectangle.left, y: modalRectangle.top }
+        }
+      }
+    }
+
+    /**
+     * Clamps an axis to a specified min and max position.
+     *
+     * @param axis A string that represents the axis (x/y).
+     * @param position The position on the axis.
+     */
+    const getClampedAxis = (axis: keyof ICoordinates, position: number) => {
+      if (keepInBounds.value && minPosition.value && maxPosition.value) {
+        position = Math.max(minPosition.value[axis], position)
+        position = Math.min(maxPosition.value[axis], position)
+      }
+
+      return position
+    }
+
+    const handleModalClose = (): void => {
+      lastSetCoordinates.value = ZERO
+
+      isModalMenuOpen.value = false
+      isModalOpen.value = false
+      isInKeyboardMoveMode.value = false
+      coordinates.value = ZERO
+
+      disposeOnKeyUp.value?.()
+
+      onDismissed.value?.()
+    }
+
+    const handleDragStart = (): void => {
+      isModalMenuOpen.value = false
+      isInKeyboardMoveMode.value = false
+    }
+
+    const handleDrag = (event: MouseEvent & TouchEvent, dragData: IDragData): void => {
+      coordinates.value = {
+        x: getClampedAxis('x', dragData.position.x),
+        y: getClampedAxis('y', dragData.position.y),
+      }
+    }
+
+    const getFocusTrapZone = (): HTMLElement | null => {
+      if (!focusTrapZoneId)
+        return null
+      return document.getElementById(focusTrapZoneId)
+    }
+
+    const handleDragStop = (): void => {
+      if (getFocusTrapZone())
+        getFocusTrapZone()?.focus()
+    }
+
+    const handleEnterKeyboardMoveMode = () => {
+      // We need a global handleKeyDown event when we are in the move mode so that we can
+      // handle the key presses and the components inside the modal do not get the events
+      const handleKeyDown = (ev: KeyboardEvent): void => {
+        // eslint-disable-next-line deprecation/deprecation
+        if (ev.altKey && ev.ctrlKey && ev.key === ' ') {
+          // CTRL + ALT + SPACE is handled during keyUp
+          ev.preventDefault()
+          ev.stopPropagation()
+          return
+        }
+
+        // eslint-disable-next-line deprecation/deprecation
+        const newLocal = ev.altKey || ev.key === 'Escape'
+        if (isModalMenuOpen.value && newLocal)
+          isModalMenuOpen.value = false
+
+        // eslint-disable-next-line deprecation/deprecation
+        if (isInKeyboardMoveMode.value && (ev.key === 'Escape' || ev.key === 'Enter')) {
+          isInKeyboardMoveMode.value = false
+          ev.preventDefault()
+          ev.stopPropagation()
+        }
+
+        if (isInKeyboardMoveMode.value) {
+          let handledEvent = true
+          const delta = getMoveDelta(ev)
+
+          // eslint-disable-next-line deprecation/deprecation
+          switch (ev.key) {
+            /* eslint-disable no-fallthrough */
+            case 'Escape':
+              coordinates.value = lastSetCoordinates.value
+            case 'Enter': {
+              // TODO: determine if fallthrough was intentional
+              /* eslint-enable no-fallthrough */
+              lastSetCoordinates.value = ZERO
+              // setIsInKeyboardMoveMode(false);
+              break
+            }
+            case 'ArrowUp': {
+              coordinates.value = { x: coordinates.value.x, y: getClampedAxis('y', coordinates.value.y - delta) }
+              break
+            }
+            case 'ArrowDown': {
+              coordinates.value = { x: coordinates.value.x, y: getClampedAxis('y', coordinates.value.y + delta) }
+              break
+            }
+            case 'ArrowLeft': {
+              coordinates.value = { x: getClampedAxis('x', coordinates.value.x - delta), y: coordinates.value.y }
+              break
+            }
+            case 'ArrowRight': {
+              coordinates.value = { x: getClampedAxis('x', coordinates.value.x + delta), y: coordinates.value.y }
+              break
+            }
+            default: {
+              handledEvent = false
+            }
+          }
+          if (handledEvent) {
+            ev.preventDefault()
+            ev.stopPropagation()
+          }
+        }
+      }
+
+      lastSetCoordinates.value = coordinates.value
+      isModalMenuOpen.value = false
+      isInKeyboardMoveMode.value = true
+
+      events.value.on(win, 'keydown', handleKeyDown, true /* useCapture */)
+      disposeOnKeyDown.value = () => {
+        events.value.off(win, 'keydown', handleKeyDown, true /* useCapture */)
+        disposeOnKeyDown.value = null
+      }
+    }
+
+    const handleExitKeyboardMoveMode = (ev: FocusEvent) => {
+      focusTrapZoneProps.value?.onBlur?.(ev)
+      lastSetCoordinates.value = ZERO
+      isInKeyboardMoveMode.value = false
+      disposeOnKeyDown.value?.()
+    }
+
+    const registerForKeyUp = (): void => {
+      const handleKeyUp = (ev: KeyboardEvent): void => {
+        // Needs to handle the CTRL + ALT + SPACE key during keyup due to FireFox bug:
+        // https://bugzilla.mozilla.org/show_bug.cgi?id=1220143
+        // eslint-disable-next-line deprecation/deprecation
+        if (ev.altKey && ev.ctrlKey && ev.key === ' ') {
+          if (elementContains(scrollableContent.value, ev.target as HTMLElement)) {
+            isModalMenuOpen.value = !isModalMenuOpen.value
+            ev.preventDefault()
+            ev.stopPropagation()
+          }
+        }
+      }
+
+      if (!disposeOnKeyUp.value) {
+        events.value.on(win, 'keyup', handleKeyUp, true /* useCapture */)
+        disposeOnKeyUp.value = () => {
+          events.value.off(win, 'keyup', handleKeyUp, true /* useCapture */)
+          disposeOnKeyUp.value = null
+        }
+      }
+    }
+
+    watch([isModalOpen, isOpen], () => {
+      if (onModalCloseTimer.value)
+        clearTimeout(onModalCloseTimer.value)
+
+      // Opening the dialog
+      if (isOpen.value) {
+        // This must be done after the modal content has rendered
+        requestAnimationFrame(() => setTimeout(registerInitialModalPosition, 0))
+
+        isModalOpen.value = true
+
+        // Add a keyUp handler for all key up events once the dialog is open.
+        if (dragOptions.value)
+          registerForKeyUp()
+
+        hasBeenOpened.value = true
+        isVisible.value = true
+      }
+
+      // Closing the dialog
+      if (!isOpen.value && isModalOpen.value) {
+        onModalCloseTimer.value = setTimeout(handleModalClose, Number.parseFloat(animationDuration) * 1000)
+        isVisible.value = false
+      }
+    })
+
+    onBeforeUnmount(() => {
+      events.value?.dispose()
+    })
+
+    return () => {
+      if (!(isModalOpen.value && responsiveMode.value! >= ResponsiveMode.small))
+        return
+
+      const {
+        renderSlot,
+      } = useSlotHelpers(slots, 'default')
+
+      const modalContent = () => h(FocusTrapZone, {
+        ...focusTrapZoneProps.value,
+        id: focusTrapZoneId,
+        className: css(classNames.value.main, focusTrapZoneProps.value?.class),
+        elementToFocusOnDismiss: focusTrapZoneProps.value?.elementToFocusOnDismiss || elementToFocusOnDismiss.value,
+        isClickableOutsideFocusTrap: focusTrapZoneProps.value?.isClickableOutsideFocusTrap ?? (isModeless.value || isClickableOutsideFocusTrap.value || !isBlocking.value),
+        disableRestoreFocus: focusTrapZoneProps.value?.disableRestoreFocus ?? disableRestoreFocus.value,
+        forceFocusInsideTrap: (focusTrapZoneProps.value?.forceFocusInsideTrap ?? forceFocusInsideTrap.value) && !isModeless.value,
+        firstFocusableSelector: focusTrapZoneProps.value?.firstFocusableSelector || firstFocusableSelector.value,
+        focusPreviouslyFocusedInnerElemen: focusTrapZoneProps.value?.focusPreviouslyFocusedInnerElement ?? true,
+        onBlur: isInKeyboardMoveMode.value ? handleExitKeyboardMoveMode : undefined,
+      }, () =>
+        [
+          dragOptions.value && isInKeyboardMoveMode.value && h('div', {
+            className: classNames.value.keyboardMoveIconContainer,
+          }, () => [
+            dragOptions.value.keyboardMoveIconProps
+              ? h(Icon, {
+                ...dragOptions.value.keyboardMoveIconProps,
+                className: classNames.value.keyboardMoveIcon,
+              })
+              : h(Icon, {
+                iconName: 'Move',
+                className: classNames.value.keyboardMoveIcon,
+              }),
           ]),
+          h('div', {
+            className: classNames.value.scrollableContent,
+            ref: scrollableContent,
+            'data-is-scrollable': true,
+          }, [
+            dragOptions.value && isModalMenuOpen.value && h(
+              dragOptions.value.menu,
+              {
+                items: [
+                  { key: 'move', text: dragOptions.value.moveMenuItemText, onClick: handleEnterKeyboardMoveMode },
+                  { key: 'close', text: dragOptions.value.closeMenuItemText, onClick: handleModalClose },
+                ],
+                onDismiss: () => { isModalMenuOpen.value = false },
+                alignTargetEdge: true,
+                coverTarget: true,
+                directionalHint: DirectionalHint.topLeftEdge, // Assuming DirectionalHint is defined
+                directionalHintFixed: true,
+                shouldFocusOnMount: true,
+                target: scrollableContent.value,
+              }),
+            renderSlot(),
+          ]),
+        ])
 
-        }),
-
-      })
+      return h(Layer, {
+        ...mergedLayerProps.value,
+      }, () => [
+        h(Popup, {
+          role: isAlertRole.value ? 'alertdialog' : 'dialog',
+          ariaLabelledBy: titleAriaId.value,
+          ariaDescribedBy: subtitleAriaId.value,
+          onDismiss: onDismiss.value,
+          shouldRestoreFocus: !disableRestoreFocus.value,
+          // Modeless modals shouldn't hide siblings.
+          // Popup will automatically handle this based on the aria-modal setting.
+          enableAriaHiddenSiblings: enableAriaHiddenSiblings.value,
+          'aria-modal': !isModeless.value,
+          ...popupProps.value,
+        }, () => [
+          h('div', {
+            ref: root,
+            className: classNames.value.root,
+            role: !isModeless.value ? 'document' : undefined,
+          }, [
+            !isModeless.value && h(Overlay, {
+              'aria-hidden': true,
+              isDarkThemed: isDarkOverlay.value,
+              onClick: isBlocking.value ? undefined : onDismiss.value,
+              allowTouchBodyScroll: allowTouchBodyScrollInternal.value,
+              ...overlay.value,
+            }),
+            (
+              dragOptions.value
+                ? h(DraggableZone, {
+                  handleSelector: dragOptions.value.dragHandleSelector || `#${focusTrapZoneId}`,
+                  preventDragSelector: 'button',
+                  onStart: handleDragStart,
+                  onDragChange: handleDrag,
+                  onStop: handleDragStop,
+                  position: coordinates.value,
+                }, modalContent())
+                : modalContent()
+            ),
+          ]),
+        ]),
+      ])
     }
   },
 })

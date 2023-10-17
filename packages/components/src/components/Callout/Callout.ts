@@ -1,27 +1,37 @@
-import { DirectionalHint } from '@fluentui-vue/utilities'
-import { h } from 'vue'
+import { computed, defineComponent, getCurrentInstance, h, ref, toRefs } from 'vue'
 import { asSlotProps } from '../../utils/types'
 import { Layer } from '../Layer'
 import { CalloutContent } from './CalloutContent'
+import { useForwardRef } from '@/composables'
 
-export function Callout(props, { attrs, slots }) {
-  const { layerProps, doNotLayer, directionalHint = DirectionalHint.bottomAutoEdge, ...rest } = props
+export const Callout = defineComponent({
+  name: 'Callout',
 
-  const slotProps = asSlotProps({
-    root: {
-      ...attrs,
-      ...layerProps,
-    },
-    content: {
-      ...rest,
-      directionalHint,
-      ...props,
-      ...attrs,
-    },
-  })
+  props: {
+    layerProps: { type: Object, default: () => ({}) },
+    doNotLayer: { type: Boolean, default: false },
+  },
 
-  const content = () => h(CalloutContent, slotProps.content, slots)
-  return doNotLayer ? content() : h(Layer, slotProps.root, content)
-}
+  setup(props, { attrs, slots, expose }) {
+    const { layerProps, doNotLayer } = toRefs(props)
+    const handleRef = useForwardRef()
 
-Callout.props = ['layerProps', 'doNotLayer', 'directionalHint']
+    const slotProps = computed(() => asSlotProps({
+      root: {
+        ...attrs,
+        ...layerProps,
+      },
+      content: {
+        ...props,
+        ...attrs,
+        ref: handleRef,
+        doNotLayer: doNotLayer.value,
+      },
+    }))
+
+    const content = () => h(CalloutContent, slotProps.value.content, slots)
+    return () => doNotLayer.value
+      ? content()
+      : h(Layer, slotProps.value.root, content)
+  },
+})
