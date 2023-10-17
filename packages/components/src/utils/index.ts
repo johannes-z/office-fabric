@@ -15,3 +15,9 @@ export * from './array'
 export * from './color'
 
 export * from './props'
+
+export * from './styleToObject'
+
+export * from './ButtonGrid'
+export * from './DraggableZone'
+export * from './keytips'
