@@ -51,7 +51,7 @@ export interface IClassNamesFunctionOptions {
  * immutable (numbers, strings, and booleans). This will allow the results to be memoized. Violating
  * these will cause extra recalcs to occur.
  */
-export function classNamesFunction<TStyleProps extends {}, TStyleSet extends IStyleSet<TStyleSet>>(
+export function classNamesFunction<TStyleProps extends {}, TStyleSet extends IStyleSet>(
   options: IClassNamesFunctionOptions = {},
 ): (
     getStyles: IStyleFunctionOrObject<TStyleProps, TStyleSet> | undefined,
@@ -111,15 +111,14 @@ export function classNamesFunction<TStyleProps extends {}, TStyleSet extends ISt
           [
             (typeof styleFunctionOrObject === 'function'
               ? styleFunctionOrObject(styleProps)
-              : styleFunctionOrObject) as IStyleSet<TStyleSet>,
+              : styleFunctionOrObject) as IStyleSet,
           ],
           { rtl: !!rtl, specificityMultiplier: options.useStaticStyles ? DEFAULT_SPECIFICITY_MULTIPLIER : undefined },
         )
       }
 
-      if (!disableCaching) {
+      if (!disableCaching)
         styleCalcCount++
-      }
     }
 
     if (styleCalcCount > (options.cacheSize || MAX_CACHE_COUNT)) {

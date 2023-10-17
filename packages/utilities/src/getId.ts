@@ -17,7 +17,7 @@ let _initializedStylesheetResets = false
  *
  * @public
  */
-export function getId(prefix?: string): string {
+export function getId(prefix?: string, providedId?: string): string {
   if (!_initializedStylesheetResets) {
     // Configure ids to reset on stylesheet resets.
     const stylesheet = Stylesheet.getInstance()
@@ -30,7 +30,7 @@ export function getId(prefix?: string): string {
 
   const index = _global[CURRENT_ID_PROPERTY]++
 
-  return (prefix === undefined ? DEFAULT_ID_STRING : prefix) + index
+  return providedId || (prefix === undefined ? DEFAULT_ID_STRING : prefix) + index
 }
 
 /**

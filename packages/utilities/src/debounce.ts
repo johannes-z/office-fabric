@@ -1,7 +1,9 @@
 export function debounce(func, wait, immediate) {
-  let timeout
+  let timeout: ReturnType<typeof setTimeout> | null
   return function (this: any, ...args) {
-    clearTimeout(timeout)
+    if (timeout)
+      clearTimeout(timeout)
+
     timeout = setTimeout(() => {
       timeout = null
       if (!immediate)
@@ -12,10 +14,12 @@ export function debounce(func, wait, immediate) {
   }
 }
 
-export function throttle(f, delay) {
-  let timer = 0
-  return function (...args) {
-    clearTimeout(timer)
-    timer = setTimeout(() => f.apply(this, args), delay)
+export function throttle(func, delay) {
+  let timer: ReturnType<typeof setTimeout> | null
+  return function (this: any, ...args) {
+    if (timer)
+      clearTimeout(timer)
+
+    timer = setTimeout(() => func.apply(this, args), delay)
   }
 }

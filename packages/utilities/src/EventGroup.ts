@@ -35,7 +35,8 @@ export interface IDeclaredEventsByName {
   [eventName: string]: boolean
 }
 
-/** An instance of EventGroup allows anything with a handle to it to trigger events on it.
+/**
+ * An instance of EventGroup allows anything with a handle to it to trigger events on it.
  *  If the target is an HTMLElement, the event will be attached to the element and can be
  *  triggered as usual (like clicking for onClick).
  *  The event can be triggered by calling EventGroup.raise() here. If the target is an
@@ -53,7 +54,8 @@ export class EventGroup {
   private _id: number = EventGroup._uniqueId++
   private _isDisposed!: boolean
 
-  /** For IE8, bubbleEvent is ignored here and must be dealt with by the handler.
+  /**
+   * For IE8, bubbleEvent is ignored here and must be dealt with by the handler.
    *  Events raised here by default have bubbling set to false and cancelable set to true.
    *  This applies also to built-in events being raised manually here on HTMLElements,
    *  which may lead to unexpected behavior if it differs from the defaults.
@@ -80,7 +82,6 @@ export class EventGroup {
       }
     }
     else {
-      // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
       while (target && retVal !== false) {
         const events = <IEventRecordsByName>target.__events__
         const eventRecords = events ? events[eventName] : null
@@ -90,7 +91,6 @@ export class EventGroup {
             if (eventRecords.hasOwnProperty(id)) {
               const eventRecordList = <IEventRecord[]>eventRecords[id]
 
-              // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
               for (let listIndex = 0; retVal !== false && listIndex < eventRecordList.length; listIndex++) {
                 const record = eventRecordList[listIndex]
 
@@ -207,7 +207,6 @@ export class EventGroup {
           try {
             result = callback.apply(parent, args)
 
-            // @ts-expect-error  -- FIXME: strictBindCallApply error - https://github.com/microsoft/fluentui/issues/17331
             if (result === false && args[0]) {
               const e = args[0]
 
