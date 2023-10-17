@@ -1,14 +1,15 @@
+import type { ILayerHost } from './LayerHost.types.ts'
+
 const _layersByHostId: { [hostId: string]: (() => void)[] } = {}
-const _layerHostsById: { [hostId: string]: any[] } = {}
+const _layerHostsById: { [hostId: string]: ILayerHost[] } = {}
 
 const defaultHostId = 'fluent-default-layer-host'
 let _defaultHostSelector: string | undefined = `#${defaultHostId}`
 
 /**
  * Register a layer for a given host id
- * @param hostId Id of the layer host
- * @param layer Layer instance
- * @param callback
+ * @param hostId - Id of the layer host
+ * @param layer - Layer instance
  */
 export function registerLayer(hostId: string, callback: () => void) {
   if (!_layersByHostId[hostId])
@@ -26,9 +27,8 @@ export function registerLayer(hostId: string, callback: () => void) {
 
 /**
  * Unregister a layer for a given host id
- * @param hostId Id of the layer host
- * @param layer Layer instance
- * @param callback
+ * @param hostId - Id of the layer host
+ * @param layer - Layer instance
  */
 export function unregisterLayer(hostId: string, callback: () => void) {
   const layers = _layersByHostId[hostId]
@@ -53,7 +53,7 @@ export function unregisterLayer(hostId: string, callback: () => void) {
 
 /**
  * Gets the number of layers currently registered with a host id.
- * @param hostId Id of the layer host.
+ * @param hostId - Id of the layer host.
  * @returns The number of layers currently registered with the host.
  */
 export function getLayerCount(hostId: string): number {
@@ -64,10 +64,10 @@ export function getLayerCount(hostId: string): number {
 
 /**
  * Gets the Layer Host instance associated with a hostId, if applicable.
- * @param hostId
+ * @param hostId - Id of the layer host
  * @returns A component ref for the associated layer host.
  */
-export function getLayerHost(hostId: string): any | undefined {
+export function getLayerHost(hostId: string): ILayerHost | undefined {
   const layerHosts = _layerHostsById[hostId]
 
   return (layerHosts && layerHosts[0]) || undefined
@@ -75,10 +75,10 @@ export function getLayerHost(hostId: string): any | undefined {
 
 /**
  * Registers a Layer Host with an associated hostId.
- * @param hostId Id of the layer host
- * @param layerHost layer host instance
+ * @param hostId - Id of the layer host
+ * @param layerHost - layer host instance
  */
-export function registerLayerHost(hostId: string, layerHost: any): void {
+export function registerLayerHost(hostId: string, layerHost: ILayerHost): void {
   const layerHosts = _layerHostsById[hostId] || (_layerHostsById[hostId] = [])
 
   // Insert this at the start of an array to avoid race conditions between mount and unmount.
@@ -90,10 +90,10 @@ export function registerLayerHost(hostId: string, layerHost: any): void {
 
 /**
  * Unregisters a Layer Host from the associated hostId.
- * @param hostId Id of the layer host
- * @param layerHost layer host instance
+ * @param hostId - Id of the layer host
+ * @param layerHost - layer host instance
  */
-export function unregisterLayerHost(hostId: string, layerHost: any): void {
+export function unregisterLayerHost(hostId: string, layerHost: ILayerHost): void {
   const layerHosts = _layerHostsById[hostId]
 
   if (layerHosts) {
@@ -108,38 +108,7 @@ export function unregisterLayerHost(hostId: string, layerHost: any): void {
 }
 
 /**
- * Used for notifying applicable Layers that a host is available/unavailable and to re-evaluate Layers that
- * care about the specific host.
- * @param id
- */
-export function notifyHostChanged(id: string) {
-  if (_layersByHostId[id])
-    _layersByHostId[id].forEach(callback => callback())
-}
-
-/**
- * Sets the default target selector to use when determining the host in which
- * Layered content will be injected into. If not provided, an element will be
- * created at the end of the document body.
- *
- * Passing in a falsy value will clear the default target and reset back to
- * using a created element at the end of document body.
- * @param selector
- */
-export function setDefaultTarget(selector?: string) {
-  _defaultHostSelector = selector
-}
-
-/**
- * Get the default target selector when determining a host
- */
-export function getDefaultTarget(): string | undefined {
-  return _defaultHostSelector
-}
-
-/**
  * When no default layer host is provided, this function is executed to create the default host.
- * @param doc
  */
 export function createDefaultLayerHost(doc: Document): Node | null {
   const host = doc.createElement('div')
@@ -153,11 +122,38 @@ export function createDefaultLayerHost(doc: Document): Node | null {
 
 /**
  * This function can be optionally called to clean up the default layer host as needed.
- * @param doc
  */
 export function cleanupDefaultLayerHost(doc: Document) {
   const host = doc.querySelector(`#${defaultHostId}`)
 
   if (host)
     doc.removeChild(host)
+}
+
+/**
+ * Used for notifying applicable Layers that a host is available/unavailable and to re-evaluate Layers that
+ * care about the specific host.
+ */
+export function notifyHostChanged(id: string) {
+  if (_layersByHostId[id])
+    _layersByHostId[id].forEach(callback => callback())
+}
+
+/**
+ * Sets the default target selector to use when determining the host in which
+ * Layered content will be injected into. If not provided, an element will be
+ * created at the end of the document body.
+ *
+ * Passing in a falsy value will clear the default target and reset back to
+ * using a created element at the end of document body.
+ */
+export function setDefaultTarget(selector?: string) {
+  _defaultHostSelector = selector
+}
+
+/**
+ * Get the default target selector when determining a host
+ */
+export function getDefaultTarget(): string | undefined {
+  return _defaultHostSelector
 }
