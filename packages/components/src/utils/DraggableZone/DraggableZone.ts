@@ -324,10 +324,10 @@ export const DraggableZone = defineComponent({
         },
 
         class: classNames.value.root,
-        onMouseDown,
-        onMouseUp,
-        onTouchStart,
-        onTouchEnd,
+        onmousedown: onMouseDown,
+        onmouseup: onMouseUp,
+        ontouchstart: onTouchStart,
+        ontouchend: onTouchEnd,
       })
     }
   },
