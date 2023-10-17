@@ -5,7 +5,7 @@ import type { IIconProps } from '../Icon'
 
 // import type { IKeytipProps } from '../Keytip'
 import type { BaseButton } from './BaseButton'
-import type { IButtonClassNames } from './Button.classNames'
+import type { IButtonClassNames } from './BaseButton.classNames'
 import type { ISplitButtonClassNames } from './SplitButton/SplitButton.classNames'
 
 /**

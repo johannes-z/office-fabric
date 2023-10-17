@@ -1,7 +1,8 @@
 import { HighContrastSelector, getHighContrastNoAdjustStyle } from '@fluentui-vue/style-utilities'
 import { IsFocusVisibleClassName } from '@fluentui-vue/utilities'
-import { Palette, SemanticColors } from '@fluentui-vue/theme'
+import { type ITheme, Palette, SemanticColors } from '@fluentui-vue/theme'
 import type { IRawStyle } from '@fluentui/merge-styles'
+import type { IButtonStyles } from './Button.types'
 
 function splitButtonDividerBaseStyles(): IRawStyle {
   return {
@@ -12,18 +13,19 @@ function splitButtonDividerBaseStyles(): IRawStyle {
     bottom: 8,
   }
 }
+export function standardStyles(theme: ITheme): IButtonStyles {
+  const { semanticColors: s, palette: p } = theme
 
-export function standardStyles(): IButtonStyles {
-  const buttonBackground = SemanticColors.buttonBackground
-  const buttonBackgroundPressed = SemanticColors.buttonBackgroundPressed
-  const buttonBackgroundHovered = SemanticColors.buttonBackgroundHovered
-  const buttonBackgroundDisabled = SemanticColors.buttonBackgroundDisabled
+  const buttonBackground = s.buttonBackground
+  const buttonBackgroundPressed = s.buttonBackgroundPressed
+  const buttonBackgroundHovered = s.buttonBackgroundHovered
+  const buttonBackgroundDisabled = s.buttonBackgroundDisabled
 
-  const buttonText = SemanticColors.buttonText
-  const buttonTextHovered = SemanticColors.buttonTextHovered
-  const buttonTextDisabled = SemanticColors.buttonTextDisabled
-  const buttonTextChecked = SemanticColors.buttonTextChecked
-  const buttonTextCheckedHovered = SemanticColors.buttonTextCheckedHovered
+  const buttonText = s.buttonText
+  const buttonTextHovered = s.buttonTextHovered
+  const buttonTextDisabled = s.buttonTextDisabled
+  const buttonTextChecked = s.buttonTextChecked
+  const buttonTextCheckedHovered = s.buttonTextCheckedHovered
 
   return {
     root: {
@@ -84,11 +86,11 @@ export function standardStyles(): IButtonStyles {
     },
 
     splitButtonMenuButton: {
-      color: Palette.white,
+      color: p.white,
       backgroundColor: 'transparent',
       selectors: {
         ':hover': {
-          backgroundColor: Palette.neutralLight,
+          backgroundColor: p.neutralLight,
           selectors: {
             [HighContrastSelector]: {
               color: 'Highlight',
@@ -99,17 +101,17 @@ export function standardStyles(): IButtonStyles {
     },
 
     splitButtonMenuButtonDisabled: {
-      backgroundColor: SemanticColors.buttonBackgroundDisabled,
+      backgroundColor: s.buttonBackgroundDisabled,
       selectors: {
         ':hover': {
-          backgroundColor: SemanticColors.buttonBackgroundDisabled,
+          backgroundColor: s.buttonBackgroundDisabled,
         },
       },
     },
 
     splitButtonDivider: {
       ...splitButtonDividerBaseStyles(),
-      backgroundColor: Palette.neutralTertiaryAlt,
+      backgroundColor: p.neutralTertiaryAlt,
       selectors: {
         [HighContrastSelector]: {
           backgroundColor: 'WindowText',
@@ -118,43 +120,45 @@ export function standardStyles(): IButtonStyles {
     },
 
     splitButtonDividerDisabled: {
-      backgroundColor: Palette.neutralTertiaryAlt,
+      backgroundColor: theme.palette.neutralTertiaryAlt,
     },
 
     splitButtonMenuButtonChecked: {
-      backgroundColor: Palette.neutralQuaternaryAlt,
+      backgroundColor: p.neutralQuaternaryAlt,
       selectors: {
         ':hover': {
-          backgroundColor: Palette.neutralQuaternaryAlt,
+          backgroundColor: p.neutralQuaternaryAlt,
         },
       },
     },
 
     splitButtonMenuButtonExpanded: {
-      backgroundColor: Palette.neutralQuaternaryAlt,
+      backgroundColor: p.neutralQuaternaryAlt,
       selectors: {
         ':hover': {
-          backgroundColor: Palette.neutralQuaternaryAlt,
+          backgroundColor: p.neutralQuaternaryAlt,
         },
       },
     },
 
     splitButtonMenuIcon: {
-      color: SemanticColors.buttonText,
+      color: s.buttonText,
     },
 
     splitButtonMenuIconDisabled: {
-      color: SemanticColors.buttonTextDisabled,
+      color: s.buttonTextDisabled,
     },
   }
 }
 
-export function primaryStyles(): IButtonStyles {
+export function primaryStyles(theme: ITheme): IButtonStyles {
+  const { palette: p, semanticColors: s } = theme
+
   return {
     root: {
-      backgroundColor: SemanticColors.primaryButtonBackground,
-      border: `1px solid ${SemanticColors.primaryButtonBackground}`,
-      color: SemanticColors.primaryButtonText,
+      backgroundColor: s.primaryButtonBackground,
+      border: `1px solid ${s.primaryButtonBackground}`,
+      color: s.primaryButtonText,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
@@ -166,7 +170,7 @@ export function primaryStyles(): IButtonStyles {
           selectors: {
             ':after': {
               border: 'none',
-              outlineColor: Palette.white,
+              outlineColor: p.white,
             },
           },
         },
@@ -174,9 +178,9 @@ export function primaryStyles(): IButtonStyles {
     },
 
     rootHovered: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundHovered,
-      border: `1px solid ${SemanticColors.primaryButtonBackgroundHovered}`,
-      color: SemanticColors.primaryButtonTextHovered,
+      backgroundColor: s.primaryButtonBackgroundHovered,
+      border: `1px solid ${s.primaryButtonBackgroundHovered}`,
+      color: s.primaryButtonTextHovered,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
@@ -187,9 +191,9 @@ export function primaryStyles(): IButtonStyles {
     },
 
     rootPressed: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
-      border: `1px solid ${SemanticColors.primaryButtonBackgroundPressed}`,
-      color: SemanticColors.primaryButtonTextPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
+      border: `1px solid ${s.primaryButtonBackgroundPressed}`,
+      color: s.primaryButtonTextPressed,
       selectors: {
         [HighContrastSelector]: {
           color: 'Window',
@@ -201,23 +205,23 @@ export function primaryStyles(): IButtonStyles {
     },
 
     rootExpanded: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
-      color: SemanticColors.primaryButtonTextPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
+      color: s.primaryButtonTextPressed,
     },
 
     rootChecked: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
-      color: SemanticColors.primaryButtonTextPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
+      color: s.primaryButtonTextPressed,
     },
 
     rootCheckedHovered: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
-      color: SemanticColors.primaryButtonTextPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
+      color: s.primaryButtonTextPressed,
     },
 
     rootDisabled: {
-      color: SemanticColors.primaryButtonTextDisabled,
-      backgroundColor: SemanticColors.primaryButtonBackgroundDisabled,
+      color: s.primaryButtonTextDisabled,
+      backgroundColor: s.primaryButtonBackgroundDisabled,
       selectors: {
         [HighContrastSelector]: {
           color: 'GrayText',
@@ -238,7 +242,7 @@ export function primaryStyles(): IButtonStyles {
 
     splitButtonDivider: {
       ...splitButtonDividerBaseStyles(),
-      backgroundColor: Palette.white,
+      backgroundColor: p.white,
       selectors: {
         [HighContrastSelector]: {
           backgroundColor: 'Window',
@@ -247,14 +251,14 @@ export function primaryStyles(): IButtonStyles {
     },
 
     splitButtonMenuButton: {
-      backgroundColor: SemanticColors.primaryButtonBackground,
-      color: SemanticColors.primaryButtonText,
+      backgroundColor: s.primaryButtonBackground,
+      color: s.primaryButtonText,
       selectors: {
         [HighContrastSelector]: {
-          backgroundColor: 'WindowText',
+          backgroundColor: 'Canvas',
         },
         ':hover': {
-          backgroundColor: SemanticColors.primaryButtonBackgroundHovered,
+          backgroundColor: s.primaryButtonBackgroundHovered,
           selectors: {
             [HighContrastSelector]: {
               color: 'Highlight',
@@ -265,38 +269,38 @@ export function primaryStyles(): IButtonStyles {
     },
 
     splitButtonMenuButtonDisabled: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundDisabled,
+      backgroundColor: s.primaryButtonBackgroundDisabled,
       selectors: {
         ':hover': {
-          backgroundColor: SemanticColors.primaryButtonBackgroundDisabled,
+          backgroundColor: s.primaryButtonBackgroundDisabled,
         },
       },
     },
 
     splitButtonMenuButtonChecked: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
       selectors: {
         ':hover': {
-          backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
+          backgroundColor: s.primaryButtonBackgroundPressed,
         },
       },
     },
 
     splitButtonMenuButtonExpanded: {
-      backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
+      backgroundColor: s.primaryButtonBackgroundPressed,
       selectors: {
         ':hover': {
-          backgroundColor: SemanticColors.primaryButtonBackgroundPressed,
+          backgroundColor: s.primaryButtonBackgroundPressed,
         },
       },
     },
 
     splitButtonMenuIcon: {
-      color: SemanticColors.primaryButtonText,
+      color: s.primaryButtonText,
     },
 
     splitButtonMenuIconDisabled: {
-      color: Palette.neutralTertiary,
+      color: p.neutralTertiary,
 
       selectors: {
         [HighContrastSelector]: {
