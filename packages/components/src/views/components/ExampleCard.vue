@@ -17,7 +17,7 @@ function onHandleLinkClicked(link) {
 }
 
 const component = computed(() => {
-  if (props.view.render)
+  if (props.view?.render)
     return props.view.render
   return typeof props.view === 'function' ? defineAsyncComponent(props.view) : props.view
 })

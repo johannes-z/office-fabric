@@ -2,6 +2,7 @@
 import type { IStackTokens } from '@fluentui-vue/components'
 import { SearchBox, Stack } from '@fluentui-vue/components'
 import { ref } from 'vue'
+import type { ISearchBoxStyles } from '@/components/SearchBox/SearchBox.types'
 
 const searchBoxStyles: Partial<ISearchBoxStyles> = { root: { width: 200 } }
 
