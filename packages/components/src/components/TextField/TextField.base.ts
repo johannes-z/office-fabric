@@ -4,7 +4,7 @@ import { type PropType, computed, defineComponent, h, nextTick, onMounted, ref, 
 import { Label } from '../Label'
 import type { ILabelStyleProps, ILabelStyles } from '../Label/Label.types'
 import type { ITextFieldStyleProps, ITextFieldStyles } from './TextField.types'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps, warnMutuallyExclusive } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>()
@@ -12,14 +12,21 @@ const getClassNames = classNamesFunction<ITextFieldStyleProps, ITextFieldStyles>
 const COMPONENT_NAME = 'TextField'
 
 export const TextFieldBase = defineComponent({
-  name: 'TextFieldBase',
+  name: COMPONENT_NAME,
 
   inheritAttrs: false,
+
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
 
   props: {
     ...makeStylingProps(),
 
-    modelValue: { type: String, default: '' },
+    modelValue: { type: String, default: undefined },
+    value: { type: String, default: undefined },
+    defaultValue: { type: String, default: undefined },
 
     multiline: { type: Boolean, default: false },
     resizable: { type: Boolean, default: null },
@@ -36,7 +43,7 @@ export const TextFieldBase = defineComponent({
     placeholder: { type: String, default: null },
     description: { type: String, default: null },
 
-    onChange: { type: Function, default: undefined },
+    onChange: { type: Function as PropType<(event?: Event, newValue?: string) => void>, default: undefined },
     'onUpdate:modelValue': { type: Function as PropType<(value: string) => void | undefined>, default: undefined },
   },
 
@@ -60,8 +67,12 @@ export const TextFieldBase = defineComponent({
       description,
     } = toRefs(props)
 
+    warnMutuallyExclusive(COMPONENT_NAME, props, {
+      modelValue: 'value',
+    })
+
     const isFocused = ref(focused.value)
-    const modelValue = useProxiedModel(props, 'modelValue')
+    const modelValue = useProxiedModel(props, 'modelValue', props.value ?? props.defaultValue ?? '')
 
     const classNames = computed(() => getClassNames(styles.value, {
       theme: theme.value,
@@ -107,7 +118,7 @@ export const TextFieldBase = defineComponent({
     const onInput = (ev: InputEvent, value: string) => {
       adjustInputHeight()
       modelValue.value = value
-      props.onChange?.(value)
+      props.onChange?.(ev, value)
     }
 
     onMounted(adjustInputHeight)

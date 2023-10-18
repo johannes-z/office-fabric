@@ -21,3 +21,5 @@ export * from './styleToObject'
 export * from './ButtonGrid'
 export * from './DraggableZone'
 export * from './keytips'
+
+export * from './warnMutuallyExclusive'

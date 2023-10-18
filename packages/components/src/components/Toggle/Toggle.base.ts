@@ -2,10 +2,12 @@ import { classNamesFunction, getId } from '@fluentui-vue/utilities'
 import { computed, defineComponent, h, toRefs, watch } from 'vue'
 import { Label } from '../Label'
 import type { IToggleProps, IToggleStyleProps, IToggleStyles } from './Toggle.types'
-import { makeStylingProps, propsFactoryFromInterface } from '@/utils'
+import { makeStylingProps, propsFactoryFromInterface, warnMutuallyExclusive } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IToggleStyleProps, IToggleStyles>()
+
+const COMPONENT_NAME = 'Toggle'
 
 export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
   ...makeStylingProps(),
@@ -14,7 +16,8 @@ export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
 
   label: { type: String, default: '' },
   inlineLabel: { type: Boolean, default: false },
-  modelValue: { type: Boolean, default: false },
+  modelValue: { type: Boolean, default: undefined },
+  checked: { type: Boolean, default: undefined },
   onText: { type: String, default: null },
   offText: { type: String, default: null },
   as: { type: String, default: '' },
@@ -24,9 +27,14 @@ export const makeToggleProps = propsFactoryFromInterface<IToggleProps>()({
 }, 'Toggle')
 
 export const ToggleBase = defineComponent({
-  name: 'ToggleBase',
+  name: COMPONENT_NAME,
 
   props: makeToggleProps(),
+
+  emits: [
+    'change',
+    'update:modelValue',
+  ],
 
   setup(props, { slots }) {
     const {
@@ -40,7 +48,11 @@ export const ToggleBase = defineComponent({
       inlineLabel,
     } = toRefs(props)
 
-    const modelValue = useProxiedModel(props, 'modelValue')
+    warnMutuallyExclusive(COMPONENT_NAME, props, {
+      modelValue: 'checked',
+    })
+
+    const modelValue = useProxiedModel(props, 'modelValue', props.checked ?? false)
 
     const id = getId('Toggle')
     const onOffMissing = computed(() => !onText.value && !offText.value)

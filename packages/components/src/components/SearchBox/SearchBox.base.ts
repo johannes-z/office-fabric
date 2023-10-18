@@ -5,7 +5,7 @@ import type { IButtonProps } from '../Button/Button.types'
 import { Icon } from '../Icon'
 import type { IIconProps } from '../Icon/Icon.types'
 import type { ISearchBoxStyleProps, ISearchBoxStyles } from './SearchBox.types'
-import { makeStylingProps } from '@/utils'
+import { makeStylingProps, warnMutuallyExclusive } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 export type SearchBoxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
@@ -15,8 +15,10 @@ const defaultClearButtonProps: IButtonProps = { ariaLabel: 'Clear text' }
 
 const getClassNames = classNamesFunction<ISearchBoxStyleProps, ISearchBoxStyles>()
 
+const COMPONENT_NAME = 'SearchBox'
+
 export const SearchBoxBase = defineComponent({
-  name: 'SearchBoxBase',
+  name: COMPONENT_NAME,
 
   emits: [
     'focus',
@@ -34,7 +36,8 @@ export const SearchBoxBase = defineComponent({
     underlined: { type: Boolean, default: false },
     defaultValue: { type: String, default: null },
     placeholder: { type: String, default: 'Search' },
-    modelValue: { type: String, default: '' },
+    modelValue: { type: String, default: undefined },
+    value: { type: String, default: undefined },
     disableAnimation: { type: Boolean, default: false },
     showIcon: { type: Boolean, default: false },
 
@@ -62,7 +65,11 @@ export const SearchBoxBase = defineComponent({
     } = toRefs(props)
 
     const hasFocus = ref(false)
-    const modelValue = useProxiedModel(props, 'modelValue')
+
+    warnMutuallyExclusive(COMPONENT_NAME, props, {
+      modelValue: 'value',
+    })
+    const modelValue = useProxiedModel(props, 'modelValue', props.value ?? '')
 
     const classNames = computed(() => getClassNames(styles.value!, {
       theme: theme.value,
@@ -124,7 +131,7 @@ export const SearchBoxBase = defineComponent({
     }
     const onInput = (e: InputEvent) => {
       modelValue.value = (<HTMLInputElement>e.target).value
-      emit('change', e, modelValue.value)
+      props.onChange?.(e, modelValue.value)
     }
     const onFocus = (e: FocusEvent) => {
       emit('focus', e)

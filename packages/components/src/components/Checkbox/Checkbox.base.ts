@@ -4,7 +4,7 @@ import { computed, defineComponent, getCurrentInstance, h, ref, toRefs, watch } 
 import { Icon } from '../Icon'
 import { Label } from '../Label'
 import type { ICheckboxStyleProps, ICheckboxStyles } from './Checkbox.types'
-import { makeStylingProps } from '@/utils/'
+import { makeStylingProps, warnMutuallyExclusive } from '@/utils/'
 import type { SlotProps } from '@/utils/'
 import { useProxiedModel } from '@/composables'
 
@@ -12,8 +12,10 @@ export type CheckboxLabelPosition = 'top' | 'right' | 'bottom' | 'left'
 
 const getClassNames = classNamesFunction<ICheckboxStyleProps, ICheckboxStyles>()
 
+const COMPONENT_NAME = 'Checkbox'
+
 export const CheckboxBase = defineComponent({
-  name: 'CheckboxBase',
+  name: COMPONENT_NAME,
 
   emits: [
     'change',
@@ -24,7 +26,8 @@ export const CheckboxBase = defineComponent({
   props: {
     ...makeStylingProps<ICheckboxStyleProps, ICheckboxStyles>(),
 
-    modelValue: { type: Boolean, default: false },
+    modelValue: { type: Boolean, default: undefined },
+    checked: { type: Boolean, default: undefined },
     indeterminate: { type: Boolean, default: false },
 
     disabled: { type: Boolean, default: false },
@@ -39,6 +42,8 @@ export const CheckboxBase = defineComponent({
     inputProps: { type: Object as () => any, default: undefined },
 
     checkmarkIconProps: { type: Object as () => any, default: undefined },
+
+    onChange: { type: Function as PropType<(event?: Event, newValue?: boolean) => void>, default: undefined },
   },
 
   setup(props, { attrs, slots, emit, expose }) {
@@ -56,7 +61,11 @@ export const CheckboxBase = defineComponent({
 
     const id = computed(() => getId('Checkbox'))
 
-    const modelValue = useProxiedModel(props, 'modelValue')
+    warnMutuallyExclusive(COMPONENT_NAME, props, {
+      modelValue: 'checked',
+    })
+
+    const modelValue = useProxiedModel(props, 'modelValue', props.checked ?? false)
     const indeterminate = useProxiedModel(props, 'indeterminate')
 
     const classNames = computed(() => getClassNames(styles.value, {
@@ -69,7 +78,7 @@ export const CheckboxBase = defineComponent({
       isUsingCustomLabelRender: true,
     }))
 
-    const onInput = () => {
+    const onInput = (ev: InputEvent) => {
       if (disabled.value)
         return
 
@@ -77,6 +86,8 @@ export const CheckboxBase = defineComponent({
         indeterminate.value = false
       else
         modelValue.value = !modelValue.value
+
+      props.onChange?.(ev, modelValue.value)
     }
 
     const inputRef = ref<HTMLInputElement | null>(null)

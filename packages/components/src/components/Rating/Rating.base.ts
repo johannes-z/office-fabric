@@ -3,10 +3,12 @@ import { type PropType, type Ref, type VNode, computed, defineComponent, h, ref,
 import { useClamp } from '@vueuse/math'
 import { Icon } from '../Icon/'
 import { type IRatingStarProps, type IRatingStyleProps, type IRatingStyles, RatingSize } from './Rating.types'
-import { asSlotProps, makeStylingProps } from '@/utils'
+import { asSlotProps, makeStylingProps, warnMutuallyExclusive } from '@/utils'
 import { useProxiedModel } from '@/composables'
 
 const getClassNames = classNamesFunction<IRatingStyleProps, IRatingStyles>()
+
+const COMPONENT_NAME = 'Rating'
 
 function RatingStar(props: IRatingStarProps) {
   const slotProps = asSlotProps({
@@ -47,6 +49,8 @@ function getFillingPercentage(starNum: number, displayRating: number): number {
 }
 
 export const RatingBase = defineComponent({
+  name: COMPONENT_NAME,
+
   emits: [
     'change',
     'update:modelValue',
@@ -56,6 +60,8 @@ export const RatingBase = defineComponent({
     ...makeStylingProps(),
 
     modelValue: { type: Number, default: undefined },
+    defaultRating: { type: Number, default: undefined },
+    rating: { type: Number, default: undefined },
 
     allowZeroStars: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -64,6 +70,8 @@ export const RatingBase = defineComponent({
     max: { type: Number, default: 5 },
     icon: { type: String, default: 'FavoriteStarFill' },
     unselectedIcon: { type: String, default: 'FavoriteStar' },
+
+    onChange: { type: Function as PropType<(event?: Event, newValue?: number) => void>, default: undefined },
   },
 
   setup(props, { attrs, slots }) {
@@ -80,7 +88,11 @@ export const RatingBase = defineComponent({
       unselectedIcon,
     } = toRefs(props)
 
-    const modelValue: Ref<number> = useProxiedModel(props, 'modelValue', 0)
+    warnMutuallyExclusive(COMPONENT_NAME, props, {
+      modelValue: 'rating',
+    })
+
+    const modelValue: Ref<number> = useProxiedModel(props, 'modelValue', props.rating ?? props.defaultRating ?? 0)
 
     const classNames = computed(() => getClassNames(styles.value, {
       disabled: disabled.value,
@@ -127,8 +139,9 @@ export const RatingBase = defineComponent({
           h('button', {
             ...slotProps.value.ratingButton,
             'aria-checked': starNum === Math.ceil(displayRating.value),
-            onClick: () => {
+            onClick: (ev: PointerEvent) => {
               modelValue.value = starNum
+              props.onChange?.(ev, starNum)
             },
           }, [
             slots.star?.(starProps) || h(RatingStar, starProps),
