@@ -118,7 +118,8 @@ export const BaseButton = defineComponent({
         href: href.value,
         class: classNames.value.root,
         onClick: (ev) => {
-          ev.stopPropagation()
+          if (props.defaultStopClickPropagation)
+            ev.stopPropagation()
           if (disabled.value)
             return
           showMenu.value = !showMenu.value
