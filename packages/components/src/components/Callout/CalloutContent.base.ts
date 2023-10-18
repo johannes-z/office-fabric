@@ -259,6 +259,10 @@ export const CalloutContentBase = defineComponent({
 
   methods: {
     updatePosition(): void {
+      // no refs, nothing to position
+      if (this.$refs.rootRef == null || this.$refs.calloutElement == null)
+        return
+
       const positions = this.positions
 
       const currentProps: any = { ...this.$props }
