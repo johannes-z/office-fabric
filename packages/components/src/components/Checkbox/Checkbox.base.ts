@@ -57,6 +57,7 @@ export const CheckboxBase = defineComponent({
       title,
       inputProps,
       label,
+      checked,
     } = toRefs(props)
 
     const id = computed(() => getId('Checkbox'))
@@ -66,6 +67,9 @@ export const CheckboxBase = defineComponent({
     })
 
     const modelValue = useProxiedModel(props, 'modelValue', props.checked ?? false)
+    watch(checked, (value) => {
+      modelValue.value = value
+    })
     const indeterminate = useProxiedModel(props, 'indeterminate')
 
     const classNames = computed(() => getClassNames(styles.value, {

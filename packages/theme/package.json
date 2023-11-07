@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fluentui-vue/utilities": "*",
-    "@fluentui/merge-styles": "^8.5.12",
+    "@fluentui/merge-styles": "^8.5.13",
     "tslib": "^2.6.2"
   }
 }
