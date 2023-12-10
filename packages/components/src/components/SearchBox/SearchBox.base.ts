@@ -119,7 +119,7 @@ export const SearchBoxBase = defineComponent({
         styles: iconButtonStyles,
         iconProps: iconButtonProps,
         ...defaultClearButtonProps,
-        onClick: clearInput,
+        onClick: clear,
       },
     }))
 
@@ -127,7 +127,7 @@ export const SearchBoxBase = defineComponent({
       emit('escape', e)
       if (e.defaultPrevented)
         return
-      clearInput()
+      clear()
     }
     const onInput = (e: InputEvent) => {
       modelValue.value = (<HTMLInputElement>e.target).value
@@ -151,7 +151,7 @@ export const SearchBoxBase = defineComponent({
           emit('escape', ev)
           if (ev.defaultPrevented)
             return
-          else clearInput()
+          else clear()
           break
 
         case 'Enter':
@@ -168,8 +168,8 @@ export const SearchBoxBase = defineComponent({
       ev.preventDefault()
       ev.stopPropagation()
     }
-    const clearInput = (e?: MouseEvent) => {
-      emit('clear', e)
+    const clear = (e?: MouseEvent) => {
+      props.onClear?.(e)
       if (e && e.defaultPrevented)
         return
       modelValue.value = ''
@@ -191,7 +191,7 @@ export const SearchBoxBase = defineComponent({
         inputRef.value?.focus()
       },
       clear: () => {
-        modelValue.value = ''
+        clear()
       },
     })
 

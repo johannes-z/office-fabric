@@ -4,6 +4,7 @@ node_modules
 dist
 lib
 tmp
+types
 
 # local env files
 .env.local
