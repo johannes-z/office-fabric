@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/file-type-icons",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Fluent UI Vue file type icon set.",
   "repository": {
     "type": "git",
@@ -24,6 +24,6 @@
     "vue-demi": "latest"
   },
   "devDependencies": {
-    "vue": "^3.3.8"
+    "vue": "^3.5.13"
   }
 }

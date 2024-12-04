@@ -1,41 +1,22 @@
 <script setup lang="ts">
 import { computedAsync } from '@vueuse/core'
-import { type Highlighter, getHighlighter, setWasm } from 'shiki'
+import { type Highlighter, codeToHtml, createHighlighter } from 'shiki'
+
 
 const props = defineProps({
   code: { type: [String, Function], required: true },
   language: { type: String, default: 'vue' },
 })
 
-declare global {
-  interface Window {
-    __shiki_cache__?: Highlighter
-  }
-}
-
 const highlightedCode = computedAsync(async () => {
-  if (!window.__shiki_cache__) {
-    const wasmResponse = await fetch('/onig.wasm')
-    setWasm(wasmResponse)
-    const highlighter = await getHighlighter({
-      theme: 'light-plus',
-      langs: ['vue'],
-    })
-    window.__shiki_cache__ = highlighter
-  }
-
-  const highlighter = window.__shiki_cache__
-
   const code = typeof props.code === 'function' ? (await props.code()).default : props.code
 
-  return highlighter.codeToHtml(code, {
-    lang: props.language,
-  })
+  return code
 }, '')
 </script>
 
 <template>
-  <div class="code-block" v-html="highlightedCode" />
+  <pre class="code-block" v-text="highlightedCode" />
 </template>
 
 <style lang="scss">

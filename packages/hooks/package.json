@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/hooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@fluentui-vue/utilities": "*",
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
-    "vue": "^3.3.8"
+    "vue": "^3.5.13"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/icons",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Fluent UI Vue icons.",
   "author": "",
   "license": "ISC",
@@ -18,6 +18,6 @@
   },
   "dependencies": {
     "@fluentui-vue/style-utilities": "*",
-    "tslib": "^2.6.2"
+    "tslib": "^2.8.1"
   }
 }

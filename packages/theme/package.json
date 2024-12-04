@@ -1,6 +1,6 @@
 {
   "name": "@fluentui-vue/theme",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "",
   "author": "",
   "license": "ISC",
@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@fluentui-vue/utilities": "*",
-    "@fluentui/merge-styles": "^8.5.13",
-    "tslib": "^2.6.2"
+    "@fluentui/merge-styles": "^8.6.13",
+    "tslib": "^2.8.1"
   }
 }
